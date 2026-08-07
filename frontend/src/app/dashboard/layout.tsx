@@ -58,6 +58,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       >
         <div style={{ marginBottom: 24, paddingLeft: 6, display: 'flex', alignItems: 'center', gap: 8 }}>
           {apariencia?.logoMenu ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={`${API_ORIGIN}${apariencia.logoMenu}`}
               alt="Logo"

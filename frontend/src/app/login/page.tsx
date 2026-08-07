@@ -86,6 +86,7 @@ export default function LoginPage() {
       >
         <div style={{ textAlign: 'center', marginBottom: 20 }}>
           {logoUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={logoUrl}
               alt="Logo"
