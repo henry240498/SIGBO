@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Patch, Post, Query, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { PermissionsGuard } from '../seguridad/guards/permissions.guard';
 import { RequirePermission } from '../seguridad/decorators/require-permission.decorator';
@@ -46,14 +46,19 @@ export class BomberosController {
 
   @Post()
   @RequirePermission('personal:crear')
-  create(@Body() dto: CreateBomberoDto, @CurrentUser() user: AuthenticatedUser) {
-    return this.bomberosService.create(dto, user.id);
+  create(@Body() dto: CreateBomberoDto, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
+    return this.bomberosService.create(dto, user.id, req.ip);
   }
 
   @Patch(':id')
   @RequirePermission('personal:editar')
-  update(@Param('id') id: string, @Body() dto: UpdateBomberoDto, @CurrentUser() user: AuthenticatedUser) {
-    return this.bomberosService.update(id, dto, user.id);
+  update(
+    @Param('id') id: string,
+    @Body() dto: UpdateBomberoDto,
+    @CurrentUser() user: AuthenticatedUser,
+    @Req() req: Request,
+  ) {
+    return this.bomberosService.update(id, dto, user.id, req.ip);
   }
 
   @Patch(':id/baja')
@@ -62,7 +67,14 @@ export class BomberosController {
     @Param('id') id: string,
     @Body('motivo') motivo: string,
     @CurrentUser() user: AuthenticatedUser,
+    @Req() req: Request,
   ) {
-    return this.bomberosService.darBaja(id, motivo, user.id);
+    return this.bomberosService.darBaja(id, motivo, user.id, req.ip);
+  }
+
+  @Delete(':id')
+  @RequirePermission('personal:eliminar_fisico')
+  eliminarFisico(@Param('id') id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
+    return this.bomberosService.eliminarFisico(id, user.id, req.ip);
   }
 }

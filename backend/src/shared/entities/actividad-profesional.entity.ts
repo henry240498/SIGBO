@@ -8,8 +8,9 @@ export class ActividadProfesional {
   @Column({ type: 'uniqueidentifier' })
   bomberoId: string;
 
-  @Column({ type: 'nvarchar', length: 150, nullable: true })
-  profesion: string | null;
+  /** Referencia a organizacion.parametros (tipo PROFESION). */
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  profesionId: string | null;
 
   @Column({ type: 'nvarchar', length: 150, nullable: true })
   empresa: string | null;

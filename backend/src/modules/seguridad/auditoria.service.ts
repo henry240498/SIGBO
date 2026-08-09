@@ -18,6 +18,7 @@ export interface RegistrarAuditoriaInput {
 export interface FiltrosAuditoria {
   usuarioId?: string;
   recurso?: string;
+  recursoId?: string;
   accion?: string;
   desde?: Date;
   hasta?: Date;
@@ -55,6 +56,7 @@ export class AuditoriaService {
 
     if (filtros.usuarioId) qb.andWhere('l.usuarioId = :usuarioId', { usuarioId: filtros.usuarioId });
     if (filtros.recurso) qb.andWhere('l.recurso = :recurso', { recurso: filtros.recurso });
+    if (filtros.recursoId) qb.andWhere('l.recursoId = :recursoId', { recursoId: filtros.recursoId });
     if (filtros.accion) qb.andWhere('l.accion = :accion', { accion: filtros.accion });
     if (filtros.desde) qb.andWhere('l.fecha >= :desde', { desde: filtros.desde });
     if (filtros.hasta) qb.andWhere('l.fecha <= :hasta', { hasta: filtros.hasta });

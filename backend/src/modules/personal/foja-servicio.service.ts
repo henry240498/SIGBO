@@ -13,6 +13,7 @@ import {
   FojaServicio,
   HistorialInstitucional,
   IdiomaBombero,
+  Parametro,
   Rango,
 } from '../../shared/entities';
 import { generarFojaServicioPdf } from '../../shared/utils/foja-servicio-pdf';
@@ -37,6 +38,7 @@ export class FojaServicioService {
     @InjectRepository(HistorialInstitucional) private readonly historialRepo: Repository<HistorialInstitucional>,
     @InjectRepository(Designacion) private readonly designacionRepo: Repository<Designacion>,
     @InjectRepository(FojaServicio) private readonly fojaRepo: Repository<FojaServicio>,
+    @InjectRepository(Parametro) private readonly parametroRepo: Repository<Parametro>,
   ) {}
 
   private async armarSnapshot(bomberoId: string, anio: number): Promise<FojaServicioSnapshot> {
@@ -69,6 +71,20 @@ export class FojaServicioService {
       : [];
     const mapaCargos = new Map(cargosCatalogo.map((c) => [c.id, c]));
 
+    const parametroIds = [
+      bombero.grupoSanguineoId,
+      bombero.paisId,
+      bombero.ciudadId,
+      actividadProfesional?.profesionId,
+      ...idiomas.map((i) => i.idiomaId),
+      ...idiomas.flatMap((i) => (i.nivelIdiomaId ? [i.nivelIdiomaId] : [])),
+    ].filter((id): id is string => !!id);
+    const parametros = parametroIds.length
+      ? await this.parametroRepo.createQueryBuilder('p').where('p.id IN (:...ids)', { ids: [...new Set(parametroIds)] }).getMany()
+      : [];
+    const mapaParametros = new Map(parametros.map((p) => [p.id, p]));
+    const nombreParametro = (id: string | null) => (id ? mapaParametros.get(id)?.nombre ?? null : null);
+
     return {
       anio,
       generadoEn: new Date().toISOString(),
@@ -88,12 +104,12 @@ export class FojaServicioService {
         entidadIngreso: compania?.nombre ?? null,
         condicionIngreso: bombero.condicionInstitucional,
         fechaJuramento: bombero.fechaJuramento,
-        grupoSanguineo: bombero.grupoSanguineo,
+        grupoSanguineo: nombreParametro(bombero.grupoSanguineoId),
       },
       informacionPersonal: {
         direccion: bombero.direccion,
-        localidad: bombero.ciudad,
-        paisResidencia: bombero.pais,
+        localidad: nombreParametro(bombero.ciudadId),
+        paisResidencia: nombreParametro(bombero.paisId),
         email: bombero.email,
         codigoPostal: bombero.codigoPostal,
         telefono: bombero.telefonoPrincipal,
@@ -118,7 +134,7 @@ export class FojaServicioService {
       })),
       actividadProfesional: actividadProfesional
         ? {
-            profesion: actividadProfesional.profesion,
+            profesion: nombreParametro(actividadProfesional.profesionId),
             empresa: actividadProfesional.empresa,
             experiencia: actividadProfesional.experiencia,
           }
@@ -130,7 +146,10 @@ export class FojaServicioService {
         fecha: c.fechaObtencion,
         duracionHoras: c.duracionHoras,
       })),
-      idiomas: idiomas.map((i) => ({ idioma: i.idioma, nivel: i.nivel })),
+      idiomas: idiomas.map((i) => ({
+        idioma: nombreParametro(i.idiomaId) ?? '(parametro eliminado)',
+        nivel: nombreParametro(i.nivelIdiomaId),
+      })),
       otros: {
         reconocimientos: movimientos
           .filter((m) => m.tipoMovimiento === 'RECONOCIMIENTO')

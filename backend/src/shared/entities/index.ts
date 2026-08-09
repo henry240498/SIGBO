@@ -47,3 +47,6 @@ export * from './personal-servicio.entity';
 export * from './materia.entity';
 export * from './curso.entity';
 export * from './inscripcion-curso.entity';
+export * from './tipo-bombero.entity';
+export * from './parametro.entity';
+export * from './seguro-bombero.entity';
