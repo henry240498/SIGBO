@@ -5,63 +5,25 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { apiFetch, obtenerSesion } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
-
-interface Bombero {
-  id: string;
-  cedula: string;
-  nombre: string;
-  apellido: string;
-  rango: string;
-  cargo: string | null;
-  numeroBombero: string;
-  estado: string;
-  tipoBomberoId: string | null;
-  rangoId: string | null;
-  cargoPrincipalId: string | null;
-}
-
-interface TipoBombero {
-  id: string;
-  nombre: string;
-  prefijo: string;
-  orden: number;
-}
-
-interface Catalogo {
-  id: string;
-  nombre: string;
-}
+import { coincideBusqueda } from '@/lib/texto';
+import { ComboBuscable } from '@/components/ComboBuscable';
+import {
+  BomberoResumen,
+  Catalogo,
+  ESTADOS_BOMBERO,
+  TipoBombero,
+  cargarBomberos,
+  cargarCatalogo,
+  cargarTiposBombero,
+  compararBomberosInstitucional,
+  construirTipoPorId,
+} from '@/lib/personal';
 
 type Columna = 'codigo' | 'nombre' | 'tipo' | 'rango' | 'cargo' | 'estado';
 
-const ESTADOS = ['ASPIRANTE', 'ACTIVO', 'SUSPENDIDO', 'LICENCIA', 'RETIRADO', 'FALLECIDO', 'HONORARIO'];
-
-/** Extrae la parte numerica del codigo bomberil como entero real (nunca como
- * texto), quitando primero el prefijo institucional del tipo asociado. */
-function extraerNumeroCodigo(numeroBombero: string, prefijo: string | undefined): number {
-  const resto = prefijo && numeroBombero.startsWith(prefijo) ? numeroBombero.slice(prefijo.length) : numeroBombero;
-  const match = resto.match(/\d+/);
-  return match ? parseInt(match[0], 10) : Number.MAX_SAFE_INTEGER;
-}
-
-/** Orden institucional: prioridad del Tipo de Bombero (parametrizada, campo
- * `orden` de personal.tipos_bombero) y despues numero de codigo ascendente
- * real. Nunca se adivina el tipo a partir del texto del codigo. */
-function compararInstitucional(a: Bombero, b: Bombero, tipoPorId: Map<string, TipoBombero>): number {
-  const tipoA = a.tipoBomberoId ? tipoPorId.get(a.tipoBomberoId) : undefined;
-  const tipoB = b.tipoBomberoId ? tipoPorId.get(b.tipoBomberoId) : undefined;
-  const ordenA = tipoA?.orden ?? Number.MAX_SAFE_INTEGER;
-  const ordenB = tipoB?.orden ?? Number.MAX_SAFE_INTEGER;
-  if (ordenA !== ordenB) return ordenA - ordenB;
-  const numA = extraerNumeroCodigo(a.numeroBombero, tipoA?.prefijo);
-  const numB = extraerNumeroCodigo(b.numeroBombero, tipoB?.prefijo);
-  if (numA !== numB) return numA - numB;
-  return a.numeroBombero.localeCompare(b.numeroBombero);
-}
-
 export default function PersonalPage() {
   const router = useRouter();
-  const [bomberos, setBomberos] = useState<Bombero[] | null>(null);
+  const [bomberos, setBomberos] = useState<BomberoResumen[] | null>(null);
   const [tipos, setTipos] = useState<TipoBombero[]>([]);
   const [rangos, setRangos] = useState<Catalogo[]>([]);
   const [cargos, setCargos] = useState<Catalogo[]>([]);
@@ -83,40 +45,34 @@ export default function PersonalPage() {
 
   async function cargar() {
     try {
-      const res = await apiFetch('/personal/bomberos');
-      if (!res.ok) throw new Error('No se pudo cargar el listado de bomberos');
-      setBomberos(await res.json());
+      setBomberos(await cargarBomberos());
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message ?? 'No se pudo cargar el listado de bomberos');
     }
   }
 
   useEffect(() => {
     cargar();
-    apiFetch('/personal/tipos-bombero')
-      .then(async (res) => (res.ok ? setTipos(await res.json()) : undefined))
-      .catch(() => undefined);
-    apiFetch('/organizacion/rangos?estado=ACTIVO')
-      .then(async (res) => (res.ok ? setRangos(await res.json()) : undefined))
-      .catch(() => undefined);
-    apiFetch('/organizacion/cargos?estado=ACTIVO')
-      .then(async (res) => (res.ok ? setCargos(await res.json()) : undefined))
-      .catch(() => undefined);
+    cargarTiposBombero().then(setTipos);
+    cargarCatalogo('/organizacion/rangos').then(setRangos);
+    cargarCatalogo('/organizacion/cargos').then(setCargos);
   }, []);
 
-  const tipoPorId = useMemo(() => {
-    const mapa = new Map<string, TipoBombero>();
-    tipos.forEach((t) => mapa.set(t.id, t));
-    return mapa;
-  }, [tipos]);
+  const tipoPorId = useMemo(() => construirTipoPorId(tipos), [tipos]);
+
+  const opcionesTipo = useMemo(
+    () => tipos.map((t) => ({ value: t.id, label: `${t.prefijo} — ${t.nombre}` })),
+    [tipos],
+  );
+  const opcionesEstado = useMemo(() => ESTADOS_BOMBERO.map((e) => ({ value: e, label: e })), []);
+  const opcionesRango = useMemo(() => rangos.map((r) => ({ value: r.id, label: r.nombre })), [rangos]);
+  const opcionesCargo = useMemo(() => cargos.map((c) => ({ value: c.id, label: c.nombre })), [cargos]);
 
   const bomberosFiltrados = useMemo(() => {
     if (!bomberos) return null;
-    const codigo = filtroCodigo.trim().toLowerCase();
-    const nombreTexto = filtroNombre.trim().toLowerCase();
     return bomberos.filter((b) => {
-      if (codigo && !b.numeroBombero.toLowerCase().includes(codigo)) return false;
-      if (nombreTexto && !`${b.nombre} ${b.apellido}`.toLowerCase().includes(nombreTexto)) return false;
+      if (filtroCodigo && !coincideBusqueda(b.numeroBombero, filtroCodigo)) return false;
+      if (filtroNombre && !coincideBusqueda(`${b.nombre} ${b.apellido}`, filtroNombre)) return false;
       if (filtroTipoId && b.tipoBomberoId !== filtroTipoId) return false;
       if (filtroEstado && b.estado !== filtroEstado) return false;
       if (filtroRangoId && b.rangoId !== filtroRangoId) return false;
@@ -131,14 +87,14 @@ export default function PersonalPage() {
     const dir = sortDirection === 'desc' ? -1 : 1;
 
     if (!sortColumn) {
-      copia.sort((a, b) => compararInstitucional(a, b, tipoPorId));
+      copia.sort((a, b) => compararBomberosInstitucional(a, b, tipoPorId));
       return copia;
     }
 
     copia.sort((a, b) => {
       switch (sortColumn) {
         case 'codigo':
-          return dir * compararInstitucional(a, b, tipoPorId);
+          return dir * compararBomberosInstitucional(a, b, tipoPorId);
         case 'nombre':
           return dir * `${a.nombre} ${a.apellido}`.localeCompare(`${b.nombre} ${b.apellido}`);
         case 'tipo': {
@@ -261,47 +217,43 @@ export default function PersonalPage() {
         </div>
         <div>
           <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Tipo de Bombero</label>
-          <select className="input-field" style={{ maxWidth: 220 }} value={filtroTipoId} onChange={(e) => setFiltroTipoId(e.target.value)}>
-            <option value="">NINGUNA</option>
-            {tipos.map((t) => (
-              <option key={t.id} value={t.id}>
-                {t.prefijo} — {t.nombre}
-              </option>
-            ))}
-          </select>
+          <ComboBuscable
+            opciones={opcionesTipo}
+            value={filtroTipoId}
+            onChange={setFiltroTipoId}
+            placeholderBusqueda="Buscar tipo..."
+            maxWidth={230}
+          />
         </div>
         <div>
           <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Estado</label>
-          <select className="input-field" style={{ maxWidth: 160 }} value={filtroEstado} onChange={(e) => setFiltroEstado(e.target.value)}>
-            <option value="">NINGUNA</option>
-            {ESTADOS.map((e) => (
-              <option key={e} value={e}>
-                {e}
-              </option>
-            ))}
-          </select>
+          <ComboBuscable
+            opciones={opcionesEstado}
+            value={filtroEstado}
+            onChange={setFiltroEstado}
+            placeholderBusqueda="Buscar estado..."
+            maxWidth={170}
+          />
         </div>
         <div>
           <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Rango</label>
-          <select className="input-field" style={{ maxWidth: 180 }} value={filtroRangoId} onChange={(e) => setFiltroRangoId(e.target.value)}>
-            <option value="">NINGUNA</option>
-            {rangos.map((r) => (
-              <option key={r.id} value={r.id}>
-                {r.nombre}
-              </option>
-            ))}
-          </select>
+          <ComboBuscable
+            opciones={opcionesRango}
+            value={filtroRangoId}
+            onChange={setFiltroRangoId}
+            placeholderBusqueda="Buscar rango..."
+            maxWidth={190}
+          />
         </div>
         <div>
           <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Cargo</label>
-          <select className="input-field" style={{ maxWidth: 180 }} value={filtroCargoId} onChange={(e) => setFiltroCargoId(e.target.value)}>
-            <option value="">NINGUNA</option>
-            {cargos.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.nombre}
-              </option>
-            ))}
-          </select>
+          <ComboBuscable
+            opciones={opcionesCargo}
+            value={filtroCargoId}
+            onChange={setFiltroCargoId}
+            placeholderBusqueda="Buscar cargo..."
+            maxWidth={190}
+          />
         </div>
         <button className="btn-primary" style={{ background: '#475569' }} onClick={limpiarFiltros}>
           Limpiar filtros

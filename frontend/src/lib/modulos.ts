@@ -9,7 +9,7 @@ export interface ModuloConfig {
 export const MODULOS: ModuloConfig[] = [
   { slug: 'organizacion', nombre: 'Organizacion Institucional', icono: '🏛️', permisoPrefijo: 'organizacion:', disponible: true },
   { slug: 'personal', nombre: 'Personal', icono: '👥', permisoPrefijo: 'personal:', disponible: true },
-  { slug: 'asistencia', nombre: 'Asistencia', icono: '🕒', permisoPrefijo: 'asistencia:', disponible: false },
+  { slug: 'asistencia', nombre: 'Asistencia', icono: '🕒', permisoPrefijo: 'asistencia:', disponible: true },
   { slug: 'guardias', nombre: 'Guardias', icono: '🛡️', permisoPrefijo: 'guardias:', disponible: false },
   { slug: 'servicios', nombre: 'Servicios', icono: '🚨', permisoPrefijo: 'servicios:', disponible: false },
   { slug: 'vehiculos', nombre: 'Vehiculos', icono: '🚒', permisoPrefijo: 'vehiculos:', disponible: true },

@@ -240,7 +240,7 @@ El más común (12 pantallas de Organización lo usan). Estructura, en orden:
    vía `window.confirm(...)` antes de llamar a la API — nunca se borra sin
    confirmación.
 
-### 5.2 Molde B — Listado simple de solo lectura (ej. `dashboard/personal/page.tsx`)
+### 5.2 Molde B — Listado simple de solo lectura
 Para pantallas que todavía no tienen CRUD propio: una sola `<section className="card">`,
 `<h2>` + tabla sin filtros ni formulario. Estado vacío explícito y honesto (no un
 spinner infinito ni una tabla vacía sin explicación):
@@ -292,6 +292,69 @@ Para pantallas de configuración global o de autogestión:
   renderiza una maqueta simplificada del resultado (ver `apariencia/page.tsx`,
   sección "Vista previa - Login"), actualizada en tiempo real con los mismos
   `useState` del formulario (no espera a guardar).
+
+### 5.5 Molde E — Grilla de gestión con filtros combinables (ej. `dashboard/personal/page.tsx`)
+Para catálogos operativos grandes (Personal es el caso canónico: 164+ registros)
+que necesitan búsqueda, múltiples filtros combinables y ordenamiento, manteniendo
+la tabla plana (sin paginación — todo el filtrado/orden es client-side sobre el
+listado completo, cargado una sola vez).
+- **Barra de filtros visible** en una `<div className="card">` arriba de la
+  tabla, sin menú desplegable adicional: cada filtro es un `<div>` con su
+  `<label style={{fontSize:11, color:'#94a3b8'}}>` encima. Filtros de texto libre
+  usan `.input-field`; filtros de catálogo/enum usan `ComboBuscable` (ver abajo),
+  nunca un `<select>` plano una vez que la lista puede crecer.
+  Botón final "Limpiar filtros" (`.btn-primary` gris) que vuelve todos los
+  filtros a vacío/`''` (=`NINGUNA`) **y** el orden manual a `null` (vuelve al
+  orden institucional por defecto).
+- **Filtrado**: un solo `useMemo` que aplica todos los filtros con AND (early
+  `return false` por cada condición que no matchee), sobre el listado completo
+  ya cargado — no se re-consulta el backend por cada filtro.
+- **Orden**: un segundo `useMemo` (encadenado sobre el resultado filtrado) que
+  aplica el orden de columna manual si el usuario clickeó un encabezado
+  (`<th onClick=...>Nombre{flecha}</th>`, alternando asc/desc), o si no, el
+  **orden institucional por defecto** (nunca alfabético) — ver `lib/personal.ts`.
+- El header muestra el conteo dinámico: `<h2>Titulo ({resultado.length})</h2>`,
+  siempre sobre el array ya filtrado+ordenado, nunca sobre el array crudo.
+
+### 5.6 Personal como catálogo centralizado — regla obligatoria para todo SIGBO
+`frontend/src/lib/personal.ts` es el **único** lugar donde vive la lógica de
+orden institucional y búsqueda de bomberos. Cualquier pantalla de cualquier
+módulo que liste, filtre, busque o permita **seleccionar** personal (asignar
+responsables, participantes de un servicio/guardia, capacitaciones, préstamos
+de equipamiento, informes, etc.) **debe** importar de ahí — nunca reimplementar
+el criterio:
+- `cargarBomberos()` / `cargarTiposBombero()` — fetch canónico.
+- `construirTipoPorId()` + `compararBomberosInstitucional()` — orden
+  institucional (prioridad de tipo vía `personal.tipos_bombero.orden`, luego
+  número de código bomberil como entero real vía `extraerNumeroCodigo()`,
+  **nunca** como texto ni adivinado por prefijo de string — siempre a través
+  del `tipoBomberoId` real del registro).
+- `ESTADOS_BOMBERO` — los 7 estados válidos (constante de código, no
+  parametrizable: es una máquina de estados fija impuesta por el backend).
+- `cargarCatalogo(path)` — fetch genérico para catálogos de Organización
+  (rangos, cargos, etc.) usados en combos relacionados con Personal.
+
+Si en el futuro cambia el criterio de orden o búsqueda de Personal, se cambia
+**una sola vez** en `lib/personal.ts` y todos los módulos que lo consuman se
+actualizan automáticamente.
+
+### 5.7 `ComboBuscable` (`components/ComboBuscable.tsx`) — combo con autocompletado
+Reemplaza a `<select>` en cualquier combo que pueda crecer (personal, rangos,
+cargos, tipos, parametros). Abrir → escribir → encontrar → seleccionar, con
+`NINGUNA` siempre como primera opción (`value: ''`) cuando el filtro es
+opcional. Búsqueda insensible a mayúsculas/tildes vía `coincideBusqueda` de
+`lib/texto.ts`. Uso:
+```tsx
+<ComboBuscable
+  opciones={tipos.map((t) => ({ value: t.id, label: `${t.prefijo} — ${t.nombre}` }))}
+  value={filtroTipoId}
+  onChange={setFiltroTipoId}
+  placeholderBusqueda="Buscar tipo..."
+  maxWidth={230}
+/>
+```
+No reimplementar un combo de búsqueda distinto en otra pantalla — extender este
+componente si le falta algo.
 
 ---
 

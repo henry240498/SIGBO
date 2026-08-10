@@ -23,7 +23,8 @@ export type TipoParametro =
   | 'GRUPO_SANGUINEO'
   | 'FACTOR_RH'
   | 'TIPO_SEGURO'
-  | 'ASEGURADORA';
+  | 'ASEGURADORA'
+  | 'TIPO_EVENTO_ASISTENCIA';
 
 /** Carga parametros activos de un tipo, opcionalmente filtrados por padre
  * (jerarquia geografica). Usado por todos los combos parametricos de Personal. */

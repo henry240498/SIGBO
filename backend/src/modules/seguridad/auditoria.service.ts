@@ -18,6 +18,9 @@ export interface RegistrarAuditoriaInput {
 export interface FiltrosAuditoria {
   usuarioId?: string;
   recurso?: string;
+  /** Filtra por prefijo de recurso (ej. 'operaciones.' trae todos los
+   * recursos de ese modulo sin tener que enumerarlos uno por uno). */
+  recursoPrefijo?: string;
   recursoId?: string;
   accion?: string;
   desde?: Date;
@@ -56,6 +59,7 @@ export class AuditoriaService {
 
     if (filtros.usuarioId) qb.andWhere('l.usuarioId = :usuarioId', { usuarioId: filtros.usuarioId });
     if (filtros.recurso) qb.andWhere('l.recurso = :recurso', { recurso: filtros.recurso });
+    if (filtros.recursoPrefijo) qb.andWhere('l.recurso LIKE :recursoPrefijo', { recursoPrefijo: `${filtros.recursoPrefijo}%` });
     if (filtros.recursoId) qb.andWhere('l.recursoId = :recursoId', { recursoId: filtros.recursoId });
     if (filtros.accion) qb.andWhere('l.accion = :accion', { accion: filtros.accion });
     if (filtros.desde) qb.andWhere('l.fecha >= :desde', { desde: filtros.desde });
