@@ -8,52 +8,54 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { AuthenticatedUser } from '../auth/types/authenticated-user';
 import { GuardiasService } from './guardias.service';
 import { CreateGuardiaDto } from './dto/create-guardia.dto';
-import { AsignarBomberoGuardiaDto } from './dto/asignar-bombero-guardia.dto';
+import { AsignarPersonalDto } from './dto/asignar-personal.dto';
+import { RegistrarHorarioDto } from './dto/registrar-horario.dto';
+import { ActualizarPresenciaDto } from './dto/actualizar-presencia.dto';
 
-@ApiTags('operaciones/guardias')
+@ApiTags('guardias')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard, PermissionsGuard)
-@Controller('operaciones/guardias')
+@Controller('guardias')
 export class GuardiasController {
   constructor(private readonly service: GuardiasService) {}
 
   @Get()
-  @RequirePermission('asistencia:guardias_ver')
+  @RequirePermission('guardias:ver')
   findAll(@Query('desde') desde?: string, @Query('hasta') hasta?: string) {
     return this.service.findAll(desde, hasta);
   }
 
   @Get(':id')
-  @RequirePermission('asistencia:guardias_ver')
+  @RequirePermission('guardias:ver')
   findOne(@Param('id') id: string) {
     return this.service.findOne(id);
   }
 
   @Post()
-  @RequirePermission('asistencia:guardias_crear')
+  @RequirePermission('guardias:crear')
   create(@Body() dto: CreateGuardiaDto, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
     return this.service.create(dto, user.id, req.ip);
   }
 
   @Get(':id/asignaciones')
-  @RequirePermission('asistencia:guardias_ver')
+  @RequirePermission('guardias:ver')
   listarAsignaciones(@Param('id') id: string) {
     return this.service.listarAsignaciones(id);
   }
 
   @Post(':id/asignaciones')
-  @RequirePermission('asistencia:guardias_editar')
-  asignarBombero(
+  @RequirePermission('guardias:asignar')
+  asignarPersonal(
     @Param('id') id: string,
-    @Body() dto: AsignarBomberoGuardiaDto,
+    @Body() dto: AsignarPersonalDto,
     @CurrentUser() user: AuthenticatedUser,
     @Req() req: Request,
   ) {
-    return this.service.asignarBombero(id, dto, user.id, req.ip);
+    return this.service.asignarPersonal(id, dto, user.id, req.ip);
   }
 
   @Delete(':id/asignaciones/:asignacionId')
-  @RequirePermission('asistencia:guardias_editar')
+  @RequirePermission('guardias:editar')
   quitarAsignacion(
     @Param('id') id: string,
     @Param('asignacionId') asignacionId: string,
@@ -61,5 +63,35 @@ export class GuardiasController {
     @Req() req: Request,
   ) {
     return this.service.quitarAsignacion(id, asignacionId, user.id, req.ip);
+  }
+
+  @Post(':id/asignaciones/:asignacionId/horario')
+  @RequirePermission('guardias:editar')
+  registrarHorario(
+    @Param('id') id: string,
+    @Param('asignacionId') asignacionId: string,
+    @Body() dto: RegistrarHorarioDto,
+    @CurrentUser() user: AuthenticatedUser,
+    @Req() req: Request,
+  ) {
+    return this.service.registrarHorario(id, asignacionId, dto, user.id, req.ip);
+  }
+
+  @Post(':id/asignaciones/:asignacionId/presencia')
+  @RequirePermission('guardias:editar')
+  actualizarPresencia(
+    @Param('id') id: string,
+    @Param('asignacionId') asignacionId: string,
+    @Body() dto: ActualizarPresenciaDto,
+    @CurrentUser() user: AuthenticatedUser,
+    @Req() req: Request,
+  ) {
+    return this.service.actualizarPresencia(id, asignacionId, dto, user.id, req.ip);
+  }
+
+  @Get(':id/cumplimiento/:bomberoId')
+  @RequirePermission('guardias:ver')
+  calcularCumplimiento(@Param('id') id: string, @Param('bomberoId') bomberoId: string) {
+    return this.service.calcularCumplimiento(id, bomberoId);
   }
 }

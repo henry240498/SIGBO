@@ -71,28 +71,6 @@ export interface Solapamiento {
   estadoSugerido: string;
 }
 
-export interface Guardia {
-  id: string;
-  fecha: string;
-  turno: string;
-  horaInicio: string;
-  horaFin: string;
-  tipo: string;
-  estado: string;
-  jefeGuardiaId: string | null;
-  observaciones: string | null;
-}
-
-export interface AsignacionGuardia {
-  id: string;
-  guardiaId: string;
-  bomberoId: string;
-  rol: string | null;
-  estado: string;
-  nombreCompleto: string;
-  codigoBombero: string | null;
-}
-
 export interface ToleranciaAsistencia {
   id: string;
   tipoEventoId: string | null;
@@ -148,11 +126,10 @@ export interface ImportacionMarcadorFila {
 
 const ESTADOS_EVENTO = ['PROGRAMADO', 'EN_CURSO', 'FINALIZADO', 'CANCELADO'];
 const ESTADOS_PARTICIPACION = ['COMPLETA', 'PARCIAL', 'NO_REGISTRADA', 'AUSENTE_CONFIRMADO'];
-const TURNOS_GUARDIA = ['DIURNO', 'NOCTURNO', 'COMPLETO'];
 const ESTADOS_FILA_IMPORTACION: EstadoFilaImportacion[] = ['RECONOCIDO', 'NO_IDENTIFICADO', 'DUPLICADO', 'YA_IMPORTADO', 'INCONSISTENTE'];
 const FUENTES_ASISTENCIA = ['MARCADOR_DIGITAL', 'MANUAL', 'IMPORTACION_EXCEL', 'EVENTO', 'GUARDIA', 'OTRO'];
 
-export { ESTADOS_EVENTO, ESTADOS_PARTICIPACION, TURNOS_GUARDIA, ESTADOS_FILA_IMPORTACION, FUENTES_ASISTENCIA };
+export { ESTADOS_EVENTO, ESTADOS_PARTICIPACION, ESTADOS_FILA_IMPORTACION, FUENTES_ASISTENCIA };
 
 /* ------------------------------------------------------------------ */
 /* Tipos de evento (parametrizados)                                     */
@@ -304,46 +281,6 @@ export async function calcularSolapamiento(eventoId: string, bomberoId: string) 
   const res = await apiFetch(`/operaciones/marcaciones/solapamiento/${eventoId}/${bomberoId}`);
   if (!res.ok) throw new Error('No se pudo calcular el solapamiento');
   return res.json() as Promise<Solapamiento>;
-}
-
-/* ------------------------------------------------------------------ */
-/* Guardias                                                             */
-/* ------------------------------------------------------------------ */
-
-export async function cargarGuardias(desde?: string, hasta?: string) {
-  const params = new URLSearchParams();
-  if (desde) params.set('desde', desde);
-  if (hasta) params.set('hasta', hasta);
-  const res = await apiFetch(`/operaciones/guardias?${params.toString()}`);
-  if (!res.ok) throw new Error('No se pudo cargar el listado de guardias');
-  return res.json() as Promise<Guardia[]>;
-}
-
-export async function crearGuardia(payload: Record<string, unknown>) {
-  const res = await apiFetch('/operaciones/guardias', { method: 'POST', body: JSON.stringify(payload) });
-  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo crear la guardia'));
-  return res.json() as Promise<Guardia>;
-}
-
-export async function listarAsignacionesGuardia(guardiaId: string) {
-  const res = await apiFetch(`/operaciones/guardias/${guardiaId}/asignaciones`);
-  if (!res.ok) throw new Error('No se pudo cargar las asignaciones');
-  return res.json() as Promise<AsignacionGuardia[]>;
-}
-
-export async function asignarBomberoGuardia(guardiaId: string, bomberoId: string, rol?: string) {
-  const res = await apiFetch(`/operaciones/guardias/${guardiaId}/asignaciones`, {
-    method: 'POST',
-    body: JSON.stringify({ bomberoId, rol: rol || undefined }),
-  });
-  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo asignar el bombero'));
-  return res.json();
-}
-
-export async function quitarAsignacionGuardia(guardiaId: string, asignacionId: string) {
-  const res = await apiFetch(`/operaciones/guardias/${guardiaId}/asignaciones/${asignacionId}`, { method: 'DELETE' });
-  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo quitar la asignacion'));
-  return res.json();
 }
 
 /* ------------------------------------------------------------------ */

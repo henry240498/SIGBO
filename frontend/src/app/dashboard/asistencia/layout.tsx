@@ -7,7 +7,6 @@ const TABS = [
   { href: '/dashboard/asistencia', label: 'Dashboard', exact: true },
   { href: '/dashboard/asistencia/registro', label: 'Registro' },
   { href: '/dashboard/asistencia/eventos', label: 'Eventos' },
-  { href: '/dashboard/asistencia/guardias', label: 'Guardias' },
   { href: '/dashboard/asistencia/externos', label: 'Personas Externas' },
   { href: '/dashboard/asistencia/tolerancias', label: 'Tolerancias' },
   { href: '/dashboard/asistencia/auditoria', label: 'Auditoria' },

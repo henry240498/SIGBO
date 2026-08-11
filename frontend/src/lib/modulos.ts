@@ -12,7 +12,7 @@ export const MODULOS: ModuloConfig[] = [
   { slug: 'organizacion', nombre: 'Organización Institucional', icono: 'building', permisoPrefijo: 'organizacion:', disponible: true },
   { slug: 'personal', nombre: 'Personal', icono: 'people', permisoPrefijo: 'personal:', disponible: true },
   { slug: 'asistencia', nombre: 'Asistencia', icono: 'clock', permisoPrefijo: 'asistencia:', disponible: true },
-  { slug: 'guardias', nombre: 'Guardias', icono: 'shield', permisoPrefijo: 'guardias:', disponible: false },
+  { slug: 'guardias', nombre: 'Guardias', icono: 'shield', permisoPrefijo: 'guardias:', disponible: true },
   { slug: 'servicios', nombre: 'Servicios', icono: 'alert', permisoPrefijo: 'servicios:', disponible: true },
   { slug: 'vehiculos', nombre: 'Vehículos', icono: 'truck', permisoPrefijo: 'vehiculos:', disponible: true },
   { slug: 'equipos', nombre: 'Equipos', icono: 'tools', permisoPrefijo: 'equipos:', disponible: true },

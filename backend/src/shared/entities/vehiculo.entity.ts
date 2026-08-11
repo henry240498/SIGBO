@@ -102,4 +102,10 @@ export class Vehiculo {
 
   @UpdateDateColumn({ name: 'actualizado_en', type: 'datetimeoffset', precision: 3 })
   actualizadoEn: Date;
+
+  @Column({ type: 'date', nullable: true })
+  fechaBaja: string | null;
+
+  @Column({ type: 'nvarchar', nullable: true })
+  motivoBaja: string | null;
 }

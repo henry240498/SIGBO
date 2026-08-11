@@ -63,4 +63,14 @@ export class Equipo {
 
   @UpdateDateColumn({ name: 'actualizado_en', type: 'datetimeoffset', precision: 3 })
   actualizadoEn: Date;
+
+  /** Movil al que esta actualmente asignado (seccion 16-19 del pedido de
+   * Guardias: Equipo -> Asignacion -> Movil). NULL = no asignado a ningun movil. */
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  vehiculoAsignadoId: string | null;
+
+  /** Ubicacion parametrizada (organizacion.parametros, tipo UBICACION_EQUIPO
+   * -- seccion 18). Distinta de `ubicacion`, que queda como nota libre. */
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  ubicacionTipo: string | null;
 }

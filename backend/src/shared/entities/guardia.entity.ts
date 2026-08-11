@@ -40,4 +40,28 @@ export class Guardia {
 
   @UpdateDateColumn({ name: 'actualizado_en', type: 'datetimeoffset', precision: 3 })
   actualizadoEn: Date;
+
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  institucionId: string | null;
+
+  /** Grupo de guardia del que se recupero la composicion titular al crear
+   * esta guardia (seccion 3 del pedido). Nullable: una guardia tambien
+   * puede armarse sin partir de un grupo predefinido. */
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  grupoGuardiaId: string | null;
+
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  cierreResponsableId: string | null;
+
+  @Column({ type: 'nvarchar', nullable: true })
+  cierreObservacion: string | null;
+
+  /** Snapshot JSON del resumen de cierre (seccion 22) -- inmutable una vez
+   * cerrada, para que el informe no cambie retroactivamente si datos
+   * relacionados se modifican despues. */
+  @Column({ type: 'nvarchar', nullable: true })
+  cierreResumen: string | null;
+
+  @Column({ type: 'datetimeoffset', precision: 3, nullable: true })
+  cerradaEn: Date | null;
 }

@@ -21,5 +21,13 @@ export class CreateGuardiaDto {
   @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
   jefeGuardiaId?: string;
 
+  @ApiProperty({
+    required: false,
+    description: 'operaciones.grupos_guardia.id -- si se indica, se recupera automaticamente su personal titular',
+  })
+  @IsOptional()
+  @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
+  grupoGuardiaId?: string;
+
   @ApiProperty({ required: false }) @IsOptional() @IsString() observaciones?: string;
 }

@@ -1,9 +1,11 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CategoriaEquipo, Equipo } from '../../shared/entities';
+import { CategoriaEquipo, Equipo, MantenimientoEquipo, Parametro, PrestamoEquipo, Vehiculo } from '../../shared/entities';
 import { CreateEquipoDto } from './dto/create-equipo.dto';
 import { UpdateEquipoDto } from './dto/update-equipo.dto';
+import { CreateMantenimientoEquipoDto } from './dto/create-mantenimiento-equipo.dto';
+import { AsignarMovilDto } from './dto/asignar-movil.dto';
 
 @Injectable()
 export class EquiposService {
@@ -11,6 +13,10 @@ export class EquiposService {
     @InjectRepository(Equipo) private readonly equipoRepo: Repository<Equipo>,
     @InjectRepository(CategoriaEquipo)
     private readonly categoriaRepo: Repository<CategoriaEquipo>,
+    @InjectRepository(MantenimientoEquipo) private readonly mantenimientoRepo: Repository<MantenimientoEquipo>,
+    @InjectRepository(PrestamoEquipo) private readonly prestamoRepo: Repository<PrestamoEquipo>,
+    @InjectRepository(Vehiculo) private readonly vehiculoRepo: Repository<Vehiculo>,
+    @InjectRepository(Parametro) private readonly parametroRepo: Repository<Parametro>,
   ) {}
 
   findAll(q?: string, categoriaId?: string, estado?: string) {
@@ -114,5 +120,81 @@ export class EquiposService {
     const equipo = await this.findOne(id);
     await this.equipoRepo.remove(equipo);
     return { eliminado: true };
+  }
+
+  async listarMantenimientos(equipoId: string) {
+    await this.findOne(equipoId);
+    return this.mantenimientoRepo.find({ where: { equipoId }, order: { fecha: 'DESC' } });
+  }
+
+  async crearMantenimiento(equipoId: string, dto: CreateMantenimientoEquipoDto, actorId: string) {
+    await this.findOne(equipoId);
+    return this.mantenimientoRepo.save(
+      this.mantenimientoRepo.create({
+        equipoId,
+        fecha: dto.fecha,
+        tipo: dto.tipo,
+        descripcion: dto.descripcion,
+        costo: dto.costo ?? null,
+        proveedor: dto.proveedor ?? null,
+        tecnico: dto.tecnico ?? null,
+        proximoMantenimiento: dto.proximoMantenimiento ?? null,
+        archivoUrl: dto.archivoUrl ?? null,
+        creadoPor: actorId,
+      }),
+    );
+  }
+
+  async asignarMovil(equipoId: string, dto: AsignarMovilDto) {
+    await this.findOne(equipoId);
+
+    if (dto.vehiculoId) {
+      const vehiculo = await this.vehiculoRepo.findOne({ where: { id: dto.vehiculoId } });
+      if (!vehiculo) throw new NotFoundException(`Vehiculo ${dto.vehiculoId} no encontrado`);
+
+      const ubicacionEnMovil = await this.obtenerUbicacionParametro('En movil');
+      await this.equipoRepo.update(equipoId, {
+        vehiculoAsignadoId: dto.vehiculoId,
+        ubicacionTipo: ubicacionEnMovil,
+      });
+    } else {
+      await this.equipoRepo.update(equipoId, { vehiculoAsignadoId: null, ubicacionTipo: null });
+    }
+
+    return this.findOne(equipoId);
+  }
+
+  private async obtenerUbicacionParametro(nombre: string): Promise<string | null> {
+    const parametro = await this.parametroRepo.findOne({ where: { tipo: 'UBICACION_EQUIPO', nombre } });
+    return parametro?.id ?? null;
+  }
+
+  /** Agrega prestamos + mantenimientos, ordenado por fecha (contraparte del
+   * historial de Moviles, seccion 15-19 del pedido de Guardias). */
+  async historial(equipoId: string) {
+    await this.findOne(equipoId);
+
+    const [prestamos, mantenimientos] = await Promise.all([
+      this.prestamoRepo.find({ where: { equipoId } }),
+      this.mantenimientoRepo.find({ where: { equipoId } }),
+    ]);
+
+    const eventos = [
+      ...prestamos.map((p) => ({
+        tipo: 'PRESTAMO' as const,
+        fecha: new Date(p.fechaPrestamo).toISOString(),
+        detalle: `Prestamo (${p.estado})${p.fechaDevolucion ? `, devuelto ${new Date(p.fechaDevolucion).toLocaleDateString()}` : ''}`,
+        registro: p,
+      })),
+      ...mantenimientos.map((m) => ({
+        tipo: 'MANTENIMIENTO' as const,
+        fecha: new Date(m.fecha).toISOString(),
+        detalle: `${m.tipo}: ${m.descripcion}`,
+        registro: m,
+      })),
+    ];
+
+    eventos.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+    return eventos;
   }
 }

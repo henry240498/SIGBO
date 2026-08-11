@@ -11,7 +11,11 @@ export type TipoParametro =
   | 'GRUPO_SANGUINEO'
   | 'FACTOR_RH'
   | 'TIPO_SEGURO'
-  | 'ASEGURADORA';
+  | 'ASEGURADORA'
+  | 'TIPO_EVENTO_ASISTENCIA'
+  | 'UBICACION_EQUIPO'
+  | 'ESTADO_PRESENCIA_GUARDIA'
+  | 'SECTOR_ESTACION';
 
 /** Catalogo generico de valores parametrizables administrados desde
  * Organizacion Institucional -> Parametros. `padreId` solo se usa en la

@@ -3,9 +3,13 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { PermissionsGuard } from '../seguridad/guards/permissions.guard';
 import { RequirePermission } from '../seguridad/decorators/require-permission.decorator';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { AuthenticatedUser } from '../auth/types/authenticated-user';
 import { EquiposService } from './equipos.service';
 import { CreateEquipoDto } from './dto/create-equipo.dto';
 import { UpdateEquipoDto } from './dto/update-equipo.dto';
+import { CreateMantenimientoEquipoDto } from './dto/create-mantenimiento-equipo.dto';
+import { AsignarMovilDto } from './dto/asignar-movil.dto';
 
 @ApiTags('equipos/equipos')
 @ApiBearerAuth()
@@ -43,8 +47,36 @@ export class EquiposController {
   }
 
   @Delete(':id')
-  @RequirePermission('equipos:editar')
+  @RequirePermission('equipos:eliminar')
   remove(@Param('id') id: string) {
     return this.equiposService.remove(id);
+  }
+
+  @Get(':id/historial')
+  @RequirePermission('equipos:ver')
+  historial(@Param('id') id: string) {
+    return this.equiposService.historial(id);
+  }
+
+  @Get(':id/mantenimientos')
+  @RequirePermission('equipos:mantenimiento')
+  listarMantenimientos(@Param('id') id: string) {
+    return this.equiposService.listarMantenimientos(id);
+  }
+
+  @Post(':id/mantenimientos')
+  @RequirePermission('equipos:mantenimiento')
+  crearMantenimiento(
+    @Param('id') id: string,
+    @Body() dto: CreateMantenimientoEquipoDto,
+    @CurrentUser() user: AuthenticatedUser,
+  ) {
+    return this.equiposService.crearMantenimiento(id, dto, user.id);
+  }
+
+  @Patch(':id/asignar-movil')
+  @RequirePermission('equipos:editar')
+  asignarMovil(@Param('id') id: string, @Body() dto: AsignarMovilDto) {
+    return this.equiposService.asignarMovil(id, dto);
   }
 }

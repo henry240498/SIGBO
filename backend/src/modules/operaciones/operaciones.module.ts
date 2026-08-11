@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   AsignacionGuardia,
   Bombero,
-  CambioGuardia,
   EventoAsistencia,
   Guardia,
   ImportacionMarcador,
@@ -19,8 +18,6 @@ import { EventosAsistenciaService } from './eventos-asistencia.service';
 import { EventosAsistenciaController } from './eventos-asistencia.controller';
 import { MarcacionesService } from './marcaciones.service';
 import { MarcacionesController } from './marcaciones.controller';
-import { GuardiasService } from './guardias.service';
-import { GuardiasController } from './guardias.controller';
 import { ParticipantesExternosService } from './participantes-externos.service';
 import { ParticipantesExternosController } from './participantes-externos.controller';
 import { ToleranciasService } from './tolerancias.service';
@@ -37,7 +34,6 @@ import { ImportacionesController } from './importaciones.controller';
       MarcacionAsistencia,
       ParticipanteEvento,
       ParticipanteExterno,
-      CambioGuardia,
       ToleranciaAsistencia,
       ImportacionMarcador,
       ImportacionMarcadorFila,
@@ -51,7 +47,6 @@ import { ImportacionesController } from './importaciones.controller';
   controllers: [
     EventosAsistenciaController,
     MarcacionesController,
-    GuardiasController,
     ParticipantesExternosController,
     ToleranciasController,
     DashboardAsistenciaController,
@@ -60,7 +55,6 @@ import { ImportacionesController } from './importaciones.controller';
   providers: [
     EventosAsistenciaService,
     MarcacionesService,
-    GuardiasService,
     ParticipantesExternosService,
     ToleranciasService,
     DashboardAsistenciaService,

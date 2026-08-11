@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { apiFetch } from '@/lib/api';
+import { cargarVehiculos } from '@/lib/vehiculos';
 
 type TipoComunicacion = 'OTRAS_OCURRENCIAS' | 'INCENDIO';
 type Valores = Record<string, any>;
@@ -22,6 +23,8 @@ interface ComunicacionApi {
 }
 
 const STORAGE_KEY = 'sigbo-servicio-borrador-v3';
+/** Lista de respaldo usada mientras se carga (o si falla) la consulta real
+ * a Moviles/Vehiculos -- ver el efecto que llama cargarVehiculos() mas abajo. */
 const MOVILES_BASE = ['Rega II', 'Rega V', 'Rega VI', 'Rega VII', 'Rega VIII', 'Cobra IX'];
 const ROLES_NOMINA = ['SCI', ...Array.from({ length: 20 }, (_, index) => `B${index + 1}`), 'RO1', 'RO2'];
 const TIPOS_CONTEO = [
@@ -59,7 +62,7 @@ function filasConteo(valor?: unknown) {
   });
 }
 
-function filasMoviles(valor?: unknown) {
+function filasMoviles(valor?: unknown, moviles: string[] = MOVILES_BASE) {
   const existentes = arreglo<Valores>(valor);
   const usados = new Set<string>();
   const normalizar = (fila: Valores, indice: number) => {
@@ -78,7 +81,7 @@ function filasMoviles(valor?: unknown) {
     };
   };
   const iniciales = existentes.map(normalizar);
-  return [...iniciales, ...MOVILES_BASE.filter((movil) => !usados.has(movil)).map((movil, index) => ({
+  return [...iniciales, ...moviles.filter((movil) => !usados.has(movil)).map((movil, index) => ({
     id: `base-${index}-${movil}`,
     movilId: movil,
     seleccionado: false,
@@ -441,6 +444,19 @@ export default function NuevoServicioPage() {
         id: texto(fila.id),
         etiqueta: [texto(fila.codigo), texto(fila.nombre)].filter(Boolean).join(' · '),
       })).filter((fila) => fila.etiqueta));
+    }).catch(() => undefined);
+    return () => { cancelado = true; };
+  }, []);
+
+  /** Reemplaza la lista de respaldo MOVILES_BASE por la flota real en cuanto
+   * carga, sin perder lo que el usuario ya haya completado en el borrador
+   * (filasMoviles conserva las filas existentes por movilId). */
+  useEffect(() => {
+    let cancelado = false;
+    cargarVehiculos().then((lista) => {
+      const nombres = lista.filter((v) => v.estado !== 'BAJA').map((v) => v.numeroInterno);
+      if (cancelado || nombres.length === 0) return;
+      setDatos((anterior) => ({ ...anterior, movilesDespachados: filasMoviles(anterior.movilesDespachados, nombres) }));
     }).catch(() => undefined);
     return () => { cancelado = true; };
   }, []);

@@ -11,6 +11,7 @@ import { EquiposModule } from './modules/equipos/equipos.module';
 import { ServiciosModule } from './modules/servicios/servicios.module';
 import { PublicacionesModule } from './modules/publicaciones/publicaciones.module';
 import { OperacionesModule } from './modules/operaciones/operaciones.module';
+import { GuardiasModule } from './modules/guardias/guardias.module';
 import { ConfiguracionModule } from './modules/configuracion/configuracion.module';
 
 @Module({
@@ -26,6 +27,7 @@ import { ConfiguracionModule } from './modules/configuracion/configuracion.modul
     ServiciosModule,
     PublicacionesModule,
     OperacionesModule,
+    GuardiasModule,
     ConfiguracionModule,
   ],
 })

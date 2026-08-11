@@ -24,7 +24,10 @@ export type TipoParametro =
   | 'FACTOR_RH'
   | 'TIPO_SEGURO'
   | 'ASEGURADORA'
-  | 'TIPO_EVENTO_ASISTENCIA';
+  | 'TIPO_EVENTO_ASISTENCIA'
+  | 'UBICACION_EQUIPO'
+  | 'ESTADO_PRESENCIA_GUARDIA'
+  | 'SECTOR_ESTACION';
 
 /** Carga parametros activos de un tipo, opcionalmente filtrados por padre
  * (jerarquia geografica). Usado por todos los combos parametricos de Personal. */

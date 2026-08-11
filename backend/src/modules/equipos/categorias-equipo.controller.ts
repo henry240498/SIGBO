@@ -39,7 +39,7 @@ export class CategoriasEquipoController {
   }
 
   @Delete(':id')
-  @RequirePermission('equipos:editar')
+  @RequirePermission('equipos:eliminar')
   remove(@Param('id') id: string) {
     return this.categoriasService.remove(id);
   }
