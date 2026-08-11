@@ -8,6 +8,8 @@ import { PersonalModule } from './modules/personal/personal.module';
 import { OrganizacionModule } from './modules/organizacion/organizacion.module';
 import { VehiculosModule } from './modules/vehiculos/vehiculos.module';
 import { EquiposModule } from './modules/equipos/equipos.module';
+import { ServiciosModule } from './modules/servicios/servicios.module';
+import { PublicacionesModule } from './modules/publicaciones/publicaciones.module';
 import { OperacionesModule } from './modules/operaciones/operaciones.module';
 
 @Module({
@@ -20,6 +22,8 @@ import { OperacionesModule } from './modules/operaciones/operaciones.module';
     OrganizacionModule,
     VehiculosModule,
     EquiposModule,
+    ServiciosModule,
+    PublicacionesModule,
     OperacionesModule,
   ],
 })

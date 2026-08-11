@@ -9,7 +9,7 @@ const TABS = [
   { href: '/dashboard/seguridad/roles', label: 'Roles' },
   { href: '/dashboard/seguridad/permisos', label: 'Permisos' },
   { href: '/dashboard/seguridad/sesiones', label: 'Sesiones' },
-  { href: '/dashboard/seguridad/auditoria', label: 'Auditoria' },
+  { href: '/dashboard/seguridad/auditoria', label: 'Auditoría' },
   { href: '/dashboard/seguridad/apariencia', label: 'Apariencia' },
 ];
 
@@ -18,30 +18,11 @@ export default function SeguridadLayout({ children }: { children: React.ReactNod
 
   return (
     <div>
-      <nav
-        style={{
-          display: 'flex',
-          gap: 4,
-          borderBottom: '1px solid #334155',
-          marginBottom: 20,
-          paddingBottom: 0,
-        }}
-      >
+      <nav className="subnav" aria-label="Secciones de seguridad">
         {TABS.map((tab) => {
           const activo = tab.exact ? pathname === tab.href : pathname.startsWith(tab.href);
           return (
-            <Link
-              key={tab.href}
-              href={tab.href}
-              style={{
-                padding: '8px 14px',
-                fontSize: 13,
-                textDecoration: 'none',
-                color: activo ? '#e2e8f0' : '#94a3b8',
-                fontWeight: activo ? 600 : 400,
-                borderBottom: activo ? '2px solid #2563eb' : '2px solid transparent',
-              }}
-            >
+            <Link key={tab.href} href={tab.href} className={`subnav-link${activo ? ' active' : ''}`} aria-current={activo ? 'page' : undefined}>
               {tab.label}
             </Link>
           );

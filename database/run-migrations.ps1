@@ -14,7 +14,11 @@ Write-Host "=== SIGBO-CBVC: ejecutando migraciones ===" -ForegroundColor Cyan
 Write-Host "Servidor: $Server" -ForegroundColor DarkGray
 
 # 1. Crear la base de datos (corre en master, sin -d)
-sqlcmd -S $Server -E -b -i (Join-Path $migrationsDir "000_create_database.sql")
+# -I habilita QUOTED_IDENTIFIER, que sqlcmd trae apagado. Sin eso, las tablas
+# con columnas computadas PERSISTED (004_academia.sql, 007_servicios.sql) fallan
+# con "CREATE TABLE failed because the following SET options have incorrect
+# settings: 'QUOTED_IDENTIFIER'".
+sqlcmd -S $Server -E -I -b -i (Join-Path $migrationsDir "000_create_database.sql")
 if ($LASTEXITCODE -ne 0) { throw "Fallo al crear la base de datos" }
 
 # 2. Ejecutar el resto de migraciones en orden, dentro de la BD
@@ -24,7 +28,7 @@ $files = Get-ChildItem -Path $migrationsDir -Filter "*.sql" |
 
 foreach ($f in $files) {
     Write-Host "-> $($f.Name)" -ForegroundColor Yellow
-    sqlcmd -S $Server -E -d $Database -b -i $f.FullName
+    sqlcmd -S $Server -E -I -d $Database -b -i $f.FullName
     if ($LASTEXITCODE -ne 0) { throw "Fallo en migracion $($f.Name)" }
 }
 

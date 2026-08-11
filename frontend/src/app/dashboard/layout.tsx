@@ -4,13 +4,10 @@ import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { API_ORIGIN, apiFetch, logout, obtenerSesion, Sesion } from '@/lib/api';
-import { MODULOS, moduloVisible } from '@/lib/modulos';
+import { MODULOS, moduloVisible, IconoModulo } from '@/lib/modulos';
+import { SystemIcon } from '@/app/components/SystemIcon';
 
-interface Apariencia {
-  nombreSistemaMenu: string | null;
-  subtituloMenu: string | null;
-  logoMenu: string | null;
-}
+interface Apariencia { nombreSistemaMenu: string | null; subtituloMenu: string | null; logoMenu: string | null; }
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -19,146 +16,68 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [apariencia, setApariencia] = useState<Apariencia | null>(null);
 
   useEffect(() => {
-    const s = obtenerSesion();
-    if (!s) {
-      router.replace('/login');
-      return;
-    }
-    setSesion(s);
+    const current = obtenerSesion();
+    if (!current) router.replace('/login');
+    else setSesion(current);
   }, [router]);
 
   useEffect(() => {
-    apiFetch('/seguridad/apariencia')
-      .then(async (res) => (res.ok ? setApariencia(await res.json()) : null))
-      .catch(() => undefined);
+    apiFetch('/seguridad/apariencia').then(async (res) => res.ok && setApariencia(await res.json())).catch(() => undefined);
   }, []);
 
-  async function onLogout() {
-    await logout();
-    router.push('/login');
-  }
-
+  async function onLogout() { await logout(); router.push('/login'); }
   if (!sesion) return null;
 
   const modulosVisibles = MODULOS.filter((m) => moduloVisible(m, sesion.usuario.permisos));
   const slugActual = pathname.split('/')[2];
   const moduloActual = MODULOS.find((m) => m.slug === slugActual);
+  const iniciales = sesion.usuario.username.slice(0, 2).toUpperCase();
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
-      <aside
-        style={{
-          width: 240,
-          flexShrink: 0,
-          borderRight: '1px solid #334155',
-          padding: '20px 14px',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <div style={{ marginBottom: 24, paddingLeft: 6, display: 'flex', alignItems: 'center', gap: 8 }}>
-          {apariencia?.logoMenu ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={`${API_ORIGIN}${apariencia.logoMenu}`}
-              alt="Logo"
-              style={{ width: 28, height: 28, objectFit: 'contain' }}
-            />
-          ) : (
-            <div style={{ fontSize: 22 }}>🚒</div>
-          )}
-          <div>
-            <div style={{ fontSize: 15, fontWeight: 700 }}>{apariencia?.nombreSistemaMenu || 'SIGBO-CBVC'}</div>
-            {apariencia?.subtituloMenu && (
-              <div style={{ fontSize: 10, color: '#94a3b8' }}>{apariencia.subtituloMenu}</div>
-            )}
+    <div className="app-shell">
+      <aside className="app-sidebar">
+        <div className="brand">
+          <div className="brand-mark">
+            {apariencia?.logoMenu ? <img src={`${API_ORIGIN}${apariencia.logoMenu}`} alt="" /> : <SystemIcon name="flame" size={23} />}
+          </div>
+          <div className="brand-copy">
+            <div className="brand-title">{apariencia?.nombreSistemaMenu || 'SIGBO · CBVC'}</div>
+            <div className="brand-subtitle">{apariencia?.subtituloMenu || 'Comando operativo'}</div>
           </div>
         </div>
-
-        <nav style={{ display: 'flex', flexDirection: 'column', gap: 4, flex: 1, overflowY: 'auto' }}>
-          <MenuLink href="/dashboard" icono="🏠" nombre="Inicio" activo={pathname === '/dashboard'} />
-          {modulosVisibles.map((m) => (
-            <MenuLink
-              key={m.slug}
-              href={`/dashboard/${m.slug}`}
-              icono={m.icono}
-              nombre={m.nombre}
-              activo={slugActual === m.slug}
-              proximamente={!m.disponible}
-            />
-          ))}
+        <div className="side-label">Centro de control</div>
+        <nav className="side-nav" aria-label="Navegación principal">
+          <MenuLink href="/dashboard" icono="home" nombre="Inicio" activo={pathname === '/dashboard'} />
+          {modulosVisibles.map((m) => <MenuLink key={m.slug} href={`/dashboard/${m.slug}`} icono={m.icono} nombre={m.nombre} activo={slugActual === m.slug} proximamente={!m.disponible} />)}
         </nav>
-
-        <div style={{ borderTop: '1px solid #334155', paddingTop: 10, marginTop: 6 }}>
-          <MenuLink
-            href="/dashboard/mi-perfil"
-            icono="👤"
-            nombre="Mi Perfil"
-            activo={pathname === '/dashboard/mi-perfil'}
-          />
+        <div className="sidebar-footer">
+          <MenuLink href="/dashboard/mi-perfil" icono="user" nombre="Mi perfil" activo={pathname === '/dashboard/mi-perfil'} />
+          <button className="logout-button" onClick={onLogout}>Cerrar sesión</button>
         </div>
-
-        <button className="btn-primary" style={{ width: '100%', marginTop: 8 }} onClick={onLogout}>
-          Cerrar sesion
-        </button>
       </aside>
 
-      <main style={{ flex: 1, padding: '28px 32px', maxWidth: 1100 }}>
-        <header
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: 24,
-          }}
-        >
-          <h1 style={{ fontSize: 20, fontWeight: 700 }}>
-            {moduloActual ? `${moduloActual.icono} ${moduloActual.nombre}` : '🏠 Inicio'}
-          </h1>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ fontSize: 13, color: '#94a3b8' }}>{sesion.usuario.username}</span>
+      <main className="app-main">
+        <header className="topbar">
+          <div>
+            <div className="topbar-eyebrow">Sistema integral</div>
+            <h1>{moduloActual?.nombre || (pathname.includes('mi-perfil') ? 'Mi perfil' : 'Panel de mando')}</h1>
+          </div>
+          <div className="user-chip" title={`${sesion.usuario.roles.length} roles asignados`}>
+            <span className="user-name">{sesion.usuario.username}</span>
             <span className="badge">{sesion.usuario.roles.length} roles</span>
+            <span className="user-avatar">{iniciales}</span>
           </div>
         </header>
-
-        {children}
+        <div className="page-content">{children}</div>
       </main>
     </div>
   );
 }
 
-function MenuLink({
-  href,
-  icono,
-  nombre,
-  activo,
-  proximamente,
-}: {
-  href: string;
-  icono: string;
-  nombre: string;
-  activo: boolean;
-  proximamente?: boolean;
-}) {
-  return (
-    <Link
-      href={href}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 10,
-        padding: '9px 10px',
-        borderRadius: 8,
-        fontSize: 14,
-        textDecoration: 'none',
-        color: activo ? '#e2e8f0' : '#94a3b8',
-        background: activo ? '#1e293b' : 'transparent',
-        fontWeight: activo ? 600 : 400,
-      }}
-    >
-      <span>{icono}</span>
-      <span style={{ flex: 1 }}>{nombre}</span>
-      {proximamente && <span style={{ fontSize: 10, color: '#64748b' }}>pronto</span>}
-    </Link>
-  );
+function MenuLink({ href, icono, nombre, activo, proximamente }: { href: string; icono: IconoModulo | 'home' | 'user'; nombre: string; activo: boolean; proximamente?: boolean }) {
+  return <Link href={href} className={`nav-link${activo ? ' active' : ''}`} aria-current={activo ? 'page' : undefined}>
+    <span className="nav-icon"><SystemIcon name={icono} size={18} /></span>
+    <span>{nombre}</span>
+    {proximamente && <span className="nav-tag">Pronto</span>}
+  </Link>;
 }
