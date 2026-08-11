@@ -11,6 +11,7 @@ const TABS = [
   { href: '/dashboard/seguridad/sesiones', label: 'Sesiones' },
   { href: '/dashboard/seguridad/auditoria', label: 'Auditoría' },
   { href: '/dashboard/seguridad/apariencia', label: 'Apariencia' },
+  { href: '/dashboard/seguridad/configuracion', label: 'Configuración global' },
 ];
 
 export default function SeguridadLayout({ children }: { children: React.ReactNode }) {

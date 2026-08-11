@@ -59,3 +59,5 @@ export * from './tolerancia-asistencia.entity';
 export * from './importacion-marcador.entity';
 export * from './importacion-marcador-fila.entity';
 export * from './cambio-guardia.entity';
+export * from './configuracion-valor.entity';
+export * from './configuracion-version.entity';

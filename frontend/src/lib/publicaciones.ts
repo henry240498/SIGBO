@@ -1,31 +1,10 @@
 import { apiFetch } from './api';
-
-export type CategoriaPublicacion = 'Noticia' | 'Suceso' | 'Evento' | 'Logro';
-
-export interface PublicacionPublica {
-  id: string;
-  titulo: string;
-  resumen: string;
-  contenido: string;
-  fecha: string;
-  categoria: CategoriaPublicacion;
-  imagen: string;
-  visible: boolean;
-  destacada: boolean;
-  orden: number;
-  color: string;
-}
-
-export const PUBLICACIONES_INICIALES: PublicacionPublica[] = [];
-
-export async function cargarPublicaciones(todas = false): Promise<PublicacionPublica[]> {
-  const response = await apiFetch(todas ? '/publicaciones' : '/publicaciones/publicas', { cache: 'no-store' });
-  if (!response.ok) throw new Error('No se pudieron cargar las publicaciones');
-  return response.json();
-}
-
-export async function guardarPublicaciones(items: PublicacionPublica[]): Promise<PublicacionPublica[]> {
-  const response = await apiFetch('/publicaciones', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(items) });
-  if (!response.ok) throw new Error('No se pudieron guardar las publicaciones');
-  return response.json();
-}
+export type SeccionPublica='PORTADA'|'RESUMEN'|'HISTORIA'|'FLOTA'|'LOGRO'|'NOTICIA'|'SUCESO'|'EVENTO'|'TRANSPARENCIA'|'CONTACTO'|'FOOTER';
+export type EstadoContenido='BORRADOR'|'PROGRAMADA'|'PUBLICADA'|'ARCHIVADA';
+export interface PublicacionPublica{id:string;seccion:SeccionPublica;titulo:string;subtitulo:string;resumen:string;contenido:string;fecha:string;fechaFin:string;hora:string;ubicacion:string;categoria:string;etiquetas:string[];imagen:string;imagenAlt:string;color:string;botonTexto:string;enlace:string;visible:boolean;destacada:boolean;orden:number;estado:EstadoContenido;publicarEn:string;caducarEn:string}
+type Extremo<T>=(T&{total:number;empate:boolean})|null;
+export interface EstadisticasPublicas{anio:number;anios:{anio:number;total:number}[];indicadores:{totalHistorico:number;totalAnio:number;totalMes:number;personalActivo:number;movilesDisponibles:number;ultimoServicio:string|null};flota:{total:number;operativos:number;mantenimiento:number;fueraServicio:number};porMes:{mes:number;total:number}[];porAnio:{anio:number;total:number}[];porDiaSemana:{dia:number;total:number}[];porTipo:{nombre:string;total:number}[];comparacion:{actual:number;anterior:number};records:{diaMaximo:{fecha:string;total:number;empate:boolean}|null;periodoSinServicios:{desde:string;hasta:string;horas:number}|null;diaSemanaMaximo:Extremo<{dia:number}>;diaSemanaMinimo:Extremo<{dia:number}>;mesMaximo:Extremo<{periodo:string}>;mesMinimo:Extremo<{periodo:string}>;anioMaximo:Extremo<{periodo:number}>;tipoFrecuente:{nombre:string;total:number}|null;promedioMensual:number|null;promedioDiario:number|null;porCategoria:{nombre:string;total:number;porcentaje:number;mesMaximo:Extremo<{periodo:string}>;diaMaximo:Extremo<{fecha:string}>}[]}}
+export const nuevaPublicacion=():PublicacionPublica=>({id:'',seccion:'NOTICIA',titulo:'',subtitulo:'',resumen:'',contenido:'',fecha:'',fechaFin:'',hora:'',ubicacion:'',categoria:'',etiquetas:[],imagen:'',imagenAlt:'',color:'#2563eb',botonTexto:'',enlace:'',visible:true,destacada:false,orden:1,estado:'BORRADOR',publicarEn:'',caducarEn:''});
+export async function cargarPublicaciones(todas=false){const r=await apiFetch(todas?'/publicaciones':'/publicaciones/publicas',{cache:'no-store'});if(!r.ok)throw new Error('No se pudieron cargar los contenidos');return r.json() as Promise<PublicacionPublica[]>}
+export async function guardarPublicaciones(items:PublicacionPublica[]){const r=await apiFetch('/publicaciones',{method:'PUT',body:JSON.stringify(items)});if(!r.ok){const b=await r.json().catch(()=>({}));throw new Error(Array.isArray(b.message)?b.message.join(', '):b.message||'No se pudieron guardar los contenidos')}return r.json() as Promise<PublicacionPublica[]>}
+export async function cargarEstadisticas(anio?:number){const r=await apiFetch(`/publicaciones/estadisticas${anio!==undefined?`?anio=${anio}`:''}`,{cache:'no-store'});if(!r.ok)throw new Error('No se pudieron cargar las estadísticas');return r.json() as Promise<EstadisticasPublicas>}
