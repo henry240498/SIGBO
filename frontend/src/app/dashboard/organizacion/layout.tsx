@@ -7,6 +7,7 @@ const TABS = [
   { href: '/dashboard/organizacion', label: 'Dashboard', exact: true },
   { href: '/dashboard/organizacion/rangos', label: 'Rangos' },
   { href: '/dashboard/organizacion/cargos', label: 'Cargos' },
+  { href: '/dashboard/organizacion/tipos-bombero', label: 'Tipos de Bombero' },
   { href: '/dashboard/organizacion/especialidades', label: 'Especialidades' },
   { href: '/dashboard/organizacion/companias', label: 'Compañías' },
   { href: '/dashboard/organizacion/cuarteles', label: 'Cuarteles' },
@@ -17,6 +18,7 @@ const TABS = [
   { href: '/dashboard/organizacion/guardias', label: 'Guardias' },
   { href: '/dashboard/organizacion/designaciones', label: 'Designaciones' },
   { href: '/dashboard/organizacion/ascensos', label: 'Ascensos' },
+  { href: '/dashboard/organizacion/parametros', label: 'Parámetros' },
   { href: '/dashboard/organizacion/reportes', label: 'Reportes' },
 ];
 

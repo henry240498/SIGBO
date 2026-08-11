@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { SeguridadModule } from '../seguridad/seguridad.module';
 import {
   ActividadProfesional,
   AsignacionGuardia,
@@ -22,9 +23,12 @@ import {
   IdiomaBombero,
   InscripcionCurso,
   Materia,
+  Parametro,
   PersonalServicio,
   Rango,
+  SeguroBombero,
   Servicio,
+  TipoBombero,
   TipoServicio,
   VehiculoAutorizado,
 } from '../../shared/entities';
@@ -44,6 +48,10 @@ import { ActividadProfesionalService } from './actividad-profesional.service';
 import { ActividadProfesionalController } from './actividad-profesional.controller';
 import { ConsultasCruzadasService } from './consultas-cruzadas.service';
 import { ConsultasCruzadasController } from './consultas-cruzadas.controller';
+import { TiposBomberoService } from './tipos-bombero.service';
+import { TiposBomberoController } from './tipos-bombero.controller';
+import { SegurosBomberoService } from './seguros-bombero.service';
+import { SegurosBomberoController } from './seguros-bombero.controller';
 
 @Module({
   imports: [
@@ -74,7 +82,11 @@ import { ConsultasCruzadasController } from './consultas-cruzadas.controller';
       Materia,
       Curso,
       InscripcionCurso,
+      TipoBombero,
+      Parametro,
+      SeguroBombero,
     ]),
+    SeguridadModule,
   ],
   controllers: [
     BomberosController,
@@ -85,6 +97,8 @@ import { ConsultasCruzadasController } from './consultas-cruzadas.controller';
     IdiomasController,
     ActividadProfesionalController,
     ConsultasCruzadasController,
+    TiposBomberoController,
+    SegurosBomberoController,
   ],
   providers: [
     BomberosService,
@@ -95,6 +109,8 @@ import { ConsultasCruzadasController } from './consultas-cruzadas.controller';
     IdiomasService,
     ActividadProfesionalService,
     ConsultasCruzadasService,
+    TiposBomberoService,
+    SegurosBomberoService,
   ],
 })
 export class PersonalModule {}

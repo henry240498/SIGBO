@@ -16,11 +16,16 @@ export class PrestamoEquipo {
   @Column({ type: 'uniqueidentifier', nullable: true })
   servicioId: string | null;
 
-  @Column({ type: 'date' })
-  fechaPrestamo: string;
+  @Column({ type: 'datetimeoffset', precision: 3 })
+  fechaPrestamo: Date;
 
-  @Column({ type: 'date', nullable: true })
-  fechaDevolucion: string | null;
+  /** Fecha/hora en la que el equipo deberia devolverse (comprometida, ingresada
+   * al prestar). Distinta de `fechaDevolucion`, que es la devolucion real. */
+  @Column({ type: 'datetimeoffset', precision: 3, nullable: true })
+  fechaDevolucionComprometida: Date | null;
+
+  @Column({ type: 'datetimeoffset', precision: 3, nullable: true })
+  fechaDevolucion: Date | null;
 
   @Column({ type: 'nvarchar', length: 20, default: 'PRESTADO' })
   estado: EstadoPrestamoEquipo;

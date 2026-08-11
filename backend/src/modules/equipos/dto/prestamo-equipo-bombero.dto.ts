@@ -7,6 +7,11 @@ export class CrearPrestamoDto {
   @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
   equipoId: string;
 
+  @ApiProperty({ required: false, description: 'Fecha/hora comprometida de devolucion (ISO 8601)' })
+  @IsOptional()
+  @IsString()
+  fechaDevolucionComprometida?: string;
+
   @ApiProperty({ required: false })
   @IsOptional()
   @IsString()

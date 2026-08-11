@@ -17,6 +17,8 @@ export class AuditoriaController {
   findAll(
     @Query('usuarioId') usuarioId?: string,
     @Query('recurso') recurso?: string,
+    @Query('recursoPrefijo') recursoPrefijo?: string,
+    @Query('recursoId') recursoId?: string,
     @Query('accion') accion?: string,
     @Query('desde') desde?: string,
     @Query('hasta') hasta?: string,
@@ -26,6 +28,8 @@ export class AuditoriaController {
     return this.auditoriaService.findAll({
       usuarioId,
       recurso,
+      recursoPrefijo,
+      recursoId,
       accion,
       desde: desde ? new Date(desde) : undefined,
       hasta: hasta ? new Date(hasta) : undefined,

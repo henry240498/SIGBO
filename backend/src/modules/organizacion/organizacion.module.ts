@@ -10,6 +10,7 @@ import {
   Departamento,
   Designacion,
   Especialidad,
+  Parametro,
   Rango,
   TipoGuardia,
   Turno,
@@ -42,6 +43,8 @@ import { AscensosService } from './ascensos.service';
 import { AscensosController } from './ascensos.controller';
 import { DashboardService } from './dashboard.service';
 import { DashboardController } from './dashboard.controller';
+import { ParametrosService } from './parametros.service';
+import { ParametrosController } from './parametros.controller';
 
 @Module({
   imports: [
@@ -59,6 +62,7 @@ import { DashboardController } from './dashboard.controller';
       Designacion,
       Ascenso,
       Bombero,
+      Parametro,
     ]),
   ],
   controllers: [
@@ -75,6 +79,7 @@ import { DashboardController } from './dashboard.controller';
     DesignacionesController,
     AscensosController,
     DashboardController,
+    ParametrosController,
   ],
   providers: [
     RangosService,
@@ -90,6 +95,8 @@ import { DashboardController } from './dashboard.controller';
     DesignacionesService,
     AscensosService,
     DashboardService,
+    ParametrosService,
   ],
+  exports: [ParametrosService],
 })
 export class OrganizacionModule {}

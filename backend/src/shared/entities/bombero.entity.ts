@@ -52,12 +52,6 @@ export class Bombero {
   @Column({ type: 'nvarchar', nullable: true })
   direccion: string | null;
 
-  @Column({ type: 'nvarchar', length: 100, nullable: true })
-  ciudad: string | null;
-
-  @Column({ type: 'nvarchar', length: 100, nullable: true })
-  departamento: string | null;
-
   @Column({ type: 'nvarchar', length: 20, nullable: true })
   codigoPostal: string | null;
 
@@ -88,11 +82,13 @@ export class Bombero {
   @Column({ type: 'int', insert: false, update: false, select: true, nullable: true })
   antiguedad: number | null;
 
-  @Column({ type: 'nvarchar', length: 5, nullable: true })
-  grupoSanguineo: string | null;
+  /** Referencia a organizacion.parametros (tipo GRUPO_SANGUINEO). */
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  grupoSanguineoId: string | null;
 
-  @Column({ type: 'nvarchar', length: 2, nullable: true })
-  factorRh: string | null;
+  /** Referencia a organizacion.parametros (tipo FACTOR_RH). */
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  factorRhId: string | null;
 
   @Column({ type: 'nvarchar', nullable: true })
   alergias: string | null;
@@ -103,14 +99,8 @@ export class Bombero {
   @Column({ type: 'nvarchar', nullable: true })
   medicamentos: string | null;
 
-  @Column({ type: 'nvarchar', length: 50, nullable: true })
-  tipoSeguro: string | null;
-
-  @Column({ type: 'nvarchar', length: 50, nullable: true })
-  numeroSeguro: string | null;
-
-  @Column({ type: 'date', nullable: true })
-  vigenciaSeguro: string | null;
+  /* tipoSeguro/numeroSeguro/vigenciaSeguro se reemplazaron por la relacion
+     1:N personal.seguros_bombero (un voluntario puede tener varias polizas). */
 
   @Column({ type: 'nvarchar', default: '[]' })
   contactosEmergencia: string;
@@ -165,6 +155,12 @@ export class Bombero {
   @Column({ type: 'nvarchar', length: 30, nullable: true })
   condicionInstitucional: CondicionInstitucional | null;
 
+  /** Catalogo parametrizable (personal.tipos_bombero). Gobierna el prefijo del
+   * codigo bomberil de aqui en adelante; coexiste con condicionInstitucional,
+   * que se mantiene sin cambios por compatibilidad con datos ya cargados. */
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  tipoBomberoId: string | null;
+
   @Column({ type: 'uniqueidentifier', nullable: true })
   brigadaId: string | null;
 
@@ -174,11 +170,21 @@ export class Bombero {
   @Column({ type: 'uniqueidentifier', nullable: true })
   unidadId: string | null;
 
-  @Column({ type: 'nvarchar', length: 50, nullable: true, default: 'Paraguay' })
-  pais: string | null;
+  /* --- Ubicacion (referencias a organizacion.parametros, jerarquia
+     PAIS -> DEPARTAMENTO -> CIUDAD -> BARRIO). departamentoResidenciaId no
+     debe confundirse con departamentoId (unidad organizacional interna,
+     arriba) — son conceptos distintos que coexisten. --- */
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  paisId: string | null;
 
-  @Column({ type: 'nvarchar', length: 100, nullable: true })
-  barrio: string | null;
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  departamentoResidenciaId: string | null;
+
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  ciudadId: string | null;
+
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  barrioId: string | null;
 
   @Column({ type: 'nvarchar', length: 30, nullable: true })
   pasaporte: string | null;

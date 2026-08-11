@@ -11,14 +11,25 @@ export class CreateBomberoDto {
   @ApiProperty({ required: false, enum: ['M', 'F'] })
   @IsOptional()
   @IsIn(['M', 'F'])
-  sexo?: 'M' | 'F';
+  sexo?: 'M' | 'F' | null;
+
+  @ApiProperty({ required: false }) @IsOptional() @IsString() estadoCivil?: string;
+  @ApiProperty({ required: false }) @IsOptional() @IsString() lugarNacimiento?: string;
 
   @ApiProperty() @IsString() @IsNotEmpty() telefonoPrincipal: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
   @IsString()
+  telefonoSecundario?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
   email?: string;
+
+  @ApiProperty({ required: false }) @IsOptional() @IsString() direccion?: string;
+  @ApiProperty({ required: false }) @IsOptional() @IsString() codigoPostal?: string;
 
   @ApiProperty() @IsString() @IsNotEmpty() numeroBombero: string;
   @ApiProperty() @IsString() @IsNotEmpty() rango: string;
@@ -45,6 +56,11 @@ export class CreateBomberoDto {
   @IsOptional()
   @IsIn(['INCORPORADO', 'COMBATIENTE', 'APOYO_ECONOMICO', 'HONORARIO'])
   condicionInstitucional?: string;
+
+  @ApiProperty({ required: false, description: 'personal.tipos_bombero.id' })
+  @IsOptional()
+  @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
+  tipoBomberoId?: string;
 
   /* --- Integracion con Organizacion Institucional (todos opcionales) --- */
   @ApiProperty({ required: false, description: 'organizacion.rangos.id' })
@@ -82,7 +98,7 @@ export class CreateBomberoDto {
   @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
   brigadaId?: string;
 
-  @ApiProperty({ required: false, description: 'organizacion.departamentos.id' })
+  @ApiProperty({ required: false, description: 'organizacion.departamentos.id (unidad organizacional)' })
   @IsOptional()
   @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
   departamentoId?: string;
@@ -92,9 +108,43 @@ export class CreateBomberoDto {
   @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
   unidadId?: string;
 
+  /* --- Ubicacion: organizacion.parametros (jerarquia PAIS>DEPARTAMENTO>CIUDAD>BARRIO) --- */
+  @ApiProperty({ required: false, description: 'organizacion.parametros.id (tipo PAIS)' })
+  @IsOptional()
+  @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
+  paisId?: string | null;
+
+  @ApiProperty({ required: false, description: 'organizacion.parametros.id (tipo DEPARTAMENTO)' })
+  @IsOptional()
+  @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
+  departamentoResidenciaId?: string | null;
+
+  @ApiProperty({ required: false, description: 'organizacion.parametros.id (tipo CIUDAD)' })
+  @IsOptional()
+  @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
+  ciudadId?: string | null;
+
+  @ApiProperty({ required: false, description: 'organizacion.parametros.id (tipo BARRIO)' })
+  @IsOptional()
+  @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
+  barrioId?: string | null;
+
+  /* --- Salud: organizacion.parametros --- */
+  @ApiProperty({ required: false, description: 'organizacion.parametros.id (tipo GRUPO_SANGUINEO)' })
+  @IsOptional()
+  @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
+  grupoSanguineoId?: string | null;
+
+  @ApiProperty({ required: false, description: 'organizacion.parametros.id (tipo FACTOR_RH)' })
+  @IsOptional()
+  @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
+  factorRhId?: string | null;
+
+  @ApiProperty({ required: false }) @IsOptional() @IsString() alergias?: string;
+  @ApiProperty({ required: false }) @IsOptional() @IsString() condicionesMedicas?: string;
+  @ApiProperty({ required: false }) @IsOptional() @IsString() medicamentos?: string;
+
   /* --- Ampliacion Modulo Personal --- */
-  @ApiProperty({ required: false }) @IsOptional() @IsString() pais?: string;
-  @ApiProperty({ required: false }) @IsOptional() @IsString() barrio?: string;
   @ApiProperty({ required: false }) @IsOptional() @IsString() pasaporte?: string;
   @ApiProperty({ required: false }) @IsOptional() @IsString() fechaIncorporacion?: string;
   @ApiProperty({ required: false }) @IsOptional() @IsString() fechaJuramento?: string;

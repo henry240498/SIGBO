@@ -33,10 +33,6 @@ export class EquipamientoBomberoService {
     }));
   }
 
-  private fechaHoy(): string {
-    return new Date().toISOString().slice(0, 10);
-  }
-
   async prestar(bomberoId: string, dto: CrearPrestamoDto, creadoPor: string) {
     const equipo = await this.equipoRepo.findOne({ where: { id: dto.equipoId } });
     if (!equipo) throw new NotFoundException(`Equipo ${dto.equipoId} no encontrado`);
@@ -45,7 +41,8 @@ export class EquipamientoBomberoService {
       this.prestamoRepo.create({
         bomberoId,
         equipoId: dto.equipoId,
-        fechaPrestamo: this.fechaHoy(),
+        fechaPrestamo: new Date(),
+        fechaDevolucionComprometida: dto.fechaDevolucionComprometida ? new Date(dto.fechaDevolucionComprometida) : null,
         estado: 'PRESTADO',
         observaciones: dto.observaciones ?? null,
         creadoPor,
@@ -58,7 +55,7 @@ export class EquipamientoBomberoService {
     if (!prestamo) throw new NotFoundException(`Prestamo ${prestamoId} no encontrado`);
 
     await this.prestamoRepo.update(prestamoId, {
-      fechaDevolucion: this.fechaHoy(),
+      fechaDevolucion: new Date(),
       estado: 'DEVUELTO',
       ...(dto.observaciones !== undefined ? { observaciones: dto.observaciones } : {}),
     });

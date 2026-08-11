@@ -8,11 +8,13 @@ export class IdiomaBombero {
   @Column({ type: 'uniqueidentifier' })
   bomberoId: string;
 
-  @Column({ type: 'nvarchar', length: 50 })
-  idioma: string;
+  /** Referencia a organizacion.parametros (tipo IDIOMA). */
+  @Column({ type: 'uniqueidentifier' })
+  idiomaId: string;
 
-  @Column({ type: 'nvarchar', length: 30, nullable: true })
-  nivel: string | null;
+  /** Referencia a organizacion.parametros (tipo NIVEL_IDIOMA). */
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  nivelIdiomaId: string | null;
 
   @Column({ type: 'nvarchar', length: 150, nullable: true })
   certificacion: string | null;
