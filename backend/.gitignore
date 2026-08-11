@@ -1,0 +1,7 @@
+node_modules/
+dist/
+
+# Secretos locales: NO versionar. La plantilla versionada es .env.example
+.env
+.env.local
+.env.*.local
