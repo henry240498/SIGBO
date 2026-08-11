@@ -10,6 +10,11 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+  // El croquis de una comunicación puede viajar como PNG codificado; el límite
+  // predeterminado de Express (100 KB) no alcanza para una escena real.
+  app.useBodyParser('json', { limit: '8mb' });
+  app.useBodyParser('urlencoded', { extended: true, limit: '8mb' });
+
   app.useStaticAssets(join(process.cwd(), 'uploads'), { prefix: '/uploads' });
   // crossOriginResourcePolicy en 'cross-origin': el frontend (puerto 3000) necesita
   // poder cargar <img> servidas desde este backend (puerto 3001) en <img src>.

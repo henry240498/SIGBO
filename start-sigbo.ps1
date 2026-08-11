@@ -52,42 +52,65 @@ Write-Host "=======================================" -ForegroundColor Cyan
 Write-Host ""
 
 # --- BACKEND ---
-if (Test-Puerto -Puerto 3001) {
-    Write-Host "Backend ya esta operativo en el puerto 3001 (no se reinicia)." -ForegroundColor Yellow
-} else {
-    Write-Host "Iniciando Backend (NestJS)..." -ForegroundColor Cyan
-    if (-not (Test-Path (Join-Path $backendDir "dist\main.js"))) {
-        Write-Host "No existe backend\dist\main.js. Compilando con 'npm run build'..." -ForegroundColor Yellow
-        Push-Location $backendDir
-        cmd /c "npm run build > `"$logsDir\backend-build.log`" 2>&1"
-        Pop-Location
+# Compila siempre: evita dejar ejecutandose un dist antiguo despues de cambiar
+# el codigo fuente. Si el puerto pertenece a este proyecto, reinicia ese proceso.
+Write-Host "Compilando Backend (NestJS)..." -ForegroundColor Cyan
+Push-Location $backendDir
+cmd /c "npm run build > `"$logsDir\backend-build.log`" 2>&1"
+Pop-Location
+
+$backendPid = (Get-NetTCPConnection -LocalPort 3001 -State Listen -ErrorAction SilentlyContinue |
+    Select-Object -First 1 -ExpandProperty OwningProcess)
+if ($backendPid) {
+    $backendProcess = Get-CimInstance Win32_Process -Filter "ProcessId=$backendPid"
+    # Start-Process usa el directorio de trabajo para `dist/main.js`, por lo
+    # que la línea de comandos no siempre incluye la ruta absoluta del repo.
+    # El patrón adicional corresponde exactamente al proceso que inicia este
+    # script en el puerto reservado del backend.
+    if ($backendProcess.CommandLine -like "*$backendDir*" -or
+        $backendProcess.CommandLine -match '(?i)\bdist[\\/]main\.js\b') {
+        Write-Host "Reiniciando Backend actualizado..." -ForegroundColor Yellow
+        Stop-Process -Id $backendPid -Force
+        Start-Sleep -Milliseconds 500
+    } else {
+        throw "El puerto 3001 esta ocupado por otro proceso: $($backendProcess.CommandLine)"
     }
-    Start-Process -FilePath "node" -ArgumentList "dist/main.js" `
-        -WorkingDirectory $backendDir `
-        -RedirectStandardOutput (Join-Path $logsDir "backend-out.log") `
-        -RedirectStandardError (Join-Path $logsDir "backend-err.log") `
-        -WindowStyle Hidden
 }
+Start-Process -FilePath "node" -ArgumentList "dist/main.js" `
+    -WorkingDirectory $backendDir `
+    -RedirectStandardOutput (Join-Path $logsDir "backend-out.log") `
+    -RedirectStandardError (Join-Path $logsDir "backend-err.log") `
+    -WindowStyle Hidden
 
 $backendOk = Esperar-Puerto -Puerto 3001 -Nombre "Backend"
 
 # --- FRONTEND ---
-if (Test-Puerto -Puerto 3000) {
-    Write-Host "Frontend ya esta operativo en el puerto 3000 (no se reinicia)." -ForegroundColor Yellow
-} else {
-    Write-Host "Iniciando Frontend (Next.js)..." -ForegroundColor Cyan
-    if (-not (Test-Path (Join-Path $frontendDir ".next"))) {
-        Write-Host "No existe frontend\.next. Compilando con 'npm run build'..." -ForegroundColor Yellow
-        Push-Location $frontendDir
-        cmd /c "npm run build > `"$logsDir\frontend-build.log`" 2>&1"
-        Pop-Location
+Write-Host "Compilando Frontend (Next.js)..." -ForegroundColor Cyan
+Push-Location $frontendDir
+cmd /c "npm run build > `"$logsDir\frontend-build.log`" 2>&1"
+Pop-Location
+
+$frontendPid = (Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction SilentlyContinue |
+    Select-Object -First 1 -ExpandProperty OwningProcess)
+if ($frontendPid) {
+    $frontendProcess = Get-CimInstance Win32_Process -Filter "ProcessId=$frontendPid"
+    # Next puede expandir su binario a node_modules en vez de conservar el
+    # working directory en CommandLine; ambos patrones identifican el proceso
+    # que este iniciador crea para el puerto 3000.
+    if ($frontendProcess.CommandLine -like "*$frontendDir*" -or
+        $frontendProcess.CommandLine -match '(?i)next(?:\.js)?\s+start') {
+        Write-Host "Reiniciando Frontend actualizado..." -ForegroundColor Yellow
+        Stop-Process -Id $frontendPid -Force
+        Start-Sleep -Milliseconds 500
+    } else {
+        throw "El puerto 3000 esta ocupado por otro proceso: $($frontendProcess.CommandLine)"
     }
-    Start-Process -FilePath "cmd.exe" -ArgumentList "/c npm start" `
-        -WorkingDirectory $frontendDir `
-        -RedirectStandardOutput (Join-Path $logsDir "frontend-out.log") `
-        -RedirectStandardError (Join-Path $logsDir "frontend-err.log") `
-        -WindowStyle Hidden
 }
+Start-Process -FilePath "cmd.exe" -ArgumentList "/c npm start" `
+    -WorkingDirectory $frontendDir `
+    -RedirectStandardOutput (Join-Path $logsDir "frontend-out.log") `
+    -RedirectStandardError (Join-Path $logsDir "frontend-err.log") `
+    -WindowStyle Hidden
 
 $frontendOk = Esperar-Puerto -Puerto 3000 -Nombre "Frontend"
 

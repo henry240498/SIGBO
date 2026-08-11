@@ -1,0 +1,17 @@
+{
+  "nodes": [
+    {"id":"0f9a12c3d4e5b678","type":"group","x":-40,"y":-40,"width":1080,"height":600,"label":"SIGBO · Centro de control","color":"#10263f"},
+    {"id":"1a2b3c4d5e6f7890","type":"text","x":20,"y":180,"width":250,"height":150,"text":"# Panel de mando\n\nPunto de entrada y estado operativo.","color":"#31a8b8"},
+    {"id":"2b3c4d5e6f78901a","type":"text","x":350,"y":20,"width":280,"height":130,"text":"## Organización\n\nEstructura, rangos, cuarteles y unidades."},
+    {"id":"3c4d5e6f78901a2b","type":"text","x":350,"y":205,"width":280,"height":130,"text":"## Personal\n\nBomberos, identidad y designaciones."},
+    {"id":"4d5e6f78901a2b3c","type":"text","x":350,"y":390,"width":280,"height":130,"text":"## Seguridad\n\nUsuarios, roles, permisos y auditoría.","color":"#d94b3d"},
+    {"id":"5e6f78901a2b3c4d","type":"text","x":710,"y":205,"width":270,"height":130,"text":"## Respuesta operativa\n\nVehículos, equipos y servicios conectados.","color":"#31a8b8"}
+  ],
+  "edges": [
+    {"id":"6f78901a2b3c4d5e","fromNode":"1a2b3c4d5e6f7890","fromSide":"right","toNode":"2b3c4d5e6f78901a","toSide":"left","label":"organiza"},
+    {"id":"78901a2b3c4d5e6f","fromNode":"1a2b3c4d5e6f7890","fromSide":"right","toNode":"3c4d5e6f78901a2b","toSide":"left","label":"coordina"},
+    {"id":"8901a2b3c4d5e6f7","fromNode":"1a2b3c4d5e6f7890","fromSide":"right","toNode":"4d5e6f78901a2b3c","toSide":"left","label":"protege"},
+    {"id":"901a2b3c4d5e6f78","fromNode":"2b3c4d5e6f78901a","fromSide":"right","toNode":"5e6f78901a2b3c4d","toSide":"left","label":"alimenta"},
+    {"id":"01a2b3c4d5e6f789","fromNode":"3c4d5e6f78901a2b","fromSide":"right","toNode":"5e6f78901a2b3c4d","toSide":"left","label":"activa"}
+  ]
+}

@@ -18,6 +18,8 @@ npm-debug.log*
 # Uploads / runtime data
 backend/uploads/
 logs/
+*.mdf
+*.ldf
 
 # OS
 .DS_Store

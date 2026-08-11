@@ -43,6 +43,7 @@ export * from './guardia.entity';
 export * from './asignacion-guardia.entity';
 export * from './tipo-servicio.entity';
 export * from './servicio.entity';
+export * from './comunicacion-servicio.entity';
 export * from './personal-servicio.entity';
 export * from './materia.entity';
 export * from './curso.entity';
