@@ -40,9 +40,9 @@ aceptando solo los valores viejos.
 - Valor de estado no permitido: violacion de constraint `CK_...` al insertar o
   actualizar.
 - Tabla faltante: el generador del grafo lo detecta y marca la entidad como
-  **huerfana** (`graph/indexes/stats.json`, seccion `entidadesSinTabla`). Hoy hay
-  una: `ConfiguracionApariencia`, cuya tabla fue renombrada en la migracion 014 y
-  que ya no se usa en ningun lado.
+  **huerfana** (`graph/indexes/stats.json`, seccion `entidadesSinTabla`). Ya sirvio una
+  vez: detecto `ConfiguracionApariencia`, cuya tabla habia sido renombrada en la
+  migracion 014, y resulto ser codigo muerto. Hoy la lista esta en cero.
 
 ## Ademas: registrar la entidad
 
