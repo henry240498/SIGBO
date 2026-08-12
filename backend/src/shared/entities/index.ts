@@ -71,3 +71,4 @@ export * from './novedad-guardia.entity';
 export * from './requisito-rol-guardia.entity';
 export * from './configuracion-valor.entity';
 export * from './configuracion-version.entity';
+export * from './publicacion.entity';

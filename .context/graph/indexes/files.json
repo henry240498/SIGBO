@@ -1,0 +1,1176 @@
+{
+ "frontend/src/lib/modulos.ts": [
+  "domain--organizacion",
+  "domain--personal",
+  "domain--asistencia",
+  "domain--guardias",
+  "domain--servicios",
+  "domain--vehiculos",
+  "domain--equipos",
+  "domain--academia",
+  "domain--finanzas",
+  "domain--deposito",
+  "domain--documentos",
+  "domain--publicaciones",
+  "domain--seguridad",
+  "domain--inteligencia",
+  "component--front-modulos",
+  "rule--frontend-no-autoriza",
+  "rule--modulo-visible-por-prefijo"
+ ],
+ "backend/src/shared/entities/actividad-profesional.entity.ts": [
+  "entity--actividad-profesional"
+ ],
+ "backend/src/shared/entities/ascenso.entity.ts": [
+  "entity--ascenso"
+ ],
+ "backend/src/shared/entities/asignacion-guardia.entity.ts": [
+  "entity--asignacion-guardia"
+ ],
+ "backend/src/shared/entities/asignacion-permiso-directo.entity.ts": [
+  "entity--asignacion-permiso-directo"
+ ],
+ "backend/src/shared/entities/asignacion-permiso-rol.entity.ts": [
+  "entity--asignacion-permiso-rol"
+ ],
+ "backend/src/shared/entities/asignacion-rol.entity.ts": [
+  "entity--asignacion-rol"
+ ],
+ "backend/src/shared/entities/bombero-especialidad.entity.ts": [
+  "entity--bombero-especialidad"
+ ],
+ "backend/src/shared/entities/bombero.entity.ts": [
+  "entity--bombero"
+ ],
+ "backend/src/shared/entities/brigada.entity.ts": [
+  "entity--brigada"
+ ],
+ "backend/src/shared/entities/cambio-guardia.entity.ts": [
+  "entity--cambio-guardia"
+ ],
+ "backend/src/shared/entities/cargo.entity.ts": [
+  "entity--cargo"
+ ],
+ "backend/src/shared/entities/categoria-equipo.entity.ts": [
+  "entity--categoria-equipo"
+ ],
+ "backend/src/shared/entities/certificacion.entity.ts": [
+  "entity--certificacion"
+ ],
+ "backend/src/shared/entities/checklist-item-vehiculo.entity.ts": [
+  "entity--checklist-item-vehiculo"
+ ],
+ "backend/src/shared/entities/compania.entity.ts": [
+  "entity--compania"
+ ],
+ "backend/src/shared/entities/comunicacion-servicio.entity.ts": [
+  "entity--comunicacion-servicio",
+  "decision--comunicacion-como-json"
+ ],
+ "backend/src/shared/entities/condicion-apoyo-economico.entity.ts": [
+  "entity--condicion-apoyo-economico"
+ ],
+ "backend/src/shared/entities/condicion-combatiente.entity.ts": [
+  "entity--condicion-combatiente"
+ ],
+ "backend/src/shared/entities/condicion-honorario.entity.ts": [
+  "entity--condicion-honorario"
+ ],
+ "backend/src/shared/entities/condicion-incorporado.entity.ts": [
+  "entity--condicion-incorporado"
+ ],
+ "backend/src/shared/entities/configuracion-sistema.entity.ts": [
+  "entity--configuracion-sistema"
+ ],
+ "backend/src/shared/entities/configuracion-valor.entity.ts": [
+  "entity--configuracion-valor"
+ ],
+ "backend/src/shared/entities/configuracion-version.entity.ts": [
+  "entity--configuracion-version"
+ ],
+ "backend/src/shared/entities/consumo-combustible.entity.ts": [
+  "entity--consumo-combustible"
+ ],
+ "backend/src/shared/entities/cuartel.entity.ts": [
+  "entity--cuartel"
+ ],
+ "backend/src/shared/entities/curso.entity.ts": [
+  "entity--curso"
+ ],
+ "backend/src/shared/entities/departamento.entity.ts": [
+  "entity--departamento"
+ ],
+ "backend/src/shared/entities/designacion.entity.ts": [
+  "entity--designacion"
+ ],
+ "backend/src/shared/entities/equipo.entity.ts": [
+  "entity--equipo"
+ ],
+ "backend/src/shared/entities/especialidad.entity.ts": [
+  "entity--especialidad"
+ ],
+ "backend/src/shared/entities/evento-asistencia.entity.ts": [
+  "entity--evento-asistencia"
+ ],
+ "backend/src/shared/entities/foja-servicio.entity.ts": [
+  "entity--foja-servicio"
+ ],
+ "backend/src/shared/entities/grupo-guardia-miembro.entity.ts": [
+  "entity--grupo-guardia-miembro"
+ ],
+ "backend/src/shared/entities/grupo-guardia.entity.ts": [
+  "entity--grupo-guardia"
+ ],
+ "backend/src/shared/entities/guardia.entity.ts": [
+  "entity--guardia"
+ ],
+ "backend/src/shared/entities/historial-codigo.entity.ts": [
+  "entity--historial-codigo"
+ ],
+ "backend/src/shared/entities/historial-contrasena.entity.ts": [
+  "entity--historial-contrasena"
+ ],
+ "backend/src/shared/entities/historial-institucional.entity.ts": [
+  "entity--historial-institucional"
+ ],
+ "backend/src/shared/entities/idioma-bombero.entity.ts": [
+  "entity--idioma-bombero"
+ ],
+ "backend/src/shared/entities/importacion-marcador-fila.entity.ts": [
+  "entity--importacion-marcador-fila"
+ ],
+ "backend/src/shared/entities/importacion-marcador.entity.ts": [
+  "entity--importacion-marcador"
+ ],
+ "backend/src/shared/entities/inscripcion-curso.entity.ts": [
+  "entity--inscripcion-curso"
+ ],
+ "backend/src/shared/entities/inspeccion-estacion.entity.ts": [
+  "entity--inspeccion-estacion"
+ ],
+ "backend/src/shared/entities/log-auditoria.entity.ts": [
+  "entity--log-auditoria"
+ ],
+ "backend/src/shared/entities/mantenimiento-equipo.entity.ts": [
+  "entity--mantenimiento-equipo"
+ ],
+ "backend/src/shared/entities/mantenimiento-vehiculo.entity.ts": [
+  "entity--mantenimiento-vehiculo"
+ ],
+ "backend/src/shared/entities/marcacion-asistencia.entity.ts": [
+  "entity--marcacion-asistencia"
+ ],
+ "backend/src/shared/entities/materia.entity.ts": [
+  "entity--materia"
+ ],
+ "backend/src/shared/entities/novedad-guardia.entity.ts": [
+  "entity--novedad-guardia"
+ ],
+ "backend/src/shared/entities/parametro.entity.ts": [
+  "entity--parametro"
+ ],
+ "backend/src/shared/entities/participante-evento.entity.ts": [
+  "entity--participante-evento"
+ ],
+ "backend/src/shared/entities/participante-externo.entity.ts": [
+  "entity--participante-externo"
+ ],
+ "backend/src/shared/entities/permiso.entity.ts": [
+  "entity--permiso"
+ ],
+ "backend/src/shared/entities/pernocte.entity.ts": [
+  "entity--pernocte"
+ ],
+ "backend/src/shared/entities/personal-servicio.entity.ts": [
+  "entity--personal-servicio"
+ ],
+ "backend/src/shared/entities/prestamo-equipo.entity.ts": [
+  "entity--prestamo-equipo"
+ ],
+ "backend/src/shared/entities/publicacion.entity.ts": [
+  "entity--publicacion"
+ ],
+ "backend/src/shared/entities/rango.entity.ts": [
+  "entity--rango"
+ ],
+ "backend/src/shared/entities/requisito-rol-guardia.entity.ts": [
+  "entity--requisito-rol-guardia",
+  "rule--elegibilidad-de-rol-guardia"
+ ],
+ "backend/src/shared/entities/rol.entity.ts": [
+  "entity--rol"
+ ],
+ "backend/src/shared/entities/seguro-bombero.entity.ts": [
+  "entity--seguro-bombero"
+ ],
+ "backend/src/shared/entities/servicio.entity.ts": [
+  "entity--servicio"
+ ],
+ "backend/src/shared/entities/sesion.entity.ts": [
+  "entity--sesion"
+ ],
+ "backend/src/shared/entities/tipo-bombero.entity.ts": [
+  "entity--tipo-bombero"
+ ],
+ "backend/src/shared/entities/tipo-guardia.entity.ts": [
+  "entity--tipo-guardia"
+ ],
+ "backend/src/shared/entities/tipo-servicio.entity.ts": [
+  "entity--tipo-servicio"
+ ],
+ "backend/src/shared/entities/tolerancia-asistencia.entity.ts": [
+  "entity--tolerancia-asistencia",
+  "decision--tolerancias-parametrizables",
+  "rule--tolerancia-null-es-la-general"
+ ],
+ "backend/src/shared/entities/turno.entity.ts": [
+  "entity--turno"
+ ],
+ "backend/src/shared/entities/unidad.entity.ts": [
+  "entity--unidad"
+ ],
+ "backend/src/shared/entities/usuario-correo.entity.ts": [
+  "entity--usuario-correo"
+ ],
+ "backend/src/shared/entities/usuario-telefono.entity.ts": [
+  "entity--usuario-telefono"
+ ],
+ "backend/src/shared/entities/usuario.entity.ts": [
+  "entity--usuario"
+ ],
+ "backend/src/shared/entities/vehiculo-autorizado.entity.ts": [
+  "entity--vehiculo-autorizado"
+ ],
+ "backend/src/shared/entities/vehiculo.entity.ts": [
+  "entity--vehiculo"
+ ],
+ "database/migrations/000_create_database.sql": [
+  "file--000-create-database"
+ ],
+ "database/migrations/001_schemas.sql": [
+  "file--001-schemas"
+ ],
+ "database/migrations/002_seguridad.sql": [
+  "file--002-seguridad",
+  "table--seguridad-usuarios",
+  "table--seguridad-roles",
+  "table--seguridad-permisos",
+  "table--seguridad-asignacion-roles",
+  "table--seguridad-asignacion-permisos-directos",
+  "table--seguridad-asignacion-permisos-rol",
+  "table--seguridad-restricciones",
+  "table--seguridad-sesiones",
+  "table--seguridad-logs-auditoria"
+ ],
+ "database/migrations/003_personal.sql": [
+  "file--003-personal",
+  "table--personal-bomberos",
+  "table--personal-certificaciones",
+  "table--personal-licencias",
+  "table--personal-historial-medico",
+  "table--personal-historial-disciplinario",
+  "rule--cedula-y-numero-bombero-unicos"
+ ],
+ "database/migrations/004_academia.sql": [
+  "file--004-academia",
+  "table--academia-aspirantes",
+  "table--academia-materias",
+  "table--academia-cursos",
+  "table--academia-inscripciones-cursos",
+  "table--academia-examenes",
+  "table--academia-notas-examenes",
+  "table--academia-asistencia-academia"
+ ],
+ "database/migrations/005_operaciones.sql": [
+  "file--005-operaciones",
+  "table--operaciones-eventos-asistencia",
+  "table--operaciones-marcaciones-asistencia",
+  "table--operaciones-guardias",
+  "table--operaciones-asignacion-guardias",
+  "table--operaciones-cambios-guardias"
+ ],
+ "database/migrations/006_vehiculos_equipos.sql": [
+  "file--006-vehiculos-equipos",
+  "table--vehiculos-vehiculos",
+  "table--vehiculos-mantenimientos-vehiculos",
+  "table--vehiculos-consumos-combustible",
+  "table--equipos-categorias-equipo",
+  "table--equipos-equipos",
+  "table--equipos-mantenimientos-equipos",
+  "table--equipos-prestamos-equipos"
+ ],
+ "database/migrations/007_servicios.sql": [
+  "file--007-servicios",
+  "table--servicios-tipos-servicio",
+  "table--servicios-servicios",
+  "table--servicios-personal-servicio",
+  "table--servicios-historial-servicios"
+ ],
+ "database/migrations/008_admin.sql": [
+  "file--008-admin",
+  "table--finanzas-cuentas-contables",
+  "table--finanzas-movimientos",
+  "table--deposito-items-deposito",
+  "table--deposito-movimientos-deposito",
+  "table--documentos-documentos"
+ ],
+ "database/migrations/009_foreign_keys.sql": [
+  "file--009-foreign-keys",
+  "table--seguridad-usuarios",
+  "table--seguridad-roles",
+  "table--seguridad-asignacion-roles",
+  "table--seguridad-asignacion-permisos-directos",
+  "table--seguridad-asignacion-permisos-rol",
+  "table--seguridad-restricciones",
+  "table--seguridad-sesiones",
+  "table--seguridad-logs-auditoria",
+  "table--personal-bomberos",
+  "table--personal-certificaciones",
+  "table--personal-licencias",
+  "table--personal-historial-medico",
+  "table--personal-historial-disciplinario",
+  "table--academia-cursos",
+  "table--academia-inscripciones-cursos",
+  "table--academia-examenes",
+  "table--academia-notas-examenes",
+  "table--academia-asistencia-academia",
+  "table--operaciones-eventos-asistencia",
+  "table--operaciones-marcaciones-asistencia",
+  "table--operaciones-guardias",
+  "table--operaciones-asignacion-guardias",
+  "table--operaciones-cambios-guardias",
+  "table--vehiculos-mantenimientos-vehiculos",
+  "table--vehiculos-consumos-combustible",
+  "table--equipos-categorias-equipo",
+  "table--equipos-equipos",
+  "table--equipos-mantenimientos-equipos",
+  "table--equipos-prestamos-equipos",
+  "table--servicios-servicios",
+  "table--servicios-personal-servicio",
+  "table--servicios-historial-servicios",
+  "table--finanzas-movimientos",
+  "table--deposito-movimientos-deposito",
+  "table--documentos-documentos"
+ ],
+ "database/migrations/010_indices.sql": [
+  "file--010-indices"
+ ],
+ "database/migrations/011_seguridad_fase1.sql": [
+  "file--011-seguridad-fase1",
+  "table--seguridad-usuarios",
+  "table--seguridad-roles",
+  "table--seguridad-historial-contrasenas"
+ ],
+ "database/migrations/012_organizacion.sql": [
+  "file--012-organizacion",
+  "table--personal-bomberos",
+  "table--organizacion-rangos",
+  "table--organizacion-cargos",
+  "table--organizacion-especialidades",
+  "table--organizacion-companias",
+  "table--organizacion-cuarteles",
+  "table--organizacion-brigadas",
+  "table--organizacion-departamentos",
+  "table--organizacion-unidades",
+  "table--organizacion-turnos",
+  "table--organizacion-tipos-guardia",
+  "table--organizacion-designaciones",
+  "table--organizacion-ascensos",
+  "table--personal-bombero-especialidades"
+ ],
+ "database/migrations/013_apariencia_login.sql": [
+  "file--013-apariencia-login",
+  "table--seguridad-configuracion-sistema"
+ ],
+ "database/migrations/014_configuracion_sistema.sql": [
+  "file--014-configuracion-sistema",
+  "table--seguridad-configuracion-sistema"
+ ],
+ "database/migrations/015_perfil_usuario.sql": [
+  "file--015-perfil-usuario",
+  "table--seguridad-usuarios",
+  "table--seguridad-configuracion-sistema",
+  "table--seguridad-usuario-telefonos",
+  "table--seguridad-usuario-correos"
+ ],
+ "database/migrations/016_personal_expansion.sql": [
+  "file--016-personal-expansion",
+  "table--personal-bomberos",
+  "table--personal-certificaciones",
+  "table--personal-bombero-especialidades",
+  "table--personal-historial-codigo",
+  "table--personal-condicion-incorporado",
+  "table--personal-condicion-combatiente",
+  "table--personal-condicion-apoyo-economico",
+  "table--personal-condicion-honorario",
+  "table--personal-historial-institucional",
+  "table--personal-actividad-profesional",
+  "table--personal-idiomas-bombero",
+  "table--personal-vehiculos-autorizados",
+  "table--personal-fojas-servicio"
+ ],
+ "database/migrations/017_comunicaciones_servicio.sql": [
+  "file--017-comunicaciones-servicio",
+  "table--servicios-comunicaciones-servicio",
+  "decision--comunicacion-como-json",
+  "rule--una-comunicacion-por-servicio",
+  "workflow--comunicacion-de-servicio"
+ ],
+ "database/migrations/017_tipos_bombero.sql": [
+  "file--017-tipos-bombero",
+  "table--personal-bomberos",
+  "table--personal-tipos-bombero"
+ ],
+ "database/migrations/018_parametros_y_normalizacion_personal.sql": [
+  "file--018-parametros-y-normalizacion-personal",
+  "table--personal-bomberos",
+  "table--equipos-prestamos-equipos",
+  "table--personal-actividad-profesional",
+  "table--personal-idiomas-bombero",
+  "table--organizacion-parametros",
+  "table--personal-seguros-bombero"
+ ],
+ "database/migrations/019_ajuste_tipos_bombero.sql": [
+  "file--019-ajuste-tipos-bombero"
+ ],
+ "database/migrations/020_asistencia.sql": [
+  "file--020-asistencia",
+  "table--operaciones-eventos-asistencia",
+  "table--operaciones-marcaciones-asistencia",
+  "table--operaciones-guardias",
+  "table--organizacion-parametros",
+  "table--operaciones-participantes-externos",
+  "table--operaciones-participantes-evento",
+  "table--operaciones-tolerancias-asistencia",
+  "table--operaciones-importaciones-marcador",
+  "table--operaciones-importaciones-marcador-filas"
+ ],
+ "database/migrations/021_configuracion_integral.sql": [
+  "file--021-configuracion-integral",
+  "table--seguridad-configuracion-valores",
+  "table--seguridad-configuracion-versiones"
+ ],
+ "database/migrations/022_permiso_publicaciones.sql": [
+  "file--022-permiso-publicaciones"
+ ],
+ "database/migrations/023_moviles.sql": [
+  "file--023-moviles",
+  "table--vehiculos-vehiculos",
+  "table--vehiculos-checklist-items"
+ ],
+ "database/migrations/024_equipos.sql": [
+  "file--024-equipos",
+  "table--equipos-equipos",
+  "table--organizacion-parametros"
+ ],
+ "database/migrations/025_guardias.sql": [
+  "file--025-guardias",
+  "table--operaciones-guardias",
+  "table--operaciones-asignacion-guardias",
+  "table--organizacion-parametros",
+  "table--operaciones-grupos-guardia",
+  "table--operaciones-grupos-guardia-miembros",
+  "table--operaciones-pernoctes",
+  "table--operaciones-inspecciones-estacion",
+  "table--operaciones-novedades-guardia",
+  "table--operaciones-requisitos-rol-guardia",
+  "rule--guardias-vive-en-operaciones"
+ ],
+ "database/migrations/026_publicaciones_persistencia.sql": [
+  "file--026-publicaciones-persistencia",
+  "table--contenido-publicaciones"
+ ],
+ "database/migrations/027_personal_reconciliacion_segura.sql": [
+  "file--027-personal-reconciliacion-segura"
+ ],
+ "backend/src/modules/auth/auth.module.ts": [
+  "component--modulo-auth"
+ ],
+ "backend/src/modules/configuracion/configuracion.module.ts": [
+  "component--modulo-configuracion"
+ ],
+ "backend/src/modules/equipos/equipos.module.ts": [
+  "component--modulo-equipos"
+ ],
+ "backend/src/modules/guardias/guardias.module.ts": [
+  "component--modulo-guardias"
+ ],
+ "backend/src/modules/operaciones/operaciones.module.ts": [
+  "component--modulo-operaciones"
+ ],
+ "backend/src/modules/organizacion/organizacion.module.ts": [
+  "component--modulo-organizacion"
+ ],
+ "backend/src/modules/personal/personal.module.ts": [
+  "component--modulo-personal"
+ ],
+ "backend/src/modules/publicaciones/publicaciones.module.ts": [
+  "component--modulo-publicaciones"
+ ],
+ "backend/src/modules/seguridad/seguridad.module.ts": [
+  "component--modulo-seguridad"
+ ],
+ "backend/src/modules/servicios/servicios.module.ts": [
+  "component--modulo-servicios"
+ ],
+ "backend/src/modules/vehiculos/vehiculos.module.ts": [
+  "component--modulo-vehiculos"
+ ],
+ "backend/src/modules/auth/auth.service.ts": [
+  "service--auth-auth",
+  "rule--bloqueo-tras-cinco-intentos",
+  "workflow--login-y-sesion"
+ ],
+ "backend/src/modules/configuracion/configuracion.service.ts": [
+  "service--configuracion-configuracion",
+  "workflow--configuracion-versionada"
+ ],
+ "backend/src/modules/equipos/categorias-equipo.service.ts": [
+  "service--equipos-categorias-equipo"
+ ],
+ "backend/src/modules/equipos/equipamiento-bombero.service.ts": [
+  "service--equipos-equipamiento-bombero"
+ ],
+ "backend/src/modules/equipos/equipos.service.ts": [
+  "service--equipos-equipos"
+ ],
+ "backend/src/modules/guardias/elegibilidad.service.ts": [
+  "service--guardias-elegibilidad",
+  "rule--elegibilidad-de-rol-guardia"
+ ],
+ "backend/src/modules/guardias/grupos-guardia.service.ts": [
+  "service--guardias-grupos-guardia"
+ ],
+ "backend/src/modules/guardias/guardias.service.ts": [
+  "service--guardias-guardias",
+  "workflow--guardia-y-pernocte"
+ ],
+ "backend/src/modules/guardias/inspecciones-estacion.service.ts": [
+  "service--guardias-inspecciones-estacion"
+ ],
+ "backend/src/modules/guardias/novedades.service.ts": [
+  "service--guardias-novedades"
+ ],
+ "backend/src/modules/guardias/pernoctes.service.ts": [
+  "service--guardias-pernoctes"
+ ],
+ "backend/src/modules/guardias/requisitos-rol.service.ts": [
+  "service--guardias-requisitos-rol"
+ ],
+ "backend/src/modules/operaciones/dashboard-asistencia.service.ts": [
+  "service--operaciones-dashboard-asistencia"
+ ],
+ "backend/src/modules/operaciones/eventos-asistencia.service.ts": [
+  "service--operaciones-eventos-asistencia",
+  "workflow--asistencia-a-evento"
+ ],
+ "backend/src/modules/operaciones/importaciones.service.ts": [
+  "service--operaciones-importaciones",
+  "workflow--importacion-marcador"
+ ],
+ "backend/src/modules/operaciones/marcaciones.service.ts": [
+  "service--operaciones-marcaciones",
+  "workflow--asistencia-a-evento"
+ ],
+ "backend/src/modules/operaciones/participantes-externos.service.ts": [
+  "service--operaciones-participantes-externos"
+ ],
+ "backend/src/modules/operaciones/tolerancias.service.ts": [
+  "service--operaciones-tolerancias",
+  "decision--tolerancias-parametrizables",
+  "rule--tolerancia-null-es-la-general"
+ ],
+ "backend/src/modules/organizacion/ascensos.service.ts": [
+  "service--organizacion-ascensos"
+ ],
+ "backend/src/modules/organizacion/brigadas.service.ts": [
+  "service--organizacion-brigadas"
+ ],
+ "backend/src/modules/organizacion/cargos.service.ts": [
+  "service--organizacion-cargos"
+ ],
+ "backend/src/modules/organizacion/companias.service.ts": [
+  "service--organizacion-companias"
+ ],
+ "backend/src/modules/organizacion/cuarteles.service.ts": [
+  "service--organizacion-cuarteles"
+ ],
+ "backend/src/modules/organizacion/dashboard.service.ts": [
+  "service--organizacion-dashboard"
+ ],
+ "backend/src/modules/organizacion/departamentos.service.ts": [
+  "service--organizacion-departamentos"
+ ],
+ "backend/src/modules/organizacion/designaciones.service.ts": [
+  "service--organizacion-designaciones"
+ ],
+ "backend/src/modules/organizacion/especialidades.service.ts": [
+  "service--organizacion-especialidades"
+ ],
+ "backend/src/modules/organizacion/parametros.service.ts": [
+  "service--organizacion-parametros"
+ ],
+ "backend/src/modules/organizacion/rangos.service.ts": [
+  "service--organizacion-rangos"
+ ],
+ "backend/src/modules/organizacion/tipos-guardia.service.ts": [
+  "service--organizacion-tipos-guardia"
+ ],
+ "backend/src/modules/organizacion/turnos.service.ts": [
+  "service--organizacion-turnos"
+ ],
+ "backend/src/modules/organizacion/unidades.service.ts": [
+  "service--organizacion-unidades"
+ ],
+ "backend/src/modules/personal/actividad-profesional.service.ts": [
+  "service--personal-actividad-profesional"
+ ],
+ "backend/src/modules/personal/bomberos.service.ts": [
+  "service--personal-bomberos",
+  "rule--cedula-y-numero-bombero-unicos"
+ ],
+ "backend/src/modules/personal/condicion.service.ts": [
+  "service--personal-condicion"
+ ],
+ "backend/src/modules/personal/consultas-cruzadas.service.ts": [
+  "service--personal-consultas-cruzadas"
+ ],
+ "backend/src/modules/personal/especialidades-bombero.service.ts": [
+  "service--personal-especialidades-bombero"
+ ],
+ "backend/src/modules/personal/foja-servicio.service.ts": [
+  "service--personal-foja-servicio"
+ ],
+ "backend/src/modules/personal/historial-institucional.service.ts": [
+  "service--personal-historial-institucional"
+ ],
+ "backend/src/modules/personal/idiomas.service.ts": [
+  "service--personal-idiomas"
+ ],
+ "backend/src/modules/personal/seguros-bombero.service.ts": [
+  "service--personal-seguros-bombero"
+ ],
+ "backend/src/modules/personal/tipos-bombero.service.ts": [
+  "service--personal-tipos-bombero"
+ ],
+ "backend/src/modules/publicaciones/publicaciones.service.ts": [
+  "service--publicaciones-publicaciones"
+ ],
+ "backend/src/modules/seguridad/apariencia.service.ts": [
+  "service--seguridad-apariencia"
+ ],
+ "backend/src/modules/seguridad/auditoria.service.ts": [
+  "service--seguridad-auditoria"
+ ],
+ "backend/src/modules/seguridad/dashboard.service.ts": [
+  "service--seguridad-dashboard"
+ ],
+ "backend/src/modules/seguridad/perfil.service.ts": [
+  "service--seguridad-perfil"
+ ],
+ "backend/src/modules/seguridad/permisos.service.ts": [
+  "service--seguridad-permisos"
+ ],
+ "backend/src/modules/seguridad/policy-engine.service.ts": [
+  "service--seguridad-policy-engine",
+  "decision--permisos-dinamicos",
+  "rule--permisos-efectivos"
+ ],
+ "backend/src/modules/seguridad/roles.service.ts": [
+  "service--seguridad-roles"
+ ],
+ "backend/src/modules/seguridad/sesiones.service.ts": [
+  "service--seguridad-sesiones"
+ ],
+ "backend/src/modules/seguridad/usuarios.service.ts": [
+  "service--seguridad-usuarios"
+ ],
+ "backend/src/modules/servicios/servicios.service.ts": [
+  "service--servicios-servicios",
+  "workflow--comunicacion-de-servicio"
+ ],
+ "backend/src/modules/vehiculos/checklist-items.service.ts": [
+  "service--vehiculos-checklist-items"
+ ],
+ "backend/src/modules/vehiculos/vehiculos-autorizados.service.ts": [
+  "service--vehiculos-vehiculos-autorizados"
+ ],
+ "backend/src/modules/vehiculos/vehiculos.service.ts": [
+  "service--vehiculos-vehiculos"
+ ],
+ "backend/src/modules/auth/auth.controller.ts": [
+  "api--auth-auth"
+ ],
+ "backend/src/modules/configuracion/configuracion.controller.ts": [
+  "api--configuracion-configuracion"
+ ],
+ "backend/src/modules/equipos/categorias-equipo.controller.ts": [
+  "api--equipos-categorias-equipo"
+ ],
+ "backend/src/modules/equipos/equipamiento-bombero.controller.ts": [
+  "api--equipos-equipamiento-bombero"
+ ],
+ "backend/src/modules/equipos/equipos.controller.ts": [
+  "api--equipos-equipos"
+ ],
+ "backend/src/modules/guardias/grupos-guardia.controller.ts": [
+  "api--guardias-grupos-guardia"
+ ],
+ "backend/src/modules/guardias/guardias.controller.ts": [
+  "api--guardias-guardias",
+  "workflow--guardia-y-pernocte"
+ ],
+ "backend/src/modules/guardias/inspecciones-estacion.controller.ts": [
+  "api--guardias-inspecciones-estacion"
+ ],
+ "backend/src/modules/guardias/novedades.controller.ts": [
+  "api--guardias-novedades"
+ ],
+ "backend/src/modules/guardias/pernoctes.controller.ts": [
+  "api--guardias-pernoctes"
+ ],
+ "backend/src/modules/guardias/requisitos-rol.controller.ts": [
+  "api--guardias-requisitos-rol"
+ ],
+ "backend/src/modules/operaciones/dashboard-asistencia.controller.ts": [
+  "api--operaciones-dashboard-asistencia"
+ ],
+ "backend/src/modules/operaciones/eventos-asistencia.controller.ts": [
+  "api--operaciones-eventos-asistencia"
+ ],
+ "backend/src/modules/operaciones/importaciones.controller.ts": [
+  "api--operaciones-importaciones",
+  "workflow--importacion-marcador"
+ ],
+ "backend/src/modules/operaciones/marcaciones.controller.ts": [
+  "api--operaciones-marcaciones"
+ ],
+ "backend/src/modules/operaciones/participantes-externos.controller.ts": [
+  "api--operaciones-participantes-externos"
+ ],
+ "backend/src/modules/operaciones/tolerancias.controller.ts": [
+  "api--operaciones-tolerancias"
+ ],
+ "backend/src/modules/organizacion/ascensos.controller.ts": [
+  "api--organizacion-ascensos"
+ ],
+ "backend/src/modules/organizacion/brigadas.controller.ts": [
+  "api--organizacion-brigadas"
+ ],
+ "backend/src/modules/organizacion/cargos.controller.ts": [
+  "api--organizacion-cargos"
+ ],
+ "backend/src/modules/organizacion/companias.controller.ts": [
+  "api--organizacion-companias"
+ ],
+ "backend/src/modules/organizacion/cuarteles.controller.ts": [
+  "api--organizacion-cuarteles"
+ ],
+ "backend/src/modules/organizacion/dashboard.controller.ts": [
+  "api--organizacion-dashboard"
+ ],
+ "backend/src/modules/organizacion/departamentos.controller.ts": [
+  "api--organizacion-departamentos"
+ ],
+ "backend/src/modules/organizacion/designaciones.controller.ts": [
+  "api--organizacion-designaciones"
+ ],
+ "backend/src/modules/organizacion/especialidades.controller.ts": [
+  "api--organizacion-especialidades"
+ ],
+ "backend/src/modules/organizacion/parametros.controller.ts": [
+  "api--organizacion-parametros"
+ ],
+ "backend/src/modules/organizacion/rangos.controller.ts": [
+  "api--organizacion-rangos"
+ ],
+ "backend/src/modules/organizacion/tipos-guardia.controller.ts": [
+  "api--organizacion-tipos-guardia"
+ ],
+ "backend/src/modules/organizacion/turnos.controller.ts": [
+  "api--organizacion-turnos"
+ ],
+ "backend/src/modules/organizacion/unidades.controller.ts": [
+  "api--organizacion-unidades"
+ ],
+ "backend/src/modules/personal/actividad-profesional.controller.ts": [
+  "api--personal-actividad-profesional"
+ ],
+ "backend/src/modules/personal/bomberos.controller.ts": [
+  "api--personal-bomberos"
+ ],
+ "backend/src/modules/personal/condicion.controller.ts": [
+  "api--personal-condicion"
+ ],
+ "backend/src/modules/personal/consultas-cruzadas.controller.ts": [
+  "api--personal-consultas-cruzadas"
+ ],
+ "backend/src/modules/personal/especialidades-bombero.controller.ts": [
+  "api--personal-especialidades-bombero"
+ ],
+ "backend/src/modules/personal/foja-servicio.controller.ts": [
+  "api--personal-foja-servicio"
+ ],
+ "backend/src/modules/personal/historial-institucional.controller.ts": [
+  "api--personal-historial-institucional"
+ ],
+ "backend/src/modules/personal/idiomas.controller.ts": [
+  "api--personal-idiomas"
+ ],
+ "backend/src/modules/personal/seguros-bombero.controller.ts": [
+  "api--personal-seguros-bombero"
+ ],
+ "backend/src/modules/personal/tipos-bombero.controller.ts": [
+  "api--personal-tipos-bombero"
+ ],
+ "backend/src/modules/publicaciones/publicaciones.controller.ts": [
+  "api--publicaciones-publicaciones"
+ ],
+ "backend/src/modules/seguridad/apariencia.controller.ts": [
+  "api--seguridad-apariencia"
+ ],
+ "backend/src/modules/seguridad/auditoria.controller.ts": [
+  "api--seguridad-auditoria"
+ ],
+ "backend/src/modules/seguridad/dashboard.controller.ts": [
+  "api--seguridad-dashboard"
+ ],
+ "backend/src/modules/seguridad/me.controller.ts": [
+  "api--seguridad-me"
+ ],
+ "backend/src/modules/seguridad/perfil.controller.ts": [
+  "api--seguridad-perfil"
+ ],
+ "backend/src/modules/seguridad/permisos.controller.ts": [
+  "api--seguridad-permisos"
+ ],
+ "backend/src/modules/seguridad/roles.controller.ts": [
+  "api--seguridad-roles"
+ ],
+ "backend/src/modules/seguridad/sesiones.controller.ts": [
+  "api--seguridad-sesiones"
+ ],
+ "backend/src/modules/seguridad/usuarios.controller.ts": [
+  "api--seguridad-usuarios"
+ ],
+ "backend/src/modules/servicios/servicios.controller.ts": [
+  "api--servicios-servicios",
+  "workflow--comunicacion-de-servicio"
+ ],
+ "backend/src/modules/vehiculos/checklist-items.controller.ts": [
+  "api--vehiculos-checklist-items"
+ ],
+ "backend/src/modules/vehiculos/vehiculos-autorizados.controller.ts": [
+  "api--vehiculos-vehiculos-autorizados"
+ ],
+ "backend/src/modules/vehiculos/vehiculos.controller.ts": [
+  "api--vehiculos-vehiculos"
+ ],
+ "frontend/src/app/dashboard/asistencia/auditoria/page.tsx": [
+  "screen--dashboard-asistencia-auditoria"
+ ],
+ "frontend/src/app/dashboard/asistencia/eventos/page.tsx": [
+  "screen--dashboard-asistencia-eventos"
+ ],
+ "frontend/src/app/dashboard/asistencia/eventos/[id]/page.tsx": [
+  "screen--dashboard-asistencia-eventos-id"
+ ],
+ "frontend/src/app/dashboard/asistencia/externos/page.tsx": [
+  "screen--dashboard-asistencia-externos"
+ ],
+ "frontend/src/app/dashboard/asistencia/page.tsx": [
+  "screen--dashboard-asistencia"
+ ],
+ "frontend/src/app/dashboard/asistencia/registro/page.tsx": [
+  "screen--dashboard-asistencia-registro"
+ ],
+ "frontend/src/app/dashboard/asistencia/tolerancias/page.tsx": [
+  "screen--dashboard-asistencia-tolerancias"
+ ],
+ "frontend/src/app/dashboard/equipos/categorias/page.tsx": [
+  "screen--dashboard-equipos-categorias"
+ ],
+ "frontend/src/app/dashboard/equipos/page.tsx": [
+  "screen--dashboard-equipos"
+ ],
+ "frontend/src/app/dashboard/equipos/[id]/page.tsx": [
+  "screen--dashboard-equipos-id"
+ ],
+ "frontend/src/app/dashboard/guardias/auditoria/page.tsx": [
+  "screen--dashboard-guardias-auditoria"
+ ],
+ "frontend/src/app/dashboard/guardias/grupos/page.tsx": [
+  "screen--dashboard-guardias-grupos"
+ ],
+ "frontend/src/app/dashboard/guardias/grupos/[id]/page.tsx": [
+  "screen--dashboard-guardias-grupos-id"
+ ],
+ "frontend/src/app/dashboard/guardias/page.tsx": [
+  "screen--dashboard-guardias"
+ ],
+ "frontend/src/app/dashboard/guardias/pernoctes/page.tsx": [
+  "screen--dashboard-guardias-pernoctes"
+ ],
+ "frontend/src/app/dashboard/guardias/requisitos/page.tsx": [
+  "screen--dashboard-guardias-requisitos"
+ ],
+ "frontend/src/app/dashboard/guardias/[id]/page.tsx": [
+  "screen--dashboard-guardias-id"
+ ],
+ "frontend/src/app/dashboard/mi-perfil/page.tsx": [
+  "screen--dashboard-mi-perfil"
+ ],
+ "frontend/src/app/dashboard/organizacion/ascensos/page.tsx": [
+  "screen--dashboard-organizacion-ascensos"
+ ],
+ "frontend/src/app/dashboard/organizacion/brigadas/page.tsx": [
+  "screen--dashboard-organizacion-brigadas"
+ ],
+ "frontend/src/app/dashboard/organizacion/cargos/page.tsx": [
+  "screen--dashboard-organizacion-cargos"
+ ],
+ "frontend/src/app/dashboard/organizacion/companias/page.tsx": [
+  "screen--dashboard-organizacion-companias"
+ ],
+ "frontend/src/app/dashboard/organizacion/cuarteles/page.tsx": [
+  "screen--dashboard-organizacion-cuarteles"
+ ],
+ "frontend/src/app/dashboard/organizacion/departamentos/page.tsx": [
+  "screen--dashboard-organizacion-departamentos"
+ ],
+ "frontend/src/app/dashboard/organizacion/designaciones/page.tsx": [
+  "screen--dashboard-organizacion-designaciones"
+ ],
+ "frontend/src/app/dashboard/organizacion/especialidades/page.tsx": [
+  "screen--dashboard-organizacion-especialidades"
+ ],
+ "frontend/src/app/dashboard/organizacion/guardias/page.tsx": [
+  "screen--dashboard-organizacion-guardias"
+ ],
+ "frontend/src/app/dashboard/organizacion/page.tsx": [
+  "screen--dashboard-organizacion"
+ ],
+ "frontend/src/app/dashboard/organizacion/parametros/page.tsx": [
+  "screen--dashboard-organizacion-parametros"
+ ],
+ "frontend/src/app/dashboard/organizacion/rangos/page.tsx": [
+  "screen--dashboard-organizacion-rangos"
+ ],
+ "frontend/src/app/dashboard/organizacion/reportes/page.tsx": [
+  "screen--dashboard-organizacion-reportes"
+ ],
+ "frontend/src/app/dashboard/organizacion/tipos-bombero/page.tsx": [
+  "screen--dashboard-organizacion-tipos-bombero"
+ ],
+ "frontend/src/app/dashboard/organizacion/turnos/page.tsx": [
+  "screen--dashboard-organizacion-turnos"
+ ],
+ "frontend/src/app/dashboard/organizacion/unidades/page.tsx": [
+  "screen--dashboard-organizacion-unidades"
+ ],
+ "frontend/src/app/dashboard/page.tsx": [
+  "screen--dashboard"
+ ],
+ "frontend/src/app/dashboard/personal/nuevo/page.tsx": [
+  "screen--dashboard-personal-nuevo"
+ ],
+ "frontend/src/app/dashboard/personal/page.tsx": [
+  "screen--dashboard-personal"
+ ],
+ "frontend/src/app/dashboard/personal/[id]/page.tsx": [
+  "screen--dashboard-personal-id"
+ ],
+ "frontend/src/app/dashboard/publicaciones/page.tsx": [
+  "screen--dashboard-publicaciones"
+ ],
+ "frontend/src/app/dashboard/seguridad/apariencia/page.tsx": [
+  "screen--dashboard-seguridad-apariencia"
+ ],
+ "frontend/src/app/dashboard/seguridad/auditoria/page.tsx": [
+  "screen--dashboard-seguridad-auditoria"
+ ],
+ "frontend/src/app/dashboard/seguridad/configuracion/page.tsx": [
+  "screen--dashboard-seguridad-configuracion"
+ ],
+ "frontend/src/app/dashboard/seguridad/page.tsx": [
+  "screen--dashboard-seguridad"
+ ],
+ "frontend/src/app/dashboard/seguridad/permisos/page.tsx": [
+  "screen--dashboard-seguridad-permisos"
+ ],
+ "frontend/src/app/dashboard/seguridad/roles/page.tsx": [
+  "screen--dashboard-seguridad-roles"
+ ],
+ "frontend/src/app/dashboard/seguridad/sesiones/page.tsx": [
+  "screen--dashboard-seguridad-sesiones"
+ ],
+ "frontend/src/app/dashboard/seguridad/usuarios/page.tsx": [
+  "screen--dashboard-seguridad-usuarios"
+ ],
+ "frontend/src/app/dashboard/seguridad/usuarios/[id]/page.tsx": [
+  "screen--dashboard-seguridad-usuarios-id"
+ ],
+ "frontend/src/app/dashboard/servicios/nuevo/page.tsx": [
+  "screen--dashboard-servicios-nuevo"
+ ],
+ "frontend/src/app/dashboard/servicios/page.tsx": [
+  "screen--dashboard-servicios"
+ ],
+ "frontend/src/app/dashboard/vehiculos/checklist-items/page.tsx": [
+  "screen--dashboard-vehiculos-checklist-items"
+ ],
+ "frontend/src/app/dashboard/vehiculos/page.tsx": [
+  "screen--dashboard-vehiculos"
+ ],
+ "frontend/src/app/dashboard/vehiculos/[id]/page.tsx": [
+  "screen--dashboard-vehiculos-id"
+ ],
+ "frontend/src/app/dashboard/[modulo]/page.tsx": [
+  "screen--dashboard-modulo"
+ ],
+ "frontend/src/app/login/page.tsx": [
+  "screen--login"
+ ],
+ "frontend/src/app/page.tsx": [
+  "screen--raiz"
+ ],
+ "frontend/src/lib/api.ts": [
+  "component--front-api",
+  "rule--api-v1-y-contrato-http",
+  "rule--pantalla-cliente-sin-store",
+  "workflow--login-y-sesion"
+ ],
+ "frontend/src/lib/asistencia.ts": [
+  "component--front-asistencia"
+ ],
+ "frontend/src/lib/configuracion.ts": [
+  "component--front-configuracion"
+ ],
+ "frontend/src/lib/equipos.ts": [
+  "component--front-equipos"
+ ],
+ "frontend/src/lib/exportar.ts": [
+  "component--front-exportar"
+ ],
+ "frontend/src/lib/guardias.ts": [
+  "component--front-guardias"
+ ],
+ "frontend/src/lib/parametros.ts": [
+  "component--front-parametros"
+ ],
+ "frontend/src/lib/personal.ts": [
+  "component--front-personal"
+ ],
+ "frontend/src/lib/publicaciones.ts": [
+  "component--front-publicaciones"
+ ],
+ "frontend/src/lib/texto.ts": [
+  "component--front-texto"
+ ],
+ "frontend/src/lib/vehiculos.ts": [
+  "component--front-vehiculos"
+ ],
+ "frontend/src/app/components/ConfigBootstrap.tsx": [
+  "component--front-configbootstrap"
+ ],
+ "frontend/src/app/components/ConfirmProvider.tsx": [
+  "component--front-confirmprovider"
+ ],
+ "frontend/src/app/components/ExperienceGuard.tsx": [
+  "component--front-experienceguard"
+ ],
+ "frontend/src/app/components/SystemIcon.tsx": [
+  "component--front-systemicon"
+ ],
+ "backend/src/modules/configuracion/configuracion.registry.ts": [
+  "configuration--apariencia",
+  "configuration--accesibilidad",
+  "configuration--idioma-y-region",
+  "configuration--comportamiento",
+  "configuration--identidad",
+  "configuration--tokens-de-diseno",
+  "configuration--navegacion",
+  "configuration--seguridad-global",
+  "configuration--mantenimiento",
+  "rule--tema-oscuro-fijo",
+  "workflow--configuracion-versionada"
+ ],
+ "backend/src/core/database/data-source-options.ts": [
+  "configuration--conexion-datos",
+  "decision--migraciones-a-mano",
+  "decision--pool-idle-timeout",
+  "decision--sqlserver-en-vez-de-postgres",
+  "dependency--sqlserver-express",
+  "error--pool-conexion-colgada",
+  "rule--snake-case-en-bd-camel-en-typescript"
+ ],
+ "backend/src/main.ts": [
+  "decision--body-parser-8mb",
+  "error--413-croquis-grande",
+  "rule--api-v1-y-contrato-http"
+ ],
+ "database/run-migrations.ps1": [
+  "decision--migraciones-a-mano",
+  "dependency--nodejs",
+  "error--quoted-identifier-en-migraciones",
+  "rule--migracion-nunca-se-edita"
+ ],
+ "backend/src/app.module.ts": [
+  "decision--monolito-modular"
+ ],
+ "docs/README.md": [
+  "decision--monolito-modular",
+  "decision--sqlserver-en-vez-de-postgres"
+ ],
+ "backend/src/modules/seguridad/guards/permissions.guard.ts": [
+  "decision--permisos-dinamicos",
+  "rule--frontend-no-autoriza",
+  "rule--todo-endpoint-mutante-con-permiso"
+ ],
+ "frontend/src/app/globals.css": [
+  "decision--sin-libreria-ui",
+  "rule--sin-clases-css-nuevas",
+  "rule--tema-oscuro-fijo"
+ ],
+ "docs/GUIA-DE-ESTILO.md": [
+  "decision--sin-libreria-ui",
+  "rule--pantalla-cliente-sin-store",
+  "rule--sin-clases-css-nuevas",
+  "rule--tema-oscuro-fijo"
+ ],
+ "backend/package.json": [
+  "dependency--nestjs"
+ ],
+ "frontend/package.json": [
+  "dependency--nextjs"
+ ],
+ "start-sigbo.ps1": [
+  "dependency--nodejs",
+  "error--start-script-no-reinicia-servicios"
+ ],
+ "database/install_local.ps1": [
+  "dependency--nodejs",
+  "dependency--sqlserver-express"
+ ],
+ "database/enable-tcp-sqlexpress.ps1": [
+  "dependency--sqlserver-express",
+  "error--tcp-sqlexpress-deshabilitado"
+ ],
+ ".gitignore": [
+  "error--context-borrado-del-disco"
+ ],
+ "backend/src/shared/entities": [
+  "rule--entidad-y-tabla-en-paralelo"
+ ],
+ "database/migrations": [
+  "rule--entidad-y-tabla-en-paralelo",
+  "rule--identidad-y-tiempo-en-sql-server",
+  "rule--migracion-nunca-se-edita"
+ ],
+ "backend/src/modules/guardias": [
+  "rule--guardias-vive-en-operaciones"
+ ],
+ "backend/src/modules/seguridad/decorators/require-permission.decorator.ts": [
+  "rule--todo-endpoint-mutante-con-permiso"
+ ]
+}

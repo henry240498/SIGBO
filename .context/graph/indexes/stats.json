@@ -1,0 +1,76 @@
+{
+ "generado": "2026-08-12T11:42:09.713Z",
+ "repo": "SIGBO",
+ "nodos": 456,
+ "aristas": 1308,
+ "nodosPorTipo": {
+  "DOMAIN": 14,
+  "ENTITY": 74,
+  "FILE": 29,
+  "TABLE": 88,
+  "COMPONENT": 27,
+  "SERVICE": 56,
+  "API": 55,
+  "SCREEN": 56,
+  "CONFIGURATION": 10,
+  "DECISION": 10,
+  "DEPENDENCY": 4,
+  "ERROR": 6,
+  "RULE": 21,
+  "WORKFLOW": 6
+ },
+ "aristasPorTipo": {
+  "belongs_to": 369,
+  "defined_in": 88,
+  "references": 48,
+  "persisted_in": 74,
+  "uses": 365,
+  "reads": 172,
+  "exposes": 57,
+  "calls": 53,
+  "configured_by": 3,
+  "constrains": 11,
+  "affects": 50,
+  "depends_on": 2,
+  "originates_from": 8,
+  "contains": 8
+ },
+ "permisos": 118,
+ "terminosIndexados": 1318,
+ "huecos": {
+  "tablasSinEntidad": [
+   "seguridad.restricciones",
+   "personal.licencias",
+   "personal.historial_medico",
+   "personal.historial_disciplinario",
+   "academia.aspirantes",
+   "academia.examenes",
+   "academia.notas_examenes",
+   "academia.asistencia_academia",
+   "servicios.historial_servicios",
+   "finanzas.cuentas_contables",
+   "finanzas.movimientos",
+   "deposito.items_deposito",
+   "deposito.movimientos_deposito",
+   "documentos.documentos"
+  ],
+  "entidadesSinTabla": [],
+  "dominiosSinPantalla": [
+   "Academia",
+   "Finanzas",
+   "Depósito",
+   "Documentos",
+   "Inteligencia"
+  ],
+  "dominiosSinApi": [
+   "Academia",
+   "Finanzas",
+   "Depósito",
+   "Documentos",
+   "Inteligencia"
+  ]
+ },
+ "advertencias": [
+  "tabla renombrada: seguridad.configuracion_apariencia -> seguridad.configuracion_sistema (014_configuracion_sistema.sql)"
+ ]
+}
