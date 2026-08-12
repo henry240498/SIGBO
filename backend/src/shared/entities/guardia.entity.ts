@@ -2,7 +2,7 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateCol
 
 export type TurnoGuardia = 'DIURNO' | 'NOCTURNO' | 'COMPLETO';
 export type TipoGuardiaRegistro = 'ORDINARIA' | 'ESPECIAL' | 'EXTRAORDINARIA';
-export type EstadoGuardia = 'PROGRAMADA' | 'EN_CURSO' | 'FINALIZADA' | 'CANCELADA' | 'REEMPLAZADA';
+export type EstadoGuardia = 'PLANIFICADA' | 'CONFIRMADA' | 'EN_CURSO' | 'FINALIZADA' | 'CANCELADA' | 'ANULADA';
 
 /** Guardias programadas reales (schema operaciones). No confundir con
  * organizacion.tipos_guardia, que es el catalogo de tipos. */
@@ -26,7 +26,7 @@ export class Guardia {
   @Column({ type: 'nvarchar', length: 20, default: 'ORDINARIA' })
   tipo: TipoGuardiaRegistro;
 
-  @Column({ type: 'nvarchar', length: 20, default: 'PROGRAMADA' })
+  @Column({ type: 'nvarchar', length: 20, default: 'PLANIFICADA' })
   estado: EstadoGuardia;
 
   @Column({ type: 'uniqueidentifier', nullable: true })
@@ -64,4 +64,14 @@ export class Guardia {
 
   @Column({ type: 'datetimeoffset', precision: 3, nullable: true })
   cerradaEn: Date | null;
+
+  /** Plantilla de horario que origino esta instancia (generacion automatica
+   * o creacion manual con esquema seleccionado). Nullable: una guardia
+   * tambien puede crearse sin partir de un esquema. */
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  esquemaHorarioId: string | null;
+
+  /** Feriado al que corresponde esta guardia, si aplica (seccion 17-18). */
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  feriadoId: string | null;
 }

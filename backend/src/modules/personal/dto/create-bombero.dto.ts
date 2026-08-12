@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsIn, IsNotEmpty, IsOptional, IsString, Matches } from 'class-validator';
+import { IsBoolean, IsIn, IsInt, IsNotEmpty, IsOptional, IsString, Matches } from 'class-validator';
 import { GUID_REGEX, GUID_REGEX_MENSAJE } from '../../../shared/utils/guid';
+
+const DIAS_SEMANA = ['NINGUNA', 'LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO'];
 
 export class CreateBomberoDto {
   @ApiProperty() @IsString() @IsNotEmpty() cedula: string;
@@ -149,4 +151,23 @@ export class CreateBomberoDto {
   @ApiProperty({ required: false }) @IsOptional() @IsString() fechaIncorporacion?: string;
   @ApiProperty({ required: false }) @IsOptional() @IsString() fechaJuramento?: string;
   @ApiProperty({ required: false }) @IsOptional() @IsString() firmaDigitalUrl?: string;
+
+  /* --- Disponibilidad para Guardias (distinto de Servicios: un bombero
+     puede participar de servicios aunque no realice guardias) --- */
+  @ApiProperty({ required: false, default: true }) @IsOptional() @IsBoolean() realizaGuardias?: boolean;
+  @ApiProperty({ required: false, default: false }) @IsOptional() @IsBoolean() realizaGuardiasEspeciales?: boolean;
+  @ApiProperty({ required: false, description: 'Cantidad de guardias normales por mes' })
+  @IsOptional()
+  @IsInt()
+  frecuenciaNormalMensual?: number;
+
+  @ApiProperty({ required: false, description: 'Cantidad de guardias especiales por mes' })
+  @IsOptional()
+  @IsInt()
+  frecuenciaEspecialMensual?: number;
+
+  @ApiProperty({ required: false, enum: DIAS_SEMANA, default: 'NINGUNA' })
+  @IsOptional()
+  @IsIn(DIAS_SEMANA)
+  diaPreferenteGuardia?: string;
 }

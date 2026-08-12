@@ -2,15 +2,19 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { obtenerSesion } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { BomberoResumen, cargarBomberos } from '@/lib/personal';
 import {
+  Guardia,
   GrupoGuardia,
   GrupoGuardiaMiembro,
   RolGrupoGuardia,
+  actualizarGrupoGuardia,
   agregarMiembroGrupo,
   cargarGrupoGuardia,
+  cargarHistorialGrupo,
   listarMiembrosGrupo,
   quitarMiembroGrupo,
 } from '@/lib/guardias';
@@ -22,12 +26,51 @@ export default function DetalleGrupoGuardiaPage() {
 
   const [grupo, setGrupo] = useState<GrupoGuardia | null>(null);
   const [miembros, setMiembros] = useState<GrupoGuardiaMiembro[] | null>(null);
+  const [historial, setHistorial] = useState<Guardia[] | null>(null);
   const [bomberos, setBomberos] = useState<BomberoResumen[]>([]);
   const [bomberoId, setBomberoId] = useState('');
   const [rol, setRol] = useState<RolGrupoGuardia>('TITULAR');
   const [error, setError] = useState<string | null>(null);
 
+  const [editandoConfig, setEditandoConfig] = useState(false);
+  const [cicloRotacionDias, setCicloRotacionDias] = useState('');
+  const [cantidadMinima, setCantidadMinima] = useState('');
+  const [cantidadMaxima, setCantidadMaxima] = useState('');
+  const [cantidadOficiales, setCantidadOficiales] = useState('');
+  const [cantidadChoferes, setCantidadChoferes] = useState('');
+  const [guardandoConfig, setGuardandoConfig] = useState(false);
+
   const puedeEditar = !!obtenerSesion()?.usuario.permisos.includes('guardias:editar');
+
+  function abrirConfig() {
+    if (!grupo) return;
+    setCicloRotacionDias(grupo.cicloRotacionDias != null ? String(grupo.cicloRotacionDias) : '');
+    setCantidadMinima(grupo.cantidadMinima != null ? String(grupo.cantidadMinima) : '');
+    setCantidadMaxima(grupo.cantidadMaxima != null ? String(grupo.cantidadMaxima) : '');
+    setCantidadOficiales(grupo.cantidadOficiales != null ? String(grupo.cantidadOficiales) : '');
+    setCantidadChoferes(grupo.cantidadChoferes != null ? String(grupo.cantidadChoferes) : '');
+    setEditandoConfig(true);
+  }
+
+  async function guardarConfig() {
+    setError(null);
+    setGuardandoConfig(true);
+    try {
+      await actualizarGrupoGuardia(grupoId, {
+        cicloRotacionDias: cicloRotacionDias ? parseInt(cicloRotacionDias, 10) : null,
+        cantidadMinima: cantidadMinima ? parseInt(cantidadMinima, 10) : null,
+        cantidadMaxima: cantidadMaxima ? parseInt(cantidadMaxima, 10) : null,
+        cantidadOficiales: cantidadOficiales ? parseInt(cantidadOficiales, 10) : null,
+        cantidadChoferes: cantidadChoferes ? parseInt(cantidadChoferes, 10) : null,
+      });
+      setEditandoConfig(false);
+      await cargarTodo();
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setGuardandoConfig(false);
+    }
+  }
 
   const opcionesBombero = useMemo(() => {
     const yaAsignados = new Set((miembros ?? []).map((m) => m.bomberoId));
@@ -48,6 +91,7 @@ export default function DetalleGrupoGuardiaPage() {
   useEffect(() => {
     cargarTodo();
     cargarBomberos().then(setBomberos).catch(() => undefined);
+    cargarHistorialGrupo(grupoId).then(setHistorial).catch(() => setHistorial([]));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [grupoId]);
 
@@ -94,6 +138,69 @@ export default function DetalleGrupoGuardiaPage() {
 
       {error && <p style={{ color: '#f87171' }}>{error}</p>}
 
+      <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h3 style={{ fontSize: 14 }}>Configuracion de rotacion / capacidad</h3>
+          {puedeEditar && !editandoConfig && (
+            <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={abrirConfig}>Editar</button>
+          )}
+        </div>
+        {!editandoConfig && (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 16 }}>
+            <div>
+              <span style={{ fontSize: 11, color: '#94a3b8', display: 'block' }}>Ciclo de rotacion</span>
+              {grupo.cicloRotacionDias ? `cada ${grupo.cicloRotacionDias} dias` : '— (no elegible para generacion automatica)'}
+            </div>
+            <div>
+              <span style={{ fontSize: 11, color: '#94a3b8', display: 'block' }}>Cant. minima</span>
+              {grupo.cantidadMinima ?? '—'}
+            </div>
+            <div>
+              <span style={{ fontSize: 11, color: '#94a3b8', display: 'block' }}>Cant. maxima</span>
+              {grupo.cantidadMaxima ?? '—'}
+            </div>
+            <div>
+              <span style={{ fontSize: 11, color: '#94a3b8', display: 'block' }}>Cant. oficiales</span>
+              {grupo.cantidadOficiales ?? '—'}
+            </div>
+            <div>
+              <span style={{ fontSize: 11, color: '#94a3b8', display: 'block' }}>Cant. choferes</span>
+              {grupo.cantidadChoferes ?? '—'}
+            </div>
+          </div>
+        )}
+        {editandoConfig && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 10 }}>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ciclo de rotacion (dias)</label>
+                <input className="input-field" type="number" min={1} value={cicloRotacionDias} onChange={(e) => setCicloRotacionDias(e.target.value)} placeholder="Sin rotacion" />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cant. minima</label>
+                <input className="input-field" type="number" min={0} value={cantidadMinima} onChange={(e) => setCantidadMinima(e.target.value)} />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cant. maxima</label>
+                <input className="input-field" type="number" min={0} value={cantidadMaxima} onChange={(e) => setCantidadMaxima(e.target.value)} />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cant. oficiales</label>
+                <input className="input-field" type="number" min={0} value={cantidadOficiales} onChange={(e) => setCantidadOficiales(e.target.value)} />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cant. choferes</label>
+                <input className="input-field" type="number" min={0} value={cantidadChoferes} onChange={(e) => setCantidadChoferes(e.target.value)} />
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <button className="btn-primary" disabled={guardandoConfig} onClick={guardarConfig}>{guardandoConfig ? 'Guardando...' : 'Guardar cambios'}</button>
+              <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => setEditandoConfig(false)}>Cancelar</button>
+            </div>
+          </div>
+        )}
+      </div>
+
       {puedeEditar && (
         <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'end', flexWrap: 'wrap' }}>
           <div style={{ minWidth: 280 }}>
@@ -135,6 +242,37 @@ export default function DetalleGrupoGuardiaPage() {
                       </button>
                     </td>
                   )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      <div className="card">
+        <h3 style={{ fontSize: 14, marginBottom: 10 }}>Historial de guardias ({historial?.length ?? 0})</h3>
+        {historial && historial.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin guardias registradas para este grupo.</p>}
+        {historial && historial.length > 0 && (
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+            <thead>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
+                <th style={{ padding: '6px 4px' }}>Fecha</th>
+                <th style={{ padding: '6px 4px' }}>Turno</th>
+                <th style={{ padding: '6px 4px' }}>Tipo</th>
+                <th style={{ padding: '6px 4px' }}>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {historial.map((g) => (
+                <tr key={g.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                  <td style={{ padding: '6px 4px' }}>
+                    <Link href={`/dashboard/guardias/${g.id}`} style={{ color: '#60a5fa', textDecoration: 'none' }}>
+                      {g.fecha}
+                    </Link>
+                  </td>
+                  <td style={{ padding: '6px 4px' }}>{g.turno}</td>
+                  <td style={{ padding: '6px 4px' }}>{g.tipo}</td>
+                  <td style={{ padding: '6px 4px' }}><span className="badge">{g.estado}</span></td>
                 </tr>
               ))}
             </tbody>

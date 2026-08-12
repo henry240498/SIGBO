@@ -5,8 +5,12 @@ import { usePathname } from 'next/navigation';
 
 const TABS = [
   { href: '/dashboard/guardias', label: 'Guardias', exact: true },
+  { href: '/dashboard/guardias/generar', label: 'Generar' },
+  { href: '/dashboard/guardias/ordenes', label: 'Ordenes de Guardia' },
   { href: '/dashboard/guardias/grupos', label: 'Grupos' },
   { href: '/dashboard/guardias/pernoctes', label: 'Pernoctes' },
+  { href: '/dashboard/guardias/sorteos', label: 'Sorteos' },
+  { href: '/dashboard/guardias/esquemas-horario', label: 'Esquemas de Horario' },
   { href: '/dashboard/guardias/requisitos', label: 'Requisitos de Rol' },
   { href: '/dashboard/guardias/auditoria', label: 'Auditoria' },
 ];

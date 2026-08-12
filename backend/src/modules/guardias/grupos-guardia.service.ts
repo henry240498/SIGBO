@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Bombero, GrupoGuardia, GrupoGuardiaMiembro } from '../../shared/entities';
+import { Bombero, Guardia, GrupoGuardia, GrupoGuardiaMiembro } from '../../shared/entities';
 import { AuditoriaService } from '../seguridad/auditoria.service';
 import { ElegibilidadService } from './elegibilidad.service';
 import { CreateGrupoGuardiaDto, UpdateGrupoGuardiaDto } from './dto/create-grupo-guardia.dto';
@@ -13,6 +13,7 @@ export class GruposGuardiaService {
     @InjectRepository(GrupoGuardia) private readonly grupoRepo: Repository<GrupoGuardia>,
     @InjectRepository(GrupoGuardiaMiembro) private readonly miembroRepo: Repository<GrupoGuardiaMiembro>,
     @InjectRepository(Bombero) private readonly bomberoRepo: Repository<Bombero>,
+    @InjectRepository(Guardia) private readonly guardiaRepo: Repository<Guardia>,
     private readonly elegibilidadService: ElegibilidadService,
     private readonly auditoriaService: AuditoriaService,
   ) {}
@@ -40,6 +41,11 @@ export class GruposGuardiaService {
         oficialACargoId: dto.oficialACargoId ?? null,
         estado: (dto.estado as GrupoGuardia['estado']) ?? 'ACTIVO',
         observaciones: dto.observaciones ?? null,
+        cicloRotacionDias: dto.cicloRotacionDias ?? null,
+        cantidadMinima: dto.cantidadMinima ?? null,
+        cantidadMaxima: dto.cantidadMaxima ?? null,
+        cantidadOficiales: dto.cantidadOficiales ?? null,
+        cantidadChoferes: dto.cantidadChoferes ?? null,
         creadoPor: actorId,
       }),
     );
@@ -71,6 +77,12 @@ export class GruposGuardiaService {
       ip: ip ?? null,
     });
     return actualizado;
+  }
+
+  /** Guardias realizadas/proximas de un grupo (seccion 41 del pedido). */
+  async historial(grupoId: string) {
+    await this.findOne(grupoId);
+    return this.guardiaRepo.find({ where: { grupoGuardiaId: grupoId }, order: { fecha: 'DESC' } });
   }
 
   async listarMiembros(grupoId: string) {

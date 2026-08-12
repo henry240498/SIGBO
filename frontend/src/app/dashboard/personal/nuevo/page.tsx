@@ -14,6 +14,7 @@ interface Catalogo {
 
 const ESTADOS = ['ASPIRANTE', 'ACTIVO', 'SUSPENDIDO', 'LICENCIA', 'RETIRADO', 'FALLECIDO', 'HONORARIO'];
 const CONDICIONES = ['INCORPORADO', 'COMBATIENTE', 'APOYO_ECONOMICO', 'HONORARIO'];
+const DIAS_SEMANA_PREFERENCIA = ['NINGUNA', 'LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO'];
 
 async function cargarCatalogo(path: string): Promise<Catalogo[]> {
   const res = await apiFetch(`${path}?estado=ACTIVO`);
@@ -81,6 +82,13 @@ export default function NuevoBomberoPage() {
   const [fechaIncorporacion, setFechaIncorporacion] = useState('');
   const [fechaJuramento, setFechaJuramento] = useState('');
 
+  // Disponibilidad para guardias
+  const [realizaGuardias, setRealizaGuardias] = useState(true);
+  const [realizaGuardiasEspeciales, setRealizaGuardiasEspeciales] = useState(false);
+  const [frecuenciaNormalMensual, setFrecuenciaNormalMensual] = useState('');
+  const [frecuenciaEspecialMensual, setFrecuenciaEspecialMensual] = useState('');
+  const [diaPreferenteGuardia, setDiaPreferenteGuardia] = useState('NINGUNA');
+
   const [guardando, setGuardando] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -137,6 +145,11 @@ export default function NuevoBomberoPage() {
         pasaporte: pasaporte || undefined,
         fechaIncorporacion: fechaIncorporacion || undefined,
         fechaJuramento: fechaJuramento || undefined,
+        realizaGuardias,
+        realizaGuardiasEspeciales,
+        frecuenciaNormalMensual: frecuenciaNormalMensual ? parseInt(frecuenciaNormalMensual, 10) : undefined,
+        frecuenciaEspecialMensual: frecuenciaEspecialMensual ? parseInt(frecuenciaEspecialMensual, 10) : undefined,
+        diaPreferenteGuardia,
       };
 
       const res = await apiFetch('/personal/bomberos', { method: 'POST', body: JSON.stringify(payload) });
@@ -405,6 +418,59 @@ export default function NuevoBomberoPage() {
                   <option key={e} value={e}>
                     {e}
                   </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <h3 style={{ fontSize: 14 }}>Disponibilidad para Guardias</h3>
+          <p style={{ fontSize: 12, color: '#94a3b8' }}>
+            Distinto de participar en Servicios: un bombero puede participar de servicios aunque no realice guardias.
+          </p>
+          <div style={{ display: 'flex', gap: 20 }}>
+            <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 6 }}>
+              <input type="checkbox" checked={realizaGuardias} onChange={(e) => setRealizaGuardias(e.target.checked)} />
+              Realiza guardias
+            </label>
+            <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 6 }}>
+              <input
+                type="checkbox"
+                checked={realizaGuardiasEspeciales}
+                onChange={(e) => setRealizaGuardiasEspeciales(e.target.checked)}
+              />
+              Realiza guardias especiales
+            </label>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Frecuencia normal mensual</label>
+              <input
+                className="input-field"
+                type="number"
+                min={0}
+                value={frecuenciaNormalMensual}
+                onChange={(e) => setFrecuenciaNormalMensual(e.target.value)}
+                placeholder="Sin definir"
+              />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Frecuencia especial mensual</label>
+              <input
+                className="input-field"
+                type="number"
+                min={0}
+                value={frecuenciaEspecialMensual}
+                onChange={(e) => setFrecuenciaEspecialMensual(e.target.value)}
+                placeholder="Sin definir"
+              />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Dia preferente</label>
+              <select className="input-field" value={diaPreferenteGuardia} onChange={(e) => setDiaPreferenteGuardia(e.target.value)}>
+                {DIAS_SEMANA_PREFERENCIA.map((d) => (
+                  <option key={d} value={d}>{d}</option>
                 ))}
               </select>
             </div>

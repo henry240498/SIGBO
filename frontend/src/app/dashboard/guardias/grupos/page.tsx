@@ -17,6 +17,8 @@ export default function GruposGuardiaPage() {
   const [nombre, setNombre] = useState('');
   const [oficialACargoId, setOficialACargoId] = useState('');
   const [observaciones, setObservaciones] = useState('');
+  const [cicloRotacionDias, setCicloRotacionDias] = useState('');
+  const [cantidadChoferes, setCantidadChoferes] = useState('');
 
   const puedeCrear = !!obtenerSesion()?.usuario.permisos.includes('guardias:crear');
   const opcionesBombero = bomberos.map((b) => ({ value: b.id, label: `${b.numeroBombero} — ${b.nombre} ${b.apellido}` }));
@@ -39,10 +41,18 @@ export default function GruposGuardiaPage() {
     setError(null);
     setGuardando(true);
     try {
-      await crearGrupoGuardia({ nombre, oficialACargoId: oficialACargoId || undefined, observaciones: observaciones || undefined });
+      await crearGrupoGuardia({
+        nombre,
+        oficialACargoId: oficialACargoId || undefined,
+        observaciones: observaciones || undefined,
+        cicloRotacionDias: cicloRotacionDias ? parseInt(cicloRotacionDias, 10) : undefined,
+        cantidadChoferes: cantidadChoferes ? parseInt(cantidadChoferes, 10) : undefined,
+      });
       setNombre('');
       setOficialACargoId('');
       setObservaciones('');
+      setCicloRotacionDias('');
+      setCantidadChoferes('');
       setMostrarForm(false);
       await cargar();
     } catch (err: any) {
@@ -81,10 +91,24 @@ export default function GruposGuardiaPage() {
               <ComboBuscable opciones={opcionesBombero} value={oficialACargoId} onChange={setOficialACargoId} placeholderBusqueda="Buscar por codigo o nombre..." />
             </div>
           </div>
-          <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
-            <input className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 2fr', gap: 10 }}>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ciclo de rotacion (dias)</label>
+              <input className="input-field" type="number" min={1} value={cicloRotacionDias} onChange={(e) => setCicloRotacionDias(e.target.value)} placeholder="Sin rotacion automatica" />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cant. choferes requeridos</label>
+              <input className="input-field" type="number" min={0} value={cantidadChoferes} onChange={(e) => setCantidadChoferes(e.target.value)} />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
+              <input className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
+            </div>
           </div>
+          <p style={{ fontSize: 12, color: '#94a3b8' }}>
+            El ciclo de rotacion es lo que le permite a la generacion automatica (Guardias → Generar) elegir este
+            grupo cuando corresponda. Sin ciclo definido, el grupo nunca se elige automaticamente.
+          </p>
           <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
             {guardando ? 'Guardando...' : 'Crear grupo'}
           </button>
@@ -97,6 +121,7 @@ export default function GruposGuardiaPage() {
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
               <th style={{ padding: '6px 4px' }}>Nombre</th>
+              <th style={{ padding: '6px 4px' }}>Ciclo de rotacion</th>
               <th style={{ padding: '6px 4px' }}>Estado</th>
             </tr>
           </thead>
@@ -108,6 +133,7 @@ export default function GruposGuardiaPage() {
                     {g.nombre}
                   </Link>
                 </td>
+                <td style={{ padding: '6px 4px' }}>{g.cicloRotacionDias ? `cada ${g.cicloRotacionDias} dias` : '— (manual)'}</td>
                 <td style={{ padding: '6px 4px' }}>
                   <span className="badge" style={{ background: g.estado === 'ACTIVO' ? '#166534' : '#7f1d1d' }}>{g.estado}</span>
                 </td>

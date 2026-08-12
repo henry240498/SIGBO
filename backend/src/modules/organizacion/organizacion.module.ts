@@ -10,12 +10,15 @@ import {
   Departamento,
   Designacion,
   Especialidad,
+  Feriado,
+  Guardia,
   Parametro,
   Rango,
   TipoGuardia,
   Turno,
   Unidad,
 } from '../../shared/entities';
+import { SeguridadModule } from '../seguridad/seguridad.module';
 
 import { RangosService } from './rangos.service';
 import { RangosController } from './rangos.controller';
@@ -45,6 +48,8 @@ import { DashboardService } from './dashboard.service';
 import { DashboardController } from './dashboard.controller';
 import { ParametrosService } from './parametros.service';
 import { ParametrosController } from './parametros.controller';
+import { FeriadosService } from './feriados.service';
+import { FeriadosController } from './feriados.controller';
 
 @Module({
   imports: [
@@ -63,7 +68,10 @@ import { ParametrosController } from './parametros.controller';
       Ascenso,
       Bombero,
       Parametro,
+      Feriado,
+      Guardia,
     ]),
+    SeguridadModule,
   ],
   controllers: [
     RangosController,
@@ -80,6 +88,7 @@ import { ParametrosController } from './parametros.controller';
     AscensosController,
     DashboardController,
     ParametrosController,
+    FeriadosController,
   ],
   providers: [
     RangosService,
@@ -96,6 +105,7 @@ import { ParametrosController } from './parametros.controller';
     AscensosService,
     DashboardService,
     ParametrosService,
+    FeriadosService,
   ],
   exports: [ParametrosService],
 })
