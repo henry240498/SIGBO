@@ -30,4 +30,23 @@ export class GrupoGuardia {
 
   @Column({ type: 'uniqueidentifier', nullable: true })
   creadoPor: string | null;
+
+  /** Cada cuantos dias vuelve a corresponderle una guardia a este grupo
+   * (seccion 8 del pedido: rotacion por ciclos, no dia fijo de semana). */
+  @Column({ type: 'int', nullable: true })
+  cicloRotacionDias: number | null;
+
+  /** Capacidad del grupo; si son NULL, el generador usa los valores del
+   * esquema de horario aplicado en su lugar (seccion 9). */
+  @Column({ type: 'int', nullable: true })
+  cantidadMinima: number | null;
+
+  @Column({ type: 'int', nullable: true })
+  cantidadMaxima: number | null;
+
+  @Column({ type: 'int', nullable: true })
+  cantidadOficiales: number | null;
+
+  @Column({ type: 'int', nullable: true })
+  cantidadChoferes: number | null;
 }

@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { apiFetch, API_ORIGIN, obtenerSesion } from '@/lib/api';
 import { cargarParametros, obtenerParametro, resolverNombres, Parametro, TipoParametro } from '@/lib/parametros';
+import { HistorialAsignacion, cargarHistorialGuardiasPersonal } from '@/lib/guardias';
 
 /* ------------------------------------------------------------------ */
 /* Tipos                                                                */
@@ -54,6 +55,11 @@ interface Bombero {
   pasaporte: string | null;
   fechaIncorporacion: string | null;
   fechaJuramento: string | null;
+  realizaGuardias: boolean;
+  realizaGuardiasEspeciales: boolean;
+  frecuenciaNormalMensual: number | null;
+  frecuenciaEspecialMensual: number | null;
+  diaPreferenteGuardia: string | null;
 }
 
 interface Catalogo {
@@ -65,6 +71,7 @@ interface Catalogo {
 
 const ESTADOS = ['ASPIRANTE', 'ACTIVO', 'SUSPENDIDO', 'LICENCIA', 'RETIRADO', 'FALLECIDO', 'HONORARIO'];
 const CONDICIONES = ['INCORPORADO', 'COMBATIENTE', 'APOYO_ECONOMICO', 'HONORARIO'];
+const DIAS_SEMANA_PREFERENCIA = ['NINGUNA', 'LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO'];
 
 const TABS: Array<{ id: string; label: string }> = [
   { id: 'resumen', label: 'Resumen' },
@@ -614,6 +621,11 @@ function TabInstitucional({
     fechaIncorporacion: bombero.fechaIncorporacion ?? '',
     fechaJuramento: bombero.fechaJuramento ?? '',
     estado: bombero.estado,
+    realizaGuardias: bombero.realizaGuardias,
+    realizaGuardiasEspeciales: bombero.realizaGuardiasEspeciales,
+    frecuenciaNormalMensual: bombero.frecuenciaNormalMensual != null ? String(bombero.frecuenciaNormalMensual) : '',
+    frecuenciaEspecialMensual: bombero.frecuenciaEspecialMensual != null ? String(bombero.frecuenciaEspecialMensual) : '',
+    diaPreferenteGuardia: bombero.diaPreferenteGuardia ?? 'NINGUNA',
   });
   const [error, setError] = useState<string | null>(null);
   const [guardando, setGuardando] = useState(false);
@@ -642,7 +654,13 @@ function TabInstitucional({
     setGuardando(true);
     setError(null);
     try {
-      const payload = Object.fromEntries(Object.entries(form).map(([k, v]) => [k, v || undefined]));
+      const { realizaGuardias, realizaGuardiasEspeciales, frecuenciaNormalMensual, frecuenciaEspecialMensual, diaPreferenteGuardia, ...resto } = form;
+      const payload: Record<string, unknown> = Object.fromEntries(Object.entries(resto).map(([k, v]) => [k, v || undefined]));
+      payload.realizaGuardias = realizaGuardias;
+      payload.realizaGuardiasEspeciales = realizaGuardiasEspeciales;
+      payload.frecuenciaNormalMensual = frecuenciaNormalMensual ? parseInt(frecuenciaNormalMensual, 10) : undefined;
+      payload.frecuenciaEspecialMensual = frecuenciaEspecialMensual ? parseInt(frecuenciaEspecialMensual, 10) : undefined;
+      payload.diaPreferenteGuardia = diaPreferenteGuardia || 'NINGUNA';
       const res = await apiFetch(`/personal/bomberos/${bombero.id}`, { method: 'PATCH', body: JSON.stringify(payload) });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
@@ -678,11 +696,26 @@ function TabInstitucional({
           {campoTexto('Fecha de juramento', bombero.fechaJuramento)}
           {campoTexto('Estado', bombero.estado)}
         </div>
+        <div>
+          <h4 style={{ fontSize: 13, color: '#94a3b8', marginBottom: 10 }}>Disponibilidad para Guardias</h4>
+          <p style={{ fontSize: 11, color: '#64748b', marginBottom: 10 }}>
+            Distinto de participar en Servicios: un bombero puede participar de servicios aunque no realice guardias.
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', gap: 16 }}>
+            {campoTexto('Realiza guardias', bombero.realizaGuardias ? 'SI' : 'NO')}
+            {campoTexto('Realiza guardias especiales', bombero.realizaGuardiasEspeciales ? 'SI' : 'NO')}
+            {campoTexto('Frecuencia normal mensual', bombero.frecuenciaNormalMensual != null ? String(bombero.frecuenciaNormalMensual) : 'Sin definir')}
+            {campoTexto('Frecuencia especial mensual', bombero.frecuenciaEspecialMensual != null ? String(bombero.frecuenciaEspecialMensual) : 'Sin definir')}
+            {campoTexto('Dia preferente', bombero.diaPreferenteGuardia ?? 'NINGUNA')}
+          </div>
+        </div>
       </div>
     );
   }
 
-  function selectCatalogo(clave: string, campo: keyof typeof form, label: string) {
+  type CampoCatalogo = 'companiaId' | 'cuartelId' | 'turnoId' | 'tipoGuardiaId' | 'brigadaId' | 'departamentoId' | 'unidadId';
+
+  function selectCatalogo(clave: string, campo: CampoCatalogo, label: string) {
     return (
       <div>
         <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>{label}</label>
@@ -751,6 +784,68 @@ function TabInstitucional({
           />
         </div>
       </div>
+
+      <div>
+        <h4 style={{ fontSize: 13, color: '#94a3b8', marginBottom: 4 }}>Disponibilidad para Guardias</h4>
+        <p style={{ fontSize: 11, color: '#64748b', marginBottom: 10 }}>
+          Distinto de participar en Servicios: un bombero puede participar de servicios aunque no realice guardias.
+        </p>
+        <div style={{ display: 'flex', gap: 20, marginBottom: 10 }}>
+          <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <input
+              type="checkbox"
+              checked={form.realizaGuardias}
+              onChange={(e) => setForm({ ...form, realizaGuardias: e.target.checked })}
+            />
+            Realiza guardias
+          </label>
+          <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <input
+              type="checkbox"
+              checked={form.realizaGuardiasEspeciales}
+              onChange={(e) => setForm({ ...form, realizaGuardiasEspeciales: e.target.checked })}
+            />
+            Realiza guardias especiales
+          </label>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
+          <div>
+            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Frecuencia normal mensual</label>
+            <input
+              className="input-field"
+              type="number"
+              min={0}
+              value={form.frecuenciaNormalMensual}
+              onChange={(e) => setForm({ ...form, frecuenciaNormalMensual: e.target.value })}
+              placeholder="Sin definir"
+            />
+          </div>
+          <div>
+            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Frecuencia especial mensual</label>
+            <input
+              className="input-field"
+              type="number"
+              min={0}
+              value={form.frecuenciaEspecialMensual}
+              onChange={(e) => setForm({ ...form, frecuenciaEspecialMensual: e.target.value })}
+              placeholder="Sin definir"
+            />
+          </div>
+          <div>
+            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Dia preferente</label>
+            <select
+              className="input-field"
+              value={form.diaPreferenteGuardia}
+              onChange={(e) => setForm({ ...form, diaPreferenteGuardia: e.target.value })}
+            >
+              {DIAS_SEMANA_PREFERENCIA.map((d) => (
+                <option key={d} value={d}>{d}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
+
       <div style={{ display: 'flex', gap: 8 }}>
         <button className="btn-primary" disabled={guardando}>
           {guardando ? 'Guardando...' : 'Guardar cambios'}
@@ -1742,13 +1837,11 @@ function TabIdiomas({ bomberoId, puedeEditar }: { bomberoId: string; puedeEditar
 /* ------------------------------------------------------------------ */
 
 function TabServicios({ bomberoId }: { bomberoId: string }) {
-  const [guardias, setGuardias] = useState<any[] | null>(null);
+  const [guardias, setGuardias] = useState<HistorialAsignacion[] | null>(null);
   const [servicios, setServicios] = useState<any[] | null>(null);
 
   useEffect(() => {
-    apiFetch(`/personal/bomberos/${bomberoId}/guardias`)
-      .then(async (res) => (res.ok ? setGuardias(await res.json()) : setGuardias([])))
-      .catch(() => setGuardias([]));
+    cargarHistorialGuardiasPersonal(bomberoId).then(setGuardias).catch(() => setGuardias([]));
     apiFetch(`/personal/bomberos/${bomberoId}/servicios`)
       .then(async (res) => (res.ok ? setServicios(await res.json()) : setServicios([])))
       .catch(() => setServicios([]));
@@ -1757,13 +1850,38 @@ function TabServicios({ bomberoId }: { bomberoId: string }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       <div className="card">
-        <h3 style={{ fontSize: 14, marginBottom: 8 }}>Guardias</h3>
-        {guardias && guardias.length === 0 && (
-          <p style={{ color: '#94a3b8', fontSize: 13 }}>
-            Sin guardias registradas. El modulo de Operaciones (asignacion de guardias) todavia no esta implementado.
-          </p>
+        <h3 style={{ fontSize: 14, marginBottom: 8 }}>Guardias ({guardias?.length ?? 0})</h3>
+        {guardias && guardias.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin guardias registradas.</p>}
+        {guardias && guardias.length > 0 && (
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+            <thead>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
+                <th style={{ padding: '6px 4px' }}>Fecha</th>
+                <th style={{ padding: '6px 4px' }}>Turno</th>
+                <th style={{ padding: '6px 4px' }}>Tipo</th>
+                <th style={{ padding: '6px 4px' }}>Rol</th>
+                <th style={{ padding: '6px 4px' }}>Participacion</th>
+                <th style={{ padding: '6px 4px' }}>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {guardias.map((g) => (
+                <tr key={g.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                  <td style={{ padding: '6px 4px' }}>
+                    <Link href={`/dashboard/guardias/${g.guardia.id}`} style={{ color: '#60a5fa', textDecoration: 'none' }}>
+                      {g.guardia.fecha}
+                    </Link>
+                  </td>
+                  <td style={{ padding: '6px 4px' }}>{g.guardia.turno}</td>
+                  <td style={{ padding: '6px 4px' }}>{g.guardia.tipo}</td>
+                  <td style={{ padding: '6px 4px' }}>{g.rol ?? '—'}</td>
+                  <td style={{ padding: '6px 4px' }}>{g.tipoParticipacion}</td>
+                  <td style={{ padding: '6px 4px' }}><span className="badge">{g.guardia.estado}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         )}
-        {guardias && guardias.length > 0 && <pre style={{ fontSize: 12 }}>{JSON.stringify(guardias, null, 2)}</pre>}
       </div>
       <div className="card">
         <h3 style={{ fontSize: 14, marginBottom: 8 }}>Servicios</h3>

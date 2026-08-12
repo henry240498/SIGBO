@@ -30,4 +30,14 @@ export class CreateGuardiaDto {
   grupoGuardiaId?: string;
 
   @ApiProperty({ required: false }) @IsOptional() @IsString() observaciones?: string;
+
+  @ApiProperty({ required: false, description: 'operaciones.esquemas_horario_guardia.id' })
+  @IsOptional()
+  @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
+  esquemaHorarioId?: string;
+
+  @ApiProperty({ required: false, description: 'organizacion.feriados.id' })
+  @IsOptional()
+  @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
+  feriadoId?: string;
 }

@@ -15,30 +15,47 @@ import {
 import { cargarParametros, Parametro } from '@/lib/parametros';
 import {
   AsignacionGuardia,
+  Bitacora,
+  ESTADOS_GUARDIA,
   Guardia,
   InspeccionEstacion,
+  InspeccionMovil,
+  MovilARevisar,
   NovedadGuardia,
   Pernocte,
+  TIPOS_GUARDIA_REGISTRO,
+  TURNOS_GUARDIA,
+  actualizarGuardia,
   actualizarPresenciaAsignacion,
+  anularGuardia,
   asignarPersonalGuardia,
+  cargarBitacora,
   cargarGuardia,
+  cargarMovilesARevisar,
+  cerrarGuardia,
   crearInspeccionEstacion,
+  crearInspeccionMovil,
   crearNovedad,
   crearPernocte,
   listarAsignacionesGuardia,
   listarInspeccionesEstacion,
+  listarInspeccionesMovil,
   listarNovedades,
   listarPernoctes,
   quitarAsignacionGuardia,
+  reabrirGuardia,
   registrarHorarioAsignacion,
+  reemplazarAsignacionGuardia,
 } from '@/lib/guardias';
 
-type Vista = 'personal' | 'pernoctes' | 'estacion' | 'novedades';
+type Vista = 'personal' | 'pernoctes' | 'estacion' | 'moviles' | 'novedades' | 'bitacora';
 const SUBTABS: { id: Vista; label: string }[] = [
   { id: 'personal', label: 'Personal' },
   { id: 'pernoctes', label: 'Pernoctantes' },
   { id: 'estacion', label: 'Condicion de Estacion' },
+  { id: 'moviles', label: 'Condicion de Moviles' },
   { id: 'novedades', label: 'Novedades' },
+  { id: 'bitacora', label: 'Bitacora' },
 ];
 
 export default function DetalleGuardiaPage() {
@@ -68,21 +85,7 @@ export default function DetalleGuardiaPage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <div className="card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <div>
-            <h2 style={{ fontSize: 18 }}>Guardia {guardia.fecha} — {guardia.turno}</h2>
-            <div style={{ display: 'flex', gap: 8, marginTop: 6 }}>
-              <span className="badge">{guardia.horaInicio} - {guardia.horaFin}</span>
-              <span className="badge">{guardia.tipo}</span>
-              <span className="badge">{guardia.estado}</span>
-            </div>
-          </div>
-          <button className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/guardias')}>
-            Volver
-          </button>
-        </div>
-      </div>
+      <CabeceraGuardia guardia={guardia} onCambiada={cargar} onVolver={() => router.push('/dashboard/guardias')} />
 
       <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid #1f2937' }}>
         {SUBTABS.map((t) => (
@@ -108,7 +111,203 @@ export default function DetalleGuardiaPage() {
       {vista === 'personal' && <TabPersonal guardiaId={guardiaId} />}
       {vista === 'pernoctes' && <TabPernoctes guardiaId={guardiaId} fecha={guardia.fecha} />}
       {vista === 'estacion' && <TabEstacion guardiaId={guardiaId} />}
+      {vista === 'moviles' && <TabMoviles guardiaId={guardiaId} />}
       {vista === 'novedades' && <TabNovedades guardiaId={guardiaId} />}
+      {vista === 'bitacora' && <TabBitacora guardiaId={guardiaId} />}
+    </div>
+  );
+}
+
+function CabeceraGuardia({
+  guardia,
+  onCambiada,
+  onVolver,
+}: {
+  guardia: Guardia;
+  onCambiada: () => void;
+  onVolver: () => void;
+}) {
+  const [editando, setEditando] = useState(false);
+  const [fecha, setFecha] = useState(guardia.fecha);
+  const [turno, setTurno] = useState(guardia.turno);
+  const [tipo, setTipo] = useState(guardia.tipo);
+  const [horaInicio, setHoraInicio] = useState(guardia.horaInicio.slice(0, 5));
+  const [horaFin, setHoraFin] = useState(guardia.horaFin.slice(0, 5));
+  const [estado, setEstado] = useState(guardia.estado);
+  const [observaciones, setObservaciones] = useState(guardia.observaciones ?? '');
+  const [guardando, setGuardando] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const puedeEditar = !!obtenerSesion()?.usuario.permisos.includes('guardias:editar');
+  const puedeAnular = !!obtenerSesion()?.usuario.permisos.includes('guardias:eliminar');
+
+  function abrirEdicion() {
+    setFecha(guardia.fecha);
+    setTurno(guardia.turno);
+    setTipo(guardia.tipo);
+    setHoraInicio(guardia.horaInicio.slice(0, 5));
+    setHoraFin(guardia.horaFin.slice(0, 5));
+    setEstado(guardia.estado);
+    setObservaciones(guardia.observaciones ?? '');
+    setError(null);
+    setEditando(true);
+  }
+
+  async function guardar(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setGuardando(true);
+    try {
+      await actualizarGuardia(guardia.id, {
+        fecha,
+        turno,
+        tipo,
+        horaInicio,
+        horaFin,
+        estado,
+        observaciones: observaciones || undefined,
+      });
+      setEditando(false);
+      onCambiada();
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setGuardando(false);
+    }
+  }
+
+  async function anular() {
+    const motivo = window.prompt('Motivo de la anulacion:');
+    if (motivo == null) return;
+    if (!motivo.trim()) {
+      window.alert('El motivo es obligatorio para anular una guardia.');
+      return;
+    }
+    setError(null);
+    try {
+      await anularGuardia(guardia.id, motivo.trim());
+      onCambiada();
+    } catch (err: any) {
+      setError(err.message);
+    }
+  }
+
+  async function cerrar() {
+    const observacion = window.prompt('Observacion de cierre (opcional):') ?? undefined;
+    setError(null);
+    try {
+      await cerrarGuardia(guardia.id, observacion || undefined);
+      onCambiada();
+    } catch (err: any) {
+      setError(err.message);
+    }
+  }
+
+  async function reabrir() {
+    const motivo = window.prompt('Motivo de la reapertura:');
+    if (motivo == null) return;
+    if (!motivo.trim()) {
+      window.alert('El motivo es obligatorio para reabrir una guardia.');
+      return;
+    }
+    setError(null);
+    try {
+      await reabrirGuardia(guardia.id, motivo.trim());
+      onCambiada();
+    } catch (err: any) {
+      setError(err.message);
+    }
+  }
+
+  if (editando) {
+    return (
+      <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {error && <p style={{ color: '#f87171' }}>{error}</p>}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', gap: 10 }}>
+          <div>
+            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label>
+            <input className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
+          </div>
+          <div>
+            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Turno</label>
+            <select className="input-field" value={turno} onChange={(e) => setTurno(e.target.value)}>
+              {TURNOS_GUARDIA.map((t) => <option key={t} value={t}>{t}</option>)}
+            </select>
+          </div>
+          <div>
+            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
+            <select className="input-field" value={tipo} onChange={(e) => setTipo(e.target.value)}>
+              {TIPOS_GUARDIA_REGISTRO.map((t) => <option key={t} value={t}>{t}</option>)}
+            </select>
+          </div>
+          <div>
+            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Hora inicio</label>
+            <input className="input-field" type="time" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} required />
+          </div>
+          <div>
+            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Hora fin</label>
+            <input className="input-field" type="time" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} required />
+          </div>
+          <div>
+            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
+            <select className="input-field" value={estado} onChange={(e) => setEstado(e.target.value)}>
+              {ESTADOS_GUARDIA.map((e) => <option key={e} value={e}>{e}</option>)}
+            </select>
+          </div>
+        </div>
+        <div>
+          <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
+          <input className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
+        </div>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button className="btn-primary" disabled={guardando}>{guardando ? 'Guardando...' : 'Guardar cambios'}</button>
+          <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => setEditando(false)}>
+            Cancelar
+          </button>
+        </div>
+      </form>
+    );
+  }
+
+  return (
+    <div className="card">
+      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}>
+        <div>
+          <h2 style={{ fontSize: 18 }}>Guardia {guardia.fecha} — {guardia.turno}</h2>
+          <div style={{ display: 'flex', gap: 8, marginTop: 6, flexWrap: 'wrap' }}>
+            <span className="badge">{guardia.horaInicio} - {guardia.horaFin}</span>
+            <span className="badge">{guardia.tipo}</span>
+            <span className="badge" style={{ background: guardia.estado === 'ANULADA' || guardia.estado === 'CANCELADA' ? '#7f1d1d' : guardia.estado === 'FINALIZADA' ? '#166534' : '#334155' }}>
+              {guardia.estado}
+            </span>
+          </div>
+          {guardia.observaciones && <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 8, whiteSpace: 'pre-wrap' }}>{guardia.observaciones}</p>}
+          {guardia.estado === 'FINALIZADA' && guardia.cerradaEn && (
+            <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 8 }}>
+              Cerrada el {new Date(guardia.cerradaEn).toLocaleString()}
+              {guardia.cierreObservacion ? ` — ${guardia.cierreObservacion}` : ''}
+            </p>
+          )}
+        </div>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {puedeEditar && guardia.estado !== 'ANULADA' && (
+            <button className="btn-primary" onClick={abrirEdicion}>Editar</button>
+          )}
+          {puedeEditar && guardia.estado !== 'ANULADA' && guardia.estado !== 'FINALIZADA' && (
+            <button className="btn-primary" style={{ background: '#166534' }} onClick={cerrar}>Cerrar guardia</button>
+          )}
+          {puedeEditar && guardia.estado === 'FINALIZADA' && (
+            <button className="btn-primary" style={{ background: '#1d4ed8' }} onClick={reabrir}>Reabrir</button>
+          )}
+          {puedeAnular && guardia.estado !== 'ANULADA' && (
+            <button className="btn-primary" style={{ background: '#7f1d1d' }} onClick={anular}>Anular</button>
+          )}
+          <button className="btn-primary" style={{ background: '#475569' }} onClick={onVolver}>
+            Volver
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -135,8 +334,13 @@ function TabPersonal({ guardiaId }: { guardiaId: string }) {
   const [estadoPresencia, setEstadoPresencia] = useState('');
   const [motivoPresencia, setMotivoPresencia] = useState('');
 
+  const [reemplazandoId, setReemplazandoId] = useState<string | null>(null);
+  const [bomberoReemplazoId, setBomberoReemplazoId] = useState('');
+  const [motivoReemplazo, setMotivoReemplazo] = useState('');
+
   const puedeAsignar = !!obtenerSesion()?.usuario.permisos.includes('guardias:asignar');
   const puedeEditar = !!obtenerSesion()?.usuario.permisos.includes('guardias:editar');
+  const puedeReemplazar = !!obtenerSesion()?.usuario.permisos.includes('guardias:reemplazar');
   const tipoBomberoPorId = useMemo(() => construirTipoPorId(tiposBombero), [tiposBombero]);
 
   async function cargarTodo() {
@@ -201,6 +405,29 @@ function TabPersonal({ guardiaId }: { guardiaId: string }) {
     setError(null);
     try {
       await quitarAsignacionGuardia(guardiaId, asignacionId);
+      await cargarTodo();
+    } catch (err: any) {
+      setError(err.message);
+    }
+  }
+
+  function abrirReemplazo(a: AsignacionGuardia) {
+    setReemplazandoId(a.id);
+    setBomberoReemplazoId('');
+    setMotivoReemplazo('');
+    setError(null);
+  }
+
+  async function confirmarReemplazo(asignacionId: string) {
+    if (!bomberoReemplazoId) return;
+    setError(null);
+    try {
+      await reemplazarAsignacionGuardia(guardiaId, asignacionId, {
+        bomberoNuevoId: bomberoReemplazoId,
+        motivo: motivoReemplazo || undefined,
+      });
+      setReemplazandoId(null);
+      setMensaje('Reemplazo registrado');
       await cargarTodo();
     } catch (err: any) {
       setError(err.message);
@@ -311,16 +538,49 @@ function TabPersonal({ guardiaId }: { guardiaId: string }) {
                       {a.horaEntrada ? new Date(a.horaEntrada).toLocaleTimeString() : '—'} / {a.horaSalida ? new Date(a.horaSalida).toLocaleTimeString() : '—'}
                     </td>
                     {puedeEditar && (
-                      <td style={{ padding: '6px 4px', display: 'flex', gap: 6 }}>
+                      <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                         <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => abrirHorario(a)}>
                           Horario/Presencia
                         </button>
+                        {puedeReemplazar && a.estado !== 'REEMPLAZADO' && (
+                          <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#1d4ed8' }} onClick={() => abrirReemplazo(a)}>
+                            Reemplazar
+                          </button>
+                        )}
                         <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }} onClick={() => quitar(a.id)}>
                           Quitar
                         </button>
                       </td>
                     )}
                   </tr>
+                  {reemplazandoId === a.id && (
+                    <tr>
+                      <td colSpan={7} style={{ padding: '10px 4px', background: '#0f172a' }}>
+                        <div style={{ display: 'flex', gap: 10, alignItems: 'end', flexWrap: 'wrap' }}>
+                          <div style={{ minWidth: 260 }}>
+                            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Reemplazar con</label>
+                            <ComboBuscable
+                              opciones={opcionesBombero}
+                              value={bomberoReemplazoId}
+                              onChange={setBomberoReemplazoId}
+                              placeholderBusqueda="Buscar por codigo o nombre..."
+                            />
+                          </div>
+                          <div>
+                            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo (opcional)</label>
+                            <input className="input-field" value={motivoReemplazo} onChange={(e) => setMotivoReemplazo(e.target.value)} />
+                          </div>
+                          <button className="btn-primary" onClick={() => confirmarReemplazo(a.id)} disabled={!bomberoReemplazoId}>Confirmar reemplazo</button>
+                          <button style={{ background: '#475569', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 14px' }} onClick={() => setReemplazandoId(null)}>Cancelar</button>
+                        </div>
+                        {a.rol && (
+                          <p style={{ fontSize: 11, color: '#94a3b8', marginTop: 6 }}>
+                            {a.rol === 'OFICIAL_A_CARGO' ? 'Solo se permite otro Oficial a Cargo de rango igual o mayor (si esta regla esta activa en la configuracion de Ordenes de Guardia).' : a.rol === 'CHOFER' ? 'Solo se permite otro personal con autorizacion de chofer.' : ''}
+                          </p>
+                        )}
+                      </td>
+                    </tr>
+                  )}
                   {editandoHorario === a.id && (
                     <tr>
                       <td colSpan={7} style={{ padding: '10px 4px', background: '#0f172a' }}>
@@ -570,6 +830,237 @@ function TabNovedades({ guardiaId }: { guardiaId: string }) {
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+function TabMoviles({ guardiaId }: { guardiaId: string }) {
+  const [moviles, setMoviles] = useState<MovilARevisar[] | null>(null);
+  const [inspecciones, setInspecciones] = useState<InspeccionMovil[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [mensaje, setMensaje] = useState<string | null>(null);
+  const [guardandoId, setGuardandoId] = useState<string | null>(null);
+  const [observacion, setObservacion] = useState('');
+
+  const puedeEditar = !!obtenerSesion()?.usuario.permisos.includes('guardias:editar');
+
+  async function cargar() {
+    try {
+      const [m, i] = await Promise.all([cargarMovilesARevisar(guardiaId), listarInspeccionesMovil(guardiaId)]);
+      setMoviles(m);
+      setInspecciones(i);
+    } catch (err: any) {
+      setError(err.message);
+    }
+  }
+
+  useEffect(() => {
+    cargar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [guardiaId]);
+
+  function inspeccionDe(vehiculoId: string, checklistItemId: string) {
+    return (inspecciones ?? []).find((i) => i.vehiculoId === vehiculoId && i.checklistItemId === checklistItemId);
+  }
+
+  async function registrar(vehiculoId: string, checklistItemId: string, estado: 'OK' | 'NO_OK') {
+    setError(null);
+    setMensaje(null);
+    const clave = `${vehiculoId}:${checklistItemId}`;
+    setGuardandoId(clave);
+    try {
+      await crearInspeccionMovil(guardiaId, { vehiculoId, checklistItemId, estado, observacion: estado === 'NO_OK' ? observacion || undefined : undefined });
+      setObservacion('');
+      setMensaje('Registrado');
+      await cargar();
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setGuardandoId(null);
+    }
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+        Vehiculos y checklist recuperados automaticamente desde el modulo de Vehiculos/Equipos — Guardias solo
+        consulta esa informacion, la administracion vive en sus propios modulos.
+      </p>
+      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+
+      {moviles && moviles.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay vehiculos activos registrados en el modulo de Vehiculos.</p>}
+
+      {moviles && moviles.map(({ vehiculo, checklistItems, equipos }) => (
+        <div key={vehiculo.id} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+            <h3 style={{ fontSize: 14 }}>{vehiculo.numeroInterno} — {vehiculo.tipo}{vehiculo.patente ? ` (${vehiculo.patente})` : ''}</h3>
+            <span className="badge">{vehiculo.estado}</span>
+          </div>
+          {equipos.length > 0 && (
+            <p style={{ fontSize: 12, color: '#94a3b8' }}>Equipamiento asignado: {equipos.map((e) => e.nombre).join(', ')}</p>
+          )}
+          {checklistItems.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin items de checklist configurados para este tipo de vehiculo.</p>}
+          {checklistItems.length > 0 && (
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+              <thead>
+                <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
+                  <th style={{ padding: '6px 4px' }}>Item</th>
+                  <th style={{ padding: '6px 4px' }}>Categoria</th>
+                  <th style={{ padding: '6px 4px' }}>Estado</th>
+                  {puedeEditar && <th style={{ padding: '6px 4px' }}>Registrar</th>}
+                </tr>
+              </thead>
+              <tbody>
+                {checklistItems.map((item) => {
+                  const ya = inspeccionDe(vehiculo.id, item.id);
+                  const clave = `${vehiculo.id}:${item.id}`;
+                  return (
+                    <tr key={item.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                      <td style={{ padding: '6px 4px' }}>{item.nombre}</td>
+                      <td style={{ padding: '6px 4px' }}>{item.categoria}</td>
+                      <td style={{ padding: '6px 4px' }}>
+                        {ya ? (
+                          <span className="badge" style={{ background: ya.estado === 'OK' ? '#166534' : '#7f1d1d' }}>
+                            {ya.estado}{ya.observacion ? ` — ${ya.observacion}` : ''}
+                          </span>
+                        ) : (
+                          <span style={{ color: '#94a3b8' }}>Sin verificar</span>
+                        )}
+                      </td>
+                      {puedeEditar && (
+                        <td style={{ padding: '6px 4px', display: 'flex', gap: 6 }}>
+                          <button
+                            className="btn-primary"
+                            style={{ padding: '4px 8px', fontSize: 12, background: '#166534' }}
+                            disabled={guardandoId === clave}
+                            onClick={() => registrar(vehiculo.id, item.id, 'OK')}
+                          >
+                            OK
+                          </button>
+                          <button
+                            className="btn-primary"
+                            style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
+                            disabled={guardandoId === clave}
+                            onClick={() => {
+                              const obs = window.prompt('Observacion (obligatoria para NO OK):');
+                              if (!obs || !obs.trim()) return;
+                              setObservacion(obs.trim());
+                              registrar(vehiculo.id, item.id, 'NO_OK');
+                            }}
+                          >
+                            NO OK
+                          </button>
+                        </td>
+                      )}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function TabBitacora({ guardiaId }: { guardiaId: string }) {
+  const [bitacora, setBitacora] = useState<Bitacora | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    cargarBitacora(guardiaId).then(setBitacora).catch((err) => setError(err.message));
+  }, [guardiaId]);
+
+  if (error) return <p style={{ color: '#f87171' }}>{error}</p>;
+  if (!bitacora) return <p style={{ color: '#94a3b8' }}>Cargando bitacora...</p>;
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+        SIGBO como concentrador: esta bitacora combina, sin duplicar, lo ya registrado en Asistencia, Servicios,
+        Equipos y Eventos dentro del horario real de esta guardia, mas lo propio de Guardias.
+      </p>
+
+      <BitacoraSeccion titulo={`Marcaciones de asistencia (${bitacora.marcacionesAsistencia.length})`}>
+        {bitacora.marcacionesAsistencia.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin marcaciones en el horario de la guardia.</p>}
+        {bitacora.marcacionesAsistencia.map((m: any) => (
+          <div key={m.id} style={{ fontSize: 13, display: 'flex', gap: 10, borderBottom: '1px solid #1f2937', padding: '4px 0' }}>
+            <span style={{ color: '#94a3b8', minWidth: 160 }}>{new Date(m.timestampMarcacion).toLocaleString()}</span>
+            <span className="badge">{m.tipoMarcacion}</span>
+            <span>{m.nombreCompleto}</span>
+          </div>
+        ))}
+      </BitacoraSeccion>
+
+      <BitacoraSeccion titulo={`Servicios (${bitacora.servicios.length})`}>
+        {bitacora.servicios.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin servicios en el horario de la guardia.</p>}
+        {bitacora.servicios.map((s: any) => (
+          <div key={s.id} style={{ fontSize: 13, display: 'flex', gap: 10, borderBottom: '1px solid #1f2937', padding: '4px 0' }}>
+            <span style={{ color: '#94a3b8', minWidth: 160 }}>{new Date(s.fechaHoraAviso).toLocaleString()}</span>
+            <span>{s.numeroServicio}</span>
+            <span className="badge">{s.estado}</span>
+          </div>
+        ))}
+      </BitacoraSeccion>
+
+      <BitacoraSeccion titulo={`Eventos (${bitacora.eventos.length})`}>
+        {bitacora.eventos.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin eventos en el horario de la guardia.</p>}
+        {bitacora.eventos.map((e: any) => (
+          <div key={e.id} style={{ fontSize: 13, display: 'flex', gap: 10, borderBottom: '1px solid #1f2937', padding: '4px 0' }}>
+            <span style={{ color: '#94a3b8', minWidth: 160 }}>{new Date(e.fechaInicio).toLocaleString()}</span>
+            <span>{e.nombre}</span>
+          </div>
+        ))}
+      </BitacoraSeccion>
+
+      <BitacoraSeccion titulo={`Prestamos de equipo (${bitacora.prestamosEquipo.length})`}>
+        {bitacora.prestamosEquipo.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin prestamos en el horario de la guardia.</p>}
+        {bitacora.prestamosEquipo.map((p: any) => (
+          <div key={p.id} style={{ fontSize: 13, display: 'flex', gap: 10, borderBottom: '1px solid #1f2937', padding: '4px 0' }}>
+            <span style={{ color: '#94a3b8', minWidth: 160 }}>{new Date(p.fechaPrestamo).toLocaleString()}</span>
+            <span>{p.nombreCompleto ?? '—'}</span>
+            <span className="badge">{p.estado}</span>
+          </div>
+        ))}
+      </BitacoraSeccion>
+
+      <BitacoraSeccion titulo={`Pernoctantes (${bitacora.pernoctes.length})`}>
+        {bitacora.pernoctes.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin pernoctantes.</p>}
+        {bitacora.pernoctes.map((p) => (
+          <div key={p.id} style={{ fontSize: 13, borderBottom: '1px solid #1f2937', padding: '4px 0' }}>
+            {p.nombreCompleto}{p.motivo ? ` — ${p.motivo}` : ''}
+          </div>
+        ))}
+      </BitacoraSeccion>
+
+      <BitacoraSeccion titulo={`Novedades (${bitacora.novedades.length})`}>
+        {bitacora.novedades.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin novedades.</p>}
+        {bitacora.novedades.map((n) => (
+          <div key={n.id} style={{ fontSize: 13, borderBottom: '1px solid #1f2937', padding: '4px 0' }}>
+            <span style={{ color: '#94a3b8' }}>{new Date(n.fechaHora).toLocaleString()}</span> — {n.texto}
+          </div>
+        ))}
+      </BitacoraSeccion>
+
+      {bitacora.guardia.cierreResumen && (
+        <div className="card">
+          <h3 style={{ fontSize: 14, marginBottom: 10 }}>Resumen de cierre</h3>
+          <pre style={{ fontSize: 12, whiteSpace: 'pre-wrap', color: '#94a3b8' }}>
+            {JSON.stringify(JSON.parse(bitacora.guardia.cierreResumen), null, 2)}
+          </pre>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function BitacoraSeccion({ titulo, children }: { titulo: string; children: React.ReactNode }) {
+  return (
+    <div className="card">
+      <h3 style={{ fontSize: 14, marginBottom: 10 }}>{titulo}</h3>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>{children}</div>
     </div>
   );
 }

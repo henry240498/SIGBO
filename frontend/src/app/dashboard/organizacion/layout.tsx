@@ -16,6 +16,7 @@ const TABS = [
   { href: '/dashboard/organizacion/unidades', label: 'Unidades' },
   { href: '/dashboard/organizacion/turnos', label: 'Turnos' },
   { href: '/dashboard/organizacion/guardias', label: 'Guardias' },
+  { href: '/dashboard/organizacion/feriados', label: 'Feriados' },
   { href: '/dashboard/organizacion/designaciones', label: 'Designaciones' },
   { href: '/dashboard/organizacion/ascensos', label: 'Ascensos' },
   { href: '/dashboard/organizacion/parametros', label: 'Parámetros' },

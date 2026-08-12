@@ -15,6 +15,8 @@ export interface Guardia {
   jefeGuardiaId: string | null;
   grupoGuardiaId: string | null;
   observaciones: string | null;
+  esquemaHorarioId: string | null;
+  feriadoId: string | null;
   cierreResponsableId: string | null;
   cierreObservacion: string | null;
   cierreResumen: string | null;
@@ -57,6 +59,11 @@ export interface GrupoGuardia {
   estado: 'ACTIVO' | 'INACTIVO';
   observaciones: string | null;
   creadoEn: string;
+  cicloRotacionDias: number | null;
+  cantidadMinima: number | null;
+  cantidadMaxima: number | null;
+  cantidadOficiales: number | null;
+  cantidadChoferes: number | null;
 }
 
 export type RolGrupoGuardia = 'TITULAR' | 'CHOFER';
@@ -116,7 +123,10 @@ export interface RequisitoRolGuardia {
 const TURNOS_GUARDIA = ['DIURNO', 'NOCTURNO', 'COMPLETO'];
 const TIPOS_GUARDIA_REGISTRO = ['ORDINARIA', 'ESPECIAL', 'EXTRAORDINARIA'];
 const ROLES_GUARDIA_BASE = ['OFICIAL_A_CARGO', 'CHOFER'];
-export { TURNOS_GUARDIA, TIPOS_GUARDIA_REGISTRO, ROLES_GUARDIA_BASE };
+const ESTADOS_GUARDIA = ['PLANIFICADA', 'CONFIRMADA', 'EN_CURSO', 'FINALIZADA', 'CANCELADA', 'ANULADA'];
+const DIAS_SEMANA_CSV = ['LUN', 'MAR', 'MIE', 'JUE', 'VIE', 'SAB', 'DOM'];
+const TIPOS_FERIADO = ['FIJO', 'MOVIL', 'TRASLADADO'];
+export { TURNOS_GUARDIA, TIPOS_GUARDIA_REGISTRO, ROLES_GUARDIA_BASE, ESTADOS_GUARDIA, DIAS_SEMANA_CSV, TIPOS_FERIADO };
 
 async function mensajeError(res: Response, porDefecto: string): Promise<string> {
   const body = await res.json().catch(() => ({}));
@@ -146,6 +156,39 @@ export async function crearGuardia(payload: Record<string, unknown>) {
   const res = await apiFetch('/guardias', { method: 'POST', body: JSON.stringify(payload) });
   if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo crear la guardia'));
   return res.json() as Promise<Guardia>;
+}
+
+export async function actualizarGuardia(id: string, payload: Record<string, unknown>) {
+  const res = await apiFetch(`/guardias/${id}`, { method: 'PATCH', body: JSON.stringify(payload) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo actualizar la guardia'));
+  return res.json() as Promise<Guardia>;
+}
+
+export async function anularGuardia(id: string, motivo: string) {
+  const res = await apiFetch(`/guardias/${id}/anular`, { method: 'POST', body: JSON.stringify({ motivo }) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo anular la guardia'));
+  return res.json() as Promise<Guardia>;
+}
+
+export interface ResultadoGeneracion {
+  guardiasCreadas: number;
+  guardiaIds: string[];
+  personasAsignadas: number;
+  advertencias: string[];
+}
+
+/** Motor de planificacion automatica (Fase B): es un asistente heuristico,
+ * no un optimizador exacto -- cada guardia generada queda inmediatamente
+ * editable/anulable con las herramientas manuales normales. */
+export async function generarPlanificacion(payload: {
+  desde: string;
+  hasta: string;
+  permitirRepetirIntegrantes?: boolean;
+  regenerarExistentes?: boolean;
+}) {
+  const res = await apiFetch('/guardias/generar', { method: 'POST', body: JSON.stringify(payload) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo generar la planificacion'));
+  return res.json() as Promise<ResultadoGeneracion>;
 }
 
 export async function listarAsignacionesGuardia(guardiaId: string) {
@@ -323,4 +366,517 @@ export async function eliminarRequisitoRol(id: string) {
   const res = await apiFetch(`/guardias/requisitos-rol/${id}`, { method: 'DELETE' });
   if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo eliminar el requisito'));
   return res.json();
+}
+
+/* ------------------------------------------------------------------ */
+/* Esquemas de horario de guardia (plantillas parametrizables)          */
+/* ------------------------------------------------------------------ */
+
+export interface EsquemaHorarioGuardia {
+  id: string;
+  nombre: string;
+  diasSemanaCsv: string | null;
+  horaInicio: string;
+  horaFin: string;
+  cruzaMedianoche: boolean;
+  diasDuracion: number;
+  esEspecial: boolean;
+  usaRotacionGrupo: boolean;
+  requiereOficial: boolean;
+  requiereChofer: boolean;
+  cantidadMinima: number | null;
+  cantidadMaxima: number | null;
+  cantidadOficiales: number;
+  cantidadChoferes: number;
+  orden: number;
+  activo: boolean;
+}
+
+export async function cargarEsquemasHorario(soloActivos?: boolean) {
+  const params = new URLSearchParams();
+  if (soloActivos) params.set('soloActivos', 'true');
+  const res = await apiFetch(`/guardias/esquemas-horario?${params.toString()}`);
+  if (!res.ok) throw new Error('No se pudo cargar los esquemas de horario');
+  return res.json() as Promise<EsquemaHorarioGuardia[]>;
+}
+
+export async function crearEsquemaHorario(payload: Record<string, unknown>) {
+  const res = await apiFetch('/guardias/esquemas-horario', { method: 'POST', body: JSON.stringify(payload) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo crear el esquema de horario'));
+  return res.json() as Promise<EsquemaHorarioGuardia>;
+}
+
+export async function actualizarEsquemaHorario(id: string, payload: Record<string, unknown>) {
+  const res = await apiFetch(`/guardias/esquemas-horario/${id}`, { method: 'PATCH', body: JSON.stringify(payload) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo actualizar el esquema de horario'));
+  return res.json() as Promise<EsquemaHorarioGuardia>;
+}
+
+export async function eliminarEsquemaHorario(id: string) {
+  const res = await apiFetch(`/guardias/esquemas-horario/${id}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo eliminar el esquema de horario'));
+  return res.json();
+}
+
+/* ------------------------------------------------------------------ */
+/* Feriados (calendario institucional, incluye feriados moviles)        */
+/* ------------------------------------------------------------------ */
+
+export interface Feriado {
+  id: string;
+  fecha: string;
+  nombre: string;
+  tipo: 'FIJO' | 'MOVIL' | 'TRASLADADO';
+  fechaOriginal: string | null;
+  esEspecial: boolean;
+  activo: boolean;
+  observacion: string | null;
+  creadoEn: string;
+  actualizadoEn: string;
+}
+
+export async function cargarFeriados(desde?: string, hasta?: string, soloActivos?: boolean) {
+  const params = new URLSearchParams();
+  if (desde) params.set('desde', desde);
+  if (hasta) params.set('hasta', hasta);
+  if (soloActivos) params.set('soloActivos', 'true');
+  const res = await apiFetch(`/organizacion/feriados?${params.toString()}`);
+  if (!res.ok) throw new Error('No se pudo cargar el listado de feriados');
+  return res.json() as Promise<Feriado[]>;
+}
+
+export async function crearFeriado(payload: Record<string, unknown>) {
+  const res = await apiFetch('/organizacion/feriados', { method: 'POST', body: JSON.stringify(payload) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo crear el feriado'));
+  return res.json() as Promise<Feriado>;
+}
+
+export async function actualizarFeriado(id: string, payload: Record<string, unknown>) {
+  const res = await apiFetch(`/organizacion/feriados/${id}`, { method: 'PATCH', body: JSON.stringify(payload) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo actualizar el feriado'));
+  return res.json() as Promise<Feriado>;
+}
+
+/** Traslada un feriado movil a una nueva fecha. Nunca reclasifica guardias
+ * en silencio: devuelve las guardias que caian en la fecha original y en la
+ * fecha nueva para que el responsable las revise manualmente. */
+export async function moverFeriado(id: string, nuevaFecha: string, motivo: string) {
+  const res = await apiFetch(`/organizacion/feriados/${id}/mover`, {
+    method: 'POST',
+    body: JSON.stringify({ nuevaFecha, motivo }),
+  });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo trasladar el feriado'));
+  return res.json() as Promise<{
+    feriado: Feriado;
+    guardiasAfectadasFechaOriginal: Guardia[];
+    guardiasAfectadasFechaNueva: Guardia[];
+  }>;
+}
+
+export async function eliminarFeriado(id: string) {
+  const res = await apiFetch(`/organizacion/feriados/${id}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo desactivar el feriado'));
+  return res.json() as Promise<Feriado>;
+}
+
+/* ------------------------------------------------------------------ */
+/* Sorteos (fechas especiales)                                          */
+/* ------------------------------------------------------------------ */
+
+export interface SorteoGuardia {
+  id: string;
+  fecha: string;
+  motivo: string;
+  cantidadASeleccionar: number;
+  esquemaHorarioId: string | null;
+  guardiaId: string | null;
+  ejecutadoPor: string | null;
+  ejecutadoEn: string;
+  observacion: string | null;
+}
+
+export interface SorteoParticipante {
+  id: string;
+  sorteoId: string;
+  bomberoId: string;
+  seleccionado: boolean;
+  orden: number;
+  nombreCompleto: string;
+  codigoBombero: string | null;
+}
+
+export interface DetalleSorteo {
+  sorteo: SorteoGuardia;
+  participantes: SorteoParticipante[];
+}
+
+export async function cargarSorteos(desde?: string, hasta?: string) {
+  const params = new URLSearchParams();
+  if (desde) params.set('desde', desde);
+  if (hasta) params.set('hasta', hasta);
+  const res = await apiFetch(`/guardias/sorteos?${params.toString()}`);
+  if (!res.ok) throw new Error('No se pudo cargar el listado de sorteos');
+  return res.json() as Promise<SorteoGuardia[]>;
+}
+
+export async function cargarDetalleSorteo(id: string) {
+  const res = await apiFetch(`/guardias/sorteos/${id}`);
+  if (!res.ok) throw new Error('No se pudo cargar el sorteo');
+  return res.json() as Promise<DetalleSorteo>;
+}
+
+export async function generarSorteo(payload: {
+  fecha: string;
+  motivo: string;
+  cantidadASeleccionar: number;
+  esquemaHorarioId?: string;
+}) {
+  const res = await apiFetch('/guardias/sorteos', { method: 'POST', body: JSON.stringify(payload) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo generar el sorteo'));
+  return res.json() as Promise<DetalleSorteo>;
+}
+
+export async function crearGuardiaDesdeSorteo(id: string, esquemaHorarioId?: string) {
+  const res = await apiFetch(`/guardias/sorteos/${id}/crear-guardia`, {
+    method: 'POST',
+    body: JSON.stringify({ esquemaHorarioId }),
+  });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo crear la guardia desde el sorteo'));
+  return res.json() as Promise<{ sorteo: SorteoGuardia; guardia: Guardia }>;
+}
+
+/* ------------------------------------------------------------------ */
+/* Consultas ampliadas (historial personal / grupo)                     */
+/* ------------------------------------------------------------------ */
+
+export interface HistorialAsignacion extends AsignacionGuardia {
+  guardia: Guardia;
+}
+
+/** Siempre por el id interno del bombero (GUID), nunca por el codigo
+ * bomberil. */
+export async function cargarHistorialGuardiasPersonal(bomberoId: string) {
+  const res = await apiFetch(`/guardias/personal/${bomberoId}`);
+  if (!res.ok) throw new Error('No se pudo cargar el historial de guardias');
+  return res.json() as Promise<HistorialAsignacion[]>;
+}
+
+export async function cargarHistorialGrupo(grupoId: string) {
+  const res = await apiFetch(`/guardias/grupos/${grupoId}/historial`);
+  if (!res.ok) throw new Error('No se pudo cargar el historial del grupo');
+  return res.json() as Promise<Guardia[]>;
+}
+
+/* ------------------------------------------------------------------ */
+/* Condicion de moviles                                                 */
+/* ------------------------------------------------------------------ */
+
+export interface VehiculoResumen {
+  id: string;
+  numeroInterno: string;
+  tipo: string;
+  marca: string | null;
+  modelo: string | null;
+  patente: string | null;
+  estado: string;
+}
+
+export interface EquipoResumen {
+  id: string;
+  nombre: string;
+  codigoInterno: string;
+  estado: string;
+}
+
+export interface ChecklistItemVehiculo {
+  id: string;
+  tipoVehiculo: string | null;
+  nombre: string;
+  categoria: 'MECANICA' | 'EQUIPAMIENTO' | 'OTRO';
+  orden: number;
+  activo: boolean;
+}
+
+export interface MovilARevisar {
+  vehiculo: VehiculoResumen;
+  checklistItems: ChecklistItemVehiculo[];
+  equipos: EquipoResumen[];
+}
+
+export interface InspeccionMovil {
+  id: string;
+  guardiaId: string;
+  vehiculoId: string;
+  checklistItemId: string;
+  estado: 'OK' | 'NO_OK';
+  observacion: string | null;
+  responsableId: string | null;
+  creadoEn: string;
+  vehiculoNombre: string;
+  checklistItemNombre: string;
+}
+
+export async function cargarMovilesARevisar(guardiaId: string) {
+  const res = await apiFetch(`/guardias/${guardiaId}/inspecciones-movil/a-revisar`);
+  if (!res.ok) throw new Error('No se pudo cargar los moviles a revisar');
+  return res.json() as Promise<MovilARevisar[]>;
+}
+
+export async function listarInspeccionesMovil(guardiaId: string) {
+  const res = await apiFetch(`/guardias/${guardiaId}/inspecciones-movil`);
+  if (!res.ok) throw new Error('No se pudo cargar las inspecciones de movil');
+  return res.json() as Promise<InspeccionMovil[]>;
+}
+
+export async function crearInspeccionMovil(guardiaId: string, payload: Record<string, unknown>) {
+  const res = await apiFetch(`/guardias/${guardiaId}/inspecciones-movil`, { method: 'POST', body: JSON.stringify(payload) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo registrar la inspeccion'));
+  return res.json() as Promise<InspeccionMovil>;
+}
+
+/* ------------------------------------------------------------------ */
+/* Bitacora / Cierre / Reapertura                                       */
+/* ------------------------------------------------------------------ */
+
+export interface Bitacora {
+  guardia: Guardia;
+  personal: AsignacionGuardia[];
+  marcacionesAsistencia: Array<Record<string, unknown> & { nombreCompleto: string; timestampMarcacion: string; tipoMarcacion: string }>;
+  servicios: Array<Record<string, unknown> & { id: string; numeroServicio: string; fechaHoraAviso: string; estado: string }>;
+  eventos: Array<Record<string, unknown> & { id: string; nombre: string; fechaInicio: string; fechaFin: string }>;
+  prestamosEquipo: Array<Record<string, unknown> & { id: string; equipoId: string; nombreCompleto: string | null; fechaPrestamo: string }>;
+  pernoctes: Pernocte[];
+  inspeccionesEstacion: InspeccionEstacion[];
+  inspeccionesMovil: InspeccionMovil[];
+  novedades: NovedadGuardia[];
+}
+
+export async function cargarBitacora(guardiaId: string) {
+  const res = await apiFetch(`/guardias/${guardiaId}/bitacora`);
+  if (!res.ok) throw new Error('No se pudo cargar la bitacora');
+  return res.json() as Promise<Bitacora>;
+}
+
+export async function cerrarGuardia(guardiaId: string, observacion?: string, responsableId?: string) {
+  const res = await apiFetch(`/guardias/${guardiaId}/cerrar`, { method: 'POST', body: JSON.stringify({ observacion, responsableId }) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo cerrar la guardia'));
+  return res.json() as Promise<Guardia>;
+}
+
+export async function reabrirGuardia(guardiaId: string, motivo: string) {
+  const res = await apiFetch(`/guardias/${guardiaId}/reabrir`, { method: 'POST', body: JSON.stringify({ motivo }) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo reabrir la guardia'));
+  return res.json() as Promise<Guardia>;
+}
+
+export async function reemplazarAsignacionGuardia(guardiaId: string, asignacionId: string, payload: Record<string, unknown>) {
+  const res = await apiFetch(`/guardias/${guardiaId}/asignaciones/${asignacionId}/reemplazar`, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo reemplazar la asignacion'));
+  return res.json() as Promise<AsignacionGuardia>;
+}
+
+/* ------------------------------------------------------------------ */
+/* Ordenes de Guardia                                                   */
+/* ------------------------------------------------------------------ */
+
+export type EstadoOrdenGuardia = 'BORRADOR' | 'REVISADA' | 'APROBADA' | 'PUBLICADA' | 'ANULADA';
+
+export interface OrdenGuardia {
+  id: string;
+  anio: number;
+  mes: number;
+  numero: number;
+  periodoDesde: string;
+  periodoHasta: string;
+  fechaEmision: string;
+  estado: EstadoOrdenGuardia;
+  contenidoJson: string;
+  generadoEn: string;
+  generadoPor: string | null;
+  revisadaEn: string | null;
+  revisadaPor: string | null;
+  aprobadaEn: string | null;
+  aprobadaPor: string | null;
+  publicadaEn: string | null;
+  publicadaPor: string | null;
+  anuladaEn: string | null;
+  anuladaPor: string | null;
+  anuladaMotivo: string | null;
+  archivoPdfUrl: string | null;
+  archivoDocxUrl: string | null;
+  observaciones: string | null;
+}
+
+export interface PersonaResumenOrden {
+  bomberoId: string;
+  nombreCompleto: string;
+  rango: string | null;
+}
+
+export interface OrdenGuardiaSnapshot {
+  numero: number;
+  anio: number;
+  numeroFormateado: string;
+  mes: number;
+  nombreMes: string;
+  periodoDesde: string;
+  periodoHasta: string;
+  fechaEmision: string;
+  generadoEn: string;
+  institucional: { textoHeader: string; logoIzquierdaUrl: string | null; logoDerechaUrl: string | null };
+  introduccion: { textoRenderizado: string; reglaOficialTexto: string; reglaChoferTexto: string };
+  gruposRotativos: Array<{
+    grupoId: string;
+    nombre: string;
+    diaSemana: string | null;
+    oficialACargo: PersonaResumenOrden | null;
+    chofer: PersonaResumenOrden | null;
+    integrantes: Array<PersonaResumenOrden & { rolGrupo: string }>;
+    fechasDelPeriodo: string[];
+  }>;
+  rostersIndividuales: Array<{
+    esquemaId: string;
+    esquemaNombre: string;
+    horaInicio: string;
+    horaFin: string;
+    diasSemanaCsv: string | null;
+    fechas: Array<{ fecha: string; diaSemana: string; asignaciones: Array<PersonaResumenOrden & { rol: string | null }> }>;
+  }>;
+  guardiasEspeciales: Array<{
+    esquemaId: string;
+    modalidadTexto: string;
+    ocurrencias: Array<{ fecha: string; asignaciones: PersonaResumenOrden[] }>;
+  }>;
+  conductoresDisponibles: Array<PersonaResumenOrden & { telefono: string | null }>;
+  piePagina: { texto: string };
+  firmantes: Array<{
+    cargoId: string | null;
+    etiquetaCargo: string;
+    bomberoId: string | null;
+    nombreCompleto: string | null;
+    rango: string | null;
+    selloUrl: string | null;
+  }>;
+}
+
+export interface OrdenGuardiaConfiguracion {
+  id: string;
+  tituloDocumento: string;
+  textoHeaderInstitucional: string | null;
+  logoIzquierdaUrl: string | null;
+  logoDerechaUrl: string | null;
+  textoIntroPlantilla: string | null;
+  reglaTextoOficial: string | null;
+  reglaTextoChofer: string | null;
+  exigirRangoIgualOSuperiorOficial: boolean;
+  textoPie: string | null;
+  firmante1CargoId: string | null;
+  firmante1Etiqueta: string | null;
+  firmante2CargoId: string | null;
+  firmante2Etiqueta: string | null;
+  actualizadoEn: string;
+  actualizadoPor: string | null;
+}
+
+export interface OrdenGuardiaModificacion {
+  id: string;
+  ordenId: string;
+  campo: string;
+  descripcion: string;
+  valorAnterior: string | null;
+  valorNuevo: string | null;
+  motivo: string;
+  registradoEn: string;
+  registradoPor: string;
+}
+
+export async function cargarOrdenesGuardia(anio?: number, mes?: number, estado?: string) {
+  const params = new URLSearchParams();
+  if (anio) params.set('anio', String(anio));
+  if (mes) params.set('mes', String(mes));
+  if (estado) params.set('estado', estado);
+  const res = await apiFetch(`/guardias/ordenes?${params.toString()}`);
+  if (!res.ok) throw new Error('No se pudo cargar el listado de ordenes');
+  return res.json() as Promise<OrdenGuardia[]>;
+}
+
+export async function cargarOrdenGuardia(id: string) {
+  const res = await apiFetch(`/guardias/ordenes/${id}`);
+  if (!res.ok) throw new Error('No se pudo cargar la orden');
+  return res.json() as Promise<OrdenGuardia>;
+}
+
+export async function crearOrdenGuardia(payload: Record<string, unknown>) {
+  const res = await apiFetch('/guardias/ordenes', { method: 'POST', body: JSON.stringify(payload) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo crear la orden'));
+  return res.json() as Promise<OrdenGuardia>;
+}
+
+export async function regenerarPreviewOrden(id: string) {
+  const res = await apiFetch(`/guardias/ordenes/${id}/regenerar-preview`, { method: 'POST' });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo regenerar la vista previa'));
+  return res.json() as Promise<OrdenGuardia>;
+}
+
+export async function generarDocumentosOrden(id: string) {
+  const res = await apiFetch(`/guardias/ordenes/${id}/generar-documentos`, { method: 'POST' });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudieron generar los documentos'));
+  return res.json() as Promise<OrdenGuardia>;
+}
+
+export async function revisarOrden(id: string) {
+  const res = await apiFetch(`/guardias/ordenes/${id}/revisar`, { method: 'POST' });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo pasar a revisada'));
+  return res.json() as Promise<OrdenGuardia>;
+}
+
+export async function volverABorradorOrden(id: string) {
+  const res = await apiFetch(`/guardias/ordenes/${id}/volver-borrador`, { method: 'POST' });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo volver a borrador'));
+  return res.json() as Promise<OrdenGuardia>;
+}
+
+export async function aprobarOrden(id: string) {
+  const res = await apiFetch(`/guardias/ordenes/${id}/aprobar`, { method: 'POST' });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo aprobar la orden'));
+  return res.json() as Promise<OrdenGuardia>;
+}
+
+export async function publicarOrden(id: string) {
+  const res = await apiFetch(`/guardias/ordenes/${id}/publicar`, { method: 'POST' });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo publicar la orden'));
+  return res.json() as Promise<OrdenGuardia>;
+}
+
+export async function anularOrden(id: string, motivo: string) {
+  const res = await apiFetch(`/guardias/ordenes/${id}/anular`, { method: 'POST', body: JSON.stringify({ motivo }) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo anular la orden'));
+  return res.json() as Promise<OrdenGuardia>;
+}
+
+export async function listarModificacionesOrden(id: string) {
+  const res = await apiFetch(`/guardias/ordenes/${id}/modificaciones`);
+  if (!res.ok) throw new Error('No se pudo cargar el historial de modificaciones');
+  return res.json() as Promise<OrdenGuardiaModificacion[]>;
+}
+
+export async function registrarModificacionOrden(id: string, payload: Record<string, unknown>) {
+  const res = await apiFetch(`/guardias/ordenes/${id}/modificaciones`, { method: 'POST', body: JSON.stringify(payload) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo registrar la modificacion'));
+  return res.json() as Promise<OrdenGuardiaModificacion>;
+}
+
+export async function cargarConfiguracionOrdenes() {
+  const res = await apiFetch('/guardias/ordenes/configuracion');
+  if (!res.ok) throw new Error('No se pudo cargar la configuracion');
+  return res.json() as Promise<OrdenGuardiaConfiguracion>;
+}
+
+export async function actualizarConfiguracionOrdenes(payload: Record<string, unknown>) {
+  const res = await apiFetch('/guardias/ordenes/configuracion', { method: 'PUT', body: JSON.stringify(payload) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo actualizar la configuracion'));
+  return res.json() as Promise<OrdenGuardiaConfiguracion>;
 }

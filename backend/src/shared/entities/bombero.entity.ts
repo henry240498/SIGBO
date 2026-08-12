@@ -197,4 +197,21 @@ export class Bombero {
 
   @Column({ type: 'nvarchar', nullable: true })
   firmaDigitalUrl: string | null;
+
+  /* --- Disponibilidad para Guardias (no confundir con Servicios: un
+     bombero puede participar de servicios aunque no realice guardias) --- */
+  @Column({ type: 'bit', default: true })
+  realizaGuardias: boolean;
+
+  @Column({ type: 'bit', default: false })
+  realizaGuardiasEspeciales: boolean;
+
+  @Column({ type: 'int', nullable: true })
+  frecuenciaNormalMensual: number | null;
+
+  @Column({ type: 'int', nullable: true })
+  frecuenciaEspecialMensual: number | null;
+
+  @Column({ type: 'nvarchar', length: 10, nullable: true })
+  diaPreferenteGuardia: string | null;
 }

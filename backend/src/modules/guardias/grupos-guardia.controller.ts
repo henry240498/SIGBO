@@ -41,6 +41,12 @@ export class GruposGuardiaController {
     return this.service.update(id, dto, user.id, req.ip);
   }
 
+  @Get(':id/historial')
+  @RequirePermission('guardias:ver')
+  historial(@Param('id') id: string) {
+    return this.service.historial(id);
+  }
+
   @Get(':id/miembros')
   @RequirePermission('guardias:ver')
   listarMiembros(@Param('id') id: string) {
