@@ -56,7 +56,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
       </aside>
 
-      <main className="app-main">
+      <main className="app-main" id="contenido-principal" tabIndex={-1}>
         <header className="topbar">
           <div>
             <div className="topbar-eyebrow">Sistema integral</div>

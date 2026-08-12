@@ -28,3 +28,4 @@ Thumbs.db
 # Editor
 .vscode/
 .idea/
+.context/.obsidian/workspace.json

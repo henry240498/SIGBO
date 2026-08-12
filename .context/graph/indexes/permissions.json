@@ -1,0 +1,789 @@
+{
+ "asistencia:asistencia_crear": {
+  "modulo": "asistencia",
+  "exigidoPor": [
+   "api--operaciones-marcaciones",
+   "screen--dashboard-asistencia-registro"
+  ]
+ },
+ "asistencia:asistencia_editar": {
+  "modulo": "asistencia",
+  "exigidoPor": [
+   "api--operaciones-tolerancias",
+   "screen--dashboard-asistencia-tolerancias"
+  ]
+ },
+ "asistencia:asistencia_ver": {
+  "modulo": "asistencia",
+  "exigidoPor": [
+   "api--operaciones-dashboard-asistencia",
+   "api--operaciones-marcaciones",
+   "api--operaciones-tolerancias"
+  ]
+ },
+ "asistencia:eventos_crear": {
+  "modulo": "asistencia",
+  "exigidoPor": [
+   "api--operaciones-eventos-asistencia",
+   "screen--dashboard-asistencia-eventos"
+  ]
+ },
+ "asistencia:eventos_editar": {
+  "modulo": "asistencia",
+  "exigidoPor": [
+   "api--operaciones-eventos-asistencia",
+   "screen--dashboard-asistencia-eventos-id"
+  ]
+ },
+ "asistencia:eventos_ver": {
+  "modulo": "asistencia",
+  "exigidoPor": [
+   "api--operaciones-eventos-asistencia"
+  ]
+ },
+ "asistencia:externos_crear": {
+  "modulo": "asistencia",
+  "exigidoPor": [
+   "api--operaciones-participantes-externos",
+   "screen--dashboard-asistencia-externos"
+  ]
+ },
+ "asistencia:externos_editar": {
+  "modulo": "asistencia",
+  "exigidoPor": [
+   "api--operaciones-participantes-externos",
+   "screen--dashboard-asistencia-externos"
+  ]
+ },
+ "asistencia:externos_ver": {
+  "modulo": "asistencia",
+  "exigidoPor": [
+   "api--operaciones-participantes-externos"
+  ]
+ },
+ "asistencia:importar_marcador": {
+  "modulo": "asistencia",
+  "exigidoPor": [
+   "api--operaciones-importaciones"
+  ]
+ },
+ "configuracion:editar_borrador": {
+  "modulo": "configuracion",
+  "exigidoPor": [
+   "api--configuracion-configuracion",
+   "configuration--identidad",
+   "configuration--tokens-de-diseno",
+   "configuration--navegacion",
+   "configuration--seguridad-global",
+   "configuration--mantenimiento"
+  ]
+ },
+ "configuracion:exportar": {
+  "modulo": "configuracion",
+  "exigidoPor": [
+   "api--configuracion-configuracion"
+  ]
+ },
+ "configuracion:publicar": {
+  "modulo": "configuracion",
+  "exigidoPor": [
+   "api--configuracion-configuracion"
+  ]
+ },
+ "configuracion:restaurar": {
+  "modulo": "configuracion",
+  "exigidoPor": [
+   "api--configuracion-configuracion"
+  ]
+ },
+ "configuracion:ver": {
+  "modulo": "configuracion",
+  "exigidoPor": [
+   "api--configuracion-configuracion"
+  ]
+ },
+ "equipos:crear": {
+  "modulo": "equipos",
+  "exigidoPor": [
+   "api--equipos-categorias-equipo",
+   "api--equipos-equipos",
+   "screen--dashboard-equipos-categorias",
+   "screen--dashboard-equipos"
+  ]
+ },
+ "equipos:editar": {
+  "modulo": "equipos",
+  "exigidoPor": [
+   "api--equipos-categorias-equipo",
+   "api--equipos-equipos",
+   "screen--dashboard-equipos-categorias",
+   "screen--dashboard-equipos-id"
+  ]
+ },
+ "equipos:eliminar": {
+  "modulo": "equipos",
+  "exigidoPor": [
+   "api--equipos-categorias-equipo",
+   "api--equipos-equipos",
+   "screen--dashboard-equipos-categorias"
+  ]
+ },
+ "equipos:mantenimiento": {
+  "modulo": "equipos",
+  "exigidoPor": [
+   "api--equipos-equipos"
+  ]
+ },
+ "equipos:prestar": {
+  "modulo": "equipos",
+  "exigidoPor": [
+   "api--equipos-equipamiento-bombero",
+   "screen--dashboard-equipos-id",
+   "screen--dashboard-personal-id"
+  ]
+ },
+ "equipos:ver": {
+  "modulo": "equipos",
+  "exigidoPor": [
+   "api--equipos-categorias-equipo",
+   "api--equipos-equipos"
+  ]
+ },
+ "guardias:asignar": {
+  "modulo": "guardias",
+  "exigidoPor": [
+   "api--guardias-guardias",
+   "screen--dashboard-guardias-id"
+  ]
+ },
+ "guardias:crear": {
+  "modulo": "guardias",
+  "exigidoPor": [
+   "api--guardias-grupos-guardia",
+   "api--guardias-guardias",
+   "screen--dashboard-guardias-grupos",
+   "screen--dashboard-guardias"
+  ]
+ },
+ "guardias:editar": {
+  "modulo": "guardias",
+  "exigidoPor": [
+   "api--guardias-grupos-guardia",
+   "api--guardias-guardias",
+   "api--guardias-inspecciones-estacion",
+   "api--guardias-novedades",
+   "api--guardias-pernoctes",
+   "screen--dashboard-guardias-grupos-id",
+   "screen--dashboard-guardias-pernoctes",
+   "screen--dashboard-guardias-id"
+  ]
+ },
+ "guardias:requisitos": {
+  "modulo": "guardias",
+  "exigidoPor": [
+   "api--guardias-requisitos-rol",
+   "screen--dashboard-guardias-requisitos"
+  ]
+ },
+ "guardias:ver": {
+  "modulo": "guardias",
+  "exigidoPor": [
+   "api--guardias-grupos-guardia",
+   "api--guardias-guardias",
+   "api--guardias-inspecciones-estacion",
+   "api--guardias-novedades",
+   "api--guardias-pernoctes"
+  ]
+ },
+ "organizacion:ascensos_anular": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-ascensos"
+  ]
+ },
+ "organizacion:ascensos_crear": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-ascensos"
+  ]
+ },
+ "organizacion:ascensos_ver": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-ascensos"
+  ]
+ },
+ "organizacion:brigadas_crear": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-brigadas"
+  ]
+ },
+ "organizacion:brigadas_editar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-brigadas"
+  ]
+ },
+ "organizacion:brigadas_eliminar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-brigadas"
+  ]
+ },
+ "organizacion:brigadas_ver": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-brigadas"
+  ]
+ },
+ "organizacion:cargos_crear": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-cargos"
+  ]
+ },
+ "organizacion:cargos_editar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-cargos"
+  ]
+ },
+ "organizacion:cargos_eliminar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-cargos"
+  ]
+ },
+ "organizacion:cargos_ver": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-cargos"
+  ]
+ },
+ "organizacion:companias_crear": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-companias"
+  ]
+ },
+ "organizacion:companias_editar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-companias"
+  ]
+ },
+ "organizacion:companias_eliminar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-companias"
+  ]
+ },
+ "organizacion:companias_ver": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-companias"
+  ]
+ },
+ "organizacion:cuarteles_crear": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-cuarteles"
+  ]
+ },
+ "organizacion:cuarteles_editar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-cuarteles"
+  ]
+ },
+ "organizacion:cuarteles_eliminar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-cuarteles"
+  ]
+ },
+ "organizacion:cuarteles_ver": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-cuarteles"
+  ]
+ },
+ "organizacion:departamentos_crear": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-departamentos"
+  ]
+ },
+ "organizacion:departamentos_editar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-departamentos"
+  ]
+ },
+ "organizacion:departamentos_eliminar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-departamentos"
+  ]
+ },
+ "organizacion:departamentos_ver": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-departamentos"
+  ]
+ },
+ "organizacion:designaciones_crear": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-designaciones"
+  ]
+ },
+ "organizacion:designaciones_editar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-designaciones"
+  ]
+ },
+ "organizacion:designaciones_eliminar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-designaciones"
+  ]
+ },
+ "organizacion:designaciones_finalizar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-designaciones"
+  ]
+ },
+ "organizacion:designaciones_ver": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-designaciones"
+  ]
+ },
+ "organizacion:especialidades_crear": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-especialidades"
+  ]
+ },
+ "organizacion:especialidades_editar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-especialidades"
+  ]
+ },
+ "organizacion:especialidades_eliminar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-especialidades"
+  ]
+ },
+ "organizacion:especialidades_ver": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-especialidades"
+  ]
+ },
+ "organizacion:parametros_crear": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-parametros"
+  ]
+ },
+ "organizacion:parametros_editar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-parametros"
+  ]
+ },
+ "organizacion:parametros_eliminar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-parametros"
+  ]
+ },
+ "organizacion:parametros_ver": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-parametros"
+  ]
+ },
+ "organizacion:rangos_crear": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-rangos"
+  ]
+ },
+ "organizacion:rangos_editar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-rangos"
+  ]
+ },
+ "organizacion:rangos_eliminar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-rangos"
+  ]
+ },
+ "organizacion:rangos_ver": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-rangos"
+  ]
+ },
+ "organizacion:tipos_guardia_crear": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-tipos-guardia"
+  ]
+ },
+ "organizacion:tipos_guardia_editar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-tipos-guardia"
+  ]
+ },
+ "organizacion:tipos_guardia_eliminar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-tipos-guardia"
+  ]
+ },
+ "organizacion:tipos_guardia_ver": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-tipos-guardia"
+  ]
+ },
+ "organizacion:turnos_crear": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-turnos"
+  ]
+ },
+ "organizacion:turnos_editar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-turnos"
+  ]
+ },
+ "organizacion:turnos_eliminar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-turnos"
+  ]
+ },
+ "organizacion:turnos_ver": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-turnos"
+  ]
+ },
+ "organizacion:unidades_crear": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-unidades"
+  ]
+ },
+ "organizacion:unidades_editar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-unidades"
+  ]
+ },
+ "organizacion:unidades_eliminar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-unidades"
+  ]
+ },
+ "organizacion:unidades_ver": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-unidades"
+  ]
+ },
+ "organizacion:ver_dashboard": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-dashboard"
+  ]
+ },
+ "personal:crear": {
+  "modulo": "personal",
+  "exigidoPor": [
+   "api--personal-bomberos",
+   "screen--dashboard-personal"
+  ]
+ },
+ "personal:editar": {
+  "modulo": "personal",
+  "exigidoPor": [
+   "api--personal-actividad-profesional",
+   "api--personal-bomberos",
+   "api--personal-condicion",
+   "api--personal-especialidades-bombero",
+   "api--personal-historial-institucional",
+   "api--personal-idiomas",
+   "api--vehiculos-vehiculos-autorizados",
+   "screen--dashboard-personal-id"
+  ]
+ },
+ "personal:eliminar": {
+  "modulo": "personal",
+  "exigidoPor": [
+   "api--personal-bomberos",
+   "screen--dashboard-personal"
+  ]
+ },
+ "personal:eliminar_fisico": {
+  "modulo": "personal",
+  "exigidoPor": [
+   "api--personal-bomberos",
+   "screen--dashboard-personal-id"
+  ]
+ },
+ "personal:generar_foja": {
+  "modulo": "personal",
+  "exigidoPor": [
+   "api--personal-foja-servicio",
+   "screen--dashboard-personal-id"
+  ]
+ },
+ "personal:seguros_crear": {
+  "modulo": "personal",
+  "exigidoPor": [
+   "api--personal-seguros-bombero",
+   "screen--dashboard-personal-id"
+  ]
+ },
+ "personal:seguros_editar": {
+  "modulo": "personal",
+  "exigidoPor": [
+   "api--personal-seguros-bombero",
+   "screen--dashboard-personal-id"
+  ]
+ },
+ "personal:seguros_eliminar": {
+  "modulo": "personal",
+  "exigidoPor": [
+   "api--personal-seguros-bombero",
+   "screen--dashboard-personal-id"
+  ]
+ },
+ "personal:seguros_ver": {
+  "modulo": "personal",
+  "exigidoPor": [
+   "api--personal-seguros-bombero",
+   "screen--dashboard-personal-id"
+  ]
+ },
+ "personal:tipos_bombero_crear": {
+  "modulo": "personal",
+  "exigidoPor": [
+   "api--personal-tipos-bombero"
+  ]
+ },
+ "personal:tipos_bombero_editar": {
+  "modulo": "personal",
+  "exigidoPor": [
+   "api--personal-tipos-bombero"
+  ]
+ },
+ "personal:tipos_bombero_eliminar": {
+  "modulo": "personal",
+  "exigidoPor": [
+   "api--personal-tipos-bombero"
+  ]
+ },
+ "personal:tipos_bombero_ver": {
+  "modulo": "personal",
+  "exigidoPor": [
+   "api--personal-tipos-bombero"
+  ]
+ },
+ "personal:ver": {
+  "modulo": "personal",
+  "exigidoPor": [
+   "api--equipos-equipamiento-bombero",
+   "api--personal-actividad-profesional",
+   "api--personal-bomberos",
+   "api--personal-condicion",
+   "api--personal-consultas-cruzadas",
+   "api--personal-especialidades-bombero",
+   "api--personal-foja-servicio",
+   "api--personal-historial-institucional",
+   "api--personal-idiomas",
+   "api--vehiculos-vehiculos-autorizados"
+  ]
+ },
+ "publicaciones:administrar": {
+  "modulo": "publicaciones",
+  "exigidoPor": [
+   "api--publicaciones-publicaciones"
+  ]
+ },
+ "seguridad:cerrar_sesion": {
+  "modulo": "seguridad",
+  "exigidoPor": [
+   "api--seguridad-usuarios"
+  ]
+ },
+ "seguridad:configurar_apariencia": {
+  "modulo": "seguridad",
+  "exigidoPor": [
+   "api--configuracion-configuracion",
+   "api--publicaciones-publicaciones",
+   "api--seguridad-apariencia",
+   "screen--dashboard-seguridad-apariencia"
+  ]
+ },
+ "seguridad:configurar_politica_perfil": {
+  "modulo": "seguridad",
+  "exigidoPor": [
+   "api--seguridad-apariencia",
+   "screen--dashboard-seguridad-apariencia"
+  ]
+ },
+ "seguridad:crear_permiso": {
+  "modulo": "seguridad",
+  "exigidoPor": [
+   "api--seguridad-permisos"
+  ]
+ },
+ "seguridad:crear_rol": {
+  "modulo": "seguridad",
+  "exigidoPor": [
+   "api--seguridad-roles"
+  ]
+ },
+ "seguridad:crear_usuario": {
+  "modulo": "seguridad",
+  "exigidoPor": [
+   "api--seguridad-usuarios"
+  ]
+ },
+ "seguridad:editar_permiso": {
+  "modulo": "seguridad",
+  "exigidoPor": [
+   "api--seguridad-permisos"
+  ]
+ },
+ "seguridad:editar_rol": {
+  "modulo": "seguridad",
+  "exigidoPor": [
+   "api--seguridad-roles"
+  ]
+ },
+ "seguridad:editar_usuario": {
+  "modulo": "seguridad",
+  "exigidoPor": [
+   "api--seguridad-perfil",
+   "api--seguridad-usuarios"
+  ]
+ },
+ "seguridad:eliminar_permiso": {
+  "modulo": "seguridad",
+  "exigidoPor": [
+   "api--seguridad-permisos"
+  ]
+ },
+ "seguridad:eliminar_rol": {
+  "modulo": "seguridad",
+  "exigidoPor": [
+   "api--seguridad-roles"
+  ]
+ },
+ "seguridad:eliminar_usuario": {
+  "modulo": "seguridad",
+  "exigidoPor": [
+   "api--seguridad-usuarios"
+  ]
+ },
+ "seguridad:ver_usuarios": {
+  "modulo": "seguridad",
+  "exigidoPor": [
+   "api--seguridad-dashboard",
+   "api--seguridad-perfil",
+   "api--seguridad-permisos",
+   "api--seguridad-roles",
+   "api--seguridad-sesiones",
+   "api--seguridad-usuarios"
+  ]
+ },
+ "servicios:crear": {
+  "modulo": "servicios",
+  "exigidoPor": [
+   "api--servicios-servicios"
+  ]
+ },
+ "servicios:editar": {
+  "modulo": "servicios",
+  "exigidoPor": [
+   "api--servicios-servicios"
+  ]
+ },
+ "servicios:eliminar": {
+  "modulo": "servicios",
+  "exigidoPor": [
+   "api--servicios-servicios"
+  ]
+ },
+ "servicios:finalizar": {
+  "modulo": "servicios",
+  "exigidoPor": [
+   "api--servicios-servicios"
+  ]
+ },
+ "servicios:ver": {
+  "modulo": "servicios",
+  "exigidoPor": [
+   "api--servicios-servicios"
+  ]
+ },
+ "vehiculos:combustible": {
+  "modulo": "vehiculos",
+  "exigidoPor": [
+   "api--vehiculos-vehiculos"
+  ]
+ },
+ "vehiculos:crear": {
+  "modulo": "vehiculos",
+  "exigidoPor": [
+   "api--vehiculos-vehiculos",
+   "screen--dashboard-vehiculos"
+  ]
+ },
+ "vehiculos:editar": {
+  "modulo": "vehiculos",
+  "exigidoPor": [
+   "api--vehiculos-checklist-items",
+   "api--vehiculos-vehiculos",
+   "screen--dashboard-vehiculos-checklist-items",
+   "screen--dashboard-vehiculos-id"
+  ]
+ },
+ "vehiculos:eliminar": {
+  "modulo": "vehiculos",
+  "exigidoPor": [
+   "api--vehiculos-vehiculos"
+  ]
+ },
+ "vehiculos:mantenimiento": {
+  "modulo": "vehiculos",
+  "exigidoPor": [
+   "api--vehiculos-vehiculos"
+  ]
+ },
+ "vehiculos:ver": {
+  "modulo": "vehiculos",
+  "exigidoPor": [
+   "api--vehiculos-checklist-items",
+   "api--vehiculos-vehiculos"
+  ]
+ }
+}

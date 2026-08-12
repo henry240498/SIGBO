@@ -1,0 +1,4 @@
+'use client';
+import {useEffect,useState} from 'react';
+import {usePathname} from 'next/navigation';
+export function ExperienceGuard(){const pathname=usePathname(),[online,setOnline]=useState(true),[announcement,setAnnouncement]=useState('');useEffect(()=>{setOnline(navigator.onLine);const up=()=>setOnline(true),down=()=>setOnline(false);addEventListener('online',up);addEventListener('offline',down);return()=>{removeEventListener('online',up);removeEventListener('offline',down)}},[]);useEffect(()=>setAnnouncement(`Página cargada: ${document.querySelector('h1')?.textContent?.trim()||document.title}`),[pathname]);return <><div className="sr-only" aria-live="polite">{announcement}</div>{!online&&<div className="network-status" role="status">Sin conexión. Los cambios no podrán guardarse.</div>}</>}

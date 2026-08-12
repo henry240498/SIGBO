@@ -6,11 +6,12 @@ import * as entities from '../../shared/entities';
 export const dataSourceOptions: DataSourceOptions = {
   type: 'mssql',
   host: process.env.DB_HOST ?? 'localhost',
-  port: Number(process.env.DB_PORT ?? 1433),
+  ...(process.env.DB_INSTANCE ? {} : { port: Number(process.env.DB_PORT ?? 1433) }),
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME ?? 'sigbo_cbvc',
   options: {
+    ...(process.env.DB_INSTANCE ? { instanceName: process.env.DB_INSTANCE } : {}),
     encrypt: process.env.DB_ENCRYPT === 'true',
     trustServerCertificate: process.env.DB_TRUST_SERVER_CERTIFICATE !== 'false',
     connectTimeout: 15000,

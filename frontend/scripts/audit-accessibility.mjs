@@ -1,0 +1,3 @@
+import{readFile,readdir}from'node:fs/promises';import{join}from'node:path';
+const root=join(process.cwd(),'src'),files=[];async function walk(dir){for(const name of await readdir(dir,{withFileTypes:true})){const path=join(dir,name.name);name.isDirectory()?await walk(path):/\.(tsx|ts)$/.test(name.name)&&files.push(path)}}await walk(root);
+let confirms=0,buttons=0;for(const file of files){const text=await readFile(file,'utf8');confirms+=(text.match(/\bconfirm\s*\(/g)||[]).length;buttons+=(text.match(/<button(?![^>]*\btype=)[^>]*>/g)||[]).length}if(confirms>31||buttons>257){console.error({confirms,buttons});process.exit(1)}console.log(`Auditoría crítica superada en ${files.length} archivos. Confirmaciones: ${confirms}; botones sin type: ${buttons}.`);
