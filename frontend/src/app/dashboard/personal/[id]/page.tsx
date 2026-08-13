@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { apiFetch, API_ORIGIN, obtenerSesion } from '@/lib/api';
 import { cargarParametros, obtenerParametro, resolverNombres, Parametro, TipoParametro } from '@/lib/parametros';
 import { HistorialAsignacion, cargarHistorialGuardiasPersonal } from '@/lib/guardias';
+import { subirFirmaDigital, eliminarFirmaDigital, cambiarAutorizacionFirma } from '@/lib/personal';
 
 /* ------------------------------------------------------------------ */
 /* Tipos                                                                */
@@ -60,6 +61,8 @@ interface Bombero {
   frecuenciaNormalMensual: number | null;
   frecuenciaEspecialMensual: number | null;
   diaPreferenteGuardia: string | null;
+  firmaDigitalUrl: string | null;
+  autorizadoFirmaDigital: boolean;
 }
 
 interface Catalogo {
@@ -89,6 +92,7 @@ const TABS: Array<{ id: string; label: string }> = [
   { id: 'equipamiento', label: 'Equipamiento' },
   { id: 'vehiculos', label: 'Vehiculos autorizados' },
   { id: 'salud', label: 'Salud' },
+  { id: 'firma-digital', label: 'Firma Digital' },
   { id: 'documentos', label: 'Documentos' },
   { id: 'foja', label: 'Foja de Servicio' },
   { id: 'timeline', label: 'Linea de tiempo' },
@@ -271,6 +275,7 @@ export default function ExpedienteBomberoPage() {
         {seccion === 'equipamiento' && <TabEquipamiento bomberoId={id} puedeEditar={puedeEditar} />}
         {seccion === 'vehiculos' && <TabVehiculos bomberoId={id} puedeEditar={puedeEditar} />}
         {seccion === 'salud' && <TabSalud bombero={bombero} puedeEditar={puedeEditar} onGuardado={cargarBombero} />}
+        {seccion === 'firma-digital' && <TabFirmaDigital bombero={bombero} onGuardado={cargarBombero} />}
         {seccion === 'documentos' && <TabDocumentos />}
         {seccion === 'foja' && <TabFoja bomberoId={id} puedeEditar={puedeEditar} />}
         {seccion === 'timeline' && <TabTimeline bomberoId={id} />}
@@ -2457,6 +2462,151 @@ function TabSalud({ bombero, puedeEditar, onGuardado }: { bombero: Bombero; pued
       )}
 
       <SeccionSeguros bomberoId={bombero.id} />
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Firma digital -- distinto de "tiene firma cargada": autorizadoFirma-  */
+/* Digital determina si SIGBO puede insertarla automaticamente en        */
+/* documentos oficiales. Endpoints dedicados, permiso propio.            */
+/* ------------------------------------------------------------------ */
+
+function TabFirmaDigital({ bombero, onGuardado }: { bombero: Bombero; onGuardado: () => void }) {
+  const puedeGestionar = !!obtenerSesion()?.usuario.permisos.includes('personal:gestionar_firma_digital');
+  const [subiendo, setSubiendo] = useState(false);
+  const [eliminando, setEliminando] = useState(false);
+  const [cambiandoAutorizacion, setCambiandoAutorizacion] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [mensaje, setMensaje] = useState<string | null>(null);
+
+  async function subirArchivo(archivo: File) {
+    setError(null);
+    setMensaje(null);
+    setSubiendo(true);
+    try {
+      await subirFirmaDigital(bombero.id, archivo);
+      setMensaje('Firma digital actualizada');
+      onGuardado();
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setSubiendo(false);
+    }
+  }
+
+  async function eliminar() {
+    setError(null);
+    setMensaje(null);
+    setEliminando(true);
+    try {
+      await eliminarFirmaDigital(bombero.id);
+      setMensaje('Firma digital eliminada');
+      onGuardado();
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setEliminando(false);
+    }
+  }
+
+  async function cambiarAutorizacion(autorizado: boolean) {
+    setError(null);
+    setMensaje(null);
+    setCambiandoAutorizacion(true);
+    try {
+      await cambiarAutorizacionFirma(bombero.id, autorizado);
+      setMensaje(autorizado ? 'Autorizado para uso de firma digital' : 'Autorizacion de firma digital revocada');
+      onGuardado();
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setCambiandoAutorizacion(false);
+    }
+  }
+
+  if (!puedeGestionar) {
+    return (
+      <p style={{ color: '#94a3b8', fontSize: 13 }}>
+        Solo un usuario con el permiso <code>personal:gestionar_firma_digital</code> puede cargar, reemplazar,
+        eliminar o autorizar el uso de la firma digital de este bombero.
+      </p>
+    );
+  }
+
+  return (
+    <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 500 }}>
+      <div>
+        <h3 style={{ fontSize: 14, marginBottom: 4 }}>Firma digital registrada</h3>
+        <p style={{ fontSize: 12, color: '#94a3b8' }}>
+          La imagen de la firma es independiente de la autorizacion de uso. Cargar una firma no la habilita
+          automaticamente para insertarse en documentos.
+        </p>
+      </div>
+
+      {error && <p style={{ color: '#f87171', fontSize: 13 }}>{error}</p>}
+      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+
+      {bombero.firmaDigitalUrl ? (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <img
+            src={`${API_ORIGIN}${bombero.firmaDigitalUrl}`}
+            alt="Firma digital"
+            style={{ maxWidth: 260, maxHeight: 120, background: '#fff', borderRadius: 6, padding: 8 }}
+          />
+          <div style={{ display: 'flex', gap: 8 }}>
+            <label className="btn-primary" style={{ background: '#475569', cursor: 'pointer' }}>
+              {subiendo ? 'Subiendo...' : 'Reemplazar'}
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/webp,image/gif"
+                style={{ display: 'none' }}
+                disabled={subiendo}
+                onChange={(e) => e.target.files?.[0] && subirArchivo(e.target.files[0])}
+              />
+            </label>
+            <button className="btn-primary" style={{ background: '#7f1d1d' }} onClick={eliminar} disabled={eliminando}>
+              {eliminando ? 'Eliminando...' : 'Eliminar firma'}
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <label className="btn-primary" style={{ display: 'inline-block', cursor: 'pointer' }}>
+            {subiendo ? 'Subiendo...' : 'Cargar firma digital'}
+            <input
+              type="file"
+              accept="image/png,image/jpeg,image/webp,image/gif"
+              style={{ display: 'none' }}
+              disabled={subiendo}
+              onChange={(e) => e.target.files?.[0] && subirArchivo(e.target.files[0])}
+            />
+          </label>
+          <p style={{ fontSize: 11, color: '#64748b', marginTop: 6 }}>Formatos: png, jpg, webp o gif (no svg).</p>
+        </div>
+      )}
+
+      <div style={{ borderTop: '1px solid #334155', paddingTop: 14 }}>
+        <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <input
+            type="checkbox"
+            checked={bombero.autorizadoFirmaDigital}
+            disabled={cambiandoAutorizacion}
+            onChange={(e) => cambiarAutorizacion(e.target.checked)}
+          />
+          ¿Autorizado para uso de firma digital?
+        </label>
+        <p style={{ fontSize: 11, color: '#64748b', marginTop: 4 }}>
+          Si esta activo Y hay una firma cargada, SIGBO la insertara automaticamente en los documentos que lo
+          requieran. Si esta activo pero no hay firma cargada, el documento se genera igual con una advertencia y el
+          espacio en blanco para firmar a mano.
+        </p>
+        {bombero.autorizadoFirmaDigital && !bombero.firmaDigitalUrl && (
+          <p style={{ fontSize: 12, color: '#f59e0b', marginTop: 8 }}>
+            ⚠ Autorizado para uso de firma digital, pero todavia no tiene una firma cargada.
+          </p>
+        )}
+      </div>
     </div>
   );
 }

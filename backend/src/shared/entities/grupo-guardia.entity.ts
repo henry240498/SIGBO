@@ -36,6 +36,11 @@ export class GrupoGuardia {
   @Column({ type: 'int', nullable: true })
   cicloRotacionDias: number | null;
 
+  /** Días fijos en los que puede asignarse el grupo (CSV LUN..DOM).
+   * Es opcional para conservar los grupos de rotación libre existentes. */
+  @Column({ type: 'nvarchar', length: 27, nullable: true, name: 'dias_semana_csv' })
+  diasSemanaCsv: string | null;
+
   /** Capacidad del grupo; si son NULL, el generador usa los valores del
    * esquema de horario aplicado en su lugar (seccion 9). */
   @Column({ type: 'int', nullable: true })

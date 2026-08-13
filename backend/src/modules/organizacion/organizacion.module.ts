@@ -12,6 +12,7 @@ import {
   Especialidad,
   Feriado,
   Guardia,
+  IdentidadInstitucional,
   Parametro,
   Rango,
   TipoGuardia,
@@ -50,6 +51,8 @@ import { ParametrosService } from './parametros.service';
 import { ParametrosController } from './parametros.controller';
 import { FeriadosService } from './feriados.service';
 import { FeriadosController } from './feriados.controller';
+import { IdentidadInstitucionalService } from './identidad-institucional.service';
+import { IdentidadInstitucionalController } from './identidad-institucional.controller';
 
 @Module({
   imports: [
@@ -70,6 +73,7 @@ import { FeriadosController } from './feriados.controller';
       Parametro,
       Feriado,
       Guardia,
+      IdentidadInstitucional,
     ]),
     SeguridadModule,
   ],
@@ -89,6 +93,7 @@ import { FeriadosController } from './feriados.controller';
     DashboardController,
     ParametrosController,
     FeriadosController,
+    IdentidadInstitucionalController,
   ],
   providers: [
     RangosService,
@@ -106,6 +111,7 @@ import { FeriadosController } from './feriados.controller';
     DashboardService,
     ParametrosService,
     FeriadosService,
+    IdentidadInstitucionalService,
   ],
   exports: [ParametrosService],
 })

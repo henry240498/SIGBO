@@ -1,7 +1,8 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Bombero, HistorialCodigo, HistorialInstitucional } from '../../shared/entities';
+import { borrarImagenSiExiste, guardarImagen, CARPETA_FIRMAS_BOMBERO } from '../../shared/utils/almacenamiento';
 import { AuditoriaService } from '../seguridad/auditoria.service';
 import { CreateBomberoDto } from './dto/create-bombero.dto';
 import { UpdateBomberoDto } from './dto/update-bombero.dto';
@@ -260,6 +261,48 @@ export class BomberosService {
     await this.registrarAuditoria(actorId, 'ELIMINACION_FISICA', id, bombero, null, ip);
     await this.bomberoRepo.delete(id);
     return { eliminado: true, id };
+  }
+
+  /** Sube o reemplaza la imagen de firma digital de un bombero. Cargar una
+   * firma NUNCA autoriza por si sola su uso automatico en documentos -- ver
+   * `cambiarAutorizacionFirma`. */
+  async cargarFirmaDigital(id: string, file: Express.Multer.File, actorId: string, ip?: string) {
+    const anterior = await this.findOne(id);
+    const rutaAnterior = anterior.firmaDigitalUrl;
+
+    const nuevaRuta = await guardarImagen(file, CARPETA_FIRMAS_BOMBERO);
+    await this.bomberoRepo.update(id, { firmaDigitalUrl: nuevaRuta, actualizadoPor: actorId });
+    await borrarImagenSiExiste(rutaAnterior, CARPETA_FIRMAS_BOMBERO);
+
+    const actualizado = await this.findOne(id);
+    await this.registrarAuditoria(actorId, 'FIRMA_DIGITAL_CARGADA', id, anterior, actualizado, ip);
+    return actualizado;
+  }
+
+  async eliminarFirmaDigital(id: string, actorId: string, ip?: string) {
+    const anterior = await this.findOne(id);
+    if (!anterior.firmaDigitalUrl) {
+      throw new BadRequestException('Este bombero no tiene una firma digital registrada');
+    }
+
+    await borrarImagenSiExiste(anterior.firmaDigitalUrl, CARPETA_FIRMAS_BOMBERO);
+    await this.bomberoRepo.update(id, { firmaDigitalUrl: null, actualizadoPor: actorId });
+
+    const actualizado = await this.findOne(id);
+    await this.registrarAuditoria(actorId, 'FIRMA_DIGITAL_ELIMINADA', id, anterior, actualizado, ip);
+    return actualizado;
+  }
+
+  /** Determina si SIGBO puede insertar automaticamente la firma de este
+   * bombero en documentos oficiales -- independiente de si ya tiene una
+   * imagen cargada (`firmaDigitalUrl`). */
+  async cambiarAutorizacionFirma(id: string, autorizado: boolean, actorId: string, ip?: string) {
+    const anterior = await this.findOne(id);
+    await this.bomberoRepo.update(id, { autorizadoFirmaDigital: autorizado, actualizadoPor: actorId });
+
+    const actualizado = await this.findOne(id);
+    await this.registrarAuditoria(actorId, 'AUTORIZACION_FIRMA_DIGITAL_CAMBIADA', id, anterior, actualizado, ip);
+    return actualizado;
   }
 
   private async registrarAuditoria(

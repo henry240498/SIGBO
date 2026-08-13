@@ -4,6 +4,12 @@ import { extname, join } from 'path';
 
 const RAIZ_UPLOADS = join(process.cwd(), 'uploads');
 
+/** Constantes de carpeta compartidas entre el alta (guardarImagen) y el
+ * borrado (borrarImagenSiExiste) de cada recurso -- evitar retipear el
+ * string en cada call site previene archivos huerfanos por un typo. */
+export const CARPETA_IDENTIDAD_INSTITUCIONAL = 'identidad-institucional';
+export const CARPETA_FIRMAS_BOMBERO = 'firmas-bomberos';
+
 /** Guarda un archivo subido con nombre hasheado dentro de uploads/<carpeta> y devuelve la ruta servible. */
 export async function guardarImagen(file: Express.Multer.File, carpeta = 'apariencia'): Promise<string> {
   const extension = extname(file.originalname) || '.png';

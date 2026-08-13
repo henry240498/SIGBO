@@ -2,6 +2,22 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001/api/v1
 /** Origen del backend sin el prefijo /api/v1 - las imagenes subidas se sirven ahi. */
 export const API_ORIGIN = API_URL.replace(/\/api\/v1\/?$/, '');
 
+/** Descarga un archivo servido por el backend aun cuando frontend y backend
+ * usan puertos distintos (el atributo HTML `download` se ignora entre
+ * origenes distintos). */
+export async function descargarArchivo(ruta: string, nombre: string): Promise<void> {
+  const res = await fetch(`${API_ORIGIN}${ruta}`);
+  if (!res.ok) throw new Error('No se pudo descargar el archivo');
+  const url = URL.createObjectURL(await res.blob());
+  const enlace = document.createElement('a');
+  enlace.href = url;
+  enlace.download = nombre;
+  document.body.appendChild(enlace);
+  enlace.click();
+  enlace.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 0);
+}
+
 export interface Sesion {
   accessToken: string;
   refreshToken: string;

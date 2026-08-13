@@ -14,15 +14,6 @@ export class OrdenGuardiaConfiguracion {
   tituloDocumento: string;
 
   @Column({ type: 'nvarchar', nullable: true })
-  textoHeaderInstitucional: string | null;
-
-  @Column({ type: 'nvarchar', nullable: true })
-  logoIzquierdaUrl: string | null;
-
-  @Column({ type: 'nvarchar', nullable: true })
-  logoDerechaUrl: string | null;
-
-  @Column({ type: 'nvarchar', nullable: true })
   textoIntroPlantilla: string | null;
 
   @Column({ type: 'nvarchar', nullable: true })

@@ -179,7 +179,7 @@ export class GeneracionService {
 
         let grupo: GrupoGuardia | null = null;
         if (esquema.usaRotacionGrupo) {
-          grupo = this.elegirGrupoDisponible(fecha, gruposConRotacion, ultimaFechaGrupo, permitirRepetir);
+          grupo = this.elegirGrupoDisponible(fecha, diaCsv, gruposConRotacion, ultimaFechaGrupo, permitirRepetir);
           if (!grupo) {
             advertencias.push(`${fecha} (${esquema.nombre}): no hay ningun grupo disponible segun su ciclo de rotacion`);
             continue;
@@ -292,11 +292,13 @@ export class GeneracionService {
    * a estar disponible con total normalidad. */
   private elegirGrupoDisponible(
     fecha: string,
+    diaCsv: string,
     gruposConRotacion: GrupoGuardia[],
     ultimaFechaGrupo: Map<string, string | null>,
     permitirRepetir: boolean,
   ): GrupoGuardia | null {
     const candidatos = gruposConRotacion.filter((g) => {
+      if (g.diasSemanaCsv && !g.diasSemanaCsv.split(',').includes(diaCsv)) return false;
       const ultima = ultimaFechaGrupo.get(g.id);
       if (!ultima) return true;
       if (permitirRepetir) return true;

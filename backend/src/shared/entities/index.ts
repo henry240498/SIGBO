@@ -80,3 +80,4 @@ export * from './orden-guardia-modificacion.entity';
 export * from './configuracion-valor.entity';
 export * from './configuracion-version.entity';
 export * from './publicacion.entity';
+export * from './identidad-institucional.entity';
