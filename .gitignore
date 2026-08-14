@@ -18,6 +18,7 @@ npm-debug.log*
 # Uploads / runtime data
 backend/uploads/
 logs/
+tmp/
 *.mdf
 *.ldf
 

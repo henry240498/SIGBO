@@ -1,5 +1,8 @@
 # SIGBO-CBVC — Documentacion del Proyecto (Fase 0 + Fase 1)
 
+Las reglas institucionales que condicionan el diseño funcional están documentadas en
+[`REGLAMENTO_GENERAL_CBVC_TRAZABILIDAD.md`](REGLAMENTO_GENERAL_CBVC_TRAZABILIDAD.md).
+
 Implementacion inicial del Sistema Integral de Gestion para Bomberos
 Voluntarios, basada en la especificacion de `Proyecto.txt`, adaptada a las
 herramientas disponibles en este equipo.
