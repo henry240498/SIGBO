@@ -40,7 +40,10 @@ Registro de cada servicio/intervencion (schema servicios).
 - [[service--personal-consultas-cruzadas|ConsultasCruzadasService]] `uses` →
 - [[service--publicaciones-publicaciones|PublicacionesService]] `uses` →
 - [[service--servicios-servicios|ServiciosService]] `uses` →
+<<<<<<< Updated upstream
 - [[service--vehiculos-vehiculos|VehiculosService]] `uses` →
+=======
+>>>>>>> Stashed changes
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

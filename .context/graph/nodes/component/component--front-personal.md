@@ -23,6 +23,7 @@ Helper de frontend "personal" (10 exportaciones).
 ## Referenciado por
 
 - [[screen--dashboard-asistencia-eventos-id|/dashboard/asistencia/eventos/[id]]] `uses` →
+<<<<<<< Updated upstream
 - [[screen--dashboard-asistencia-registro|/dashboard/asistencia/registro]] `uses` →
 - [[screen--dashboard-equipos-id|/dashboard/equipos/[id]]] `uses` →
 - [[screen--dashboard-guardias-grupos|/dashboard/guardias/grupos]] `uses` →
@@ -30,6 +31,10 @@ Helper de frontend "personal" (10 exportaciones).
 - [[screen--dashboard-guardias-pernoctes|/dashboard/guardias/pernoctes]] `uses` →
 - [[screen--dashboard-guardias-requisitos|/dashboard/guardias/requisitos]] `uses` →
 - [[screen--dashboard-guardias-id|/dashboard/guardias/[id]]] `uses` →
+=======
+- [[screen--dashboard-asistencia-guardias-id|/dashboard/asistencia/guardias/[id]]] `uses` →
+- [[screen--dashboard-asistencia-registro|/dashboard/asistencia/registro]] `uses` →
+>>>>>>> Stashed changes
 - [[screen--dashboard-personal|/dashboard/personal]] `uses` →
 
 ---

@@ -19,7 +19,11 @@ terminos: [equipo, equipos, estado, operativo, mantenimiento, daniado, baja, pre
 Entidad Equipo, persistida en equipos.equipos.
 
 - **Tabla:** [[table--equipos-equipos|equipos.equipos]]
+<<<<<<< Updated upstream
 - **Columnas mapeadas:** 19
+=======
+- **Columnas mapeadas:** 17
+>>>>>>> Stashed changes
 
 ## Estados y enumeraciones
 

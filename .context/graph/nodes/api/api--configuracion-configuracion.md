@@ -28,6 +28,10 @@ Superficie HTTP de configuracion bajo /api/v1/configuracion.
 |---|---|---|
 | GET | `/configuracion/publica` | — |
 | GET | `/configuracion/registro-publico` | — |
+<<<<<<< Updated upstream
+=======
+| GET | `/configuracion/registro-preferencias` | — |
+>>>>>>> Stashed changes
 | GET | `/configuracion/mis-preferencias` | — |
 | PUT | `/configuracion/mis-preferencias` | — |
 | GET | `/configuracion/admin/registro` | `configuracion:ver` o `seguridad:configurar_apariencia` |
@@ -49,5 +53,13 @@ Superficie HTTP de configuracion bajo /api/v1/configuracion.
 - `belongs_to` → [[domain--seguridad|Seguridad]]
 - `exposes` → [[service--configuracion-configuracion|ConfiguracionService]]
 
+<<<<<<< Updated upstream
+=======
+## Referenciado por
+
+- [[screen--dashboard-mi-perfil-preferencias|/dashboard/mi-perfil/preferencias]] `calls` →
+- [[screen--dashboard-mi-perfil-preferencias|/dashboard/mi-perfil/preferencias]] `calls` →
+
+>>>>>>> Stashed changes
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

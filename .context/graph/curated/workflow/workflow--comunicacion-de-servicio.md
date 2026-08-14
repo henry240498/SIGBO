@@ -11,6 +11,10 @@ edges:
   - [contains, rule--una-comunicacion-por-servicio]
   - [contains, decision--comunicacion-como-json]
   - [affects, entity--comunicacion-servicio]
+<<<<<<< Updated upstream
+=======
+  - [affects, api--servicios-servicios]
+>>>>>>> Stashed changes
 ---
 
 ## Maquina de estados
@@ -26,10 +30,17 @@ edges:
                                     (anular desde cualquiera) ──► ANULADO
 ```
 
+<<<<<<< Updated upstream
 Los cinco valores son los del `CHECK` de la tabla: `BORRADOR`,
 `PENDIENTE_REVISION`, `OBSERVADO`, `FINALIZADA`, `ANULADO`.
 
 ## Endpoints y permisos
+=======
+Los cinco valores son los del `CHECK` de la tabla:
+`BORRADOR`, `PENDIENTE_REVISION`, `OBSERVADO`, `FINALIZADA`, `ANULADO`.
+
+## Endpoints y permisos, tal como estan hoy
+>>>>>>> Stashed changes
 
 | Transicion | Endpoint | Permiso |
 |---|---|---|

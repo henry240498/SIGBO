@@ -32,9 +32,13 @@ Entidad VehiculoAutorizado, persistida en personal.vehiculos_autorizados.
 
 ## Referenciado por
 
+<<<<<<< Updated upstream
 - [[service--guardias-elegibilidad|ElegibilidadService]] `uses` →
 - [[service--vehiculos-vehiculos-autorizados|VehiculosAutorizadosService]] `uses` →
 - [[rule--elegibilidad-de-rol-guardia|La elegibilidad para un rol de guardia se configura en tablas, con OR entre filas y AND entre columnas]] `affects` →
+=======
+- [[service--vehiculos-vehiculos-autorizados|VehiculosAutorizadosService]] `uses` →
+>>>>>>> Stashed changes
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

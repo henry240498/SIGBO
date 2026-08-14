@@ -4,23 +4,40 @@ tipo: TABLE
 nombre: equipos.equipos
 nivel: L2
 dominio: equipos
+<<<<<<< Updated upstream
 resumen: Tabla equipos.equipos (22 columnas). Creada en 006_vehiculos_equipos.sql, modificada por 009_foreign_keys.sql, 024_equipos.sql.
+=======
+resumen: Tabla equipos.equipos (20 columnas). Creada en 006_vehiculos_equipos.sql, modificada por 009_foreign_keys.sql.
+>>>>>>> Stashed changes
 tabla: equipos
 archivos:
   - database/migrations/006_vehiculos_equipos.sql
   - database/migrations/009_foreign_keys.sql
+<<<<<<< Updated upstream
   - database/migrations/024_equipos.sql
 edges:
   - [defined_in, file--006-vehiculos-equipos]
   - [belongs_to, domain--equipos]
 terminos: [equipos, categoria, codigo, interno, nombre, descripcion, marca, modelo, numero, serie, estado, ubicacion, responsable, fecha, compra, vencimiento, vida, util, meses, code, fotos, documentos, metadata, creado, actualizado, vehiculo, asignado, tipo]
+=======
+edges:
+  - [defined_in, file--006-vehiculos-equipos]
+  - [belongs_to, domain--equipos]
+terminos: [equipos, categoria, codigo, interno, nombre, descripcion, marca, modelo, numero, serie, estado, ubicacion, responsable, fecha, compra, vencimiento, vida, util, meses, code, fotos, documentos, metadata, creado, actualizado]
+>>>>>>> Stashed changes
 ---
 
 # equipos.equipos
 
+<<<<<<< Updated upstream
 Tabla equipos.equipos (22 columnas). Creada en 006_vehiculos_equipos.sql, modificada por 009_foreign_keys.sql, 024_equipos.sql.
 
 - **Esquema:** equipos · **Columnas:** 22
+=======
+Tabla equipos.equipos (20 columnas). Creada en 006_vehiculos_equipos.sql, modificada por 009_foreign_keys.sql.
+
+- **Esquema:** equipos · **Columnas:** 20
+>>>>>>> Stashed changes
 - **UNIQUE:** `codigo_interno`
 
 ## Columnas
@@ -47,14 +64,20 @@ Tabla equipos.equipos (22 columnas). Creada en 006_vehiculos_equipos.sql, modifi
 | metadata | NVARCHAR(MAX) |
 | creado_en | DATETIMEOFFSET(3) |
 | actualizado_en | DATETIMEOFFSET(3) |
+<<<<<<< Updated upstream
 | vehiculo_asignado_id | UNIQUEIDENTIFIER |
 | ubicacion_tipo | UNIQUEIDENTIFIER |
+=======
+>>>>>>> Stashed changes
 
 ## Archivos
 
 - `database/migrations/006_vehiculos_equipos.sql`
 - `database/migrations/009_foreign_keys.sql`
+<<<<<<< Updated upstream
 - `database/migrations/024_equipos.sql`
+=======
+>>>>>>> Stashed changes
 
 ## Relaciones
 

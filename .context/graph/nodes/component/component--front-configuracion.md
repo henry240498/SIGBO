@@ -21,6 +21,10 @@ Helper de frontend "configuracion" (8 exportaciones).
 
 ## Referenciado por
 
+<<<<<<< Updated upstream
+=======
+- [[screen--dashboard-mi-perfil-preferencias|/dashboard/mi-perfil/preferencias]] `uses` →
+>>>>>>> Stashed changes
 - [[screen--dashboard-seguridad-configuracion|/dashboard/seguridad/configuracion]] `uses` →
 
 ---

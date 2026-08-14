@@ -41,10 +41,17 @@ export class SesionesService {
   }
 
   findByUsuario(usuarioId: string) {
-    return this.sesionRepo.find({
-      where: { usuarioId, activa: true },
-      order: { fechaUltimaActividad: 'DESC' },
-    });
+    return this.sesionRepo.createQueryBuilder('s')
+      .select(['s.id','s.ip','s.userAgent','s.dispositivo','s.fechaInicio','s.fechaExpiracion','s.fechaUltimaActividad'])
+      .where('s.usuarioId = :usuarioId',{usuarioId}).andWhere('s.activa = :activa',{activa:true})
+      .andWhere('(s.fechaExpiracion IS NULL OR s.fechaExpiracion > :ahora)',{ahora:new Date()})
+      .orderBy('s.fechaUltimaActividad','DESC').getMany();
+  }
+
+  async cerrarPropia(id:string,usuarioId:string):Promise<Sesion>{
+    const sesion=await this.sesionRepo.findOne({where:{id,usuarioId,activa:true}});
+    if(!sesion)throw new NotFoundException('Sesion activa no encontrada');
+    await this.sesionRepo.update({id,usuarioId},{activa:false});return sesion;
   }
 
   countConectadosAhora(): Promise<number> {

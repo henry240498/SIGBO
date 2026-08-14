@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
  "generado": "2026-08-12T11:49:19.742Z",
  "repo": "SIGBO",
  "nodos": 456,
@@ -37,6 +38,46 @@
  },
  "permisos": 118,
  "terminosIndexados": 1318,
+=======
+ "generado": "2026-08-11T18:26:01.732Z",
+ "repo": "SIGBO",
+ "nodos": 406,
+ "aristas": 1133,
+ "nodosPorTipo": {
+  "DOMAIN": 14,
+  "ENTITY": 64,
+  "FILE": 26,
+  "TABLE": 81,
+  "COMPONENT": 23,
+  "SERVICE": 49,
+  "API": 49,
+  "SCREEN": 47,
+  "CONFIGURATION": 10,
+  "DECISION": 10,
+  "DEPENDENCY": 4,
+  "ERROR": 5,
+  "RULE": 19,
+  "WORKFLOW": 5
+ },
+ "aristasPorTipo": {
+  "belongs_to": 326,
+  "defined_in": 81,
+  "references": 35,
+  "persisted_in": 64,
+  "uses": 304,
+  "reads": 147,
+  "exposes": 51,
+  "calls": 55,
+  "configured_by": 3,
+  "constrains": 11,
+  "affects": 41,
+  "depends_on": 2,
+  "originates_from": 7,
+  "contains": 6
+ },
+ "permisos": 111,
+ "terminosIndexados": 1228,
+>>>>>>> Stashed changes
  "huecos": {
   "tablasSinEntidad": [
    "seguridad.restricciones",
@@ -47,6 +88,12 @@
    "academia.examenes",
    "academia.notas_examenes",
    "academia.asistencia_academia",
+<<<<<<< Updated upstream
+=======
+   "vehiculos.mantenimientos_vehiculos",
+   "vehiculos.consumos_combustible",
+   "equipos.mantenimientos_equipos",
+>>>>>>> Stashed changes
    "servicios.historial_servicios",
    "finanzas.cuentas_contables",
    "finanzas.movimientos",
@@ -56,6 +103,12 @@
   ],
   "entidadesSinTabla": [],
   "dominiosSinPantalla": [
+<<<<<<< Updated upstream
+=======
+   "Guardias",
+   "Vehículos",
+   "Equipos",
+>>>>>>> Stashed changes
    "Academia",
    "Finanzas",
    "Depósito",
@@ -63,6 +116,10 @@
    "Inteligencia"
   ],
   "dominiosSinApi": [
+<<<<<<< Updated upstream
+=======
+   "Guardias",
+>>>>>>> Stashed changes
    "Academia",
    "Finanzas",
    "Depósito",

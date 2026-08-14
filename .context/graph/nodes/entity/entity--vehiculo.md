@@ -19,7 +19,11 @@ terminos: [vehiculo, vehiculos, estado, operativo, mantenimiento, fuera, servici
 Entidad Vehiculo, persistida en vehiculos.vehiculos.
 
 - **Tabla:** [[table--vehiculos-vehiculos|vehiculos.vehiculos]]
+<<<<<<< Updated upstream
 - **Columnas mapeadas:** 32
+=======
+- **Columnas mapeadas:** 30
+>>>>>>> Stashed changes
 
 ## Estados y enumeraciones
 
@@ -36,7 +40,10 @@ Entidad Vehiculo, persistida en vehiculos.vehiculos.
 
 ## Referenciado por
 
+<<<<<<< Updated upstream
 - [[service--equipos-equipos|EquiposService]] `uses` →
+=======
+>>>>>>> Stashed changes
 - [[service--publicaciones-publicaciones|PublicacionesService]] `uses` →
 - [[service--servicios-servicios|ServiciosService]] `uses` →
 - [[service--vehiculos-vehiculos-autorizados|VehiculosAutorizadosService]] `uses` →

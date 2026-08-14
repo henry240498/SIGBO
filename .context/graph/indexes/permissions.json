@@ -61,6 +61,29 @@
    "api--operaciones-participantes-externos"
   ]
  },
+<<<<<<< Updated upstream
+=======
+ "asistencia:guardias_crear": {
+  "modulo": "asistencia",
+  "exigidoPor": [
+   "api--operaciones-guardias",
+   "screen--dashboard-asistencia-guardias"
+  ]
+ },
+ "asistencia:guardias_editar": {
+  "modulo": "asistencia",
+  "exigidoPor": [
+   "api--operaciones-guardias",
+   "screen--dashboard-asistencia-guardias-id"
+  ]
+ },
+ "asistencia:guardias_ver": {
+  "modulo": "asistencia",
+  "exigidoPor": [
+   "api--operaciones-guardias"
+  ]
+ },
+>>>>>>> Stashed changes
  "asistencia:importar_marcador": {
   "modulo": "asistencia",
   "exigidoPor": [
@@ -106,15 +129,20 @@
   "modulo": "equipos",
   "exigidoPor": [
    "api--equipos-categorias-equipo",
+<<<<<<< Updated upstream
    "api--equipos-equipos",
    "screen--dashboard-equipos-categorias",
    "screen--dashboard-equipos"
+=======
+   "api--equipos-equipos"
+>>>>>>> Stashed changes
   ]
  },
  "equipos:editar": {
   "modulo": "equipos",
   "exigidoPor": [
    "api--equipos-categorias-equipo",
+<<<<<<< Updated upstream
    "api--equipos-equipos",
    "screen--dashboard-equipos-categorias",
    "screen--dashboard-equipos-id"
@@ -131,6 +159,8 @@
  "equipos:mantenimiento": {
   "modulo": "equipos",
   "exigidoPor": [
+=======
+>>>>>>> Stashed changes
    "api--equipos-equipos"
   ]
  },
@@ -138,7 +168,10 @@
   "modulo": "equipos",
   "exigidoPor": [
    "api--equipos-equipamiento-bombero",
+<<<<<<< Updated upstream
    "screen--dashboard-equipos-id",
+=======
+>>>>>>> Stashed changes
    "screen--dashboard-personal-id"
   ]
  },
@@ -149,6 +182,7 @@
    "api--equipos-equipos"
   ]
  },
+<<<<<<< Updated upstream
  "guardias:asignar": {
   "modulo": "guardias",
   "exigidoPor": [
@@ -195,6 +229,8 @@
    "api--guardias-pernoctes"
   ]
  },
+=======
+>>>>>>> Stashed changes
  "organizacion:ascensos_anular": {
   "modulo": "organizacion",
   "exigidoPor": [
@@ -745,6 +781,7 @@
    "api--servicios-servicios"
   ]
  },
+<<<<<<< Updated upstream
  "vehiculos:combustible": {
   "modulo": "vehiculos",
   "exigidoPor": [
@@ -774,6 +811,15 @@
   ]
  },
  "vehiculos:mantenimiento": {
+=======
+ "vehiculos:crear": {
+  "modulo": "vehiculos",
+  "exigidoPor": [
+   "api--vehiculos-vehiculos"
+  ]
+ },
+ "vehiculos:editar": {
+>>>>>>> Stashed changes
   "modulo": "vehiculos",
   "exigidoPor": [
    "api--vehiculos-vehiculos"
@@ -782,7 +828,10 @@
  "vehiculos:ver": {
   "modulo": "vehiculos",
   "exigidoPor": [
+<<<<<<< Updated upstream
    "api--vehiculos-checklist-items",
+=======
+>>>>>>> Stashed changes
    "api--vehiculos-vehiculos"
   ]
  }

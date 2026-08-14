@@ -20,7 +20,11 @@ Modulo NestJS que cablea controladores, servicios y repositorios de vehiculos.
 
 ## Entidades registradas (forFeature)
 
+<<<<<<< Updated upstream
 Vehiculo, VehiculoAutorizado, MantenimientoVehiculo, ConsumoCombustible, ChecklistItemVehiculo, Servicio
+=======
+Vehiculo, VehiculoAutorizado
+>>>>>>> Stashed changes
 
 ## Archivos
 
@@ -32,7 +36,10 @@ Vehiculo, VehiculoAutorizado, MantenimientoVehiculo, ConsumoCombustible, Checkli
 
 ## Referenciado por
 
+<<<<<<< Updated upstream
 - [[service--vehiculos-checklist-items|ChecklistItemsService]] `uses` →
+=======
+>>>>>>> Stashed changes
 - [[service--vehiculos-vehiculos-autorizados|VehiculosAutorizadosService]] `uses` →
 - [[service--vehiculos-vehiculos|VehiculosService]] `uses` →
 

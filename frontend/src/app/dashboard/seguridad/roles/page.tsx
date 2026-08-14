@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useState } from 'react';
 import { apiFetch } from '@/lib/api';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 
 interface Rol {
   id: string;
@@ -21,6 +22,7 @@ interface Permiso {
 }
 
 export default function RolesPage() {
+  const confirmar = useConfirmacion();
   const [roles, setRoles] = useState<Rol[] | null>(null);
   const [permisos, setPermisos] = useState<Permiso[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -87,7 +89,7 @@ export default function RolesPage() {
 
   async function eliminar(id: string) {
     setError(null);
-    if (!window.confirm('Eliminar este rol? Esta accion no se puede deshacer.')) return;
+    if (!await confirmar({titulo:'Eliminar rol',mensaje:'El rol se eliminará definitivamente. Esta acción no se puede deshacer.',confirmar:'Eliminar',peligro:true})) return;
     const res = await apiFetch(`/seguridad/roles/${id}`, { method: 'DELETE' });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));

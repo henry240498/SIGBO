@@ -19,6 +19,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const current = obtenerSesion();
     if (!current) router.replace('/login');
     else setSesion(current);
+    const sync=(event:StorageEvent)=>{if(event.key==='sigbo_sesion'&&!event.newValue)router.replace('/login')};
+    window.addEventListener('storage',sync);
+    return()=>window.removeEventListener('storage',sync);
   }, [router]);
 
   useEffect(() => {

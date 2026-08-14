@@ -52,6 +52,10 @@ Superficie HTTP de servicios bajo /api/v1/servicios/comunicaciones.
 - [[screen--dashboard-servicios-nuevo|/dashboard/servicios/nuevo]] `calls` →
 - [[screen--dashboard-servicios-nuevo|/dashboard/servicios/nuevo]] `calls` →
 - [[screen--dashboard-servicios|/dashboard/servicios]] `calls` →
+<<<<<<< Updated upstream
+=======
+- [[workflow--comunicacion-de-servicio|Ciclo de vida de la comunicacion de servicio]] `affects` →
+>>>>>>> Stashed changes
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

@@ -32,6 +32,10 @@ Superficie HTTP de publicaciones bajo /api/v1/publicaciones.
 | POST | `/publicaciones` | `publicaciones:administrar` o `seguridad:configurar_apariencia` |
 | PUT | `/publicaciones/:id` | `publicaciones:administrar` o `seguridad:configurar_apariencia` |
 | DELETE | `/publicaciones/:id` | `publicaciones:administrar` o `seguridad:configurar_apariencia` |
+<<<<<<< Updated upstream
+=======
+| PUT | `/publicaciones` | `publicaciones:administrar` o `seguridad:configurar_apariencia` |
+>>>>>>> Stashed changes
 
 ## Archivos
 

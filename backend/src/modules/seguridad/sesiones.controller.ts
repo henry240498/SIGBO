@@ -25,6 +25,23 @@ export class SesionesController {
     return this.sesionesService.findActivas();
   }
 
+  @Get('mias')
+  misSesiones(@CurrentUser() user:AuthenticatedUser){return this.sesionesService.findByUsuario(user.id);}
+
+  @Delete('mias/:id')
+  async cerrarPropia(@Param('id') id:string,@CurrentUser() user:AuthenticatedUser,@Req() req:Request){
+    await this.sesionesService.cerrarPropia(id,user.id);
+    await this.auditoriaService.registrar({usuarioId:user.id,accion:'CERRAR_SESION_PROPIA',recurso:'sesion',recursoId:id,ip:req.ip,userAgent:req.headers['user-agent'] as string});
+    return{ok:true};
+  }
+
+  @Post('mias/cerrar-todas')
+  async cerrarTodasPropias(@CurrentUser() user:AuthenticatedUser,@Req() req:Request){
+    const total=await this.sesionesService.cerrarTodas(user.id);
+    await this.auditoriaService.registrar({usuarioId:user.id,accion:'CERRAR_SESIONES_PROPIAS',recurso:'sesion',recursoId:user.id,datosDespues:{total},ip:req.ip,userAgent:req.headers['user-agent'] as string});
+    return{ok:true,total};
+  }
+
   @Delete(':id')
   @RequirePermission('seguridad:cerrar_sesion')
   async cerrar(

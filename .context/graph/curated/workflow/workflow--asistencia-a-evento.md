@@ -25,8 +25,13 @@ como salida.
 - **Bomberos** de la institucion → `operaciones.participantes_evento`, ligados a
   `personal.bomberos`.
 - **Externos** (invitados, otras instituciones) → `operaciones.participantes_externos`,
+<<<<<<< Updated upstream
   con sus propios datos porque no tienen legajo. Endpoints bajo `/operaciones/externos`
   con permisos `asistencia:externos_*`.
+=======
+  con sus propios datos porque no tienen legajo. Endpoints bajo
+  `/operaciones/externos` con permisos `asistencia:externos_*`.
+>>>>>>> Stashed changes
 
 Separarlos evita crear bomberos falsos para poder registrar a un visitante, que
 contaminaria el padron de personal.
@@ -54,6 +59,7 @@ La puntualidad se evalua **contra la tolerancia vigente**, resuelta como indica
 `/guardias/[id]`, `/registro`, `/externos`, `/tolerancias`, `/auditoria`.
 `operaciones/dashboard` (`DashboardAsistenciaService`) calcula los agregados.
 
+<<<<<<< Updated upstream
 ## Guardias: ahora es un modulo aparte
 
 Las guardias **ya no viven aca**: tienen su propio modulo NestJS, su prefijo de
@@ -72,3 +78,14 @@ Lo que quedo de la etapa anterior:
 
 Al tocar asistencia o guardias, verificar en cual de los dos lados esta lo que vas a
 cambiar: hay superposicion real.
+=======
+## Guardias, en paralelo
+
+Las guardias tienen su propio ciclo: `EstadoGuardia`
+(`PROGRAMADA`/`EN_CURSO`/`FINALIZADA`/`CANCELADA`/`REEMPLAZADA`),
+`EstadoAsignacionGuardia` (`ASIGNADO`/`CONFIRMADO`/`REEMPLAZADO`/`AUSENTE`) y
+`EstadoCambioGuardia` (`PENDIENTE`/`APROBADO`/`RECHAZADO`/`CANCELADO`) para el flujo de
+solicitud y aprobacion de cambios. Viven en el modulo `operaciones` con permisos
+`asistencia:guardias_*`, no en un modulo `guardias` propio — ver
+[[rule--modulo-visible-por-prefijo]].
+>>>>>>> Stashed changes

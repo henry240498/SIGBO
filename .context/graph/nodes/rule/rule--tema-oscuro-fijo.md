@@ -44,7 +44,11 @@ no elegir un lado a mitad de camino:
 
 - **Opcion A** — el tema oscuro es el producto: los tokens de Configuracion se
   corrigen a valores oscuros y se elimina la promesa de `light`.
+<<<<<<< Updated upstream
 - **Opcion B** — los tokens mandan: hay que reemplazar los cientos de hex inline por
+=======
+- **Opcion B** — los tokens mandan: hay que reemplazar los ~cientos de hex inline por
+>>>>>>> Stashed changes
   variables CSS alimentadas desde `configuracion_valores`. Es un refactor grande y
   contradice [[decision--sin-libreria-ui]] tal como esta escrita hoy.
 
@@ -53,7 +57,11 @@ Hacer la mitad de B deja pantallas mezcladas, que es peor que cualquiera de las 
 ## Mientras nadie decida
 
 Al crear una pantalla nueva: **tema oscuro, hex de [[rule--sin-clases-css-nuevas]]**.
+<<<<<<< Updated upstream
 Es lo consistente con las ~56 pantallas que ya existen.
+=======
+Es lo consistente con las ~50 pantallas que ya existen.
+>>>>>>> Stashed changes
 
 
 ## Archivos

@@ -25,7 +25,11 @@ Logica de negocio de sesiones (modulo seguridad).
 
 ## Metodos
 
+<<<<<<< Updated upstream
 `findActivas()` · `findByUsuario()` · `countConectadosAhora()` · `countActivas()` · `cerrar()` · `cerrarTodas()`
+=======
+`findActivas()` · `findByUsuario()` · `cerrarPropia()` · `countConectadosAhora()` · `countActivas()` · `cerrar()` · `cerrarTodas()`
+>>>>>>> Stashed changes
 
 ## Archivos
 

@@ -22,7 +22,7 @@ entregar un sistema que efectivamente corra en esta maquina, se adapto a:
 | Mensajeria | Kafka (event sourcing/CQRS) | No implementado en esta fase |
 | App movil | Flutter | No implementado en esta fase |
 
-El modelo de datos (42 tablas, 10 esquemas), el sistema de roles/permisos
+El modelo de datos (81 tablas, 12 esquemas), el sistema de roles/permisos
 dinamicos y las reglas de negocio de asistencia siguen el documento original
 punto por punto; solo cambia el dialecto SQL (T-SQL en vez de PL/pgSQL) y el
 formato de columnas (`UNIQUEIDENTIFIER`/`DATETIMEOFFSET`/`NVARCHAR(MAX)` en
@@ -30,7 +30,7 @@ vez de `UUID`/`TIMESTAMPTZ`/`JSONB`).
 
 ## Que esta funcionando
 
-- **Base de datos completa**: 10 esquemas, 42 tablas, 77 llaves foraneas,
+- **Base de datos completa**: 12 esquemas, 81 tablas, llaves foráneas y
   133 indices (`database/migrations/`).
 - **Autenticacion**: login con JWT + refresh token, bloqueo tras 5 intentos
   fallidos (15 minutos), sesiones persistidas en `seguridad.sesiones`.

@@ -53,7 +53,10 @@ Tabla equipos.prestamos_equipos (11 columnas). Creada en 006_vehiculos_equipos.s
 
 - [[entity--prestamo-equipo|PrestamoEquipo]] `persisted_in` →
 - [[service--equipos-equipamiento-bombero|EquipamientoBomberoService]] `reads` →
+<<<<<<< Updated upstream
 - [[service--equipos-equipos|EquiposService]] `reads` →
+=======
+>>>>>>> Stashed changes
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

@@ -12,4 +12,8 @@ export class PublicacionesController{
  @Post() @UseGuards(JwtAuthGuard,PermissionsGuard) @RequirePermission('publicaciones:administrar','seguridad:configurar_apariencia') crear(@Body() item:PublicacionPublica){return this.service.crear(item)}
  @Put(':id') @UseGuards(JwtAuthGuard,PermissionsGuard) @RequirePermission('publicaciones:administrar','seguridad:configurar_apariencia') actualizar(@Param('id') id:string,@Body() item:PublicacionPublica){return this.service.actualizar(id,item)}
  @Delete(':id') @UseGuards(JwtAuthGuard,PermissionsGuard) @RequirePermission('publicaciones:administrar','seguridad:configurar_apariencia') eliminar(@Param('id') id:string){return this.service.eliminar(id)}
+<<<<<<< Updated upstream
+=======
+ @Put() @UseGuards(JwtAuthGuard,PermissionsGuard) @RequirePermission('publicaciones:administrar','seguridad:configurar_apariencia') reemplazar(@Body() items:PublicacionPublica[]){return this.service.reemplazar(items)}
+>>>>>>> Stashed changes
 }

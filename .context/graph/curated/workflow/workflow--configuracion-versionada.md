@@ -15,8 +15,13 @@ edges:
 
 ## El registro es el contrato
 
+<<<<<<< Updated upstream
 `CONFIG_REGISTRY` en `configuracion.registry.ts` declara cada una de las 26 claves con
 su tipo, control de interfaz, default, permiso requerido y metadatos:
+=======
+`CONFIG_REGISTRY` en `configuracion.registry.ts` declara cada clave con su tipo,
+control de interfaz, default, permiso requerido y metadatos:
+>>>>>>> Stashed changes
 
 ```ts
 { key, nombre, descripcion, categoria, nivel, tipo, control, defaultValue,

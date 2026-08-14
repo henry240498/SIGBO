@@ -40,6 +40,7 @@ Logica de negocio de auditoria (modulo seguridad).
 
 - [[service--auth-auth|AuthService]] `uses` →
 - [[service--configuracion-configuracion|ConfiguracionService]] `uses` →
+<<<<<<< Updated upstream
 - [[service--guardias-grupos-guardia|GruposGuardiaService]] `uses` →
 - [[service--guardias-guardias|GuardiasService]] `uses` →
 - [[service--guardias-inspecciones-estacion|InspeccionesEstacionService]] `uses` →
@@ -47,6 +48,10 @@ Logica de negocio de auditoria (modulo seguridad).
 - [[service--guardias-pernoctes|PernoctesService]] `uses` →
 - [[service--guardias-requisitos-rol|RequisitosRolService]] `uses` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `uses` →
+=======
+- [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `uses` →
+- [[service--operaciones-guardias|GuardiasService]] `uses` →
+>>>>>>> Stashed changes
 - [[service--operaciones-importaciones|ImportacionesService]] `uses` →
 - [[service--operaciones-marcaciones|MarcacionesService]] `uses` →
 - [[service--personal-bomberos|BomberosService]] `uses` →

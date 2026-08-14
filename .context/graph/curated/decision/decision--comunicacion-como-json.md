@@ -33,9 +33,15 @@ cada campo nuevo y a decenas de columnas nulas por fila.
 - **No se puede consultar por dentro del formulario** con SQL indexado: SQL Server
   Express con `NVARCHAR(MAX)` no ofrece lo que `JSONB` daria. Responder "cuantos
   incendios tuvieron victimas" exige leer las filas y parsearlas en la aplicacion.
+<<<<<<< Updated upstream
 - La forma del JSON **no esta validada** por la BD mas alla de ser JSON valido. La
   columna `version` (INT, default 1) existe para poder migrar documentos con forma
   vieja.
+=======
+- La forma del JSON **no esta validada** por la BD mas alla de ser JSON sintacticamente
+  valido. La columna `version` (INT, default 1) existe justamente para poder migrar
+  documentos con forma vieja.
+>>>>>>> Stashed changes
 - El contrato real de la forma del documento vive en los DTOs de
   `backend/src/modules/servicios/dto/` y en la pantalla que lo edita. Son la unica
   fuente de verdad de que campos tiene un formulario.

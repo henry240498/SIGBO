@@ -54,7 +54,10 @@ Tabla organizacion.rangos (15 columnas). Creada en 012_organizacion.sql, modific
 
 - [[table--organizacion-ascensos|organizacion.ascensos]] `references` →
 - [[table--organizacion-ascensos|organizacion.ascensos]] `references` →
+<<<<<<< Updated upstream
 - [[table--operaciones-requisitos-rol-guardia|operaciones.requisitos_rol_guardia]] `references` →
+=======
+>>>>>>> Stashed changes
 - [[entity--rango|Rango]] `persisted_in` →
 - [[service--organizacion-ascensos|AscensosService]] `reads` →
 - [[service--organizacion-dashboard|DashboardService]] `reads` →

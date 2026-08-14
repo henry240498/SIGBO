@@ -11,7 +11,11 @@ archivos:
 edges:
   - [belongs_to, domain--organizacion]
   - [persisted_in, table--organizacion-parametros]
+<<<<<<< Updated upstream
 terminos: [parametro, parametros, organizacion, tipo, pais, departamento, ciudad, barrio, profesion, idioma, nivel, grupo, sanguineo, factor, seguro, aseguradora, evento, asistencia, ubicacion, equipo, estado, presencia, guardia, sector, estacion]
+=======
+terminos: [parametro, parametros, organizacion, tipo, pais, departamento, ciudad, barrio, profesion, idioma, nivel, grupo, sanguineo, factor, seguro, aseguradora]
+>>>>>>> Stashed changes
 ---
 
 # Parametro
@@ -23,7 +27,11 @@ Catalogo generico de valores parametrizables administrados desde Organizacion In
 
 ## Estados y enumeraciones
 
+<<<<<<< Updated upstream
 - `TipoParametro`: `PAIS` · `DEPARTAMENTO` · `CIUDAD` · `BARRIO` · `PROFESION` · `IDIOMA` · `NIVEL_IDIOMA` · `GRUPO_SANGUINEO` · `FACTOR_RH` · `TIPO_SEGURO` · `ASEGURADORA` · `TIPO_EVENTO_ASISTENCIA` · `UBICACION_EQUIPO` · `ESTADO_PRESENCIA_GUARDIA` · `SECTOR_ESTACION`
+=======
+- `TipoParametro`: `PAIS` · `DEPARTAMENTO` · `CIUDAD` · `BARRIO` · `PROFESION` · `IDIOMA` · `NIVEL_IDIOMA` · `GRUPO_SANGUINEO` · `FACTOR_RH` · `TIPO_SEGURO` · `ASEGURADORA`
+>>>>>>> Stashed changes
 
 ## Archivos
 
@@ -36,8 +44,11 @@ Catalogo generico de valores parametrizables administrados desde Organizacion In
 
 ## Referenciado por
 
+<<<<<<< Updated upstream
 - [[service--equipos-equipos|EquiposService]] `uses` →
 - [[service--guardias-inspecciones-estacion|InspeccionesEstacionService]] `uses` →
+=======
+>>>>>>> Stashed changes
 - [[service--operaciones-dashboard-asistencia|DashboardAsistenciaService]] `uses` →
 - [[service--organizacion-parametros|ParametrosService]] `uses` →
 - [[service--personal-foja-servicio|FojaServicioService]] `uses` →

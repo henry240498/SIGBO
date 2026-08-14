@@ -236,7 +236,11 @@
    "clase": "Guardia"
   },
   "migracion": "database/migrations/005_operaciones.sql",
+<<<<<<< Updated upstream
   "columnas": 17,
+=======
+  "columnas": 12,
+>>>>>>> Stashed changes
   "fks": []
  },
  "operaciones.asignacion_guardias": {
@@ -247,7 +251,11 @@
    "clase": "AsignacionGuardia"
   },
   "migracion": "database/migrations/005_operaciones.sql",
+<<<<<<< Updated upstream
   "columnas": 14,
+=======
+  "columnas": 8,
+>>>>>>> Stashed changes
   "fks": []
  },
  "operaciones.cambios_guardias": {
@@ -269,16 +277,24 @@
    "clase": "Vehiculo"
   },
   "migracion": "database/migrations/006_vehiculos_equipos.sql",
+<<<<<<< Updated upstream
   "columnas": 35,
+=======
+  "columnas": 33,
+>>>>>>> Stashed changes
   "fks": []
  },
  "vehiculos.mantenimientos_vehiculos": {
   "id": "table--vehiculos-mantenimientos-vehiculos",
   "dominio": "vehiculos",
+<<<<<<< Updated upstream
   "entidad": {
    "id": "entity--mantenimiento-vehiculo",
    "clase": "MantenimientoVehiculo"
   },
+=======
+  "entidad": null,
+>>>>>>> Stashed changes
   "migracion": "database/migrations/006_vehiculos_equipos.sql",
   "columnas": 13,
   "fks": []
@@ -286,10 +302,14 @@
  "vehiculos.consumos_combustible": {
   "id": "table--vehiculos-consumos-combustible",
   "dominio": "vehiculos",
+<<<<<<< Updated upstream
   "entidad": {
    "id": "entity--consumo-combustible",
    "clase": "ConsumoCombustible"
   },
+=======
+  "entidad": null,
+>>>>>>> Stashed changes
   "migracion": "database/migrations/006_vehiculos_equipos.sql",
   "columnas": 11,
   "fks": []
@@ -313,16 +333,24 @@
    "clase": "Equipo"
   },
   "migracion": "database/migrations/006_vehiculos_equipos.sql",
+<<<<<<< Updated upstream
   "columnas": 22,
+=======
+  "columnas": 20,
+>>>>>>> Stashed changes
   "fks": []
  },
  "equipos.mantenimientos_equipos": {
   "id": "table--equipos-mantenimientos-equipos",
   "dominio": "equipos",
+<<<<<<< Updated upstream
   "entidad": {
    "id": "entity--mantenimiento-equipo",
    "clase": "MantenimientoEquipo"
   },
+=======
+  "entidad": null,
+>>>>>>> Stashed changes
   "migracion": "database/migrations/006_vehiculos_equipos.sql",
   "columnas": 12,
   "fks": []
@@ -905,6 +933,7 @@
    "seguridad.usuarios"
   ]
  },
+<<<<<<< Updated upstream
  "vehiculos.checklist_items": {
   "id": "table--vehiculos-checklist-items",
   "dominio": "vehiculos",
@@ -1001,6 +1030,8 @@
    "personal.tipos_bombero"
   ]
  },
+=======
+>>>>>>> Stashed changes
  "contenido.publicaciones": {
   "id": "table--contenido-publicaciones",
   "dominio": "publicaciones",
@@ -1008,7 +1039,11 @@
    "id": "entity--publicacion",
    "clase": "Publicacion"
   },
+<<<<<<< Updated upstream
   "migracion": "database/migrations/026_publicaciones_persistencia.sql",
+=======
+  "migracion": "database/migrations/023_publicaciones_persistencia.sql",
+>>>>>>> Stashed changes
   "columnas": 12,
   "fks": []
  }

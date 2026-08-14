@@ -19,7 +19,11 @@ terminos: [publicacion, publicaciones, contenido]
 Entidad Publicacion, persistida en contenido.publicaciones.
 
 - **Tabla:** [[table--contenido-publicaciones|contenido.publicaciones]]
+<<<<<<< Updated upstream
 - **Columnas mapeadas:** 11
+=======
+- **Columnas mapeadas:** 9
+>>>>>>> Stashed changes
 
 ## Archivos
 

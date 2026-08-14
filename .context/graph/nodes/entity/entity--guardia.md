@@ -19,7 +19,11 @@ terminos: [guardia, guardias, operaciones, turno, diurno, nocturno, completo, ti
 Guardias programadas reales (schema operaciones). No confundir con organizacion.tipos_guardia, que es el catalogo de tipos.
 
 - **Tabla:** [[table--operaciones-guardias|operaciones.guardias]]
+<<<<<<< Updated upstream
 - **Columnas mapeadas:** 14
+=======
+- **Columnas mapeadas:** 8
+>>>>>>> Stashed changes
 
 ## Estados y enumeraciones
 
@@ -38,12 +42,18 @@ Guardias programadas reales (schema operaciones). No confundir con organizacion.
 
 ## Referenciado por
 
+<<<<<<< Updated upstream
 - [[service--guardias-guardias|GuardiasService]] `uses` →
 - [[service--guardias-inspecciones-estacion|InspeccionesEstacionService]] `uses` →
 - [[service--guardias-novedades|NovedadesService]] `uses` →
 - [[service--operaciones-dashboard-asistencia|DashboardAsistenciaService]] `uses` →
 - [[service--personal-consultas-cruzadas|ConsultasCruzadasService]] `uses` →
 - [[workflow--guardia-y-pernocte|Operacion de una guardia: grupos, asignaciones, presencia, novedades y pernoctes]] `affects` →
+=======
+- [[service--operaciones-dashboard-asistencia|DashboardAsistenciaService]] `uses` →
+- [[service--operaciones-guardias|GuardiasService]] `uses` →
+- [[service--personal-consultas-cruzadas|ConsultasCruzadasService]] `uses` →
+>>>>>>> Stashed changes
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

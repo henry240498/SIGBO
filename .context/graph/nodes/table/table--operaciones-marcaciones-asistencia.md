@@ -67,7 +67,10 @@ Tabla operaciones.marcaciones_asistencia (22 columnas). Creada en 005_operacione
 ## Referenciado por
 
 - [[entity--marcacion-asistencia|MarcacionAsistencia]] `persisted_in` →
+<<<<<<< Updated upstream
 - [[service--guardias-guardias|GuardiasService]] `reads` →
+=======
+>>>>>>> Stashed changes
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `reads` →
 - [[service--operaciones-importaciones|ImportacionesService]] `reads` →
 - [[service--operaciones-marcaciones|MarcacionesService]] `reads` →

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { apiFetch } from '@/lib/api';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 
 interface Permiso {
   id: string;
@@ -14,6 +15,7 @@ interface Permiso {
 }
 
 export default function PermisosPage() {
+  const confirmar = useConfirmacion();
   const [permisos, setPermisos] = useState<Permiso[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mostrarForm, setMostrarForm] = useState(false);
@@ -61,7 +63,7 @@ export default function PermisosPage() {
 
   async function eliminar(id: string) {
     setError(null);
-    if (!window.confirm('Eliminar este permiso? Se quitara de todos los roles y usuarios que lo tengan.')) return;
+    if (!await confirmar({titulo:'Eliminar permiso',mensaje:'El permiso se quitará de todos los roles y usuarios que lo tengan.',confirmar:'Eliminar',peligro:true})) return;
     const res = await apiFetch(`/seguridad/permisos/${id}`, { method: 'DELETE' });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));

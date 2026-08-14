@@ -48,10 +48,13 @@ Tabla equipos.mantenimientos_equipos (12 columnas). Creada en 006_vehiculos_equi
 - `defined_in` → [[file--006-vehiculos-equipos|006_vehiculos_equipos.sql]]
 - `belongs_to` → [[domain--equipos|Equipos]]
 
+<<<<<<< Updated upstream
 ## Referenciado por
 
 - [[entity--mantenimiento-equipo|MantenimientoEquipo]] `persisted_in` →
 - [[service--equipos-equipos|EquiposService]] `reads` →
 
+=======
+>>>>>>> Stashed changes
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

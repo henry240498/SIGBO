@@ -25,7 +25,11 @@ tiempo de request.
 Un endpoint declara **que permiso exige**, nunca que rol:
 
 ```ts
+<<<<<<< Updated upstream
 @RequirePermission('guardias:asignar')
+=======
+@RequirePermission('organizacion:rangos_crear')
+>>>>>>> Stashed changes
 ```
 
 ## Motivo
@@ -41,14 +45,22 @@ sembrados, pero nada en el codigo depende de que existan.
   inmediato.
 - Un permiso mal escrito en `@RequirePermission` no falla al compilar: queda un
   endpoint que **nadie** puede usar. De ahi que el grafo mantenga
+<<<<<<< Updated upstream
   `graph/indexes/permissions.json`, que permite cruzar los 118 codigos que el
   codigo exige contra los que la base tiene sembrados.
+=======
+  `graph/indexes/permissions.json`, que permite cruzar los codigos que el codigo
+  exige contra los que la base tiene sembrados.
+>>>>>>> Stashed changes
 
 ## Alcance de los permisos
 
 Son **globales por usuario**, no por compania ni cuartel. Un usuario con
 `personal:editar` puede editar cualquier bombero de cualquier compania. Si se
 necesitara alcance territorial, hay que disenarlo: hoy no existe.
+<<<<<<< Updated upstream
 
 Notar que la **elegibilidad** para un rol operativo es un mecanismo distinto y
 paralelo a los permisos: ver [[rule--elegibilidad-de-rol-guardia]].
+=======
+>>>>>>> Stashed changes

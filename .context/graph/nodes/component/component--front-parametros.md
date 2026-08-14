@@ -24,7 +24,10 @@ Helper de frontend "parametros" (5 exportaciones).
 - [[screen--dashboard-asistencia-eventos|/dashboard/asistencia/eventos]] `uses` →
 - [[screen--dashboard-asistencia-eventos-id|/dashboard/asistencia/eventos/[id]]] `uses` →
 - [[screen--dashboard-asistencia-tolerancias|/dashboard/asistencia/tolerancias]] `uses` →
+<<<<<<< Updated upstream
 - [[screen--dashboard-guardias-id|/dashboard/guardias/[id]]] `uses` →
+=======
+>>>>>>> Stashed changes
 - [[screen--dashboard-organizacion-parametros|/dashboard/organizacion/parametros]] `uses` →
 - [[screen--dashboard-personal-nuevo|/dashboard/personal/nuevo]] `uses` →
 - [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `uses` →

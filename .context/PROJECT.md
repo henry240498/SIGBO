@@ -16,6 +16,7 @@ publicaciones y sus estadísticas.
 
 | Módulo | Backend | Pantallas | Estado |
 |---|---|---|---|
+<<<<<<< Updated upstream
 | **Organización** | 14 controladores | 14 pantallas | Completo: compañías, cuarteles, brigadas, unidades, departamentos, cargos, rangos, especialidades, turnos, tipos de guardia, designaciones, ascensos, parámetros |
 | **Seguridad** | 12 controladores | 8 pantallas | Completo: usuarios, roles, permisos, sesiones, auditoría, apariencia, configuración |
 | **Personal** | 10 controladores | 3 pantallas | Funcional: CRUD de bomberos, condiciones, especialidades, idiomas, seguros, foja de servicio, historial |
@@ -26,6 +27,17 @@ publicaciones y sus estadísticas.
 | **Vehículos** | 2 controladores | — | API; migración 023 (móviles) |
 | **Publicaciones** | 1 controlador | 1 pantalla | Funcional, con rutas públicas; persiste en esquema `contenido` |
 | **Academia, Finanzas, Depósito, Documentos, Inteligencia** | — | — | `disponible: false`. Tablas creadas (salvo Inteligencia), sin backend |
+=======
+| **Seguridad** | 12 controladores | 8 pantallas | Completo: usuarios, roles, permisos, sesiones, auditoría, apariencia, configuración |
+| **Organización** | 14 controladores | 14 pantallas | Completo: compañías, cuarteles, brigadas, unidades, departamentos, cargos, rangos, especialidades, turnos, tipos de guardia, designaciones, ascensos, parámetros |
+| **Personal** | 10 controladores | 3 pantallas | Funcional: CRUD de bomberos, condiciones, especialidades, idiomas, seguros, foja de servicio, historial |
+| **Asistencia** (esquema `operaciones`) | 7 controladores | 9 pantallas | Funcional: eventos, guardias, marcaciones, importación de marcador, tolerancias, externos, dashboard |
+| **Servicios** | 1 controlador | 2 pantallas | En desarrollo activo: comunicaciones de servicio con PDF |
+| **Publicaciones** | 1 controlador | 1 pantalla | Funcional, con rutas públicas |
+| **Vehículos** | 2 controladores | — | API sin pantalla propia |
+| **Equipos** | 3 controladores | — | API sin pantalla propia |
+| **Guardias, Academia, Finanzas, Depósito, Documentos, Inteligencia** | — | — | `disponible: false`. Tablas creadas, sin backend |
+>>>>>>> Stashed changes
 
 **Datos reales cargados:** 164 personas (103 combatientes, 4 incorporados, 39 activos,
 9 honorarios, 9 brigadistas), con campos obligatorios pendientes de completar —
@@ -57,6 +69,7 @@ cualquier otra cosa.
   o modificar el servicio requiere lo segundo.
 - Node 24, Windows 10, PowerShell 5.1 (no PS7: sin `&&`, sin ternario).
 - Los archivos `sigbo_cbvc.mdf` / `.ldf` están en la raíz del repositorio y contienen
+<<<<<<< Updated upstream
   datos reales de personas. `.gitignore` los excluye.
 
 ## Deuda técnica conocida, priorizada
@@ -75,13 +88,31 @@ cualquier otra cosa.
 6. **Secretos de desarrollo en el repositorio:** `JWT_SECRET` y contraseñas semilla hay
    que rotar antes de cualquier uso real.
 7. **`/uploads` se sirve como estático sin pasar por el guard de permisos.**
+=======
+  datos reales de personas.
+
+## Deuda técnica conocida, priorizada
+
+1. **Cobertura automatizada parcial.** GitHub Actions compila ambas aplicaciones y
+   ejecuta la auditoría estática; falta una suite unitaria y E2E completa.
+2. **Tema claro a medio camino.** El registro de configuración define tokens de tema
+   claro que ninguna pantalla consume — ver [[rule--tema-oscuro-fijo]].
+3. **Numeración de migraciones colisionada:** dos archivos con prefijo `017`.
+4. **Secretos de desarrollo en el repositorio:** `JWT_SECRET` y contraseñas semilla hay
+   que rotar antes de cualquier uso real.
+5. **`/uploads` se sirve como estático sin pasar por el guard de permisos.**
+>>>>>>> Stashed changes
 
 ## Antes de producción
 
 - Rotar `JWT_SECRET` y `REFRESH_TOKEN_SECRET`.
 - Forzar cambio de contraseña de todos los usuarios semilla (`debeCambiarPassword`).
 - Activar `DB_ENCRYPT=true` con certificado válido.
+<<<<<<< Updated upstream
 - Sacar los archivos `.mdf`/`.ldf` de la carpeta del repositorio.
+=======
+- Sacar los archivos `.mdf`/`.ldf` del repositorio.
+>>>>>>> Stashed changes
 
 ## Para orientarte
 

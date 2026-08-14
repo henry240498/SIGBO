@@ -55,7 +55,10 @@ Tabla personal.vehiculos_autorizados (8 columnas). Creada en 016_personal_expans
 ## Referenciado por
 
 - [[entity--vehiculo-autorizado|VehiculoAutorizado]] `persisted_in` →
+<<<<<<< Updated upstream
 - [[service--guardias-elegibilidad|ElegibilidadService]] `reads` →
+=======
+>>>>>>> Stashed changes
 - [[service--vehiculos-vehiculos-autorizados|VehiculosAutorizadosService]] `reads` →
 
 ---

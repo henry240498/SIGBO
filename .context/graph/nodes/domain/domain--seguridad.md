@@ -77,11 +77,19 @@ Modulo funcional "Seguridad". Habilitado en la navegacion.
 - [[api--seguridad-sesiones|SesionesController]] `belongs_to` →
 - [[api--seguridad-usuarios|UsuariosController]] `belongs_to` →
 - [[screen--dashboard-mi-perfil|/dashboard/mi-perfil]] `belongs_to` →
+<<<<<<< Updated upstream
 - [[screen--dashboard|/dashboard]] `belongs_to` →
 - [[screen--dashboard-seguridad-apariencia|/dashboard/seguridad/apariencia]] `belongs_to` →
 - [[screen--dashboard-seguridad-auditoria|/dashboard/seguridad/auditoria]] `belongs_to` →
 - [[screen--dashboard-seguridad-configuracion|/dashboard/seguridad/configuracion]] `belongs_to` →
 - [[screen--dashboard-seguridad|/dashboard/seguridad]] `belongs_to` →
+=======
+- [[screen--dashboard-mi-perfil-preferencias|/dashboard/mi-perfil/preferencias]] `belongs_to` →
+- [[screen--dashboard-mi-perfil-seguridad|/dashboard/mi-perfil/seguridad]] `belongs_to` →
+- [[screen--dashboard|/dashboard]] `belongs_to` →
+- [[screen--dashboard-seguridad-apariencia|/dashboard/seguridad/apariencia]] `belongs_to` →
+- [[screen--dashboard-seguridad-auditoria|/dashboard/seguridad/auditoria]] `belongs_to` →
+>>>>>>> Stashed changes
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

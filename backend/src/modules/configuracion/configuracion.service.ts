@@ -97,7 +97,14 @@ export class ConfiguracionService {
   }
 
   async versiones(){return Promise.all((await this.versionesRepo.find({order:{numero:'DESC'},take:100})).map(x=>this.serializarVersion(x)));}
-  async restaurar(id:string,motivo:string,actorId:string){const source=await this.versionesRepo.findOne({where:{id}});if(!source)throw new NotFoundException('Versión no encontrada');const draft=await this.crearBorrador(actorId);await this.actualizarBorrador(draft.id,JSON.parse(source.valoresJson),motivo,actorId);return this.publicar(draft.id,actorId);}
+  async restaurar(id:string,motivo:string,actorId:string){
+    const source=await this.versionesRepo.findOne({where:{id}});if(!source)throw new NotFoundException('Versión no encontrada');
+    const existente=await this.versionesRepo.findOne({where:{estado:'BORRADOR'}});if(existente)throw new ConflictException('Existe un borrador pendiente. Publíquelo antes de restaurar una versión.');
+    const max=await this.versionesRepo.createQueryBuilder('v').select('MAX(v.numero)','max').getRawOne();
+    const row=await this.versionesRepo.save(this.versionesRepo.create({numero:Number(max?.max??0)+1,estado:'BORRADOR',valoresJson:source.valoresJson,motivo,baseVersion:source.numero,creadoPor:actorId,publicadoPor:null,publicadoEn:null}));
+    await this.auditoria.registrar({usuarioId:actorId,accion:'RESTAURAR_VERSION',recurso:'configuracion.global',recursoId:id,datosDespues:{nuevaVersion:row.numero,motivo}});
+    return this.publicar(row.id,actorId);
+  }
   async exportar(){return {format:'sigbo-config',schemaVersion:1,exportedAt:new Date().toISOString(),registryVersion:'1.0',published:await this.publica()};}
 
   validar(values:Record<string,unknown>,soloUsuario:boolean){

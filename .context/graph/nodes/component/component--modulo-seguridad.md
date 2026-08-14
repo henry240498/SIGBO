@@ -41,6 +41,10 @@ Usuario, Rol, Permiso, AsignacionRol, AsignacionPermisoRol, AsignacionPermisoDir
 - [[service--seguridad-roles|RolesService]] `uses` →
 - [[service--seguridad-sesiones|SesionesService]] `uses` →
 - [[service--seguridad-usuarios|UsuariosService]] `uses` →
+<<<<<<< Updated upstream
+=======
+- [[rule--el-grafo-no-es-la-verdad|Ante discrepancia entre el grafo y el codigo, gana el codigo]] `affects` →
+>>>>>>> Stashed changes
 - [[rule--todo-endpoint-mutante-con-permiso|Todo endpoint que lee o modifica datos declara el permiso que exige]] `affects` →
 
 ---

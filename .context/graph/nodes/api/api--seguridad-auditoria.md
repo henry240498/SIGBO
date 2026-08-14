@@ -33,7 +33,10 @@ Superficie HTTP de auditoria bajo /api/v1/seguridad/auditoria.
 ## Referenciado por
 
 - [[screen--dashboard-asistencia-auditoria|/dashboard/asistencia/auditoria]] `calls` →
+<<<<<<< Updated upstream
 - [[screen--dashboard-guardias-auditoria|/dashboard/guardias/auditoria]] `calls` →
+=======
+>>>>>>> Stashed changes
 - [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `calls` →
 - [[screen--dashboard-seguridad-auditoria|/dashboard/seguridad/auditoria]] `calls` →
 

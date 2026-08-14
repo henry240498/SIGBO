@@ -22,8 +22,13 @@ Resolucion, en este orden:
 
 1. Fila con `estado = 'ACTIVO'` y `tipo_evento_id` = el tipo del evento → gana.
 2. Si no hay, fila con `estado = 'ACTIVO'` y `tipo_evento_id IS NULL` → la general.
+<<<<<<< Updated upstream
 3. Si tampoco hay, el default de columna es `0` minutos: tolerancia cero, cualquier
    minuto de atraso cuenta como atraso.
+=======
+3. Si tampoco hay, el default de columna es `0` minutos en ambos sentidos: tolerancia
+   cero, es decir cualquier minuto de atraso cuenta como atraso.
+>>>>>>> Stashed changes
 
 ## Lo que nunca se hace
 
@@ -38,6 +43,7 @@ iguala nada. Hay que consultar explicitamente ambas y elegir, o usar
 `WHERE tipo_evento_id = @id OR tipo_evento_id IS NULL` y ordenar poniendo primero la
 especifica.
 
+<<<<<<< Updated upstream
 ## El mismo patron, con la polaridad opuesta
 
 `requisitos_rol_guardia` tambien usa `NULL` como "no exijo nada por esta via", pero
@@ -52,3 +58,10 @@ Dos tablas parametrizables, dos defaults opuestos. Ver
 
 La entidad tiene `institucionId` nullable. No hay tabla de instituciones en el esquema:
 es un gancho para multi-institucion que hoy no esta implementado.
+=======
+## Campo relacionado sin uso definido
+
+La entidad tiene `institucionId` nullable. No hay tabla de instituciones en el
+esquema: es un gancho para multi-institucion que hoy no esta implementado. No apoyarse
+en el hasta que exista ese diseno.
+>>>>>>> Stashed changes

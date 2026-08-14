@@ -37,12 +37,17 @@ Entidad Bombero, persistida en personal.bomberos.
 
 ## Referenciado por
 
+<<<<<<< Updated upstream
 - [[service--guardias-elegibilidad|ElegibilidadService]] `uses` →
 - [[service--guardias-grupos-guardia|GruposGuardiaService]] `uses` →
 - [[service--guardias-guardias|GuardiasService]] `uses` →
 - [[service--guardias-novedades|NovedadesService]] `uses` →
 - [[service--guardias-pernoctes|PernoctesService]] `uses` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `uses` →
+=======
+- [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `uses` →
+- [[service--operaciones-guardias|GuardiasService]] `uses` →
+>>>>>>> Stashed changes
 - [[service--operaciones-importaciones|ImportacionesService]] `uses` →
 - [[service--operaciones-marcaciones|MarcacionesService]] `uses` →
 - [[service--organizacion-ascensos|AscensosService]] `uses` →

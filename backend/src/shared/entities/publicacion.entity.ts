@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity({schema:'contenido',name:'publicaciones'})
@@ -14,4 +15,21 @@ export class Publicacion {
  @Column({name:'contenido_json',type:'nvarchar',length:'MAX'}) contenidoJson:string;
  @Column({name:'creado_en',type:'datetimeoffset',select:false,insert:false,update:false}) creadoEn:Date;
  @Column({name:'actualizado_en',type:'datetimeoffset',select:false,insert:false,update:false}) actualizadoEn:Date;
+=======
+import {Column,CreateDateColumn,Entity,PrimaryColumn,UpdateDateColumn} from 'typeorm';
+@Entity({name:'publicaciones',schema:'contenido'})
+export class Publicacion{
+ @PrimaryColumn('uniqueidentifier') id:string;
+ @Column({type:'nvarchar',length:30}) seccion:string;
+ @Column({type:'nvarchar',length:20}) estado:string;
+ @Column({type:'bit',default:true}) visible:boolean;
+ @Column({type:'bit',default:false}) destacada:boolean;
+ @Column({type:'int',default:0}) orden:number;
+ @Column({type:'date',nullable:true}) fecha:string|null;
+ @Column({name:'publicarEn',type:'datetimeoffset',precision:3,nullable:true}) publicarEn:Date|null;
+ @Column({name:'caducarEn',type:'datetimeoffset',precision:3,nullable:true}) caducarEn:Date|null;
+ @Column({name:'contenidoJson',type:'nvarchar'}) contenidoJson:string;
+ @CreateDateColumn({name:'creado_en',type:'datetimeoffset',precision:3}) creadoEn:Date;
+ @UpdateDateColumn({name:'actualizado_en',type:'datetimeoffset',precision:3}) actualizadoEn:Date;
+>>>>>>> Stashed changes
 }

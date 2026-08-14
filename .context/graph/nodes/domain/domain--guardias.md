@@ -4,8 +4,13 @@ tipo: DOMAIN
 nombre: Guardias
 nivel: L0
 dominio: guardias
+<<<<<<< Updated upstream
 estado: ACTIVO
 resumen: "Modulo funcional \"Guardias\". Habilitado en la navegacion."
+=======
+estado: PLANIFICADO
+resumen: "Modulo funcional \"Guardias\". Declarado pero aun no habilitado (disponible: false)."
+>>>>>>> Stashed changes
 archivos:
   - frontend/src/lib/modulos.ts
 terminos: [guardias]
@@ -13,13 +18,18 @@ terminos: [guardias]
 
 # Guardias
 
+<<<<<<< Updated upstream
 Modulo funcional "Guardias". Habilitado en la navegacion.
+=======
+Modulo funcional "Guardias". Declarado pero aun no habilitado (disponible: false).
+>>>>>>> Stashed changes
 
 
 ## Archivos
 
 - `frontend/src/lib/modulos.ts`
 
+<<<<<<< Updated upstream
 ## Referenciado por
 
 - [[component--modulo-guardias|guardias (modulo NestJS)]] `belongs_to` →
@@ -47,5 +57,7 @@ Modulo funcional "Guardias". Habilitado en la navegacion.
 - [[rule--guardias-vive-en-operaciones|Guardias es un modulo propio cuyas tablas viven en el esquema operaciones]] `belongs_to` →
 - [[workflow--guardia-y-pernocte|Operacion de una guardia: grupos, asignaciones, presencia, novedades y pernoctes]] `belongs_to` →
 
+=======
+>>>>>>> Stashed changes
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

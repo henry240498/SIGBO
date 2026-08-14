@@ -140,6 +140,7 @@
   "entity--asignacion-guardia",
   "entity--cambio-guardia",
   "entity--evento-asistencia",
+<<<<<<< Updated upstream
   "entity--grupo-guardia-miembro",
   "entity--grupo-guardia",
   "entity--guardia",
@@ -152,6 +153,14 @@
   "entity--participante-externo",
   "entity--pernocte",
   "entity--requisito-rol-guardia",
+=======
+  "entity--guardia",
+  "entity--importacion-marcador-fila",
+  "entity--importacion-marcador",
+  "entity--marcacion-asistencia",
+  "entity--participante-evento",
+  "entity--participante-externo",
+>>>>>>> Stashed changes
   "entity--tolerancia-asistencia",
   "table--operaciones-eventos-asistencia",
   "table--operaciones-marcaciones-asistencia",
@@ -163,6 +172,7 @@
   "table--operaciones-tolerancias-asistencia",
   "table--operaciones-importaciones-marcador",
   "table--operaciones-importaciones-marcador-filas",
+<<<<<<< Updated upstream
   "table--operaciones-grupos-guardia",
   "table--operaciones-grupos-guardia-miembros",
   "table--operaciones-pernoctes",
@@ -172,12 +182,22 @@
   "component--modulo-operaciones",
   "service--operaciones-dashboard-asistencia",
   "service--operaciones-eventos-asistencia",
+=======
+  "component--modulo-operaciones",
+  "service--operaciones-dashboard-asistencia",
+  "service--operaciones-eventos-asistencia",
+  "service--operaciones-guardias",
+>>>>>>> Stashed changes
   "service--operaciones-importaciones",
   "service--operaciones-marcaciones",
   "service--operaciones-participantes-externos",
   "service--operaciones-tolerancias",
   "api--operaciones-dashboard-asistencia",
   "api--operaciones-eventos-asistencia",
+<<<<<<< Updated upstream
+=======
+  "api--operaciones-guardias",
+>>>>>>> Stashed changes
   "api--operaciones-importaciones",
   "api--operaciones-marcaciones",
   "api--operaciones-participantes-externos",
@@ -186,6 +206,11 @@
   "screen--dashboard-asistencia-eventos",
   "screen--dashboard-asistencia-eventos-id",
   "screen--dashboard-asistencia-externos",
+<<<<<<< Updated upstream
+=======
+  "screen--dashboard-asistencia-guardias",
+  "screen--dashboard-asistencia-guardias-id",
+>>>>>>> Stashed changes
   "screen--dashboard-asistencia",
   "screen--dashboard-asistencia-registro",
   "screen--dashboard-asistencia-tolerancias",
@@ -196,6 +221,7 @@
   "workflow--importacion-marcador"
  ],
  "guardias": [
+<<<<<<< Updated upstream
   "domain--guardias",
   "component--modulo-guardias",
   "service--guardias-elegibilidad",
@@ -222,6 +248,9 @@
   "rule--elegibilidad-de-rol-guardia",
   "rule--guardias-vive-en-operaciones",
   "workflow--guardia-y-pernocte"
+=======
+  "domain--guardias"
+>>>>>>> Stashed changes
  ],
  "servicios": [
   "domain--servicios",
@@ -247,13 +276,17 @@
  ],
  "vehiculos": [
   "domain--vehiculos",
+<<<<<<< Updated upstream
   "entity--checklist-item-vehiculo",
   "entity--consumo-combustible",
   "entity--mantenimiento-vehiculo",
+=======
+>>>>>>> Stashed changes
   "entity--vehiculo",
   "table--vehiculos-vehiculos",
   "table--vehiculos-mantenimientos-vehiculos",
   "table--vehiculos-consumos-combustible",
+<<<<<<< Updated upstream
   "table--vehiculos-checklist-items",
   "component--modulo-vehiculos",
   "service--vehiculos-checklist-items",
@@ -266,12 +299,22 @@
   "screen--dashboard-vehiculos",
   "screen--dashboard-vehiculos-id",
   "component--front-vehiculos"
+=======
+  "component--modulo-vehiculos",
+  "service--vehiculos-vehiculos-autorizados",
+  "service--vehiculos-vehiculos",
+  "api--vehiculos-vehiculos-autorizados",
+  "api--vehiculos-vehiculos"
+>>>>>>> Stashed changes
  ],
  "equipos": [
   "domain--equipos",
   "entity--categoria-equipo",
   "entity--equipo",
+<<<<<<< Updated upstream
   "entity--mantenimiento-equipo",
+=======
+>>>>>>> Stashed changes
   "entity--prestamo-equipo",
   "table--equipos-categorias-equipo",
   "table--equipos-equipos",
@@ -283,11 +326,15 @@
   "service--equipos-equipos",
   "api--equipos-categorias-equipo",
   "api--equipos-equipamiento-bombero",
+<<<<<<< Updated upstream
   "api--equipos-equipos",
   "screen--dashboard-equipos-categorias",
   "screen--dashboard-equipos",
   "screen--dashboard-equipos-id",
   "component--front-equipos"
+=======
+  "api--equipos-equipos"
+>>>>>>> Stashed changes
  ],
  "academia": [
   "domain--academia",
@@ -383,6 +430,11 @@
   "api--seguridad-sesiones",
   "api--seguridad-usuarios",
   "screen--dashboard-mi-perfil",
+<<<<<<< Updated upstream
+=======
+  "screen--dashboard-mi-perfil-preferencias",
+  "screen--dashboard-mi-perfil-seguridad",
+>>>>>>> Stashed changes
   "screen--dashboard",
   "screen--dashboard-seguridad-apariencia",
   "screen--dashboard-seguridad-auditoria",

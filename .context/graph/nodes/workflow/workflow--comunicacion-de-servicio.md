@@ -13,6 +13,10 @@ edges:
   - [contains, rule--una-comunicacion-por-servicio]
   - [contains, decision--comunicacion-como-json]
   - [affects, entity--comunicacion-servicio]
+<<<<<<< Updated upstream
+=======
+  - [affects, api--servicios-servicios]
+>>>>>>> Stashed changes
   - [belongs_to, domain--servicios]
 terminos: [comunicacion, servicio, estado, borrador, revision, observado, finalizada, anulado, pdf, ciclo, vida, pendiente, ahi, salida, cada, transicion, endpoint, propio, permiso]
 ---
@@ -34,10 +38,17 @@ BORRADOR a PENDIENTE_REVISION, de ahi a OBSERVADO o FINALIZADA, y ANULADO como s
                                     (anular desde cualquiera) ──► ANULADO
 ```
 
+<<<<<<< Updated upstream
 Los cinco valores son los del `CHECK` de la tabla: `BORRADOR`,
 `PENDIENTE_REVISION`, `OBSERVADO`, `FINALIZADA`, `ANULADO`.
 
 ## Endpoints y permisos
+=======
+Los cinco valores son los del `CHECK` de la tabla:
+`BORRADOR`, `PENDIENTE_REVISION`, `OBSERVADO`, `FINALIZADA`, `ANULADO`.
+
+## Endpoints y permisos, tal como estan hoy
+>>>>>>> Stashed changes
 
 | Transicion | Endpoint | Permiso |
 |---|---|---|
@@ -84,6 +95,10 @@ cerrar formalmente.
 - `contains` → [[rule--una-comunicacion-por-servicio|Un servicio tiene como maximo una comunicacion, y borrar el servicio la borra]]
 - `contains` → [[decision--comunicacion-como-json|La comunicacion de servicio se guarda como documento JSON validado]]
 - `affects` → [[entity--comunicacion-servicio|ComunicacionServicio]]
+<<<<<<< Updated upstream
+=======
+- `affects` → [[api--servicios-servicios|ServiciosController]]
+>>>>>>> Stashed changes
 - `belongs_to` → [[domain--servicios|Servicios]]
 
 ---

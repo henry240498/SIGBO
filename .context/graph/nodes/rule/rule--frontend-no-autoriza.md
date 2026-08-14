@@ -21,9 +21,15 @@ Los chequeos de permisos en React son cosmetica. La autorizacion real la aplica 
 
 ## El invariante
 
+<<<<<<< Updated upstream
 `permisos.includes('guardias:asignar')` y `moduloVisible()` sirven para no mostrar
 controles inutiles. **No protegen nada.** La lista de permisos vive en `localStorage`
 bajo la clave `sigbo_sesion` y cualquiera puede editarla.
+=======
+`permisos.includes('asistencia:eventos_crear')` y `moduloVisible()` sirven para no
+mostrar controles inutiles. **No protegen nada.** La lista de permisos vive en
+`localStorage` bajo la clave `sigbo_sesion` y cualquiera puede editarla.
+>>>>>>> Stashed changes
 
 La proteccion real es `@RequirePermission` + `PermissionsGuard` en el backend, que
 recalcula los permisos desde la base en cada request.
@@ -47,6 +53,7 @@ El login devuelve `usuario.permisos` en el objeto `Sesion`. Ese arreglo se guard
 administrador cambia permisos, la interfaz del usuario afectado sigue mostrando lo
 viejo hasta que renueve sesion. El backend, en cambio, aplica el cambio de inmediato.
 
+<<<<<<< Updated upstream
 ## Lo mismo vale para las reglas de negocio
 
 La elegibilidad de rol de guardia se valida **en el backend**
@@ -55,6 +62,8 @@ configurables y no estar quemadas en el frontend"*. Filtrar la lista de candidat
 React esta bien como ayuda visual; no reemplaza la validacion. Ver
 [[rule--elegibilidad-de-rol-guardia]].
 
+=======
+>>>>>>> Stashed changes
 
 ## Archivos
 

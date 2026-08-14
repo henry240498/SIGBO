@@ -57,9 +57,12 @@
  "backend/src/shared/entities/certificacion.entity.ts": [
   "entity--certificacion"
  ],
+<<<<<<< Updated upstream
  "backend/src/shared/entities/checklist-item-vehiculo.entity.ts": [
   "entity--checklist-item-vehiculo"
  ],
+=======
+>>>>>>> Stashed changes
  "backend/src/shared/entities/compania.entity.ts": [
   "entity--compania"
  ],
@@ -88,9 +91,12 @@
  "backend/src/shared/entities/configuracion-version.entity.ts": [
   "entity--configuracion-version"
  ],
+<<<<<<< Updated upstream
  "backend/src/shared/entities/consumo-combustible.entity.ts": [
   "entity--consumo-combustible"
  ],
+=======
+>>>>>>> Stashed changes
  "backend/src/shared/entities/cuartel.entity.ts": [
   "entity--cuartel"
  ],
@@ -115,12 +121,15 @@
  "backend/src/shared/entities/foja-servicio.entity.ts": [
   "entity--foja-servicio"
  ],
+<<<<<<< Updated upstream
  "backend/src/shared/entities/grupo-guardia-miembro.entity.ts": [
   "entity--grupo-guardia-miembro"
  ],
  "backend/src/shared/entities/grupo-guardia.entity.ts": [
   "entity--grupo-guardia"
  ],
+=======
+>>>>>>> Stashed changes
  "backend/src/shared/entities/guardia.entity.ts": [
   "entity--guardia"
  ],
@@ -145,6 +154,7 @@
  "backend/src/shared/entities/inscripcion-curso.entity.ts": [
   "entity--inscripcion-curso"
  ],
+<<<<<<< Updated upstream
  "backend/src/shared/entities/inspeccion-estacion.entity.ts": [
   "entity--inspeccion-estacion"
  ],
@@ -157,15 +167,23 @@
  "backend/src/shared/entities/mantenimiento-vehiculo.entity.ts": [
   "entity--mantenimiento-vehiculo"
  ],
+=======
+ "backend/src/shared/entities/log-auditoria.entity.ts": [
+  "entity--log-auditoria"
+ ],
+>>>>>>> Stashed changes
  "backend/src/shared/entities/marcacion-asistencia.entity.ts": [
   "entity--marcacion-asistencia"
  ],
  "backend/src/shared/entities/materia.entity.ts": [
   "entity--materia"
  ],
+<<<<<<< Updated upstream
  "backend/src/shared/entities/novedad-guardia.entity.ts": [
   "entity--novedad-guardia"
  ],
+=======
+>>>>>>> Stashed changes
  "backend/src/shared/entities/parametro.entity.ts": [
   "entity--parametro"
  ],
@@ -178,9 +196,12 @@
  "backend/src/shared/entities/permiso.entity.ts": [
   "entity--permiso"
  ],
+<<<<<<< Updated upstream
  "backend/src/shared/entities/pernocte.entity.ts": [
   "entity--pernocte"
  ],
+=======
+>>>>>>> Stashed changes
  "backend/src/shared/entities/personal-servicio.entity.ts": [
   "entity--personal-servicio"
  ],
@@ -193,10 +214,13 @@
  "backend/src/shared/entities/rango.entity.ts": [
   "entity--rango"
  ],
+<<<<<<< Updated upstream
  "backend/src/shared/entities/requisito-rol-guardia.entity.ts": [
   "entity--requisito-rol-guardia",
   "rule--elegibilidad-de-rol-guardia"
  ],
+=======
+>>>>>>> Stashed changes
  "backend/src/shared/entities/rol.entity.ts": [
   "entity--rol"
  ],
@@ -453,6 +477,7 @@
  "database/migrations/022_permiso_publicaciones.sql": [
   "file--022-permiso-publicaciones"
  ],
+<<<<<<< Updated upstream
  "database/migrations/023_moviles.sql": [
   "file--023-moviles",
   "table--vehiculos-vehiculos",
@@ -482,6 +507,14 @@
  ],
  "database/migrations/027_personal_reconciliacion_segura.sql": [
   "file--027-personal-reconciliacion-segura"
+=======
+ "database/migrations/023_publicaciones_persistencia.sql": [
+  "file--023-publicaciones-persistencia",
+  "table--contenido-publicaciones"
+ ],
+ "database/migrations/024_personal_reconciliacion_segura.sql": [
+  "file--024-personal-reconciliacion-segura"
+>>>>>>> Stashed changes
  ],
  "backend/src/modules/auth/auth.module.ts": [
   "component--modulo-auth"
@@ -492,9 +525,12 @@
  "backend/src/modules/equipos/equipos.module.ts": [
   "component--modulo-equipos"
  ],
+<<<<<<< Updated upstream
  "backend/src/modules/guardias/guardias.module.ts": [
   "component--modulo-guardias"
  ],
+=======
+>>>>>>> Stashed changes
  "backend/src/modules/operaciones/operaciones.module.ts": [
   "component--modulo-operaciones"
  ],
@@ -534,6 +570,7 @@
  "backend/src/modules/equipos/equipos.service.ts": [
   "service--equipos-equipos"
  ],
+<<<<<<< Updated upstream
  "backend/src/modules/guardias/elegibilidad.service.ts": [
   "service--guardias-elegibilidad",
   "rule--elegibilidad-de-rol-guardia"
@@ -557,6 +594,8 @@
  "backend/src/modules/guardias/requisitos-rol.service.ts": [
   "service--guardias-requisitos-rol"
  ],
+=======
+>>>>>>> Stashed changes
  "backend/src/modules/operaciones/dashboard-asistencia.service.ts": [
   "service--operaciones-dashboard-asistencia"
  ],
@@ -564,6 +603,12 @@
   "service--operaciones-eventos-asistencia",
   "workflow--asistencia-a-evento"
  ],
+<<<<<<< Updated upstream
+=======
+ "backend/src/modules/operaciones/guardias.service.ts": [
+  "service--operaciones-guardias"
+ ],
+>>>>>>> Stashed changes
  "backend/src/modules/operaciones/importaciones.service.ts": [
   "service--operaciones-importaciones",
   "workflow--importacion-marcador"
@@ -689,9 +734,12 @@
   "service--servicios-servicios",
   "workflow--comunicacion-de-servicio"
  ],
+<<<<<<< Updated upstream
  "backend/src/modules/vehiculos/checklist-items.service.ts": [
   "service--vehiculos-checklist-items"
  ],
+=======
+>>>>>>> Stashed changes
  "backend/src/modules/vehiculos/vehiculos-autorizados.service.ts": [
   "service--vehiculos-vehiculos-autorizados"
  ],
@@ -713,6 +761,7 @@
  "backend/src/modules/equipos/equipos.controller.ts": [
   "api--equipos-equipos"
  ],
+<<<<<<< Updated upstream
  "backend/src/modules/guardias/grupos-guardia.controller.ts": [
   "api--guardias-grupos-guardia"
  ],
@@ -732,12 +781,20 @@
  "backend/src/modules/guardias/requisitos-rol.controller.ts": [
   "api--guardias-requisitos-rol"
  ],
+=======
+>>>>>>> Stashed changes
  "backend/src/modules/operaciones/dashboard-asistencia.controller.ts": [
   "api--operaciones-dashboard-asistencia"
  ],
  "backend/src/modules/operaciones/eventos-asistencia.controller.ts": [
   "api--operaciones-eventos-asistencia"
  ],
+<<<<<<< Updated upstream
+=======
+ "backend/src/modules/operaciones/guardias.controller.ts": [
+  "api--operaciones-guardias"
+ ],
+>>>>>>> Stashed changes
  "backend/src/modules/operaciones/importaciones.controller.ts": [
   "api--operaciones-importaciones",
   "workflow--importacion-marcador"
@@ -857,9 +914,12 @@
   "api--servicios-servicios",
   "workflow--comunicacion-de-servicio"
  ],
+<<<<<<< Updated upstream
  "backend/src/modules/vehiculos/checklist-items.controller.ts": [
   "api--vehiculos-checklist-items"
  ],
+=======
+>>>>>>> Stashed changes
  "backend/src/modules/vehiculos/vehiculos-autorizados.controller.ts": [
   "api--vehiculos-vehiculos-autorizados"
  ],
@@ -878,6 +938,15 @@
  "frontend/src/app/dashboard/asistencia/externos/page.tsx": [
   "screen--dashboard-asistencia-externos"
  ],
+<<<<<<< Updated upstream
+=======
+ "frontend/src/app/dashboard/asistencia/guardias/page.tsx": [
+  "screen--dashboard-asistencia-guardias"
+ ],
+ "frontend/src/app/dashboard/asistencia/guardias/[id]/page.tsx": [
+  "screen--dashboard-asistencia-guardias-id"
+ ],
+>>>>>>> Stashed changes
  "frontend/src/app/dashboard/asistencia/page.tsx": [
   "screen--dashboard-asistencia"
  ],
@@ -887,6 +956,7 @@
  "frontend/src/app/dashboard/asistencia/tolerancias/page.tsx": [
   "screen--dashboard-asistencia-tolerancias"
  ],
+<<<<<<< Updated upstream
  "frontend/src/app/dashboard/equipos/categorias/page.tsx": [
   "screen--dashboard-equipos-categorias"
  ],
@@ -920,6 +990,17 @@
  "frontend/src/app/dashboard/mi-perfil/page.tsx": [
   "screen--dashboard-mi-perfil"
  ],
+=======
+ "frontend/src/app/dashboard/mi-perfil/page.tsx": [
+  "screen--dashboard-mi-perfil"
+ ],
+ "frontend/src/app/dashboard/mi-perfil/preferencias/page.tsx": [
+  "screen--dashboard-mi-perfil-preferencias"
+ ],
+ "frontend/src/app/dashboard/mi-perfil/seguridad/page.tsx": [
+  "screen--dashboard-mi-perfil-seguridad"
+ ],
+>>>>>>> Stashed changes
  "frontend/src/app/dashboard/organizacion/ascensos/page.tsx": [
   "screen--dashboard-organizacion-ascensos"
  ],
@@ -1016,6 +1097,7 @@
  "frontend/src/app/dashboard/servicios/page.tsx": [
   "screen--dashboard-servicios"
  ],
+<<<<<<< Updated upstream
  "frontend/src/app/dashboard/vehiculos/checklist-items/page.tsx": [
   "screen--dashboard-vehiculos-checklist-items"
  ],
@@ -1025,6 +1107,8 @@
  "frontend/src/app/dashboard/vehiculos/[id]/page.tsx": [
   "screen--dashboard-vehiculos-id"
  ],
+=======
+>>>>>>> Stashed changes
  "frontend/src/app/dashboard/[modulo]/page.tsx": [
   "screen--dashboard-modulo"
  ],
@@ -1046,6 +1130,7 @@
  "frontend/src/lib/configuracion.ts": [
   "component--front-configuracion"
  ],
+<<<<<<< Updated upstream
  "frontend/src/lib/equipos.ts": [
   "component--front-equipos"
  ],
@@ -1055,6 +1140,11 @@
  "frontend/src/lib/guardias.ts": [
   "component--front-guardias"
  ],
+=======
+ "frontend/src/lib/exportar.ts": [
+  "component--front-exportar"
+ ],
+>>>>>>> Stashed changes
  "frontend/src/lib/parametros.ts": [
   "component--front-parametros"
  ],
@@ -1067,9 +1157,12 @@
  "frontend/src/lib/texto.ts": [
   "component--front-texto"
  ],
+<<<<<<< Updated upstream
  "frontend/src/lib/vehiculos.ts": [
   "component--front-vehiculos"
  ],
+=======
+>>>>>>> Stashed changes
  "frontend/src/app/components/ConfigBootstrap.tsx": [
   "component--front-configbootstrap"
  ],
@@ -1156,9 +1249,12 @@
   "dependency--sqlserver-express",
   "error--tcp-sqlexpress-deshabilitado"
  ],
+<<<<<<< Updated upstream
  ".gitignore": [
   "error--context-borrado-del-disco"
  ],
+=======
+>>>>>>> Stashed changes
  "backend/src/shared/entities": [
   "rule--entidad-y-tabla-en-paralelo"
  ],
@@ -1167,9 +1263,12 @@
   "rule--identidad-y-tiempo-en-sql-server",
   "rule--migracion-nunca-se-edita"
  ],
+<<<<<<< Updated upstream
  "backend/src/modules/guardias": [
   "rule--guardias-vive-en-operaciones"
  ],
+=======
+>>>>>>> Stashed changes
  "backend/src/modules/seguridad/decorators/require-permission.decorator.ts": [
   "rule--todo-endpoint-mutante-con-permiso"
  ]

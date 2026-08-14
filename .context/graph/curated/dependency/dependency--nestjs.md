@@ -32,9 +32,12 @@ terminos: [nestjs, typeorm, mssql, passport, jwt, swagger, classvalidator, frame
 - **TypeORM 0.3** cambio la API respecto de 0.2: `find` recibe `{ where: {} }` y
   `createQueryBuilder` es el camino para consultas complejas. Los ejemplos de 0.2 que
   circulan no compilan.
+<<<<<<< Updated upstream
 - **Ninguna entidad usa relaciones del ORM** (`@ManyToOne` y compania): las FKs son
   columnas planas. No existe `relations: ['bombero']` — todo join es explicito. Es la
   particularidad que mas sorprende al escribir un servicio nuevo.
+=======
+>>>>>>> Stashed changes
 - `reflect-metadata` debe importarse **primero** en `main.ts`, antes de cualquier
   decorador.
 - NestJS 10 requiere Node 18+. Ver [[dependency--nodejs]].

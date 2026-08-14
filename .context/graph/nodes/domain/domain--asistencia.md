@@ -25,6 +25,7 @@ Modulo funcional "Asistencia". Habilitado en la navegacion.
 - [[entity--asignacion-guardia|AsignacionGuardia]] `belongs_to` →
 - [[entity--cambio-guardia|CambioGuardia]] `belongs_to` →
 - [[entity--evento-asistencia|EventoAsistencia]] `belongs_to` →
+<<<<<<< Updated upstream
 - [[entity--grupo-guardia-miembro|GrupoGuardiaMiembro]] `belongs_to` →
 - [[entity--grupo-guardia|GrupoGuardia]] `belongs_to` →
 - [[entity--guardia|Guardia]] `belongs_to` →
@@ -37,6 +38,14 @@ Modulo funcional "Asistencia". Habilitado en la navegacion.
 - [[entity--participante-externo|ParticipanteExterno]] `belongs_to` →
 - [[entity--pernocte|Pernocte]] `belongs_to` →
 - [[entity--requisito-rol-guardia|RequisitoRolGuardia]] `belongs_to` →
+=======
+- [[entity--guardia|Guardia]] `belongs_to` →
+- [[entity--importacion-marcador-fila|ImportacionMarcadorFila]] `belongs_to` →
+- [[entity--importacion-marcador|ImportacionMarcador]] `belongs_to` →
+- [[entity--marcacion-asistencia|MarcacionAsistencia]] `belongs_to` →
+- [[entity--participante-evento|ParticipanteEvento]] `belongs_to` →
+- [[entity--participante-externo|ParticipanteExterno]] `belongs_to` →
+>>>>>>> Stashed changes
 - [[entity--tolerancia-asistencia|ToleranciaAsistencia]] `belongs_to` →
 - [[table--operaciones-eventos-asistencia|operaciones.eventos_asistencia]] `belongs_to` →
 - [[table--operaciones-marcaciones-asistencia|operaciones.marcaciones_asistencia]] `belongs_to` →
@@ -48,6 +57,7 @@ Modulo funcional "Asistencia". Habilitado en la navegacion.
 - [[table--operaciones-tolerancias-asistencia|operaciones.tolerancias_asistencia]] `belongs_to` →
 - [[table--operaciones-importaciones-marcador|operaciones.importaciones_marcador]] `belongs_to` →
 - [[table--operaciones-importaciones-marcador-filas|operaciones.importaciones_marcador_filas]] `belongs_to` →
+<<<<<<< Updated upstream
 - [[table--operaciones-grupos-guardia|operaciones.grupos_guardia]] `belongs_to` →
 - [[table--operaciones-grupos-guardia-miembros|operaciones.grupos_guardia_miembros]] `belongs_to` →
 - [[table--operaciones-pernoctes|operaciones.pernoctes]] `belongs_to` →
@@ -57,12 +67,22 @@ Modulo funcional "Asistencia". Habilitado en la navegacion.
 - [[component--modulo-operaciones|operaciones (modulo NestJS)]] `belongs_to` →
 - [[service--operaciones-dashboard-asistencia|DashboardAsistenciaService]] `belongs_to` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `belongs_to` →
+=======
+- [[component--modulo-operaciones|operaciones (modulo NestJS)]] `belongs_to` →
+- [[service--operaciones-dashboard-asistencia|DashboardAsistenciaService]] `belongs_to` →
+- [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `belongs_to` →
+- [[service--operaciones-guardias|GuardiasService]] `belongs_to` →
+>>>>>>> Stashed changes
 - [[service--operaciones-importaciones|ImportacionesService]] `belongs_to` →
 - [[service--operaciones-marcaciones|MarcacionesService]] `belongs_to` →
 - [[service--operaciones-participantes-externos|ParticipantesExternosService]] `belongs_to` →
 - [[service--operaciones-tolerancias|ToleranciasService]] `belongs_to` →
 - [[api--operaciones-dashboard-asistencia|DashboardAsistenciaController]] `belongs_to` →
 - [[api--operaciones-eventos-asistencia|EventosAsistenciaController]] `belongs_to` →
+<<<<<<< Updated upstream
+=======
+- [[api--operaciones-guardias|GuardiasController]] `belongs_to` →
+>>>>>>> Stashed changes
 - [[api--operaciones-importaciones|ImportacionesController]] `belongs_to` →
 - [[api--operaciones-marcaciones|MarcacionesController]] `belongs_to` →
 - [[api--operaciones-participantes-externos|ParticipantesExternosController]] `belongs_to` →
@@ -71,6 +91,11 @@ Modulo funcional "Asistencia". Habilitado en la navegacion.
 - [[screen--dashboard-asistencia-eventos|/dashboard/asistencia/eventos]] `belongs_to` →
 - [[screen--dashboard-asistencia-eventos-id|/dashboard/asistencia/eventos/[id]]] `belongs_to` →
 - [[screen--dashboard-asistencia-externos|/dashboard/asistencia/externos]] `belongs_to` →
+<<<<<<< Updated upstream
+=======
+- [[screen--dashboard-asistencia-guardias|/dashboard/asistencia/guardias]] `belongs_to` →
+- [[screen--dashboard-asistencia-guardias-id|/dashboard/asistencia/guardias/[id]]] `belongs_to` →
+>>>>>>> Stashed changes
 - [[screen--dashboard-asistencia|/dashboard/asistencia]] `belongs_to` →
 - [[screen--dashboard-asistencia-registro|/dashboard/asistencia/registro]] `belongs_to` →
 - [[screen--dashboard-asistencia-tolerancias|/dashboard/asistencia/tolerancias]] `belongs_to` →

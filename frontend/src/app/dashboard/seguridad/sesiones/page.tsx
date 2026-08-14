@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { apiFetch } from '@/lib/api';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 
 interface SesionActiva {
   id: string;
@@ -15,23 +16,26 @@ interface SesionActiva {
 }
 
 export default function SesionesPage() {
+  const confirmar = useConfirmacion();
   const [sesiones, setSesiones] = useState<SesionActiva[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
 
-  async function cargar() {
+  const cargar = useCallback(async (signal?: AbortSignal) => {
     try {
-      const res = await apiFetch('/seguridad/sesiones');
+      const res = await apiFetch('/seguridad/sesiones', { signal });
       if (!res.ok) throw new Error('No se pudo cargar las sesiones activas');
       setSesiones(await res.json());
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      if ((err as Error).name !== 'AbortError') setError((err as Error).message);
     }
-  }
+  }, []);
 
   useEffect(() => {
-    cargar();
-  }, []);
+    const controller = new AbortController();
+    cargar(controller.signal);
+    return () => controller.abort();
+  }, [cargar]);
 
   async function cerrar(id: string) {
     setError(null);
@@ -44,7 +48,7 @@ export default function SesionesPage() {
   }
 
   async function cerrarTodasDeUsuario(usuarioId: string, username: string | null) {
-    if (!window.confirm(`Cerrar todas las sesiones de ${username ?? usuarioId}?`)) return;
+    if (!await confirmar({titulo:'Cerrar sesiones del usuario',mensaje:`Se cerrarán todas las sesiones activas de ${username ?? usuarioId}.`,confirmar:'Cerrar todas',peligro:true})) return;
     setError(null);
     const res = await apiFetch(`/seguridad/usuarios/${usuarioId}/cerrar-sesiones`, { method: 'POST' });
     if (!res.ok) {
@@ -88,12 +92,14 @@ export default function SesionesPage() {
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 10 }}>
                   <button
+                    type="button"
                     onClick={() => cerrar(s.id)}
                     style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
                   >
                     cerrar
                   </button>
                   <button
+                    type="button"
                     onClick={() => cerrarTodasDeUsuario(s.usuarioId, s.username)}
                     style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
                   >

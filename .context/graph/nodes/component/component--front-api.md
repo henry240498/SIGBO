@@ -25,6 +25,7 @@ Helper de frontend "api" (8 exportaciones).
 - [[screen--dashboard-asistencia-eventos|/dashboard/asistencia/eventos]] `uses` →
 - [[screen--dashboard-asistencia-eventos-id|/dashboard/asistencia/eventos/[id]]] `uses` →
 - [[screen--dashboard-asistencia-externos|/dashboard/asistencia/externos]] `uses` →
+<<<<<<< Updated upstream
 - [[screen--dashboard-asistencia-registro|/dashboard/asistencia/registro]] `uses` →
 - [[screen--dashboard-asistencia-tolerancias|/dashboard/asistencia/tolerancias]] `uses` →
 - [[screen--dashboard-equipos-categorias|/dashboard/equipos/categorias]] `uses` →
@@ -38,6 +39,15 @@ Helper de frontend "api" (8 exportaciones).
 - [[screen--dashboard-guardias-requisitos|/dashboard/guardias/requisitos]] `uses` →
 - [[screen--dashboard-guardias-id|/dashboard/guardias/[id]]] `uses` →
 - [[screen--dashboard-mi-perfil|/dashboard/mi-perfil]] `uses` →
+=======
+- [[screen--dashboard-asistencia-guardias|/dashboard/asistencia/guardias]] `uses` →
+- [[screen--dashboard-asistencia-guardias-id|/dashboard/asistencia/guardias/[id]]] `uses` →
+- [[screen--dashboard-asistencia-registro|/dashboard/asistencia/registro]] `uses` →
+- [[screen--dashboard-asistencia-tolerancias|/dashboard/asistencia/tolerancias]] `uses` →
+- [[screen--dashboard-mi-perfil|/dashboard/mi-perfil]] `uses` →
+- [[screen--dashboard-mi-perfil-preferencias|/dashboard/mi-perfil/preferencias]] `uses` →
+- [[screen--dashboard-mi-perfil-seguridad|/dashboard/mi-perfil/seguridad]] `uses` →
+>>>>>>> Stashed changes
 - [[screen--dashboard-organizacion-ascensos|/dashboard/organizacion/ascensos]] `uses` →
 - [[screen--dashboard-organizacion-brigadas|/dashboard/organizacion/brigadas]] `uses` →
 - [[screen--dashboard-organizacion-cargos|/dashboard/organizacion/cargos]] `uses` →
@@ -68,9 +78,12 @@ Helper de frontend "api" (8 exportaciones).
 - [[screen--dashboard-seguridad-usuarios-id|/dashboard/seguridad/usuarios/[id]]] `uses` →
 - [[screen--dashboard-servicios-nuevo|/dashboard/servicios/nuevo]] `uses` →
 - [[screen--dashboard-servicios|/dashboard/servicios]] `uses` →
+<<<<<<< Updated upstream
 - [[screen--dashboard-vehiculos-checklist-items|/dashboard/vehiculos/checklist-items]] `uses` →
 - [[screen--dashboard-vehiculos|/dashboard/vehiculos]] `uses` →
 - [[screen--dashboard-vehiculos-id|/dashboard/vehiculos/[id]]] `uses` →
+=======
+>>>>>>> Stashed changes
 - [[screen--login|/login]] `uses` →
 - [[screen--raiz|/]] `uses` →
 - [[rule--api-v1-y-contrato-http|Toda la API vive bajo /api/v1 y el frontend nunca escribe ese prefijo]] `affects` →

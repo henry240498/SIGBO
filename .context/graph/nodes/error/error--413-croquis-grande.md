@@ -21,8 +21,13 @@ El croquis viaja como PNG en base64 dentro del JSON. Con el limite por defecto d
 ## Sintoma
 
 Guardar una comunicacion de servicio devuelve **413** o falla sin llegar al
+<<<<<<< Updated upstream
 controlador. Las comunicaciones sin croquis, o con un croquis simple, guardan bien:
 solo fallan las escenas dibujadas con detalle.
+=======
+controlador. Las comunicaciones sin croquis, o con un croquis simple, guardan bien: solo
+fallan las escenas dibujadas con detalle.
+>>>>>>> Stashed changes
 
 ## Causa
 

@@ -23,8 +23,13 @@ CONSTRAINT FK_comser_servicio FOREIGN KEY (servicio_id)
 
 Dos hechos que hay que tener juntos en la cabeza:
 
+<<<<<<< Updated upstream
 1. **1:1.** Un servicio no puede tener dos comunicaciones. El endpoint de guardado es
    un upsert por `servicioId`, no un insert.
+=======
+1. **1:1.** Un servicio no puede tener dos comunicaciones. El endpoint de guardado
+   es un upsert por `servicioId`, no un insert.
+>>>>>>> Stashed changes
 2. **Cascade.** Borrar el servicio borra su comunicacion **en silencio**, sin pasar
    por ninguna validacion de la aplicacion.
 
@@ -43,6 +48,13 @@ Si esto importa formalmente, el cambio a considerar es pasar la FK a
 
 ## Nota de precision entre capas
 
+<<<<<<< Updated upstream
 La migracion declara `estado NVARCHAR(30)`; la entidad TypeORM declara `length: 20`.
 Los cinco valores del `CHECK` caben en 20, asi que no hay falla practica, pero la
 entidad y la tabla no coinciden. Al agregar un estado, verificar ambos numeros.
+=======
+La migracion declara `estado NVARCHAR(30)`; la entidad TypeORM declara
+`length: 20`. Los cinco valores del `CHECK` caben en 20, asi que no hay falla
+practica, pero la entidad y la tabla no coinciden exactamente. Al agregar un estado
+nuevo, verificar ambos numeros.
+>>>>>>> Stashed changes

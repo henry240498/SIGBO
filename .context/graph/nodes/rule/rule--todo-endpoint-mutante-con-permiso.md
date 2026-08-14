@@ -24,20 +24,35 @@ Cada ruta va con @RequirePermission y los guards JwtAuthGuard + PermissionsGuard
 Un controlador nuevo se escribe asi:
 
 ```ts
+<<<<<<< Updated upstream
 @Controller('guardias/grupos')
 @UseGuards(JwtAuthGuard, PermissionsGuard)
 export class GruposGuardiaController {
   @Get()    @RequirePermission('guardias:ver')    listar() {}
   @Post()   @RequirePermission('guardias:crear')  crear() {}
   @Patch(':id') @RequirePermission('guardias:editar') editar() {}
+=======
+@Controller('organizacion/rangos')
+@UseGuards(JwtAuthGuard, PermissionsGuard)
+export class RangosController {
+  @Get()    @RequirePermission('organizacion:rangos_ver')    listar() {}
+  @Post()   @RequirePermission('organizacion:rangos_crear')  crear() {}
+  @Patch(':id') @RequirePermission('organizacion:rangos_editar') editar() {}
+  @Delete(':id') @RequirePermission('organizacion:rangos_eliminar') borrar() {}
+>>>>>>> Stashed changes
 }
 ```
 
 ## Formato del codigo de permiso
 
 `modulo:accion` o `modulo:recurso_accion`. Los prefijos en uso son `asistencia:`,
+<<<<<<< Updated upstream
 `configuracion:`, `equipos:`, `guardias:`, `organizacion:`, `personal:`,
 `publicaciones:`, `seguridad:`, `servicios:`, `vehiculos:`.
+=======
+`equipos:`, `organizacion:`, `personal:`, `publicaciones:`, `seguridad:`,
+`servicios:`, `vehiculos:`, `configuracion:`.
+>>>>>>> Stashed changes
 
 `@RequirePermission` acepta **varios** codigos, y alcanza con tener uno (OR):
 
@@ -54,6 +69,7 @@ Si falta el paso 2 el endpoint compila, arranca y **nadie puede usarlo nunca**: 
 guard no encuentra el permiso en el conjunto efectivo de ningun usuario. El fallo se
 ve como un 403 inexplicable.
 
+<<<<<<< Updated upstream
 Para cruzar ambos lados: `graph/indexes/permissions.json` lista los 118 codigos que
 el codigo exige, con que nodo los pide.
 
@@ -63,6 +79,10 @@ el codigo exige, con que nodo los pide.
 `crear`, `editar`, `asignar`, `requisitos`) para seis controladores. No hay una regla
 uniforme: al agregar un endpoint, mirar que permisos ya usa su modulo antes de
 inventar uno nuevo.
+=======
+Para cruzar ambos lados: `graph/indexes/permissions.json` lista todos los codigos
+que el codigo exige.
+>>>>>>> Stashed changes
 
 ## Excepciones deliberadas
 

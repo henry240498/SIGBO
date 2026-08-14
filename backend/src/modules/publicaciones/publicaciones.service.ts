@@ -25,6 +25,10 @@ export class PublicacionesService {
   async crear(item:PublicacionPublica){const value=this.validar(this.normalizar(item));if(await this.publicaciones.exist({where:{id:value.id}}))throw new BadRequestException('Ya existe una publicación con ese identificador');await this.guardar(value);return value;}
   async actualizar(id:string,item:PublicacionPublica){if(!await this.publicaciones.exist({where:{id}}))throw new NotFoundException('La publicación no existe');const value=this.validar(this.normalizar({...item,id}));await this.guardar(value);return value;}
   async eliminar(id:string){const result=await this.publicaciones.delete(id);if(!result.affected)throw new NotFoundException('La publicación no existe');return{ok:true};}
+<<<<<<< Updated upstream
+=======
+  async reemplazar(items:PublicacionPublica[]){if(!Array.isArray(items))throw new BadRequestException('Se esperaba una lista de contenidos');const normalized=items.map(x=>this.validar(this.normalizar(x)));const ids=new Set(normalized.map(x=>x.id));if(ids.size!==normalized.length)throw new BadRequestException('Hay identificadores duplicados');await this.publicaciones.manager.transaction(async manager=>{const repo=manager.getRepository(Publicacion);const actuales=await repo.find();const recibidos=new Set(normalized.map(x=>x.id));const removidos=actuales.filter(x=>!recibidos.has(x.id));if(removidos.length)await repo.remove(removidos);for(const x of normalized){const actual=await repo.findOne({where:{id:x.id}});await repo.save(repo.create({...actual,id:x.id,seccion:x.seccion,estado:x.estado,visible:x.visible,destacada:x.destacada,orden:x.orden,fecha:x.fecha||null,publicarEn:x.publicarEn?new Date(x.publicarEn):null,caducarEn:x.caducarEn?new Date(x.caducarEn):null,contenidoJson:JSON.stringify(x)}));}});return this.listar(true);}
+>>>>>>> Stashed changes
   async estadisticas(anio?:number){
     const todos=anio===0;const year=todos?0:anio&&anio>=2000&&anio<=2100?anio:new Date().getFullYear();
     const servicios=await this.servicios.createQueryBuilder('s').where("s.estado <> 'CANCELADO'").orderBy('s.fechaHoraAviso','ASC').getMany();

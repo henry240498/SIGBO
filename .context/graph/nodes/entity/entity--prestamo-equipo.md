@@ -37,7 +37,10 @@ Entidad PrestamoEquipo, persistida en equipos.prestamos_equipos.
 ## Referenciado por
 
 - [[service--equipos-equipamiento-bombero|EquipamientoBomberoService]] `uses` →
+<<<<<<< Updated upstream
 - [[service--equipos-equipos|EquiposService]] `uses` →
+=======
+>>>>>>> Stashed changes
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

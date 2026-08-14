@@ -29,7 +29,11 @@ Todo se resuelve con `fetch`, `useState` y CSS propio. Ver
 - **Todas** las paginas son `'use client'`. No se usan Server Components para datos,
   ni Server Actions, ni Route Handlers: el backend NestJS es la unica API.
 - Alias `@/` apunta a `frontend/src/`.
+<<<<<<< Updated upstream
 - Segmentos dinamicos en uso: `[id]` (personal, usuarios, eventos, guardias, grupos) y
+=======
+- Segmentos dinamicos en uso: `[id]` (personal, usuarios, eventos, guardias) y
+>>>>>>> Stashed changes
   `[modulo]` como comodin de dashboard.
 
 ## Consecuencia de no usar el servidor de Next

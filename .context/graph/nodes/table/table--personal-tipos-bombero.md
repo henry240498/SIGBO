@@ -48,7 +48,10 @@ Tabla personal.tipos_bombero (11 columnas). Creada en 017_tipos_bombero.sql.
 
 ## Referenciado por
 
+<<<<<<< Updated upstream
 - [[table--operaciones-requisitos-rol-guardia|operaciones.requisitos_rol_guardia]] `references` →
+=======
+>>>>>>> Stashed changes
 - [[entity--tipo-bombero|TipoBombero]] `persisted_in` →
 - [[service--personal-tipos-bombero|TiposBomberoService]] `reads` →
 

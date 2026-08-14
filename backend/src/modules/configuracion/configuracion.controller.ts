@@ -14,6 +14,8 @@ export class ConfiguracionController {
   constructor(private readonly service:ConfiguracionService){}
   @Get('publica') publica(){return this.service.publica();}
   @Get('registro-publico') registroPublico(){return this.service.registro(true);}
+  @Get('registro-preferencias') @ApiBearerAuth() @UseGuards(JwtAuthGuard)
+  registroPreferencias(){return this.service.registro().filter(x=>x.userOverride);}
 
   @Get('mis-preferencias') @ApiBearerAuth() @UseGuards(JwtAuthGuard)
   preferencias(@CurrentUser() user:AuthenticatedUser){return this.service.preferencias(user.id);}

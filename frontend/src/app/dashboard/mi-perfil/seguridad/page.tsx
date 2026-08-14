@@ -1,0 +1,18 @@
+'use client';
+import {useCallback,useEffect,useState} from 'react';
+import {useRouter} from 'next/navigation';
+import {useConfirmacion} from '@/app/components/ConfirmProvider';
+import {apiFetch,cerrarSesionLocal} from '@/lib/api';
+
+interface Session{id:string;ip:string|null;userAgent:string|null;dispositivo:string|null;fechaInicio:string;fechaExpiracion:string|null;fechaUltimaActividad:string}
+
+export default function SeguridadPage(){
+ const[items,setItems]=useState<Session[]>([]),[error,setError]=useState(''),[loading,setLoading]=useState(true),[busy,setBusy]=useState<string|null>(null);
+ const confirmar=useConfirmacion(),router=useRouter();
+ const load=useCallback(async(signal?:AbortSignal)=>{setLoading(true);try{const r=await apiFetch('/seguridad/sesiones/mias',{signal});if(!r.ok)throw new Error('No se pudieron cargar tus sesiones');setItems(await r.json());setError('')}catch(e){if((e as Error).name!=='AbortError')setError((e as Error).message)}finally{if(!signal?.aborted)setLoading(false)}},[]);
+ useEffect(()=>{const controller=new AbortController();load(controller.signal);return()=>controller.abort()},[load]);
+ async function close(id:string){if(!await confirmar({titulo:'Cerrar sesión',mensaje:'Esta sesión perderá acceso y deberá autenticarse nuevamente.',confirmar:'Cerrar sesión',peligro:true}))return;setBusy(id);try{const r=await apiFetch(`/seguridad/sesiones/mias/${id}`,{method:'DELETE'});if(!r.ok)throw new Error('No se pudo cerrar la sesión');await load()}catch(e){setError((e as Error).message)}finally{setBusy(null)}}
+ async function closeAll(){if(!await confirmar({titulo:'Cerrar todas las sesiones',mensaje:'Se cerrarán todos los accesos de tu cuenta, incluido este dispositivo.',confirmar:'Cerrar todas',peligro:true}))return;setBusy('all');try{const r=await apiFetch('/seguridad/sesiones/mias/cerrar-todas',{method:'POST'});if(!r.ok)throw new Error('No se pudieron cerrar las sesiones');cerrarSesionLocal();router.replace('/login')}catch(e){setError((e as Error).message);setBusy(null)}}
+ return <div><div className="service-heading"><div><span className="topbar-eyebrow">Mi cuenta</span><h2>Seguridad y sesiones</h2><p>Revisá los accesos activos y cerrá los que no reconozcas.</p></div><button type="button" className="service-secondary" onClick={closeAll} disabled={busy!==null}>{busy==='all'?'Cerrando…':'Cerrar todas'}</button></div>{error&&<div className="service-validation" role="alert">{error}</div>}{loading?<p role="status">Cargando sesiones…</p>:items.length?<div className="session-list">{items.map(x=><article className="card" key={x.id}><div><h3>{x.dispositivo||device(x.userAgent)}</h3><p>{x.ip||'IP no registrada'} · Última actividad {new Date(x.fechaUltimaActividad).toLocaleString('es-PY')}</p><small>Inicio {new Date(x.fechaInicio).toLocaleString('es-PY')}</small></div><button type="button" className="service-secondary" disabled={busy!==null} onClick={()=>close(x.id)}>{busy===x.id?'Cerrando…':'Cerrar sesión'}</button></article>)}</div>:<div className="card public-empty">No hay sesiones activas registradas.</div>}<section className="card security-capabilities"><h3>Protección de la cuenta</h3><p>El sistema aplica bloqueo temporal tras intentos fallidos y renovación controlada de sesión.</p><p>La autenticación de dos factores todavía no está disponible; no se presenta como activa hasta contar con infraestructura real.</p></section></div>
+}
+function device(ua:string|null){if(!ua)return'Dispositivo no identificado';if(/mobile|android|iphone/i.test(ua))return'Dispositivo móvil';if(/windows/i.test(ua))return'Equipo Windows';if(/mac/i.test(ua))return'Equipo macOS';return'Navegador web'}

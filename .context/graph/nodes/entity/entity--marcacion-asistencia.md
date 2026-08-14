@@ -38,7 +38,10 @@ Marcacion fisica de entrada/salida del cuartel. `eventoId` es opcional: marcar p
 
 ## Referenciado por
 
+<<<<<<< Updated upstream
 - [[service--guardias-guardias|GuardiasService]] `uses` →
+=======
+>>>>>>> Stashed changes
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `uses` →
 - [[service--operaciones-importaciones|ImportacionesService]] `uses` →
 - [[service--operaciones-marcaciones|MarcacionesService]] `uses` →

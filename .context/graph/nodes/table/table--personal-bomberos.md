@@ -133,6 +133,7 @@ Tabla personal.bomberos (65 columnas). Creada en 003_personal.sql, modificada po
 - [[table--personal-seguros-bombero|personal.seguros_bombero]] `references` →
 - [[table--operaciones-participantes-evento|operaciones.participantes_evento]] `references` →
 - [[table--operaciones-importaciones-marcador-filas|operaciones.importaciones_marcador_filas]] `references` →
+<<<<<<< Updated upstream
 - [[table--operaciones-grupos-guardia|operaciones.grupos_guardia]] `references` →
 - [[table--operaciones-grupos-guardia-miembros|operaciones.grupos_guardia_miembros]] `references` →
 - [[table--operaciones-pernoctes|operaciones.pernoctes]] `references` →
@@ -145,6 +146,11 @@ Tabla personal.bomberos (65 columnas). Creada en 003_personal.sql, modificada po
 - [[service--guardias-novedades|NovedadesService]] `reads` →
 - [[service--guardias-pernoctes|PernoctesService]] `reads` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `reads` →
+=======
+- [[entity--bombero|Bombero]] `persisted_in` →
+- [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `reads` →
+- [[service--operaciones-guardias|GuardiasService]] `reads` →
+>>>>>>> Stashed changes
 - [[service--operaciones-importaciones|ImportacionesService]] `reads` →
 - [[service--operaciones-marcaciones|MarcacionesService]] `reads` →
 - [[service--organizacion-ascensos|AscensosService]] `reads` →

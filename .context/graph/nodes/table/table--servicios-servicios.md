@@ -74,7 +74,10 @@ Tabla servicios.servicios (30 columnas). Creada en 007_servicios.sql, modificada
 - [[service--personal-consultas-cruzadas|ConsultasCruzadasService]] `reads` →
 - [[service--publicaciones-publicaciones|PublicacionesService]] `reads` →
 - [[service--servicios-servicios|ServiciosService]] `reads` →
+<<<<<<< Updated upstream
 - [[service--vehiculos-vehiculos|VehiculosService]] `reads` →
+=======
+>>>>>>> Stashed changes
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

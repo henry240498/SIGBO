@@ -55,7 +55,10 @@ Tabla organizacion.cargos (13 columnas). Creada en 012_organizacion.sql, modific
 ## Referenciado por
 
 - [[table--organizacion-designaciones|organizacion.designaciones]] `references` →
+<<<<<<< Updated upstream
 - [[table--operaciones-requisitos-rol-guardia|operaciones.requisitos_rol_guardia]] `references` →
+=======
+>>>>>>> Stashed changes
 - [[entity--cargo|Cargo]] `persisted_in` →
 - [[service--organizacion-cargos|CargosService]] `reads` →
 - [[service--organizacion-dashboard|DashboardService]] `reads` →

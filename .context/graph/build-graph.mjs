@@ -32,12 +32,23 @@ const CURATED_DIR = join(GRAPH_DIR, 'curated');
 
 const log = (...a) => { if (!QUIET) console.log(...a); };
 
+<<<<<<< Updated upstream
 function walk(dir, keep, out = []) {
   if (!existsSync(dir)) return out;
   for (const name of readdirSync(dir)) {
     if (['node_modules', '.next', 'dist', '.git', '.obsidian'].includes(name)) continue;
     const abs = join(dir, name);
     if (statSync(abs).isDirectory()) walk(abs, keep, out);
+=======
+/** Lista archivos recursivamente filtrando por predicado sobre la ruta absoluta. */
+function walk(dir, keep, out = []) {
+  if (!existsSync(dir)) return out;
+  for (const name of readdirSync(dir)) {
+    if (name === 'node_modules' || name === '.next' || name === 'dist' || name === '.git') continue;
+    const abs = join(dir, name);
+    const st = statSync(abs);
+    if (st.isDirectory()) walk(abs, keep, out);
+>>>>>>> Stashed changes
     else if (keep(abs)) out.push(abs);
   }
   return out;
@@ -51,6 +62,10 @@ const slug = (s) => String(s)
   .normalize('NFD').replace(/[̀-ͯ]/g, '')
   .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
+<<<<<<< Updated upstream
+=======
+/** Palabras utiles para busqueda, sin ruido. */
+>>>>>>> Stashed changes
 const STOP = new Set(['de', 'del', 'la', 'el', 'los', 'las', 'y', 'o', 'en', 'por', 'para', 'con',
   'un', 'una', 'que', 'se', 'su', 'al', 'lo', 'como', 'mas', 'sin', 'sobre', 'entity', 'service',
   'controller', 'page', 'tsx', 'ts', 'src', 'app', 'dashboard', 'backend', 'frontend', 'the', 'a']);
@@ -60,6 +75,10 @@ function terms(...parts) {
   for (const part of parts.filter(Boolean)) {
     for (const raw of String(part).split(/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9_]+/)) {
       if (!raw) continue;
+<<<<<<< Updated upstream
+=======
+      // separa camelCase y snake_case
+>>>>>>> Stashed changes
       for (const piece of raw.replace(/([a-z0-9])([A-Z])/g, '$1 $2').split(/[\s_]+/)) {
         const t = slug(piece);
         if (t.length >= 3 && !STOP.has(t)) bag.add(t);
@@ -69,12 +88,20 @@ function terms(...parts) {
   return [...bag];
 }
 
+<<<<<<< Updated upstream
 /** Primer bloque de documentacion que precede a un ancla, como resumen. */
+=======
+/** Primer bloque /** ... *\/ que precede a un ancla, como resumen. */
+>>>>>>> Stashed changes
 function docCommentBefore(src, anchorIndex) {
   const head = src.slice(0, anchorIndex);
   const m = [...head.matchAll(/\/\*\*([\s\S]*?)\*\//g)].pop();
   if (!m) return '';
   const body = m[1].replace(/^\s*\*/gm, ' ').replace(/\s+/g, ' ').trim();
+<<<<<<< Updated upstream
+=======
+  // Solo si el comentario esta pegado al ancla (no uno perdido al inicio del archivo)
+>>>>>>> Stashed changes
   const between = head.slice(m.index + m[0].length);
   if (between.replace(/\s|@\w+\(?[^\n]*\)?/g, '').length > 40) return '';
   return body;
@@ -88,12 +115,17 @@ const yamlStr = (s) => {
 
 // ------------------------------------------------------------------- dominios
 
+<<<<<<< Updated upstream
 /** Esquema SQL -> slug de dominio canonico. */
+=======
+/** slug de esquema SQL / carpeta de modulo -> slug de dominio canonico. */
+>>>>>>> Stashed changes
 const DOMAIN_OF_SCHEMA = {
   seguridad: 'seguridad', personal: 'personal', organizacion: 'organizacion',
   operaciones: 'asistencia', servicios: 'servicios', vehiculos: 'vehiculos',
   equipos: 'equipos', academia: 'academia', finanzas: 'finanzas',
   deposito: 'deposito', documentos: 'documentos', contenido: 'publicaciones',
+<<<<<<< Updated upstream
   // No hay esquema 'guardias': sus tablas viven en 'operaciones'. El modulo NestJS
   // guardias si es un dominio propio (ver DOMAIN_OF_MODULE y rule--guardias-vive-en-operaciones).
 };
@@ -103,16 +135,32 @@ const DOMAIN_OF_MODULE = {
   organizacion: 'organizacion', operaciones: 'asistencia', servicios: 'servicios',
   vehiculos: 'vehiculos', equipos: 'equipos', publicaciones: 'publicaciones',
   configuracion: 'seguridad', guardias: 'guardias',
+=======
+>>>>>>> Stashed changes
 };
 /** Raiz de ruta del frontend que no coincide con el slug de un modulo. */
 const DOMAIN_OF_ROUTE = {
   login: 'seguridad', 'mi-perfil': 'seguridad', dashboard: 'seguridad',
 };
+<<<<<<< Updated upstream
 
 // --------------------------------------------------------------- acumuladores
 
 const nodes = new Map();
 const edges = [];
+=======
+const DOMAIN_OF_MODULE = {
+  auth: 'seguridad', seguridad: 'seguridad', personal: 'personal',
+  organizacion: 'organizacion', operaciones: 'asistencia', servicios: 'servicios',
+  vehiculos: 'vehiculos', equipos: 'equipos', publicaciones: 'publicaciones',
+  configuracion: 'seguridad',
+};
+
+// --------------------------------------------------------------- acumuladores
+
+const nodes = new Map();   // id -> nodo
+const edges = [];          // {from, tipo, to}
+>>>>>>> Stashed changes
 const warnings = [];
 
 function addNode(node) {
@@ -128,7 +176,11 @@ function addEdge(from, tipo, to) {
 const idDomain = (d) => `domain--${slug(d)}`;
 const idEntity = (f) => `entity--${slug(basename(f).replace(/\.entity\.ts$/, ''))}`;
 const idTable = (schema, table) => `table--${slug(schema)}-${slug(table)}`;
+<<<<<<< Updated upstream
 const idFile = (p) => `file--${slug(basename(p).replace(/\.[a-z]+$/, ''))}`;
+=======
+const idFile = (p) => `file--${slug(rel(p).replace(/^.*\//, '').replace(/\.[a-z]+$/, ''))}`;
+>>>>>>> Stashed changes
 
 // =============================================================== 1. DOMINIOS
 
@@ -147,12 +199,20 @@ function buildDomains() {
       terminos: terms(s, nombre, prefijo),
     });
   }
+<<<<<<< Updated upstream
+=======
+  // Dominios que existen en BD pero no estan declarados en el menu
+>>>>>>> Stashed changes
   for (const s of new Set(Object.values(DOMAIN_OF_SCHEMA))) {
     if (!nodes.has(idDomain(s))) {
       addNode({
         id: idDomain(s), tipo: 'DOMAIN', nombre: s, nivel: 'L0', dominio: s,
         estado: 'SOLO_BD',
+<<<<<<< Updated upstream
         resumen: 'Dominio presente en la base de datos y/o el backend pero no declarado en el menu del frontend.',
+=======
+        resumen: `Dominio presente en la base de datos y/o el backend pero no declarado en el menu del frontend.`,
+>>>>>>> Stashed changes
         terminos: terms(s),
       });
     }
@@ -166,6 +226,7 @@ function buildEntities() {
   const files = walk(join(REPO, 'backend/src/shared/entities'), (p) => p.endsWith('.entity.ts'));
   for (const f of files) {
     const src = read(f);
+<<<<<<< Updated upstream
     // Independiente del orden de las claves y de los espacios: hay entidades escritas
     // como {name:'x',schema:'y'} y otras como {schema:'y',name:'x'}.
     const ent = /@Entity\(\{([^}]*)\}\)/.exec(src);
@@ -176,6 +237,12 @@ function buildEntities() {
       warnings.push(`entidad sin @Entity/class parseable: ${rel(f)}`);
       continue;
     }
+=======
+    const ent = /@Entity\(\{\s*name:\s*'([^']+)',\s*schema:\s*'([^']+)'\s*\}\)/.exec(src);
+    const cls = /export class (\w+)/.exec(src);
+    if (!ent || !cls) { warnings.push(`entidad sin @Entity/class parseable: ${rel(f)}`); continue; }
+    const [, table, schema] = ent;
+>>>>>>> Stashed changes
     const dominio = DOMAIN_OF_SCHEMA[schema] ?? schema;
 
     const enums = [...src.matchAll(/export type (\w+)\s*=\s*([^;]+);/g)]
@@ -204,13 +271,23 @@ function buildEntities() {
       terminos: terms(cls[1], table, schema, ...enums.flatMap((e) => [e.nombre, ...e.valores])),
     });
 
+<<<<<<< Updated upstream
     // La arista a la tabla se resuelve en linkEntitiesToTables(), cuando ya se
     // conoce el esquema resultante de aplicar todas las migraciones.
+=======
+    // La arista solo se emite si la tabla existe de verdad tras aplicar las
+    // migraciones. Una entidad que apunta a una tabla inexistente es un hallazgo,
+    // no un enlace roto: se marca en el nodo y se reporta.
+>>>>>>> Stashed changes
     node._tablaEsperada = { schema, table };
     addEdge(id, 'belongs_to', idDomain(dominio));
     node._relTargets = relations.map((r) => r.target);
   }
+<<<<<<< Updated upstream
 
+=======
+  // relates_to entre entidades (por nombre de clase)
+>>>>>>> Stashed changes
   const byClass = new Map([...nodes.values()].filter((n) => n.tipo === 'ENTITY').map((n) => [n.nombre, n.id]));
   for (const n of nodes.values()) {
     if (n.tipo !== 'ENTITY') continue;
@@ -232,7 +309,11 @@ function buildEntities() {
  */
 function buildTables() {
   const migrations = walk(join(REPO, 'database/migrations'), (p) => p.endsWith('.sql')).sort();
+<<<<<<< Updated upstream
   const tablas = new Map();
+=======
+  const tablas = new Map(); // 'schema.tabla' actual -> hecho acumulado
+>>>>>>> Stashed changes
   const renombres = [];
 
   for (const f of migrations) {
@@ -247,6 +328,10 @@ function buildTables() {
       terminos: terms(basename(f, '.sql')),
     });
 
+<<<<<<< Updated upstream
+=======
+    // --- CREATE TABLE
+>>>>>>> Stashed changes
     for (const m of src.matchAll(/CREATE TABLE\s+\[?(\w+)\]?\.\[?(\w+)\]?\s*\(([\s\S]*?)\n\s*\)\s*;/gi)) {
       const [, schema, table, body] = m;
       const key = `${schema.toLowerCase()}.${table.toLowerCase()}`;
@@ -254,7 +339,12 @@ function buildTables() {
         .filter(([, n]) => !/^(CONSTRAINT|PRIMARY|FOREIGN|UNIQUE|CHECK|INDEX)$/i.test(n))
         .map(([, n, t]) => ({ nombre: n, tipo: t }));
       tablas.set(key, {
+<<<<<<< Updated upstream
         esquema: schema, tabla: table, columnas: cols,
+=======
+        esquema: schema, tabla: table,
+        columnas: cols,
+>>>>>>> Stashed changes
         fks: [...body.matchAll(/FOREIGN KEY\s*\(([^)]+)\)\s*REFERENCES\s+\[?(\w+)\]?\.\[?(\w+)\]?/gi)]
           .map(([, col, s, t]) => ({ columna: col.trim(), destino: `${s}.${t}` })),
         checks: [...body.matchAll(/CONSTRAINT\s+\w+\s+CHECK\s*\(([\s\S]*?)\)(?=,\n|\s*\n\s*\))/gi)]
@@ -265,22 +355,38 @@ function buildTables() {
       });
     }
 
+<<<<<<< Updated upstream
     // sp_rename de TABLA
+=======
+    // --- sp_rename de TABLA: 'schema.vieja', 'nueva'
+>>>>>>> Stashed changes
     for (const m of src.matchAll(/sp_rename\s+'(\w+)\.(\w+)'\s*,\s*'(\w+)'\s*(?:;|\n|$)/gi)) {
       const [full, schema, vieja, nueva] = m;
       if (/'COLUMN'/i.test(full)) continue;
       const oldKey = `${schema.toLowerCase()}.${vieja.toLowerCase()}`;
+<<<<<<< Updated upstream
+=======
+      const newKey = `${schema.toLowerCase()}.${nueva.toLowerCase()}`;
+>>>>>>> Stashed changes
       const hecho = tablas.get(oldKey);
       if (!hecho) { warnings.push(`sp_rename sobre tabla desconocida: ${oldKey} (${mig})`); continue; }
       tablas.delete(oldKey);
       hecho.tabla = nueva;
       hecho.renombradaDe = `${schema}.${vieja}`;
       hecho.modificadaPor.push(mig);
+<<<<<<< Updated upstream
       tablas.set(`${schema.toLowerCase()}.${nueva.toLowerCase()}`, hecho);
       renombres.push({ de: `${schema}.${vieja}`, a: `${schema}.${nueva}`, mig });
     }
 
     // sp_rename de COLUMNA
+=======
+      tablas.set(newKey, hecho);
+      renombres.push({ de: `${schema}.${vieja}`, a: `${schema}.${nueva}`, mig });
+    }
+
+    // --- sp_rename de COLUMNA: 'schema.tabla.vieja', 'nueva', 'COLUMN'
+>>>>>>> Stashed changes
     for (const m of src.matchAll(/sp_rename\s+'(\w+)\.(\w+)\.(\w+)'\s*,\s*'(\w+)'\s*,\s*'COLUMN'/gi)) {
       const [, schema, table, vieja, nueva] = m;
       const hecho = tablas.get(`${schema.toLowerCase()}.${table.toLowerCase()}`);
@@ -290,7 +396,11 @@ function buildTables() {
       if (!hecho.modificadaPor.includes(mig)) hecho.modificadaPor.push(mig);
     }
 
+<<<<<<< Updated upstream
     // ALTER TABLE: columnas agregadas y eliminadas
+=======
+    // --- ALTER TABLE: columnas agregadas y eliminadas
+>>>>>>> Stashed changes
     for (const m of src.matchAll(/ALTER TABLE\s+\[?(\w+)\]?\.\[?(\w+)\]?\s+([\s\S]*?);/gi)) {
       const [, schema, table, cuerpo] = m;
       const hecho = tablas.get(`${schema.toLowerCase()}.${table.toLowerCase()}`);
@@ -315,11 +425,19 @@ function buildTables() {
       }
     }
 
+<<<<<<< Updated upstream
+=======
+    // --- DROP TABLE
+>>>>>>> Stashed changes
     for (const m of src.matchAll(/DROP TABLE\s+(?:IF EXISTS\s+)?\[?(\w+)\]?\.\[?(\w+)\]?/gi)) {
       tablas.delete(`${m[1].toLowerCase()}.${m[2].toLowerCase()}`);
     }
   }
 
+<<<<<<< Updated upstream
+=======
+  // --- emitir los nodos del esquema resultante
+>>>>>>> Stashed changes
   for (const hecho of tablas.values()) {
     const { esquema, tabla } = hecho;
     const id = idTable(esquema, tabla);
@@ -332,7 +450,11 @@ function buildTables() {
       resumen: `Tabla ${esquema}.${tabla} (${hecho.columnas.length} columnas). Creada en ${hecho.creadaEn}`
         + (hecho.renombradaDe ? `, renombrada desde ${hecho.renombradaDe}` : '')
         + (hecho.modificadaPor.length ? `, modificada por ${hecho.modificadaPor.join(', ')}` : '') + '.',
+<<<<<<< Updated upstream
       esquema, tabla,
+=======
+      esquema, tabla: tabla,
+>>>>>>> Stashed changes
       columnas: hecho.columnas, fks: hecho.fks, checks: hecho.checks, uniques: hecho.uniques,
       renombradaDe: hecho.renombradaDe, modificadaPor: hecho.modificadaPor,
       archivos,
@@ -351,9 +473,15 @@ function buildTables() {
 }
 
 /**
+<<<<<<< Updated upstream
  * Une cada entidad con su tabla real. Si la tabla no existe tras aplicar las
  * migraciones, la entidad queda marcada como huerfana en vez de generar una
  * arista hacia un nodo inexistente: es un hallazgo, no un enlace roto.
+=======
+ * Une cada entidad con su tabla, ahora que el esquema resultante ya se conoce.
+ * Si la tabla no existe, la entidad queda marcada como huerfana en vez de
+ * generar una arista hacia un nodo inexistente.
+>>>>>>> Stashed changes
  */
 function linkEntitiesToTables() {
   let huerfanas = 0;
@@ -376,7 +504,12 @@ function linkEntitiesToTables() {
 
 // ====================================================== 4. API + SERVICE + MODULE
 
+<<<<<<< Updated upstream
 const permisosIndex = new Map();
+=======
+const permisosIndex = new Map(); // codigo -> Set(nodeIds)
+
+>>>>>>> Stashed changes
 function notePermiso(code, nodeId) {
   if (!permisosIndex.has(code)) permisosIndex.set(code, new Set());
   permisosIndex.get(code).add(nodeId);
@@ -391,6 +524,10 @@ function buildBackendCode() {
   const services = files.filter((p) => p.endsWith('.service.ts'));
   const modules = files.filter((p) => p.endsWith('.module.ts'));
 
+<<<<<<< Updated upstream
+=======
+  // --- COMPONENT: modulos NestJS
+>>>>>>> Stashed changes
   for (const f of modules) {
     const mod = moduleOf(f);
     const src = read(f);
@@ -408,6 +545,10 @@ function buildBackendCode() {
     addEdge(id, 'belongs_to', idDomain(DOMAIN_OF_MODULE[mod] ?? mod));
   }
 
+<<<<<<< Updated upstream
+=======
+  // --- SERVICE
+>>>>>>> Stashed changes
   const serviceIdByClass = new Map();
   for (const f of services) {
     const mod = moduleOf(f);
@@ -451,6 +592,10 @@ function buildBackendCode() {
     delete n._injected;
   }
 
+<<<<<<< Updated upstream
+=======
+  // --- API
+>>>>>>> Stashed changes
   for (const f of controllers) {
     const mod = moduleOf(f);
     const src = read(f);
@@ -459,6 +604,10 @@ function buildBackendCode() {
     const id = `api--${slug(mod)}-${slug(basename(f).replace(/\.controller\.ts$/, ''))}`;
     const dominio = DOMAIN_OF_MODULE[mod] ?? slug(mod);
 
+<<<<<<< Updated upstream
+=======
+    // rutas: verbo + subruta + permisos declarados en el bloque del metodo
+>>>>>>> Stashed changes
     const rutas = [];
     const verbRe = /@(Get|Post|Put|Patch|Delete)\(\s*'?([^')]*)'?\s*\)([\s\S]{0,400}?)(?=@(?:Get|Post|Put|Patch|Delete)\(|\n\}\s*$)/g;
     for (const m of src.matchAll(verbRe)) {
@@ -483,6 +632,10 @@ function buildBackendCode() {
     });
     addEdge(id, 'belongs_to', idDomain(dominio));
 
+<<<<<<< Updated upstream
+=======
+    // exposes -> servicios inyectados en el constructor
+>>>>>>> Stashed changes
     for (const [, svcCls] of src.matchAll(/private\s+readonly\s+\w+:\s*(\w*Service)/g)) {
       const to = serviceIdByClass.get(svcCls);
       if (to) addEdge(id, 'exposes', to);
@@ -503,6 +656,10 @@ function buildFrontend() {
     const cleanRoute = route === '/.' ? '/' : route;
     const seg = cleanRoute.split('/').filter((s) => s && s !== 'dashboard' && !s.startsWith('['));
     const crudo = seg.length ? slug(seg[0]) : 'seguridad';
+<<<<<<< Updated upstream
+=======
+    // resolver a un DOMAIN que exista: slug de modulo -> modulo NestJS -> raiz de ruta
+>>>>>>> Stashed changes
     const dominio = nodes.has(idDomain(crudo)) ? crudo
       : (DOMAIN_OF_MODULE[crudo] ?? DOMAIN_OF_ROUTE[crudo] ?? 'seguridad');
     const id = `screen--${slug(cleanRoute) || 'raiz'}`;
@@ -512,7 +669,12 @@ function buildFrontend() {
     permisos.forEach((p) => notePermiso(p, id));
 
     addNode({
+<<<<<<< Updated upstream
       id, tipo: 'SCREEN', nombre: cleanRoute, nivel: 'L1', dominio,
+=======
+      id, tipo: 'SCREEN', nombre: cleanRoute, nivel: 'L1',
+      dominio: nodes.has(idDomain(dominio)) ? dominio : (DOMAIN_OF_MODULE[dominio] ?? dominio),
+>>>>>>> Stashed changes
       resumen: `Pantalla ${cleanRoute}${llamadas.length ? `, consume ${llamadas.length} endpoint(s).` : '.'}`,
       capa: 'frontend',
       ruta: cleanRoute, llamadas, permisos,
@@ -522,6 +684,7 @@ function buildFrontend() {
     addEdge(id, 'belongs_to', idDomain(dominio));
   }
 
+<<<<<<< Updated upstream
   // COMPONENT: helpers de frontend/src/lib y componentes compartidos
   for (const f of [...walk(join(REPO, 'frontend/src/lib'), (p) => p.endsWith('.ts')),
                    ...walk(join(REPO, 'frontend/src/app/components'), (p) => p.endsWith('.tsx'))]) {
@@ -539,6 +702,8 @@ function buildFrontend() {
     });
   }
 
+=======
+>>>>>>> Stashed changes
   // SCREEN --uses--> COMPONENT segun los imports de @/lib y @/app/components
   for (const n of nodes.values()) {
     if (n.tipo !== 'SCREEN') continue;
@@ -559,6 +724,26 @@ function buildFrontend() {
       if (hit) addEdge(n.id, 'calls', hit.id);
     }
   }
+<<<<<<< Updated upstream
+=======
+
+  // COMPONENT: helpers de frontend/src/lib y componentes compartidos
+  for (const f of [...walk(join(REPO, 'frontend/src/lib'), (p) => p.endsWith('.ts')),
+                   ...walk(join(REPO, 'frontend/src/app/components'), (p) => p.endsWith('.tsx'))]) {
+    const src = read(f);
+    const base = basename(f).replace(/\.(ts|tsx)$/, '');
+    const id = `component--front-${slug(base)}`;
+    const exports = [...src.matchAll(/export (?:async )?(?:function|const|type|interface) (\w+)/g)].map((m) => m[1]);
+    addNode({
+      id, tipo: 'COMPONENT', nombre: base, nivel: 'L2',
+      dominio: nodes.has(idDomain(base)) ? slug(base) : undefined,
+      resumen: docCommentBefore(src, 0) || `Helper de frontend "${base}" (${exports.length} exportaciones).`,
+      capa: 'frontend', exports,
+      archivos: [rel(f)],
+      terminos: terms(base, ...exports.slice(0, 20)),
+    });
+  }
+>>>>>>> Stashed changes
   log(`  SCREEN   ${pages.length}`);
 }
 
@@ -569,7 +754,11 @@ function buildConfiguration() {
   if (existsSync(f)) {
     const src = read(f);
     const defs = [...src.matchAll(/d\(\{([^}]*?)\}\)/g)].map(([, body]) => {
+<<<<<<< Updated upstream
       const g = (k) => (new RegExp(`${k}:\\s*'([^']*)'`).exec(body) ?? [, null])[1];
+=======
+      const g = (k, q = "'") => (new RegExp(`${k}:\\s*${q}([^${q}]*)${q}`).exec(body) ?? [, null])[1];
+>>>>>>> Stashed changes
       const raw = (k) => (new RegExp(`${k}:\\s*([^,}]+)`).exec(body) ?? [, null])[1];
       return {
         key: g('key'), nombre: g('nombre'), categoria: g('categoria'),
@@ -598,6 +787,10 @@ function buildConfiguration() {
     log(`  CONFIG   ${defs.length} claves en ${porCategoria.size} categorias`);
   }
 
+<<<<<<< Updated upstream
+=======
+  // Configuracion de infraestructura: conexion a datos
+>>>>>>> Stashed changes
   const ds = join(REPO, 'backend/src/core/database/data-source-options.ts');
   if (existsSync(ds)) {
     const src = read(ds);
@@ -656,6 +849,10 @@ function buildCurated() {
       archivos: Array.isArray(data.archivos) ? data.archivos : (data.archivos ? [data.archivos] : []),
       terminos: [...new Set([...(Array.isArray(data.terminos) ? data.terminos : []),
         ...terms(data.nombre, data.resumen)])],
+<<<<<<< Updated upstream
+=======
+      _curatedPath: rel(f),
+>>>>>>> Stashed changes
     });
     for (const e of data.edges ?? []) {
       const pair = Array.isArray(e) ? e : String(e).replace(/^\[|\]$/g, '').split(',').map((s) => s.trim());
@@ -693,8 +890,15 @@ function nodeToMarkdown(n) {
   if (outEdges.length) fm.push('edges:', ...outEdges.map((e) => `  - [${e.tipo}, ${e.to}]`));
   if (n.terminos?.length) push('terminos', `[${n.terminos.slice(0, 40).join(', ')}]`);
 
+<<<<<<< Updated upstream
   const out = [`---`, ...fm, `---`, ``, `# ${n.nombre}`, ``];
   if (n.resumen) out.push(n.resumen, ``);
+=======
+  // ---- cuerpo
+  const out = [`---`, ...fm, `---`, ``, `# ${n.nombre}`, ``];
+  if (n.resumen) out.push(n.resumen, ``);
+
+>>>>>>> Stashed changes
   if (n.curado && n.cuerpo) out.push(n.cuerpo, ``);
 
   if (n.tipo === 'ENTITY') {
@@ -733,7 +937,11 @@ function nodeToMarkdown(n) {
     out.push(`- **Prefijo:** \`${n.prefijo}\``);
     if (n.rutas?.length) {
       out.push(``, `## Rutas`, ``, `| Verbo | Ruta | Permiso exigido |`, `|---|---|---|`);
+<<<<<<< Updated upstream
       for (const r of n.rutas) out.push(`| ${r.verbo.toUpperCase()} | \`${r.ruta}\` | ${r.permisos.length ? r.permisos.map((p) => `\`${p}\``).join(' o ') : '—'} |`);
+=======
+      for (const r of n.rutas) out.push(`| ${r.verbo.toUpperCase()} | \`${r.ruta}\` | ${r.permisos.length ? r.permisos.map((p) => `\`${p}\``).join(' o ') : '—' } |`);
+>>>>>>> Stashed changes
     }
   }
 
@@ -767,6 +975,10 @@ function nodeToMarkdown(n) {
     for (const a of n.archivos) out.push(`- \`${a}\``);
   }
 
+<<<<<<< Updated upstream
+=======
+  // Relaciones legibles + wikilinks (para que el grafo de Obsidian coincida)
+>>>>>>> Stashed changes
   if (outEdges.length) {
     out.push(``, `## Relaciones`, ``);
     for (const e of outEdges) {
@@ -793,12 +1005,20 @@ function write() {
     mkdirSync(d, { recursive: true });
   }
 
+<<<<<<< Updated upstream
+=======
+  // nodos, agrupados por tipo
+>>>>>>> Stashed changes
   for (const n of nodes.values()) {
     const dir = join(NODES_DIR, n.tipo.toLowerCase());
     mkdirSync(dir, { recursive: true });
     writeFileSync(join(dir, `${n.id}.md`), nodeToMarkdown(n) + '\n', 'utf8');
   }
 
+<<<<<<< Updated upstream
+=======
+  // aristas
+>>>>>>> Stashed changes
   const seen = new Set();
   const unique = edges.filter((e) => {
     const k = `${e.from}|${e.tipo}|${e.to}`;
@@ -812,6 +1032,10 @@ function write() {
   const porTipo = {};
   for (const e of unique) porTipo[e.tipo] = (porTipo[e.tipo] ?? 0) + 1;
 
+<<<<<<< Updated upstream
+=======
+  // --- indices
+>>>>>>> Stashed changes
   const list = [...nodes.values()].map((n) => ({
     id: n.id, tipo: n.tipo, nombre: n.nombre, dominio: n.dominio ?? null,
     nivel: n.nivel, resumen: n.resumen ?? '',
@@ -825,7 +1049,11 @@ function write() {
     ...(n.ruta ? { ruta: n.ruta } : {}),
     ...(n.permisos?.length ? { permisos: n.permisos } : {}),
   }));
+<<<<<<< Updated upstream
   writeFileSync(join(INDEXES_DIR, 'nodes.json'), JSON.stringify(list), 'utf8');
+=======
+  writeFileSync(join(INDEXES_DIR, 'nodes.json'), JSON.stringify(list, null, 0), 'utf8');
+>>>>>>> Stashed changes
 
   const byType = {};
   const byDomain = {};
@@ -836,14 +1064,27 @@ function write() {
   writeFileSync(join(INDEXES_DIR, 'by-type.json'), JSON.stringify(byType, null, 1), 'utf8');
   writeFileSync(join(INDEXES_DIR, 'by-domain.json'), JSON.stringify(byDomain, null, 1), 'utf8');
 
+<<<<<<< Updated upstream
   const caps = {};
   for (const n of list) for (const t of n.terminos) (caps[t] ??= []).push(n.id);
   writeFileSync(join(INDEXES_DIR, 'capabilities.json'), JSON.stringify(caps), 'utf8');
 
+=======
+  // indice invertido termino -> nodos
+  const caps = {};
+  for (const n of list) for (const t of n.terminos) (caps[t] ??= []).push(n.id);
+  writeFileSync(join(INDEXES_DIR, 'capabilities.json'), JSON.stringify(caps, null, 0), 'utf8');
+
+  // archivo -> nodos (para "quien toca este archivo")
+>>>>>>> Stashed changes
   const byFile = {};
   for (const n of list) for (const f of n.archivos) (byFile[f] ??= []).push(n.id);
   writeFileSync(join(INDEXES_DIR, 'files.json'), JSON.stringify(byFile, null, 1), 'utf8');
 
+<<<<<<< Updated upstream
+=======
+  // tabla -> entidad + dominio + migracion
+>>>>>>> Stashed changes
   const tables = {};
   for (const n of nodes.values()) {
     if (n.tipo !== 'TABLE') continue;
@@ -858,6 +1099,7 @@ function write() {
   }
   writeFileSync(join(INDEXES_DIR, 'tables.json'), JSON.stringify(tables, null, 1), 'utf8');
 
+<<<<<<< Updated upstream
   const perms = {};
   for (const [code, ids] of [...permisosIndex].sort()) {
     perms[code] = { modulo: code.split(':')[0], exigidoPor: [...ids] };
@@ -868,6 +1110,21 @@ function write() {
     tablasSinEntidad: Object.entries(tables).filter(([, v]) => !v.entidad).map(([k]) => k),
     entidadesSinTabla: [...nodes.values()].filter((n) => n.tipo === 'ENTITY' && n.huerfana)
       .map((n) => `${n.nombre} -> ${n.tabla}`),
+=======
+  // permisos -> quien los exige
+  const perms = {};
+  for (const [code, ids] of [...permisosIndex].sort()) {
+    const [modulo] = code.split(':');
+    perms[code] = { modulo, exigidoPor: [...ids] };
+  }
+  writeFileSync(join(INDEXES_DIR, 'permissions.json'), JSON.stringify(perms, null, 1), 'utf8');
+
+  // tablas sin entidad y entidades sin tabla: los huecos importan
+  const huecos = {
+    tablasSinEntidad: Object.entries(tables).filter(([, v]) => !v.entidad).map(([k]) => k),
+    entidadesSinTabla: [...nodes.values()].filter((n) => n.tipo === 'ENTITY' &&
+      !nodes.has(idTable(...String(n.tabla).split('.')))).map((n) => `${n.nombre} -> ${n.tabla}`),
+>>>>>>> Stashed changes
     dominiosSinPantalla: [...nodes.values()].filter((n) => n.tipo === 'DOMAIN' &&
       ![...nodes.values()].some((s) => s.tipo === 'SCREEN' && s.dominio === n.dominio)).map((n) => n.nombre),
     dominiosSinApi: [...nodes.values()].filter((n) => n.tipo === 'DOMAIN' &&

@@ -31,9 +31,12 @@ en el codigo**, no una propuesta a futuro.
   cada archivo. Cambiar la paleta es un find-and-replace, no un cambio de token.
 - Riesgo real de deriva visual si alguien inventa un color parecido en vez de
   copiar el exacto. De ahi [[rule--sin-clases-css-nuevas]].
+<<<<<<< Updated upstream
 - Cada pantalla nueva paga el costo de reimplementar patrones (tablas, formularios,
   badges) que una libreria daria hechos. Con ~56 pantallas, el patron ya esta
   establecido: copiar de una vecina es mas rapido y mas seguro que inventar.
+=======
+>>>>>>> Stashed changes
 
 ## Tension no resuelta (importante al tocar apariencia)
 

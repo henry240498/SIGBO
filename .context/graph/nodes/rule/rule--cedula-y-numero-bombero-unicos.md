@@ -40,12 +40,18 @@ CONSTRAINT UQ_bomberos_numero UNIQUE (numero_bombero),
 
 ## Relacionado
 
+<<<<<<< Updated upstream
 `personal.historial_codigo` guarda los codigos que una persona tuvo antes. Al cambiar
 el numero de bombero de alguien, ese historial es lo que permite encontrarlo por su
 codigo antiguo — importante porque el marcador biometrico importa por codigo
 (ver [[workflow--importacion-marcador]]).
 
 Ver tambien [[rule--reglas-duplicadas-bd-y-codigo]].
+=======
+`personal.historial_codigo` guarda los codigos que una persona tuvo antes. Al
+cambiar el numero de bombero de alguien, ese historial es lo que permite encontrarlo
+por su codigo antiguo. Ver [[rule--reglas-duplicadas-bd-y-codigo]].
+>>>>>>> Stashed changes
 
 
 ## Archivos
