@@ -4,7 +4,6 @@ import { GUID_REGEX, GUID_REGEX_MENSAJE } from '../../../shared/utils/guid';
 
 export class ActualizarConfiguracionOrdenDto {
   @ApiProperty({ required: false }) @IsOptional() @IsString() tituloDocumento?: string;
-  @ApiProperty({ required: false }) @IsOptional() @IsString() textoHeaderInstitucional?: string;
   @ApiProperty({ required: false }) @IsOptional() @IsString() textoIntroPlantilla?: string;
   @ApiProperty({ required: false }) @IsOptional() @IsString() reglaTextoOficial?: string;
   @ApiProperty({ required: false }) @IsOptional() @IsString() reglaTextoChofer?: string;

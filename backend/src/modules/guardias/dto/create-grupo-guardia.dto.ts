@@ -22,6 +22,13 @@ export class CreateGrupoGuardiaDto {
   @Min(1)
   cicloRotacionDias?: number;
 
+  @ApiProperty({ required: false, description: 'CSV de LUN,MAR,MIE,JUE,VIE,SAB,DOM; restringe el grupo a esos días' })
+  @IsOptional()
+  @Matches(/^(LUN|MAR|MIE|JUE|VIE|SAB|DOM)(,(LUN|MAR|MIE|JUE|VIE|SAB|DOM))*$/, {
+    message: 'debe ser una lista separada por comas de LUN,MAR,MIE,JUE,VIE,SAB,DOM',
+  })
+  diasSemanaCsv?: string;
+
   @ApiProperty({ required: false }) @IsOptional() @IsInt() @Min(0) cantidadMinima?: number;
   @ApiProperty({ required: false }) @IsOptional() @IsInt() @Min(0) cantidadMaxima?: number;
   @ApiProperty({ required: false }) @IsOptional() @IsInt() @Min(0) cantidadOficiales?: number;
@@ -45,6 +52,13 @@ export class UpdateGrupoGuardiaDto {
   @IsInt()
   @Min(1)
   cicloRotacionDias?: number | null;
+
+  @ApiProperty({ required: false, nullable: true })
+  @IsOptional()
+  @Matches(/^(LUN|MAR|MIE|JUE|VIE|SAB|DOM)(,(LUN|MAR|MIE|JUE|VIE|SAB|DOM))*$/, {
+    message: 'debe ser una lista separada por comas de LUN,MAR,MIE,JUE,VIE,SAB,DOM',
+  })
+  diasSemanaCsv?: string | null;
 
   @ApiProperty({ required: false, nullable: true }) @IsOptional() @IsInt() @Min(0) cantidadMinima?: number | null;
   @ApiProperty({ required: false, nullable: true }) @IsOptional() @IsInt() @Min(0) cantidadMaxima?: number | null;

@@ -20,6 +20,7 @@ const TABS = [
   { href: '/dashboard/organizacion/designaciones', label: 'Designaciones' },
   { href: '/dashboard/organizacion/ascensos', label: 'Ascensos' },
   { href: '/dashboard/organizacion/parametros', label: 'Parámetros' },
+  { href: '/dashboard/organizacion/documentos', label: 'Configuración de Documentos' },
   { href: '/dashboard/organizacion/reportes', label: 'Reportes' },
 ];
 

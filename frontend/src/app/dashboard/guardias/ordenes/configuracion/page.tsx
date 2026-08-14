@@ -15,7 +15,6 @@ export default function ConfiguracionOrdenesPage() {
   const [mensaje, setMensaje] = useState<string | null>(null);
 
   const [tituloDocumento, setTituloDocumento] = useState('');
-  const [textoHeaderInstitucional, setTextoHeaderInstitucional] = useState('');
   const [textoIntroPlantilla, setTextoIntroPlantilla] = useState('');
   const [reglaTextoOficial, setReglaTextoOficial] = useState('');
   const [reglaTextoChofer, setReglaTextoChofer] = useState('');
@@ -30,7 +29,6 @@ export default function ConfiguracionOrdenesPage() {
     Promise.all([cargarConfiguracionOrdenes(), cargarCatalogo('/organizacion/cargos')])
       .then(([config, cargosData]) => {
         setTituloDocumento(config.tituloDocumento ?? '');
-        setTextoHeaderInstitucional(config.textoHeaderInstitucional ?? '');
         setTextoIntroPlantilla(config.textoIntroPlantilla ?? '');
         setReglaTextoOficial(config.reglaTextoOficial ?? '');
         setReglaTextoChofer(config.reglaTextoChofer ?? '');
@@ -56,7 +54,6 @@ export default function ConfiguracionOrdenesPage() {
     try {
       await actualizarConfiguracionOrdenes({
         tituloDocumento,
-        textoHeaderInstitucional: textoHeaderInstitucional || undefined,
         textoIntroPlantilla: textoIntroPlantilla || undefined,
         reglaTextoOficial: reglaTextoOficial || undefined,
         reglaTextoChofer: reglaTextoChofer || undefined,
@@ -95,17 +92,20 @@ export default function ConfiguracionOrdenesPage() {
 
       <form onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <h3 style={{ fontSize: 14 }}>Encabezado y titulo</h3>
+          <h3 style={{ fontSize: 14 }}>Titulo</h3>
           <div>
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>
               Titulo del documento (placeholders: {'{{numero}}'} y {'{{anio}}'})
             </label>
             <input className="input-field" value={tituloDocumento} onChange={(e) => setTituloDocumento(e.target.value)} />
           </div>
-          <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Texto institucional de encabezado</label>
-            <textarea className="input-field" rows={3} value={textoHeaderInstitucional} onChange={(e) => setTextoHeaderInstitucional(e.target.value)} />
-          </div>
+          <p style={{ fontSize: 12, color: '#94a3b8' }}>
+            El membrete (nombre, logos, direccion, contacto) ahora se configura en un solo lugar para todo SIGBO —{' '}
+            <a href="/dashboard/organizacion/documentos" style={{ color: '#60a5fa' }}>
+              Organizacion → Configuracion de Documentos
+            </a>
+            .
+          </p>
         </section>
 
         <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>

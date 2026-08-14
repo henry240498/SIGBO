@@ -150,7 +150,10 @@ export class CreateBomberoDto {
   @ApiProperty({ required: false }) @IsOptional() @IsString() pasaporte?: string;
   @ApiProperty({ required: false }) @IsOptional() @IsString() fechaIncorporacion?: string;
   @ApiProperty({ required: false }) @IsOptional() @IsString() fechaJuramento?: string;
-  @ApiProperty({ required: false }) @IsOptional() @IsString() firmaDigitalUrl?: string;
+  /* firmaDigitalUrl y autorizadoFirmaDigital NO se editan por este DTO
+     generico: tienen endpoints dedicados en BomberosController
+     (PUT/DELETE .../firma-digital, PATCH .../autorizacion-firma) gateados
+     por el permiso especifico personal:gestionar_firma_digital. */
 
   /* --- Disponibilidad para Guardias (distinto de Servicios: un bombero
      puede participar de servicios aunque no realice guardias) --- */

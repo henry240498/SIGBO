@@ -10,6 +10,7 @@ import {
   Guardia,
   GrupoGuardia,
   GrupoGuardiaMiembro,
+  IdentidadInstitucional,
   OrdenGuardia,
   OrdenGuardiaModificacion,
   Rango,
@@ -23,6 +24,9 @@ import { OrdenGuardiaSnapshot, PersonaResumen } from './types/orden-guardia-snap
 import { generarOrdenGuardiaPdf } from '../../shared/utils/orden-guardia-pdf';
 import { generarOrdenGuardiaDocx } from '../../shared/utils/orden-guardia-docx';
 import { guardarBuffer } from '../../shared/utils/almacenamiento';
+import { resolverFirmante } from '../../shared/utils/firmantes-institucionales';
+
+type LineaDestacada = { texto: string; tipo: 'SUBTITULO' | 'DISTINCION' | 'OTRO'; visible: boolean; orden: number };
 
 const CARPETA_ORDENES = 'ordenes-guardia';
 
@@ -65,6 +69,7 @@ export class OrdenesGuardiaService {
     @InjectRepository(Cargo) private readonly cargoRepo: Repository<Cargo>,
     @InjectRepository(Designacion) private readonly designacionRepo: Repository<Designacion>,
     @InjectRepository(OrdenGuardiaModificacion) private readonly modificacionRepo: Repository<OrdenGuardiaModificacion>,
+    @InjectRepository(IdentidadInstitucional) private readonly identidadRepo: Repository<IdentidadInstitucional>,
     @InjectDataSource() private readonly dataSource: DataSource,
     private readonly auditoriaService: AuditoriaService,
     private readonly configuracionService: OrdenGuardiaConfiguracionService,
@@ -388,7 +393,9 @@ export class OrdenesGuardiaService {
         telefono: b.telefonoPrincipal ?? null,
       }));
 
-    // --- firmantes: quien ocupa hoy cada cargo configurado ---
+    // --- firmantes: quien ocupa hoy cada cargo configurado, y si SIGBO
+    // puede insertar su firma digital automaticamente (ver
+    // shared/utils/firmantes-institucionales.ts) ---
     const firmantesConfig: Array<[string | null, string | null]> = [
       [config.firmante1CargoId, config.firmante1Etiqueta],
       [config.firmante2CargoId, config.firmante2Etiqueta],
@@ -396,19 +403,19 @@ export class OrdenesGuardiaService {
     const firmantes: OrdenGuardiaSnapshot['firmantes'] = [];
     for (const [cargoId, etiqueta] of firmantesConfig) {
       if (!cargoId) continue;
-      const cargo = await this.cargoRepo.findOne({ where: { id: cargoId } });
-      const designacion = await this.designacionRepo.findOne({ where: { cargoId, estado: 'ACTIVA' } });
-      const bombero = designacion ? await this.bomberoRepo.findOne({ where: { id: designacion.bomberoId } }) : null;
-      const rango = bombero?.rangoId ? await this.rangoRepo.findOne({ where: { id: bombero.rangoId } }) : null;
-      firmantes.push({
-        cargoId,
-        etiquetaCargo: etiqueta || cargo?.nombre || '',
-        bomberoId: bombero?.id ?? null,
-        nombreCompleto: bombero ? `${bombero.nombre} ${bombero.apellido}` : null,
-        rango: rango?.nombre ?? bombero?.rango ?? null,
-        selloUrl: bombero?.firmaDigitalUrl ?? null,
-      });
+      firmantes.push(
+        await resolverFirmante(
+          { cargoRepo: this.cargoRepo, designacionRepo: this.designacionRepo, bomberoRepo: this.bomberoRepo, rangoRepo: this.rangoRepo },
+          cargoId,
+          etiqueta,
+        ),
+      );
     }
+
+    // --- identidad institucional: membrete/datos de contacto centralizados,
+    // reutilizables por cualquier modulo (no propios de Guardias) ---
+    const [identidad] = await this.identidadRepo.find({ take: 1 });
+    const lineasDestacadas: LineaDestacada[] = identidad?.lineasDestacadas ? JSON.parse(identidad.lineasDestacadas) : [];
 
     const nombreMes = NOMBRES_MES[orden.mes - 1] ?? '';
     const textoRenderizado = (config.textoIntroPlantilla ?? '')
@@ -426,9 +433,24 @@ export class OrdenesGuardiaService {
       fechaEmision: orden.fechaEmision,
       generadoEn: new Date().toISOString(),
       institucional: {
-        textoHeader: config.textoHeaderInstitucional ?? '',
-        logoIzquierdaUrl: config.logoIzquierdaUrl,
-        logoDerechaUrl: config.logoDerechaUrl,
+        nombreInstitucion: identidad?.nombreInstitucion ?? '',
+        lineasDestacadas: lineasDestacadas
+          .filter((l) => l.visible)
+          .sort((a, b) => a.orden - b.orden)
+          .map((l) => ({ texto: l.texto, tipo: l.tipo })),
+        direccion: identidad?.mostrarDireccion ? identidad.direccion : null,
+        telefono: identidad?.mostrarTelefono ? identidad.telefono : null,
+        email: identidad?.mostrarEmail ? identidad.email : null,
+        sitioWeb: identidad?.mostrarSitioWeb ? identidad.sitioWeb : null,
+        personeriaJuridica: identidad?.mostrarPersoneria ? identidad.personeriaJuridica : null,
+        fechaFundacion: identidad?.mostrarFechaFundacion ? identidad.fechaFundacion : null,
+        logoIzquierdaUrl: identidad?.mostrarLogoIzquierda ? identidad.logoIzquierdaUrl : null,
+        logoDerechaUrl: identidad?.mostrarLogoDerecha ? identidad.logoDerechaUrl : null,
+        piePaginaInstitucional: {
+          texto: identidad?.textoPiePagina ?? null,
+          mostrarNumeroPagina: identidad?.mostrarNumeroPagina ?? false,
+          mostrarGeneradoSigbo: identidad?.mostrarGeneradoSigbo ?? false,
+        },
       },
       introduccion: {
         textoRenderizado,

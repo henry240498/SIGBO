@@ -198,6 +198,11 @@ export class Bombero {
   @Column({ type: 'nvarchar', nullable: true })
   firmaDigitalUrl: string | null;
 
+  /** Distinto de "tiene firmaDigitalUrl cargada": esto controla si SIGBO
+   * puede insertar automaticamente esa imagen en documentos oficiales. */
+  @Column({ type: 'bit', default: false })
+  autorizadoFirmaDigital: boolean;
+
   /* --- Disponibilidad para Guardias (no confundir con Servicios: un
      bombero puede participar de servicios aunque no realice guardias) --- */
   @Column({ type: 'bit', default: true })

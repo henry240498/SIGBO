@@ -42,6 +42,7 @@ export class GruposGuardiaService {
         estado: (dto.estado as GrupoGuardia['estado']) ?? 'ACTIVO',
         observaciones: dto.observaciones ?? null,
         cicloRotacionDias: dto.cicloRotacionDias ?? null,
+        diasSemanaCsv: dto.diasSemanaCsv ?? null,
         cantidadMinima: dto.cantidadMinima ?? null,
         cantidadMaxima: dto.cantidadMaxima ?? null,
         cantidadOficiales: dto.cantidadOficiales ?? null,

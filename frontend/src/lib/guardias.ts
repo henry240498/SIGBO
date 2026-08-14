@@ -60,6 +60,7 @@ export interface GrupoGuardia {
   observaciones: string | null;
   creadoEn: string;
   cicloRotacionDias: number | null;
+  diasSemanaCsv: string | null;
   cantidadMinima: number | null;
   cantidadMaxima: number | null;
   cantidadOficiales: number | null;
@@ -726,7 +727,19 @@ export interface OrdenGuardiaSnapshot {
   periodoHasta: string;
   fechaEmision: string;
   generadoEn: string;
-  institucional: { textoHeader: string; logoIzquierdaUrl: string | null; logoDerechaUrl: string | null };
+  institucional: {
+    nombreInstitucion: string;
+    lineasDestacadas: Array<{ texto: string; tipo: 'SUBTITULO' | 'DISTINCION' | 'OTRO' }>;
+    direccion: string | null;
+    telefono: string | null;
+    email: string | null;
+    sitioWeb: string | null;
+    personeriaJuridica: string | null;
+    fechaFundacion: string | null;
+    logoIzquierdaUrl: string | null;
+    logoDerechaUrl: string | null;
+    piePaginaInstitucional: { texto: string | null; mostrarNumeroPagina: boolean; mostrarGeneradoSigbo: boolean };
+  };
   introduccion: { textoRenderizado: string; reglaOficialTexto: string; reglaChoferTexto: string };
   gruposRotativos: Array<{
     grupoId: string;
@@ -758,16 +771,14 @@ export interface OrdenGuardiaSnapshot {
     bomberoId: string | null;
     nombreCompleto: string | null;
     rango: string | null;
-    selloUrl: string | null;
+    firmaDigitalUrl: string | null;
+    advertencia: string | null;
   }>;
 }
 
 export interface OrdenGuardiaConfiguracion {
   id: string;
   tituloDocumento: string;
-  textoHeaderInstitucional: string | null;
-  logoIzquierdaUrl: string | null;
-  logoDerechaUrl: string | null;
   textoIntroPlantilla: string | null;
   reglaTextoOficial: string | null;
   reglaTextoChofer: string | null;

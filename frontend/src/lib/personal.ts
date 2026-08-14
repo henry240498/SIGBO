@@ -1,4 +1,4 @@
-import { apiFetch } from './api';
+import { apiFetch, API_ORIGIN, obtenerSesion } from './api';
 
 /**
  * Reglas GLOBALES de SIGBO para trabajar con Personal (bomberos). Cualquier
@@ -117,5 +117,48 @@ export interface Catalogo {
 export async function cargarCatalogo(path: string): Promise<Catalogo[]> {
   const res = await apiFetch(`${path}?estado=ACTIVO`);
   if (!res.ok) return [];
+  return res.json();
+}
+
+/* ------------------------------------------------------------------ */
+/* Firma digital -- endpoints dedicados, distintos del PATCH generico   */
+/* ------------------------------------------------------------------ */
+
+async function mensajeErrorFirma(res: Response, porDefecto: string): Promise<string> {
+  const body = await res.json().catch(() => ({}));
+  return Array.isArray(body.message) ? body.message.join(', ') : body.message ?? porDefecto;
+}
+
+/** Multipart: apiFetch fuerza Content-Type: application/json, incompatible
+ * con el boundary de un form-data -- mismo patron manual que
+ * seguridad/apariencia/page.tsx. */
+export async function subirFirmaDigital(bomberoId: string, archivo: File): Promise<unknown> {
+  const formData = new FormData();
+  formData.append('archivo', archivo);
+  const sesion = obtenerSesion();
+  const headers: HeadersInit = {};
+  if (sesion) headers['Authorization'] = `Bearer ${sesion.accessToken}`;
+
+  const res = await fetch(`${API_ORIGIN}/api/v1/personal/bomberos/${bomberoId}/firma-digital`, {
+    method: 'PUT',
+    headers,
+    body: formData,
+  });
+  if (!res.ok) throw new Error(await mensajeErrorFirma(res, 'No se pudo subir la firma digital'));
+  return res.json();
+}
+
+export async function eliminarFirmaDigital(bomberoId: string): Promise<unknown> {
+  const res = await apiFetch(`/personal/bomberos/${bomberoId}/firma-digital`, { method: 'DELETE' });
+  if (!res.ok) throw new Error(await mensajeErrorFirma(res, 'No se pudo eliminar la firma digital'));
+  return res.json();
+}
+
+export async function cambiarAutorizacionFirma(bomberoId: string, autorizado: boolean): Promise<unknown> {
+  const res = await apiFetch(`/personal/bomberos/${bomberoId}/autorizacion-firma`, {
+    method: 'PATCH',
+    body: JSON.stringify({ autorizado }),
+  });
+  if (!res.ok) throw new Error(await mensajeErrorFirma(res, 'No se pudo actualizar la autorizacion de firma digital'));
   return res.json();
 }

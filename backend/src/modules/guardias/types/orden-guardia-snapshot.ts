@@ -21,10 +21,23 @@ export interface OrdenGuardiaSnapshot {
   fechaEmision: string;
   generadoEn: string;
 
+  /** Membrete/identidad institucional -- sourced de la configuracion central
+   * `organizacion.identidad_institucional` (motor documental reutilizable
+   * por cualquier modulo, no propio de Guardias). Cada campo es null si la
+   * institucion eligio no mostrarlo (mostrar_* en false), no si falta el
+   * dato -- la vista/renderer nunca decide por su cuenta que mostrar. */
   institucional: {
-    textoHeader: string;
+    nombreInstitucion: string;
+    lineasDestacadas: Array<{ texto: string; tipo: 'SUBTITULO' | 'DISTINCION' | 'OTRO' }>;
+    direccion: string | null;
+    telefono: string | null;
+    email: string | null;
+    sitioWeb: string | null;
+    personeriaJuridica: string | null;
+    fechaFundacion: string | null;
     logoIzquierdaUrl: string | null;
     logoDerechaUrl: string | null;
+    piePaginaInstitucional: { texto: string | null; mostrarNumeroPagina: boolean; mostrarGeneradoSigbo: boolean };
   };
 
   introduccion: {
@@ -72,6 +85,7 @@ export interface OrdenGuardiaSnapshot {
     bomberoId: string | null;
     nombreCompleto: string | null;
     rango: string | null;
-    selloUrl: string | null;
+    firmaDigitalUrl: string | null;
+    advertencia: string | null;
   }>;
 }

@@ -84,3 +84,4 @@ export * from './categoria-denuncia.entity';
 export * from './denuncia.entity';
 export * from './historial-estado-denuncia.entity';
 export * from './evidencia-denuncia.entity';
+export * from './identidad-institucional.entity';

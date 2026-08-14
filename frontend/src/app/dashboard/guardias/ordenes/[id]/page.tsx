@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { API_ORIGIN, obtenerSesion } from '@/lib/api';
+import { API_ORIGIN, descargarArchivo, obtenerSesion } from '@/lib/api';
 import {
   OrdenGuardia,
   OrdenGuardiaModificacion,
@@ -85,6 +85,15 @@ export default function DetalleOrdenGuardiaPage() {
     await ejecutar(() => anularOrden(ordenId, motivo.trim()), 'Orden anulada');
   }
 
+  async function descargarPdf() {
+    if (!orden?.archivoPdfUrl) return;
+    try {
+      await descargarArchivo(orden.archivoPdfUrl, `orden-guardia-${orden.numero}-${orden.anio}.pdf`);
+    } catch (err: any) {
+      setError(err.message);
+    }
+  }
+
   if (error && !orden) return <p style={{ color: '#f87171' }}>{error}</p>;
   if (!orden) return <p style={{ color: '#94a3b8' }}>Cargando orden...</p>;
 
@@ -150,8 +159,13 @@ export default function DetalleOrdenGuardiaPage() {
         )}
         {orden.archivoPdfUrl && (
           <a href={`${API_ORIGIN}${orden.archivoPdfUrl}`} target="_blank" rel="noreferrer" className="btn-primary" style={{ textDecoration: 'none', display: 'inline-block' }}>
-            Descargar PDF
+            Visualizar PDF
           </a>
+        )}
+        {orden.archivoPdfUrl && (
+          <button className="btn-primary" style={{ background: '#475569' }} onClick={descargarPdf}>
+            Descargar PDF
+          </button>
         )}
         {orden.archivoDocxUrl && (
           <a href={`${API_ORIGIN}${orden.archivoDocxUrl}`} target="_blank" rel="noreferrer" className="btn-primary" style={{ textDecoration: 'none', display: 'inline-block' }}>
@@ -173,7 +187,17 @@ function VistaPreviaOrden({ snapshot }: { snapshot: OrdenGuardiaSnapshot }) {
   return (
     <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <h3 style={{ fontSize: 15 }}>Vista previa</h3>
-      {snapshot.institucional.textoHeader && <p style={{ fontSize: 11, color: '#94a3b8', whiteSpace: 'pre-wrap' }}>{snapshot.institucional.textoHeader}</p>}
+      <div style={{ textAlign: 'center', fontSize: 11, color: '#94a3b8' }}>
+        {snapshot.institucional.nombreInstitucion && (
+          <p style={{ fontWeight: 700, fontSize: 14, color: '#e2e8f0', marginBottom: 4 }}>{snapshot.institucional.nombreInstitucion}</p>
+        )}
+        {snapshot.institucional.lineasDestacadas.map((l, i) => (
+          <p key={i} style={{ fontWeight: 600, margin: 0 }}>{l.texto}</p>
+        ))}
+        {[snapshot.institucional.direccion, snapshot.institucional.telefono, snapshot.institucional.email, snapshot.institucional.sitioWeb]
+          .filter(Boolean)
+          .map((linea, i) => <p key={i} style={{ margin: 0 }}>{linea}</p>)}
+      </div>
       <p style={{ fontSize: 13, whiteSpace: 'pre-wrap' }}>{snapshot.introduccion.textoRenderizado}</p>
       <p style={{ fontSize: 12, color: '#94a3b8' }}>{snapshot.introduccion.reglaOficialTexto}</p>
       <p style={{ fontSize: 12, color: '#94a3b8' }}>{snapshot.introduccion.reglaChoferTexto}</p>
@@ -238,10 +262,16 @@ function VistaPreviaOrden({ snapshot }: { snapshot: OrdenGuardiaSnapshot }) {
         <div style={{ display: 'flex', gap: 20, marginTop: 10 }}>
           {snapshot.firmantes.map((f, i) => (
             <div key={i} style={{ textAlign: 'center', fontSize: 12, flex: 1 }}>
+              {f.firmaDigitalUrl ? (
+                <div style={{ fontSize: 10, color: '#4ade80', marginBottom: 4 }}>✓ Firma digital se insertara automaticamente</div>
+              ) : (
+                <div style={{ fontSize: 10, color: '#64748b', marginBottom: 4 }}>Espacio para firma manuscrita</div>
+              )}
               <div style={{ borderTop: '1px solid #94a3b8', paddingTop: 4 }}>
                 {f.nombreCompleto ? `${f.rango ? f.rango + ' ' : ''}${f.nombreCompleto}` : '(cargo vacante)'}
               </div>
               <div style={{ color: '#94a3b8' }}>{f.etiquetaCargo}</div>
+              {f.advertencia && <div style={{ color: '#f59e0b', fontSize: 10, marginTop: 4 }}>⚠ {f.advertencia}</div>}
             </div>
           ))}
         </div>
