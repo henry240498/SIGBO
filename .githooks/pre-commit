@@ -1,0 +1,39 @@
+#!/bin/sh
+# Bloquea commits con marcadores de conflicto sin resolver.
+#
+# Motivo: el 2026-08-14 se commitearon 160 archivos con marcadores en .context/,
+# lo que dejo el indice del repositorio inutilizable (los .mjs no parseaban).
+# Ver .context/graph/curated/error/error--context-borrado-del-disco.md
+#
+# Instalar (una vez por clon):
+#   git config core.hooksPath .githooks
+#
+# Saltear deliberadamente en un caso puntual:
+#   git commit --no-verify
+
+archivos=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$archivos" ] && exit 0
+
+conflictivos=""
+for archivo in $archivos; do
+  # Solo el contenido en el indice, no el del disco: es lo que realmente se commitea.
+  if git show ":$archivo" 2>/dev/null | grep -qE '^(<<<<<<< |>>>>>>> |={7}$)'; then
+    conflictivos="$conflictivos $archivo"
+  fi
+done
+
+if [ -n "$conflictivos" ]; then
+  echo ""
+  echo "  Commit bloqueado: hay marcadores de conflicto sin resolver."
+  echo ""
+  for archivo in $conflictivos; do
+    echo "    $archivo"
+  done
+  echo ""
+  echo "  Resolve los conflictos y volve a agregar los archivos."
+  echo "  Si es intencional: git commit --no-verify"
+  echo ""
+  exit 1
+fi
+
+exit 0

@@ -15,7 +15,6 @@ edges:
   - [reads, table--equipos-equipos]
   - [uses, entity--categoria-equipo]
   - [reads, table--equipos-categorias-equipo]
-<<<<<<< Updated upstream
   - [uses, entity--mantenimiento-equipo]
   - [reads, table--equipos-mantenimientos-equipos]
   - [uses, entity--prestamo-equipo]
@@ -25,9 +24,6 @@ edges:
   - [uses, entity--parametro]
   - [reads, table--organizacion-parametros]
 terminos: [equipos, equipo, categoria, mantenimiento, prestamo, vehiculo, parametro]
-=======
-terminos: [equipos, equipo, categoria]
->>>>>>> Stashed changes
 ---
 
 # EquiposService
@@ -37,11 +33,7 @@ Logica de negocio de equipos (modulo equipos).
 
 ## Metodos
 
-<<<<<<< Updated upstream
 `findAll()` · `findOne()` · `create()` · `update()` · `remove()` · `listarMantenimientos()` · `crearMantenimiento()` · `asignarMovil()` · `historial()`
-=======
-`findAll()` · `findOne()` · `create()` · `update()` · `remove()`
->>>>>>> Stashed changes
 
 ## Archivos
 
@@ -55,7 +47,6 @@ Logica de negocio de equipos (modulo equipos).
 - `reads` → [[table--equipos-equipos|equipos.equipos]]
 - `uses` → [[entity--categoria-equipo|CategoriaEquipo]]
 - `reads` → [[table--equipos-categorias-equipo|equipos.categorias_equipo]]
-<<<<<<< Updated upstream
 - `uses` → [[entity--mantenimiento-equipo|MantenimientoEquipo]]
 - `reads` → [[table--equipos-mantenimientos-equipos|equipos.mantenimientos_equipos]]
 - `uses` → [[entity--prestamo-equipo|PrestamoEquipo]]
@@ -64,8 +55,6 @@ Logica de negocio de equipos (modulo equipos).
 - `reads` → [[table--vehiculos-vehiculos|vehiculos.vehiculos]]
 - `uses` → [[entity--parametro|Parametro]]
 - `reads` → [[table--organizacion-parametros|organizacion.parametros]]
-=======
->>>>>>> Stashed changes
 
 ## Referenciado por
 

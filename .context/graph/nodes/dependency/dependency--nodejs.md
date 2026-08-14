@@ -3,11 +3,7 @@ id: dependency--nodejs
 tipo: DEPENDENCY
 nombre: Node.js 24 y PowerShell como entorno de ejecucion
 nivel: L2
-<<<<<<< Updated upstream
 resumen: Node 24 LTS en Windows 10. Los scripts de arranque, instalacion y migracion son PowerShell 5.1, no bash.
-=======
-resumen: Node 24 LTS en Windows 10. Los scripts de arranque, instalacion y migracion son PowerShell, no bash.
->>>>>>> Stashed changes
 archivos:
   - start-sigbo.ps1
   - database/run-migrations.ps1
@@ -17,11 +13,7 @@ terminos: [node, nodejs, 24, powershell, windows, script, arranque, npm, ps1, po
 
 # Node.js 24 y PowerShell como entorno de ejecucion
 
-<<<<<<< Updated upstream
 Node 24 LTS en Windows 10. Los scripts de arranque, instalacion y migracion son PowerShell 5.1, no bash.
-=======
-Node 24 LTS en Windows 10. Los scripts de arranque, instalacion y migracion son PowerShell, no bash.
->>>>>>> Stashed changes
 
 ## Entorno
 
@@ -56,14 +48,9 @@ no surte efecto".
 
 ## Este grafo tambien corre en Node
 
-<<<<<<< Updated upstream
 `build-graph.mjs`, `context.mjs` y `validar.mjs` son ESM sin dependencias, pensados
 para Node 18+. No necesitan Python ni instalar nada. Es deliberado: el indice no debe
 tener requisitos propios mas alla de lo que el proyecto ya usa.
-=======
-`build-graph.mjs` y `context.mjs` son ESM sin dependencias, pensados para Node 18+.
-No necesitan Python ni instalar nada.
->>>>>>> Stashed changes
 
 
 ## Archivos
@@ -74,10 +61,7 @@ No necesitan Python ni instalar nada.
 
 ## Referenciado por
 
-<<<<<<< Updated upstream
 - [[error--context-borrado-del-disco|.context/ desaparecio del disco por estar en .gitignore]] `originates_from` →
-=======
->>>>>>> Stashed changes
 - [[error--start-script-no-reinicia-servicios|start-sigbo.ps1 deja corriendo el proceso viejo si el puerto ya escucha]] `originates_from` →
 
 ---

@@ -37,6 +37,15 @@ Tabla seguridad.configuracion_sistema (10 columnas). Creada en 013_apariencia_lo
 | logo_menu | NVARCHAR(500) |
 | perfil_edicion_libre | BIT |
 
+## Donde se usa
+
+- **Pantallas:** `/`, `/dashboard/seguridad/apariencia`, `/login`
+- **Endpoints:** AparienciaController
+- **Servicios:** AparienciaService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/013_apariencia_login.sql`

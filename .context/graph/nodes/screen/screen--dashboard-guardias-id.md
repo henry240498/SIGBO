@@ -7,7 +7,7 @@ dominio: guardias
 resumen: "Pantalla /dashboard/guardias/[id]."
 ruta: /dashboard/guardias/[id]
 capa: frontend
-permisos: [guardias:asignar, guardias:editar]
+permisos: [guardias:editar, guardias:eliminar, guardias:asignar, guardias:reemplazar]
 archivos:
   - frontend/src/app/dashboard/guardias/[id]/page.tsx
 edges:
@@ -16,7 +16,7 @@ edges:
   - [uses, component--front-personal]
   - [uses, component--front-parametros]
   - [uses, component--front-guardias]
-terminos: [guardias, asignar, editar]
+terminos: [guardias, editar, eliminar, asignar, reemplazar]
 ---
 
 # /dashboard/guardias/[id]
@@ -24,7 +24,7 @@ terminos: [guardias, asignar, editar]
 Pantalla /dashboard/guardias/[id].
 
 - **Ruta:** `/dashboard/guardias/[id]`
-- **Permisos referenciados:** `guardias:asignar`, `guardias:editar`
+- **Permisos referenciados:** `guardias:editar`, `guardias:eliminar`, `guardias:asignar`, `guardias:reemplazar`
 
 ## Archivos
 

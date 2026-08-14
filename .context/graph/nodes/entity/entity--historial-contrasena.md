@@ -21,6 +21,15 @@ Entidad HistorialContrasena, persistida en seguridad.historial_contrasenas.
 - **Tabla:** [[table--seguridad-historial-contrasenas|seguridad.historial_contrasenas]]
 - **Columnas mapeadas:** 2
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/mi-perfil`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Endpoints:** MeController, UsuariosController
+- **Servicios:** UsuariosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/historial-contrasena.entity.ts`

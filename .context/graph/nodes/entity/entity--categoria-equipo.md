@@ -21,6 +21,15 @@ Entidad CategoriaEquipo, persistida en equipos.categorias_equipo.
 - **Tabla:** [[table--equipos-categorias-equipo|equipos.categorias_equipo]]
 - **Columnas mapeadas:** 4
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/equipos`, `/dashboard/equipos/[id]`, `/dashboard/equipos/categorias`, `/dashboard/personal/[id]`
+- **Endpoints:** CategoriasEquipoController, EquiposController
+- **Servicios:** CategoriasEquipoService, EquiposService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/categoria-equipo.entity.ts`

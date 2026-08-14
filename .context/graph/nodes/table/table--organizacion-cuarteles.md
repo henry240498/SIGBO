@@ -44,6 +44,15 @@ Tabla organizacion.cuarteles (13 columnas). Creada en 012_organizacion.sql, modi
 | creado_por | UNIQUEIDENTIFIER |
 | actualizado_por | UNIQUEIDENTIFIER |
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/organizacion/cuarteles`, `/dashboard/organizacion/designaciones`
+- **Endpoints:** CuartelsController, DesignacionesController
+- **Servicios:** CuartelsService, DashboardService, DesignacionesService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/012_organizacion.sql`

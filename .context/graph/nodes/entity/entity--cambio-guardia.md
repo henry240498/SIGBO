@@ -25,6 +25,11 @@ Solicitud de cambio/reemplazo de una asignacion de guardia (tabla ya existente e
 
 - `EstadoCambioGuardia`: `PENDIENTE` · `APROBADO` · `RECHAZADO` · `CANCELADO`
 
+## Donde se usa
+
+Ningun servicio del backend la referencia hoy. Puede ser estructura
+preparada para una fase siguiente, o codigo muerto: verificar antes de asumir.
+
 ## Archivos
 
 - `backend/src/shared/entities/cambio-guardia.entity.ts`

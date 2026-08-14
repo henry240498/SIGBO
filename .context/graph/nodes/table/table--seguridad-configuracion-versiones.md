@@ -47,6 +47,15 @@ Tabla seguridad.configuracion_versiones (10 columnas). Creada en 021_configuraci
 | creado_en | DATETIMEOFFSET(3) |
 | publicado_en | DATETIMEOFFSET(3) |
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/mi-perfil/preferencias`, `/dashboard/seguridad/configuracion`
+- **Endpoints:** ConfiguracionController
+- **Servicios:** ConfiguracionService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/021_configuracion_integral.sql`

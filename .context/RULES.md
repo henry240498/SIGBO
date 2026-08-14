@@ -5,17 +5,10 @@ nivel: L0
 
 # Reglas e invariantes
 
-<<<<<<< Updated upstream
 21 reglas verificadas contra el código. Cada una tiene su nodo curado con el detalle, el
 archivo donde vive y qué pasa si se rompe.
 
 > Si vas a modificar código de SIGBO, las **CRÍTICAS** son lectura obligatoria.
-=======
-19 reglas verificadas contra el código. Cada una tiene su nodo curado con el detalle, el
-archivo donde vive y qué pasa si se rompe.
-
-> Si vas a modificar código de SIGBO, las cinco **CRÍTICAS** son lectura obligatoria.
->>>>>>> Stashed changes
 
 ## Críticas
 
@@ -33,11 +26,8 @@ archivo donde vive y qué pasa si se rompe.
 
 | Regla | En una línea |
 |---|---|
-<<<<<<< Updated upstream
 | [[rule--guardias-vive-en-operaciones]] | No existe el esquema `guardias`: sus tablas están en `operaciones` |
 | [[rule--elegibilidad-de-rol-guardia]] | OR entre filas, AND entre columnas; sin requisitos configurados, no se restringe |
-=======
->>>>>>> Stashed changes
 | [[rule--sin-clases-css-nuevas]] | Solo 4 clases; hex exactos, nunca parecidos. ACTIVO verde / malo rojo |
 | [[rule--api-v1-y-contrato-http]] | `/api/v1` lo agrega `apiFetch`; las pantallas pasan rutas relativas |
 | [[rule--identidad-y-tiempo-en-sql-server]] | PK `UNIQUEIDENTIFIER` + `NEWSEQUENTIALID()`, tiempos `DATETIMEOFFSET(3)` |
@@ -56,11 +46,7 @@ archivo donde vive y qué pasa si se rompe.
 | [[rule--modulo-visible-por-prefijo]] | Un módulo se ve si `disponible: true` **y** hay permisos de su prefijo |
 | [[rule--espanol-y-auditoria]] | Todo en español; auditoría técnica ≠ historial de expediente |
 
-<<<<<<< Updated upstream
 ## Las cuatro trampas que más tiempo cuestan
-=======
-## Las tres trampas que más tiempo cuestan
->>>>>>> Stashed changes
 
 Ordenadas por cuánto se tarda en darse cuenta:
 
@@ -76,7 +62,6 @@ Get-Process node | Select-Object Id, StartTime
 Si el `StartTime` es anterior a tu edición, no es tu código el que corre.
 Ver [[error--start-script-no-reinicia-servicios]].
 
-<<<<<<< Updated upstream
 ### 2. Buscar el esquema `guardias`
 
 No existe. Las tablas de guardias están en `operaciones`, junto con las de asistencia.
@@ -89,20 +74,10 @@ endpoint compila, arranca y nadie puede usarlo. Cruzá contra
 `graph/indexes/permissions.json`.
 
 ### 4. `Invalid column name` o violación de `CHECK`
-=======
-### 2. Un 403 inexplicable
-
-El `@RequirePermission` usa un código que no está sembrado en `seguridad.permisos`.
-El endpoint compila, arranca y nadie puede usarlo. Cruzá contra
-`graph/indexes/permissions.json`.
-
-### 3. `Invalid column name` o violación de `CHECK`
->>>>>>> Stashed changes
 
 Cambiaste la entidad y no la migración. La columna nueva no existe, o el estado nuevo no
 está en el `CHECK`. Ver [[rule--entidad-y-tabla-en-paralelo]].
 
-<<<<<<< Updated upstream
 ## Fallas conocidas del entorno
 
 6 nodos `ERROR` con síntoma, causa y solución:
@@ -118,20 +93,12 @@ node .context/graph/context.mjs --tipo ERROR --level L2
 - [[error--413-croquis-grande]] — 413 al guardar una comunicación con croquis
 - [[error--context-borrado-del-disco]] — por qué este directorio tiene que estar en git
 
-=======
->>>>>>> Stashed changes
 ## Consultar reglas por tema
 
 ```bash
 node .context/graph/context.mjs --tipo RULE                        # todas
-<<<<<<< Updated upstream
 node .context/graph/context.mjs --tipo RULE --dominio guardias      # de un dominio
 node .context/graph/context.mjs permisos --level L2                # reglas de un tema
-=======
-node .context/graph/context.mjs --tipo RULE --dominio servicios    # de un dominio
-node .context/graph/context.mjs permisos --level L2                # reglas de un tema
-node .context/graph/context.mjs --tipo ERROR                       # fallas conocidas
->>>>>>> Stashed changes
 ```
 
 ## Agregar una regla
@@ -146,10 +113,7 @@ nombre: <el invariante, afirmativo y en una línea>
 nivel: L1
 resumen: <qué debe cumplirse siempre>
 severidad: CRITICA | ALTA | MEDIA
-<<<<<<< Updated upstream
 fuente: <contra qué se verificó>
-=======
->>>>>>> Stashed changes
 archivos: [<dónde vive>]
 edges:
   - [affects, <entity|table|service|screen afectado>]
@@ -160,10 +124,5 @@ En el cuerpo: **el invariante** (con el código real que lo implementa), **qué 
 rompe** y **cómo se ve el fallo**. Una regla que no dice cómo se manifiesta el fallo no
 ayuda a nadie a las tres de la mañana.
 
-<<<<<<< Updated upstream
 Solo escribí reglas **verificadas contra el código**. Después:
 `node .context/graph/build-graph.mjs && node .context/graph/validar.mjs`.
-=======
-Solo escribí reglas **verificadas contra el código**, y anotá en `fuente` contra qué se
-verificaron. Después: `node .context/graph/build-graph.mjs`.
->>>>>>> Stashed changes

@@ -21,6 +21,15 @@ Reglas de tolerancia de horario parametrizables por tipo de evento (NULL = regla
 - **Tabla:** [[table--operaciones-tolerancias-asistencia|operaciones.tolerancias_asistencia]]
 - **Columnas mapeadas:** 5
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
+- **Endpoints:** ToleranciasController
+- **Servicios:** ToleranciasService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/tolerancia-asistencia.entity.ts`

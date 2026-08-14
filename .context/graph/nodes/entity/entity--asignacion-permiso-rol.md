@@ -21,6 +21,15 @@ Entidad AsignacionPermisoRol, persistida en seguridad.asignacion_permisos_rol.
 - **Tabla:** [[table--seguridad-asignacion-permisos-rol|seguridad.asignacion_permisos_rol]]
 - **Columnas mapeadas:** 3
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/seguridad/permisos`, `/dashboard/seguridad/roles`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Endpoints:** PermisosController, RolesController
+- **Servicios:** PermisosService, PolicyEngineService, RolesService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/asignacion-permiso-rol.entity.ts`

@@ -32,18 +32,11 @@ migraciones"* — lo activa en `database/run-migrations.ps1`.
 
 ## Regla al escribir migraciones nuevas
 
-<<<<<<< Updated upstream
 No confiar en las opciones SET de la sesion. Declararlas **dentro del archivo**, antes
 del DDL, como ya hacen las migraciones recientes:
 
 ```sql
 SET ANSI_NULLS ON;
-=======
-No confiar en las opciones SET de la sesion. Si una migracion necesita opciones
-particulares, declararlas **dentro del archivo**, antes del DDL:
-
-```sql
->>>>>>> Stashed changes
 SET QUOTED_IDENTIFIER ON;
 GO
 ```

@@ -23,6 +23,7 @@ edges:
   - [reads, table--operaciones-marcaciones-asistencia]
   - [uses, service--seguridad-auditoria]
   - [uses, service--guardias-elegibilidad]
+  - [uses, service--guardias-orden-guardia-configuracion]
 terminos: [guardias, guardia, asignacion, grupo, miembro, bombero, marcacion, asistencia]
 ---
 
@@ -33,7 +34,7 @@ Logica de negocio de guardias (modulo guardias).
 
 ## Metodos
 
-`findAll()` · `findOne()` · `rangoGuardia()` · `create()` · `listarAsignaciones()` · `asignarPersonal()` · `quitarAsignacion()` · `registrarHorario()` · `actualizarPresencia()` · `calcularCumplimiento()`
+`findAll()` · `findOne()` · `rangoGuardia()` · `create()` · `update()` · `anular()` · `listarAsignaciones()` · `historialPersonal()` · `asignarPersonal()` · `reemplazarAsignacion()` · `quitarAsignacion()` · `registrarHorario()` · `actualizarPresencia()` · `calcularCumplimiento()`
 
 ## Archivos
 
@@ -55,9 +56,13 @@ Logica de negocio de guardias (modulo guardias).
 - `reads` → [[table--operaciones-marcaciones-asistencia|operaciones.marcaciones_asistencia]]
 - `uses` → [[service--seguridad-auditoria|AuditoriaService]]
 - `uses` → [[service--guardias-elegibilidad|ElegibilidadService]]
+- `uses` → [[service--guardias-orden-guardia-configuracion|OrdenGuardiaConfiguracionService]]
 
 ## Referenciado por
 
+- [[service--guardias-bitacora|BitacoraService]] `uses` →
+- [[service--guardias-generacion|GeneracionService]] `uses` →
+- [[service--guardias-sorteos|SorteosService]] `uses` →
 - [[api--guardias-guardias|GuardiasController]] `exposes` →
 
 ---

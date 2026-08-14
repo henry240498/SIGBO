@@ -36,6 +36,11 @@ Tabla servicios.historial_servicios (10 columnas). Creada en 007_servicios.sql, 
 | datos | NVARCHAR(MAX) |
 | creado_por | UNIQUEIDENTIFIER |
 
+## Donde se usa
+
+Ningun servicio del backend la referencia hoy. Puede ser estructura
+preparada para una fase siguiente, o codigo muerto: verificar antes de asumir.
+
 ## Archivos
 
 - `database/migrations/007_servicios.sql`

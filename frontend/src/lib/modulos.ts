@@ -21,6 +21,7 @@ export const MODULOS: ModuloConfig[] = [
   { slug: 'deposito', nombre: 'Depósito', icono: 'box', permisoPrefijo: 'deposito:', disponible: false },
   { slug: 'documentos', nombre: 'Documentos', icono: 'document', permisoPrefijo: 'documentos:', disponible: false },
   { slug: 'publicaciones', nombre: 'Publicaciones', icono: 'document', permisoPrefijo: 'publicaciones:', disponible: true },
+  { slug: 'denuncias', nombre: 'Denuncias', icono: 'alert', permisoPrefijo: 'denuncias:', disponible: true },
   { slug: 'seguridad', nombre: 'Seguridad', icono: 'lock', permisoPrefijo: 'seguridad:', disponible: true },
   { slug: 'inteligencia', nombre: 'Inteligencia', icono: 'chart', permisoPrefijo: 'inteligencia:', disponible: false },
 ];

@@ -11,8 +11,6 @@ archivos:
   - frontend/src/app/dashboard/servicios/page.tsx
 edges:
   - [belongs_to, domain--servicios]
-  - [uses, component--front-api]
-  - [uses, component--front-systemicon]
   - [calls, api--servicios-servicios]
 terminos: [servicios]
 ---
@@ -34,8 +32,6 @@ Pantalla /dashboard/servicios, consume 1 endpoint(s).
 ## Relaciones
 
 - `belongs_to` → [[domain--servicios|Servicios]]
-- `uses` → [[component--front-api|api]]
-- `uses` → [[component--front-systemicon|SystemIcon]]
 - `calls` → [[api--servicios-servicios|ServiciosController]]
 
 ---

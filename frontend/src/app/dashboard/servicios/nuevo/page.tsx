@@ -124,6 +124,8 @@ function nuevoFormulario(): Valores {
     localidad: '',
     barrio: '',
     direccion: '',
+    coordenadasLat: '',
+    coordenadasLon: '',
     comandante: '',
     comandanteIncidentePersonaId: '',
     guardias: [],
@@ -604,6 +606,7 @@ export default function NuevoServicioPage() {
         <Field etiqueta="Localidad"><input className="input-field" disabled={soloLectura} value={datos.localidad} onChange={(evento) => set('localidad', evento.target.value)} /></Field>
         <Field etiqueta="Barrio / Cía."><input className="input-field" disabled={soloLectura} value={datos.barrio} onChange={(evento) => set('barrio', evento.target.value)} /></Field>
         <Field etiqueta="Dirección o referencia"><input className="input-field" disabled={soloLectura} value={datos.direccion} onChange={(evento) => set('direccion', evento.target.value)} /></Field>
+        <Geolocalizacion latitud={datos.coordenadasLat} longitud={datos.coordenadasLon} disabled={soloLectura} onChange={(latitud,longitud)=>{set('coordenadasLat',latitud);set('coordenadasLon',longitud)}} />
         <PersonaInput etiqueta="Comandante de incidente" valor={datos.comandante} personal={personal} disabled={soloLectura} onChange={(valor, personaId) => { set('comandante', valor); set('comandanteIncidentePersonaId', personaId); }} />
         <Field etiqueta="Guardias relacionadas"><input className="input-field" disabled={soloLectura} value={arreglo<string>(datos.guardias).join(', ')} onChange={(evento) => set('guardias', evento.target.value.split(/[,;\n]/).map((valor) => valor.trim()).filter(Boolean))} placeholder="Separar personas con coma" /></Field>
       </div>
@@ -656,6 +659,14 @@ export default function NuevoServicioPage() {
 
 function Section({ numero, titulo, texto: descripcion }: { numero: string; titulo: string; texto: string }) {
   return <div className="service-section-title"><span>{numero}</span><div><h3>{titulo}</h3><p>{descripcion}</p></div></div>;
+}
+
+function Geolocalizacion({latitud,longitud,disabled,onChange}:{latitud:unknown;longitud:unknown;disabled:boolean;onChange:(latitud:number|string,longitud:number|string)=>void}) {
+  const [estado,setEstado]=useState('');
+  const lat=Number(latitud),lon=Number(longitud),valida=latitud!==''&&longitud!==''&&Number.isFinite(lat)&&Number.isFinite(lon)&&lat>=-90&&lat<=90&&lon>=-180&&lon<=180;
+  const destino=valida?`${lat},${lon}`:'';
+  function capturar(){if(!navigator.geolocation){setEstado('Este dispositivo no admite geolocalización.');return}setEstado('Obteniendo ubicación…');navigator.geolocation.getCurrentPosition(pos=>{onChange(Number(pos.coords.latitude.toFixed(8)),Number(pos.coords.longitude.toFixed(8)));setEstado(`Ubicación registrada con precisión aproximada de ${Math.round(pos.coords.accuracy)} m.`)},error=>setEstado(error.code===1?'Debe permitir el acceso a la ubicación.':'No se pudo obtener la ubicación. Intente al aire libre.'),{enableHighAccuracy:true,timeout:12000,maximumAge:0})}
+  return <div className="geo-panel"><div><strong>Ubicación GPS del servicio</strong><p>Registre el punto exacto desde un dispositivo presente en el lugar. Los conductores usarán este destino para navegar.</p></div><div className="geo-fields"><label>Latitud<input className="input-field" disabled={disabled} inputMode="decimal" value={String(latitud??'')} onChange={e=>onChange(e.target.value,longitud as string)}/></label><label>Longitud<input className="input-field" disabled={disabled} inputMode="decimal" value={String(longitud??'')} onChange={e=>onChange(latitud as string,e.target.value)}/></label></div><div className="geo-actions">{!disabled&&<button type="button" className="service-secondary" onClick={capturar}>Usar ubicación actual</button>}{valida&&<><a className="btn-primary" href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destino)}&travelmode=driving&dir_action=navigate`} target="_blank" rel="noopener noreferrer">Navegar con Google Maps</a><a className="service-secondary" href={`https://waze.com/ul?ll=${encodeURIComponent(destino)}&navigate=yes&utm_source=SIGBO`} target="_blank" rel="noopener noreferrer">Navegar con Waze</a></>}</div>{estado&&<p role="status" className="service-hint">{estado}</p>}{!valida&&latitud!==''&&longitud!==''&&<p role="alert" className="form-error">Revise las coordenadas ingresadas.</p>}</div>;
 }
 
 function Field({ etiqueta, children }: { etiqueta: string; children: ReactNode }) {

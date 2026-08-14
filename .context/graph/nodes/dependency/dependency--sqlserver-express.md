@@ -45,14 +45,8 @@ Credenciales en `backend/.env`. Conexion con DBeaver documentada en
 ## Nota sobre los archivos MDF/LDF en el repositorio
 
 `sigbo_cbvc.mdf` (~75 MB) y su log estan en la raiz del proyecto. Son archivos
-<<<<<<< Updated upstream
 binarios de base de datos con **datos reales de 164 personas**. `.gitignore` los
 excluye (`*.mdf`, `*.ldf`), y conviene que siga asi: no deberian viajar a un remoto.
-=======
-binarios de base de datos con **datos reales de 164 personas**. Antes de compartir el
-repositorio o cambiarlos de lugar, verificar `.gitignore`: no deberian viajar a un
-remoto.
->>>>>>> Stashed changes
 
 Ver [[decision--sqlserver-en-vez-de-postgres]] para el porque de este motor.
 

@@ -34,10 +34,7 @@ El **modelo logico no cambio**: los mismos esquemas, las mismas relaciones.
   (ver [[decision--comunicacion-como-json]]) se leen enteros y se parsean en la
   aplicacion.
 - Express limita a 10 GB por base de datos y ~1410 MB de RAM del motor.
-<<<<<<< Updated upstream
 - Sin SQL Server Agent: no hay trabajos programados en el motor.
-=======
->>>>>>> Stashed changes
 - Sin TimescaleDB: las series de asistencia son tablas normales con indices.
 
 ## Riesgo operativo conocido

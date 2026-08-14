@@ -25,6 +25,15 @@ Entidad HistorialInstitucional, persistida en personal.historial_institucional.
 
 - `TipoMovimientoInstitucional`: `INGRESO` · `ASCENSO` · `CAMBIO_RANGO` · `CAMBIO_CARGO` · `CAMBIO_COMPANIA` · `CAMBIO_CONDICION` · `CAMBIO_CODIGO` · `LICENCIA` · `SUSPENSION` · `RECONOCIMIENTO` · `SANCION` · `RETIRO`
 
+## Donde se usa
+
+- **Pantallas:** — (sin pantalla que llegue hasta aca)
+- **Endpoints:** BomberosController, CondicionController, FojaServicioController, HistorialInstitucionalController
+- **Servicios:** BomberosService, CondicionService, FojaServicioService, HistorialInstitucionalService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/historial-institucional.entity.ts`

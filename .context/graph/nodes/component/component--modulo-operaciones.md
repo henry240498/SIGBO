@@ -20,11 +20,7 @@ Modulo NestJS que cablea controladores, servicios y repositorios de operaciones.
 
 ## Entidades registradas (forFeature)
 
-<<<<<<< Updated upstream
 EventoAsistencia, MarcacionAsistencia, ParticipanteEvento, ParticipanteExterno, ToleranciaAsistencia, ImportacionMarcador, ImportacionMarcadorFila, Guardia, AsignacionGuardia, Bombero, Parametro
-=======
-EventoAsistencia, MarcacionAsistencia, ParticipanteEvento, ParticipanteExterno, CambioGuardia, ToleranciaAsistencia, ImportacionMarcador, ImportacionMarcadorFila, Guardia, AsignacionGuardia, Bombero, Parametro
->>>>>>> Stashed changes
 
 ## Archivos
 
@@ -38,10 +34,6 @@ EventoAsistencia, MarcacionAsistencia, ParticipanteEvento, ParticipanteExterno, 
 
 - [[service--operaciones-dashboard-asistencia|DashboardAsistenciaService]] `uses` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `uses` →
-<<<<<<< Updated upstream
-=======
-- [[service--operaciones-guardias|GuardiasService]] `uses` →
->>>>>>> Stashed changes
 - [[service--operaciones-importaciones|ImportacionesService]] `uses` →
 - [[service--operaciones-marcaciones|MarcacionesService]] `uses` →
 - [[service--operaciones-participantes-externos|ParticipantesExternosService]] `uses` →

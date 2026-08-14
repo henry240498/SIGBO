@@ -17,11 +17,7 @@ Opciones del DataSource: pool, timeouts, naming strategy y synchronize:false.
 
 ## Variables de entorno
 
-<<<<<<< Updated upstream
 `DB_HOST` · `DB_INSTANCE` · `DB_PORT` · `DB_USER` · `DB_PASSWORD` · `DB_NAME` · `DB_ENCRYPT` · `DB_TRUST_SERVER_CERTIFICATE` · `NODE_ENV`
-=======
-`DB_HOST` · `DB_PORT` · `DB_USER` · `DB_PASSWORD` · `DB_NAME` · `DB_ENCRYPT` · `DB_TRUST_SERVER_CERTIFICATE` · `NODE_ENV`
->>>>>>> Stashed changes
 
 ## Archivos
 

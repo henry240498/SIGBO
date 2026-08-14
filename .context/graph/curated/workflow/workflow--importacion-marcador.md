@@ -17,12 +17,7 @@ edges:
 
 ```
 archivo ──► ANALIZADO ──► CONFIRMADO
-<<<<<<< Updated upstream
                  └──────► CANCELADO
-=======
-                 │
-                 └──► CANCELADO
->>>>>>> Stashed changes
 ```
 
 `EstadoImportacionMarcador` = `ANALIZADO` | `CONFIRMADO` | `CANCELADO`.
@@ -56,15 +51,12 @@ decisiones sobre las personas.
 
 `YA_IMPORTADO` es lo que hace **idempotente** reimportar el mismo archivo: no duplica.
 
-<<<<<<< Updated upstream
 ## Detalle sobre los codigos
 
 El marcador identifica por codigo de bombero. Si a alguien le cambiaron el numero,
 `personal.historial_codigo` es lo que permite reconocerlo — ver
 [[rule--cedula-y-numero-bombero-unicos]].
 
-=======
->>>>>>> Stashed changes
 ## Contexto
 
 Requiere `asistencia:importar_marcador`. `FuenteAsistencia` distingue el origen de cada

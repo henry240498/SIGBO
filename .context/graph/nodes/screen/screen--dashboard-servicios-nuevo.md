@@ -12,10 +12,7 @@ archivos:
 edges:
   - [belongs_to, domain--servicios]
   - [uses, component--front-api]
-<<<<<<< Updated upstream
   - [uses, component--front-vehiculos]
-=======
->>>>>>> Stashed changes
   - [calls, api--servicios-servicios]
   - [calls, api--servicios-servicios]
 terminos: [servicios, nuevo]
@@ -40,10 +37,7 @@ Pantalla /dashboard/servicios/nuevo, consume 2 endpoint(s).
 
 - `belongs_to` → [[domain--servicios|Servicios]]
 - `uses` → [[component--front-api|api]]
-<<<<<<< Updated upstream
 - `uses` → [[component--front-vehiculos|vehiculos]]
-=======
->>>>>>> Stashed changes
 - `calls` → [[api--servicios-servicios|ServiciosController]]
 - `calls` → [[api--servicios-servicios|ServiciosController]]
 

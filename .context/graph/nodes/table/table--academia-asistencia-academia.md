@@ -36,6 +36,11 @@ Tabla academia.asistencia_academia (9 columnas). Creada en 004_academia.sql, mod
 | creado_en | DATETIMEOFFSET(3) |
 | actualizado_en | DATETIMEOFFSET(3) |
 
+## Donde se usa
+
+Ningun servicio del backend la referencia hoy. Puede ser estructura
+preparada para una fase siguiente, o codigo muerto: verificar antes de asumir.
+
 ## Archivos
 
 - `database/migrations/004_academia.sql`

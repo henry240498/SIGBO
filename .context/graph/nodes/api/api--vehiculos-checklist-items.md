@@ -40,5 +40,11 @@ Superficie HTTP de checklist items bajo /api/v1/vehiculos/checklist-items.
 - `belongs_to` → [[domain--vehiculos|Vehículos]]
 - `exposes` → [[service--vehiculos-checklist-items|ChecklistItemsService]]
 
+## Referenciado por
+
+- [[component--front-vehiculos|vehiculos]] `calls` →
+- [[component--front-vehiculos|vehiculos]] `calls` →
+- [[component--front-vehiculos|vehiculos]] `calls` →
+
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

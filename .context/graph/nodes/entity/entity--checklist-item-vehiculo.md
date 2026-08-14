@@ -25,6 +25,15 @@ Catalogo parametrizable de items de inspeccion de vehiculo (seccion 12 del pedid
 
 - `CategoriaChecklistItemVehiculo`: `MECANICA` · `EQUIPAMIENTO` · `OTRO`
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/equipos/[id]`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
+- **Endpoints:** ChecklistItemsController, InspeccionesMovilController
+- **Servicios:** ChecklistItemsService, InspeccionesMovilService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/checklist-item-vehiculo.entity.ts`
@@ -36,6 +45,7 @@ Catalogo parametrizable de items de inspeccion de vehiculo (seccion 12 del pedid
 
 ## Referenciado por
 
+- [[service--guardias-inspecciones-movil|InspeccionesMovilService]] `uses` →
 - [[service--vehiculos-checklist-items|ChecklistItemsService]] `uses` →
 
 ---

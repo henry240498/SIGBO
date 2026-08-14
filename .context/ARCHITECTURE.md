@@ -10,11 +10,7 @@ mensajes, sin caché, sin servicios externos.
 
 ```
 ┌──────────────────────────────┐
-<<<<<<< Updated upstream
 │  Next.js 14 · puerto 3000    │   56 pantallas, todas 'use client'
-=======
-│  Next.js 14 · puerto 3000    │   47 pantallas, todas 'use client'
->>>>>>> Stashed changes
 │  App Router · React 18       │   sin store global, sin librería de UI
 └──────────────┬───────────────┘
                │  apiFetch('/ruta')  →  Bearer token, reintento en 401
@@ -26,32 +22,21 @@ mensajes, sin caché, sin servicios externos.
 │  │ PermissionsGuard       │  │   consulta permisos efectivos en cada request
 │  │ ValidationPipe         │  │   whitelist + forbidNonWhitelisted
 │  ├────────────────────────┤  │
-<<<<<<< Updated upstream
 │  │ 55 Controllers (API)   │  │   declaran @RequirePermission
 │  │ 56 Services            │  │   toda la lógica de negocio
 │  │ 75 Entities (TypeORM)  │  │   sin relaciones ORM: FKs como columnas planas
-=======
-│  │ 49 Controllers (API)   │  │   declaran @RequirePermission
-│  │ 49 Services            │  │   toda la lógica de negocio
-│  │ 65 Entities (TypeORM)  │  │   sin relaciones ORM: FKs como columnas planas
->>>>>>> Stashed changes
 │  └────────────────────────┘  │
 └──────────────┬───────────────┘
                │  TypeORM 0.3 · mssql · pool max 10 / idle 15s · synchronize: FALSE
                ▼
 ┌──────────────────────────────┐
-<<<<<<< Updated upstream
 │  SQL Server 2019 Express     │   12 esquemas · 88 tablas · 0 procedures
-=======
-│  SQL Server 2019 Express     │   12 esquemas · 81 tablas · 0 procedures
->>>>>>> Stashed changes
 │  instancia SQLEXPRESS        │   constraints CHECK/UNIQUE como última defensa
 └──────────────────────────────┘
 ```
 
 ## El recorrido de un request
 
-<<<<<<< Updated upstream
 1. La pantalla llama `apiFetch('/guardias/grupos')` — **sin** `/api/v1`, el helper lo
    agrega.
 2. `JwtAuthGuard` valida el Bearer token. Si expiró → 401.
@@ -65,19 +50,6 @@ mensajes, sin caché, sin servicios externos.
 6. El controlador delega en el servicio. El servicio usa repositorios TypeORM, y puede
    aplicar reglas de negocio configurables (por ejemplo `ElegibilidadService` al asignar
    personal a una guardia).
-=======
-1. La pantalla llama `apiFetch('/organizacion/rangos')` — **sin** `/api/v1`, el helper
-   lo agrega.
-2. `JwtAuthGuard` valida el Bearer token. Si expiró → 401.
-3. El cliente intercepta ese 401, llama `/auth/refresh` y **reintenta una vez** de forma
-   transparente.
-4. `PermissionsGuard` llama al Policy Engine, que calcula los permisos efectivos
-   **desde la base, en cada request, sin caché**, y los compara con el
-   `@RequirePermission` de la ruta.
-5. `ValidationPipe` valida el DTO. Un campo no declarado **hace fallar** la petición con
-   400 (`forbidNonWhitelisted`), no se ignora.
-6. El controlador delega en el servicio. El servicio usa repositorios TypeORM.
->>>>>>> Stashed changes
 7. La respuesta vuelve como JSON; la pantalla llama `cargar()` de nuevo tras cada
    mutación.
 
@@ -88,28 +60,18 @@ Detalle en [[workflow--login-y-sesion]] y [[rule--permisos-efectivos]].
 ```
 backend/src/
 ├── main.ts                    prefijo /api/v1, helmet, CORS, body 8mb, Swagger
-<<<<<<< Updated upstream
 ├── app.module.ts              cablea los 11 módulos
 ├── core/database/             data-source-options.ts (pool, naming, synchronize:false)
 ├── shared/entities/           75 entidades + index.ts (el DataSource carga Object.values)
-=======
-├── app.module.ts              cablea los 10 módulos
-├── core/database/             data-source-options.ts (pool, naming, synchronize:false)
-├── shared/entities/           64 entidades + index.ts (el DataSource carga Object.values)
->>>>>>> Stashed changes
 └── modules/
     ├── auth/                  login, JWT, refresh, guards, strategies
     ├── seguridad/             usuarios, roles, permisos, sesiones, auditoría,
     │                          policy-engine.service.ts, PermissionsGuard
     ├── personal/              bomberos, condiciones, especialidades, foja de servicio
     ├── organizacion/          14 controladores de catálogos institucionales
-<<<<<<< Updated upstream
     ├── operaciones/           asistencia: eventos, marcaciones, importaciones, tolerancias
     ├── guardias/              grupos, asignaciones, presencia, novedades, inspecciones,
     │                          pernoctes, requisitos de rol, elegibilidad
-=======
-    ├── operaciones/           asistencia: eventos, guardias, marcaciones, importaciones
->>>>>>> Stashed changes
     ├── servicios/             comunicaciones de servicio + PDF
     ├── vehiculos/ equipos/    flotas y equipamiento
     ├── publicaciones/         contenido público
@@ -119,7 +81,6 @@ backend/src/
 Cada módulo tiene `*.controller.ts`, `*.service.ts`, `dto/` y su `*.module.ts`. Las
 entidades son **compartidas** en `shared/entities/`, no por módulo.
 
-<<<<<<< Updated upstream
 **El módulo no dice el esquema.** `guardias` es un módulo propio pero sus tablas viven en
 el esquema `operaciones` — ver [[rule--guardias-vive-en-operaciones]]. Es la confusión de
 nombres más costosa del proyecto.
@@ -130,18 +91,11 @@ nombres más costosa del proyecto.
 
 **Ninguna de las 75 entidades usa `@ManyToOne`, `@OneToMany` ni `@ManyToMany`.** Las
 llaves foráneas son columnas planas (`guardiaId: string`, `bomberoId: string`).
-=======
-## Una particularidad importante: sin relaciones TypeORM
-
-**Ninguna de las 64 entidades usa `@ManyToOne`, `@OneToMany` ni `@ManyToMany`.** Las
-llaves foráneas son columnas planas (`servicioId: string`, `bomberoId: string`).
->>>>>>> Stashed changes
 
 Consecuencias:
 
 - No hay carga eager/lazy ni cascadas del ORM. Nada se trae "solo".
 - Todo join es explícito, con `createQueryBuilder`, o son dos consultas y un armado en
-<<<<<<< Updated upstream
   memoria. `relations: ['bombero']` **no funciona**.
 - Las cascadas que existen son de **la base de datos**, no del ORM — y por eso son
   invisibles desde el código. Ver [[rule--una-comunicacion-por-servicio]].
@@ -155,39 +109,20 @@ constante. Cuatro mecanismos coexisten —`organizacion.parametros`,
 `operaciones.tolerancias_asistencia`, `operaciones.requisitos_rol_guardia` y el registro
 de Configuración. Ver [[decision--tolerancias-parametrizables]] y
 [[rule--elegibilidad-de-rol-guardia]].
-=======
-  memoria.
-- Las cascadas que existen son de **la base de datos**, no del ORM — y por eso son
-  invisibles desde el código. Ver [[rule--una-comunicacion-por-servicio]].
-- El grafo suple lo que el ORM no declara: las aristas `references` entre tablas se
-  derivan de las FKs de las migraciones (35 aristas).
-
-Al escribir un servicio nuevo: no esperes `relations: ['bombero']`. No va a funcionar.
->>>>>>> Stashed changes
 
 ## Capas del frontend
 
 ```
 frontend/src/
 ├── app/
-<<<<<<< Updated upstream
 │   ├── layout.tsx · globals.css      las 4 clases utilitarias
-=======
-│   ├── layout.tsx · globals.css      estilos globales y proveedores accesibles
->>>>>>> Stashed changes
 │   ├── login/                        único acceso
 │   ├── dashboard/
 │   │   ├── layout.tsx                navegación filtrada por permisos
 │   │   ├── [modulo]/                 comodín para módulos sin pantalla propia
-<<<<<<< Updated upstream
 │   │   └── organizacion/ personal/ asistencia/ guardias/ servicios/
 │   │       seguridad/ publicaciones/ mi-perfil/
 │   └── components/                   ConfigBootstrap, SystemIcon, ExperienceGuard
-=======
-│   │   └── organizacion/ personal/ asistencia/ servicios/ seguridad/
-│   │       publicaciones/ mi-perfil/
-│   └── components/                   configuración, confirmaciones, experiencia e iconos
->>>>>>> Stashed changes
 └── lib/
     ├── api.ts          apiFetch, login, logout, refresh, sesión en localStorage
     ├── modulos.ts      los 14 módulos y moduloVisible()
@@ -199,12 +134,7 @@ frontend/src/
 
 Sin Redis, Kafka, Elasticsearch, MinIO, Docker, Kubernetes. Sin microservicios. Sin
 caché de permisos. Sin store global en el cliente. Sin librería de UI. Sin i18n. Sin
-<<<<<<< Updated upstream
 procedimientos almacenados. **Sin pruebas automatizadas.** Sin CI.
-=======
-procedimientos almacenados. Aún no hay una suite unitaria/E2E completa; sí existen
-compilación y auditoría estática automatizadas en GitHub Actions.
->>>>>>> Stashed changes
 
 Cada ausencia es una decisión, no un olvido: ver [DECISIONS.md](DECISIONS.md).
 

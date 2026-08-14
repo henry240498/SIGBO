@@ -17,7 +17,9 @@ edges:
   - [reads, table--personal-bomberos]
   - [uses, entity--vehiculo-autorizado]
   - [reads, table--personal-vehiculos-autorizados]
-terminos: [elegibilidad, guardias, requisito, rol, guardia, bombero, vehiculo, autorizado]
+  - [uses, entity--rango]
+  - [reads, table--organizacion-rangos]
+terminos: [elegibilidad, guardias, requisito, rol, guardia, bombero, vehiculo, autorizado, rango]
 ---
 
 # ElegibilidadService
@@ -27,7 +29,7 @@ Valida elegibilidad de rol de forma configurable (seccion 7 del pedido: "estas r
 
 ## Metodos
 
-`validar()`
+`validar()` · `esElegible()` · `validarReemplazo()`
 
 ## Archivos
 
@@ -43,9 +45,12 @@ Valida elegibilidad de rol de forma configurable (seccion 7 del pedido: "estas r
 - `reads` → [[table--personal-bomberos|personal.bomberos]]
 - `uses` → [[entity--vehiculo-autorizado|VehiculoAutorizado]]
 - `reads` → [[table--personal-vehiculos-autorizados|personal.vehiculos_autorizados]]
+- `uses` → [[entity--rango|Rango]]
+- `reads` → [[table--organizacion-rangos|organizacion.rangos]]
 
 ## Referenciado por
 
+- [[service--guardias-generacion|GeneracionService]] `uses` →
 - [[service--guardias-grupos-guardia|GruposGuardiaService]] `uses` →
 - [[service--guardias-guardias|GuardiasService]] `uses` →
 - [[rule--elegibilidad-de-rol-guardia|La elegibilidad para un rol de guardia se configura en tablas, con OR entre filas y AND entre columnas]] `affects` →

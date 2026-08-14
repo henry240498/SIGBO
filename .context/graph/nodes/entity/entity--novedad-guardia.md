@@ -21,6 +21,15 @@ Entrada manual de la bitacora de una guardia (seccion 9). La bitacora completa q
 - **Tabla:** [[table--operaciones-novedades-guardia|operaciones.novedades_guardia]]
 - **Columnas mapeadas:** 4
 
+## Donde se usa
+
+- **Pantallas:** — (sin pantalla que llegue hasta aca)
+- **Endpoints:** BitacoraController, NovedadesController
+- **Servicios:** BitacoraService, NovedadesService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/novedad-guardia.entity.ts`
@@ -32,6 +41,7 @@ Entrada manual de la bitacora de una guardia (seccion 9). La bitacora completa q
 
 ## Referenciado por
 
+- [[service--guardias-bitacora|BitacoraService]] `uses` →
 - [[service--guardias-novedades|NovedadesService]] `uses` →
 
 ---

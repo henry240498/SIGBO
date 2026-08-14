@@ -38,7 +38,6 @@ actualizadoEn: Date;
 Los nombres de tabla son **explicitos** en cada entidad, no derivados de la clase:
 
 ```ts
-<<<<<<< Updated upstream
 @Entity({ name: 'grupos_guardia', schema: 'operaciones' })
 ```
 
@@ -54,28 +53,9 @@ patron, en vez de aplicar una regla general que el repositorio no cumple del tod
 
 Y **cuidado con el esquema**: las tablas de guardias van en `operaciones`, no en un
 esquema `guardias` — ver [[rule--guardias-vive-en-operaciones]].
-=======
-@Entity({ name: 'bomberos', schema: 'personal' })
-```
-
-Y son **plurales** en su mayoria (`bomberos`, `roles`, `guardias`,
-`comunicaciones_servicio`), con excepciones deliberadas en singular para tablas de
-condicion (`condicion_combatiente`, `condicion_honorario`,
-`condicion_apoyo_economico`, `condicion_incorporado`, `actividad_profesional`,
-`personal_servicio`, `historial_codigo`).
-
-Al agregar una tabla: mirar primero como se llama su vecina en el mismo esquema y
-seguir ese patron, en vez de aplicar una regla general que el repositorio no cumple
-del todo.
->>>>>>> Stashed changes
 
 ## Columnas de auditoria
 
 El patron repetido es `creado_en`, `actualizado_en`, `creado_por`, `actualizado_por`.
-<<<<<<< Updated upstream
 Las de `_por` son `UNIQUEIDENTIFIER NULL` apuntando a `seguridad.usuarios`, en general
 **sin** llave foranea declarada.
-=======
-Las de `_por` son `UNIQUEIDENTIFIER NULL` apuntando a `seguridad.usuarios`, en
-general **sin** llave foranea declarada.
->>>>>>> Stashed changes

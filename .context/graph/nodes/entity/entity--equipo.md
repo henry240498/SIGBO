@@ -19,15 +19,20 @@ terminos: [equipo, equipos, estado, operativo, mantenimiento, daniado, baja, pre
 Entidad Equipo, persistida en equipos.equipos.
 
 - **Tabla:** [[table--equipos-equipos|equipos.equipos]]
-<<<<<<< Updated upstream
 - **Columnas mapeadas:** 19
-=======
-- **Columnas mapeadas:** 17
->>>>>>> Stashed changes
 
 ## Estados y enumeraciones
 
 - `EstadoEquipo`: `OPERATIVO` · `EN_MANTENIMIENTO` · `DANIADO` · `BAJA` · `PRESTADO`
+
+## Donde se usa
+
+- **Pantallas:** `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/registro`, `/dashboard/equipos`, `/dashboard/equipos/[id]`, `/dashboard/equipos/categorias`, `/dashboard/guardias/[id]`, `/dashboard/guardias/grupos`, `/dashboard/guardias/grupos/[id]`, `/dashboard/guardias/ordenes/configuracion`, `/dashboard/guardias/pernoctes`, `/dashboard/guardias/requisitos`, `/dashboard/organizacion/ascensos`, `/dashboard/organizacion/cuarteles`, `/dashboard/organizacion/designaciones`, `/dashboard/organizacion/turnos`, `/dashboard/personal`, `/dashboard/personal/[id]`, `/dashboard/personal/nuevo`, `/dashboard/seguridad/usuarios`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
+- **Endpoints:** EquipamientoBomberoController, EquiposController, InspeccionesMovilController
+- **Servicios:** EquipamientoBomberoService, EquiposService, InspeccionesMovilService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
 
 ## Archivos
 
@@ -42,6 +47,7 @@ Entidad Equipo, persistida en equipos.equipos.
 
 - [[service--equipos-equipamiento-bombero|EquipamientoBomberoService]] `uses` →
 - [[service--equipos-equipos|EquiposService]] `uses` →
+- [[service--guardias-inspecciones-movil|InspeccionesMovilService]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

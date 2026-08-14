@@ -26,6 +26,15 @@ Registro de cada servicio/intervencion (schema servicios).
 - `GravedadServicio`: `LEVE` · `MODERADA` · `GRAVE` · `CRITICA`
 - `EstadoServicio`: `REGISTRADO` · `DESPACHADO` · `EN_CURSO` · `FINALIZADO` · `CANCELADO`
 
+## Donde se usa
+
+- **Pantallas:** `/`, `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/equipos/[id]`, `/dashboard/personal/[id]`, `/dashboard/publicaciones`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
+- **Endpoints:** BitacoraController, ConsultasCruzadasController, DenunciasController, DenunciasPublicasController, PublicacionesController, ServiciosController, VehiculosController
+- **Servicios:** BitacoraService, ConsultasCruzadasService, DenunciasService, PublicacionesService, ServiciosService, VehiculosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/servicio.entity.ts`
@@ -37,13 +46,12 @@ Registro de cada servicio/intervencion (schema servicios).
 
 ## Referenciado por
 
+- [[service--denuncias-denuncias|DenunciasService]] `uses` →
+- [[service--guardias-bitacora|BitacoraService]] `uses` →
 - [[service--personal-consultas-cruzadas|ConsultasCruzadasService]] `uses` →
 - [[service--publicaciones-publicaciones|PublicacionesService]] `uses` →
 - [[service--servicios-servicios|ServiciosService]] `uses` →
-<<<<<<< Updated upstream
 - [[service--vehiculos-vehiculos|VehiculosService]] `uses` →
-=======
->>>>>>> Stashed changes
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

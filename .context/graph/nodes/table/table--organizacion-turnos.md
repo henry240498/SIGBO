@@ -38,6 +38,15 @@ Tabla organizacion.turnos (12 columnas). Creada en 012_organizacion.sql, modific
 | creado_por | UNIQUEIDENTIFIER |
 | actualizado_por | UNIQUEIDENTIFIER |
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/organizacion/turnos`
+- **Endpoints:** TurnosController
+- **Servicios:** DashboardService, TurnosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/012_organizacion.sql`

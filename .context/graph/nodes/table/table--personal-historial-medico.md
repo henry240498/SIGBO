@@ -38,6 +38,11 @@ Tabla personal.historial_medico (12 columnas). Creada en 003_personal.sql, modif
 | creado_en | DATETIMEOFFSET(3) |
 | creado_por | UNIQUEIDENTIFIER |
 
+## Donde se usa
+
+Ningun servicio del backend la referencia hoy. Puede ser estructura
+preparada para una fase siguiente, o codigo muerto: verificar antes de asumir.
+
 ## Archivos
 
 - `database/migrations/003_personal.sql`

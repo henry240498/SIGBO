@@ -45,5 +45,11 @@ Superficie HTTP de eventos asistencia bajo /api/v1/operaciones/eventos.
 - `belongs_to` → [[domain--asistencia|Asistencia]]
 - `exposes` → [[service--operaciones-eventos-asistencia|EventosAsistenciaService]]
 
+## Referenciado por
+
+- [[component--front-asistencia|asistencia]] `calls` →
+- [[component--front-asistencia|asistencia]] `calls` →
+- [[component--front-asistencia|asistencia]] `calls` →
+
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

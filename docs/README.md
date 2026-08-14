@@ -3,6 +3,12 @@
 Las reglas institucionales que condicionan el diseño funcional están documentadas en
 [`REGLAMENTO_GENERAL_CBVC_TRAZABILIDAD.md`](REGLAMENTO_GENERAL_CBVC_TRAZABILIDAD.md).
 
+La operación de rutas para conductores está descrita en
+[`GEOLOCALIZACION_OPERATIVA.md`](GEOLOCALIZACION_OPERATIVA.md).
+
+El canal público y el flujo interno de gestión están documentados en
+[`MODULO_DENUNCIAS_RAPIDAS.md`](MODULO_DENUNCIAS_RAPIDAS.md).
+
 Implementacion inicial del Sistema Integral de Gestion para Bomberos
 Voluntarios, basada en la especificacion de `Proyecto.txt`, adaptada a las
 herramientas disponibles en este equipo.

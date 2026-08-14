@@ -54,15 +54,10 @@ y cambiar los permisos de un rol (que afecta a **todos** sus usuarios).
 
 ## Lo que esta regla NO dice
 
-<<<<<<< Updated upstream
 No hay alcance territorial: un permiso vale para toda la institucion, no por compania
 ni cuartel. Y **no** cubre elegibilidad operativa: tener `guardias:asignar` te deja
 asignar personal, pero quien puede *ser* CHOFER lo decide otra cosa — ver
 [[rule--elegibilidad-de-rol-guardia]].
-=======
-No hay alcance territorial. Un permiso vale para toda la institucion, no por
-compania ni cuartel. Ver [[decision--permisos-dinamicos]].
->>>>>>> Stashed changes
 
 
 ## Archivos

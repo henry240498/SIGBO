@@ -6,17 +6,10 @@
  *
  * Comprueba:
  *   1. Todo wikilink resuelve a un nodo existente.
-<<<<<<< Updated upstream
  *   2. Toda arista apunta a nodos que existen y usa un tipo declarado.
  *   3. Los nodos cumplen el contrato de SCHEMA.md (tipo, nivel, nombre).
  *   4. Los indices estan sincronizados con los nodos en disco.
  *   5. Reporta hallazgos estructurales del repositorio.
-=======
- *   2. Toda arista apunta a nodos que existen.
- *   3. Los nodos curados tienen los campos obligatorios del contrato (SCHEMA.md).
- *   4. Los indices estan sincronizados con los nodos en disco.
- *   5. Reporta hallazgos estructurales: entidades huerfanas, tablas sin entidad.
->>>>>>> Stashed changes
  *
  * Sale con codigo 1 si hay errores (util en un hook o en CI).
  */
@@ -31,11 +24,6 @@ const CONTEXT_DIR = dirname(GRAPH_DIR);
 const errores = [];
 const avisos = [];
 
-<<<<<<< Updated upstream
-=======
-// ------------------------------------------------------------------- carga
-
->>>>>>> Stashed changes
 const idxPath = join(GRAPH_DIR, 'indexes', 'nodes.json');
 if (!existsSync(idxPath)) {
   console.error('No hay indices. Corre primero: node .context/graph/build-graph.mjs');
@@ -43,10 +31,6 @@ if (!existsSync(idxPath)) {
 }
 const nodes = JSON.parse(readFileSync(idxPath, 'utf8'));
 const ids = new Set(nodes.map((n) => n.id));
-<<<<<<< Updated upstream
-=======
-const byId = new Map(nodes.map((n) => [n.id, n]));
->>>>>>> Stashed changes
 
 const edgesPath = join(GRAPH_DIR, 'edges', 'edges.jsonl');
 const edges = existsSync(edgesPath)
@@ -94,11 +78,7 @@ for (const e of edges) {
   if (!TIPOS_ARISTA.has(e.tipo)) errores.push(`tipo de arista no declarado en SCHEMA.md: ${e.tipo}`);
 }
 
-<<<<<<< Updated upstream
 // ------------------------------------------- 3. contrato de nodos
-=======
-// ------------------------------------------- 3. contrato de nodos curados
->>>>>>> Stashed changes
 
 const TIPOS_NODO = new Set(['DOMAIN', 'ENTITY', 'TABLE', 'SERVICE', 'API', 'SCREEN',
   'COMPONENT', 'CONFIGURATION', 'FILE', 'WORKFLOW', 'RULE', 'DECISION', 'DEPENDENCY',
@@ -113,10 +93,6 @@ for (const n of nodes) {
   if (n.curado && !n.terminos?.length) avisos.push(`nodo curado sin terminos de busqueda: ${n.id}`);
 }
 
-<<<<<<< Updated upstream
-=======
-// curados: verificar que existan en disco y declaren severidad si son RULE/ERROR
->>>>>>> Stashed changes
 const curados = walkMd(join(GRAPH_DIR, 'curated'));
 for (const f of curados) {
   const txt = readFileSync(f, 'utf8');
@@ -127,12 +103,7 @@ for (const f of curados) {
   if ((tipo === 'RULE' || tipo === 'ERROR') && !/^severidad:/m.test(txt)) {
     avisos.push(`${tipo} sin severidad: ${id}`);
   }
-<<<<<<< Updated upstream
   if (basename(f) !== `${id}.md`) avisos.push(`nombre de archivo != id: ${rel(f)} (esperado ${id}.md)`);
-=======
-  const esperado = `${id}.md`;
-  if (basename(f) !== esperado) avisos.push(`nombre de archivo != id: ${rel(f)} (esperado ${esperado})`);
->>>>>>> Stashed changes
 }
 
 // -------------------------------------- 4. indices sincronizados con disco
@@ -142,25 +113,42 @@ if (enDisco !== nodes.length) {
   errores.push(`desincronizacion: ${enDisco} nodos en disco vs ${nodes.length} en nodes.json. Regenera el grafo.`);
 }
 
+// ------------------------- 4.5 numeracion de migraciones (rule--migracion-nunca-se-edita)
+
+const MIGRACIONES = join(dirname(CONTEXT_DIR), 'database', 'migrations');
+if (existsSync(MIGRACIONES)) {
+  const sql = readdirSync(MIGRACIONES).filter((f) => f.endsWith('.sql')).sort();
+  const porPrefijo = new Map();
+  for (const f of sql) {
+    const m = /^(\d+)_/.exec(f);
+    if (!m) { avisos.push(`migracion sin prefijo numerico: ${f}`); continue; }
+    if (!porPrefijo.has(m[1])) porPrefijo.set(m[1], []);
+    porPrefijo.get(m[1]).push(f);
+  }
+  for (const [prefijo, archivos] of porPrefijo) {
+    if (archivos.length > 1) {
+      // No es un error del grafo, es un riesgo real del esquema: con dos archivos
+      // del mismo numero el orden depende del filesystem, no de la numeracion.
+      avisos.push(`prefijo de migracion duplicado ${prefijo}: ${archivos.join(' + ')} — el orden de ejecucion no esta garantizado`);
+    }
+  }
+  const numeros = [...porPrefijo.keys()].map(Number).sort((a, b) => a - b);
+  const ultimo = numeros[numeros.length - 1];
+  console.log(`Migraciones: ${sql.length} archivos, ultimo prefijo ${String(ultimo).padStart(3, '0')}. `
+    + `El siguiente libre es ${String(ultimo + 1).padStart(3, '0')}.\n`);
+}
+
 // ------------------------------------------- 5. hallazgos estructurales
 
 const stats = JSON.parse(readFileSync(join(GRAPH_DIR, 'indexes', 'stats.json'), 'utf8'));
 const huecos = stats.huecos ?? {};
 
-<<<<<<< Updated upstream
-=======
-// nodos sin ninguna arista: sospechoso, salvo lo que legitimamente va solo
->>>>>>> Stashed changes
 const conArista = new Set(edges.flatMap((e) => [e.from, e.to]));
 const planificados = [];
 const solos = [];
 for (const n of nodes) {
   if (conArista.has(n.id)) continue;
   if (['DEPENDENCY', 'FILE'].includes(n.tipo)) continue;
-<<<<<<< Updated upstream
-=======
-  // un dominio declarado pero no construido no tiene con que relacionarse: es esperado
->>>>>>> Stashed changes
   if (n.tipo === 'DOMAIN' && (n.estado === 'PLANIFICADO' || n.estado === 'SOLO_BD')) {
     planificados.push(n.nombre);
     continue;
@@ -176,12 +164,8 @@ console.log(`  ${nodes.length} nodos · ${edges.length} aristas · ${mdFiles.len
 
 if (errores.length) {
   console.log(`ERRORES (${errores.length}):`);
-<<<<<<< Updated upstream
   errores.slice(0, 30).forEach((e) => console.log(`  x ${e}`));
   if (errores.length > 30) console.log(`  ... y ${errores.length - 30} mas`);
-=======
-  errores.forEach((e) => console.log(`  x ${e}`));
->>>>>>> Stashed changes
   console.log('');
 }
 if (avisos.length) {
@@ -198,13 +182,9 @@ if (planificados.length) {
 
 console.log('Hallazgos estructurales del repositorio (no son errores del grafo):');
 for (const [k, v] of Object.entries(huecos)) {
-<<<<<<< Updated upstream
   if (Array.isArray(v) && v.length) {
     console.log(`  ${k}: ${v.length}  -> ${v.slice(0, 4).join(', ')}${v.length > 4 ? ', ...' : ''}`);
   }
-=======
-  if (Array.isArray(v) && v.length) console.log(`  ${k}: ${v.length}  -> ${v.slice(0, 4).join(', ')}${v.length > 4 ? ', ...' : ''}`);
->>>>>>> Stashed changes
 }
 if (stats.advertencias?.length) {
   console.log('\nAdvertencias del generador:');

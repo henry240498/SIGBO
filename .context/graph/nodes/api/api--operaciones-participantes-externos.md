@@ -40,5 +40,11 @@ Superficie HTTP de participantes externos bajo /api/v1/operaciones/externos.
 - `belongs_to` → [[domain--asistencia|Asistencia]]
 - `exposes` → [[service--operaciones-participantes-externos|ParticipantesExternosService]]
 
+## Referenciado por
+
+- [[component--front-asistencia|asistencia]] `calls` →
+- [[component--front-asistencia|asistencia]] `calls` →
+- [[component--front-asistencia|asistencia]] `calls` →
+
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

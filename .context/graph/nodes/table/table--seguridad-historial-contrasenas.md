@@ -34,6 +34,15 @@ Tabla seguridad.historial_contrasenas (4 columnas). Creada en 011_seguridad_fase
 | password_hash | NVARCHAR(255) |
 | creado_en | DATETIMEOFFSET(3) |
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/mi-perfil`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Endpoints:** MeController, UsuariosController
+- **Servicios:** UsuariosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/011_seguridad_fase1.sql`

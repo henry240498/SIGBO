@@ -11,11 +11,7 @@ edges:
   - [affects, table--personal-bomberos]
 ---
 
-<<<<<<< Updated upstream
 ## El invariante, repetido en las 87 tablas
-=======
-## El invariante, repetido en las 80 tablas
->>>>>>> Stashed changes
 
 ```sql
 id UNIQUEIDENTIFIER NOT NULL CONSTRAINT DF_<tabla>_id DEFAULT NEWSEQUENTIALID(),
@@ -32,20 +28,14 @@ fragmentacion y division de paginas en cada insercion. `NEWSEQUENTIALID()` gener
 valores crecientes: las inserciones van al final del indice.
 
 El costo es que los GUIDs resultan **parcialmente predecibles**. Como los ids
-<<<<<<< Updated upstream
 aparecen en URLs (`/dashboard/personal/[id]`, `/dashboard/guardias/[id]`), no hay que
 tratarlos como secretos: la autorizacion la da el permiso, nunca la dificultad de
 adivinar un id.
-=======
-aparecen en URLs (`/dashboard/personal/[id]`), no hay que tratarlos como secretos:
-la autorizacion la da el permiso, nunca la dificultad de adivinar un id.
->>>>>>> Stashed changes
 
 ## Por que DATETIMEOFFSET(3) y no DATETIME2
 
 Guarda el offset de zona horaria. La institucion opera en `America/Asuncion`, que
 tiene horario de verano: un `DATETIME2` sin offset vuelve ambiguas las marcaciones de
-<<<<<<< Updated upstream
 asistencia y los pernoctes en la noche del cambio de hora — exactamente el dato que no
 puede quedar ambiguo.
 
@@ -57,17 +47,3 @@ Copiar el encabezado de una migracion reciente (`025_guardias.sql` es el molde m
 actual) en vez de escribirlo de memoria: tiene los elementos —PK, defaults,
 timestamps, constraints nombrados, `GO`, creacion idempotente— en la forma que el
 resto del esquema ya usa.
-=======
-asistencia en la noche del cambio de hora — exactamente el dato que no puede quedar
-ambiguo.
-
-`precision: 3` = milisegundos. Suficiente para marcaciones y mas liviano que el
-default de 7 digitos.
-
-## Al escribir una tabla nueva
-
-Copiar el encabezado de una migracion reciente
-(`017_comunicaciones_servicio.sql` es un buen molde) en vez de escribirlo de memoria:
-tiene los cinco elementos —PK, defaults, timestamps, constraints nombrados, `GO`— en
-la forma que el resto del esquema ya usa.
->>>>>>> Stashed changes

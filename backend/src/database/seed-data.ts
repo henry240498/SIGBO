@@ -49,6 +49,13 @@ export const PERMISOS: PermisoSeed[] = [
   { nombre: 'servicios:finalizar', recurso: 'servicios', accion: 'finalizar', categoria: 'Servicios' },
   { nombre: 'servicios:ver_gps', recurso: 'servicios', accion: 'ver_gps', categoria: 'Servicios' },
   { nombre: 'servicios:exportar_informe', recurso: 'servicios', accion: 'exportar_informe', categoria: 'Servicios' },
+  // DENUNCIAS
+  { nombre: 'denuncias:ver', recurso: 'denuncias', accion: 'ver', categoria: 'Denuncias' },
+  { nombre: 'denuncias:gestionar', recurso: 'denuncias', accion: 'gestionar', categoria: 'Denuncias' },
+  { nombre: 'denuncias:asignar', recurso: 'denuncias', accion: 'asignar', categoria: 'Denuncias' },
+  { nombre: 'denuncias:cerrar', recurso: 'denuncias', accion: 'cerrar', categoria: 'Denuncias' },
+  { nombre: 'denuncias:ver_datos_tecnicos', recurso: 'denuncias', accion: 'ver_datos_tecnicos', categoria: 'Denuncias' },
+  { nombre: 'denuncias:configurar_categorias', recurso: 'denuncias', accion: 'configurar_categorias', categoria: 'Denuncias' },
   // VEHICULOS
   { nombre: 'vehiculos:ver', recurso: 'vehiculos', accion: 'ver', categoria: 'Vehiculos' },
   { nombre: 'vehiculos:crear', recurso: 'vehiculos', accion: 'crear', categoria: 'Vehiculos' },

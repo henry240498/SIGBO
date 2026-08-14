@@ -21,6 +21,15 @@ Una poliza de seguro de un bombero. Relacion 1:N (un voluntario puede tener vari
 - **Tabla:** [[table--personal-seguros-bombero|personal.seguros_bombero]]
 - **Columnas mapeadas:** 11
 
+## Donde se usa
+
+- **Pantallas:** — (sin pantalla que llegue hasta aca)
+- **Endpoints:** SegurosBomberoController
+- **Servicios:** SegurosBomberoService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/seguro-bombero.entity.ts`

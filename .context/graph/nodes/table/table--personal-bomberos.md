@@ -4,7 +4,7 @@ tipo: TABLE
 nombre: personal.bomberos
 nivel: L2
 dominio: personal
-resumen: Tabla personal.bomberos (65 columnas). Creada en 003_personal.sql, modificada por 009_foreign_keys.sql, 012_organizacion.sql, 016_personal_expansion.sql, 017_tipos_bombero.sql, 018_parametros_y_normalizacion_personal.sql.
+resumen: Tabla personal.bomberos (70 columnas). Creada en 003_personal.sql, modificada por 009_foreign_keys.sql, 012_organizacion.sql, 016_personal_expansion.sql, 017_tipos_bombero.sql, 018_parametros_y_normalizacion_personal.sql, 026_guardias_planificacion.sql.
 tabla: bomberos
 archivos:
   - database/migrations/003_personal.sql
@@ -13,6 +13,7 @@ archivos:
   - database/migrations/016_personal_expansion.sql
   - database/migrations/017_tipos_bombero.sql
   - database/migrations/018_parametros_y_normalizacion_personal.sql
+  - database/migrations/026_guardias_planificacion.sql
 edges:
   - [defined_in, file--003-personal]
   - [belongs_to, domain--personal]
@@ -21,15 +22,16 @@ terminos: [personal, bomberos, cedula, nombre, apellido, fecha, nacimiento, sexo
 
 # personal.bomberos
 
-Tabla personal.bomberos (65 columnas). Creada en 003_personal.sql, modificada por 009_foreign_keys.sql, 012_organizacion.sql, 016_personal_expansion.sql, 017_tipos_bombero.sql, 018_parametros_y_normalizacion_personal.sql.
+Tabla personal.bomberos (70 columnas). Creada en 003_personal.sql, modificada por 009_foreign_keys.sql, 012_organizacion.sql, 016_personal_expansion.sql, 017_tipos_bombero.sql, 018_parametros_y_normalizacion_personal.sql, 026_guardias_planificacion.sql.
 
-- **Esquema:** personal · **Columnas:** 65
+- **Esquema:** personal · **Columnas:** 70
 - **UNIQUE:** `cedula`, `numero_bombero`
 
 ## Restricciones CHECK (reglas que la BD impone)
 
 - `estado IN ('ASPIRANTE','ACTIVO','SUSPENDIDO','LICENCIA','RETIRADO','FALLECIDO','HONORARIO')`
 - `condicion_institucional IS NULL OR condicion_institucional IN ('INCORPORADO','COMBATIENTE','APOYO_ECONOMICO','HONORARIO')`
+- `dia_preferente_guardia IN ('NINGUNA','LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO')`
 
 ## Columnas
 
@@ -100,6 +102,20 @@ Tabla personal.bomberos (65 columnas). Creada en 003_personal.sql, modificada po
 | barrio_id | UNIQUEIDENTIFIER |
 | grupo_sanguineo_id | UNIQUEIDENTIFIER |
 | factor_rh_id | UNIQUEIDENTIFIER |
+| realiza_guardias | BIT |
+| realiza_guardias_especiales | BIT |
+| frecuencia_normal_mensual | INT |
+| frecuencia_especial_mensual | INT |
+| dia_preferente_guardia | NVARCHAR(10) |
+
+## Donde se usa
+
+- **Pantallas:** `/`, `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`, `/dashboard/guardias`, `/dashboard/guardias/[id]`, `/dashboard/guardias/esquemas-horario`, `/dashboard/guardias/generar`, `/dashboard/guardias/grupos`, `/dashboard/guardias/grupos/[id]`, `/dashboard/guardias/ordenes`, `/dashboard/guardias/ordenes/[id]`, `/dashboard/guardias/ordenes/configuracion`, `/dashboard/guardias/ordenes/nueva`, `/dashboard/guardias/pernoctes`, `/dashboard/guardias/requisitos`, `/dashboard/guardias/sorteos`, `/dashboard/guardias/sorteos/[id]`, `/dashboard/organizacion/ascensos`, `/dashboard/organizacion/designaciones`, `/dashboard/organizacion/feriados`, `/dashboard/personal/[id]`, `/dashboard/publicaciones`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`
+- **Endpoints:** ActividadProfesionalController, AscensosController, BitacoraController, BomberosController, CondicionController, DesignacionesController, EspecialidadesBomberoController, EventosAsistenciaController, FojaServicioController, GruposGuardiaController, GuardiasController, HistorialInstitucionalController, IdiomasController, ImportacionesController, MarcacionesController, NovedadesController, OrdenesGuardiaController, PernoctesController, PublicacionesController, SegurosBomberoController, ServiciosController, SorteosController
+- **Servicios:** ActividadProfesionalService, AscensosService, BitacoraService, BomberosService, CondicionService, DesignacionesService, ElegibilidadService, EspecialidadesBomberoService, EventosAsistenciaService, FojaServicioService, GeneracionService, GruposGuardiaService, GuardiasService, HistorialInstitucionalService, IdiomasService, ImportacionesService, MarcacionesService, NovedadesService, OrdenesGuardiaService, PernoctesService, PublicacionesService, SegurosBomberoService, ServiciosService, SorteosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
 
 ## Archivos
 
@@ -109,6 +125,7 @@ Tabla personal.bomberos (65 columnas). Creada en 003_personal.sql, modificada po
 - `database/migrations/016_personal_expansion.sql`
 - `database/migrations/017_tipos_bombero.sql`
 - `database/migrations/018_parametros_y_normalizacion_personal.sql`
+- `database/migrations/026_guardias_planificacion.sql`
 
 ## Relaciones
 
@@ -133,24 +150,23 @@ Tabla personal.bomberos (65 columnas). Creada en 003_personal.sql, modificada po
 - [[table--personal-seguros-bombero|personal.seguros_bombero]] `references` →
 - [[table--operaciones-participantes-evento|operaciones.participantes_evento]] `references` →
 - [[table--operaciones-importaciones-marcador-filas|operaciones.importaciones_marcador_filas]] `references` →
-<<<<<<< Updated upstream
 - [[table--operaciones-grupos-guardia|operaciones.grupos_guardia]] `references` →
 - [[table--operaciones-grupos-guardia-miembros|operaciones.grupos_guardia_miembros]] `references` →
 - [[table--operaciones-pernoctes|operaciones.pernoctes]] `references` →
 - [[table--operaciones-inspecciones-estacion|operaciones.inspecciones_estacion]] `references` →
 - [[table--operaciones-novedades-guardia|operaciones.novedades_guardia]] `references` →
+- [[table--operaciones-sorteo-participantes|operaciones.sorteo_participantes]] `references` →
 - [[entity--bombero|Bombero]] `persisted_in` →
+- [[service--guardias-bitacora|BitacoraService]] `reads` →
 - [[service--guardias-elegibilidad|ElegibilidadService]] `reads` →
+- [[service--guardias-generacion|GeneracionService]] `reads` →
 - [[service--guardias-grupos-guardia|GruposGuardiaService]] `reads` →
 - [[service--guardias-guardias|GuardiasService]] `reads` →
 - [[service--guardias-novedades|NovedadesService]] `reads` →
+- [[service--guardias-ordenes-guardia|OrdenesGuardiaService]] `reads` →
 - [[service--guardias-pernoctes|PernoctesService]] `reads` →
+- [[service--guardias-sorteos|SorteosService]] `reads` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `reads` →
-=======
-- [[entity--bombero|Bombero]] `persisted_in` →
-- [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `reads` →
-- [[service--operaciones-guardias|GuardiasService]] `reads` →
->>>>>>> Stashed changes
 - [[service--operaciones-importaciones|ImportacionesService]] `reads` →
 - [[service--operaciones-marcaciones|MarcacionesService]] `reads` →
 - [[service--organizacion-ascensos|AscensosService]] `reads` →

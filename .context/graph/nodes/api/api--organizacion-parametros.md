@@ -49,6 +49,8 @@ Superficie HTTP de parametros bajo /api/v1/organizacion/parametros.
 - [[screen--dashboard-organizacion-parametros|/dashboard/organizacion/parametros]] `calls` →
 - [[screen--dashboard-organizacion-parametros|/dashboard/organizacion/parametros]] `calls` →
 - [[screen--dashboard-organizacion-parametros|/dashboard/organizacion/parametros]] `calls` →
+- [[component--front-parametros|parametros]] `calls` →
+- [[component--front-parametros|parametros]] `calls` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

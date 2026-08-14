@@ -16,26 +16,17 @@ edges:
 
 `synchronize: false` en `data-source-options.ts`. La estructura de la base se
 define exclusivamente en `database/migrations/NNN_nombre.sql`, ejecutados en orden
-<<<<<<< Updated upstream
 numerico por `database/run-migrations.ps1`. Hoy son **27 migraciones**, hasta
 `025_guardias.sql`.
-=======
-numerico por `database/run-migrations.ps1`.
->>>>>>> Stashed changes
 
 ## Motivo
 
 `synchronize: true` habria borrado o alterado columnas en produccion siguiendo los
-<<<<<<< Updated upstream
 cambios de las entidades. Con 87 tablas y datos reales de 164 personas cargadas, un
-=======
-cambios de las entidades. Con 80 tablas y datos reales de 164 personas cargadas, un
->>>>>>> Stashed changes
 DROP automatico no es un riesgo aceptable.
 
 ## Consecuencias que hay que respetar
 
-<<<<<<< Updated upstream
 1. **La entidad no crea la tabla.** Agregar una propiedad `@Column` no agrega la
    columna: hace falta una migracion. Si se olvida, TypeORM falla en tiempo de
    ejecucion al consultar una columna inexistente. Ver
@@ -50,17 +41,6 @@ DROP automatico no es un riesgo aceptable.
 La migracion 014 **renombra** una tabla con `sp_rename`. Por eso el generador del
 grafo aplica las migraciones en orden (renames, `ALTER`, `DROP`) en vez de solo leer
 los `CREATE TABLE`: de otro modo describiria un esquema que ya no existe.
-=======
-1. **La entidad no crea la tabla.** Agregar una propiedad `@Column` a una entidad no
-   agrega la columna: hace falta una migracion. Si se olvida, TypeORM falla en tiempo
-   de ejecucion al consultar una columna inexistente. Ver
-   [[rule--entidad-y-tabla-en-paralelo]].
-2. **Las migraciones ya aplicadas son inmutables.** Ver [[rule--migracion-nunca-se-edita]].
-3. El numero de migracion mas alto es el estado del esquema. Hoy hay **dos** archivos
-   con prefijo `017` (`017_comunicaciones_servicio.sql` y `017_tipos_bombero.sql`):
-   la numeracion ya colisiono una vez, hay que verificar el prefijo libre antes de
-   crear una migracion nueva.
->>>>>>> Stashed changes
 
 ## Nota sobre el estado real
 

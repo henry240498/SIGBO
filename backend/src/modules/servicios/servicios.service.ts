@@ -309,6 +309,8 @@ export class ServiciosService {
       fechaHoraFin: enBase ? this.fechaHora(fecha, enBase, salida) : null,
       direccion: this.textoCampo(formulario, 'direccion'),
       ciudad: this.textoCampo(formulario, 'localidad') || null,
+      coordenadasLat: this.coordenada(formulario.coordenadasLat, 'latitud', -90, 90),
+      coordenadasLon: this.coordenada(formulario.coordenadasLon, 'longitud', -180, 180),
       descripcion: this.textoCampo(formulario, 'tareasEjecutadas', 'tareas') || null,
       informe: this.textoCampo(formulario, 'datosInteres') || null,
       tiempoTotalMinutos: this.duracion(salida, enBase),
@@ -357,6 +359,7 @@ export class ServiciosService {
     this.validarPersonas(this.valorCampo(formulario, 'personas', 'personasInvolucradas'));
     this.validarMoviles(formulario, alFinalizar);
     this.validarOtros(tipo, formulario, alFinalizar);
+    this.validarCoordenadas(formulario);
   }
 
   private validarMoviles(formulario: Formulario, alFinalizar: boolean) {
@@ -510,6 +513,26 @@ export class ServiciosService {
   private esOtro(valor: string) { return this.normalizarBusqueda(valor).startsWith('otro'); }
   private normalizarBusqueda(valor: string) { return valor.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
   private tieneValor(valor: unknown) { return valor !== undefined && valor !== null && valor !== ''; }
+  private coordenada(valor: unknown, etiqueta: string, min: number, max: number): number | null {
+    if (!this.tieneValor(valor)) return null;
+    const numero = Number(valor);
+    if (!Number.isFinite(numero) || numero < min || numero > max) {
+      throw new BadRequestException(`La ${etiqueta} de la ubicación no es válida`);
+    }
+    return numero;
+  }
+
+  private validarCoordenadas(formulario: Formulario) {
+    const tieneLatitud = this.tieneValor(formulario.coordenadasLat);
+    const tieneLongitud = this.tieneValor(formulario.coordenadasLon);
+    if (tieneLatitud !== tieneLongitud) {
+      throw new BadRequestException('La ubicación requiere latitud y longitud');
+    }
+    if (tieneLatitud) {
+      this.coordenada(formulario.coordenadasLat, 'latitud', -90, 90);
+      this.coordenada(formulario.coordenadasLon, 'longitud', -180, 180);
+    }
+  }
   private esFecha(valor: string) { const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(valor); if (!match) return false; const fecha = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]))); return fecha.getUTCFullYear() === Number(match[1]) && fecha.getUTCMonth() === Number(match[2]) - 1 && fecha.getUTCDate() === Number(match[3]); }
   private esHora(valor: string) { return /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(valor); }
   private validarDecimalNoNegativo(valor: unknown, etiqueta: string): number | null {

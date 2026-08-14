@@ -17,6 +17,8 @@ edges:
   - [reads, table--operaciones-grupos-guardia-miembros]
   - [uses, entity--bombero]
   - [reads, table--personal-bomberos]
+  - [uses, entity--guardia]
+  - [reads, table--operaciones-guardias]
   - [uses, service--guardias-elegibilidad]
   - [uses, service--seguridad-auditoria]
 terminos: [grupos, guardia, guardias, grupo, miembro, bombero]
@@ -29,7 +31,7 @@ Logica de negocio de grupos guardia (modulo guardias).
 
 ## Metodos
 
-`findAll()` · `findOne()` · `create()` · `update()` · `listarMiembros()` · `agregarMiembro()` · `quitarMiembro()`
+`findAll()` · `findOne()` · `create()` · `update()` · `historial()` · `listarMiembros()` · `agregarMiembro()` · `quitarMiembro()`
 
 ## Archivos
 
@@ -45,6 +47,8 @@ Logica de negocio de grupos guardia (modulo guardias).
 - `reads` → [[table--operaciones-grupos-guardia-miembros|operaciones.grupos_guardia_miembros]]
 - `uses` → [[entity--bombero|Bombero]]
 - `reads` → [[table--personal-bomberos|personal.bomberos]]
+- `uses` → [[entity--guardia|Guardia]]
+- `reads` → [[table--operaciones-guardias|operaciones.guardias]]
 - `uses` → [[service--guardias-elegibilidad|ElegibilidadService]]
 - `uses` → [[service--seguridad-auditoria|AuditoriaService]]
 

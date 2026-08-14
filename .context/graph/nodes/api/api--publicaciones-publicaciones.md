@@ -32,10 +32,6 @@ Superficie HTTP de publicaciones bajo /api/v1/publicaciones.
 | POST | `/publicaciones` | `publicaciones:administrar` o `seguridad:configurar_apariencia` |
 | PUT | `/publicaciones/:id` | `publicaciones:administrar` o `seguridad:configurar_apariencia` |
 | DELETE | `/publicaciones/:id` | `publicaciones:administrar` o `seguridad:configurar_apariencia` |
-<<<<<<< Updated upstream
-=======
-| PUT | `/publicaciones` | `publicaciones:administrar` o `seguridad:configurar_apariencia` |
->>>>>>> Stashed changes
 
 ## Archivos
 
@@ -45,6 +41,12 @@ Superficie HTTP de publicaciones bajo /api/v1/publicaciones.
 
 - `belongs_to` → [[domain--publicaciones|Publicaciones]]
 - `exposes` → [[service--publicaciones-publicaciones|PublicacionesService]]
+
+## Referenciado por
+
+- [[component--front-publicaciones|publicaciones]] `calls` →
+- [[component--front-publicaciones|publicaciones]] `calls` →
+- [[component--front-publicaciones|publicaciones]] `calls` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

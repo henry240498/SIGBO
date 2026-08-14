@@ -20,7 +20,6 @@ Kubernetes para orquestacion.
 
 ## Decision
 
-<<<<<<< Updated upstream
 Un solo proceso NestJS con **11 modulos**: `AuthModule`, `SeguridadModule`,
 `PersonalModule`, `OrganizacionModule`, `VehiculosModule`, `EquiposModule`,
 `ServiciosModule`, `PublicacionesModule`, `OperacionesModule`, `GuardiasModule`,
@@ -29,14 +28,6 @@ Un solo proceso NestJS con **11 modulos**: `AuthModule`, `SeguridadModule`,
 Los limites entre modulos se respetan por convencion: cada modulo tiene sus
 controladores, servicios y DTOs, y comparte unicamente las entidades de
 `backend/src/shared/entities/`.
-=======
-Un solo proceso NestJS con **10 modulos**: `AuthModule`, `SeguridadModule`,
-`PersonalModule`, `OrganizacionModule`, `VehiculosModule`, `EquiposModule`,
-`ServiciosModule`, `PublicacionesModule`, `OperacionesModule`,
-`ConfiguracionModule`. Los limites entre modulos se respetan por convencion: cada
-modulo tiene sus controladores, servicios y DTOs, y comparte unicamente las
-entidades de `backend/src/shared/entities/`.
->>>>>>> Stashed changes
 
 ## Motivo
 
@@ -51,13 +42,10 @@ voluntarios sin equipo de plataforma.
   `historial_codigo`, `fojas_servicio`).
 - Sin busqueda full-text: las consultas van directo a SQL Server.
 - Escalado solo vertical.
-<<<<<<< Updated upstream
 - Los limites modulares **no los fuerza nada**: cualquier servicio puede importar
   cualquier entidad. La separacion depende de disciplina, no del compilador. El caso
   de Guardias lo muestra: es un modulo propio cuyas tablas viven en el esquema
   `operaciones` — ver [[rule--guardias-vive-en-operaciones]].
-=======
->>>>>>> Stashed changes
 
 ## Cuando reconsiderar
 

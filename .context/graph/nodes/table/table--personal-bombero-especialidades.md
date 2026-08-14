@@ -43,6 +43,15 @@ Tabla personal.bombero_especialidades (9 columnas). Creada en 012_organizacion.s
 | institucion_certificadora | NVARCHAR(200) |
 | vigencia | DATE |
 
+## Donde se usa
+
+- **Pantallas:** — (sin pantalla que llegue hasta aca)
+- **Endpoints:** EspecialidadesBomberoController, FojaServicioController
+- **Servicios:** EspecialidadesBomberoService, FojaServicioService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/012_organizacion.sql`

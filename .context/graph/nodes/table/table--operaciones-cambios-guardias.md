@@ -37,6 +37,11 @@ Tabla operaciones.cambios_guardias (11 columnas). Creada en 005_operaciones.sql,
 | fecha_aprobacion | DATETIMEOFFSET(3) |
 | observaciones | NVARCHAR(MAX) |
 
+## Donde se usa
+
+Ningun servicio del backend la referencia hoy. Puede ser estructura
+preparada para una fase siguiente, o codigo muerto: verificar antes de asumir.
+
 ## Archivos
 
 - `database/migrations/005_operaciones.sql`

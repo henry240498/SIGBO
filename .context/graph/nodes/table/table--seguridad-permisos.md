@@ -36,6 +36,15 @@ Tabla seguridad.permisos (10 columnas). Creada en 002_seguridad.sql.
 | creado_en | DATETIMEOFFSET(3) |
 | actualizado_en | DATETIMEOFFSET(3) |
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/mi-perfil`, `/dashboard/organizacion`, `/dashboard/seguridad`, `/dashboard/seguridad/permisos`, `/dashboard/seguridad/roles`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Endpoints:** DashboardController, DashboardController, MeController, PermisosController, RolesController, UsuariosController
+- **Servicios:** DashboardService, PermisosService, PolicyEngineService, RolesService, UsuariosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/002_seguridad.sql`

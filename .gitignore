@@ -29,16 +29,4 @@ Thumbs.db
 # Editor
 .vscode/
 .idea/
-<<<<<<< Updated upstream
 .context/.obsidian/workspace.json
-=======
-
-# .context/ SI se versiona: es el indice semantico compartido del repositorio
-# (ver .context/INDEX.md). Solo se ignora el estado local de Obsidian, que es
-# por usuario y cambia con cada apertura del vault.
-.context/.obsidian/workspace.json
-.context/.obsidian/workspace-mobile.json
-.context/.obsidian/cache
-.context/.obsidian/plugins/
-.context/.obsidian/themes/
->>>>>>> Stashed changes

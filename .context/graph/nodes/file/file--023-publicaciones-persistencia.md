@@ -18,9 +18,5 @@ Migracion SQL 023_publicaciones_persistencia.sql.
 
 - `database/migrations/023_publicaciones_persistencia.sql`
 
-## Referenciado por
-
-- [[table--contenido-publicaciones|contenido.publicaciones]] `defined_in` →
-
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

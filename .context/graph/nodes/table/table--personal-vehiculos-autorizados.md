@@ -41,6 +41,15 @@ Tabla personal.vehiculos_autorizados (8 columnas). Creada en 016_personal_expans
 | capacitaciones | NVARCHAR(MAX) |
 | creado_en | DATETIMEOFFSET(3) |
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/guardias`, `/dashboard/guardias/[id]`, `/dashboard/guardias/esquemas-horario`, `/dashboard/guardias/generar`, `/dashboard/guardias/grupos`, `/dashboard/guardias/grupos/[id]`, `/dashboard/guardias/ordenes`, `/dashboard/guardias/ordenes/[id]`, `/dashboard/guardias/ordenes/configuracion`, `/dashboard/guardias/ordenes/nueva`, `/dashboard/guardias/pernoctes`, `/dashboard/guardias/requisitos`, `/dashboard/guardias/sorteos`, `/dashboard/guardias/sorteos/[id]`, `/dashboard/organizacion/feriados`, `/dashboard/personal/[id]`
+- **Endpoints:** OrdenesGuardiaController, VehiculosAutorizadosController
+- **Servicios:** ElegibilidadService, OrdenesGuardiaService, VehiculosAutorizadosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/016_personal_expansion.sql`
@@ -55,10 +64,8 @@ Tabla personal.vehiculos_autorizados (8 columnas). Creada en 016_personal_expans
 ## Referenciado por
 
 - [[entity--vehiculo-autorizado|VehiculoAutorizado]] `persisted_in` →
-<<<<<<< Updated upstream
 - [[service--guardias-elegibilidad|ElegibilidadService]] `reads` →
-=======
->>>>>>> Stashed changes
+- [[service--guardias-ordenes-guardia|OrdenesGuardiaService]] `reads` →
 - [[service--vehiculos-vehiculos-autorizados|VehiculosAutorizadosService]] `reads` →
 
 ---

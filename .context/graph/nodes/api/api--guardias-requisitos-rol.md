@@ -40,5 +40,11 @@ Superficie HTTP de requisitos rol bajo /api/v1/guardias/requisitos-rol.
 - `belongs_to` → [[domain--guardias|Guardias]]
 - `exposes` → [[service--guardias-requisitos-rol|RequisitosRolService]]
 
+## Referenciado por
+
+- [[component--front-guardias|guardias]] `calls` →
+- [[component--front-guardias|guardias]] `calls` →
+- [[component--front-guardias|guardias]] `calls` →
+
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

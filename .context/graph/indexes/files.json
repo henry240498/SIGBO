@@ -12,6 +12,7 @@
   "domain--deposito",
   "domain--documentos",
   "domain--publicaciones",
+  "domain--denuncias",
   "domain--seguridad",
   "domain--inteligencia",
   "component--front-modulos",
@@ -51,18 +52,18 @@
  "backend/src/shared/entities/cargo.entity.ts": [
   "entity--cargo"
  ],
+ "backend/src/shared/entities/categoria-denuncia.entity.ts": [
+  "entity--categoria-denuncia"
+ ],
  "backend/src/shared/entities/categoria-equipo.entity.ts": [
   "entity--categoria-equipo"
  ],
  "backend/src/shared/entities/certificacion.entity.ts": [
   "entity--certificacion"
  ],
-<<<<<<< Updated upstream
  "backend/src/shared/entities/checklist-item-vehiculo.entity.ts": [
   "entity--checklist-item-vehiculo"
  ],
-=======
->>>>>>> Stashed changes
  "backend/src/shared/entities/compania.entity.ts": [
   "entity--compania"
  ],
@@ -91,17 +92,17 @@
  "backend/src/shared/entities/configuracion-version.entity.ts": [
   "entity--configuracion-version"
  ],
-<<<<<<< Updated upstream
  "backend/src/shared/entities/consumo-combustible.entity.ts": [
   "entity--consumo-combustible"
  ],
-=======
->>>>>>> Stashed changes
  "backend/src/shared/entities/cuartel.entity.ts": [
   "entity--cuartel"
  ],
  "backend/src/shared/entities/curso.entity.ts": [
   "entity--curso"
+ ],
+ "backend/src/shared/entities/denuncia.entity.ts": [
+  "entity--denuncia"
  ],
  "backend/src/shared/entities/departamento.entity.ts": [
   "entity--departamento"
@@ -115,21 +116,27 @@
  "backend/src/shared/entities/especialidad.entity.ts": [
   "entity--especialidad"
  ],
+ "backend/src/shared/entities/esquema-horario-guardia.entity.ts": [
+  "entity--esquema-horario-guardia"
+ ],
  "backend/src/shared/entities/evento-asistencia.entity.ts": [
   "entity--evento-asistencia"
+ ],
+ "backend/src/shared/entities/evidencia-denuncia.entity.ts": [
+  "entity--evidencia-denuncia"
+ ],
+ "backend/src/shared/entities/feriado.entity.ts": [
+  "entity--feriado"
  ],
  "backend/src/shared/entities/foja-servicio.entity.ts": [
   "entity--foja-servicio"
  ],
-<<<<<<< Updated upstream
  "backend/src/shared/entities/grupo-guardia-miembro.entity.ts": [
   "entity--grupo-guardia-miembro"
  ],
  "backend/src/shared/entities/grupo-guardia.entity.ts": [
   "entity--grupo-guardia"
  ],
-=======
->>>>>>> Stashed changes
  "backend/src/shared/entities/guardia.entity.ts": [
   "entity--guardia"
  ],
@@ -138,6 +145,9 @@
  ],
  "backend/src/shared/entities/historial-contrasena.entity.ts": [
   "entity--historial-contrasena"
+ ],
+ "backend/src/shared/entities/historial-estado-denuncia.entity.ts": [
+  "entity--historial-estado-denuncia"
  ],
  "backend/src/shared/entities/historial-institucional.entity.ts": [
   "entity--historial-institucional"
@@ -154,9 +164,11 @@
  "backend/src/shared/entities/inscripcion-curso.entity.ts": [
   "entity--inscripcion-curso"
  ],
-<<<<<<< Updated upstream
  "backend/src/shared/entities/inspeccion-estacion.entity.ts": [
   "entity--inspeccion-estacion"
+ ],
+ "backend/src/shared/entities/inspeccion-movil.entity.ts": [
+  "entity--inspeccion-movil"
  ],
  "backend/src/shared/entities/log-auditoria.entity.ts": [
   "entity--log-auditoria"
@@ -167,23 +179,24 @@
  "backend/src/shared/entities/mantenimiento-vehiculo.entity.ts": [
   "entity--mantenimiento-vehiculo"
  ],
-=======
- "backend/src/shared/entities/log-auditoria.entity.ts": [
-  "entity--log-auditoria"
- ],
->>>>>>> Stashed changes
  "backend/src/shared/entities/marcacion-asistencia.entity.ts": [
   "entity--marcacion-asistencia"
  ],
  "backend/src/shared/entities/materia.entity.ts": [
   "entity--materia"
  ],
-<<<<<<< Updated upstream
  "backend/src/shared/entities/novedad-guardia.entity.ts": [
   "entity--novedad-guardia"
  ],
-=======
->>>>>>> Stashed changes
+ "backend/src/shared/entities/orden-guardia-configuracion.entity.ts": [
+  "entity--orden-guardia-configuracion"
+ ],
+ "backend/src/shared/entities/orden-guardia-modificacion.entity.ts": [
+  "entity--orden-guardia-modificacion"
+ ],
+ "backend/src/shared/entities/orden-guardia.entity.ts": [
+  "entity--orden-guardia"
+ ],
  "backend/src/shared/entities/parametro.entity.ts": [
   "entity--parametro"
  ],
@@ -196,12 +209,9 @@
  "backend/src/shared/entities/permiso.entity.ts": [
   "entity--permiso"
  ],
-<<<<<<< Updated upstream
  "backend/src/shared/entities/pernocte.entity.ts": [
   "entity--pernocte"
  ],
-=======
->>>>>>> Stashed changes
  "backend/src/shared/entities/personal-servicio.entity.ts": [
   "entity--personal-servicio"
  ],
@@ -214,13 +224,10 @@
  "backend/src/shared/entities/rango.entity.ts": [
   "entity--rango"
  ],
-<<<<<<< Updated upstream
  "backend/src/shared/entities/requisito-rol-guardia.entity.ts": [
   "entity--requisito-rol-guardia",
   "rule--elegibilidad-de-rol-guardia"
  ],
-=======
->>>>>>> Stashed changes
  "backend/src/shared/entities/rol.entity.ts": [
   "entity--rol"
  ],
@@ -232,6 +239,12 @@
  ],
  "backend/src/shared/entities/sesion.entity.ts": [
   "entity--sesion"
+ ],
+ "backend/src/shared/entities/sorteo-guardia.entity.ts": [
+  "entity--sorteo-guardia"
+ ],
+ "backend/src/shared/entities/sorteo-participante.entity.ts": [
+  "entity--sorteo-participante"
  ],
  "backend/src/shared/entities/tipo-bombero.entity.ts": [
   "entity--tipo-bombero"
@@ -477,16 +490,21 @@
  "database/migrations/022_permiso_publicaciones.sql": [
   "file--022-permiso-publicaciones"
  ],
-<<<<<<< Updated upstream
  "database/migrations/023_moviles.sql": [
   "file--023-moviles",
   "table--vehiculos-vehiculos",
   "table--vehiculos-checklist-items"
  ],
+ "database/migrations/023_publicaciones_persistencia.sql": [
+  "file--023-publicaciones-persistencia"
+ ],
  "database/migrations/024_equipos.sql": [
   "file--024-equipos",
   "table--equipos-equipos",
   "table--organizacion-parametros"
+ ],
+ "database/migrations/024_personal_reconciliacion_segura.sql": [
+  "file--024-personal-reconciliacion-segura"
  ],
  "database/migrations/025_guardias.sql": [
   "file--025-guardias",
@@ -501,20 +519,47 @@
   "table--operaciones-requisitos-rol-guardia",
   "rule--guardias-vive-en-operaciones"
  ],
+ "database/migrations/026_guardias_planificacion.sql": [
+  "file--026-guardias-planificacion",
+  "table--personal-bomberos",
+  "table--operaciones-guardias",
+  "table--operaciones-grupos-guardia",
+  "table--organizacion-feriados",
+  "table--operaciones-esquemas-horario-guardia"
+ ],
  "database/migrations/026_publicaciones_persistencia.sql": [
   "file--026-publicaciones-persistencia",
   "table--contenido-publicaciones"
  ],
+ "database/migrations/027_guardias_generacion.sql": [
+  "file--027-guardias-generacion",
+  "table--operaciones-esquemas-horario-guardia"
+ ],
  "database/migrations/027_personal_reconciliacion_segura.sql": [
   "file--027-personal-reconciliacion-segura"
-=======
- "database/migrations/023_publicaciones_persistencia.sql": [
-  "file--023-publicaciones-persistencia",
-  "table--contenido-publicaciones"
  ],
- "database/migrations/024_personal_reconciliacion_segura.sql": [
-  "file--024-personal-reconciliacion-segura"
->>>>>>> Stashed changes
+ "database/migrations/028_guardias_sorteo.sql": [
+  "file--028-guardias-sorteo",
+  "table--operaciones-sorteos-guardia",
+  "table--operaciones-sorteo-participantes"
+ ],
+ "database/migrations/029_guardias_moviles_bitacora.sql": [
+  "file--029-guardias-moviles-bitacora",
+  "table--operaciones-inspecciones-movil"
+ ],
+ "database/migrations/030_ordenes_guardia.sql": [
+  "file--030-ordenes-guardia",
+  "table--operaciones-orden-guardia-configuracion",
+  "table--operaciones-ordenes-guardia",
+  "table--operaciones-ordenes-guardia-modificaciones"
+ ],
+ "database/migrations/031_denuncias_rapidas.sql": [
+  "file--031-denuncias-rapidas",
+  "table--denuncias-categorias-denuncia",
+  "table--denuncias-denuncias",
+  "table--denuncias-historial-estados-denuncia",
+  "table--denuncias-evidencias-denuncia",
+  "workflow--denuncia-rapida"
  ],
  "backend/src/modules/auth/auth.module.ts": [
   "component--modulo-auth"
@@ -522,15 +567,15 @@
  "backend/src/modules/configuracion/configuracion.module.ts": [
   "component--modulo-configuracion"
  ],
+ "backend/src/modules/denuncias/denuncias.module.ts": [
+  "component--modulo-denuncias"
+ ],
  "backend/src/modules/equipos/equipos.module.ts": [
   "component--modulo-equipos"
  ],
-<<<<<<< Updated upstream
  "backend/src/modules/guardias/guardias.module.ts": [
   "component--modulo-guardias"
  ],
-=======
->>>>>>> Stashed changes
  "backend/src/modules/operaciones/operaciones.module.ts": [
   "component--modulo-operaciones"
  ],
@@ -561,6 +606,11 @@
   "service--configuracion-configuracion",
   "workflow--configuracion-versionada"
  ],
+ "backend/src/modules/denuncias/denuncias.service.ts": [
+  "service--denuncias-denuncias",
+  "rule--datos-tecnicos-de-denuncia-restringidos",
+  "workflow--denuncia-rapida"
+ ],
  "backend/src/modules/equipos/categorias-equipo.service.ts": [
   "service--equipos-categorias-equipo"
  ],
@@ -570,10 +620,18 @@
  "backend/src/modules/equipos/equipos.service.ts": [
   "service--equipos-equipos"
  ],
-<<<<<<< Updated upstream
+ "backend/src/modules/guardias/bitacora.service.ts": [
+  "service--guardias-bitacora"
+ ],
  "backend/src/modules/guardias/elegibilidad.service.ts": [
   "service--guardias-elegibilidad",
   "rule--elegibilidad-de-rol-guardia"
+ ],
+ "backend/src/modules/guardias/esquemas-horario.service.ts": [
+  "service--guardias-esquemas-horario"
+ ],
+ "backend/src/modules/guardias/generacion.service.ts": [
+  "service--guardias-generacion"
  ],
  "backend/src/modules/guardias/grupos-guardia.service.ts": [
   "service--guardias-grupos-guardia"
@@ -585,8 +643,17 @@
  "backend/src/modules/guardias/inspecciones-estacion.service.ts": [
   "service--guardias-inspecciones-estacion"
  ],
+ "backend/src/modules/guardias/inspecciones-movil.service.ts": [
+  "service--guardias-inspecciones-movil"
+ ],
  "backend/src/modules/guardias/novedades.service.ts": [
   "service--guardias-novedades"
+ ],
+ "backend/src/modules/guardias/orden-guardia-configuracion.service.ts": [
+  "service--guardias-orden-guardia-configuracion"
+ ],
+ "backend/src/modules/guardias/ordenes-guardia.service.ts": [
+  "service--guardias-ordenes-guardia"
  ],
  "backend/src/modules/guardias/pernoctes.service.ts": [
   "service--guardias-pernoctes"
@@ -594,8 +661,9 @@
  "backend/src/modules/guardias/requisitos-rol.service.ts": [
   "service--guardias-requisitos-rol"
  ],
-=======
->>>>>>> Stashed changes
+ "backend/src/modules/guardias/sorteos.service.ts": [
+  "service--guardias-sorteos"
+ ],
  "backend/src/modules/operaciones/dashboard-asistencia.service.ts": [
   "service--operaciones-dashboard-asistencia"
  ],
@@ -603,12 +671,6 @@
   "service--operaciones-eventos-asistencia",
   "workflow--asistencia-a-evento"
  ],
-<<<<<<< Updated upstream
-=======
- "backend/src/modules/operaciones/guardias.service.ts": [
-  "service--operaciones-guardias"
- ],
->>>>>>> Stashed changes
  "backend/src/modules/operaciones/importaciones.service.ts": [
   "service--operaciones-importaciones",
   "workflow--importacion-marcador"
@@ -651,6 +713,9 @@
  ],
  "backend/src/modules/organizacion/especialidades.service.ts": [
   "service--organizacion-especialidades"
+ ],
+ "backend/src/modules/organizacion/feriados.service.ts": [
+  "service--organizacion-feriados"
  ],
  "backend/src/modules/organizacion/parametros.service.ts": [
   "service--organizacion-parametros"
@@ -734,12 +799,9 @@
   "service--servicios-servicios",
   "workflow--comunicacion-de-servicio"
  ],
-<<<<<<< Updated upstream
  "backend/src/modules/vehiculos/checklist-items.service.ts": [
   "service--vehiculos-checklist-items"
  ],
-=======
->>>>>>> Stashed changes
  "backend/src/modules/vehiculos/vehiculos-autorizados.service.ts": [
   "service--vehiculos-vehiculos-autorizados"
  ],
@@ -752,6 +814,14 @@
  "backend/src/modules/configuracion/configuracion.controller.ts": [
   "api--configuracion-configuracion"
  ],
+ "backend/src/modules/denuncias/denuncias-publicas.controller.ts": [
+  "api--denuncias-denuncias-publicas",
+  "workflow--denuncia-rapida"
+ ],
+ "backend/src/modules/denuncias/denuncias.controller.ts": [
+  "api--denuncias-denuncias",
+  "rule--datos-tecnicos-de-denuncia-restringidos"
+ ],
  "backend/src/modules/equipos/categorias-equipo.controller.ts": [
   "api--equipos-categorias-equipo"
  ],
@@ -761,7 +831,12 @@
  "backend/src/modules/equipos/equipos.controller.ts": [
   "api--equipos-equipos"
  ],
-<<<<<<< Updated upstream
+ "backend/src/modules/guardias/bitacora.controller.ts": [
+  "api--guardias-bitacora"
+ ],
+ "backend/src/modules/guardias/esquemas-horario.controller.ts": [
+  "api--guardias-esquemas-horario"
+ ],
  "backend/src/modules/guardias/grupos-guardia.controller.ts": [
   "api--guardias-grupos-guardia"
  ],
@@ -772,8 +847,14 @@
  "backend/src/modules/guardias/inspecciones-estacion.controller.ts": [
   "api--guardias-inspecciones-estacion"
  ],
+ "backend/src/modules/guardias/inspecciones-movil.controller.ts": [
+  "api--guardias-inspecciones-movil"
+ ],
  "backend/src/modules/guardias/novedades.controller.ts": [
   "api--guardias-novedades"
+ ],
+ "backend/src/modules/guardias/ordenes-guardia.controller.ts": [
+  "api--guardias-ordenes-guardia"
  ],
  "backend/src/modules/guardias/pernoctes.controller.ts": [
   "api--guardias-pernoctes"
@@ -781,20 +862,15 @@
  "backend/src/modules/guardias/requisitos-rol.controller.ts": [
   "api--guardias-requisitos-rol"
  ],
-=======
->>>>>>> Stashed changes
+ "backend/src/modules/guardias/sorteos.controller.ts": [
+  "api--guardias-sorteos"
+ ],
  "backend/src/modules/operaciones/dashboard-asistencia.controller.ts": [
   "api--operaciones-dashboard-asistencia"
  ],
  "backend/src/modules/operaciones/eventos-asistencia.controller.ts": [
   "api--operaciones-eventos-asistencia"
  ],
-<<<<<<< Updated upstream
-=======
- "backend/src/modules/operaciones/guardias.controller.ts": [
-  "api--operaciones-guardias"
- ],
->>>>>>> Stashed changes
  "backend/src/modules/operaciones/importaciones.controller.ts": [
   "api--operaciones-importaciones",
   "workflow--importacion-marcador"
@@ -834,6 +910,9 @@
  ],
  "backend/src/modules/organizacion/especialidades.controller.ts": [
   "api--organizacion-especialidades"
+ ],
+ "backend/src/modules/organizacion/feriados.controller.ts": [
+  "api--organizacion-feriados"
  ],
  "backend/src/modules/organizacion/parametros.controller.ts": [
   "api--organizacion-parametros"
@@ -914,12 +993,9 @@
   "api--servicios-servicios",
   "workflow--comunicacion-de-servicio"
  ],
-<<<<<<< Updated upstream
  "backend/src/modules/vehiculos/checklist-items.controller.ts": [
   "api--vehiculos-checklist-items"
  ],
-=======
->>>>>>> Stashed changes
  "backend/src/modules/vehiculos/vehiculos-autorizados.controller.ts": [
   "api--vehiculos-vehiculos-autorizados"
  ],
@@ -938,15 +1014,6 @@
  "frontend/src/app/dashboard/asistencia/externos/page.tsx": [
   "screen--dashboard-asistencia-externos"
  ],
-<<<<<<< Updated upstream
-=======
- "frontend/src/app/dashboard/asistencia/guardias/page.tsx": [
-  "screen--dashboard-asistencia-guardias"
- ],
- "frontend/src/app/dashboard/asistencia/guardias/[id]/page.tsx": [
-  "screen--dashboard-asistencia-guardias-id"
- ],
->>>>>>> Stashed changes
  "frontend/src/app/dashboard/asistencia/page.tsx": [
   "screen--dashboard-asistencia"
  ],
@@ -956,7 +1023,12 @@
  "frontend/src/app/dashboard/asistencia/tolerancias/page.tsx": [
   "screen--dashboard-asistencia-tolerancias"
  ],
-<<<<<<< Updated upstream
+ "frontend/src/app/dashboard/denuncias/page.tsx": [
+  "screen--dashboard-denuncias"
+ ],
+ "frontend/src/app/dashboard/denuncias/[id]/page.tsx": [
+  "screen--dashboard-denuncias-id"
+ ],
  "frontend/src/app/dashboard/equipos/categorias/page.tsx": [
   "screen--dashboard-equipos-categorias"
  ],
@@ -969,11 +1041,29 @@
  "frontend/src/app/dashboard/guardias/auditoria/page.tsx": [
   "screen--dashboard-guardias-auditoria"
  ],
+ "frontend/src/app/dashboard/guardias/esquemas-horario/page.tsx": [
+  "screen--dashboard-guardias-esquemas-horario"
+ ],
+ "frontend/src/app/dashboard/guardias/generar/page.tsx": [
+  "screen--dashboard-guardias-generar"
+ ],
  "frontend/src/app/dashboard/guardias/grupos/page.tsx": [
   "screen--dashboard-guardias-grupos"
  ],
  "frontend/src/app/dashboard/guardias/grupos/[id]/page.tsx": [
   "screen--dashboard-guardias-grupos-id"
+ ],
+ "frontend/src/app/dashboard/guardias/ordenes/configuracion/page.tsx": [
+  "screen--dashboard-guardias-ordenes-configuracion"
+ ],
+ "frontend/src/app/dashboard/guardias/ordenes/nueva/page.tsx": [
+  "screen--dashboard-guardias-ordenes-nueva"
+ ],
+ "frontend/src/app/dashboard/guardias/ordenes/page.tsx": [
+  "screen--dashboard-guardias-ordenes"
+ ],
+ "frontend/src/app/dashboard/guardias/ordenes/[id]/page.tsx": [
+  "screen--dashboard-guardias-ordenes-id"
  ],
  "frontend/src/app/dashboard/guardias/page.tsx": [
   "screen--dashboard-guardias"
@@ -984,13 +1074,15 @@
  "frontend/src/app/dashboard/guardias/requisitos/page.tsx": [
   "screen--dashboard-guardias-requisitos"
  ],
+ "frontend/src/app/dashboard/guardias/sorteos/page.tsx": [
+  "screen--dashboard-guardias-sorteos"
+ ],
+ "frontend/src/app/dashboard/guardias/sorteos/[id]/page.tsx": [
+  "screen--dashboard-guardias-sorteos-id"
+ ],
  "frontend/src/app/dashboard/guardias/[id]/page.tsx": [
   "screen--dashboard-guardias-id"
  ],
- "frontend/src/app/dashboard/mi-perfil/page.tsx": [
-  "screen--dashboard-mi-perfil"
- ],
-=======
  "frontend/src/app/dashboard/mi-perfil/page.tsx": [
   "screen--dashboard-mi-perfil"
  ],
@@ -1000,7 +1092,6 @@
  "frontend/src/app/dashboard/mi-perfil/seguridad/page.tsx": [
   "screen--dashboard-mi-perfil-seguridad"
  ],
->>>>>>> Stashed changes
  "frontend/src/app/dashboard/organizacion/ascensos/page.tsx": [
   "screen--dashboard-organizacion-ascensos"
  ],
@@ -1024,6 +1115,9 @@
  ],
  "frontend/src/app/dashboard/organizacion/especialidades/page.tsx": [
   "screen--dashboard-organizacion-especialidades"
+ ],
+ "frontend/src/app/dashboard/organizacion/feriados/page.tsx": [
+  "screen--dashboard-organizacion-feriados"
  ],
  "frontend/src/app/dashboard/organizacion/guardias/page.tsx": [
   "screen--dashboard-organizacion-guardias"
@@ -1097,7 +1191,6 @@
  "frontend/src/app/dashboard/servicios/page.tsx": [
   "screen--dashboard-servicios"
  ],
-<<<<<<< Updated upstream
  "frontend/src/app/dashboard/vehiculos/checklist-items/page.tsx": [
   "screen--dashboard-vehiculos-checklist-items"
  ],
@@ -1107,10 +1200,11 @@
  "frontend/src/app/dashboard/vehiculos/[id]/page.tsx": [
   "screen--dashboard-vehiculos-id"
  ],
-=======
->>>>>>> Stashed changes
  "frontend/src/app/dashboard/[modulo]/page.tsx": [
   "screen--dashboard-modulo"
+ ],
+ "frontend/src/app/denuncias/page.tsx": [
+  "screen--denuncias"
  ],
  "frontend/src/app/login/page.tsx": [
   "screen--login"
@@ -1130,7 +1224,6 @@
  "frontend/src/lib/configuracion.ts": [
   "component--front-configuracion"
  ],
-<<<<<<< Updated upstream
  "frontend/src/lib/equipos.ts": [
   "component--front-equipos"
  ],
@@ -1140,11 +1233,6 @@
  "frontend/src/lib/guardias.ts": [
   "component--front-guardias"
  ],
-=======
- "frontend/src/lib/exportar.ts": [
-  "component--front-exportar"
- ],
->>>>>>> Stashed changes
  "frontend/src/lib/parametros.ts": [
   "component--front-parametros"
  ],
@@ -1157,12 +1245,9 @@
  "frontend/src/lib/texto.ts": [
   "component--front-texto"
  ],
-<<<<<<< Updated upstream
  "frontend/src/lib/vehiculos.ts": [
   "component--front-vehiculos"
  ],
-=======
->>>>>>> Stashed changes
  "frontend/src/app/components/ConfigBootstrap.tsx": [
   "component--front-configbootstrap"
  ],
@@ -1220,6 +1305,12 @@
   "rule--frontend-no-autoriza",
   "rule--todo-endpoint-mutante-con-permiso"
  ],
+ "backend/src/modules/denuncias/guards/rate-limit.guard.ts": [
+  "decision--rate-limit-propio"
+ ],
+ "backend/src/modules/denuncias/decorators/rate-limit.decorator.ts": [
+  "decision--rate-limit-propio"
+ ],
  "frontend/src/app/globals.css": [
   "decision--sin-libreria-ui",
   "rule--sin-clases-css-nuevas",
@@ -1249,12 +1340,9 @@
   "dependency--sqlserver-express",
   "error--tcp-sqlexpress-deshabilitado"
  ],
-<<<<<<< Updated upstream
  ".gitignore": [
   "error--context-borrado-del-disco"
  ],
-=======
->>>>>>> Stashed changes
  "backend/src/shared/entities": [
   "rule--entidad-y-tabla-en-paralelo"
  ],
@@ -1263,12 +1351,9 @@
   "rule--identidad-y-tiempo-en-sql-server",
   "rule--migracion-nunca-se-edita"
  ],
-<<<<<<< Updated upstream
  "backend/src/modules/guardias": [
   "rule--guardias-vive-en-operaciones"
  ],
-=======
->>>>>>> Stashed changes
  "backend/src/modules/seguridad/decorators/require-permission.decorator.ts": [
   "rule--todo-endpoint-mutante-con-permiso"
  ]

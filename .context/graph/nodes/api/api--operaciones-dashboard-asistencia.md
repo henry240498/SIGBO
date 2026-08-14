@@ -37,5 +37,9 @@ Superficie HTTP de dashboard asistencia bajo /api/v1/operaciones/dashboard.
 - `belongs_to` → [[domain--asistencia|Asistencia]]
 - `exposes` → [[service--operaciones-dashboard-asistencia|DashboardAsistenciaService]]
 
+## Referenciado por
+
+- [[component--front-asistencia|asistencia]] `calls` →
+
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

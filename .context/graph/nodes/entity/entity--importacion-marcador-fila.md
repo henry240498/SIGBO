@@ -25,6 +25,15 @@ Una fila cruda del Excel analizada durante la previsualizacion de una importacio
 
 - `EstadoFilaImportacion`: `RECONOCIDO` · `NO_IDENTIFICADO` · `DUPLICADO` · `YA_IMPORTADO` · `INCONSISTENTE`
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
+- **Endpoints:** ImportacionesController
+- **Servicios:** ImportacionesService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/importacion-marcador-fila.entity.ts`

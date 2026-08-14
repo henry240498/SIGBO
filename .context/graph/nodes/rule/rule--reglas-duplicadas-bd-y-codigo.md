@@ -25,11 +25,7 @@ Reparto de responsabilidades:
 | Capa | Responsabilidad |
 |---|---|
 | DTO + `ValidationPipe` | Forma de la peticion (tipos, requeridos, formato) |
-<<<<<<< Updated upstream
 | Servicio | Reglas de negocio con contexto (unicidad con mensaje legible, transiciones de estado, elegibilidad) |
-=======
-| Servicio | Reglas de negocio con contexto (unicidad con mensaje legible, transiciones de estado) |
->>>>>>> Stashed changes
 | `CHECK` / `UNIQUE` / FK | Ultima linea: lo que no puede existir jamas en la tabla |
 
 ## El costo: cambiar en dos lugares
@@ -45,7 +41,6 @@ Solo el paso 1 compila y falla en tiempo de ejecucion al guardar. Ver
 ## Donde estan estas reglas duplicadas hoy
 
 Los estados de casi todo el dominio: `EstadoServicio`, `EstadoComunicacionServicio`,
-<<<<<<< Updated upstream
 `EstadoGuardia`, `EstadoGrupoGuardia`, `RolGrupoGuardia`,
 `EstadoInspeccionEstacion`, `EstadoEventoAsistencia`, `EstadoEquipo`,
 `EstadoVehiculo`, `EstadoPrestamoEquipo`, `EstadoInscripcionCurso`,
@@ -65,21 +60,6 @@ verificar el nodo `TABLE`.
 
 `main.ts` usa `whitelist: true` y `forbidNonWhitelisted: true`: un campo que el DTO
 no declara **hace fallar** la peticion con 400, no se ignora. Agregar un campo al
-=======
-`EstadoGuardia`, `EstadoEventoAsistencia`, `EstadoEquipo`, `EstadoVehiculo`,
-`EstadoPrestamoEquipo`, `EstadoInscripcionCurso`, `EstadoCambioGuardia`,
-`EstadoAsignacionGuardia`, `CondicionInstitucional`, `TipoMarcacion`,
-`MetodoMarcacion`, `FuenteAsistencia`, `GravedadServicio`.
-
-Cada uno es un `export type` en `shared/entities/` **y** un `CHECK` en su migracion.
-El grafo los expone juntos: el nodo `ENTITY` lista las enumeraciones y el nodo `TABLE`
-lista los `CHECK`, de modo que se puede comparar sin abrir los archivos.
-
-## Validacion estricta de peticiones
-
-`main.ts` usa `whitelist: true` y `forbidNonWhitelisted: true`: un campo que el DTO no
-declara **hace fallar la peticion** con 400, no se ignora. Agregar un campo al
->>>>>>> Stashed changes
 frontend sin agregarlo al DTO rompe el endpoint.
 
 

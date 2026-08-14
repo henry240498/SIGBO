@@ -37,12 +37,9 @@ Framework del backend. NestJS 10.4 con TypeORM 0.3.20, mssql 11, Passport JWT, c
 - **TypeORM 0.3** cambio la API respecto de 0.2: `find` recibe `{ where: {} }` y
   `createQueryBuilder` es el camino para consultas complejas. Los ejemplos de 0.2 que
   circulan no compilan.
-<<<<<<< Updated upstream
 - **Ninguna entidad usa relaciones del ORM** (`@ManyToOne` y compania): las FKs son
   columnas planas. No existe `relations: ['bombero']` — todo join es explicito. Es la
   particularidad que mas sorprende al escribir un servicio nuevo.
-=======
->>>>>>> Stashed changes
 - `reflect-metadata` debe importarse **primero** en `main.ts`, antes de cualquier
   decorador.
 - NestJS 10 requiere Node 18+. Ver [[dependency--nodejs]].
@@ -62,6 +59,7 @@ Swagger.
 ## Referenciado por
 
 - [[decision--monolito-modular|Monolito modular NestJS en vez de microservicios]] `depends_on` →
+- [[decision--rate-limit-propio|Rate limiting propio en memoria en vez de @nestjs/throttler]] `depends_on` →
 
 ---
 <sub>Nodo **curado** (editable a mano).</sub>

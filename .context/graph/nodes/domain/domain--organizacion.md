@@ -30,6 +30,7 @@ Modulo funcional "Organización Institucional". Habilitado en la navegacion.
 - [[entity--departamento|Departamento]] `belongs_to` →
 - [[entity--designacion|Designacion]] `belongs_to` →
 - [[entity--especialidad|Especialidad]] `belongs_to` →
+- [[entity--feriado|Feriado]] `belongs_to` →
 - [[entity--parametro|Parametro]] `belongs_to` →
 - [[entity--rango|Rango]] `belongs_to` →
 - [[entity--tipo-guardia|TipoGuardia]] `belongs_to` →
@@ -48,6 +49,7 @@ Modulo funcional "Organización Institucional". Habilitado en la navegacion.
 - [[table--organizacion-designaciones|organizacion.designaciones]] `belongs_to` →
 - [[table--organizacion-ascensos|organizacion.ascensos]] `belongs_to` →
 - [[table--organizacion-parametros|organizacion.parametros]] `belongs_to` →
+- [[table--organizacion-feriados|organizacion.feriados]] `belongs_to` →
 - [[component--modulo-organizacion|organizacion (modulo NestJS)]] `belongs_to` →
 - [[service--organizacion-ascensos|AscensosService]] `belongs_to` →
 - [[service--organizacion-brigadas|BrigadasService]] `belongs_to` →
@@ -58,6 +60,7 @@ Modulo funcional "Organización Institucional". Habilitado en la navegacion.
 - [[service--organizacion-departamentos|DepartamentosService]] `belongs_to` →
 - [[service--organizacion-designaciones|DesignacionesService]] `belongs_to` →
 - [[service--organizacion-especialidades|EspecialidadesService]] `belongs_to` →
+- [[service--organizacion-feriados|FeriadosService]] `belongs_to` →
 - [[service--organizacion-parametros|ParametrosService]] `belongs_to` →
 - [[service--organizacion-rangos|RangosService]] `belongs_to` →
 - [[service--organizacion-tipos-guardia|TiposGuardiaService]] `belongs_to` →
@@ -72,16 +75,13 @@ Modulo funcional "Organización Institucional". Habilitado en la navegacion.
 - [[api--organizacion-departamentos|DepartamentosController]] `belongs_to` →
 - [[api--organizacion-designaciones|DesignacionesController]] `belongs_to` →
 - [[api--organizacion-especialidades|EspecialidadesController]] `belongs_to` →
+- [[api--organizacion-feriados|FeriadosController]] `belongs_to` →
 - [[api--organizacion-parametros|ParametrosController]] `belongs_to` →
 - [[api--organizacion-rangos|RangosController]] `belongs_to` →
 - [[api--organizacion-tipos-guardia|TiposGuardiaController]] `belongs_to` →
 - [[api--organizacion-turnos|TurnosController]] `belongs_to` →
 - [[api--organizacion-unidades|UnidadesController]] `belongs_to` →
 - [[screen--dashboard-organizacion-ascensos|/dashboard/organizacion/ascensos]] `belongs_to` →
-- [[screen--dashboard-organizacion-brigadas|/dashboard/organizacion/brigadas]] `belongs_to` →
-- [[screen--dashboard-organizacion-cargos|/dashboard/organizacion/cargos]] `belongs_to` →
-- [[screen--dashboard-organizacion-companias|/dashboard/organizacion/companias]] `belongs_to` →
-- [[screen--dashboard-organizacion-cuarteles|/dashboard/organizacion/cuarteles]] `belongs_to` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

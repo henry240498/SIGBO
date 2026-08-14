@@ -9,12 +9,10 @@
 {"from":"entity--brigada","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"entity--cambio-guardia","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"entity--cargo","tipo":"belongs_to","to":"domain--organizacion"}
+{"from":"entity--categoria-denuncia","tipo":"belongs_to","to":"domain--denuncias"}
 {"from":"entity--categoria-equipo","tipo":"belongs_to","to":"domain--equipos"}
 {"from":"entity--certificacion","tipo":"belongs_to","to":"domain--personal"}
-<<<<<<< Updated upstream
 {"from":"entity--checklist-item-vehiculo","tipo":"belongs_to","to":"domain--vehiculos"}
-=======
->>>>>>> Stashed changes
 {"from":"entity--compania","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"entity--comunicacion-servicio","tipo":"belongs_to","to":"domain--servicios"}
 {"from":"entity--condicion-apoyo-economico","tipo":"belongs_to","to":"domain--personal"}
@@ -24,64 +22,57 @@
 {"from":"entity--configuracion-sistema","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"entity--configuracion-valor","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"entity--configuracion-version","tipo":"belongs_to","to":"domain--seguridad"}
-<<<<<<< Updated upstream
 {"from":"entity--consumo-combustible","tipo":"belongs_to","to":"domain--vehiculos"}
-=======
->>>>>>> Stashed changes
 {"from":"entity--cuartel","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"entity--curso","tipo":"belongs_to","to":"domain--academia"}
+{"from":"entity--denuncia","tipo":"belongs_to","to":"domain--denuncias"}
 {"from":"entity--departamento","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"entity--designacion","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"entity--equipo","tipo":"belongs_to","to":"domain--equipos"}
 {"from":"entity--especialidad","tipo":"belongs_to","to":"domain--organizacion"}
+{"from":"entity--esquema-horario-guardia","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"entity--evento-asistencia","tipo":"belongs_to","to":"domain--asistencia"}
+{"from":"entity--evidencia-denuncia","tipo":"belongs_to","to":"domain--denuncias"}
+{"from":"entity--feriado","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"entity--foja-servicio","tipo":"belongs_to","to":"domain--personal"}
-<<<<<<< Updated upstream
 {"from":"entity--grupo-guardia-miembro","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"entity--grupo-guardia","tipo":"belongs_to","to":"domain--asistencia"}
-=======
->>>>>>> Stashed changes
 {"from":"entity--guardia","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"entity--historial-codigo","tipo":"belongs_to","to":"domain--personal"}
 {"from":"entity--historial-contrasena","tipo":"belongs_to","to":"domain--seguridad"}
+{"from":"entity--historial-estado-denuncia","tipo":"belongs_to","to":"domain--denuncias"}
 {"from":"entity--historial-institucional","tipo":"belongs_to","to":"domain--personal"}
 {"from":"entity--idioma-bombero","tipo":"belongs_to","to":"domain--personal"}
 {"from":"entity--importacion-marcador-fila","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"entity--importacion-marcador","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"entity--inscripcion-curso","tipo":"belongs_to","to":"domain--academia"}
-<<<<<<< Updated upstream
 {"from":"entity--inspeccion-estacion","tipo":"belongs_to","to":"domain--asistencia"}
+{"from":"entity--inspeccion-movil","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"entity--log-auditoria","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"entity--mantenimiento-equipo","tipo":"belongs_to","to":"domain--equipos"}
 {"from":"entity--mantenimiento-vehiculo","tipo":"belongs_to","to":"domain--vehiculos"}
 {"from":"entity--marcacion-asistencia","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"entity--materia","tipo":"belongs_to","to":"domain--academia"}
 {"from":"entity--novedad-guardia","tipo":"belongs_to","to":"domain--asistencia"}
-=======
-{"from":"entity--log-auditoria","tipo":"belongs_to","to":"domain--seguridad"}
-{"from":"entity--marcacion-asistencia","tipo":"belongs_to","to":"domain--asistencia"}
-{"from":"entity--materia","tipo":"belongs_to","to":"domain--academia"}
->>>>>>> Stashed changes
+{"from":"entity--orden-guardia-configuracion","tipo":"belongs_to","to":"domain--asistencia"}
+{"from":"entity--orden-guardia-modificacion","tipo":"belongs_to","to":"domain--asistencia"}
+{"from":"entity--orden-guardia","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"entity--parametro","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"entity--participante-evento","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"entity--participante-externo","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"entity--permiso","tipo":"belongs_to","to":"domain--seguridad"}
-<<<<<<< Updated upstream
 {"from":"entity--pernocte","tipo":"belongs_to","to":"domain--asistencia"}
-=======
->>>>>>> Stashed changes
 {"from":"entity--personal-servicio","tipo":"belongs_to","to":"domain--servicios"}
 {"from":"entity--prestamo-equipo","tipo":"belongs_to","to":"domain--equipos"}
 {"from":"entity--publicacion","tipo":"belongs_to","to":"domain--publicaciones"}
 {"from":"entity--rango","tipo":"belongs_to","to":"domain--organizacion"}
-<<<<<<< Updated upstream
 {"from":"entity--requisito-rol-guardia","tipo":"belongs_to","to":"domain--asistencia"}
-=======
->>>>>>> Stashed changes
 {"from":"entity--rol","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"entity--seguro-bombero","tipo":"belongs_to","to":"domain--personal"}
 {"from":"entity--servicio","tipo":"belongs_to","to":"domain--servicios"}
 {"from":"entity--sesion","tipo":"belongs_to","to":"domain--seguridad"}
+{"from":"entity--sorteo-guardia","tipo":"belongs_to","to":"domain--asistencia"}
+{"from":"entity--sorteo-participante","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"entity--tipo-bombero","tipo":"belongs_to","to":"domain--personal"}
 {"from":"entity--tipo-guardia","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"entity--tipo-servicio","tipo":"belongs_to","to":"domain--servicios"}
@@ -288,9 +279,10 @@
 {"from":"table--seguridad-configuracion-versiones","tipo":"defined_in","to":"file--021-configuracion-integral"}
 {"from":"table--seguridad-configuracion-versiones","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"table--seguridad-configuracion-versiones","tipo":"references","to":"table--seguridad-usuarios"}
-<<<<<<< Updated upstream
 {"from":"table--vehiculos-checklist-items","tipo":"defined_in","to":"file--023-moviles"}
 {"from":"table--vehiculos-checklist-items","tipo":"belongs_to","to":"domain--vehiculos"}
+{"from":"table--contenido-publicaciones","tipo":"defined_in","to":"file--026-publicaciones-persistencia"}
+{"from":"table--contenido-publicaciones","tipo":"belongs_to","to":"domain--publicaciones"}
 {"from":"table--operaciones-grupos-guardia","tipo":"defined_in","to":"file--025-guardias"}
 {"from":"table--operaciones-grupos-guardia","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"table--operaciones-grupos-guardia","tipo":"references","to":"table--personal-bomberos"}
@@ -316,11 +308,46 @@
 {"from":"table--operaciones-requisitos-rol-guardia","tipo":"references","to":"table--organizacion-cargos"}
 {"from":"table--operaciones-requisitos-rol-guardia","tipo":"references","to":"table--organizacion-rangos"}
 {"from":"table--operaciones-requisitos-rol-guardia","tipo":"references","to":"table--personal-tipos-bombero"}
-{"from":"table--contenido-publicaciones","tipo":"defined_in","to":"file--026-publicaciones-persistencia"}
-=======
-{"from":"table--contenido-publicaciones","tipo":"defined_in","to":"file--023-publicaciones-persistencia"}
->>>>>>> Stashed changes
-{"from":"table--contenido-publicaciones","tipo":"belongs_to","to":"domain--publicaciones"}
+{"from":"table--organizacion-feriados","tipo":"defined_in","to":"file--026-guardias-planificacion"}
+{"from":"table--organizacion-feriados","tipo":"belongs_to","to":"domain--organizacion"}
+{"from":"table--operaciones-esquemas-horario-guardia","tipo":"defined_in","to":"file--026-guardias-planificacion"}
+{"from":"table--operaciones-esquemas-horario-guardia","tipo":"belongs_to","to":"domain--asistencia"}
+{"from":"table--operaciones-sorteos-guardia","tipo":"defined_in","to":"file--028-guardias-sorteo"}
+{"from":"table--operaciones-sorteos-guardia","tipo":"belongs_to","to":"domain--asistencia"}
+{"from":"table--operaciones-sorteos-guardia","tipo":"references","to":"table--operaciones-esquemas-horario-guardia"}
+{"from":"table--operaciones-sorteos-guardia","tipo":"references","to":"table--operaciones-guardias"}
+{"from":"table--operaciones-sorteo-participantes","tipo":"defined_in","to":"file--028-guardias-sorteo"}
+{"from":"table--operaciones-sorteo-participantes","tipo":"belongs_to","to":"domain--asistencia"}
+{"from":"table--operaciones-sorteo-participantes","tipo":"references","to":"table--operaciones-sorteos-guardia"}
+{"from":"table--operaciones-sorteo-participantes","tipo":"references","to":"table--personal-bomberos"}
+{"from":"table--operaciones-inspecciones-movil","tipo":"defined_in","to":"file--029-guardias-moviles-bitacora"}
+{"from":"table--operaciones-inspecciones-movil","tipo":"belongs_to","to":"domain--asistencia"}
+{"from":"table--operaciones-inspecciones-movil","tipo":"references","to":"table--operaciones-guardias"}
+{"from":"table--operaciones-inspecciones-movil","tipo":"references","to":"table--vehiculos-vehiculos"}
+{"from":"table--operaciones-inspecciones-movil","tipo":"references","to":"table--vehiculos-checklist-items"}
+{"from":"table--operaciones-orden-guardia-configuracion","tipo":"defined_in","to":"file--030-ordenes-guardia"}
+{"from":"table--operaciones-orden-guardia-configuracion","tipo":"belongs_to","to":"domain--asistencia"}
+{"from":"table--operaciones-orden-guardia-configuracion","tipo":"references","to":"table--organizacion-cargos"}
+{"from":"table--operaciones-ordenes-guardia","tipo":"defined_in","to":"file--030-ordenes-guardia"}
+{"from":"table--operaciones-ordenes-guardia","tipo":"belongs_to","to":"domain--asistencia"}
+{"from":"table--operaciones-ordenes-guardia-modificaciones","tipo":"defined_in","to":"file--030-ordenes-guardia"}
+{"from":"table--operaciones-ordenes-guardia-modificaciones","tipo":"belongs_to","to":"domain--asistencia"}
+{"from":"table--operaciones-ordenes-guardia-modificaciones","tipo":"references","to":"table--operaciones-ordenes-guardia"}
+{"from":"table--denuncias-categorias-denuncia","tipo":"defined_in","to":"file--031-denuncias-rapidas"}
+{"from":"table--denuncias-categorias-denuncia","tipo":"belongs_to","to":"domain--denuncias"}
+{"from":"table--denuncias-denuncias","tipo":"defined_in","to":"file--031-denuncias-rapidas"}
+{"from":"table--denuncias-denuncias","tipo":"belongs_to","to":"domain--denuncias"}
+{"from":"table--denuncias-denuncias","tipo":"references","to":"table--denuncias-categorias-denuncia"}
+{"from":"table--denuncias-denuncias","tipo":"references","to":"table--seguridad-usuarios"}
+{"from":"table--denuncias-denuncias","tipo":"references","to":"table--servicios-servicios"}
+{"from":"table--denuncias-denuncias","tipo":"references","to":"table--vehiculos-vehiculos"}
+{"from":"table--denuncias-historial-estados-denuncia","tipo":"defined_in","to":"file--031-denuncias-rapidas"}
+{"from":"table--denuncias-historial-estados-denuncia","tipo":"belongs_to","to":"domain--denuncias"}
+{"from":"table--denuncias-historial-estados-denuncia","tipo":"references","to":"table--denuncias-denuncias"}
+{"from":"table--denuncias-historial-estados-denuncia","tipo":"references","to":"table--seguridad-usuarios"}
+{"from":"table--denuncias-evidencias-denuncia","tipo":"defined_in","to":"file--031-denuncias-rapidas"}
+{"from":"table--denuncias-evidencias-denuncia","tipo":"belongs_to","to":"domain--denuncias"}
+{"from":"table--denuncias-evidencias-denuncia","tipo":"references","to":"table--denuncias-denuncias"}
 {"from":"entity--actividad-profesional","tipo":"persisted_in","to":"table--personal-actividad-profesional"}
 {"from":"entity--ascenso","tipo":"persisted_in","to":"table--organizacion-ascensos"}
 {"from":"entity--asignacion-guardia","tipo":"persisted_in","to":"table--operaciones-asignacion-guardias"}
@@ -332,12 +359,10 @@
 {"from":"entity--brigada","tipo":"persisted_in","to":"table--organizacion-brigadas"}
 {"from":"entity--cambio-guardia","tipo":"persisted_in","to":"table--operaciones-cambios-guardias"}
 {"from":"entity--cargo","tipo":"persisted_in","to":"table--organizacion-cargos"}
+{"from":"entity--categoria-denuncia","tipo":"persisted_in","to":"table--denuncias-categorias-denuncia"}
 {"from":"entity--categoria-equipo","tipo":"persisted_in","to":"table--equipos-categorias-equipo"}
 {"from":"entity--certificacion","tipo":"persisted_in","to":"table--personal-certificaciones"}
-<<<<<<< Updated upstream
 {"from":"entity--checklist-item-vehiculo","tipo":"persisted_in","to":"table--vehiculos-checklist-items"}
-=======
->>>>>>> Stashed changes
 {"from":"entity--compania","tipo":"persisted_in","to":"table--organizacion-companias"}
 {"from":"entity--comunicacion-servicio","tipo":"persisted_in","to":"table--servicios-comunicaciones-servicio"}
 {"from":"entity--condicion-apoyo-economico","tipo":"persisted_in","to":"table--personal-condicion-apoyo-economico"}
@@ -347,64 +372,57 @@
 {"from":"entity--configuracion-sistema","tipo":"persisted_in","to":"table--seguridad-configuracion-sistema"}
 {"from":"entity--configuracion-valor","tipo":"persisted_in","to":"table--seguridad-configuracion-valores"}
 {"from":"entity--configuracion-version","tipo":"persisted_in","to":"table--seguridad-configuracion-versiones"}
-<<<<<<< Updated upstream
 {"from":"entity--consumo-combustible","tipo":"persisted_in","to":"table--vehiculos-consumos-combustible"}
-=======
->>>>>>> Stashed changes
 {"from":"entity--cuartel","tipo":"persisted_in","to":"table--organizacion-cuarteles"}
 {"from":"entity--curso","tipo":"persisted_in","to":"table--academia-cursos"}
+{"from":"entity--denuncia","tipo":"persisted_in","to":"table--denuncias-denuncias"}
 {"from":"entity--departamento","tipo":"persisted_in","to":"table--organizacion-departamentos"}
 {"from":"entity--designacion","tipo":"persisted_in","to":"table--organizacion-designaciones"}
 {"from":"entity--equipo","tipo":"persisted_in","to":"table--equipos-equipos"}
 {"from":"entity--especialidad","tipo":"persisted_in","to":"table--organizacion-especialidades"}
+{"from":"entity--esquema-horario-guardia","tipo":"persisted_in","to":"table--operaciones-esquemas-horario-guardia"}
 {"from":"entity--evento-asistencia","tipo":"persisted_in","to":"table--operaciones-eventos-asistencia"}
+{"from":"entity--evidencia-denuncia","tipo":"persisted_in","to":"table--denuncias-evidencias-denuncia"}
+{"from":"entity--feriado","tipo":"persisted_in","to":"table--organizacion-feriados"}
 {"from":"entity--foja-servicio","tipo":"persisted_in","to":"table--personal-fojas-servicio"}
-<<<<<<< Updated upstream
 {"from":"entity--grupo-guardia-miembro","tipo":"persisted_in","to":"table--operaciones-grupos-guardia-miembros"}
 {"from":"entity--grupo-guardia","tipo":"persisted_in","to":"table--operaciones-grupos-guardia"}
-=======
->>>>>>> Stashed changes
 {"from":"entity--guardia","tipo":"persisted_in","to":"table--operaciones-guardias"}
 {"from":"entity--historial-codigo","tipo":"persisted_in","to":"table--personal-historial-codigo"}
 {"from":"entity--historial-contrasena","tipo":"persisted_in","to":"table--seguridad-historial-contrasenas"}
+{"from":"entity--historial-estado-denuncia","tipo":"persisted_in","to":"table--denuncias-historial-estados-denuncia"}
 {"from":"entity--historial-institucional","tipo":"persisted_in","to":"table--personal-historial-institucional"}
 {"from":"entity--idioma-bombero","tipo":"persisted_in","to":"table--personal-idiomas-bombero"}
 {"from":"entity--importacion-marcador-fila","tipo":"persisted_in","to":"table--operaciones-importaciones-marcador-filas"}
 {"from":"entity--importacion-marcador","tipo":"persisted_in","to":"table--operaciones-importaciones-marcador"}
 {"from":"entity--inscripcion-curso","tipo":"persisted_in","to":"table--academia-inscripciones-cursos"}
-<<<<<<< Updated upstream
 {"from":"entity--inspeccion-estacion","tipo":"persisted_in","to":"table--operaciones-inspecciones-estacion"}
+{"from":"entity--inspeccion-movil","tipo":"persisted_in","to":"table--operaciones-inspecciones-movil"}
 {"from":"entity--log-auditoria","tipo":"persisted_in","to":"table--seguridad-logs-auditoria"}
 {"from":"entity--mantenimiento-equipo","tipo":"persisted_in","to":"table--equipos-mantenimientos-equipos"}
 {"from":"entity--mantenimiento-vehiculo","tipo":"persisted_in","to":"table--vehiculos-mantenimientos-vehiculos"}
 {"from":"entity--marcacion-asistencia","tipo":"persisted_in","to":"table--operaciones-marcaciones-asistencia"}
 {"from":"entity--materia","tipo":"persisted_in","to":"table--academia-materias"}
 {"from":"entity--novedad-guardia","tipo":"persisted_in","to":"table--operaciones-novedades-guardia"}
-=======
-{"from":"entity--log-auditoria","tipo":"persisted_in","to":"table--seguridad-logs-auditoria"}
-{"from":"entity--marcacion-asistencia","tipo":"persisted_in","to":"table--operaciones-marcaciones-asistencia"}
-{"from":"entity--materia","tipo":"persisted_in","to":"table--academia-materias"}
->>>>>>> Stashed changes
+{"from":"entity--orden-guardia-configuracion","tipo":"persisted_in","to":"table--operaciones-orden-guardia-configuracion"}
+{"from":"entity--orden-guardia-modificacion","tipo":"persisted_in","to":"table--operaciones-ordenes-guardia-modificaciones"}
+{"from":"entity--orden-guardia","tipo":"persisted_in","to":"table--operaciones-ordenes-guardia"}
 {"from":"entity--parametro","tipo":"persisted_in","to":"table--organizacion-parametros"}
 {"from":"entity--participante-evento","tipo":"persisted_in","to":"table--operaciones-participantes-evento"}
 {"from":"entity--participante-externo","tipo":"persisted_in","to":"table--operaciones-participantes-externos"}
 {"from":"entity--permiso","tipo":"persisted_in","to":"table--seguridad-permisos"}
-<<<<<<< Updated upstream
 {"from":"entity--pernocte","tipo":"persisted_in","to":"table--operaciones-pernoctes"}
-=======
->>>>>>> Stashed changes
 {"from":"entity--personal-servicio","tipo":"persisted_in","to":"table--servicios-personal-servicio"}
 {"from":"entity--prestamo-equipo","tipo":"persisted_in","to":"table--equipos-prestamos-equipos"}
 {"from":"entity--publicacion","tipo":"persisted_in","to":"table--contenido-publicaciones"}
 {"from":"entity--rango","tipo":"persisted_in","to":"table--organizacion-rangos"}
-<<<<<<< Updated upstream
 {"from":"entity--requisito-rol-guardia","tipo":"persisted_in","to":"table--operaciones-requisitos-rol-guardia"}
-=======
->>>>>>> Stashed changes
 {"from":"entity--rol","tipo":"persisted_in","to":"table--seguridad-roles"}
 {"from":"entity--seguro-bombero","tipo":"persisted_in","to":"table--personal-seguros-bombero"}
 {"from":"entity--servicio","tipo":"persisted_in","to":"table--servicios-servicios"}
 {"from":"entity--sesion","tipo":"persisted_in","to":"table--seguridad-sesiones"}
+{"from":"entity--sorteo-guardia","tipo":"persisted_in","to":"table--operaciones-sorteos-guardia"}
+{"from":"entity--sorteo-participante","tipo":"persisted_in","to":"table--operaciones-sorteo-participantes"}
 {"from":"entity--tipo-bombero","tipo":"persisted_in","to":"table--personal-tipos-bombero"}
 {"from":"entity--tipo-guardia","tipo":"persisted_in","to":"table--organizacion-tipos-guardia"}
 {"from":"entity--tipo-servicio","tipo":"persisted_in","to":"table--servicios-tipos-servicio"}
@@ -418,11 +436,9 @@
 {"from":"entity--vehiculo","tipo":"persisted_in","to":"table--vehiculos-vehiculos"}
 {"from":"component--modulo-auth","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"component--modulo-configuracion","tipo":"belongs_to","to":"domain--seguridad"}
+{"from":"component--modulo-denuncias","tipo":"belongs_to","to":"domain--denuncias"}
 {"from":"component--modulo-equipos","tipo":"belongs_to","to":"domain--equipos"}
-<<<<<<< Updated upstream
 {"from":"component--modulo-guardias","tipo":"belongs_to","to":"domain--guardias"}
-=======
->>>>>>> Stashed changes
 {"from":"component--modulo-operaciones","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"component--modulo-organizacion","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"component--modulo-personal","tipo":"belongs_to","to":"domain--personal"}
@@ -446,6 +462,26 @@
 {"from":"service--configuracion-configuracion","tipo":"reads","to":"table--seguridad-configuracion-valores"}
 {"from":"service--configuracion-configuracion","tipo":"uses","to":"entity--configuracion-version"}
 {"from":"service--configuracion-configuracion","tipo":"reads","to":"table--seguridad-configuracion-versiones"}
+{"from":"service--denuncias-denuncias","tipo":"belongs_to","to":"domain--denuncias"}
+{"from":"service--denuncias-denuncias","tipo":"uses","to":"component--modulo-denuncias"}
+{"from":"service--denuncias-denuncias","tipo":"uses","to":"entity--denuncia"}
+{"from":"service--denuncias-denuncias","tipo":"reads","to":"table--denuncias-denuncias"}
+{"from":"service--denuncias-denuncias","tipo":"uses","to":"entity--categoria-denuncia"}
+{"from":"service--denuncias-denuncias","tipo":"reads","to":"table--denuncias-categorias-denuncia"}
+{"from":"service--denuncias-denuncias","tipo":"uses","to":"entity--historial-estado-denuncia"}
+{"from":"service--denuncias-denuncias","tipo":"reads","to":"table--denuncias-historial-estados-denuncia"}
+{"from":"service--denuncias-denuncias","tipo":"uses","to":"entity--evidencia-denuncia"}
+{"from":"service--denuncias-denuncias","tipo":"reads","to":"table--denuncias-evidencias-denuncia"}
+{"from":"service--denuncias-denuncias","tipo":"uses","to":"entity--servicio"}
+{"from":"service--denuncias-denuncias","tipo":"reads","to":"table--servicios-servicios"}
+{"from":"service--denuncias-denuncias","tipo":"uses","to":"entity--tipo-servicio"}
+{"from":"service--denuncias-denuncias","tipo":"reads","to":"table--servicios-tipos-servicio"}
+{"from":"service--denuncias-denuncias","tipo":"uses","to":"entity--vehiculo"}
+{"from":"service--denuncias-denuncias","tipo":"reads","to":"table--vehiculos-vehiculos"}
+{"from":"service--denuncias-denuncias","tipo":"uses","to":"entity--comunicacion-servicio"}
+{"from":"service--denuncias-denuncias","tipo":"reads","to":"table--servicios-comunicaciones-servicio"}
+{"from":"service--denuncias-denuncias","tipo":"uses","to":"entity--usuario"}
+{"from":"service--denuncias-denuncias","tipo":"reads","to":"table--seguridad-usuarios"}
 {"from":"service--equipos-categorias-equipo","tipo":"belongs_to","to":"domain--equipos"}
 {"from":"service--equipos-categorias-equipo","tipo":"uses","to":"component--modulo-equipos"}
 {"from":"service--equipos-categorias-equipo","tipo":"uses","to":"entity--categoria-equipo"}
@@ -462,7 +498,6 @@
 {"from":"service--equipos-equipos","tipo":"reads","to":"table--equipos-equipos"}
 {"from":"service--equipos-equipos","tipo":"uses","to":"entity--categoria-equipo"}
 {"from":"service--equipos-equipos","tipo":"reads","to":"table--equipos-categorias-equipo"}
-<<<<<<< Updated upstream
 {"from":"service--equipos-equipos","tipo":"uses","to":"entity--mantenimiento-equipo"}
 {"from":"service--equipos-equipos","tipo":"reads","to":"table--equipos-mantenimientos-equipos"}
 {"from":"service--equipos-equipos","tipo":"uses","to":"entity--prestamo-equipo"}
@@ -471,6 +506,32 @@
 {"from":"service--equipos-equipos","tipo":"reads","to":"table--vehiculos-vehiculos"}
 {"from":"service--equipos-equipos","tipo":"uses","to":"entity--parametro"}
 {"from":"service--equipos-equipos","tipo":"reads","to":"table--organizacion-parametros"}
+{"from":"service--guardias-bitacora","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"service--guardias-bitacora","tipo":"uses","to":"component--modulo-guardias"}
+{"from":"service--guardias-bitacora","tipo":"uses","to":"entity--bombero"}
+{"from":"service--guardias-bitacora","tipo":"reads","to":"table--personal-bomberos"}
+{"from":"service--guardias-bitacora","tipo":"uses","to":"entity--marcacion-asistencia"}
+{"from":"service--guardias-bitacora","tipo":"reads","to":"table--operaciones-marcaciones-asistencia"}
+{"from":"service--guardias-bitacora","tipo":"uses","to":"entity--servicio"}
+{"from":"service--guardias-bitacora","tipo":"reads","to":"table--servicios-servicios"}
+{"from":"service--guardias-bitacora","tipo":"uses","to":"entity--evento-asistencia"}
+{"from":"service--guardias-bitacora","tipo":"reads","to":"table--operaciones-eventos-asistencia"}
+{"from":"service--guardias-bitacora","tipo":"uses","to":"entity--participante-evento"}
+{"from":"service--guardias-bitacora","tipo":"reads","to":"table--operaciones-participantes-evento"}
+{"from":"service--guardias-bitacora","tipo":"uses","to":"entity--prestamo-equipo"}
+{"from":"service--guardias-bitacora","tipo":"reads","to":"table--equipos-prestamos-equipos"}
+{"from":"service--guardias-bitacora","tipo":"uses","to":"entity--pernocte"}
+{"from":"service--guardias-bitacora","tipo":"reads","to":"table--operaciones-pernoctes"}
+{"from":"service--guardias-bitacora","tipo":"uses","to":"entity--inspeccion-estacion"}
+{"from":"service--guardias-bitacora","tipo":"reads","to":"table--operaciones-inspecciones-estacion"}
+{"from":"service--guardias-bitacora","tipo":"uses","to":"entity--inspeccion-movil"}
+{"from":"service--guardias-bitacora","tipo":"reads","to":"table--operaciones-inspecciones-movil"}
+{"from":"service--guardias-bitacora","tipo":"uses","to":"entity--novedad-guardia"}
+{"from":"service--guardias-bitacora","tipo":"reads","to":"table--operaciones-novedades-guardia"}
+{"from":"service--guardias-bitacora","tipo":"uses","to":"entity--guardia"}
+{"from":"service--guardias-bitacora","tipo":"reads","to":"table--operaciones-guardias"}
+{"from":"service--guardias-bitacora","tipo":"uses","to":"entity--usuario"}
+{"from":"service--guardias-bitacora","tipo":"reads","to":"table--seguridad-usuarios"}
 {"from":"service--guardias-elegibilidad","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"service--guardias-elegibilidad","tipo":"uses","to":"component--modulo-guardias"}
 {"from":"service--guardias-elegibilidad","tipo":"uses","to":"entity--requisito-rol-guardia"}
@@ -479,6 +540,30 @@
 {"from":"service--guardias-elegibilidad","tipo":"reads","to":"table--personal-bomberos"}
 {"from":"service--guardias-elegibilidad","tipo":"uses","to":"entity--vehiculo-autorizado"}
 {"from":"service--guardias-elegibilidad","tipo":"reads","to":"table--personal-vehiculos-autorizados"}
+{"from":"service--guardias-elegibilidad","tipo":"uses","to":"entity--rango"}
+{"from":"service--guardias-elegibilidad","tipo":"reads","to":"table--organizacion-rangos"}
+{"from":"service--guardias-esquemas-horario","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"service--guardias-esquemas-horario","tipo":"uses","to":"component--modulo-guardias"}
+{"from":"service--guardias-esquemas-horario","tipo":"uses","to":"entity--esquema-horario-guardia"}
+{"from":"service--guardias-esquemas-horario","tipo":"reads","to":"table--operaciones-esquemas-horario-guardia"}
+{"from":"service--guardias-generacion","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"service--guardias-generacion","tipo":"uses","to":"component--modulo-guardias"}
+{"from":"service--guardias-generacion","tipo":"uses","to":"entity--guardia"}
+{"from":"service--guardias-generacion","tipo":"reads","to":"table--operaciones-guardias"}
+{"from":"service--guardias-generacion","tipo":"uses","to":"entity--asignacion-guardia"}
+{"from":"service--guardias-generacion","tipo":"reads","to":"table--operaciones-asignacion-guardias"}
+{"from":"service--guardias-generacion","tipo":"uses","to":"entity--esquema-horario-guardia"}
+{"from":"service--guardias-generacion","tipo":"reads","to":"table--operaciones-esquemas-horario-guardia"}
+{"from":"service--guardias-generacion","tipo":"uses","to":"entity--feriado"}
+{"from":"service--guardias-generacion","tipo":"reads","to":"table--organizacion-feriados"}
+{"from":"service--guardias-generacion","tipo":"uses","to":"entity--grupo-guardia"}
+{"from":"service--guardias-generacion","tipo":"reads","to":"table--operaciones-grupos-guardia"}
+{"from":"service--guardias-generacion","tipo":"uses","to":"entity--grupo-guardia-miembro"}
+{"from":"service--guardias-generacion","tipo":"reads","to":"table--operaciones-grupos-guardia-miembros"}
+{"from":"service--guardias-generacion","tipo":"uses","to":"entity--bombero"}
+{"from":"service--guardias-generacion","tipo":"reads","to":"table--personal-bomberos"}
+{"from":"service--guardias-generacion","tipo":"uses","to":"entity--rango"}
+{"from":"service--guardias-generacion","tipo":"reads","to":"table--organizacion-rangos"}
 {"from":"service--guardias-grupos-guardia","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"service--guardias-grupos-guardia","tipo":"uses","to":"component--modulo-guardias"}
 {"from":"service--guardias-grupos-guardia","tipo":"uses","to":"entity--grupo-guardia"}
@@ -487,6 +572,8 @@
 {"from":"service--guardias-grupos-guardia","tipo":"reads","to":"table--operaciones-grupos-guardia-miembros"}
 {"from":"service--guardias-grupos-guardia","tipo":"uses","to":"entity--bombero"}
 {"from":"service--guardias-grupos-guardia","tipo":"reads","to":"table--personal-bomberos"}
+{"from":"service--guardias-grupos-guardia","tipo":"uses","to":"entity--guardia"}
+{"from":"service--guardias-grupos-guardia","tipo":"reads","to":"table--operaciones-guardias"}
 {"from":"service--guardias-guardias","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"service--guardias-guardias","tipo":"uses","to":"component--modulo-guardias"}
 {"from":"service--guardias-guardias","tipo":"uses","to":"entity--guardia"}
@@ -507,6 +594,18 @@
 {"from":"service--guardias-inspecciones-estacion","tipo":"reads","to":"table--operaciones-guardias"}
 {"from":"service--guardias-inspecciones-estacion","tipo":"uses","to":"entity--parametro"}
 {"from":"service--guardias-inspecciones-estacion","tipo":"reads","to":"table--organizacion-parametros"}
+{"from":"service--guardias-inspecciones-movil","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"service--guardias-inspecciones-movil","tipo":"uses","to":"component--modulo-guardias"}
+{"from":"service--guardias-inspecciones-movil","tipo":"uses","to":"entity--inspeccion-movil"}
+{"from":"service--guardias-inspecciones-movil","tipo":"reads","to":"table--operaciones-inspecciones-movil"}
+{"from":"service--guardias-inspecciones-movil","tipo":"uses","to":"entity--guardia"}
+{"from":"service--guardias-inspecciones-movil","tipo":"reads","to":"table--operaciones-guardias"}
+{"from":"service--guardias-inspecciones-movil","tipo":"uses","to":"entity--vehiculo"}
+{"from":"service--guardias-inspecciones-movil","tipo":"reads","to":"table--vehiculos-vehiculos"}
+{"from":"service--guardias-inspecciones-movil","tipo":"uses","to":"entity--checklist-item-vehiculo"}
+{"from":"service--guardias-inspecciones-movil","tipo":"reads","to":"table--vehiculos-checklist-items"}
+{"from":"service--guardias-inspecciones-movil","tipo":"uses","to":"entity--equipo"}
+{"from":"service--guardias-inspecciones-movil","tipo":"reads","to":"table--equipos-equipos"}
 {"from":"service--guardias-novedades","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"service--guardias-novedades","tipo":"uses","to":"component--modulo-guardias"}
 {"from":"service--guardias-novedades","tipo":"uses","to":"entity--novedad-guardia"}
@@ -515,6 +614,36 @@
 {"from":"service--guardias-novedades","tipo":"reads","to":"table--operaciones-guardias"}
 {"from":"service--guardias-novedades","tipo":"uses","to":"entity--bombero"}
 {"from":"service--guardias-novedades","tipo":"reads","to":"table--personal-bomberos"}
+{"from":"service--guardias-orden-guardia-configuracion","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"service--guardias-orden-guardia-configuracion","tipo":"uses","to":"component--modulo-guardias"}
+{"from":"service--guardias-orden-guardia-configuracion","tipo":"uses","to":"entity--orden-guardia-configuracion"}
+{"from":"service--guardias-orden-guardia-configuracion","tipo":"reads","to":"table--operaciones-orden-guardia-configuracion"}
+{"from":"service--guardias-ordenes-guardia","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"service--guardias-ordenes-guardia","tipo":"uses","to":"component--modulo-guardias"}
+{"from":"service--guardias-ordenes-guardia","tipo":"uses","to":"entity--orden-guardia"}
+{"from":"service--guardias-ordenes-guardia","tipo":"reads","to":"table--operaciones-ordenes-guardia"}
+{"from":"service--guardias-ordenes-guardia","tipo":"uses","to":"entity--guardia"}
+{"from":"service--guardias-ordenes-guardia","tipo":"reads","to":"table--operaciones-guardias"}
+{"from":"service--guardias-ordenes-guardia","tipo":"uses","to":"entity--asignacion-guardia"}
+{"from":"service--guardias-ordenes-guardia","tipo":"reads","to":"table--operaciones-asignacion-guardias"}
+{"from":"service--guardias-ordenes-guardia","tipo":"uses","to":"entity--grupo-guardia"}
+{"from":"service--guardias-ordenes-guardia","tipo":"reads","to":"table--operaciones-grupos-guardia"}
+{"from":"service--guardias-ordenes-guardia","tipo":"uses","to":"entity--grupo-guardia-miembro"}
+{"from":"service--guardias-ordenes-guardia","tipo":"reads","to":"table--operaciones-grupos-guardia-miembros"}
+{"from":"service--guardias-ordenes-guardia","tipo":"uses","to":"entity--esquema-horario-guardia"}
+{"from":"service--guardias-ordenes-guardia","tipo":"reads","to":"table--operaciones-esquemas-horario-guardia"}
+{"from":"service--guardias-ordenes-guardia","tipo":"uses","to":"entity--bombero"}
+{"from":"service--guardias-ordenes-guardia","tipo":"reads","to":"table--personal-bomberos"}
+{"from":"service--guardias-ordenes-guardia","tipo":"uses","to":"entity--rango"}
+{"from":"service--guardias-ordenes-guardia","tipo":"reads","to":"table--organizacion-rangos"}
+{"from":"service--guardias-ordenes-guardia","tipo":"uses","to":"entity--vehiculo-autorizado"}
+{"from":"service--guardias-ordenes-guardia","tipo":"reads","to":"table--personal-vehiculos-autorizados"}
+{"from":"service--guardias-ordenes-guardia","tipo":"uses","to":"entity--cargo"}
+{"from":"service--guardias-ordenes-guardia","tipo":"reads","to":"table--organizacion-cargos"}
+{"from":"service--guardias-ordenes-guardia","tipo":"uses","to":"entity--designacion"}
+{"from":"service--guardias-ordenes-guardia","tipo":"reads","to":"table--organizacion-designaciones"}
+{"from":"service--guardias-ordenes-guardia","tipo":"uses","to":"entity--orden-guardia-modificacion"}
+{"from":"service--guardias-ordenes-guardia","tipo":"reads","to":"table--operaciones-ordenes-guardia-modificaciones"}
 {"from":"service--guardias-pernoctes","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"service--guardias-pernoctes","tipo":"uses","to":"component--modulo-guardias"}
 {"from":"service--guardias-pernoctes","tipo":"uses","to":"entity--pernocte"}
@@ -525,8 +654,16 @@
 {"from":"service--guardias-requisitos-rol","tipo":"uses","to":"component--modulo-guardias"}
 {"from":"service--guardias-requisitos-rol","tipo":"uses","to":"entity--requisito-rol-guardia"}
 {"from":"service--guardias-requisitos-rol","tipo":"reads","to":"table--operaciones-requisitos-rol-guardia"}
-=======
->>>>>>> Stashed changes
+{"from":"service--guardias-sorteos","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"service--guardias-sorteos","tipo":"uses","to":"component--modulo-guardias"}
+{"from":"service--guardias-sorteos","tipo":"uses","to":"entity--sorteo-guardia"}
+{"from":"service--guardias-sorteos","tipo":"reads","to":"table--operaciones-sorteos-guardia"}
+{"from":"service--guardias-sorteos","tipo":"uses","to":"entity--sorteo-participante"}
+{"from":"service--guardias-sorteos","tipo":"reads","to":"table--operaciones-sorteo-participantes"}
+{"from":"service--guardias-sorteos","tipo":"uses","to":"entity--bombero"}
+{"from":"service--guardias-sorteos","tipo":"reads","to":"table--personal-bomberos"}
+{"from":"service--guardias-sorteos","tipo":"uses","to":"entity--esquema-horario-guardia"}
+{"from":"service--guardias-sorteos","tipo":"reads","to":"table--operaciones-esquemas-horario-guardia"}
 {"from":"service--operaciones-dashboard-asistencia","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"service--operaciones-dashboard-asistencia","tipo":"uses","to":"component--modulo-operaciones"}
 {"from":"service--operaciones-dashboard-asistencia","tipo":"uses","to":"entity--evento-asistencia"}
@@ -551,17 +688,6 @@
 {"from":"service--operaciones-eventos-asistencia","tipo":"reads","to":"table--personal-bomberos"}
 {"from":"service--operaciones-eventos-asistencia","tipo":"uses","to":"entity--marcacion-asistencia"}
 {"from":"service--operaciones-eventos-asistencia","tipo":"reads","to":"table--operaciones-marcaciones-asistencia"}
-<<<<<<< Updated upstream
-=======
-{"from":"service--operaciones-guardias","tipo":"belongs_to","to":"domain--asistencia"}
-{"from":"service--operaciones-guardias","tipo":"uses","to":"component--modulo-operaciones"}
-{"from":"service--operaciones-guardias","tipo":"uses","to":"entity--guardia"}
-{"from":"service--operaciones-guardias","tipo":"reads","to":"table--operaciones-guardias"}
-{"from":"service--operaciones-guardias","tipo":"uses","to":"entity--asignacion-guardia"}
-{"from":"service--operaciones-guardias","tipo":"reads","to":"table--operaciones-asignacion-guardias"}
-{"from":"service--operaciones-guardias","tipo":"uses","to":"entity--bombero"}
-{"from":"service--operaciones-guardias","tipo":"reads","to":"table--personal-bomberos"}
->>>>>>> Stashed changes
 {"from":"service--operaciones-importaciones","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"service--operaciones-importaciones","tipo":"uses","to":"component--modulo-operaciones"}
 {"from":"service--operaciones-importaciones","tipo":"uses","to":"entity--importacion-marcador"}
@@ -656,6 +782,12 @@
 {"from":"service--organizacion-especialidades","tipo":"uses","to":"component--modulo-organizacion"}
 {"from":"service--organizacion-especialidades","tipo":"uses","to":"entity--especialidad"}
 {"from":"service--organizacion-especialidades","tipo":"reads","to":"table--organizacion-especialidades"}
+{"from":"service--organizacion-feriados","tipo":"belongs_to","to":"domain--organizacion"}
+{"from":"service--organizacion-feriados","tipo":"uses","to":"component--modulo-organizacion"}
+{"from":"service--organizacion-feriados","tipo":"uses","to":"entity--feriado"}
+{"from":"service--organizacion-feriados","tipo":"reads","to":"table--organizacion-feriados"}
+{"from":"service--organizacion-feriados","tipo":"uses","to":"entity--guardia"}
+{"from":"service--organizacion-feriados","tipo":"reads","to":"table--operaciones-guardias"}
 {"from":"service--organizacion-parametros","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"service--organizacion-parametros","tipo":"uses","to":"component--modulo-organizacion"}
 {"from":"service--organizacion-parametros","tipo":"uses","to":"entity--parametro"}
@@ -880,13 +1012,10 @@
 {"from":"service--servicios-servicios","tipo":"reads","to":"table--personal-bomberos"}
 {"from":"service--servicios-servicios","tipo":"uses","to":"entity--vehiculo"}
 {"from":"service--servicios-servicios","tipo":"reads","to":"table--vehiculos-vehiculos"}
-<<<<<<< Updated upstream
 {"from":"service--vehiculos-checklist-items","tipo":"belongs_to","to":"domain--vehiculos"}
 {"from":"service--vehiculos-checklist-items","tipo":"uses","to":"component--modulo-vehiculos"}
 {"from":"service--vehiculos-checklist-items","tipo":"uses","to":"entity--checklist-item-vehiculo"}
 {"from":"service--vehiculos-checklist-items","tipo":"reads","to":"table--vehiculos-checklist-items"}
-=======
->>>>>>> Stashed changes
 {"from":"service--vehiculos-vehiculos-autorizados","tipo":"belongs_to","to":"domain--vehiculos"}
 {"from":"service--vehiculos-vehiculos-autorizados","tipo":"uses","to":"component--modulo-vehiculos"}
 {"from":"service--vehiculos-vehiculos-autorizados","tipo":"uses","to":"entity--vehiculo-autorizado"}
@@ -897,7 +1026,6 @@
 {"from":"service--vehiculos-vehiculos","tipo":"uses","to":"component--modulo-vehiculos"}
 {"from":"service--vehiculos-vehiculos","tipo":"uses","to":"entity--vehiculo"}
 {"from":"service--vehiculos-vehiculos","tipo":"reads","to":"table--vehiculos-vehiculos"}
-<<<<<<< Updated upstream
 {"from":"service--vehiculos-vehiculos","tipo":"uses","to":"entity--mantenimiento-vehiculo"}
 {"from":"service--vehiculos-vehiculos","tipo":"reads","to":"table--vehiculos-mantenimientos-vehiculos"}
 {"from":"service--vehiculos-vehiculos","tipo":"uses","to":"entity--consumo-combustible"}
@@ -907,26 +1035,31 @@
 {"from":"service--auth-auth","tipo":"uses","to":"service--seguridad-policy-engine"}
 {"from":"service--auth-auth","tipo":"uses","to":"service--seguridad-auditoria"}
 {"from":"service--configuracion-configuracion","tipo":"uses","to":"service--seguridad-auditoria"}
+{"from":"service--denuncias-denuncias","tipo":"uses","to":"service--seguridad-auditoria"}
+{"from":"service--guardias-bitacora","tipo":"uses","to":"service--guardias-guardias"}
+{"from":"service--guardias-bitacora","tipo":"uses","to":"service--seguridad-auditoria"}
+{"from":"service--guardias-generacion","tipo":"uses","to":"service--seguridad-auditoria"}
+{"from":"service--guardias-generacion","tipo":"uses","to":"service--guardias-elegibilidad"}
+{"from":"service--guardias-generacion","tipo":"uses","to":"service--guardias-guardias"}
 {"from":"service--guardias-grupos-guardia","tipo":"uses","to":"service--guardias-elegibilidad"}
 {"from":"service--guardias-grupos-guardia","tipo":"uses","to":"service--seguridad-auditoria"}
 {"from":"service--guardias-guardias","tipo":"uses","to":"service--seguridad-auditoria"}
 {"from":"service--guardias-guardias","tipo":"uses","to":"service--guardias-elegibilidad"}
+{"from":"service--guardias-guardias","tipo":"uses","to":"service--guardias-orden-guardia-configuracion"}
 {"from":"service--guardias-inspecciones-estacion","tipo":"uses","to":"service--seguridad-auditoria"}
+{"from":"service--guardias-inspecciones-movil","tipo":"uses","to":"service--seguridad-auditoria"}
 {"from":"service--guardias-novedades","tipo":"uses","to":"service--seguridad-auditoria"}
+{"from":"service--guardias-ordenes-guardia","tipo":"uses","to":"service--seguridad-auditoria"}
+{"from":"service--guardias-ordenes-guardia","tipo":"uses","to":"service--guardias-orden-guardia-configuracion"}
 {"from":"service--guardias-pernoctes","tipo":"uses","to":"service--seguridad-auditoria"}
 {"from":"service--guardias-requisitos-rol","tipo":"uses","to":"service--seguridad-auditoria"}
+{"from":"service--guardias-sorteos","tipo":"uses","to":"service--seguridad-auditoria"}
+{"from":"service--guardias-sorteos","tipo":"uses","to":"service--guardias-guardias"}
 {"from":"service--operaciones-dashboard-asistencia","tipo":"uses","to":"service--operaciones-marcaciones"}
 {"from":"service--operaciones-eventos-asistencia","tipo":"uses","to":"service--seguridad-auditoria"}
-=======
-{"from":"service--auth-auth","tipo":"uses","to":"service--seguridad-policy-engine"}
-{"from":"service--auth-auth","tipo":"uses","to":"service--seguridad-auditoria"}
-{"from":"service--configuracion-configuracion","tipo":"uses","to":"service--seguridad-auditoria"}
-{"from":"service--operaciones-dashboard-asistencia","tipo":"uses","to":"service--operaciones-marcaciones"}
-{"from":"service--operaciones-eventos-asistencia","tipo":"uses","to":"service--seguridad-auditoria"}
-{"from":"service--operaciones-guardias","tipo":"uses","to":"service--seguridad-auditoria"}
->>>>>>> Stashed changes
 {"from":"service--operaciones-importaciones","tipo":"uses","to":"service--seguridad-auditoria"}
 {"from":"service--operaciones-marcaciones","tipo":"uses","to":"service--seguridad-auditoria"}
+{"from":"service--organizacion-feriados","tipo":"uses","to":"service--seguridad-auditoria"}
 {"from":"service--personal-bomberos","tipo":"uses","to":"service--seguridad-auditoria"}
 {"from":"service--seguridad-dashboard","tipo":"uses","to":"service--seguridad-sesiones"}
 {"from":"service--seguridad-dashboard","tipo":"uses","to":"service--seguridad-auditoria"}
@@ -940,36 +1073,44 @@
 {"from":"api--auth-auth","tipo":"exposes","to":"service--auth-auth"}
 {"from":"api--configuracion-configuracion","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"api--configuracion-configuracion","tipo":"exposes","to":"service--configuracion-configuracion"}
+{"from":"api--denuncias-denuncias-publicas","tipo":"belongs_to","to":"domain--denuncias"}
+{"from":"api--denuncias-denuncias-publicas","tipo":"exposes","to":"service--denuncias-denuncias"}
+{"from":"api--denuncias-denuncias","tipo":"belongs_to","to":"domain--denuncias"}
+{"from":"api--denuncias-denuncias","tipo":"exposes","to":"service--denuncias-denuncias"}
 {"from":"api--equipos-categorias-equipo","tipo":"belongs_to","to":"domain--equipos"}
 {"from":"api--equipos-categorias-equipo","tipo":"exposes","to":"service--equipos-categorias-equipo"}
 {"from":"api--equipos-equipamiento-bombero","tipo":"belongs_to","to":"domain--equipos"}
 {"from":"api--equipos-equipamiento-bombero","tipo":"exposes","to":"service--equipos-equipamiento-bombero"}
 {"from":"api--equipos-equipos","tipo":"belongs_to","to":"domain--equipos"}
 {"from":"api--equipos-equipos","tipo":"exposes","to":"service--equipos-equipos"}
-<<<<<<< Updated upstream
+{"from":"api--guardias-bitacora","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"api--guardias-bitacora","tipo":"exposes","to":"service--guardias-bitacora"}
+{"from":"api--guardias-esquemas-horario","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"api--guardias-esquemas-horario","tipo":"exposes","to":"service--guardias-esquemas-horario"}
 {"from":"api--guardias-grupos-guardia","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"api--guardias-grupos-guardia","tipo":"exposes","to":"service--guardias-grupos-guardia"}
 {"from":"api--guardias-guardias","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"api--guardias-guardias","tipo":"exposes","to":"service--guardias-guardias"}
+{"from":"api--guardias-guardias","tipo":"exposes","to":"service--guardias-generacion"}
 {"from":"api--guardias-inspecciones-estacion","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"api--guardias-inspecciones-estacion","tipo":"exposes","to":"service--guardias-inspecciones-estacion"}
+{"from":"api--guardias-inspecciones-movil","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"api--guardias-inspecciones-movil","tipo":"exposes","to":"service--guardias-inspecciones-movil"}
 {"from":"api--guardias-novedades","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"api--guardias-novedades","tipo":"exposes","to":"service--guardias-novedades"}
+{"from":"api--guardias-ordenes-guardia","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"api--guardias-ordenes-guardia","tipo":"exposes","to":"service--guardias-ordenes-guardia"}
+{"from":"api--guardias-ordenes-guardia","tipo":"exposes","to":"service--guardias-orden-guardia-configuracion"}
 {"from":"api--guardias-pernoctes","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"api--guardias-pernoctes","tipo":"exposes","to":"service--guardias-pernoctes"}
 {"from":"api--guardias-requisitos-rol","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"api--guardias-requisitos-rol","tipo":"exposes","to":"service--guardias-requisitos-rol"}
-=======
->>>>>>> Stashed changes
+{"from":"api--guardias-sorteos","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"api--guardias-sorteos","tipo":"exposes","to":"service--guardias-sorteos"}
 {"from":"api--operaciones-dashboard-asistencia","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"api--operaciones-dashboard-asistencia","tipo":"exposes","to":"service--operaciones-dashboard-asistencia"}
 {"from":"api--operaciones-eventos-asistencia","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"api--operaciones-eventos-asistencia","tipo":"exposes","to":"service--operaciones-eventos-asistencia"}
-<<<<<<< Updated upstream
-=======
-{"from":"api--operaciones-guardias","tipo":"belongs_to","to":"domain--asistencia"}
-{"from":"api--operaciones-guardias","tipo":"exposes","to":"service--operaciones-guardias"}
->>>>>>> Stashed changes
 {"from":"api--operaciones-importaciones","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"api--operaciones-importaciones","tipo":"exposes","to":"service--operaciones-importaciones"}
 {"from":"api--operaciones-marcaciones","tipo":"belongs_to","to":"domain--asistencia"}
@@ -997,6 +1138,8 @@
 {"from":"api--organizacion-designaciones","tipo":"exposes","to":"service--organizacion-designaciones"}
 {"from":"api--organizacion-especialidades","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"api--organizacion-especialidades","tipo":"exposes","to":"service--organizacion-especialidades"}
+{"from":"api--organizacion-feriados","tipo":"belongs_to","to":"domain--organizacion"}
+{"from":"api--organizacion-feriados","tipo":"exposes","to":"service--organizacion-feriados"}
 {"from":"api--organizacion-parametros","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"api--organizacion-parametros","tipo":"exposes","to":"service--organizacion-parametros"}
 {"from":"api--organizacion-rangos","tipo":"belongs_to","to":"domain--organizacion"}
@@ -1050,11 +1193,8 @@
 {"from":"api--seguridad-usuarios","tipo":"exposes","to":"service--seguridad-usuarios"}
 {"from":"api--servicios-servicios","tipo":"belongs_to","to":"domain--servicios"}
 {"from":"api--servicios-servicios","tipo":"exposes","to":"service--servicios-servicios"}
-<<<<<<< Updated upstream
 {"from":"api--vehiculos-checklist-items","tipo":"belongs_to","to":"domain--vehiculos"}
 {"from":"api--vehiculos-checklist-items","tipo":"exposes","to":"service--vehiculos-checklist-items"}
-=======
->>>>>>> Stashed changes
 {"from":"api--vehiculos-vehiculos-autorizados","tipo":"belongs_to","to":"domain--vehiculos"}
 {"from":"api--vehiculos-vehiculos-autorizados","tipo":"exposes","to":"service--vehiculos-vehiculos-autorizados"}
 {"from":"api--vehiculos-vehiculos","tipo":"belongs_to","to":"domain--vehiculos"}
@@ -1063,31 +1203,32 @@
 {"from":"screen--dashboard-asistencia-eventos","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"screen--dashboard-asistencia-eventos-id","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"screen--dashboard-asistencia-externos","tipo":"belongs_to","to":"domain--asistencia"}
-<<<<<<< Updated upstream
 {"from":"screen--dashboard-asistencia","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"screen--dashboard-asistencia-registro","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"screen--dashboard-asistencia-tolerancias","tipo":"belongs_to","to":"domain--asistencia"}
+{"from":"screen--dashboard-denuncias","tipo":"belongs_to","to":"domain--denuncias"}
+{"from":"screen--dashboard-denuncias-id","tipo":"belongs_to","to":"domain--denuncias"}
 {"from":"screen--dashboard-equipos-categorias","tipo":"belongs_to","to":"domain--equipos"}
 {"from":"screen--dashboard-equipos","tipo":"belongs_to","to":"domain--equipos"}
 {"from":"screen--dashboard-equipos-id","tipo":"belongs_to","to":"domain--equipos"}
 {"from":"screen--dashboard-guardias-auditoria","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"screen--dashboard-guardias-esquemas-horario","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"screen--dashboard-guardias-generar","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"screen--dashboard-guardias-grupos","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"screen--dashboard-guardias-grupos-id","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"screen--dashboard-guardias-ordenes-configuracion","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"screen--dashboard-guardias-ordenes-nueva","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"screen--dashboard-guardias-ordenes","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"screen--dashboard-guardias-ordenes-id","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"screen--dashboard-guardias","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"screen--dashboard-guardias-pernoctes","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"screen--dashboard-guardias-requisitos","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"screen--dashboard-guardias-sorteos","tipo":"belongs_to","to":"domain--guardias"}
+{"from":"screen--dashboard-guardias-sorteos-id","tipo":"belongs_to","to":"domain--guardias"}
 {"from":"screen--dashboard-guardias-id","tipo":"belongs_to","to":"domain--guardias"}
-{"from":"screen--dashboard-mi-perfil","tipo":"belongs_to","to":"domain--seguridad"}
-=======
-{"from":"screen--dashboard-asistencia-guardias","tipo":"belongs_to","to":"domain--asistencia"}
-{"from":"screen--dashboard-asistencia-guardias-id","tipo":"belongs_to","to":"domain--asistencia"}
-{"from":"screen--dashboard-asistencia","tipo":"belongs_to","to":"domain--asistencia"}
-{"from":"screen--dashboard-asistencia-registro","tipo":"belongs_to","to":"domain--asistencia"}
-{"from":"screen--dashboard-asistencia-tolerancias","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"screen--dashboard-mi-perfil","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"screen--dashboard-mi-perfil-preferencias","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"screen--dashboard-mi-perfil-seguridad","tipo":"belongs_to","to":"domain--seguridad"}
->>>>>>> Stashed changes
 {"from":"screen--dashboard-organizacion-ascensos","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"screen--dashboard-organizacion-brigadas","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"screen--dashboard-organizacion-cargos","tipo":"belongs_to","to":"domain--organizacion"}
@@ -1096,6 +1237,7 @@
 {"from":"screen--dashboard-organizacion-departamentos","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"screen--dashboard-organizacion-designaciones","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"screen--dashboard-organizacion-especialidades","tipo":"belongs_to","to":"domain--organizacion"}
+{"from":"screen--dashboard-organizacion-feriados","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"screen--dashboard-organizacion-guardias","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"screen--dashboard-organizacion","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"screen--dashboard-organizacion-parametros","tipo":"belongs_to","to":"domain--organizacion"}
@@ -1120,13 +1262,11 @@
 {"from":"screen--dashboard-seguridad-usuarios-id","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"screen--dashboard-servicios-nuevo","tipo":"belongs_to","to":"domain--servicios"}
 {"from":"screen--dashboard-servicios","tipo":"belongs_to","to":"domain--servicios"}
-<<<<<<< Updated upstream
 {"from":"screen--dashboard-vehiculos-checklist-items","tipo":"belongs_to","to":"domain--vehiculos"}
 {"from":"screen--dashboard-vehiculos","tipo":"belongs_to","to":"domain--vehiculos"}
 {"from":"screen--dashboard-vehiculos-id","tipo":"belongs_to","to":"domain--vehiculos"}
-=======
->>>>>>> Stashed changes
 {"from":"screen--dashboard-modulo","tipo":"belongs_to","to":"domain--seguridad"}
+{"from":"screen--denuncias","tipo":"belongs_to","to":"domain--denuncias"}
 {"from":"screen--login","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"screen--raiz","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"screen--dashboard-asistencia-auditoria","tipo":"uses","to":"component--front-api"}
@@ -1139,14 +1279,6 @@
 {"from":"screen--dashboard-asistencia-eventos-id","tipo":"uses","to":"component--front-parametros"}
 {"from":"screen--dashboard-asistencia-externos","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-asistencia-externos","tipo":"uses","to":"component--front-asistencia"}
-<<<<<<< Updated upstream
-=======
-{"from":"screen--dashboard-asistencia-guardias","tipo":"uses","to":"component--front-api"}
-{"from":"screen--dashboard-asistencia-guardias","tipo":"uses","to":"component--front-asistencia"}
-{"from":"screen--dashboard-asistencia-guardias-id","tipo":"uses","to":"component--front-api"}
-{"from":"screen--dashboard-asistencia-guardias-id","tipo":"uses","to":"component--front-personal"}
-{"from":"screen--dashboard-asistencia-guardias-id","tipo":"uses","to":"component--front-asistencia"}
->>>>>>> Stashed changes
 {"from":"screen--dashboard-asistencia","tipo":"uses","to":"component--front-asistencia"}
 {"from":"screen--dashboard-asistencia-registro","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-asistencia-registro","tipo":"uses","to":"component--front-personal"}
@@ -1154,7 +1286,8 @@
 {"from":"screen--dashboard-asistencia-tolerancias","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-asistencia-tolerancias","tipo":"uses","to":"component--front-parametros"}
 {"from":"screen--dashboard-asistencia-tolerancias","tipo":"uses","to":"component--front-asistencia"}
-<<<<<<< Updated upstream
+{"from":"screen--dashboard-denuncias","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-denuncias-id","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-equipos-categorias","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-equipos-categorias","tipo":"uses","to":"component--front-equipos"}
 {"from":"screen--dashboard-equipos","tipo":"uses","to":"component--front-api"}
@@ -1164,12 +1297,23 @@
 {"from":"screen--dashboard-equipos-id","tipo":"uses","to":"component--front-vehiculos"}
 {"from":"screen--dashboard-equipos-id","tipo":"uses","to":"component--front-equipos"}
 {"from":"screen--dashboard-guardias-auditoria","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-guardias-esquemas-horario","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-guardias-esquemas-horario","tipo":"uses","to":"component--front-guardias"}
+{"from":"screen--dashboard-guardias-generar","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-guardias-generar","tipo":"uses","to":"component--front-guardias"}
 {"from":"screen--dashboard-guardias-grupos","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-guardias-grupos","tipo":"uses","to":"component--front-personal"}
 {"from":"screen--dashboard-guardias-grupos","tipo":"uses","to":"component--front-guardias"}
 {"from":"screen--dashboard-guardias-grupos-id","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-guardias-grupos-id","tipo":"uses","to":"component--front-personal"}
 {"from":"screen--dashboard-guardias-grupos-id","tipo":"uses","to":"component--front-guardias"}
+{"from":"screen--dashboard-guardias-ordenes-configuracion","tipo":"uses","to":"component--front-personal"}
+{"from":"screen--dashboard-guardias-ordenes-configuracion","tipo":"uses","to":"component--front-guardias"}
+{"from":"screen--dashboard-guardias-ordenes-nueva","tipo":"uses","to":"component--front-guardias"}
+{"from":"screen--dashboard-guardias-ordenes","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-guardias-ordenes","tipo":"uses","to":"component--front-guardias"}
+{"from":"screen--dashboard-guardias-ordenes-id","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-guardias-ordenes-id","tipo":"uses","to":"component--front-guardias"}
 {"from":"screen--dashboard-guardias","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-guardias","tipo":"uses","to":"component--front-guardias"}
 {"from":"screen--dashboard-guardias-pernoctes","tipo":"uses","to":"component--front-api"}
@@ -1178,18 +1322,19 @@
 {"from":"screen--dashboard-guardias-requisitos","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-guardias-requisitos","tipo":"uses","to":"component--front-personal"}
 {"from":"screen--dashboard-guardias-requisitos","tipo":"uses","to":"component--front-guardias"}
+{"from":"screen--dashboard-guardias-sorteos","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-guardias-sorteos","tipo":"uses","to":"component--front-guardias"}
+{"from":"screen--dashboard-guardias-sorteos-id","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-guardias-sorteos-id","tipo":"uses","to":"component--front-guardias"}
 {"from":"screen--dashboard-guardias-id","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-guardias-id","tipo":"uses","to":"component--front-personal"}
 {"from":"screen--dashboard-guardias-id","tipo":"uses","to":"component--front-parametros"}
 {"from":"screen--dashboard-guardias-id","tipo":"uses","to":"component--front-guardias"}
 {"from":"screen--dashboard-mi-perfil","tipo":"uses","to":"component--front-api"}
-=======
-{"from":"screen--dashboard-mi-perfil","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-mi-perfil-preferencias","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-mi-perfil-preferencias","tipo":"uses","to":"component--front-configuracion"}
 {"from":"screen--dashboard-mi-perfil-seguridad","tipo":"uses","to":"component--front-confirmprovider"}
 {"from":"screen--dashboard-mi-perfil-seguridad","tipo":"uses","to":"component--front-api"}
->>>>>>> Stashed changes
 {"from":"screen--dashboard-organizacion-ascensos","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-organizacion-ascensos","tipo":"uses","to":"component--front-exportar"}
 {"from":"screen--dashboard-organizacion-brigadas","tipo":"uses","to":"component--front-api"}
@@ -1206,6 +1351,8 @@
 {"from":"screen--dashboard-organizacion-designaciones","tipo":"uses","to":"component--front-exportar"}
 {"from":"screen--dashboard-organizacion-especialidades","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-organizacion-especialidades","tipo":"uses","to":"component--front-exportar"}
+{"from":"screen--dashboard-organizacion-feriados","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-organizacion-feriados","tipo":"uses","to":"component--front-guardias"}
 {"from":"screen--dashboard-organizacion-guardias","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-organizacion-guardias","tipo":"uses","to":"component--front-exportar"}
 {"from":"screen--dashboard-organizacion","tipo":"uses","to":"component--front-api"}
@@ -1232,6 +1379,7 @@
 {"from":"screen--dashboard-personal","tipo":"uses","to":"component--front-personal"}
 {"from":"screen--dashboard-personal-id","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-personal-id","tipo":"uses","to":"component--front-parametros"}
+{"from":"screen--dashboard-personal-id","tipo":"uses","to":"component--front-guardias"}
 {"from":"screen--dashboard-publicaciones","tipo":"uses","to":"component--front-publicaciones"}
 {"from":"screen--dashboard-publicaciones","tipo":"uses","to":"component--front-confirmprovider"}
 {"from":"screen--dashboard-seguridad-apariencia","tipo":"uses","to":"component--front-api"}
@@ -1240,22 +1388,6 @@
 {"from":"screen--dashboard-seguridad-configuracion","tipo":"uses","to":"component--front-configuracion"}
 {"from":"screen--dashboard-seguridad","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-seguridad-permisos","tipo":"uses","to":"component--front-api"}
-<<<<<<< Updated upstream
-{"from":"screen--dashboard-seguridad-roles","tipo":"uses","to":"component--front-api"}
-{"from":"screen--dashboard-seguridad-sesiones","tipo":"uses","to":"component--front-api"}
-{"from":"screen--dashboard-seguridad-usuarios","tipo":"uses","to":"component--front-api"}
-{"from":"screen--dashboard-seguridad-usuarios-id","tipo":"uses","to":"component--front-api"}
-{"from":"screen--dashboard-servicios-nuevo","tipo":"uses","to":"component--front-api"}
-{"from":"screen--dashboard-servicios-nuevo","tipo":"uses","to":"component--front-vehiculos"}
-{"from":"screen--dashboard-servicios","tipo":"uses","to":"component--front-api"}
-{"from":"screen--dashboard-servicios","tipo":"uses","to":"component--front-systemicon"}
-{"from":"screen--dashboard-vehiculos-checklist-items","tipo":"uses","to":"component--front-api"}
-{"from":"screen--dashboard-vehiculos-checklist-items","tipo":"uses","to":"component--front-vehiculos"}
-{"from":"screen--dashboard-vehiculos","tipo":"uses","to":"component--front-api"}
-{"from":"screen--dashboard-vehiculos","tipo":"uses","to":"component--front-vehiculos"}
-{"from":"screen--dashboard-vehiculos-id","tipo":"uses","to":"component--front-api"}
-{"from":"screen--dashboard-vehiculos-id","tipo":"uses","to":"component--front-vehiculos"}
-=======
 {"from":"screen--dashboard-seguridad-permisos","tipo":"uses","to":"component--front-confirmprovider"}
 {"from":"screen--dashboard-seguridad-roles","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-seguridad-roles","tipo":"uses","to":"component--front-confirmprovider"}
@@ -1264,23 +1396,25 @@
 {"from":"screen--dashboard-seguridad-usuarios","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-seguridad-usuarios-id","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-servicios-nuevo","tipo":"uses","to":"component--front-api"}
-{"from":"screen--dashboard-servicios","tipo":"uses","to":"component--front-api"}
-{"from":"screen--dashboard-servicios","tipo":"uses","to":"component--front-systemicon"}
->>>>>>> Stashed changes
+{"from":"screen--dashboard-servicios-nuevo","tipo":"uses","to":"component--front-vehiculos"}
+{"from":"screen--dashboard-vehiculos-checklist-items","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-vehiculos-checklist-items","tipo":"uses","to":"component--front-vehiculos"}
+{"from":"screen--dashboard-vehiculos","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-vehiculos","tipo":"uses","to":"component--front-vehiculos"}
+{"from":"screen--dashboard-vehiculos-id","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-vehiculos-id","tipo":"uses","to":"component--front-vehiculos"}
 {"from":"screen--dashboard-modulo","tipo":"uses","to":"component--front-modulos"}
+{"from":"screen--denuncias","tipo":"uses","to":"component--front-api"}
 {"from":"screen--login","tipo":"uses","to":"component--front-api"}
 {"from":"screen--raiz","tipo":"uses","to":"component--front-api"}
 {"from":"screen--raiz","tipo":"uses","to":"component--front-publicaciones"}
 {"from":"screen--dashboard-asistencia-auditoria","tipo":"calls","to":"api--seguridad-auditoria"}
-<<<<<<< Updated upstream
+{"from":"screen--dashboard-denuncias","tipo":"calls","to":"api--denuncias-denuncias"}
+{"from":"screen--dashboard-denuncias-id","tipo":"calls","to":"api--denuncias-denuncias"}
 {"from":"screen--dashboard-guardias-auditoria","tipo":"calls","to":"api--seguridad-auditoria"}
-{"from":"screen--dashboard-mi-perfil","tipo":"calls","to":"api--seguridad-me"}
-=======
-{"from":"screen--dashboard-asistencia-guardias-id","tipo":"calls","to":"api--operaciones-guardias"}
 {"from":"screen--dashboard-mi-perfil","tipo":"calls","to":"api--seguridad-me"}
 {"from":"screen--dashboard-mi-perfil-preferencias","tipo":"calls","to":"api--configuracion-configuracion"}
 {"from":"screen--dashboard-mi-perfil-seguridad","tipo":"calls","to":"api--seguridad-sesiones"}
->>>>>>> Stashed changes
 {"from":"screen--dashboard-organizacion-ascensos","tipo":"calls","to":"api--organizacion-ascensos"}
 {"from":"screen--dashboard-organizacion-ascensos","tipo":"calls","to":"api--equipos-equipamiento-bombero"}
 {"from":"screen--dashboard-organizacion-ascensos","tipo":"calls","to":"api--organizacion-rangos"}
@@ -1331,6 +1465,31 @@
 {"from":"screen--dashboard-servicios","tipo":"calls","to":"api--servicios-servicios"}
 {"from":"screen--login","tipo":"calls","to":"api--seguridad-apariencia"}
 {"from":"screen--raiz","tipo":"calls","to":"api--seguridad-apariencia"}
+{"from":"component--front-asistencia","tipo":"calls","to":"api--operaciones-eventos-asistencia"}
+{"from":"component--front-asistencia","tipo":"calls","to":"api--operaciones-marcaciones"}
+{"from":"component--front-asistencia","tipo":"calls","to":"api--operaciones-participantes-externos"}
+{"from":"component--front-asistencia","tipo":"calls","to":"api--operaciones-tolerancias"}
+{"from":"component--front-asistencia","tipo":"calls","to":"api--operaciones-dashboard-asistencia"}
+{"from":"component--front-asistencia","tipo":"calls","to":"api--operaciones-importaciones"}
+{"from":"component--front-configuracion","tipo":"calls","to":"api--configuracion-configuracion"}
+{"from":"component--front-equipos","tipo":"calls","to":"api--equipos-categorias-equipo"}
+{"from":"component--front-equipos","tipo":"calls","to":"api--equipos-equipos"}
+{"from":"component--front-equipos","tipo":"calls","to":"api--equipos-equipamiento-bombero"}
+{"from":"component--front-guardias","tipo":"calls","to":"api--guardias-guardias"}
+{"from":"component--front-guardias","tipo":"calls","to":"api--guardias-grupos-guardia"}
+{"from":"component--front-guardias","tipo":"calls","to":"api--guardias-pernoctes"}
+{"from":"component--front-guardias","tipo":"calls","to":"api--guardias-requisitos-rol"}
+{"from":"component--front-guardias","tipo":"calls","to":"api--guardias-esquemas-horario"}
+{"from":"component--front-guardias","tipo":"calls","to":"api--organizacion-feriados"}
+{"from":"component--front-guardias","tipo":"calls","to":"api--guardias-sorteos"}
+{"from":"component--front-guardias","tipo":"calls","to":"api--guardias-ordenes-guardia"}
+{"from":"component--front-parametros","tipo":"calls","to":"api--organizacion-parametros"}
+{"from":"component--front-personal","tipo":"calls","to":"api--personal-tipos-bombero"}
+{"from":"component--front-personal","tipo":"calls","to":"api--equipos-equipamiento-bombero"}
+{"from":"component--front-publicaciones","tipo":"calls","to":"api--publicaciones-publicaciones"}
+{"from":"component--front-vehiculos","tipo":"calls","to":"api--vehiculos-vehiculos"}
+{"from":"component--front-vehiculos","tipo":"calls","to":"api--vehiculos-checklist-items"}
+{"from":"component--front-vehiculos","tipo":"calls","to":"api--equipos-equipamiento-bombero"}
 {"from":"configuration--apariencia","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"configuration--accesibilidad","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"configuration--idioma-y-region","tipo":"belongs_to","to":"domain--seguridad"}
@@ -1354,6 +1513,9 @@
 {"from":"decision--permisos-dinamicos","tipo":"constrains","to":"rule--frontend-no-autoriza"}
 {"from":"decision--permisos-dinamicos","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"decision--pool-idle-timeout","tipo":"configured_by","to":"configuration--conexion-datos"}
+{"from":"decision--rate-limit-propio","tipo":"constrains","to":"api--denuncias-denuncias-publicas"}
+{"from":"decision--rate-limit-propio","tipo":"depends_on","to":"dependency--nestjs"}
+{"from":"decision--rate-limit-propio","tipo":"belongs_to","to":"domain--denuncias"}
 {"from":"decision--sin-libreria-ui","tipo":"constrains","to":"rule--sin-clases-css-nuevas"}
 {"from":"decision--sin-libreria-ui","tipo":"constrains","to":"rule--tema-oscuro-fijo"}
 {"from":"decision--sqlserver-en-vez-de-postgres","tipo":"depends_on","to":"dependency--sqlserver-express"}
@@ -1363,10 +1525,7 @@
 {"from":"decision--tolerancias-parametrizables","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"error--413-croquis-grande","tipo":"originates_from","to":"configuration--conexion-datos"}
 {"from":"error--413-croquis-grande","tipo":"belongs_to","to":"domain--servicios"}
-<<<<<<< Updated upstream
 {"from":"error--context-borrado-del-disco","tipo":"originates_from","to":"dependency--nodejs"}
-=======
->>>>>>> Stashed changes
 {"from":"error--pool-conexion-colgada","tipo":"originates_from","to":"configuration--conexion-datos"}
 {"from":"error--pool-conexion-colgada","tipo":"originates_from","to":"dependency--sqlserver-express"}
 {"from":"error--quoted-identifier-en-migraciones","tipo":"originates_from","to":"dependency--sqlserver-express"}
@@ -1380,26 +1539,22 @@
 {"from":"rule--cedula-y-numero-bombero-unicos","tipo":"affects","to":"table--personal-bomberos"}
 {"from":"rule--cedula-y-numero-bombero-unicos","tipo":"affects","to":"entity--bombero"}
 {"from":"rule--cedula-y-numero-bombero-unicos","tipo":"belongs_to","to":"domain--personal"}
-<<<<<<< Updated upstream
+{"from":"rule--datos-tecnicos-de-denuncia-restringidos","tipo":"affects","to":"entity--denuncia"}
+{"from":"rule--datos-tecnicos-de-denuncia-restringidos","tipo":"affects","to":"api--denuncias-denuncias"}
+{"from":"rule--datos-tecnicos-de-denuncia-restringidos","tipo":"belongs_to","to":"domain--denuncias"}
 {"from":"rule--elegibilidad-de-rol-guardia","tipo":"affects","to":"entity--requisito-rol-guardia"}
 {"from":"rule--elegibilidad-de-rol-guardia","tipo":"affects","to":"service--guardias-elegibilidad"}
 {"from":"rule--elegibilidad-de-rol-guardia","tipo":"affects","to":"entity--vehiculo-autorizado"}
 {"from":"rule--elegibilidad-de-rol-guardia","tipo":"belongs_to","to":"domain--guardias"}
-=======
-{"from":"rule--el-grafo-no-es-la-verdad","tipo":"affects","to":"component--modulo-seguridad"}
->>>>>>> Stashed changes
 {"from":"rule--entidad-y-tabla-en-paralelo","tipo":"affects","to":"configuration--conexion-datos"}
 {"from":"rule--espanol-y-auditoria","tipo":"affects","to":"entity--log-auditoria"}
 {"from":"rule--espanol-y-auditoria","tipo":"affects","to":"table--seguridad-logs-auditoria"}
 {"from":"rule--frontend-no-autoriza","tipo":"affects","to":"component--front-modulos"}
 {"from":"rule--frontend-no-autoriza","tipo":"belongs_to","to":"domain--seguridad"}
-<<<<<<< Updated upstream
 {"from":"rule--guardias-vive-en-operaciones","tipo":"affects","to":"component--modulo-guardias"}
 {"from":"rule--guardias-vive-en-operaciones","tipo":"affects","to":"entity--grupo-guardia"}
 {"from":"rule--guardias-vive-en-operaciones","tipo":"affects","to":"entity--pernocte"}
 {"from":"rule--guardias-vive-en-operaciones","tipo":"belongs_to","to":"domain--guardias"}
-=======
->>>>>>> Stashed changes
 {"from":"rule--identidad-y-tiempo-en-sql-server","tipo":"affects","to":"table--personal-bomberos"}
 {"from":"rule--migracion-nunca-se-edita","tipo":"affects","to":"component--modulo-configuracion"}
 {"from":"rule--modulo-visible-por-prefijo","tipo":"affects","to":"component--front-modulos"}
@@ -1430,16 +1585,18 @@
 {"from":"workflow--comunicacion-de-servicio","tipo":"contains","to":"rule--una-comunicacion-por-servicio"}
 {"from":"workflow--comunicacion-de-servicio","tipo":"contains","to":"decision--comunicacion-como-json"}
 {"from":"workflow--comunicacion-de-servicio","tipo":"affects","to":"entity--comunicacion-servicio"}
-<<<<<<< Updated upstream
-=======
-{"from":"workflow--comunicacion-de-servicio","tipo":"affects","to":"api--servicios-servicios"}
->>>>>>> Stashed changes
 {"from":"workflow--comunicacion-de-servicio","tipo":"belongs_to","to":"domain--servicios"}
 {"from":"workflow--configuracion-versionada","tipo":"affects","to":"entity--configuracion-valor"}
 {"from":"workflow--configuracion-versionada","tipo":"affects","to":"entity--configuracion-version"}
 {"from":"workflow--configuracion-versionada","tipo":"affects","to":"configuration--apariencia"}
 {"from":"workflow--configuracion-versionada","tipo":"belongs_to","to":"domain--seguridad"}
-<<<<<<< Updated upstream
+{"from":"workflow--denuncia-rapida","tipo":"contains","to":"rule--datos-tecnicos-de-denuncia-restringidos"}
+{"from":"workflow--denuncia-rapida","tipo":"contains","to":"decision--rate-limit-propio"}
+{"from":"workflow--denuncia-rapida","tipo":"affects","to":"entity--denuncia"}
+{"from":"workflow--denuncia-rapida","tipo":"affects","to":"entity--evidencia-denuncia"}
+{"from":"workflow--denuncia-rapida","tipo":"affects","to":"entity--historial-estado-denuncia"}
+{"from":"workflow--denuncia-rapida","tipo":"affects","to":"entity--categoria-denuncia"}
+{"from":"workflow--denuncia-rapida","tipo":"belongs_to","to":"domain--denuncias"}
 {"from":"workflow--guardia-y-pernocte","tipo":"contains","to":"rule--elegibilidad-de-rol-guardia"}
 {"from":"workflow--guardia-y-pernocte","tipo":"contains","to":"rule--guardias-vive-en-operaciones"}
 {"from":"workflow--guardia-y-pernocte","tipo":"affects","to":"entity--guardia"}
@@ -1448,8 +1605,6 @@
 {"from":"workflow--guardia-y-pernocte","tipo":"affects","to":"entity--pernocte"}
 {"from":"workflow--guardia-y-pernocte","tipo":"affects","to":"api--guardias-guardias"}
 {"from":"workflow--guardia-y-pernocte","tipo":"belongs_to","to":"domain--guardias"}
-=======
->>>>>>> Stashed changes
 {"from":"workflow--importacion-marcador","tipo":"affects","to":"entity--importacion-marcador"}
 {"from":"workflow--importacion-marcador","tipo":"affects","to":"entity--importacion-marcador-fila"}
 {"from":"workflow--importacion-marcador","tipo":"affects","to":"entity--marcacion-asistencia"}

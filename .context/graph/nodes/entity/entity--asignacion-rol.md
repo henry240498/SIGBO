@@ -21,6 +21,15 @@ Entidad AsignacionRol, persistida en seguridad.asignacion_roles.
 - **Tabla:** [[table--seguridad-asignacion-roles|seguridad.asignacion_roles]]
 - **Columnas mapeadas:** 5
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/mi-perfil`, `/dashboard/seguridad/roles`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Endpoints:** AuthController, MeController, RolesController, UsuariosController
+- **Servicios:** AuthService, PolicyEngineService, RolesService, UsuariosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/asignacion-rol.entity.ts`

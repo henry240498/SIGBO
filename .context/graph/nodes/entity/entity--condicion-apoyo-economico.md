@@ -21,6 +21,15 @@ Entidad CondicionApoyoEconomico, persistida en personal.condicion_apoyo_economic
 - **Tabla:** [[table--personal-condicion-apoyo-economico|personal.condicion_apoyo_economico]]
 - **Columnas mapeadas:** 7
 
+## Donde se usa
+
+- **Pantallas:** — (sin pantalla que llegue hasta aca)
+- **Endpoints:** CondicionController
+- **Servicios:** CondicionService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/condicion-apoyo-economico.entity.ts`

@@ -31,11 +31,7 @@ Logica de negocio de publicaciones (modulo publicaciones).
 
 ## Metodos
 
-<<<<<<< Updated upstream
 `listar()` · `crear()` · `actualizar()` · `eliminar()` · `estadisticas()`
-=======
-`listar()` · `crear()` · `actualizar()` · `eliminar()` · `reemplazar()` · `estadisticas()`
->>>>>>> Stashed changes
 
 ## Archivos
 

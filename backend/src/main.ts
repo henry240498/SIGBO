@@ -9,6 +9,9 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  // Solo se confían cabeceras de proxy cuando la infraestructura lo declara.
+  // En local, req.ip proviene directamente del socket y no de X-Forwarded-For.
+  app.set('trust proxy', process.env.TRUST_PROXY === 'true' ? 1 : false);
 
   // El croquis de una comunicación puede viajar como PNG codificado; el límite
   // predeterminado de Express (100 KB) no alcanza para una escena real.

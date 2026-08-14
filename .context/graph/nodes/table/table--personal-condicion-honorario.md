@@ -39,6 +39,15 @@ Tabla personal.condicion_honorario (8 columnas). Creada en 016_personal_expansio
 | observaciones | NVARCHAR(MAX) |
 | actualizado_en | DATETIMEOFFSET(3) |
 
+## Donde se usa
+
+- **Pantallas:** — (sin pantalla que llegue hasta aca)
+- **Endpoints:** CondicionController
+- **Servicios:** CondicionService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/016_personal_expansion.sql`

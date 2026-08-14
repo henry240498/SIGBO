@@ -35,6 +35,15 @@ Tabla seguridad.usuario_correos (5 columnas). Creada en 015_perfil_usuario.sql.
 | etiqueta | NVARCHAR(50) |
 | creado_en | DATETIMEOFFSET(3) |
 
+## Donde se usa
+
+- **Pantallas:** — (sin pantalla que llegue hasta aca)
+- **Endpoints:** PerfilController
+- **Servicios:** PerfilService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/015_perfil_usuario.sql`

@@ -25,6 +25,15 @@ Evento al que se puede asistir (guardia, reunion, capacitacion, academia, etc. -
 
 - `EstadoEventoAsistencia`: `PROGRAMADO` · `EN_CURSO` · `FINALIZADO` · `CANCELADO`
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
+- **Endpoints:** BitacoraController, DashboardAsistenciaController, EventosAsistenciaController, MarcacionesController
+- **Servicios:** BitacoraService, DashboardAsistenciaService, EventosAsistenciaService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/evento-asistencia.entity.ts`
@@ -36,6 +45,7 @@ Evento al que se puede asistir (guardia, reunion, capacitacion, academia, etc. -
 
 ## Referenciado por
 
+- [[service--guardias-bitacora|BitacoraService]] `uses` →
 - [[service--operaciones-dashboard-asistencia|DashboardAsistenciaService]] `uses` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `uses` →
 - [[workflow--asistencia-a-evento|Evento de asistencia, participantes y marcaciones]] `affects` →

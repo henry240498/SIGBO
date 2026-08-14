@@ -17,22 +17,5 @@
   "outline": true,
   "word-count": false,
   "file-recovery": true,
-<<<<<<< Updated upstream
   "canvas": true
 }
-=======
-  "canvas": true,
-  "footnotes": false,
-  "slash-command": false,
-  "markdown-importer": false,
-  "zk-prefixer": false,
-  "random-note": false,
-  "slides": false,
-  "audio-recorder": false,
-  "workspaces": false,
-  "publish": false,
-  "sync": true,
-  "bases": true,
-  "webviewer": false
-}
->>>>>>> Stashed changes

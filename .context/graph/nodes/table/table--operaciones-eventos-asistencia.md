@@ -40,6 +40,15 @@ Tabla operaciones.eventos_asistencia (13 columnas). Creada en 005_operaciones.sq
 | tipo_evento_id | UNIQUEIDENTIFIER |
 | institucion_id | UNIQUEIDENTIFIER |
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
+- **Endpoints:** BitacoraController, DashboardAsistenciaController, EventosAsistenciaController, MarcacionesController
+- **Servicios:** BitacoraService, DashboardAsistenciaService, EventosAsistenciaService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/005_operaciones.sql`
@@ -55,6 +64,7 @@ Tabla operaciones.eventos_asistencia (13 columnas). Creada en 005_operaciones.sq
 
 - [[table--operaciones-participantes-evento|operaciones.participantes_evento]] `references` →
 - [[entity--evento-asistencia|EventoAsistencia]] `persisted_in` →
+- [[service--guardias-bitacora|BitacoraService]] `reads` →
 - [[service--operaciones-dashboard-asistencia|DashboardAsistenciaService]] `reads` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `reads` →
 

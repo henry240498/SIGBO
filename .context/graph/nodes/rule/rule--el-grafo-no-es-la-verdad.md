@@ -5,11 +5,6 @@ nombre: Ante discrepancia entre el grafo y el codigo, gana el codigo
 nivel: L0
 resumen: .context/ es un indice derivado. Sirve para encontrar y decidir que leer, nunca como evidencia de que algo funciona de cierta manera.
 severidad: CRITICA
-<<<<<<< Updated upstream
-=======
-edges:
-  - [affects, component--modulo-seguridad]
->>>>>>> Stashed changes
 terminos: [grafo, contexto, verdad, indice, derivado, verificar, desactualizado, fuente, ante, discrepancia, entre, codigo, gana, context, sirve, encontrar, decidir, leer, nunca, evidencia, algo, funciona, cierta, manera]
 ---
 
@@ -28,11 +23,7 @@ justamente para que ese salto cueste una sola lectura.
 ## Por que esta regla es necesaria
 
 Los nodos derivados se generan por analisis estatico con expresiones regulares, no
-<<<<<<< Updated upstream
 por compilacion. Limites conocidos:
-=======
-por compilacion. Eso implica limites conocidos:
->>>>>>> Stashed changes
 
 - Un `@Controller` armado dinamicamente o un decorador con formato inusual puede no
   parsearse.
@@ -44,7 +35,6 @@ por compilacion. Eso implica limites conocidos:
   contra que se verificaron.
 
 `graph/indexes/stats.json` publica las advertencias del generador y la seccion
-<<<<<<< Updated upstream
 `huecos`. Vale la pena mirarla.
 
 ## Dos pruebas de que esto pasa de verdad
@@ -59,29 +49,10 @@ por compilacion. Eso implica limites conocidos:
 ```bash
 node .context/graph/build-graph.mjs   # regenerar
 node .context/graph/validar.mjs       # verificar integridad
-=======
-`huecos` (tablas sin entidad, dominios sin pantalla). Vale la pena mirarla.
-
-## La prueba de que el grafo puede quedar viejo
-
-El generador cuenta **81 tablas en 12 esquemas** leyendo las migraciones. Esas cifras
-deben coincidir con la documentación escrita; cualquier divergencia indica que hay que
-regenerar el grafo y revisar los documentos curados.
-
-```bash
-node .context/graph/build-graph.mjs
->>>>>>> Stashed changes
 ```
 
 Ver [[decision--migraciones-a-mano]] y `graph/SCHEMA.md`, seccion "Regla de actualizacion".
 
 
-<<<<<<< Updated upstream
-=======
-## Relaciones
-
-- `affects` → [[component--modulo-seguridad|seguridad (modulo NestJS)]]
-
->>>>>>> Stashed changes
 ---
 <sub>Nodo **curado** (editable a mano).</sub>

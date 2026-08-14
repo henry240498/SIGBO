@@ -56,6 +56,15 @@ Tabla operaciones.participantes_evento (17 columnas). Creada en 020_asistencia.s
 | creado_en | DATETIMEOFFSET(3) |
 | actualizado_en | DATETIMEOFFSET(3) |
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
+- **Endpoints:** BitacoraController, DashboardAsistenciaController, EventosAsistenciaController, MarcacionesController
+- **Servicios:** BitacoraService, DashboardAsistenciaService, EventosAsistenciaService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/020_asistencia.sql`
@@ -71,6 +80,7 @@ Tabla operaciones.participantes_evento (17 columnas). Creada en 020_asistencia.s
 ## Referenciado por
 
 - [[entity--participante-evento|ParticipanteEvento]] `persisted_in` →
+- [[service--guardias-bitacora|BitacoraService]] `reads` →
 - [[service--operaciones-dashboard-asistencia|DashboardAsistenciaService]] `reads` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `reads` →
 

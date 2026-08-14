@@ -6,11 +6,7 @@ nivel: L1
 resumen: Solo existen .card, .btn-primary, .input-field y .badge. Lo que no cubran se resuelve con style inline copiando el hex exacto documentado, nunca uno aproximado.
 severidad: ALTA
 archivos: [frontend/src/app/globals.css, docs/GUIA-DE-ESTILO.md]
-<<<<<<< Updated upstream
 terminos: [css, clase, color, hex, inline, estilo, paleta, consistencia, tailwind, badge]
-=======
-terminos: [css, clase, color, hex, inline, estilo, paleta, consistencia, tailwind]
->>>>>>> Stashed changes
 edges:
   - [affects, component--front-modulos]
 ---
@@ -39,7 +35,6 @@ exacto** de la guia de estilo. No una clase nueva, no un hex parecido.
 ## Estados, sin excepcion
 
 `ACTIVO` = verde: texto `#4ade80`, fondo de badge `#166534`, fondo de boton `#16a34a`.
-<<<<<<< Updated upstream
 Cualquier estado malo (`INACTIVO`, `BLOQUEADO`, `NO_OK`, denegado, eliminar, dar de
 baja) = rojo oscuro `#7f1d1d`, texto `#f87171`. Advertencia = ambar `#b45309` borde /
 `#451a03` fondo.
@@ -47,14 +42,6 @@ baja) = rojo oscuro `#7f1d1d`, texto `#f87171`. Advertencia = ambar `#b45309` bo
 **No usar otros colores para este binario.** Es lo que hace que el sistema se lea de
 un vistazo en una guardia. Aplica igual a los estados nuevos: `EstadoInspeccionEstacion`
 es `OK`/`NO_OK` — verde y rojo, como todo lo demas.
-=======
-Cualquier estado malo (`INACTIVO`, `BLOQUEADO`, denegado, eliminar, dar de baja) =
-rojo oscuro `#7f1d1d`, texto `#f87171`. Advertencia = ambar `#b45309` borde /
-`#451a03` fondo.
-
-**No usar otros colores para este binario.** Es lo que hace que el sistema se lea de
-un vistazo en una guardia.
->>>>>>> Stashed changes
 
 ## Medidas que tambien se copian
 
@@ -65,9 +52,5 @@ Separacion entre secciones: `gap: 16` en listados, `gap: 20` en pantallas tipo
 expediente.
 
 Ver [[decision--sin-libreria-ui]] para el porque, y `docs/GUIA-DE-ESTILO.md` para el
-<<<<<<< Updated upstream
 detalle completo con ejemplos de codigo. Con ~56 pantallas ya escritas, copiar de una
 vecina del mismo tipo es mas rapido y mas seguro que inventar.
-=======
-detalle completo con ejemplos de codigo.
->>>>>>> Stashed changes

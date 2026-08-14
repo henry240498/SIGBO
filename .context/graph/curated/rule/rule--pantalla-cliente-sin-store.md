@@ -21,11 +21,7 @@ edges:
 - Todo pasa por `apiFetch(path, options)` de `@/lib/api`, que agrega el
   `Authorization: Bearer` y reintenta una vez si recibe 401, refrescando el token.
 
-<<<<<<< Updated upstream
 ## El patron, tal como se repite en ~56 pantallas
-=======
-## El patron, tal como se repite en ~50 pantallas
->>>>>>> Stashed changes
 
 ```tsx
 'use client';
@@ -33,22 +29,14 @@ const [items, setItems] = useState<Item[]>([]);
 const [cargando, setCargando] = useState(true);
 
 async function cargar() {
-<<<<<<< Updated upstream
   const res = await apiFetch('/guardias/grupos');
-=======
-  const res = await apiFetch('/organizacion/rangos');
->>>>>>> Stashed changes
   if (res.ok) setItems(await res.json());
   setCargando(false);
 }
 useEffect(() => { cargar(); }, []);
 
 async function guardar() {
-<<<<<<< Updated upstream
   const res = await apiFetch('/guardias/grupos', { method: 'POST', body: JSON.stringify(dto) });
-=======
-  const res = await apiFetch('/organizacion/rangos', { method: 'POST', body: JSON.stringify(dto) });
->>>>>>> Stashed changes
   if (res.ok) await cargar();   // recargar, no mutar el arreglo local
 }
 ```
@@ -56,20 +44,14 @@ async function guardar() {
 ## Por que recargar en vez de mutar
 
 Porque el backend puede haber derivado campos (codigos, timestamps, estados
-<<<<<<< Updated upstream
 calculados, validaciones de elegibilidad). Mutar el arreglo local produce pantallas
 que muestran algo distinto de lo que quedo guardado. Recargar es mas peticiones y es
 lo correcto aca.
-=======
-calculados). Mutar el arreglo local produce pantallas que muestran algo distinto de
-lo que quedo guardado. Recargar es mas peticiones y es lo correcto acá.
->>>>>>> Stashed changes
 
 ## No introducir un store sin necesidad real
 
 Agregar React Query o Zustand a una sola pantalla crea dos patrones donde habia uno.
 Si hiciera falta, es un cambio de todas las pantallas o de ninguna.
-<<<<<<< Updated upstream
 
 ## Los helpers de lib son la excepcion util
 
@@ -81,5 +63,3 @@ de duplicar una funcion conviene consultar:
 ```bash
 node .context/graph/context.mjs --archivo frontend/src/lib/personal.ts --level L2
 ```
-=======
->>>>>>> Stashed changes

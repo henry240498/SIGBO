@@ -12,6 +12,7 @@
   "domain--deposito",
   "domain--documentos",
   "domain--publicaciones",
+  "domain--denuncias",
   "domain--seguridad",
   "domain--inteligencia"
  ],
@@ -27,12 +28,10 @@
   "entity--brigada",
   "entity--cambio-guardia",
   "entity--cargo",
+  "entity--categoria-denuncia",
   "entity--categoria-equipo",
   "entity--certificacion",
-<<<<<<< Updated upstream
   "entity--checklist-item-vehiculo",
-=======
->>>>>>> Stashed changes
   "entity--compania",
   "entity--comunicacion-servicio",
   "entity--condicion-apoyo-economico",
@@ -42,64 +41,57 @@
   "entity--configuracion-sistema",
   "entity--configuracion-valor",
   "entity--configuracion-version",
-<<<<<<< Updated upstream
   "entity--consumo-combustible",
-=======
->>>>>>> Stashed changes
   "entity--cuartel",
   "entity--curso",
+  "entity--denuncia",
   "entity--departamento",
   "entity--designacion",
   "entity--equipo",
   "entity--especialidad",
+  "entity--esquema-horario-guardia",
   "entity--evento-asistencia",
+  "entity--evidencia-denuncia",
+  "entity--feriado",
   "entity--foja-servicio",
-<<<<<<< Updated upstream
   "entity--grupo-guardia-miembro",
   "entity--grupo-guardia",
-=======
->>>>>>> Stashed changes
   "entity--guardia",
   "entity--historial-codigo",
   "entity--historial-contrasena",
+  "entity--historial-estado-denuncia",
   "entity--historial-institucional",
   "entity--idioma-bombero",
   "entity--importacion-marcador-fila",
   "entity--importacion-marcador",
   "entity--inscripcion-curso",
-<<<<<<< Updated upstream
   "entity--inspeccion-estacion",
+  "entity--inspeccion-movil",
   "entity--log-auditoria",
   "entity--mantenimiento-equipo",
   "entity--mantenimiento-vehiculo",
   "entity--marcacion-asistencia",
   "entity--materia",
   "entity--novedad-guardia",
-=======
-  "entity--log-auditoria",
-  "entity--marcacion-asistencia",
-  "entity--materia",
->>>>>>> Stashed changes
+  "entity--orden-guardia-configuracion",
+  "entity--orden-guardia-modificacion",
+  "entity--orden-guardia",
   "entity--parametro",
   "entity--participante-evento",
   "entity--participante-externo",
   "entity--permiso",
-<<<<<<< Updated upstream
   "entity--pernocte",
-=======
->>>>>>> Stashed changes
   "entity--personal-servicio",
   "entity--prestamo-equipo",
   "entity--publicacion",
   "entity--rango",
-<<<<<<< Updated upstream
   "entity--requisito-rol-guardia",
-=======
->>>>>>> Stashed changes
   "entity--rol",
   "entity--seguro-bombero",
   "entity--servicio",
   "entity--sesion",
+  "entity--sorteo-guardia",
+  "entity--sorteo-participante",
   "entity--tipo-bombero",
   "entity--tipo-guardia",
   "entity--tipo-servicio",
@@ -137,16 +129,19 @@
   "file--020-asistencia",
   "file--021-configuracion-integral",
   "file--022-permiso-publicaciones",
-<<<<<<< Updated upstream
   "file--023-moviles",
-  "file--024-equipos",
-  "file--025-guardias",
-  "file--026-publicaciones-persistencia",
-  "file--027-personal-reconciliacion-segura"
-=======
   "file--023-publicaciones-persistencia",
-  "file--024-personal-reconciliacion-segura"
->>>>>>> Stashed changes
+  "file--024-equipos",
+  "file--024-personal-reconciliacion-segura",
+  "file--025-guardias",
+  "file--026-guardias-planificacion",
+  "file--026-publicaciones-persistencia",
+  "file--027-guardias-generacion",
+  "file--027-personal-reconciliacion-segura",
+  "file--028-guardias-sorteo",
+  "file--029-guardias-moviles-bitacora",
+  "file--030-ordenes-guardia",
+  "file--031-denuncias-rapidas"
  ],
  "TABLE": [
   "table--seguridad-usuarios",
@@ -229,26 +224,33 @@
   "table--operaciones-importaciones-marcador-filas",
   "table--seguridad-configuracion-valores",
   "table--seguridad-configuracion-versiones",
-<<<<<<< Updated upstream
   "table--vehiculos-checklist-items",
+  "table--contenido-publicaciones",
   "table--operaciones-grupos-guardia",
   "table--operaciones-grupos-guardia-miembros",
   "table--operaciones-pernoctes",
   "table--operaciones-inspecciones-estacion",
   "table--operaciones-novedades-guardia",
   "table--operaciones-requisitos-rol-guardia",
-=======
->>>>>>> Stashed changes
-  "table--contenido-publicaciones"
+  "table--organizacion-feriados",
+  "table--operaciones-esquemas-horario-guardia",
+  "table--operaciones-sorteos-guardia",
+  "table--operaciones-sorteo-participantes",
+  "table--operaciones-inspecciones-movil",
+  "table--operaciones-orden-guardia-configuracion",
+  "table--operaciones-ordenes-guardia",
+  "table--operaciones-ordenes-guardia-modificaciones",
+  "table--denuncias-categorias-denuncia",
+  "table--denuncias-denuncias",
+  "table--denuncias-historial-estados-denuncia",
+  "table--denuncias-evidencias-denuncia"
  ],
  "COMPONENT": [
   "component--modulo-auth",
   "component--modulo-configuracion",
+  "component--modulo-denuncias",
   "component--modulo-equipos",
-<<<<<<< Updated upstream
   "component--modulo-guardias",
-=======
->>>>>>> Stashed changes
   "component--modulo-operaciones",
   "component--modulo-organizacion",
   "component--modulo-personal",
@@ -259,22 +261,15 @@
   "component--front-api",
   "component--front-asistencia",
   "component--front-configuracion",
-<<<<<<< Updated upstream
   "component--front-equipos",
   "component--front-exportar",
   "component--front-guardias",
-=======
-  "component--front-exportar",
->>>>>>> Stashed changes
   "component--front-modulos",
   "component--front-parametros",
   "component--front-personal",
   "component--front-publicaciones",
   "component--front-texto",
-<<<<<<< Updated upstream
   "component--front-vehiculos",
-=======
->>>>>>> Stashed changes
   "component--front-configbootstrap",
   "component--front-confirmprovider",
   "component--front-experienceguard",
@@ -283,24 +278,26 @@
  "SERVICE": [
   "service--auth-auth",
   "service--configuracion-configuracion",
+  "service--denuncias-denuncias",
   "service--equipos-categorias-equipo",
   "service--equipos-equipamiento-bombero",
   "service--equipos-equipos",
-<<<<<<< Updated upstream
+  "service--guardias-bitacora",
   "service--guardias-elegibilidad",
+  "service--guardias-esquemas-horario",
+  "service--guardias-generacion",
   "service--guardias-grupos-guardia",
   "service--guardias-guardias",
   "service--guardias-inspecciones-estacion",
+  "service--guardias-inspecciones-movil",
   "service--guardias-novedades",
+  "service--guardias-orden-guardia-configuracion",
+  "service--guardias-ordenes-guardia",
   "service--guardias-pernoctes",
   "service--guardias-requisitos-rol",
+  "service--guardias-sorteos",
   "service--operaciones-dashboard-asistencia",
   "service--operaciones-eventos-asistencia",
-=======
-  "service--operaciones-dashboard-asistencia",
-  "service--operaciones-eventos-asistencia",
-  "service--operaciones-guardias",
->>>>>>> Stashed changes
   "service--operaciones-importaciones",
   "service--operaciones-marcaciones",
   "service--operaciones-participantes-externos",
@@ -314,6 +311,7 @@
   "service--organizacion-departamentos",
   "service--organizacion-designaciones",
   "service--organizacion-especialidades",
+  "service--organizacion-feriados",
   "service--organizacion-parametros",
   "service--organizacion-rangos",
   "service--organizacion-tipos-guardia",
@@ -340,33 +338,31 @@
   "service--seguridad-sesiones",
   "service--seguridad-usuarios",
   "service--servicios-servicios",
-<<<<<<< Updated upstream
   "service--vehiculos-checklist-items",
-=======
->>>>>>> Stashed changes
   "service--vehiculos-vehiculos-autorizados",
   "service--vehiculos-vehiculos"
  ],
  "API": [
   "api--auth-auth",
   "api--configuracion-configuracion",
+  "api--denuncias-denuncias-publicas",
+  "api--denuncias-denuncias",
   "api--equipos-categorias-equipo",
   "api--equipos-equipamiento-bombero",
   "api--equipos-equipos",
-<<<<<<< Updated upstream
+  "api--guardias-bitacora",
+  "api--guardias-esquemas-horario",
   "api--guardias-grupos-guardia",
   "api--guardias-guardias",
   "api--guardias-inspecciones-estacion",
+  "api--guardias-inspecciones-movil",
   "api--guardias-novedades",
+  "api--guardias-ordenes-guardia",
   "api--guardias-pernoctes",
   "api--guardias-requisitos-rol",
+  "api--guardias-sorteos",
   "api--operaciones-dashboard-asistencia",
   "api--operaciones-eventos-asistencia",
-=======
-  "api--operaciones-dashboard-asistencia",
-  "api--operaciones-eventos-asistencia",
-  "api--operaciones-guardias",
->>>>>>> Stashed changes
   "api--operaciones-importaciones",
   "api--operaciones-marcaciones",
   "api--operaciones-participantes-externos",
@@ -380,6 +376,7 @@
   "api--organizacion-departamentos",
   "api--organizacion-designaciones",
   "api--organizacion-especialidades",
+  "api--organizacion-feriados",
   "api--organizacion-parametros",
   "api--organizacion-rangos",
   "api--organizacion-tipos-guardia",
@@ -406,10 +403,7 @@
   "api--seguridad-sesiones",
   "api--seguridad-usuarios",
   "api--servicios-servicios",
-<<<<<<< Updated upstream
   "api--vehiculos-checklist-items",
-=======
->>>>>>> Stashed changes
   "api--vehiculos-vehiculos-autorizados",
   "api--vehiculos-vehiculos"
  ],
@@ -418,31 +412,32 @@
   "screen--dashboard-asistencia-eventos",
   "screen--dashboard-asistencia-eventos-id",
   "screen--dashboard-asistencia-externos",
-<<<<<<< Updated upstream
   "screen--dashboard-asistencia",
   "screen--dashboard-asistencia-registro",
   "screen--dashboard-asistencia-tolerancias",
+  "screen--dashboard-denuncias",
+  "screen--dashboard-denuncias-id",
   "screen--dashboard-equipos-categorias",
   "screen--dashboard-equipos",
   "screen--dashboard-equipos-id",
   "screen--dashboard-guardias-auditoria",
+  "screen--dashboard-guardias-esquemas-horario",
+  "screen--dashboard-guardias-generar",
   "screen--dashboard-guardias-grupos",
   "screen--dashboard-guardias-grupos-id",
+  "screen--dashboard-guardias-ordenes-configuracion",
+  "screen--dashboard-guardias-ordenes-nueva",
+  "screen--dashboard-guardias-ordenes",
+  "screen--dashboard-guardias-ordenes-id",
   "screen--dashboard-guardias",
   "screen--dashboard-guardias-pernoctes",
   "screen--dashboard-guardias-requisitos",
+  "screen--dashboard-guardias-sorteos",
+  "screen--dashboard-guardias-sorteos-id",
   "screen--dashboard-guardias-id",
-  "screen--dashboard-mi-perfil",
-=======
-  "screen--dashboard-asistencia-guardias",
-  "screen--dashboard-asistencia-guardias-id",
-  "screen--dashboard-asistencia",
-  "screen--dashboard-asistencia-registro",
-  "screen--dashboard-asistencia-tolerancias",
   "screen--dashboard-mi-perfil",
   "screen--dashboard-mi-perfil-preferencias",
   "screen--dashboard-mi-perfil-seguridad",
->>>>>>> Stashed changes
   "screen--dashboard-organizacion-ascensos",
   "screen--dashboard-organizacion-brigadas",
   "screen--dashboard-organizacion-cargos",
@@ -451,6 +446,7 @@
   "screen--dashboard-organizacion-departamentos",
   "screen--dashboard-organizacion-designaciones",
   "screen--dashboard-organizacion-especialidades",
+  "screen--dashboard-organizacion-feriados",
   "screen--dashboard-organizacion-guardias",
   "screen--dashboard-organizacion",
   "screen--dashboard-organizacion-parametros",
@@ -475,13 +471,11 @@
   "screen--dashboard-seguridad-usuarios-id",
   "screen--dashboard-servicios-nuevo",
   "screen--dashboard-servicios",
-<<<<<<< Updated upstream
   "screen--dashboard-vehiculos-checklist-items",
   "screen--dashboard-vehiculos",
   "screen--dashboard-vehiculos-id",
-=======
->>>>>>> Stashed changes
   "screen--dashboard-modulo",
+  "screen--denuncias",
   "screen--login",
   "screen--raiz"
  ],
@@ -505,6 +499,7 @@
   "decision--monolito-modular",
   "decision--permisos-dinamicos",
   "decision--pool-idle-timeout",
+  "decision--rate-limit-propio",
   "decision--sin-libreria-ui",
   "decision--sqlserver-en-vez-de-postgres",
   "decision--tolerancias-parametrizables"
@@ -517,10 +512,7 @@
  ],
  "ERROR": [
   "error--413-croquis-grande",
-<<<<<<< Updated upstream
   "error--context-borrado-del-disco",
-=======
->>>>>>> Stashed changes
   "error--pool-conexion-colgada",
   "error--quoted-identifier-en-migraciones",
   "error--start-script-no-reinicia-servicios",
@@ -530,18 +522,13 @@
   "rule--api-v1-y-contrato-http",
   "rule--bloqueo-tras-cinco-intentos",
   "rule--cedula-y-numero-bombero-unicos",
+  "rule--datos-tecnicos-de-denuncia-restringidos",
   "rule--el-grafo-no-es-la-verdad",
-<<<<<<< Updated upstream
   "rule--elegibilidad-de-rol-guardia",
   "rule--entidad-y-tabla-en-paralelo",
   "rule--espanol-y-auditoria",
   "rule--frontend-no-autoriza",
   "rule--guardias-vive-en-operaciones",
-=======
-  "rule--entidad-y-tabla-en-paralelo",
-  "rule--espanol-y-auditoria",
-  "rule--frontend-no-autoriza",
->>>>>>> Stashed changes
   "rule--identidad-y-tiempo-en-sql-server",
   "rule--migracion-nunca-se-edita",
   "rule--modulo-visible-por-prefijo",
@@ -559,10 +546,8 @@
   "workflow--asistencia-a-evento",
   "workflow--comunicacion-de-servicio",
   "workflow--configuracion-versionada",
-<<<<<<< Updated upstream
+  "workflow--denuncia-rapida",
   "workflow--guardia-y-pernocte",
-=======
->>>>>>> Stashed changes
   "workflow--importacion-marcador",
   "workflow--login-y-sesion"
  ]

@@ -1,83 +1,42 @@
 {
-<<<<<<< Updated upstream
- "generado": "2026-08-12T11:49:19.742Z",
+ "generado": "2026-08-14T15:11:01.100Z",
  "repo": "SIGBO",
- "nodos": 456,
- "aristas": 1308,
+ "nodos": 524,
+ "aristas": 1616,
  "nodosPorTipo": {
-  "DOMAIN": 14,
-  "ENTITY": 74,
-  "FILE": 29,
-  "TABLE": 88,
-  "COMPONENT": 27,
-  "SERVICE": 56,
-  "API": 55,
-  "SCREEN": 56,
+  "DOMAIN": 15,
+  "ENTITY": 86,
+  "FILE": 37,
+  "TABLE": 100,
+  "COMPONENT": 28,
+  "SERVICE": 65,
+  "API": 63,
+  "SCREEN": 70,
   "CONFIGURATION": 10,
-  "DECISION": 10,
+  "DECISION": 11,
   "DEPENDENCY": 4,
   "ERROR": 6,
-  "RULE": 21,
-  "WORKFLOW": 6
+  "RULE": 22,
+  "WORKFLOW": 7
  },
  "aristasPorTipo": {
-  "belongs_to": 369,
-  "defined_in": 88,
-  "references": 48,
-  "persisted_in": 74,
-  "uses": 365,
-  "reads": 172,
-  "exposes": 57,
-  "calls": 53,
+  "belongs_to": 428,
+  "defined_in": 100,
+  "references": 64,
+  "persisted_in": 86,
+  "uses": 469,
+  "reads": 228,
+  "exposes": 67,
+  "calls": 82,
   "configured_by": 3,
-  "constrains": 11,
-  "affects": 50,
-  "depends_on": 2,
+  "constrains": 12,
+  "affects": 56,
+  "depends_on": 3,
   "originates_from": 8,
-  "contains": 8
+  "contains": 10
  },
- "permisos": 118,
- "terminosIndexados": 1318,
-=======
- "generado": "2026-08-11T18:26:01.732Z",
- "repo": "SIGBO",
- "nodos": 406,
- "aristas": 1133,
- "nodosPorTipo": {
-  "DOMAIN": 14,
-  "ENTITY": 64,
-  "FILE": 26,
-  "TABLE": 81,
-  "COMPONENT": 23,
-  "SERVICE": 49,
-  "API": 49,
-  "SCREEN": 47,
-  "CONFIGURATION": 10,
-  "DECISION": 10,
-  "DEPENDENCY": 4,
-  "ERROR": 5,
-  "RULE": 19,
-  "WORKFLOW": 5
- },
- "aristasPorTipo": {
-  "belongs_to": 326,
-  "defined_in": 81,
-  "references": 35,
-  "persisted_in": 64,
-  "uses": 304,
-  "reads": 147,
-  "exposes": 51,
-  "calls": 55,
-  "configured_by": 3,
-  "constrains": 11,
-  "affects": 41,
-  "depends_on": 2,
-  "originates_from": 7,
-  "contains": 6
- },
- "permisos": 111,
- "terminosIndexados": 1228,
->>>>>>> Stashed changes
+ "permisos": 135,
+ "terminosIndexados": 1422,
  "huecos": {
   "tablasSinEntidad": [
    "seguridad.restricciones",
@@ -88,12 +47,6 @@
    "academia.examenes",
    "academia.notas_examenes",
    "academia.asistencia_academia",
-<<<<<<< Updated upstream
-=======
-   "vehiculos.mantenimientos_vehiculos",
-   "vehiculos.consumos_combustible",
-   "equipos.mantenimientos_equipos",
->>>>>>> Stashed changes
    "servicios.historial_servicios",
    "finanzas.cuentas_contables",
    "finanzas.movimientos",
@@ -103,12 +56,6 @@
   ],
   "entidadesSinTabla": [],
   "dominiosSinPantalla": [
-<<<<<<< Updated upstream
-=======
-   "Guardias",
-   "Vehículos",
-   "Equipos",
->>>>>>> Stashed changes
    "Academia",
    "Finanzas",
    "Depósito",
@@ -116,10 +63,6 @@
    "Inteligencia"
   ],
   "dominiosSinApi": [
-<<<<<<< Updated upstream
-=======
-   "Guardias",
->>>>>>> Stashed changes
    "Academia",
    "Finanzas",
    "Depósito",

@@ -49,6 +49,15 @@ Tabla servicios.comunicaciones_servicio (12 columnas). Creada en 017_comunicacio
 | creado_en | DATETIMEOFFSET(3) |
 | actualizado_en | DATETIMEOFFSET(3) |
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`
+- **Endpoints:** DenunciasController, DenunciasPublicasController, ServiciosController
+- **Servicios:** DenunciasService, ServiciosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/017_comunicaciones_servicio.sql`
@@ -62,6 +71,7 @@ Tabla servicios.comunicaciones_servicio (12 columnas). Creada en 017_comunicacio
 ## Referenciado por
 
 - [[entity--comunicacion-servicio|ComunicacionServicio]] `persisted_in` →
+- [[service--denuncias-denuncias|DenunciasService]] `reads` →
 - [[service--servicios-servicios|ServiciosService]] `reads` →
 - [[decision--comunicacion-como-json|La comunicacion de servicio se guarda como documento JSON validado]] `constrains` →
 - [[rule--una-comunicacion-por-servicio|Un servicio tiene como maximo una comunicacion, y borrar el servicio la borra]] `affects` →

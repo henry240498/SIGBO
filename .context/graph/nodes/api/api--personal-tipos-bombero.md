@@ -49,6 +49,7 @@ Superficie HTTP de tipos bombero bajo /api/v1/personal/tipos-bombero.
 - [[screen--dashboard-organizacion-tipos-bombero|/dashboard/organizacion/tipos-bombero]] `calls` →
 - [[screen--dashboard-organizacion-tipos-bombero|/dashboard/organizacion/tipos-bombero]] `calls` →
 - [[screen--dashboard-organizacion-tipos-bombero|/dashboard/organizacion/tipos-bombero]] `calls` →
+- [[component--front-personal|personal]] `calls` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

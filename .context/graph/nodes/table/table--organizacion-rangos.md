@@ -41,6 +41,15 @@ Tabla organizacion.rangos (15 columnas). Creada en 012_organizacion.sql, modific
 | creado_por | UNIQUEIDENTIFIER |
 | actualizado_por | UNIQUEIDENTIFIER |
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/guardias`, `/dashboard/guardias/[id]`, `/dashboard/guardias/esquemas-horario`, `/dashboard/guardias/generar`, `/dashboard/guardias/grupos`, `/dashboard/guardias/grupos/[id]`, `/dashboard/guardias/ordenes`, `/dashboard/guardias/ordenes/[id]`, `/dashboard/guardias/ordenes/configuracion`, `/dashboard/guardias/ordenes/nueva`, `/dashboard/guardias/pernoctes`, `/dashboard/guardias/requisitos`, `/dashboard/guardias/sorteos`, `/dashboard/guardias/sorteos/[id]`, `/dashboard/organizacion/ascensos`, `/dashboard/organizacion/feriados`, `/dashboard/organizacion/rangos`, `/dashboard/personal/[id]`
+- **Endpoints:** AscensosController, FojaServicioController, GuardiasController, OrdenesGuardiaController, RangosController
+- **Servicios:** AscensosService, DashboardService, ElegibilidadService, FojaServicioService, GeneracionService, OrdenesGuardiaService, RangosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/012_organizacion.sql`
@@ -54,11 +63,11 @@ Tabla organizacion.rangos (15 columnas). Creada en 012_organizacion.sql, modific
 
 - [[table--organizacion-ascensos|organizacion.ascensos]] `references` →
 - [[table--organizacion-ascensos|organizacion.ascensos]] `references` →
-<<<<<<< Updated upstream
 - [[table--operaciones-requisitos-rol-guardia|operaciones.requisitos_rol_guardia]] `references` →
-=======
->>>>>>> Stashed changes
 - [[entity--rango|Rango]] `persisted_in` →
+- [[service--guardias-elegibilidad|ElegibilidadService]] `reads` →
+- [[service--guardias-generacion|GeneracionService]] `reads` →
+- [[service--guardias-ordenes-guardia|OrdenesGuardiaService]] `reads` →
 - [[service--organizacion-ascensos|AscensosService]] `reads` →
 - [[service--organizacion-dashboard|DashboardService]] `reads` →
 - [[service--organizacion-rangos|RangosService]] `reads` →

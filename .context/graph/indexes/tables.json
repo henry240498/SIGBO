@@ -103,7 +103,7 @@
    "clase": "Bombero"
   },
   "migracion": "database/migrations/003_personal.sql",
-  "columnas": 65,
+  "columnas": 70,
   "fks": []
  },
  "personal.certificaciones": {
@@ -236,11 +236,7 @@
    "clase": "Guardia"
   },
   "migracion": "database/migrations/005_operaciones.sql",
-<<<<<<< Updated upstream
-  "columnas": 17,
-=======
-  "columnas": 12,
->>>>>>> Stashed changes
+  "columnas": 19,
   "fks": []
  },
  "operaciones.asignacion_guardias": {
@@ -251,11 +247,7 @@
    "clase": "AsignacionGuardia"
   },
   "migracion": "database/migrations/005_operaciones.sql",
-<<<<<<< Updated upstream
   "columnas": 14,
-=======
-  "columnas": 8,
->>>>>>> Stashed changes
   "fks": []
  },
  "operaciones.cambios_guardias": {
@@ -277,24 +269,16 @@
    "clase": "Vehiculo"
   },
   "migracion": "database/migrations/006_vehiculos_equipos.sql",
-<<<<<<< Updated upstream
   "columnas": 35,
-=======
-  "columnas": 33,
->>>>>>> Stashed changes
   "fks": []
  },
  "vehiculos.mantenimientos_vehiculos": {
   "id": "table--vehiculos-mantenimientos-vehiculos",
   "dominio": "vehiculos",
-<<<<<<< Updated upstream
   "entidad": {
    "id": "entity--mantenimiento-vehiculo",
    "clase": "MantenimientoVehiculo"
   },
-=======
-  "entidad": null,
->>>>>>> Stashed changes
   "migracion": "database/migrations/006_vehiculos_equipos.sql",
   "columnas": 13,
   "fks": []
@@ -302,14 +286,10 @@
  "vehiculos.consumos_combustible": {
   "id": "table--vehiculos-consumos-combustible",
   "dominio": "vehiculos",
-<<<<<<< Updated upstream
   "entidad": {
    "id": "entity--consumo-combustible",
    "clase": "ConsumoCombustible"
   },
-=======
-  "entidad": null,
->>>>>>> Stashed changes
   "migracion": "database/migrations/006_vehiculos_equipos.sql",
   "columnas": 11,
   "fks": []
@@ -333,24 +313,16 @@
    "clase": "Equipo"
   },
   "migracion": "database/migrations/006_vehiculos_equipos.sql",
-<<<<<<< Updated upstream
   "columnas": 22,
-=======
-  "columnas": 20,
->>>>>>> Stashed changes
   "fks": []
  },
  "equipos.mantenimientos_equipos": {
   "id": "table--equipos-mantenimientos-equipos",
   "dominio": "equipos",
-<<<<<<< Updated upstream
   "entidad": {
    "id": "entity--mantenimiento-equipo",
    "clase": "MantenimientoEquipo"
   },
-=======
-  "entidad": null,
->>>>>>> Stashed changes
   "migracion": "database/migrations/006_vehiculos_equipos.sql",
   "columnas": 12,
   "fks": []
@@ -933,7 +905,6 @@
    "seguridad.usuarios"
   ]
  },
-<<<<<<< Updated upstream
  "vehiculos.checklist_items": {
   "id": "table--vehiculos-checklist-items",
   "dominio": "vehiculos",
@@ -945,6 +916,17 @@
   "columnas": 7,
   "fks": []
  },
+ "contenido.publicaciones": {
+  "id": "table--contenido-publicaciones",
+  "dominio": "publicaciones",
+  "entidad": {
+   "id": "entity--publicacion",
+   "clase": "Publicacion"
+  },
+  "migracion": "database/migrations/026_publicaciones_persistencia.sql",
+  "columnas": 12,
+  "fks": []
+ },
  "operaciones.grupos_guardia": {
   "id": "table--operaciones-grupos-guardia",
   "dominio": "asistencia",
@@ -953,7 +935,7 @@
    "clase": "GrupoGuardia"
   },
   "migracion": "database/migrations/025_guardias.sql",
-  "columnas": 8,
+  "columnas": 13,
   "fks": [
    "personal.bomberos"
   ]
@@ -1030,21 +1012,162 @@
    "personal.tipos_bombero"
   ]
  },
-=======
->>>>>>> Stashed changes
- "contenido.publicaciones": {
-  "id": "table--contenido-publicaciones",
-  "dominio": "publicaciones",
+ "organizacion.feriados": {
+  "id": "table--organizacion-feriados",
+  "dominio": "organizacion",
   "entidad": {
-   "id": "entity--publicacion",
-   "clase": "Publicacion"
+   "id": "entity--feriado",
+   "clase": "Feriado"
   },
-<<<<<<< Updated upstream
-  "migracion": "database/migrations/026_publicaciones_persistencia.sql",
-=======
-  "migracion": "database/migrations/023_publicaciones_persistencia.sql",
->>>>>>> Stashed changes
+  "migracion": "database/migrations/026_guardias_planificacion.sql",
   "columnas": 12,
   "fks": []
+ },
+ "operaciones.esquemas_horario_guardia": {
+  "id": "table--operaciones-esquemas-horario-guardia",
+  "dominio": "asistencia",
+  "entidad": {
+   "id": "entity--esquema-horario-guardia",
+   "clase": "EsquemaHorarioGuardia"
+  },
+  "migracion": "database/migrations/026_guardias_planificacion.sql",
+  "columnas": 18,
+  "fks": []
+ },
+ "operaciones.sorteos_guardia": {
+  "id": "table--operaciones-sorteos-guardia",
+  "dominio": "asistencia",
+  "entidad": {
+   "id": "entity--sorteo-guardia",
+   "clase": "SorteoGuardia"
+  },
+  "migracion": "database/migrations/028_guardias_sorteo.sql",
+  "columnas": 9,
+  "fks": [
+   "operaciones.esquemas_horario_guardia",
+   "operaciones.guardias"
+  ]
+ },
+ "operaciones.sorteo_participantes": {
+  "id": "table--operaciones-sorteo-participantes",
+  "dominio": "asistencia",
+  "entidad": {
+   "id": "entity--sorteo-participante",
+   "clase": "SorteoParticipante"
+  },
+  "migracion": "database/migrations/028_guardias_sorteo.sql",
+  "columnas": 5,
+  "fks": [
+   "operaciones.sorteos_guardia",
+   "personal.bomberos"
+  ]
+ },
+ "operaciones.inspecciones_movil": {
+  "id": "table--operaciones-inspecciones-movil",
+  "dominio": "asistencia",
+  "entidad": {
+   "id": "entity--inspeccion-movil",
+   "clase": "InspeccionMovil"
+  },
+  "migracion": "database/migrations/029_guardias_moviles_bitacora.sql",
+  "columnas": 8,
+  "fks": [
+   "operaciones.guardias",
+   "vehiculos.vehiculos",
+   "vehiculos.checklist_items"
+  ]
+ },
+ "operaciones.orden_guardia_configuracion": {
+  "id": "table--operaciones-orden-guardia-configuracion",
+  "dominio": "asistencia",
+  "entidad": {
+   "id": "entity--orden-guardia-configuracion",
+   "clase": "OrdenGuardiaConfiguracion"
+  },
+  "migracion": "database/migrations/030_ordenes_guardia.sql",
+  "columnas": 16,
+  "fks": [
+   "organizacion.cargos",
+   "organizacion.cargos"
+  ]
+ },
+ "operaciones.ordenes_guardia": {
+  "id": "table--operaciones-ordenes-guardia",
+  "dominio": "asistencia",
+  "entidad": {
+   "id": "entity--orden-guardia",
+   "clase": "OrdenGuardia"
+  },
+  "migracion": "database/migrations/030_ordenes_guardia.sql",
+  "columnas": 23,
+  "fks": []
+ },
+ "operaciones.ordenes_guardia_modificaciones": {
+  "id": "table--operaciones-ordenes-guardia-modificaciones",
+  "dominio": "asistencia",
+  "entidad": {
+   "id": "entity--orden-guardia-modificacion",
+   "clase": "OrdenGuardiaModificacion"
+  },
+  "migracion": "database/migrations/030_ordenes_guardia.sql",
+  "columnas": 9,
+  "fks": [
+   "operaciones.ordenes_guardia"
+  ]
+ },
+ "denuncias.categorias_denuncia": {
+  "id": "table--denuncias-categorias-denuncia",
+  "dominio": "denuncias",
+  "entidad": {
+   "id": "entity--categoria-denuncia",
+   "clase": "CategoriaDenuncia"
+  },
+  "migracion": "database/migrations/031_denuncias_rapidas.sql",
+  "columnas": 7,
+  "fks": []
+ },
+ "denuncias.denuncias": {
+  "id": "table--denuncias-denuncias",
+  "dominio": "denuncias",
+  "entidad": {
+   "id": "entity--denuncia",
+   "clase": "Denuncia"
+  },
+  "migracion": "database/migrations/031_denuncias_rapidas.sql",
+  "columnas": 22,
+  "fks": [
+   "denuncias.categorias_denuncia",
+   "seguridad.usuarios",
+   "servicios.servicios",
+   "vehiculos.vehiculos",
+   "seguridad.usuarios"
+  ]
+ },
+ "denuncias.historial_estados_denuncia": {
+  "id": "table--denuncias-historial-estados-denuncia",
+  "dominio": "denuncias",
+  "entidad": {
+   "id": "entity--historial-estado-denuncia",
+   "clase": "HistorialEstadoDenuncia"
+  },
+  "migracion": "database/migrations/031_denuncias_rapidas.sql",
+  "columnas": 7,
+  "fks": [
+   "denuncias.denuncias",
+   "seguridad.usuarios"
+  ]
+ },
+ "denuncias.evidencias_denuncia": {
+  "id": "table--denuncias-evidencias-denuncia",
+  "dominio": "denuncias",
+  "entidad": {
+   "id": "entity--evidencia-denuncia",
+   "clase": "EvidenciaDenuncia"
+  },
+  "migracion": "database/migrations/031_denuncias_rapidas.sql",
+  "columnas": 10,
+  "fks": [
+   "denuncias.denuncias"
+  ]
  }
 }

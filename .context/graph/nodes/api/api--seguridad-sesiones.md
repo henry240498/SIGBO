@@ -28,12 +28,8 @@ Superficie HTTP de sesiones bajo /api/v1/seguridad/sesiones.
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
 | GET | `/seguridad/sesiones` | `seguridad:ver_usuarios` |
-<<<<<<< Updated upstream
-=======
 | GET | `/seguridad/sesiones/mias` | — |
 | DELETE | `/seguridad/sesiones/mias/:id` | — |
-| POST | `/seguridad/sesiones/mias/cerrar-todas` | — |
->>>>>>> Stashed changes
 
 ## Archivos
 
@@ -47,12 +43,9 @@ Superficie HTTP de sesiones bajo /api/v1/seguridad/sesiones.
 
 ## Referenciado por
 
-<<<<<<< Updated upstream
-=======
 - [[screen--dashboard-mi-perfil-seguridad|/dashboard/mi-perfil/seguridad]] `calls` →
 - [[screen--dashboard-mi-perfil-seguridad|/dashboard/mi-perfil/seguridad]] `calls` →
 - [[screen--dashboard-mi-perfil-seguridad|/dashboard/mi-perfil/seguridad]] `calls` →
->>>>>>> Stashed changes
 - [[screen--dashboard-seguridad-sesiones|/dashboard/seguridad/sesiones]] `calls` →
 - [[screen--dashboard-seguridad-sesiones|/dashboard/seguridad/sesiones]] `calls` →
 - [[screen--dashboard-seguridad-usuarios-id|/dashboard/seguridad/usuarios/[id]]] `calls` →

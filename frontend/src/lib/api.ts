@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001/api/v1';
+export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001/api/v1';
 /** Origen del backend sin el prefijo /api/v1 - las imagenes subidas se sirven ahi. */
 export const API_ORIGIN = API_URL.replace(/\/api\/v1\/?$/, '');
 

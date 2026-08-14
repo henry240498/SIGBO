@@ -19,11 +19,16 @@ terminos: [publicacion, publicaciones, contenido]
 Entidad Publicacion, persistida en contenido.publicaciones.
 
 - **Tabla:** [[table--contenido-publicaciones|contenido.publicaciones]]
-<<<<<<< Updated upstream
 - **Columnas mapeadas:** 11
-=======
-- **Columnas mapeadas:** 9
->>>>>>> Stashed changes
+
+## Donde se usa
+
+- **Pantallas:** `/`, `/dashboard/publicaciones`
+- **Endpoints:** PublicacionesController
+- **Servicios:** PublicacionesService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
 
 ## Archivos
 

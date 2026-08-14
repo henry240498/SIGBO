@@ -50,6 +50,10 @@ Superficie HTTP de equipamiento bombero bajo /api/v1/personal/bomberos.
 - [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `calls` →
 - [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `calls` →
 - [[screen--dashboard-seguridad-usuarios|/dashboard/seguridad/usuarios]] `calls` →
+- [[component--front-equipos|equipos]] `calls` →
+- [[component--front-equipos|equipos]] `calls` →
+- [[component--front-personal|personal]] `calls` →
+- [[component--front-vehiculos|vehiculos]] `calls` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

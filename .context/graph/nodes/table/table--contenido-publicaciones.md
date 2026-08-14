@@ -4,42 +4,25 @@ tipo: TABLE
 nombre: contenido.publicaciones
 nivel: L2
 dominio: publicaciones
-<<<<<<< Updated upstream
 resumen: Tabla contenido.publicaciones (12 columnas). Creada en 026_publicaciones_persistencia.sql, modificada por 026_publicaciones_persistencia.sql.
 tabla: publicaciones
 archivos:
   - database/migrations/026_publicaciones_persistencia.sql
 edges:
   - [defined_in, file--026-publicaciones-persistencia]
-=======
-resumen: Tabla contenido.publicaciones (12 columnas). Creada en 023_publicaciones_persistencia.sql.
-tabla: publicaciones
-archivos:
-  - database/migrations/023_publicaciones_persistencia.sql
-edges:
-  - [defined_in, file--023-publicaciones-persistencia]
->>>>>>> Stashed changes
   - [belongs_to, domain--publicaciones]
 terminos: [contenido, publicaciones, seccion, estado, visible, destacada, orden, fecha, publicar, caducar, json, creado, actualizado]
 ---
 
 # contenido.publicaciones
 
-<<<<<<< Updated upstream
 Tabla contenido.publicaciones (12 columnas). Creada en 026_publicaciones_persistencia.sql, modificada por 026_publicaciones_persistencia.sql.
-=======
-Tabla contenido.publicaciones (12 columnas). Creada en 023_publicaciones_persistencia.sql.
->>>>>>> Stashed changes
 
 - **Esquema:** contenido · **Columnas:** 12
 
 ## Restricciones CHECK (reglas que la BD impone)
 
-<<<<<<< Updated upstream
 - `ISJSON(contenido_json)=1)'`
-=======
-- `ISJSON(contenidoJson)=1`
->>>>>>> Stashed changes
 
 ## Columnas
 
@@ -52,12 +35,20 @@ Tabla contenido.publicaciones (12 columnas). Creada en 023_publicaciones_persist
 | destacada | BIT |
 | orden | INT |
 | fecha | DATE |
-<<<<<<< Updated upstream
 | publicar_en | DATETIMEOFFSET |
 | caducar_en | DATETIMEOFFSET |
 | contenido_json | NVARCHAR(MAX) |
 | creado_en | DATETIMEOFFSET |
 | actualizado_en | DATETIMEOFFSET |
+
+## Donde se usa
+
+- **Pantallas:** `/`, `/dashboard/publicaciones`
+- **Endpoints:** PublicacionesController
+- **Servicios:** PublicacionesService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
 
 ## Archivos
 
@@ -66,21 +57,6 @@ Tabla contenido.publicaciones (12 columnas). Creada en 023_publicaciones_persist
 ## Relaciones
 
 - `defined_in` → [[file--026-publicaciones-persistencia|026_publicaciones_persistencia.sql]]
-=======
-| publicarEn | DATETIMEOFFSET(3) |
-| caducarEn | DATETIMEOFFSET(3) |
-| contenidoJson | NVARCHAR(MAX) |
-| creado_en | DATETIMEOFFSET(3) |
-| actualizado_en | DATETIMEOFFSET(3) |
-
-## Archivos
-
-- `database/migrations/023_publicaciones_persistencia.sql`
-
-## Relaciones
-
-- `defined_in` → [[file--023-publicaciones-persistencia|023_publicaciones_persistencia.sql]]
->>>>>>> Stashed changes
 - `belongs_to` → [[domain--publicaciones|Publicaciones]]
 
 ## Referenciado por

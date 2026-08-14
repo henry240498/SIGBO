@@ -20,7 +20,7 @@ Modulo NestJS que cablea controladores, servicios y repositorios de organizacion
 
 ## Entidades registradas (forFeature)
 
-Rango, Cargo, Especialidad, Compania, Cuartel, Brigada, Departamento, Unidad, Turno, TipoGuardia, Designacion, Ascenso, Bombero, Parametro
+Rango, Cargo, Especialidad, Compania, Cuartel, Brigada, Departamento, Unidad, Turno, TipoGuardia, Designacion, Ascenso, Bombero, Parametro, Feriado, Guardia
 
 ## Archivos
 
@@ -41,6 +41,7 @@ Rango, Cargo, Especialidad, Compania, Cuartel, Brigada, Departamento, Unidad, Tu
 - [[service--organizacion-departamentos|DepartamentosService]] `uses` →
 - [[service--organizacion-designaciones|DesignacionesService]] `uses` →
 - [[service--organizacion-especialidades|EspecialidadesService]] `uses` →
+- [[service--organizacion-feriados|FeriadosService]] `uses` →
 - [[service--organizacion-parametros|ParametrosService]] `uses` →
 - [[service--organizacion-rangos|RangosService]] `uses` →
 - [[service--organizacion-tipos-guardia|TiposGuardiaService]] `uses` →

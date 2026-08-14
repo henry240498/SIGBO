@@ -4,18 +4,11 @@ tipo: TABLE
 nombre: vehiculos.vehiculos
 nivel: L2
 dominio: vehiculos
-<<<<<<< Updated upstream
 resumen: Tabla vehiculos.vehiculos (35 columnas). Creada en 006_vehiculos_equipos.sql, modificada por 023_moviles.sql.
 tabla: vehiculos
 archivos:
   - database/migrations/006_vehiculos_equipos.sql
   - database/migrations/023_moviles.sql
-=======
-resumen: Tabla vehiculos.vehiculos (33 columnas). Creada en 006_vehiculos_equipos.sql.
-tabla: vehiculos
-archivos:
-  - database/migrations/006_vehiculos_equipos.sql
->>>>>>> Stashed changes
 edges:
   - [defined_in, file--006-vehiculos-equipos]
   - [belongs_to, domain--vehiculos]
@@ -24,15 +17,9 @@ terminos: [vehiculos, numero, interno, tipo, marca, modelo, anio, patente, color
 
 # vehiculos.vehiculos
 
-<<<<<<< Updated upstream
 Tabla vehiculos.vehiculos (35 columnas). Creada en 006_vehiculos_equipos.sql, modificada por 023_moviles.sql.
 
 - **Esquema:** vehiculos · **Columnas:** 35
-=======
-Tabla vehiculos.vehiculos (33 columnas). Creada en 006_vehiculos_equipos.sql.
-
-- **Esquema:** vehiculos · **Columnas:** 33
->>>>>>> Stashed changes
 - **UNIQUE:** `numero_interno`, `patente`
 
 ## Columnas
@@ -72,19 +59,22 @@ Tabla vehiculos.vehiculos (33 columnas). Creada en 006_vehiculos_equipos.sql.
 | metadata | NVARCHAR(MAX) |
 | creado_en | DATETIMEOFFSET(3) |
 | actualizado_en | DATETIMEOFFSET(3) |
-<<<<<<< Updated upstream
 | fecha_baja | DATE |
 | motivo_baja | NVARCHAR(MAX) |
-=======
->>>>>>> Stashed changes
+
+## Donde se usa
+
+- **Pantallas:** `/`, `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/equipos`, `/dashboard/equipos/[id]`, `/dashboard/equipos/categorias`, `/dashboard/personal/[id]`, `/dashboard/publicaciones`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
+- **Endpoints:** DenunciasController, DenunciasPublicasController, EquiposController, InspeccionesMovilController, PublicacionesController, ServiciosController, VehiculosAutorizadosController, VehiculosController
+- **Servicios:** DenunciasService, EquiposService, InspeccionesMovilService, PublicacionesService, ServiciosService, VehiculosAutorizadosService, VehiculosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
 
 ## Archivos
 
 - `database/migrations/006_vehiculos_equipos.sql`
-<<<<<<< Updated upstream
 - `database/migrations/023_moviles.sql`
-=======
->>>>>>> Stashed changes
 
 ## Relaciones
 
@@ -94,11 +84,12 @@ Tabla vehiculos.vehiculos (33 columnas). Creada en 006_vehiculos_equipos.sql.
 ## Referenciado por
 
 - [[table--personal-vehiculos-autorizados|personal.vehiculos_autorizados]] `references` →
+- [[table--operaciones-inspecciones-movil|operaciones.inspecciones_movil]] `references` →
+- [[table--denuncias-denuncias|denuncias.denuncias]] `references` →
 - [[entity--vehiculo|Vehiculo]] `persisted_in` →
-<<<<<<< Updated upstream
+- [[service--denuncias-denuncias|DenunciasService]] `reads` →
 - [[service--equipos-equipos|EquiposService]] `reads` →
-=======
->>>>>>> Stashed changes
+- [[service--guardias-inspecciones-movil|InspeccionesMovilService]] `reads` →
 - [[service--publicaciones-publicaciones|PublicacionesService]] `reads` →
 - [[service--servicios-servicios|ServiciosService]] `reads` →
 - [[service--vehiculos-vehiculos-autorizados|VehiculosAutorizadosService]] `reads` →

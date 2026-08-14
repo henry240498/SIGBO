@@ -3,11 +3,7 @@ id: rule--entidad-y-tabla-en-paralelo
 tipo: RULE
 nombre: Cambiar una entidad exige la migracion correspondiente en el mismo cambio
 nivel: L1
-<<<<<<< Updated upstream
 resumen: "Con synchronize false, agregar un @Column no crea la columna. Entidad y migracion se cambian juntas o el backend falla en tiempo de ejecucion."
-=======
-resumen: "Con synchronize:false, agregar un @Column no crea la columna. Entidad y migracion se cambian juntas o el backend falla en tiempo de ejecucion."
->>>>>>> Stashed changes
 severidad: CRITICA
 archivos:
   - backend/src/shared/entities
@@ -19,11 +15,7 @@ terminos: [entidad, tabla, columna, migracion, synchronize, typeorm, paralelo, i
 
 # Cambiar una entidad exige la migracion correspondiente en el mismo cambio
 
-<<<<<<< Updated upstream
 Con synchronize false, agregar un @Column no crea la columna. Entidad y migracion se cambian juntas o el backend falla en tiempo de ejecucion.
-=======
-Con synchronize:false, agregar un @Column no crea la columna. Entidad y migracion se cambian juntas o el backend falla en tiempo de ejecucion.
->>>>>>> Stashed changes
 
 ## El invariante
 
@@ -47,20 +39,10 @@ aceptando solo los valores viejos.
   entidad entera queda inutilizable, no solo el campo nuevo.
 - Valor de estado no permitido: violacion de constraint `CK_...` al insertar o
   actualizar.
-<<<<<<< Updated upstream
 - Tabla faltante: el generador del grafo lo detecta y marca la entidad como
   **huerfana** (`graph/indexes/stats.json`, seccion `entidadesSinTabla`). Ya sirvio una
   vez: detecto `ConfiguracionApariencia`, cuya tabla habia sido renombrada en la
   migracion 014, y resulto ser codigo muerto. Hoy la lista esta en cero.
-=======
-
-## Convencion de nombres entre las dos capas
-
-`SnakeNamingStrategy` traduce automaticamente: `numeroBombero` en TypeScript es
-`numero_bombero` en SQL. No hace falta `@Column({ name: ... })` salvo cuando el
-nombre real se aparta de esa conversion. Ver
-[[rule--snake-case-en-bd-camel-en-typescript]].
->>>>>>> Stashed changes
 
 ## Ademas: registrar la entidad
 
@@ -70,7 +52,6 @@ Una entidad nueva tiene que exportarse desde `backend/src/shared/entities/index.
 TypeORM no la conoce; si falta lo segundo, la inyeccion del repositorio falla al
 arrancar.
 
-<<<<<<< Updated upstream
 ## Convencion de nombres entre las dos capas
 
 `SnakeNamingStrategy` traduce automaticamente: `numeroBombero` es `numero_bombero`.
@@ -83,8 +64,6 @@ entidad declara `length: 20`. Los cinco valores del `CHECK` caben en 20, asi que
 falla, pero las dos capas no coinciden. Al agregar un estado, verificar **ambos**
 numeros.
 
-=======
->>>>>>> Stashed changes
 
 ## Archivos
 

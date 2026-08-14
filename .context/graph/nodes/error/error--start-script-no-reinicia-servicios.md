@@ -41,14 +41,8 @@ Get-NetTCPConnection -LocalPort 3000,3001 -State Listen |
   ForEach-Object { Stop-Process -Id $_ -Force }
 ```
 
-<<<<<<< Updated upstream
 y despues correr el script. O en desarrollo usar directamente `npm run start:dev`
 (backend) y `npm run dev` (frontend), que recargan al detectar cambios.
-=======
-y despues correr el script. O en desarrollo usar directamente
-`npm run start:dev` (backend) y `npm run dev` (frontend), que recargan al detectar
-cambios.
->>>>>>> Stashed changes
 
 ## Como confirmar el diagnostico en 5 segundos
 

@@ -41,6 +41,15 @@ Tabla personal.historial_institucional (11 columnas). Creada en 016_personal_exp
 | referencia_id | UNIQUEIDENTIFIER |
 | creado_en | DATETIMEOFFSET(3) |
 
+## Donde se usa
+
+- **Pantallas:** — (sin pantalla que llegue hasta aca)
+- **Endpoints:** BomberosController, CondicionController, FojaServicioController, HistorialInstitucionalController
+- **Servicios:** BomberosService, CondicionService, FojaServicioService, HistorialInstitucionalService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/016_personal_expansion.sql`

@@ -55,6 +55,15 @@ Tabla seguridad.usuarios (26 columnas). Creada en 002_seguridad.sql, modificada 
 | instagram_url | NVARCHAR(500) |
 | x_url | NVARCHAR(500) |
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/mi-perfil`, `/dashboard/mi-perfil/seguridad`, `/dashboard/organizacion`, `/dashboard/seguridad`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Endpoints:** AuthController, BitacoraController, DashboardController, DashboardController, DenunciasController, DenunciasPublicasController, MeController, PerfilController, SesionesController, UsuariosController
+- **Servicios:** AuthService, BitacoraService, DashboardService, DenunciasService, PerfilService, SesionesService, UsuariosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/002_seguridad.sql`
@@ -76,8 +85,13 @@ Tabla seguridad.usuarios (26 columnas). Creada en 002_seguridad.sql, modificada 
 - [[table--seguridad-configuracion-valores|seguridad.configuracion_valores]] `references` →
 - [[table--seguridad-configuracion-versiones|seguridad.configuracion_versiones]] `references` →
 - [[table--seguridad-configuracion-versiones|seguridad.configuracion_versiones]] `references` →
+- [[table--denuncias-denuncias|denuncias.denuncias]] `references` →
+- [[table--denuncias-denuncias|denuncias.denuncias]] `references` →
+- [[table--denuncias-historial-estados-denuncia|denuncias.historial_estados_denuncia]] `references` →
 - [[entity--usuario|Usuario]] `persisted_in` →
 - [[service--auth-auth|AuthService]] `reads` →
+- [[service--denuncias-denuncias|DenunciasService]] `reads` →
+- [[service--guardias-bitacora|BitacoraService]] `reads` →
 - [[service--seguridad-dashboard|DashboardService]] `reads` →
 - [[service--seguridad-perfil|PerfilService]] `reads` →
 - [[service--seguridad-sesiones|SesionesService]] `reads` →

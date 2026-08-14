@@ -43,6 +43,11 @@ Tabla documentos.documentos (17 columnas). Creada en 008_admin.sql, modificada p
 | actualizado_en | DATETIMEOFFSET(3) |
 | creado_por | UNIQUEIDENTIFIER |
 
+## Donde se usa
+
+Ningun servicio del backend la referencia hoy. Puede ser estructura
+preparada para una fase siguiente, o codigo muerto: verificar antes de asumir.
+
 ## Archivos
 
 - `database/migrations/008_admin.sql`

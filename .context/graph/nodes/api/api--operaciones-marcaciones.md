@@ -42,5 +42,13 @@ Superficie HTTP de marcaciones bajo /api/v1/operaciones/marcaciones.
 - `exposes` → [[service--operaciones-marcaciones|MarcacionesService]]
 - `exposes` → [[service--operaciones-eventos-asistencia|EventosAsistenciaService]]
 
+## Referenciado por
+
+- [[component--front-asistencia|asistencia]] `calls` →
+- [[component--front-asistencia|asistencia]] `calls` →
+- [[component--front-asistencia|asistencia]] `calls` →
+- [[component--front-asistencia|asistencia]] `calls` →
+- [[component--front-asistencia|asistencia]] `calls` →
+
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

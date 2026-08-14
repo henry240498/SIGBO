@@ -19,12 +19,21 @@ terminos: [bombero, bomberos, personal, estado, aspirante, activo, suspendido, l
 Entidad Bombero, persistida en personal.bomberos.
 
 - **Tabla:** [[table--personal-bomberos|personal.bomberos]]
-- **Columnas mapeadas:** 54
+- **Columnas mapeadas:** 59
 
 ## Estados y enumeraciones
 
 - `EstadoBombero`: `ASPIRANTE` · `ACTIVO` · `SUSPENDIDO` · `LICENCIA` · `RETIRADO` · `FALLECIDO` · `HONORARIO`
 - `CondicionInstitucional`: `INCORPORADO` · `COMBATIENTE` · `APOYO_ECONOMICO` · `HONORARIO`
+
+## Donde se usa
+
+- **Pantallas:** `/`, `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`, `/dashboard/guardias`, `/dashboard/guardias/[id]`, `/dashboard/guardias/esquemas-horario`, `/dashboard/guardias/generar`, `/dashboard/guardias/grupos`, `/dashboard/guardias/grupos/[id]`, `/dashboard/guardias/ordenes`, `/dashboard/guardias/ordenes/[id]`, `/dashboard/guardias/ordenes/configuracion`, `/dashboard/guardias/ordenes/nueva`, `/dashboard/guardias/pernoctes`, `/dashboard/guardias/requisitos`, `/dashboard/guardias/sorteos`, `/dashboard/guardias/sorteos/[id]`, `/dashboard/organizacion/ascensos`, `/dashboard/organizacion/designaciones`, `/dashboard/organizacion/feriados`, `/dashboard/personal/[id]`, `/dashboard/publicaciones`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`
+- **Endpoints:** ActividadProfesionalController, AscensosController, BitacoraController, BomberosController, CondicionController, DesignacionesController, EspecialidadesBomberoController, EventosAsistenciaController, FojaServicioController, GruposGuardiaController, GuardiasController, HistorialInstitucionalController, IdiomasController, ImportacionesController, MarcacionesController, NovedadesController, OrdenesGuardiaController, PernoctesController, PublicacionesController, SegurosBomberoController, ServiciosController, SorteosController
+- **Servicios:** ActividadProfesionalService, AscensosService, BitacoraService, BomberosService, CondicionService, DesignacionesService, ElegibilidadService, EspecialidadesBomberoService, EventosAsistenciaService, FojaServicioService, GeneracionService, GruposGuardiaService, GuardiasService, HistorialInstitucionalService, IdiomasService, ImportacionesService, MarcacionesService, NovedadesService, OrdenesGuardiaService, PernoctesService, PublicacionesService, SegurosBomberoService, ServiciosService, SorteosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
 
 ## Archivos
 
@@ -37,17 +46,16 @@ Entidad Bombero, persistida en personal.bomberos.
 
 ## Referenciado por
 
-<<<<<<< Updated upstream
+- [[service--guardias-bitacora|BitacoraService]] `uses` →
 - [[service--guardias-elegibilidad|ElegibilidadService]] `uses` →
+- [[service--guardias-generacion|GeneracionService]] `uses` →
 - [[service--guardias-grupos-guardia|GruposGuardiaService]] `uses` →
 - [[service--guardias-guardias|GuardiasService]] `uses` →
 - [[service--guardias-novedades|NovedadesService]] `uses` →
+- [[service--guardias-ordenes-guardia|OrdenesGuardiaService]] `uses` →
 - [[service--guardias-pernoctes|PernoctesService]] `uses` →
+- [[service--guardias-sorteos|SorteosService]] `uses` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `uses` →
-=======
-- [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `uses` →
-- [[service--operaciones-guardias|GuardiasService]] `uses` →
->>>>>>> Stashed changes
 - [[service--operaciones-importaciones|ImportacionesService]] `uses` →
 - [[service--operaciones-marcaciones|MarcacionesService]] `uses` →
 - [[service--organizacion-ascensos|AscensosService]] `uses` →

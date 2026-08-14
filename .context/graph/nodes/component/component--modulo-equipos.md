@@ -20,11 +20,7 @@ Modulo NestJS que cablea controladores, servicios y repositorios de equipos.
 
 ## Entidades registradas (forFeature)
 
-<<<<<<< Updated upstream
 CategoriaEquipo, Equipo, PrestamoEquipo, MantenimientoEquipo, Vehiculo, Parametro
-=======
-CategoriaEquipo, Equipo, PrestamoEquipo
->>>>>>> Stashed changes
 
 ## Archivos
 

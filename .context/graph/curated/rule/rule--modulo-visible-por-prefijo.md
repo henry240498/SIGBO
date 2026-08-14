@@ -24,19 +24,13 @@ export function moduloVisible(modulo: ModuloConfig, permisos: string[]): boolean
 
 ## Dos filtros distintos, no confundirlos
 
-<<<<<<< Updated upstream
 - **`disponible: false`** — el modulo no esta construido. Hoy: `academia`,
   `finanzas`, `deposito`, `documentos`, `inteligencia`.
-=======
-- **`disponible: false`** — el modulo no esta construido. Hoy: `guardias`,
-  `academia`, `finanzas`, `deposito`, `documentos`, `inteligencia`.
->>>>>>> Stashed changes
 - **`moduloVisible()` falso** — el modulo existe pero este usuario no tiene ningun
   permiso de ese prefijo.
 
 Un modulo se muestra solo si pasa **ambos**.
 
-<<<<<<< Updated upstream
 ## Los 9 habilitados hoy
 
 `organizacion`, `personal`, `asistencia`, `guardias`, `servicios`, `vehiculos`,
@@ -65,24 +59,3 @@ permisos `asistencia:guardias_*` a modulo propio con prefijo `guardias:` (5 perm
   operacion de guardias).
 - `/dashboard/[modulo]/page.tsx` es la ruta comodin que atiende los slugs sin pantalla
   propia.
-=======
-## Al habilitar un modulo nuevo
-
-1. Poner `disponible: true` en `modulos.ts`.
-2. Sembrar permisos con ese prefijo exacto — si no, ningun usuario lo vera y va a
-   parecer que el cambio no surtio efecto.
-3. Crear la carpeta de rutas en `frontend/src/app/dashboard/<slug>/`.
-
-## Desalineaciones reales hoy
-
-- El prefijo `asistencia:` corresponde al modulo backend `operaciones` (esquema
-  `operaciones`) y al slug de frontend `asistencia`. **No** existe prefijo
-  `operaciones:`. Es el punto donde mas se confunde el nombre del dominio.
-- El modulo `guardias` esta `disponible: false`, pero hay pantallas de guardias
-  funcionando dentro de `asistencia`
-  (`/dashboard/asistencia/guardias`) y una en organizacion
-  (`/dashboard/organizacion/guardias`). Sus permisos son `asistencia:guardias_*`, no
-  `guardias:*`.
-- `/dashboard/[modulo]/page.tsx` es la ruta comodin que atiende los slugs sin
-  pantalla propia.
->>>>>>> Stashed changes

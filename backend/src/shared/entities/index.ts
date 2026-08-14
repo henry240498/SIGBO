@@ -80,3 +80,7 @@ export * from './orden-guardia-modificacion.entity';
 export * from './configuracion-valor.entity';
 export * from './configuracion-version.entity';
 export * from './publicacion.entity';
+export * from './categoria-denuncia.entity';
+export * from './denuncia.entity';
+export * from './historial-estado-denuncia.entity';
+export * from './evidencia-denuncia.entity';

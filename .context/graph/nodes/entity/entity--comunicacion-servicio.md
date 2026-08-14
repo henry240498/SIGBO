@@ -26,6 +26,15 @@ Formulario digital completo vinculado a un servicio operativo.
 - `TipoComunicacionServicio`: `OTRAS_OCURRENCIAS` · `INCENDIO`
 - `EstadoComunicacionServicio`: `BORRADOR` · `PENDIENTE_REVISION` · `OBSERVADO` · `FINALIZADA` · `ANULADO`
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`
+- **Endpoints:** DenunciasController, DenunciasPublicasController, ServiciosController
+- **Servicios:** DenunciasService, ServiciosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/comunicacion-servicio.entity.ts`
@@ -37,6 +46,7 @@ Formulario digital completo vinculado a un servicio operativo.
 
 ## Referenciado por
 
+- [[service--denuncias-denuncias|DenunciasService]] `uses` →
 - [[service--servicios-servicios|ServiciosService]] `uses` →
 - [[decision--comunicacion-como-json|La comunicacion de servicio se guarda como documento JSON validado]] `affects` →
 - [[rule--una-comunicacion-por-servicio|Un servicio tiene como maximo una comunicacion, y borrar el servicio la borra]] `affects` →

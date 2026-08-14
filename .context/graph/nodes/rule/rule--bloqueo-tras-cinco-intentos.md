@@ -41,7 +41,6 @@ login exitoso pone el contador en cero.
 ## Para desbloquear a alguien manualmente
 
 Poner `bloqueado_hasta = NULL` e `intentos_fallidos = 0` en `seguridad.usuarios`.
-<<<<<<< Updated upstream
 
 Existe tambien el flujo administrativo de bloqueo/desbloqueo en `seguridad/usuarios`
 (`bloqueo.dto.ts`), que es **distinto** de este bloqueo automatico: el administrativo
@@ -55,12 +54,6 @@ Son constantes del modulo, no filas. Es la excepcion al patron dominante del sis
 datos, pero las defensas de seguridad son codigo. Si se quisiera hacerlas
 configurables, el registro de Configuracion ya tiene el nivel `GLOBAL` para eso —
 notar que `operations.sessionMinutes` si esta alli.
-=======
-Existe tambien el flujo administrativo de bloqueo/desbloqueo en
-`seguridad/usuarios` (`bloqueo.dto.ts`), que es **distinto** de este bloqueo
-automatico: el administrativo es una decision humana, este es una defensa contra
-fuerza bruta.
->>>>>>> Stashed changes
 
 
 ## Archivos

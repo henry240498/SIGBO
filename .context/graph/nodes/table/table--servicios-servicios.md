@@ -57,6 +57,15 @@ Tabla servicios.servicios (30 columnas). Creada en 007_servicios.sql, modificada
 | actualizado_en | DATETIMEOFFSET(3) |
 | creado_por | UNIQUEIDENTIFIER |
 
+## Donde se usa
+
+- **Pantallas:** `/`, `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/equipos/[id]`, `/dashboard/personal/[id]`, `/dashboard/publicaciones`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
+- **Endpoints:** BitacoraController, ConsultasCruzadasController, DenunciasController, DenunciasPublicasController, PublicacionesController, ServiciosController, VehiculosController
+- **Servicios:** BitacoraService, ConsultasCruzadasService, DenunciasService, PublicacionesService, ServiciosService, VehiculosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/007_servicios.sql`
@@ -70,14 +79,14 @@ Tabla servicios.servicios (30 columnas). Creada en 007_servicios.sql, modificada
 ## Referenciado por
 
 - [[table--servicios-comunicaciones-servicio|servicios.comunicaciones_servicio]] `references` →
+- [[table--denuncias-denuncias|denuncias.denuncias]] `references` →
 - [[entity--servicio|Servicio]] `persisted_in` →
+- [[service--denuncias-denuncias|DenunciasService]] `reads` →
+- [[service--guardias-bitacora|BitacoraService]] `reads` →
 - [[service--personal-consultas-cruzadas|ConsultasCruzadasService]] `reads` →
 - [[service--publicaciones-publicaciones|PublicacionesService]] `reads` →
 - [[service--servicios-servicios|ServiciosService]] `reads` →
-<<<<<<< Updated upstream
 - [[service--vehiculos-vehiculos|VehiculosService]] `reads` →
-=======
->>>>>>> Stashed changes
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

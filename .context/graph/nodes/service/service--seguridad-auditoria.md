@@ -40,20 +40,22 @@ Logica de negocio de auditoria (modulo seguridad).
 
 - [[service--auth-auth|AuthService]] `uses` →
 - [[service--configuracion-configuracion|ConfiguracionService]] `uses` →
-<<<<<<< Updated upstream
+- [[service--denuncias-denuncias|DenunciasService]] `uses` →
+- [[service--guardias-bitacora|BitacoraService]] `uses` →
+- [[service--guardias-generacion|GeneracionService]] `uses` →
 - [[service--guardias-grupos-guardia|GruposGuardiaService]] `uses` →
 - [[service--guardias-guardias|GuardiasService]] `uses` →
 - [[service--guardias-inspecciones-estacion|InspeccionesEstacionService]] `uses` →
+- [[service--guardias-inspecciones-movil|InspeccionesMovilService]] `uses` →
 - [[service--guardias-novedades|NovedadesService]] `uses` →
+- [[service--guardias-ordenes-guardia|OrdenesGuardiaService]] `uses` →
 - [[service--guardias-pernoctes|PernoctesService]] `uses` →
 - [[service--guardias-requisitos-rol|RequisitosRolService]] `uses` →
+- [[service--guardias-sorteos|SorteosService]] `uses` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `uses` →
-=======
-- [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `uses` →
-- [[service--operaciones-guardias|GuardiasService]] `uses` →
->>>>>>> Stashed changes
 - [[service--operaciones-importaciones|ImportacionesService]] `uses` →
 - [[service--operaciones-marcaciones|MarcacionesService]] `uses` →
+- [[service--organizacion-feriados|FeriadosService]] `uses` →
 - [[service--personal-bomberos|BomberosService]] `uses` →
 - [[service--seguridad-dashboard|DashboardService]] `uses` →
 - [[service--seguridad-permisos|PermisosService]] `uses` →

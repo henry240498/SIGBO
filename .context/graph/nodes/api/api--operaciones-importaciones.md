@@ -41,5 +41,10 @@ Superficie HTTP de importaciones bajo /api/v1/operaciones/importaciones.
 - `belongs_to` → [[domain--asistencia|Asistencia]]
 - `exposes` → [[service--operaciones-importaciones|ImportacionesService]]
 
+## Referenciado por
+
+- [[component--front-asistencia|asistencia]] `calls` →
+- [[component--front-asistencia|asistencia]] `calls` →
+
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

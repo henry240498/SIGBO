@@ -21,6 +21,15 @@ Entidad ConfiguracionVersion, persistida en seguridad.configuracion_versiones.
 - **Tabla:** [[table--seguridad-configuracion-versiones|seguridad.configuracion_versiones]]
 - **Columnas mapeadas:** 8
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/mi-perfil/preferencias`, `/dashboard/seguridad/configuracion`
+- **Endpoints:** ConfiguracionController
+- **Servicios:** ConfiguracionService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/configuracion-version.entity.ts`

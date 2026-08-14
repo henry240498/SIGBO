@@ -20,7 +20,7 @@ Modulo NestJS que cablea controladores, servicios y repositorios de guardias.
 
 ## Entidades registradas (forFeature)
 
-Guardia, AsignacionGuardia, CambioGuardia, GrupoGuardia, GrupoGuardiaMiembro, Pernocte, InspeccionEstacion, NovedadGuardia, RequisitoRolGuardia, Bombero, MarcacionAsistencia, Parametro, VehiculoAutorizado
+Guardia, AsignacionGuardia, CambioGuardia, GrupoGuardia, GrupoGuardiaMiembro, Pernocte, InspeccionEstacion, NovedadGuardia, RequisitoRolGuardia, EsquemaHorarioGuardia, Feriado, Rango, SorteoGuardia, SorteoParticipante, InspeccionMovil, Vehiculo, ChecklistItemVehiculo, Equipo, Servicio, EventoAsistencia, ParticipanteEvento, PrestamoEquipo, Bombero, MarcacionAsistencia, Parametro, Usuario, VehiculoAutorizado, OrdenGuardia, OrdenGuardiaConfiguracion, OrdenGuardiaModificacion, Cargo, Designacion
 
 ## Archivos
 
@@ -32,13 +32,20 @@ Guardia, AsignacionGuardia, CambioGuardia, GrupoGuardia, GrupoGuardiaMiembro, Pe
 
 ## Referenciado por
 
+- [[service--guardias-bitacora|BitacoraService]] `uses` →
 - [[service--guardias-elegibilidad|ElegibilidadService]] `uses` →
+- [[service--guardias-esquemas-horario|EsquemasHorarioService]] `uses` →
+- [[service--guardias-generacion|GeneracionService]] `uses` →
 - [[service--guardias-grupos-guardia|GruposGuardiaService]] `uses` →
 - [[service--guardias-guardias|GuardiasService]] `uses` →
 - [[service--guardias-inspecciones-estacion|InspeccionesEstacionService]] `uses` →
+- [[service--guardias-inspecciones-movil|InspeccionesMovilService]] `uses` →
 - [[service--guardias-novedades|NovedadesService]] `uses` →
+- [[service--guardias-orden-guardia-configuracion|OrdenGuardiaConfiguracionService]] `uses` →
+- [[service--guardias-ordenes-guardia|OrdenesGuardiaService]] `uses` →
 - [[service--guardias-pernoctes|PernoctesService]] `uses` →
 - [[service--guardias-requisitos-rol|RequisitosRolService]] `uses` →
+- [[service--guardias-sorteos|SorteosService]] `uses` →
 - [[rule--guardias-vive-en-operaciones|Guardias es un modulo propio cuyas tablas viven en el esquema operaciones]] `affects` →
 
 ---

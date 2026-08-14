@@ -21,6 +21,15 @@ Entidad AsignacionPermisoDirecto, persistida en seguridad.asignacion_permisos_di
 - **Tabla:** [[table--seguridad-asignacion-permisos-directos|seguridad.asignacion_permisos_directos]]
 - **Columnas mapeadas:** 5
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/mi-perfil`, `/dashboard/seguridad/permisos`, `/dashboard/seguridad/roles`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Endpoints:** MeController, PermisosController, UsuariosController
+- **Servicios:** PermisosService, PolicyEngineService, UsuariosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/asignacion-permiso-directo.entity.ts`

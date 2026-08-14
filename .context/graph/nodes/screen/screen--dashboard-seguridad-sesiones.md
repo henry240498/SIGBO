@@ -12,10 +12,7 @@ archivos:
 edges:
   - [belongs_to, domain--seguridad]
   - [uses, component--front-api]
-<<<<<<< Updated upstream
-=======
   - [uses, component--front-confirmprovider]
->>>>>>> Stashed changes
   - [calls, api--seguridad-sesiones]
   - [calls, api--seguridad-sesiones]
   - [calls, api--seguridad-usuarios]
@@ -42,10 +39,7 @@ Pantalla /dashboard/seguridad/sesiones, consume 3 endpoint(s).
 
 - `belongs_to` → [[domain--seguridad|Seguridad]]
 - `uses` → [[component--front-api|api]]
-<<<<<<< Updated upstream
-=======
 - `uses` → [[component--front-confirmprovider|ConfirmProvider]]
->>>>>>> Stashed changes
 - `calls` → [[api--seguridad-sesiones|SesionesController]]
 - `calls` → [[api--seguridad-sesiones|SesionesController]]
 - `calls` → [[api--seguridad-usuarios|UsuariosController]]

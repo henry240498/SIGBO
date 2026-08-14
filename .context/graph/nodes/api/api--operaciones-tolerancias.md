@@ -39,5 +39,9 @@ Superficie HTTP de tolerancias bajo /api/v1/operaciones/tolerancias.
 - `belongs_to` → [[domain--asistencia|Asistencia]]
 - `exposes` → [[service--operaciones-tolerancias|ToleranciasService]]
 
+## Referenciado por
+
+- [[component--front-asistencia|asistencia]] `calls` →
+
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

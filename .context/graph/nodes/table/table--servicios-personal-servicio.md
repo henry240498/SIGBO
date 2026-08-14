@@ -33,6 +33,15 @@ Tabla servicios.personal_servicio (6 columnas). Creada en 007_servicios.sql, mod
 | horas_servicio | INT |
 | observaciones | NVARCHAR(MAX) |
 
+## Donde se usa
+
+- **Pantallas:** — (sin pantalla que llegue hasta aca)
+- **Endpoints:** ConsultasCruzadasController
+- **Servicios:** ConsultasCruzadasService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/007_servicios.sql`

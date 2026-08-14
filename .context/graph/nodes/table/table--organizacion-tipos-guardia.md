@@ -37,6 +37,15 @@ Tabla organizacion.tipos_guardia (11 columnas). Creada en 012_organizacion.sql, 
 | creado_por | UNIQUEIDENTIFIER |
 | actualizado_por | UNIQUEIDENTIFIER |
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/organizacion/guardias`
+- **Endpoints:** TiposGuardiaController
+- **Servicios:** DashboardService, TiposGuardiaService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/012_organizacion.sql`

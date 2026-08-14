@@ -24,10 +24,7 @@ Modulo funcional "Equipos". Habilitado en la navegacion.
 
 - [[entity--categoria-equipo|CategoriaEquipo]] `belongs_to` →
 - [[entity--equipo|Equipo]] `belongs_to` →
-<<<<<<< Updated upstream
 - [[entity--mantenimiento-equipo|MantenimientoEquipo]] `belongs_to` →
-=======
->>>>>>> Stashed changes
 - [[entity--prestamo-equipo|PrestamoEquipo]] `belongs_to` →
 - [[table--equipos-categorias-equipo|equipos.categorias_equipo]] `belongs_to` →
 - [[table--equipos-equipos|equipos.equipos]] `belongs_to` →
@@ -40,12 +37,9 @@ Modulo funcional "Equipos". Habilitado en la navegacion.
 - [[api--equipos-categorias-equipo|CategoriasEquipoController]] `belongs_to` →
 - [[api--equipos-equipamiento-bombero|EquipamientoBomberoController]] `belongs_to` →
 - [[api--equipos-equipos|EquiposController]] `belongs_to` →
-<<<<<<< Updated upstream
 - [[screen--dashboard-equipos-categorias|/dashboard/equipos/categorias]] `belongs_to` →
 - [[screen--dashboard-equipos|/dashboard/equipos]] `belongs_to` →
 - [[screen--dashboard-equipos-id|/dashboard/equipos/[id]]] `belongs_to` →
-=======
->>>>>>> Stashed changes
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

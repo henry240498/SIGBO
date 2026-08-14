@@ -61,29 +61,6 @@
    "api--operaciones-participantes-externos"
   ]
  },
-<<<<<<< Updated upstream
-=======
- "asistencia:guardias_crear": {
-  "modulo": "asistencia",
-  "exigidoPor": [
-   "api--operaciones-guardias",
-   "screen--dashboard-asistencia-guardias"
-  ]
- },
- "asistencia:guardias_editar": {
-  "modulo": "asistencia",
-  "exigidoPor": [
-   "api--operaciones-guardias",
-   "screen--dashboard-asistencia-guardias-id"
-  ]
- },
- "asistencia:guardias_ver": {
-  "modulo": "asistencia",
-  "exigidoPor": [
-   "api--operaciones-guardias"
-  ]
- },
->>>>>>> Stashed changes
  "asistencia:importar_marcador": {
   "modulo": "asistencia",
   "exigidoPor": [
@@ -125,24 +102,37 @@
    "api--configuracion-configuracion"
   ]
  },
+ "denuncias:asignar": {
+  "modulo": "denuncias",
+  "exigidoPor": [
+   "api--denuncias-denuncias"
+  ]
+ },
+ "denuncias:configurar_categorias": {
+  "modulo": "denuncias",
+  "exigidoPor": [
+   "api--denuncias-denuncias"
+  ]
+ },
+ "denuncias:ver": {
+  "modulo": "denuncias",
+  "exigidoPor": [
+   "api--denuncias-denuncias"
+  ]
+ },
  "equipos:crear": {
   "modulo": "equipos",
   "exigidoPor": [
    "api--equipos-categorias-equipo",
-<<<<<<< Updated upstream
    "api--equipos-equipos",
    "screen--dashboard-equipos-categorias",
    "screen--dashboard-equipos"
-=======
-   "api--equipos-equipos"
->>>>>>> Stashed changes
   ]
  },
  "equipos:editar": {
   "modulo": "equipos",
   "exigidoPor": [
    "api--equipos-categorias-equipo",
-<<<<<<< Updated upstream
    "api--equipos-equipos",
    "screen--dashboard-equipos-categorias",
    "screen--dashboard-equipos-id"
@@ -159,8 +149,6 @@
  "equipos:mantenimiento": {
   "modulo": "equipos",
   "exigidoPor": [
-=======
->>>>>>> Stashed changes
    "api--equipos-equipos"
   ]
  },
@@ -168,10 +156,7 @@
   "modulo": "equipos",
   "exigidoPor": [
    "api--equipos-equipamiento-bombero",
-<<<<<<< Updated upstream
    "screen--dashboard-equipos-id",
-=======
->>>>>>> Stashed changes
    "screen--dashboard-personal-id"
   ]
  },
@@ -182,7 +167,6 @@
    "api--equipos-equipos"
   ]
  },
-<<<<<<< Updated upstream
  "guardias:asignar": {
   "modulo": "guardias",
   "exigidoPor": [
@@ -195,16 +179,21 @@
   "exigidoPor": [
    "api--guardias-grupos-guardia",
    "api--guardias-guardias",
+   "api--guardias-sorteos",
+   "screen--dashboard-guardias-generar",
    "screen--dashboard-guardias-grupos",
-   "screen--dashboard-guardias"
+   "screen--dashboard-guardias",
+   "screen--dashboard-guardias-sorteos-id"
   ]
  },
  "guardias:editar": {
   "modulo": "guardias",
   "exigidoPor": [
+   "api--guardias-bitacora",
    "api--guardias-grupos-guardia",
    "api--guardias-guardias",
    "api--guardias-inspecciones-estacion",
+   "api--guardias-inspecciones-movil",
    "api--guardias-novedades",
    "api--guardias-pernoctes",
    "screen--dashboard-guardias-grupos-id",
@@ -212,25 +201,96 @@
    "screen--dashboard-guardias-id"
   ]
  },
+ "guardias:eliminar": {
+  "modulo": "guardias",
+  "exigidoPor": [
+   "api--guardias-guardias",
+   "screen--dashboard-guardias-id"
+  ]
+ },
+ "guardias:ordenes_anular": {
+  "modulo": "guardias",
+  "exigidoPor": [
+   "api--guardias-ordenes-guardia",
+   "screen--dashboard-guardias-ordenes-id"
+  ]
+ },
+ "guardias:ordenes_aprobar": {
+  "modulo": "guardias",
+  "exigidoPor": [
+   "api--guardias-ordenes-guardia",
+   "screen--dashboard-guardias-ordenes-id"
+  ]
+ },
+ "guardias:ordenes_configurar": {
+  "modulo": "guardias",
+  "exigidoPor": [
+   "api--guardias-ordenes-guardia",
+   "screen--dashboard-guardias-ordenes"
+  ]
+ },
+ "guardias:ordenes_crear": {
+  "modulo": "guardias",
+  "exigidoPor": [
+   "api--guardias-ordenes-guardia",
+   "screen--dashboard-guardias-ordenes"
+  ]
+ },
+ "guardias:ordenes_editar": {
+  "modulo": "guardias",
+  "exigidoPor": [
+   "api--guardias-ordenes-guardia",
+   "screen--dashboard-guardias-ordenes-id"
+  ]
+ },
+ "guardias:ordenes_publicar": {
+  "modulo": "guardias",
+  "exigidoPor": [
+   "api--guardias-ordenes-guardia",
+   "screen--dashboard-guardias-ordenes-id"
+  ]
+ },
+ "guardias:ordenes_ver": {
+  "modulo": "guardias",
+  "exigidoPor": [
+   "api--guardias-ordenes-guardia"
+  ]
+ },
+ "guardias:reemplazar": {
+  "modulo": "guardias",
+  "exigidoPor": [
+   "screen--dashboard-guardias-id"
+  ]
+ },
  "guardias:requisitos": {
   "modulo": "guardias",
   "exigidoPor": [
+   "api--guardias-esquemas-horario",
    "api--guardias-requisitos-rol",
+   "screen--dashboard-guardias-esquemas-horario",
    "screen--dashboard-guardias-requisitos"
+  ]
+ },
+ "guardias:sorteos": {
+  "modulo": "guardias",
+  "exigidoPor": [
+   "api--guardias-sorteos",
+   "screen--dashboard-guardias-sorteos"
   ]
  },
  "guardias:ver": {
   "modulo": "guardias",
   "exigidoPor": [
+   "api--guardias-bitacora",
+   "api--guardias-esquemas-horario",
    "api--guardias-grupos-guardia",
    "api--guardias-guardias",
    "api--guardias-inspecciones-estacion",
+   "api--guardias-inspecciones-movil",
    "api--guardias-novedades",
    "api--guardias-pernoctes"
   ]
  },
-=======
->>>>>>> Stashed changes
  "organizacion:ascensos_anular": {
   "modulo": "organizacion",
   "exigidoPor": [
@@ -421,6 +481,33 @@
   "modulo": "organizacion",
   "exigidoPor": [
    "api--organizacion-especialidades"
+  ]
+ },
+ "organizacion:feriados_crear": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-feriados",
+   "screen--dashboard-organizacion-feriados"
+  ]
+ },
+ "organizacion:feriados_editar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-feriados",
+   "screen--dashboard-organizacion-feriados"
+  ]
+ },
+ "organizacion:feriados_eliminar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-feriados",
+   "screen--dashboard-organizacion-feriados"
+  ]
+ },
+ "organizacion:feriados_ver": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-feriados"
   ]
  },
  "organizacion:parametros_crear": {
@@ -781,7 +868,6 @@
    "api--servicios-servicios"
   ]
  },
-<<<<<<< Updated upstream
  "vehiculos:combustible": {
   "modulo": "vehiculos",
   "exigidoPor": [
@@ -811,15 +897,6 @@
   ]
  },
  "vehiculos:mantenimiento": {
-=======
- "vehiculos:crear": {
-  "modulo": "vehiculos",
-  "exigidoPor": [
-   "api--vehiculos-vehiculos"
-  ]
- },
- "vehiculos:editar": {
->>>>>>> Stashed changes
   "modulo": "vehiculos",
   "exigidoPor": [
    "api--vehiculos-vehiculos"
@@ -828,10 +905,7 @@
  "vehiculos:ver": {
   "modulo": "vehiculos",
   "exigidoPor": [
-<<<<<<< Updated upstream
    "api--vehiculos-checklist-items",
-=======
->>>>>>> Stashed changes
    "api--vehiculos-vehiculos"
   ]
  }

@@ -41,6 +41,15 @@ Tabla operaciones.inspecciones_estacion (7 columnas). Creada en 025_guardias.sql
 | responsable_id | UNIQUEIDENTIFIER |
 | creado_en | DATETIMEOFFSET(3) |
 
+## Donde se usa
+
+- **Pantallas:** — (sin pantalla que llegue hasta aca)
+- **Endpoints:** BitacoraController, InspeccionesEstacionController
+- **Servicios:** BitacoraService, InspeccionesEstacionService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/025_guardias.sql`
@@ -56,6 +65,7 @@ Tabla operaciones.inspecciones_estacion (7 columnas). Creada en 025_guardias.sql
 ## Referenciado por
 
 - [[entity--inspeccion-estacion|InspeccionEstacion]] `persisted_in` →
+- [[service--guardias-bitacora|BitacoraService]] `reads` →
 - [[service--guardias-inspecciones-estacion|InspeccionesEstacionService]] `reads` →
 
 ---

@@ -37,6 +37,15 @@ Tabla personal.historial_codigo (7 columnas). Creada en 016_personal_expansion.s
 | fecha_cambio | DATETIMEOFFSET(3) |
 | cambiado_por | UNIQUEIDENTIFIER |
 
+## Donde se usa
+
+- **Pantallas:** — (sin pantalla que llegue hasta aca)
+- **Endpoints:** BomberosController
+- **Servicios:** BomberosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/016_personal_expansion.sql`

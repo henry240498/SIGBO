@@ -38,6 +38,15 @@ Tabla operaciones.novedades_guardia (6 columnas). Creada en 025_guardias.sql.
 | texto | NVARCHAR(MAX) |
 | creado_en | DATETIMEOFFSET(3) |
 
+## Donde se usa
+
+- **Pantallas:** — (sin pantalla que llegue hasta aca)
+- **Endpoints:** BitacoraController, NovedadesController
+- **Servicios:** BitacoraService, NovedadesService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/025_guardias.sql`
@@ -52,6 +61,7 @@ Tabla operaciones.novedades_guardia (6 columnas). Creada en 025_guardias.sql.
 ## Referenciado por
 
 - [[entity--novedad-guardia|NovedadGuardia]] `persisted_in` →
+- [[service--guardias-bitacora|BitacoraService]] `reads` →
 - [[service--guardias-novedades|NovedadesService]] `reads` →
 
 ---

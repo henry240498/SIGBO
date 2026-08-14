@@ -32,6 +32,15 @@ Tabla seguridad.asignacion_permisos_rol (5 columnas). Creada en 002_seguridad.sq
 | fecha_asignacion | DATETIMEOFFSET(3) |
 | asignado_por | UNIQUEIDENTIFIER |
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/seguridad/permisos`, `/dashboard/seguridad/roles`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Endpoints:** PermisosController, RolesController
+- **Servicios:** PermisosService, PolicyEngineService, RolesService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/002_seguridad.sql`

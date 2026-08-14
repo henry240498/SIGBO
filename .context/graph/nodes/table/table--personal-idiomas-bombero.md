@@ -38,6 +38,15 @@ Tabla personal.idiomas_bombero (7 columnas). Creada en 016_personal_expansion.sq
 | idioma_id | UNIQUEIDENTIFIER |
 | nivel_idioma_id | UNIQUEIDENTIFIER |
 
+## Donde se usa
+
+- **Pantallas:** — (sin pantalla que llegue hasta aca)
+- **Endpoints:** FojaServicioController, IdiomasController
+- **Servicios:** FojaServicioService, IdiomasService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/016_personal_expansion.sql`

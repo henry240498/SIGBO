@@ -9,6 +9,7 @@
   "entity--departamento",
   "entity--designacion",
   "entity--especialidad",
+  "entity--feriado",
   "entity--parametro",
   "entity--rango",
   "entity--tipo-guardia",
@@ -27,6 +28,7 @@
   "table--organizacion-designaciones",
   "table--organizacion-ascensos",
   "table--organizacion-parametros",
+  "table--organizacion-feriados",
   "component--modulo-organizacion",
   "service--organizacion-ascensos",
   "service--organizacion-brigadas",
@@ -37,6 +39,7 @@
   "service--organizacion-departamentos",
   "service--organizacion-designaciones",
   "service--organizacion-especialidades",
+  "service--organizacion-feriados",
   "service--organizacion-parametros",
   "service--organizacion-rangos",
   "service--organizacion-tipos-guardia",
@@ -51,6 +54,7 @@
   "api--organizacion-departamentos",
   "api--organizacion-designaciones",
   "api--organizacion-especialidades",
+  "api--organizacion-feriados",
   "api--organizacion-parametros",
   "api--organizacion-rangos",
   "api--organizacion-tipos-guardia",
@@ -64,6 +68,7 @@
   "screen--dashboard-organizacion-departamentos",
   "screen--dashboard-organizacion-designaciones",
   "screen--dashboard-organizacion-especialidades",
+  "screen--dashboard-organizacion-feriados",
   "screen--dashboard-organizacion-guardias",
   "screen--dashboard-organizacion",
   "screen--dashboard-organizacion-parametros",
@@ -139,28 +144,26 @@
   "domain--asistencia",
   "entity--asignacion-guardia",
   "entity--cambio-guardia",
+  "entity--esquema-horario-guardia",
   "entity--evento-asistencia",
-<<<<<<< Updated upstream
   "entity--grupo-guardia-miembro",
   "entity--grupo-guardia",
   "entity--guardia",
   "entity--importacion-marcador-fila",
   "entity--importacion-marcador",
   "entity--inspeccion-estacion",
+  "entity--inspeccion-movil",
   "entity--marcacion-asistencia",
   "entity--novedad-guardia",
+  "entity--orden-guardia-configuracion",
+  "entity--orden-guardia-modificacion",
+  "entity--orden-guardia",
   "entity--participante-evento",
   "entity--participante-externo",
   "entity--pernocte",
   "entity--requisito-rol-guardia",
-=======
-  "entity--guardia",
-  "entity--importacion-marcador-fila",
-  "entity--importacion-marcador",
-  "entity--marcacion-asistencia",
-  "entity--participante-evento",
-  "entity--participante-externo",
->>>>>>> Stashed changes
+  "entity--sorteo-guardia",
+  "entity--sorteo-participante",
   "entity--tolerancia-asistencia",
   "table--operaciones-eventos-asistencia",
   "table--operaciones-marcaciones-asistencia",
@@ -172,32 +175,28 @@
   "table--operaciones-tolerancias-asistencia",
   "table--operaciones-importaciones-marcador",
   "table--operaciones-importaciones-marcador-filas",
-<<<<<<< Updated upstream
   "table--operaciones-grupos-guardia",
   "table--operaciones-grupos-guardia-miembros",
   "table--operaciones-pernoctes",
   "table--operaciones-inspecciones-estacion",
   "table--operaciones-novedades-guardia",
   "table--operaciones-requisitos-rol-guardia",
+  "table--operaciones-esquemas-horario-guardia",
+  "table--operaciones-sorteos-guardia",
+  "table--operaciones-sorteo-participantes",
+  "table--operaciones-inspecciones-movil",
+  "table--operaciones-orden-guardia-configuracion",
+  "table--operaciones-ordenes-guardia",
+  "table--operaciones-ordenes-guardia-modificaciones",
   "component--modulo-operaciones",
   "service--operaciones-dashboard-asistencia",
   "service--operaciones-eventos-asistencia",
-=======
-  "component--modulo-operaciones",
-  "service--operaciones-dashboard-asistencia",
-  "service--operaciones-eventos-asistencia",
-  "service--operaciones-guardias",
->>>>>>> Stashed changes
   "service--operaciones-importaciones",
   "service--operaciones-marcaciones",
   "service--operaciones-participantes-externos",
   "service--operaciones-tolerancias",
   "api--operaciones-dashboard-asistencia",
   "api--operaciones-eventos-asistencia",
-<<<<<<< Updated upstream
-=======
-  "api--operaciones-guardias",
->>>>>>> Stashed changes
   "api--operaciones-importaciones",
   "api--operaciones-marcaciones",
   "api--operaciones-participantes-externos",
@@ -206,11 +205,6 @@
   "screen--dashboard-asistencia-eventos",
   "screen--dashboard-asistencia-eventos-id",
   "screen--dashboard-asistencia-externos",
-<<<<<<< Updated upstream
-=======
-  "screen--dashboard-asistencia-guardias",
-  "screen--dashboard-asistencia-guardias-id",
->>>>>>> Stashed changes
   "screen--dashboard-asistencia",
   "screen--dashboard-asistencia-registro",
   "screen--dashboard-asistencia-tolerancias",
@@ -221,36 +215,52 @@
   "workflow--importacion-marcador"
  ],
  "guardias": [
-<<<<<<< Updated upstream
   "domain--guardias",
   "component--modulo-guardias",
+  "service--guardias-bitacora",
   "service--guardias-elegibilidad",
+  "service--guardias-esquemas-horario",
+  "service--guardias-generacion",
   "service--guardias-grupos-guardia",
   "service--guardias-guardias",
   "service--guardias-inspecciones-estacion",
+  "service--guardias-inspecciones-movil",
   "service--guardias-novedades",
+  "service--guardias-orden-guardia-configuracion",
+  "service--guardias-ordenes-guardia",
   "service--guardias-pernoctes",
   "service--guardias-requisitos-rol",
+  "service--guardias-sorteos",
+  "api--guardias-bitacora",
+  "api--guardias-esquemas-horario",
   "api--guardias-grupos-guardia",
   "api--guardias-guardias",
   "api--guardias-inspecciones-estacion",
+  "api--guardias-inspecciones-movil",
   "api--guardias-novedades",
+  "api--guardias-ordenes-guardia",
   "api--guardias-pernoctes",
   "api--guardias-requisitos-rol",
+  "api--guardias-sorteos",
   "screen--dashboard-guardias-auditoria",
+  "screen--dashboard-guardias-esquemas-horario",
+  "screen--dashboard-guardias-generar",
   "screen--dashboard-guardias-grupos",
   "screen--dashboard-guardias-grupos-id",
+  "screen--dashboard-guardias-ordenes-configuracion",
+  "screen--dashboard-guardias-ordenes-nueva",
+  "screen--dashboard-guardias-ordenes",
+  "screen--dashboard-guardias-ordenes-id",
   "screen--dashboard-guardias",
   "screen--dashboard-guardias-pernoctes",
   "screen--dashboard-guardias-requisitos",
+  "screen--dashboard-guardias-sorteos",
+  "screen--dashboard-guardias-sorteos-id",
   "screen--dashboard-guardias-id",
   "component--front-guardias",
   "rule--elegibilidad-de-rol-guardia",
   "rule--guardias-vive-en-operaciones",
   "workflow--guardia-y-pernocte"
-=======
-  "domain--guardias"
->>>>>>> Stashed changes
  ],
  "servicios": [
   "domain--servicios",
@@ -276,17 +286,13 @@
  ],
  "vehiculos": [
   "domain--vehiculos",
-<<<<<<< Updated upstream
   "entity--checklist-item-vehiculo",
   "entity--consumo-combustible",
   "entity--mantenimiento-vehiculo",
-=======
->>>>>>> Stashed changes
   "entity--vehiculo",
   "table--vehiculos-vehiculos",
   "table--vehiculos-mantenimientos-vehiculos",
   "table--vehiculos-consumos-combustible",
-<<<<<<< Updated upstream
   "table--vehiculos-checklist-items",
   "component--modulo-vehiculos",
   "service--vehiculos-checklist-items",
@@ -299,22 +305,12 @@
   "screen--dashboard-vehiculos",
   "screen--dashboard-vehiculos-id",
   "component--front-vehiculos"
-=======
-  "component--modulo-vehiculos",
-  "service--vehiculos-vehiculos-autorizados",
-  "service--vehiculos-vehiculos",
-  "api--vehiculos-vehiculos-autorizados",
-  "api--vehiculos-vehiculos"
->>>>>>> Stashed changes
  ],
  "equipos": [
   "domain--equipos",
   "entity--categoria-equipo",
   "entity--equipo",
-<<<<<<< Updated upstream
   "entity--mantenimiento-equipo",
-=======
->>>>>>> Stashed changes
   "entity--prestamo-equipo",
   "table--equipos-categorias-equipo",
   "table--equipos-equipos",
@@ -326,15 +322,11 @@
   "service--equipos-equipos",
   "api--equipos-categorias-equipo",
   "api--equipos-equipamiento-bombero",
-<<<<<<< Updated upstream
   "api--equipos-equipos",
   "screen--dashboard-equipos-categorias",
   "screen--dashboard-equipos",
   "screen--dashboard-equipos-id",
   "component--front-equipos"
-=======
-  "api--equipos-equipos"
->>>>>>> Stashed changes
  ],
  "academia": [
   "domain--academia",
@@ -372,6 +364,27 @@
   "api--publicaciones-publicaciones",
   "screen--dashboard-publicaciones",
   "component--front-publicaciones"
+ ],
+ "denuncias": [
+  "domain--denuncias",
+  "entity--categoria-denuncia",
+  "entity--denuncia",
+  "entity--evidencia-denuncia",
+  "entity--historial-estado-denuncia",
+  "table--denuncias-categorias-denuncia",
+  "table--denuncias-denuncias",
+  "table--denuncias-historial-estados-denuncia",
+  "table--denuncias-evidencias-denuncia",
+  "component--modulo-denuncias",
+  "service--denuncias-denuncias",
+  "api--denuncias-denuncias-publicas",
+  "api--denuncias-denuncias",
+  "screen--dashboard-denuncias",
+  "screen--dashboard-denuncias-id",
+  "screen--denuncias",
+  "decision--rate-limit-propio",
+  "rule--datos-tecnicos-de-denuncia-restringidos",
+  "workflow--denuncia-rapida"
  ],
  "seguridad": [
   "domain--seguridad",
@@ -430,11 +443,8 @@
   "api--seguridad-sesiones",
   "api--seguridad-usuarios",
   "screen--dashboard-mi-perfil",
-<<<<<<< Updated upstream
-=======
   "screen--dashboard-mi-perfil-preferencias",
   "screen--dashboard-mi-perfil-seguridad",
->>>>>>> Stashed changes
   "screen--dashboard",
   "screen--dashboard-seguridad-apariencia",
   "screen--dashboard-seguridad-auditoria",

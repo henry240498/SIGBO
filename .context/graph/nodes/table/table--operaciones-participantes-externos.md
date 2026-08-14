@@ -35,6 +35,15 @@ Tabla operaciones.participantes_externos (10 columnas). Creada en 020_asistencia
 | creado_en | DATETIMEOFFSET(3) |
 | creado_por | UNIQUEIDENTIFIER |
 
+## Donde se usa
+
+- **Pantallas:** `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
+- **Endpoints:** EventosAsistenciaController, MarcacionesController, ParticipantesExternosController
+- **Servicios:** EventosAsistenciaService, ParticipantesExternosService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `database/migrations/020_asistencia.sql`

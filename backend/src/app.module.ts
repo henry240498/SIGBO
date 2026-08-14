@@ -13,6 +13,7 @@ import { PublicacionesModule } from './modules/publicaciones/publicaciones.modul
 import { OperacionesModule } from './modules/operaciones/operaciones.module';
 import { GuardiasModule } from './modules/guardias/guardias.module';
 import { ConfiguracionModule } from './modules/configuracion/configuracion.module';
+import { DenunciasModule } from './modules/denuncias/denuncias.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ConfiguracionModule } from './modules/configuracion/configuracion.modul
     OperacionesModule,
     GuardiasModule,
     ConfiguracionModule,
+    DenunciasModule,
   ],
 })
 export class AppModule {}

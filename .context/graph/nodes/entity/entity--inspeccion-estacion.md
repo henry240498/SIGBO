@@ -25,6 +25,15 @@ Checklist de condicion de la estacion por guardia (seccion 10). `sector` referen
 
 - `EstadoInspeccionEstacion`: `OK` · `NO_OK`
 
+## Donde se usa
+
+- **Pantallas:** — (sin pantalla que llegue hasta aca)
+- **Endpoints:** BitacoraController, InspeccionesEstacionController
+- **Servicios:** BitacoraService, InspeccionesEstacionService
+
+<sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
+Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
+
 ## Archivos
 
 - `backend/src/shared/entities/inspeccion-estacion.entity.ts`
@@ -36,6 +45,7 @@ Checklist de condicion de la estacion por guardia (seccion 10). `sector` referen
 
 ## Referenciado por
 
+- [[service--guardias-bitacora|BitacoraService]] `uses` →
 - [[service--guardias-inspecciones-estacion|InspeccionesEstacionService]] `uses` →
 
 ---
