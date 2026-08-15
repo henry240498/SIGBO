@@ -12,10 +12,13 @@ import {
 import { CambiarEstadoComunicacionDto } from './dto/cambiar-estado-comunicacion.dto';
 import { GuardarComunicacionDto } from './dto/guardar-comunicacion.dto';
 import { generarPdfComunicacion } from './comunicacion-servicio.pdf';
+import { guardarBuffer } from '../../shared/utils/almacenamiento';
+import { DocumentosService } from '../documentos/documentos.service';
 
 type Formulario = Record<string, unknown>;
 
 const MAX_FORMULARIO_BYTES = 4 * 1024 * 1024;
+const CARPETA_COMUNICACIONES_SERVICIO = 'comunicaciones-servicio';
 const ESTADOS_EDITABLES: ComunicacionServicio['estado'][] = ['BORRADOR', 'OBSERVADO'];
 const TRANSICIONES: Record<ComunicacionServicio['estado'], ComunicacionServicio['estado'][]> = {
   BORRADOR: ['PENDIENTE_REVISION', 'FINALIZADA', 'ANULADO'],
@@ -52,6 +55,7 @@ export class ServiciosService {
     @InjectRepository(LogAuditoria) private readonly auditoriaRepo: Repository<LogAuditoria>,
     @InjectRepository(Bombero) private readonly bomberoRepo: Repository<Bombero>,
     @InjectRepository(Vehiculo) private readonly vehiculoRepo: Repository<Vehiculo>,
+    private readonly documentosService: DocumentosService,
   ) {}
 
   async listar() {
@@ -183,7 +187,7 @@ export class ServiciosService {
       const comunicacionRepo = manager.getRepository(ComunicacionServicio);
       const servicio = await servicioRepo.findOne({ where: { id: comunicacion.servicioId } });
       if (!servicio) throw new NotFoundException(`Servicio operativo ${comunicacion.servicioId} no encontrado`);
-      if (comunicacion.estado === 'FINALIZADA') return { comunicacion, servicio };
+      if (comunicacion.estado === 'FINALIZADA') return { comunicacion, servicio, yaFinalizada: true };
       this.asegurarTransicion(comunicacion.estado, 'FINALIZADA');
       const formulario = this.parsearDatos(comunicacion.datos);
       this.validarFinalizacion(comunicacion.tipo, formulario);
@@ -195,9 +199,39 @@ export class ServiciosService {
       const nuevaComunicacion = await comunicacionRepo.findOneByOrFail({ id });
       const nuevoServicio = await servicioRepo.findOneByOrFail({ id: servicio.id });
       await this.registrarAuditoria(manager, usuarioId, 'FINALIZAR', id, this.resumen(comunicacion), this.resumen(nuevaComunicacion));
-      return { comunicacion: nuevaComunicacion, servicio: nuevoServicio };
+      return { comunicacion: nuevaComunicacion, servicio: nuevoServicio, yaFinalizada: false };
     });
+
+    if (!finalizado.yaFinalizada) {
+      await this.registrarDocumentoComunicacion(finalizado.comunicacion, finalizado.servicio, usuarioId);
+    }
+
     return this.presentar(finalizado.comunicacion, finalizado.servicio);
+  }
+
+  /** Persiste el PDF oficial de la Comunicacion de Servicio y la registra
+   * en el modulo transversal Documentos (seccion 20 del pedido de
+   * Documentos: "hoy se genera al vuelo y se descarta, nunca queda
+   * archivada"). Se dispara una sola vez, al finalizar -- momento en que
+   * el contenido queda congelado. */
+  private async registrarDocumentoComunicacion(comunicacion: ComunicacionServicio, servicio: Servicio, usuarioId: string) {
+    const buffer = await generarPdfComunicacion(comunicacion, servicio, this.parsearDatos(comunicacion.datos));
+    const archivoUrl = await guardarBuffer(buffer, '.pdf', CARPETA_COMUNICACIONES_SERVICIO);
+    await this.documentosService.registrarDesdeOtroModulo(
+      {
+        tipoDocumentoNombre: 'Informe',
+        categoriaDocumentoNombre: 'Operativo',
+        titulo: `Comunicacion de Servicio N° ${servicio.numeroServicio}`,
+        fechaEmision: new Date().toISOString().slice(0, 10),
+        archivoUrl,
+        archivoNombreOriginal: `comunicacion-${servicio.numeroServicio}.pdf`,
+        archivoExtension: 'pdf',
+        generadoPorModulo: 'servicios',
+        estadoNombre: 'Publicado',
+        relaciones: [{ modulo: 'servicios', entidad: 'servicio', registroId: servicio.id, etiqueta: 'Comunicacion de Servicio' }],
+      },
+      usuarioId,
+    );
   }
 
   enviarRevision(id: string, dto: CambiarEstadoComunicacionDto, usuarioId: string) {

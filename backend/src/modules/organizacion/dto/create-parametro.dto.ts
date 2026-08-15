@@ -14,6 +14,18 @@ const TIPOS_PARAMETRO = [
   'FACTOR_RH',
   'TIPO_SEGURO',
   'ASEGURADORA',
+  // Estos 4 ya existian en el enum de la entidad y en la restriccion CHECK
+  // de la base, pero faltaban aca -- creaba un parametro de estos tipos
+  // fallaba la validacion del DTO aunque la base lo permitia.
+  'TIPO_EVENTO_ASISTENCIA',
+  'UBICACION_EQUIPO',
+  'ESTADO_PRESENCIA_GUARDIA',
+  'SECTOR_ESTACION',
+  // Modulo Academia
+  'TIPO_ACTIVIDAD_ACADEMICA',
+  'MODALIDAD_ACADEMICA',
+  'TIPO_EVALUACION_ACADEMICA',
+  'RESULTADO_ACADEMICO',
 ];
 
 export class CreateParametroDto {

@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {
+  ActividadAcademica,
   ActividadProfesional,
   Bombero,
   BomberoEspecialidad,
@@ -13,6 +14,7 @@ import {
   FojaServicio,
   HistorialInstitucional,
   IdiomaBombero,
+  InscripcionActividadAcademica,
   Parametro,
   Rango,
 } from '../../shared/entities';
@@ -39,6 +41,8 @@ export class FojaServicioService {
     @InjectRepository(Designacion) private readonly designacionRepo: Repository<Designacion>,
     @InjectRepository(FojaServicio) private readonly fojaRepo: Repository<FojaServicio>,
     @InjectRepository(Parametro) private readonly parametroRepo: Repository<Parametro>,
+    @InjectRepository(InscripcionActividadAcademica) private readonly inscripcionAcademiaRepo: Repository<InscripcionActividadAcademica>,
+    @InjectRepository(ActividadAcademica) private readonly actividadAcademicaRepo: Repository<ActividadAcademica>,
   ) {}
 
   private async armarSnapshot(bomberoId: string, anio: number): Promise<FojaServicioSnapshot> {
@@ -61,6 +65,24 @@ export class FojaServicioService {
     const mapaEspecialidades = new Map(especialidadesCatalogo.map((e) => [e.id, e]));
 
     const certificaciones = await this.certificacionRepo.find({ where: { bomberoId }, order: { fechaObtencion: 'DESC' } });
+    const inscripcionesAcademia = await this.inscripcionAcademiaRepo.find({ where: { bomberoId } });
+    const actividadesAcademicasCatalogo = inscripcionesAcademia.length
+      ? await this.actividadAcademicaRepo
+          .createQueryBuilder('a')
+          .where('a.id IN (:...ids)', { ids: inscripcionesAcademia.map((i) => i.actividadId) })
+          .getMany()
+      : [];
+    const mapaActividadesAcademicas = new Map(actividadesAcademicasCatalogo.map((a) => [a.id, a]));
+    const resultadoAcademiaIds = [...new Set(inscripcionesAcademia.map((i) => i.resultadoFinalId).filter((id): id is string => !!id))];
+    const resultadosAcademia = resultadoAcademiaIds.length
+      ? await this.parametroRepo.createQueryBuilder('p').where('p.id IN (:...ids)', { ids: resultadoAcademiaIds }).getMany()
+      : [];
+    const mapaResultadosAcademia = new Map(resultadosAcademia.map((r) => [r.id, r.nombre]));
+    const tipoActividadIds = [...new Set(actividadesAcademicasCatalogo.map((a) => a.tipoActividadId))];
+    const tiposActividadAcademica = tipoActividadIds.length
+      ? await this.parametroRepo.createQueryBuilder('p').where('p.id IN (:...ids)', { ids: tipoActividadIds }).getMany()
+      : [];
+    const mapaTiposActividadAcademica = new Map(tiposActividadAcademica.map((t) => [t.id, t.nombre]));
     const actividadProfesional = await this.actividadProfesionalRepo.findOne({ where: { bomberoId } });
     const idiomas = await this.idiomaRepo.find({ where: { bomberoId } });
     const movimientos = await this.historialRepo.find({ where: { bomberoId }, order: { fecha: 'DESC' } });
@@ -146,6 +168,21 @@ export class FojaServicioService {
         fecha: c.fechaObtencion,
         duracionHoras: c.duracionHoras,
       })),
+      actividadesAcademicas: inscripcionesAcademia
+        .map((i) => {
+          const actividad = mapaActividadesAcademicas.get(i.actividadId);
+          if (!actividad) return null;
+          return {
+            nombre: actividad.nombre,
+            tipo: mapaTiposActividadAcademica.get(actividad.tipoActividadId) ?? null,
+            fechaInicio: actividad.fechaInicio,
+            fechaFin: actividad.fechaFin,
+            estado: i.estado,
+            resultado: i.resultadoFinalId ? (mapaResultadosAcademia.get(i.resultadoFinalId) ?? null) : null,
+          };
+        })
+        .filter((x): x is NonNullable<typeof x> => x !== null)
+        .sort((a, b) => (a.fechaInicio < b.fechaInicio ? 1 : -1)),
       idiomas: idiomas.map((i) => ({
         idioma: nombreParametro(i.idiomaId) ?? '(parametro eliminado)',
         nivel: nombreParametro(i.nivelIdiomaId),

@@ -49,4 +49,9 @@ export class EventoAsistencia {
   /** Campo preparado para multi-institucion futura; sin scoping real aun. */
   @Column({ type: 'uniqueidentifier', nullable: true })
   institucionId: string | null;
+
+  /** Si el evento es una sesion/jornada de una actividad academica, enlaza
+   * con ella. Null para guardias, reuniones u otros eventos no academicos. */
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  actividadAcademicaId: string | null;
 }

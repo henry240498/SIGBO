@@ -60,5 +60,6 @@ import { ImportacionesController } from './importaciones.controller';
     DashboardAsistenciaService,
     ImportacionesService,
   ],
+  exports: [EventosAsistenciaService],
 })
 export class OperacionesModule {}

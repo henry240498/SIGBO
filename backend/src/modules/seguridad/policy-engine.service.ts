@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import {
   AsignacionPermisoDirecto,
   AsignacionPermisoRol,
   AsignacionRol,
   Permiso,
+  Rol,
 } from '../../shared/entities';
 
 @Injectable()
@@ -17,12 +18,21 @@ export class PolicyEngineService {
     @InjectRepository(AsignacionPermisoDirecto)
     private readonly asignacionPermisoDirectoRepo: Repository<AsignacionPermisoDirecto>,
     @InjectRepository(Permiso) private readonly permisoRepo: Repository<Permiso>,
+    @InjectRepository(Rol) private readonly rolRepo: Repository<Rol>,
   ) {}
 
   /**
    * Calcula el conjunto efectivo de permisos de un usuario: union de permisos
    * de todos sus roles vigentes, mas los permisos directos concedidos,
    * menos los permisos directos denegados explicitamente (concedido = false).
+   *
+   * Si alguno de los roles vigentes tiene `accesoTotal`, se devuelve el
+   * catalogo COMPLETO de permisos existentes directamente -- sin pasar por
+   * asignacion_permisos_rol -- para que ese rol nunca quede desactualizado
+   * cuando una migracion agrega un permiso nuevo y olvida asignarselo (esto
+   * ya paso una vez con publicaciones/denuncias). No aplican denegaciones
+   * directas sobre un rol de acceso total: si a alguien no le corresponde
+   * ver todo, no debe tener ese rol.
    */
   async getPermisosEfectivos(usuarioId: string): Promise<string[]> {
     const ahora = new Date();
@@ -31,6 +41,14 @@ export class PolicyEngineService {
     const rolesVigentes = asignacionesRol
       .filter((a) => !a.fechaExpiracion || a.fechaExpiracion > ahora)
       .map((a) => a.rolId);
+
+    if (rolesVigentes.length > 0) {
+      const tieneAccesoTotal = await this.rolRepo.exist({ where: { id: In(rolesVigentes), accesoTotal: true } });
+      if (tieneAccesoTotal) {
+        const todos = await this.permisoRepo.find();
+        return todos.map((p) => p.nombre);
+      }
+    }
 
     const permisoMap = new Map<string, Permiso>();
 

@@ -1,0 +1,233 @@
+'use client';
+
+import { useEffect, useMemo, useState } from 'react';
+import { obtenerSesion } from '@/lib/api';
+import { ComboBuscable } from '@/components/ComboBuscable';
+import {
+  CategoriaArticulo,
+  actualizarCategoriaArticulo,
+  cargarCategoriasArticulo,
+  crearCategoriaArticulo,
+  eliminarCategoriaArticulo,
+} from '@/lib/deposito';
+
+export default function CategoriasArticuloPage() {
+  const [categorias, setCategorias] = useState<CategoriaArticulo[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [mensaje, setMensaje] = useState<string | null>(null);
+  const [mostrarForm, setMostrarForm] = useState(false);
+  const [guardando, setGuardando] = useState(false);
+  const [editandoId, setEditandoId] = useState<string | null>(null);
+
+  const [q, setQ] = useState('');
+
+  const [codigo, setCodigo] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+  const [padreId, setPadreId] = useState('');
+  const [activo, setActivo] = useState(true);
+
+  const permisos = obtenerSesion()?.usuario.permisos ?? [];
+  const puedeCrear = permisos.includes('deposito:crear');
+  const puedeEditar = permisos.includes('deposito:editar');
+  const puedeEliminar = permisos.includes('deposito:eliminar');
+
+  const opcionesPadre = useMemo(
+    () => (categorias ?? []).filter((c) => c.id !== editandoId).map((c) => ({ value: c.id, label: c.nombre })),
+    [categorias, editandoId],
+  );
+  const nombrePorId = useMemo(() => new Map((categorias ?? []).map((c) => [c.id, c.nombre])), [categorias]);
+
+  async function cargar() {
+    try {
+      setCategorias(await cargarCategoriasArticulo(q || undefined));
+    } catch (err: any) {
+      setError(err.message);
+    }
+  }
+
+  useEffect(() => {
+    cargar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q]);
+
+  function limpiarForm() {
+    setCodigo('');
+    setNombre('');
+    setDescripcion('');
+    setPadreId('');
+    setActivo(true);
+    setEditandoId(null);
+  }
+
+  function editar(c: CategoriaArticulo) {
+    setEditandoId(c.id);
+    setCodigo(c.codigo ?? '');
+    setNombre(c.nombre);
+    setDescripcion(c.descripcion ?? '');
+    setPadreId(c.padreId ?? '');
+    setActivo(c.activo);
+    setMostrarForm(true);
+  }
+
+  async function guardar(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setMensaje(null);
+    setGuardando(true);
+    try {
+      const payload = {
+        codigo: codigo || undefined,
+        nombre,
+        descripcion: descripcion || undefined,
+        padreId: padreId || undefined,
+        activo,
+      };
+      if (editandoId) {
+        await actualizarCategoriaArticulo(editandoId, payload);
+        setMensaje('Categoria actualizada.');
+      } else {
+        await crearCategoriaArticulo(payload);
+        setMensaje('Categoria creada.');
+      }
+      limpiarForm();
+      setMostrarForm(false);
+      await cargar();
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setGuardando(false);
+    }
+  }
+
+  async function eliminar(c: CategoriaArticulo) {
+    if (!window.confirm(`¿Eliminar la categoria "${c.nombre}"?`)) return;
+    setError(null);
+    try {
+      await eliminarCategoriaArticulo(c.id);
+      setMensaje('Categoria eliminada.');
+      await cargar();
+    } catch (err: any) {
+      setError(err.message);
+    }
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h2 style={{ fontSize: 16 }}>Categorias de articulo ({categorias?.length ?? 0})</h2>
+        {puedeCrear && (
+          <button
+            className="btn-primary"
+            onClick={() => {
+              limpiarForm();
+              setMostrarForm(!mostrarForm);
+            }}
+          >
+            {mostrarForm ? 'Cancelar' : '+ Nueva categoria'}
+          </button>
+        )}
+      </div>
+
+      <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end' }}>
+        <div style={{ flex: 1 }}>
+          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Buscar</label>
+          <input className="input-field" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nombre o codigo..." />
+        </div>
+      </div>
+
+      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+
+      {mostrarForm && (
+        <form onSubmit={guardar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gap: 10 }}>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo</label>
+              <input className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria padre</label>
+              <ComboBuscable opciones={opcionesPadre} value={padreId} onChange={setPadreId} ningunaLabel="Sin categoria padre" />
+            </div>
+          </div>
+          <div>
+            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+          </div>
+          <label style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <input type="checkbox" checked={activo} onChange={(e) => setActivo(e.target.checked)} />
+            Activa
+          </label>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+              {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear categoria'}
+            </button>
+            {editandoId && (
+              <button
+                type="button"
+                className="btn-primary"
+                style={{ background: '#475569' }}
+                onClick={() => {
+                  limpiarForm();
+                  setMostrarForm(false);
+                }}
+              >
+                Cancelar
+              </button>
+            )}
+          </div>
+        </form>
+      )}
+
+      {categorias && categorias.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay categorias registradas.</p>}
+      {categorias && categorias.length > 0 && (
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+          <thead>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
+              <th style={{ padding: '6px 4px' }}>Codigo</th>
+              <th style={{ padding: '6px 4px' }}>Nombre</th>
+              <th style={{ padding: '6px 4px' }}>Categoria padre</th>
+              <th style={{ padding: '6px 4px' }}>Estado</th>
+              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {categorias.map((c) => (
+              <tr key={c.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <td style={{ padding: '6px 4px' }}>{c.codigo ?? '-'}</td>
+                <td style={{ padding: '6px 4px' }}>{c.nombre}</td>
+                <td style={{ padding: '6px 4px' }}>{c.padreId ? nombrePorId.get(c.padreId) ?? '-' : '-'}</td>
+                <td style={{ padding: '6px 4px' }}>
+                  <span className="badge" style={{ background: c.activo ? '#166534' : '#7f1d1d', color: c.activo ? '#4ade80' : '#f87171' }}>
+                    {c.activo ? 'ACTIVA' : 'INACTIVA'}
+                  </span>
+                </td>
+                <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                  {puedeEditar && (
+                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(c)}>
+                      Editar
+                    </button>
+                  )}
+                  {puedeEliminar && (
+                    <button
+                      className="btn-primary"
+                      style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
+                      onClick={() => eliminar(c)}
+                    >
+                      Eliminar
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+}

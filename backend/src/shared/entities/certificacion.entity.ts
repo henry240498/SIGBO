@@ -48,6 +48,12 @@ export class Certificacion {
   @Column({ type: 'nvarchar', length: 150, nullable: true })
   instructor: string | null;
 
+  /** Si el certificado corresponde a una actividad interna registrada en
+   * Academia, enlaza con ella. Null para certificaciones externas/sueltas
+   * (seccion 18 del pedido: capacitacion externa). */
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  actividadAcademicaId: string | null;
+
   @CreateDateColumn({ name: 'creado_en', type: 'datetimeoffset', precision: 3 })
   creadoEn: Date;
 

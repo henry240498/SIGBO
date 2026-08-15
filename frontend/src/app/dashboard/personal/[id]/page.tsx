@@ -7,6 +7,15 @@ import { apiFetch, API_ORIGIN, obtenerSesion } from '@/lib/api';
 import { cargarParametros, obtenerParametro, resolverNombres, Parametro, TipoParametro } from '@/lib/parametros';
 import { HistorialAsignacion, cargarHistorialGuardiasPersonal } from '@/lib/guardias';
 import { subirFirmaDigital, eliminarFirmaDigital, cambiarAutorizacionFirma } from '@/lib/personal';
+import {
+  Certificacion,
+  TipoCertificacion,
+  cargarCertificacionesDeBombero,
+  crearCertificacion,
+  eliminarCertificacion,
+} from '@/lib/academia';
+import { EquipamientoDeBomberoItem, cargarEquipamientoDeBombero } from '@/lib/deposito';
+import { DocumentosDeEntidad } from '@/components/DocumentosDeEntidad';
 
 /* ------------------------------------------------------------------ */
 /* Tipos                                                                */
@@ -276,7 +285,7 @@ export default function ExpedienteBomberoPage() {
         {seccion === 'vehiculos' && <TabVehiculos bomberoId={id} puedeEditar={puedeEditar} />}
         {seccion === 'salud' && <TabSalud bombero={bombero} puedeEditar={puedeEditar} onGuardado={cargarBombero} />}
         {seccion === 'firma-digital' && <TabFirmaDigital bombero={bombero} onGuardado={cargarBombero} />}
-        {seccion === 'documentos' && <TabDocumentos />}
+        {seccion === 'documentos' && <TabDocumentos bomberoId={id} />}
         {seccion === 'foja' && <TabFoja bomberoId={id} puedeEditar={puedeEditar} />}
         {seccion === 'timeline' && <TabTimeline bomberoId={id} />}
         {seccion === 'auditoria' && <TabAuditoria bomberoId={id} />}
@@ -879,30 +888,31 @@ function TabTipoBombero({
   onGuardado: () => void;
 }) {
   const [tipoBomberoId, setTipoBomberoId] = useState(bombero.tipoBomberoId ?? '');
-  const [nuevoNumero, setNuevoNumero] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
   const [guardando, setGuardando] = useState(false);
 
+  const [codigo, setCodigo] = useState(bombero.numeroBombero);
+  const [errorCodigo, setErrorCodigo] = useState<string | null>(null);
+  const [mensajeCodigo, setMensajeCodigo] = useState<string | null>(null);
+  const [guardandoCodigo, setGuardandoCodigo] = useState(false);
+
   const tipoActual = tipos.find((t) => t.id === bombero.tipoBomberoId);
-  const tipoSeleccionado = tipos.find((t) => t.id === tipoBomberoId);
 
   async function guardar() {
     setGuardando(true);
     setError(null);
     setMensaje(null);
     try {
-      const payload: Record<string, unknown> = { tipoBomberoId: tipoBomberoId || null };
-      if (nuevoNumero.trim() && tipoSeleccionado) {
-        payload.numeroBombero = `${tipoSeleccionado.prefijo}${nuevoNumero.trim()}`;
-      }
-      const res = await apiFetch(`/personal/bomberos/${bombero.id}`, { method: 'PATCH', body: JSON.stringify(payload) });
+      const res = await apiFetch(`/personal/bomberos/${bombero.id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ tipoBomberoId: tipoBomberoId || null }),
+      });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
         throw new Error(Array.isArray(body.message) ? body.message.join(', ') : body.message ?? 'No se pudo guardar');
       }
       setMensaje('Tipo de bombero actualizado');
-      setNuevoNumero('');
       onGuardado();
     } catch (err: any) {
       setError(err.message);
@@ -911,10 +921,33 @@ function TabTipoBombero({
     }
   }
 
+  async function guardarCodigo() {
+    setGuardandoCodigo(true);
+    setErrorCodigo(null);
+    setMensajeCodigo(null);
+    try {
+      const nuevoCodigo = codigo.trim();
+      if (!nuevoCodigo) throw new Error('El codigo no puede quedar vacio');
+      const res = await apiFetch(`/personal/bomberos/${bombero.id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ numeroBombero: nuevoCodigo }),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(Array.isArray(body.message) ? body.message.join(', ') : body.message ?? 'No se pudo guardar');
+      }
+      setMensajeCodigo('Codigo bomberil actualizado');
+      onGuardado();
+    } catch (err: any) {
+      setErrorCodigo(err.message);
+    } finally {
+      setGuardandoCodigo(false);
+    }
+  }
+
   return (
     <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 500 }}>
       {campoTexto('Tipo de bombero actual', tipoActual ? `${tipoActual.prefijo} - ${tipoActual.nombre}` : 'Sin asignar')}
-      {campoTexto('Codigo bomberil actual', bombero.numeroBombero)}
 
       {puedeEditar && (
         <>
@@ -929,30 +962,40 @@ function TabTipoBombero({
               ))}
             </select>
           </div>
-          <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>
-              Nuevo codigo (opcional - dejar vacio para no cambiar el codigo actual)
-            </label>
-            <input
-              className="input-field"
-              value={nuevoNumero}
-              onChange={(e) => setNuevoNumero(e.target.value)}
-              placeholder="045"
-            />
-            {tipoSeleccionado && nuevoNumero && (
-              <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 4 }}>
-                Nuevo codigo resultante: {tipoSeleccionado.prefijo}
-                {nuevoNumero}
-              </p>
-            )}
-          </div>
           {error && <p style={{ color: '#f87171' }}>{error}</p>}
           {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
           <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando} onClick={guardar}>
-            {guardando ? 'Guardando...' : 'Guardar'}
+            {guardando ? 'Guardando...' : 'Guardar tipo'}
           </button>
         </>
       )}
+
+      <div style={{ borderTop: '1px solid #334155', paddingTop: 12 }}>
+        {campoTexto('Codigo bomberil actual', bombero.numeroBombero)}
+        {puedeEditar && (
+          <>
+            <label style={{ fontSize: 12, display: 'block', margin: '8px 0 4px' }}>
+              Nuevo codigo (se puede tipear libremente, no depende del tipo seleccionado)
+            </label>
+            <input
+              className="input-field"
+              value={codigo}
+              onChange={(e) => setCodigo(e.target.value)}
+              placeholder="BVCF-01"
+            />
+            {errorCodigo && <p style={{ color: '#f87171', marginTop: 6 }}>{errorCodigo}</p>}
+            {mensajeCodigo && <p style={{ color: '#4ade80', fontSize: 13, marginTop: 6 }}>{mensajeCodigo}</p>}
+            <button
+              className="btn-primary"
+              style={{ alignSelf: 'flex-start', marginTop: 8 }}
+              disabled={guardandoCodigo || codigo.trim() === bombero.numeroBombero}
+              onClick={guardarCodigo}
+            >
+              {guardandoCodigo ? 'Guardando...' : 'Guardar codigo'}
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 }
@@ -1464,27 +1507,258 @@ function TabCondicion({ bomberoId, puedeEditar, onGuardado }: { bomberoId: strin
 }
 
 /* ------------------------------------------------------------------ */
-/* Formacion (solo lectura - modulo Academia no implementado)           */
+/* Formacion / Historial Academico (modulo Academia)                    */
 /* ------------------------------------------------------------------ */
 
+interface FormacionAcademica {
+  inscripcionId: string;
+  actividadId: string;
+  nombreActividad: string | null;
+  fechaInicio: string | null;
+  fechaFin: string | null;
+  estado: string;
+  resultadoFinal: string | null;
+}
+
+const TIPOS_CERTIFICACION: TipoCertificacion[] = ['BASICO', 'INTERMEDIO', 'AVANZADO', 'ESPECIALIDAD', 'CURSO', 'SEMINARIO', 'TALLER', 'ENTRENAMIENTO'];
+
+const CERT_VACIO = {
+  tipo: 'CURSO' as TipoCertificacion,
+  nombre: '',
+  institucion: '',
+  fechaObtencion: '',
+  fechaVencimiento: '',
+  numeroCertificado: '',
+  duracionHoras: '',
+  instructor: '',
+};
+
 function TabFormacion({ bomberoId }: { bomberoId: string }) {
-  const [items, setItems] = useState<any[] | null>(null);
+  const [actividades, setActividades] = useState<FormacionAcademica[] | null>(null);
+  const [certificaciones, setCertificaciones] = useState<Certificacion[] | null>(null);
+  const [mostrarForm, setMostrarForm] = useState(false);
+  const [form, setForm] = useState(CERT_VACIO);
+  const [archivo, setArchivo] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [guardando, setGuardando] = useState(false);
+
+  async function cargar() {
+    try {
+      const [resAct, certs] = await Promise.all([
+        apiFetch(`/personal/bomberos/${bomberoId}/formacion-academia`),
+        cargarCertificacionesDeBombero(bomberoId),
+      ]);
+      setActividades(resAct.ok ? await resAct.json() : []);
+      setCertificaciones(certs);
+    } catch (err: any) {
+      setError(err.message);
+    }
+  }
 
   useEffect(() => {
-    apiFetch(`/personal/bomberos/${bomberoId}/formacion-academia`)
-      .then(async (res) => (res.ok ? setItems(await res.json()) : setItems([])))
-      .catch(() => setItems([]));
+    cargar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bomberoId]);
 
+  async function agregarCertificacion(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setGuardando(true);
+    try {
+      await crearCertificacion(
+        {
+          bomberoId,
+          tipo: form.tipo,
+          nombre: form.nombre,
+          institucion: form.institucion || undefined,
+          fechaObtencion: form.fechaObtencion,
+          fechaVencimiento: form.fechaVencimiento || undefined,
+          numeroCertificado: form.numeroCertificado || undefined,
+          duracionHoras: form.duracionHoras ? Number(form.duracionHoras) : undefined,
+          instructor: form.instructor || undefined,
+        },
+        archivo ?? undefined,
+      );
+      setForm(CERT_VACIO);
+      setArchivo(null);
+      setMostrarForm(false);
+      await cargar();
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setGuardando(false);
+    }
+  }
+
+  async function quitarCertificacion(id: string) {
+    if (!window.confirm('Eliminar esta certificacion?')) return;
+    setError(null);
+    try {
+      await eliminarCertificacion(id);
+      await cargar();
+    } catch (err: any) {
+      setError(err.message);
+    }
+  }
+
   return (
-    <div className="card">
-      {items && items.length === 0 && (
-        <p style={{ color: '#94a3b8', fontSize: 13 }}>
-          Sin cursos registrados. El modulo de Academia (formacion/capacitacion) todavia no esta implementado en el
-          sistema.
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div className="card">
+        <h3 style={{ fontSize: 14, marginBottom: 10 }}>Actividades académicas ({actividades?.length ?? 0})</h3>
+        <p style={{ fontSize: 12, color: '#94a3b8', marginBottom: 10 }}>
+          Inscripciones a cursos, capacitaciones y otras actividades del módulo Academia.
         </p>
-      )}
-      {items && items.length > 0 && <pre style={{ fontSize: 12 }}>{JSON.stringify(items, null, 2)}</pre>}
+        {actividades && actividades.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin actividades académicas registradas.</p>}
+        {actividades && actividades.length > 0 && (
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+            <thead>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
+                <th style={{ padding: '6px 4px' }}>Actividad</th>
+                <th style={{ padding: '6px 4px' }}>Periodo</th>
+                <th style={{ padding: '6px 4px' }}>Estado</th>
+                <th style={{ padding: '6px 4px' }}>Resultado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {actividades.map((a) => (
+                <tr key={a.inscripcionId} style={{ borderBottom: '1px solid #1f2937' }}>
+                  <td style={{ padding: '6px 4px' }}>
+                    <Link href={`/dashboard/academia/${a.actividadId}`} style={{ color: '#60a5fa' }}>
+                      {a.nombreActividad ?? '(actividad eliminada)'}
+                    </Link>
+                  </td>
+                  <td style={{ padding: '6px 4px', color: '#94a3b8' }}>
+                    {a.fechaInicio} - {a.fechaFin}
+                  </td>
+                  <td style={{ padding: '6px 4px' }}>
+                    <span className="badge">{a.estado}</span>
+                  </td>
+                  <td style={{ padding: '6px 4px' }}>{a.resultadoFinal ?? '-'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+
+      <div className="card">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+          <h3 style={{ fontSize: 14 }}>Certificaciones ({certificaciones?.length ?? 0})</h3>
+          <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
+            {mostrarForm ? 'Cancelar' : '+ Cargar certificado'}
+          </button>
+        </div>
+        <p style={{ fontSize: 12, color: '#94a3b8', marginBottom: 10 }}>
+          SIGBO no certifica automáticamente por participar en una actividad: el bombero (o quien tenga el permiso
+          correspondiente) es responsable de registrar y adjuntar su certificado.
+        </p>
+
+        {mostrarForm && (
+          <form onSubmit={agregarCertificacion} style={{ display: 'flex', flexDirection: 'column', gap: 10, borderBottom: '1px solid #334155', paddingBottom: 14, marginBottom: 10 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gap: 10 }}>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
+                <select className="input-field" value={form.tipo} onChange={(e) => setForm({ ...form, tipo: e.target.value as TipoCertificacion })}>
+                  {TIPOS_CERTIFICACION.map((t) => (
+                    <option key={t} value={t}>
+                      {t}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+                <input className="input-field" value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} required />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Institución</label>
+                <input className="input-field" value={form.institucion} onChange={(e) => setForm({ ...form, institucion: e.target.value })} />
+              </div>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha obtención</label>
+                <input className="input-field" type="date" value={form.fechaObtencion} onChange={(e) => setForm({ ...form, fechaObtencion: e.target.value })} required />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Vencimiento</label>
+                <input className="input-field" type="date" value={form.fechaVencimiento} onChange={(e) => setForm({ ...form, fechaVencimiento: e.target.value })} />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>N° certificado</label>
+                <input className="input-field" value={form.numeroCertificado} onChange={(e) => setForm({ ...form, numeroCertificado: e.target.value })} />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Carga horaria</label>
+                <input className="input-field" type="number" value={form.duracionHoras} onChange={(e) => setForm({ ...form, duracionHoras: e.target.value })} />
+              </div>
+            </div>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Archivo del certificado (imagen o PDF)</label>
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/webp,image/gif,application/pdf"
+                onChange={(e) => setArchivo(e.target.files?.[0] ?? null)}
+              />
+            </div>
+            <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+              {guardando ? 'Guardando...' : 'Guardar certificación'}
+            </button>
+          </form>
+        )}
+
+        {certificaciones && certificaciones.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin certificaciones registradas.</p>}
+        {certificaciones && certificaciones.length > 0 && (
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+            <thead>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
+                <th style={{ padding: '6px 4px' }}>Nombre</th>
+                <th style={{ padding: '6px 4px' }}>Tipo</th>
+                <th style={{ padding: '6px 4px' }}>Institución</th>
+                <th style={{ padding: '6px 4px' }}>Obtención</th>
+                <th style={{ padding: '6px 4px' }}>Estado</th>
+                <th style={{ padding: '6px 4px' }}>Archivo</th>
+                <th style={{ padding: '6px 4px' }}>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {certificaciones.map((c) => (
+                <tr key={c.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                  <td style={{ padding: '6px 4px' }}>{c.nombre}</td>
+                  <td style={{ padding: '6px 4px' }}>{c.tipo}</td>
+                  <td style={{ padding: '6px 4px', color: '#94a3b8' }}>{c.institucion ?? '-'}</td>
+                  <td style={{ padding: '6px 4px', color: '#94a3b8' }}>{c.fechaObtencion}</td>
+                  <td style={{ padding: '6px 4px' }}>
+                    <span className="badge" style={{ background: c.estado === 'VENCIDO' ? '#7f1d1d' : undefined }}>
+                      {c.estado}
+                    </span>
+                  </td>
+                  <td style={{ padding: '6px 4px' }}>
+                    {c.archivoUrl ? (
+                      <a href={`${API_ORIGIN}${c.archivoUrl}`} target="_blank" rel="noreferrer" style={{ color: '#60a5fa' }}>
+                        Ver
+                      </a>
+                    ) : (
+                      '-'
+                    )}
+                  </td>
+                  <td style={{ padding: '6px 4px' }}>
+                    <button
+                      className="btn-primary"
+                      style={{ padding: '4px 8px', fontSize: 11, background: '#7f1d1d' }}
+                      onClick={() => quitarCertificacion(c.id)}
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }
@@ -2069,6 +2343,58 @@ function TabEquipamiento({ bomberoId, puedeEditar }: { bomberoId: string; puedeE
           </table>
         )}
       </div>
+
+      <TabEquipamientoDeposito bomberoId={bomberoId} />
+    </div>
+  );
+}
+
+/** Historico de tenencias del modulo Deposito (seccion 8 del pedido de
+ * Deposito) -- convive con el prestamo de Equipos de arriba sin
+ * reemplazarlo: lo de arriba es "que tiene en uso ahora" via el sistema
+ * viejo de Equipos; esto es de solo lectura y refleja el historico de
+ * movimientos/tenencias de Deposito (incluye confiscaciones, donde el
+ * elemento pasa a "En deposito" pero conserva quien lo tuvo antes). */
+function TabEquipamientoDeposito({ bomberoId }: { bomberoId: string }) {
+  const [items, setItems] = useState<EquipamientoDeBomberoItem[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    cargarEquipamientoDeBombero(bomberoId)
+      .then(setItems)
+      .catch((err) => setError(err.message));
+  }, [bomberoId]);
+
+  return (
+    <div className="card">
+      <h2 style={{ fontSize: 14, marginBottom: 10 }}>
+        Deposito — <Link href="/dashboard/deposito/movimientos" style={{ color: '#60a5fa', fontSize: 12 }}>ver movimientos ↗</Link>
+      </h2>
+      {error && <p style={{ color: '#f87171', fontSize: 13 }}>{error}</p>}
+      {items && items.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin elementos del modulo Deposito a su nombre.</p>}
+      {items && items.length > 0 && (
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+          <thead>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
+              <th style={{ padding: '6px 4px' }}>Elemento</th>
+              <th style={{ padding: '6px 4px' }}>Cantidad</th>
+              <th style={{ padding: '6px 4px' }}>Actualizado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((it, idx) => (
+              <tr key={idx} style={{ borderBottom: '1px solid #1f2937' }}>
+                <td style={{ padding: '6px 4px' }}>
+                  {it.codigo ? `${it.codigo} - ${it.nombre}` : it.nombre}
+                  <span className="badge" style={{ marginLeft: 6, background: '#475569' }}>{it.tipoElemento}</span>
+                </td>
+                <td style={{ padding: '6px 4px' }}>{it.cantidad ?? '-'}</td>
+                <td style={{ padding: '6px 4px' }}>{formatearFechaHora(it.actualizadoEn)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
@@ -2889,15 +3215,8 @@ function SeccionSeguros({ bomberoId }: { bomberoId: string }) {
 /* Documentos (placeholder - fuera de alcance)                          */
 /* ------------------------------------------------------------------ */
 
-function TabDocumentos() {
-  return (
-    <div className="card">
-      <p style={{ color: '#94a3b8', fontSize: 13 }}>
-        El modulo de Documentos todavia no esta implementado en el sistema (no existe backend para el esquema
-        documentos). Esta seccion se habilitara cuando ese modulo se construya.
-      </p>
-    </div>
-  );
+function TabDocumentos({ bomberoId }: { bomberoId: string }) {
+  return <DocumentosDeEntidad modulo="personal" entidad="bombero" registroId={bomberoId} titulo="Documentos de la persona" />;
 }
 
 /* ------------------------------------------------------------------ */

@@ -111,9 +111,20 @@ export function generarFojaServicioPdf(snapshot: FojaServicioSnapshot): Promise<
     }
 
     seccion('VI. Formacion');
+    doc.font('Helvetica-Bold').text('Certificaciones:');
+    doc.font('Helvetica');
     if (snapshot.formacion.length === 0) doc.text('Sin formacion registrada.');
     for (const f of snapshot.formacion) {
       doc.text(`- [${f.tipo}] ${f.nombre}${f.institucion ? ' - ' + f.institucion : ''} (${f.fecha})`);
+    }
+    doc.moveDown(0.3);
+    doc.font('Helvetica-Bold').text('Actividades academicas (modulo Academia):');
+    doc.font('Helvetica');
+    if (snapshot.actividadesAcademicas.length === 0) doc.text('Sin actividades academicas registradas.');
+    for (const a of snapshot.actividadesAcademicas) {
+      doc.text(
+        `- ${a.tipo ? '[' + a.tipo + '] ' : ''}${a.nombre} (${a.fechaInicio} - ${a.fechaFin}) - ${a.estado}${a.resultado ? ' - resultado: ' + a.resultado : ''}`,
+      );
     }
 
     seccion('VII. Idiomas');

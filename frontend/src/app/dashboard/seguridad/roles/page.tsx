@@ -12,6 +12,7 @@ interface Rol {
   prioridad: number;
   esAdministrativo: boolean;
   esSistema: boolean;
+  accesoTotal: boolean;
   activo: boolean;
 }
 
@@ -244,6 +245,14 @@ export default function RolesPage() {
                       {r.nombre}
                     </span>
                     {r.esSistema && <span style={{ fontSize: 10, color: '#64748b', marginLeft: 6 }}>sistema</span>}
+                    {r.accesoTotal && (
+                      <span
+                        style={{ fontSize: 10, color: '#166534', marginLeft: 6 }}
+                        title="Este rol tiene todos los permisos del sistema, incluidos los que se agreguen a futuro."
+                      >
+                        acceso total
+                      </span>
+                    )}
                   </td>
                   <td style={{ padding: '6px 4px', color: '#94a3b8' }}>{r.descripcion}</td>
                   <td style={{ padding: '6px 4px' }}>{r.prioridad}</td>
@@ -276,6 +285,12 @@ export default function RolesPage() {
                 {expandidoId === r.id && (
                   <tr>
                     <td colSpan={5} style={{ padding: '10px 4px', background: '#0f172a' }}>
+                      {r.accesoTotal && (
+                        <p style={{ fontSize: 12, color: '#166534', marginBottom: 10 }}>
+                          Este rol tiene acceso total: ya cuenta con todos los permisos existentes y con los que se
+                          agreguen a futuro, sin importar lo que esté marcado abajo.
+                        </p>
+                      )}
                       <div style={{ display: 'flex', gap: 8, marginBottom: 10, alignItems: 'center' }}>
                         <select
                           className="input-field"

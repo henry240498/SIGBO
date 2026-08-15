@@ -17,6 +17,7 @@ import {
   VehiculoAutorizado,
 } from '../../shared/entities';
 import { AuditoriaService } from '../seguridad/auditoria.service';
+import { DocumentosService } from '../documentos/documentos.service';
 import { OrdenGuardiaConfiguracionService } from './orden-guardia-configuracion.service';
 import { CreateOrdenGuardiaDto } from './dto/create-orden-guardia.dto';
 import { AnularOrdenGuardiaDto, RegistrarModificacionOrdenDto } from './dto/anular-orden-guardia.dto';
@@ -73,6 +74,7 @@ export class OrdenesGuardiaService {
     @InjectDataSource() private readonly dataSource: DataSource,
     private readonly auditoriaService: AuditoriaService,
     private readonly configuracionService: OrdenGuardiaConfiguracionService,
+    private readonly documentosService: DocumentosService,
   ) {}
 
   findAll(anio?: number, mes?: number, estado?: string) {
@@ -527,6 +529,24 @@ export class OrdenesGuardiaService {
       archivoPdfUrl,
       archivoDocxUrl,
     });
+
+    await this.documentosService.registrarDesdeOtroModulo(
+      {
+        tipoDocumentoNombre: 'Orden',
+        categoriaDocumentoNombre: 'Operativo',
+        titulo: `Orden de Guardia N° ${orden.numero}/${orden.anio}`,
+        descripcion: `Orden de Guardia del periodo ${orden.periodoDesde} al ${orden.periodoHasta}`,
+        fechaEmision: orden.fechaEmision,
+        archivoUrl: archivoPdfUrl,
+        archivoNombreOriginal: `orden-guardia-${orden.anio}-${orden.mes}-${orden.numero}.pdf`,
+        archivoExtension: 'pdf',
+        generadoPorModulo: 'guardias',
+        estadoNombre: 'Publicado',
+        relaciones: [{ modulo: 'guardias', entidad: 'orden_guardia', registroId: id, etiqueta: 'Orden de Guardia' }],
+      },
+      actorId,
+    );
+
     return this.registrarTransicion(id, 'PUBLICAR_ORDEN_GUARDIA', orden, actorId, ip);
   }
 

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SeguridadModule } from '../seguridad/seguridad.module';
 import {
+  ActividadAcademica,
   ActividadProfesional,
   AsignacionGuardia,
   Bombero,
@@ -13,7 +14,6 @@ import {
   CondicionCombatiente,
   CondicionHonorario,
   CondicionIncorporado,
-  Curso,
   Designacion,
   Especialidad,
   FojaServicio,
@@ -21,8 +21,7 @@ import {
   HistorialCodigo,
   HistorialInstitucional,
   IdiomaBombero,
-  InscripcionCurso,
-  Materia,
+  InscripcionActividadAcademica,
   Parametro,
   PersonalServicio,
   Rango,
@@ -79,9 +78,8 @@ import { SegurosBomberoController } from './seguros-bombero.controller';
       TipoServicio,
       Servicio,
       PersonalServicio,
-      Materia,
-      Curso,
-      InscripcionCurso,
+      ActividadAcademica,
+      InscripcionActividadAcademica,
       TipoBombero,
       Parametro,
       SeguroBombero,

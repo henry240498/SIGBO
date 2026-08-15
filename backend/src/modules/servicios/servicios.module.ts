@@ -4,9 +4,10 @@ import { Bombero, ComunicacionServicio, LogAuditoria, Servicio, TipoServicio, Ve
 import { ServiciosController } from './servicios.controller';
 import { ServiciosService } from './servicios.service';
 import { SeguridadModule } from '../seguridad/seguridad.module';
+import { DocumentosModule } from '../documentos/documentos.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Servicio, TipoServicio, ComunicacionServicio, LogAuditoria, Bombero, Vehiculo]), SeguridadModule],
+  imports: [TypeOrmModule.forFeature([Servicio, TipoServicio, ComunicacionServicio, LogAuditoria, Bombero, Vehiculo]), SeguridadModule, DocumentosModule],
   controllers: [ServiciosController],
   providers: [ServiciosService],
 })

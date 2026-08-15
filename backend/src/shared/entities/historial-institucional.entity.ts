@@ -12,7 +12,8 @@ export type TipoMovimientoInstitucional =
   | 'SUSPENSION'
   | 'RECONOCIMIENTO'
   | 'SANCION'
-  | 'RETIRO';
+  | 'RETIRO'
+  | 'FORMACION_ACADEMICA';
 
 @Entity({ name: 'historial_institucional', schema: 'personal' })
 export class HistorialInstitucional {

@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {
+  ActividadAcademica,
   AsignacionGuardia,
-  Curso,
   Guardia,
-  InscripcionCurso,
-  Materia,
+  InscripcionActividadAcademica,
+  Parametro,
   PersonalServicio,
   Servicio,
   TipoServicio,
@@ -22,10 +22,10 @@ export class ConsultasCruzadasService {
     @InjectRepository(Servicio) private readonly servicioRepo: Repository<Servicio>,
     @InjectRepository(PersonalServicio)
     private readonly personalServicioRepo: Repository<PersonalServicio>,
-    @InjectRepository(Materia) private readonly materiaRepo: Repository<Materia>,
-    @InjectRepository(Curso) private readonly cursoRepo: Repository<Curso>,
-    @InjectRepository(InscripcionCurso)
-    private readonly inscripcionCursoRepo: Repository<InscripcionCurso>,
+    @InjectRepository(ActividadAcademica) private readonly actividadAcademicaRepo: Repository<ActividadAcademica>,
+    @InjectRepository(InscripcionActividadAcademica)
+    private readonly inscripcionActividadRepo: Repository<InscripcionActividadAcademica>,
+    @InjectRepository(Parametro) private readonly parametroRepo: Repository<Parametro>,
   ) {}
 
   async guardiasDeBombero(bomberoId: string) {
@@ -89,28 +89,34 @@ export class ConsultasCruzadasService {
   }
 
   async formacionAcademicaDeBombero(bomberoId: string) {
-    const inscripciones = await this.inscripcionCursoRepo.find({ where: { bomberoId } });
+    const inscripciones = await this.inscripcionActividadRepo.find({ where: { bomberoId } });
     if (inscripciones.length === 0) return [];
 
-    const cursoIds = [...new Set(inscripciones.map((i) => i.cursoId))];
-    const cursos = await this.cursoRepo
-      .createQueryBuilder('c')
-      .where('c.id IN (:...ids)', { ids: cursoIds })
+    const actividadIds = [...new Set(inscripciones.map((i) => i.actividadId))];
+    const actividades = await this.actividadAcademicaRepo
+      .createQueryBuilder('a')
+      .where('a.id IN (:...ids)', { ids: actividadIds })
       .getMany();
-    const cursoMap = new Map(cursos.map((c) => [c.id, c]));
+    const actividadMap = new Map(actividades.map((a) => [a.id, a]));
+
+    const resultadoIds = [...new Set(inscripciones.map((i) => i.resultadoFinalId).filter((x): x is string => !!x))];
+    const resultados = resultadoIds.length
+      ? await this.parametroRepo.createQueryBuilder('p').where('p.id IN (:...ids)', { ids: resultadoIds }).getMany()
+      : [];
+    const resultadoMap = new Map(resultados.map((r) => [r.id, r.nombre]));
 
     return inscripciones
       .sort((x, y) => compararDesc(x.fechaInscripcion, y.fechaInscripcion))
       .map((inscripcion) => {
-        const curso = cursoMap.get(inscripcion.cursoId);
+        const actividad = actividadMap.get(inscripcion.actividadId);
         return {
           inscripcionId: inscripcion.id,
-          cursoId: inscripcion.cursoId,
-          nombreCurso: curso?.nombre ?? null,
-          fechaInicio: curso?.fechaInicio ?? null,
-          fechaFin: curso?.fechaFin ?? null,
+          actividadId: inscripcion.actividadId,
+          nombreActividad: actividad?.nombre ?? null,
+          fechaInicio: actividad?.fechaInicio ?? null,
+          fechaFin: actividad?.fechaFin ?? null,
           estado: inscripcion.estado,
-          notaFinal: inscripcion.notaFinal,
+          resultadoFinal: inscripcion.resultadoFinalId ? (resultadoMap.get(inscripcion.resultadoFinalId) ?? null) : null,
         };
       });
   }

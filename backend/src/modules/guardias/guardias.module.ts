@@ -36,6 +36,7 @@ import {
   VehiculoAutorizado,
 } from '../../shared/entities';
 import { SeguridadModule } from '../seguridad/seguridad.module';
+import { DocumentosModule } from '../documentos/documentos.module';
 import { ElegibilidadService } from './elegibilidad.service';
 import { GuardiasService } from './guardias.service';
 import { GuardiasController } from './guardias.controller';
@@ -100,6 +101,7 @@ import { OrdenGuardiaConfiguracionService } from './orden-guardia-configuracion.
       IdentidadInstitucional,
     ]),
     SeguridadModule,
+    DocumentosModule,
   ],
   controllers: [
     GuardiasController,

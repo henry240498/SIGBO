@@ -87,9 +87,16 @@ export async function generarFojaServicioDocx(snapshot: FojaServicioSnapshot): P
         ]),
 
     titulo('VI. Formacion'),
+    subtitulo('Certificaciones:'),
     ...(snapshot.formacion.length === 0
       ? [item('Sin formacion registrada.')]
       : snapshot.formacion.map((f) => item(`[${f.tipo}] ${f.nombre}${f.institucion ? ' - ' + f.institucion : ''} (${f.fecha})`))),
+    subtitulo('Actividades academicas (modulo Academia):'),
+    ...(snapshot.actividadesAcademicas.length === 0
+      ? [item('Sin actividades academicas registradas.')]
+      : snapshot.actividadesAcademicas.map((a) =>
+          item(`${a.tipo ? '[' + a.tipo + '] ' : ''}${a.nombre} (${a.fechaInicio} - ${a.fechaFin}) - ${a.estado}${a.resultado ? ' - resultado: ' + a.resultado : ''}`),
+        )),
 
     titulo('VII. Idiomas'),
     ...(snapshot.idiomas.length === 0

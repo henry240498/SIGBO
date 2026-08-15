@@ -14,6 +14,10 @@ import { OperacionesModule } from './modules/operaciones/operaciones.module';
 import { GuardiasModule } from './modules/guardias/guardias.module';
 import { ConfiguracionModule } from './modules/configuracion/configuracion.module';
 import { DenunciasModule } from './modules/denuncias/denuncias.module';
+import { AcademiaModule } from './modules/academia/academia.module';
+import { DepositoModule } from './modules/deposito/deposito.module';
+import { FinanzasModule } from './modules/finanzas/finanzas.module';
+import { DocumentosModule } from './modules/documentos/documentos.module';
 
 @Module({
   imports: [
@@ -31,6 +35,10 @@ import { DenunciasModule } from './modules/denuncias/denuncias.module';
     GuardiasModule,
     ConfiguracionModule,
     DenunciasModule,
+    AcademiaModule,
+    DepositoModule,
+    FinanzasModule,
+    DocumentosModule,
   ],
 })
 export class AppModule {}

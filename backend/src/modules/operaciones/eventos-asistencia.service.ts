@@ -159,6 +159,44 @@ export class EventosAsistenciaService {
       participanteExternoId = externo.id;
     }
 
+    return this.crearParticipanteEvento(eventoId, bomberoId, participanteExternoId, actorId, ip);
+  }
+
+  /** Igual que agregarParticipante, pero para un participanteExterno que YA
+   * existe (ej. inscrito desde Academia) -- nunca crea un registro nuevo en
+   * participantes_externos, solo lo referencia. */
+  async agregarParticipanteExistente(
+    eventoId: string,
+    datos: { bomberoId?: string; participanteExternoId?: string },
+    actorId?: string,
+    ip?: string,
+  ) {
+    await this.findOne(eventoId);
+    if (datos.bomberoId) {
+      const bombero = await this.bomberoRepo.findOne({ where: { id: datos.bomberoId } });
+      if (!bombero) throw new NotFoundException(`Bombero ${datos.bomberoId} no encontrado`);
+    } else if (datos.participanteExternoId) {
+      const externo = await this.externoRepo.findOne({ where: { id: datos.participanteExternoId } });
+      if (!externo) throw new NotFoundException(`Participante externo ${datos.participanteExternoId} no encontrado`);
+    } else {
+      throw new BadRequestException('Debe indicar bomberoId o participanteExternoId');
+    }
+    return this.crearParticipanteEvento(
+      eventoId,
+      datos.bomberoId ?? null,
+      datos.participanteExternoId ?? null,
+      actorId ?? null,
+      ip,
+    );
+  }
+
+  private async crearParticipanteEvento(
+    eventoId: string,
+    bomberoId: string | null,
+    participanteExternoId: string | null,
+    actorId: string | null,
+    ip?: string,
+  ) {
     const participanteId = bomberoId ?? participanteExternoId;
     const yaExiste = await this.participanteRepo.findOne({ where: { eventoId, participanteId: participanteId! } });
     if (yaExiste) {

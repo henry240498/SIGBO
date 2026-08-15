@@ -53,7 +53,13 @@ const DEPENDENCIAS_BOMBERO: Array<{ etiqueta: string; sql: string }> = [
   { etiqueta: 'pernoctes registrados', sql: 'SELECT COUNT(*) AS c FROM operaciones.pernoctes WHERE bombero_id = @0' },
   { etiqueta: 'movimientos financieros (donante)', sql: 'SELECT COUNT(*) AS c FROM finanzas.movimientos WHERE donante_id = @0' },
   { etiqueta: 'documentos', sql: 'SELECT COUNT(*) AS c FROM documentos.documentos WHERE bombero_id = @0' },
-  { etiqueta: 'movimientos de deposito', sql: 'SELECT COUNT(*) AS c FROM deposito.movimientos_deposito WHERE bombero_id = @0' },
+  { etiqueta: 'movimientos de deposito (legado)', sql: 'SELECT COUNT(*) AS c FROM deposito.movimientos_deposito WHERE bombero_id = @0' },
+  {
+    etiqueta: 'movimientos de deposito',
+    sql: 'SELECT COUNT(*) AS c FROM deposito.movimientos WHERE bombero_origen_id = @0 OR bombero_destino_id = @0 OR responsable_id = @0',
+  },
+  { etiqueta: 'tenencias de deposito', sql: 'SELECT COUNT(*) AS c FROM deposito.tenencias WHERE bombero_id = @0' },
+  { etiqueta: 'prestamos de deposito', sql: 'SELECT COUNT(*) AS c FROM deposito.prestamos WHERE solicitante_bombero_id = @0 OR autorizado_por = @0' },
 ];
 
 @Injectable()

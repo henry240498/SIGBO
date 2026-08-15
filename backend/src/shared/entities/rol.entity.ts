@@ -35,6 +35,12 @@ export class Rol {
   @Column({ name: 'es_sistema', type: 'bit', default: false })
   esSistema: boolean;
 
+  /** Si esta activo, el rol tiene TODOS los permisos existentes -- presentes
+   * y futuros -- sin depender de que cada migracion que agregue un permiso
+   * nuevo recuerde asignarselo explicitamente (ver PolicyEngineService). */
+  @Column({ name: 'acceso_total', type: 'bit', default: false })
+  accesoTotal: boolean;
+
   @Column({ type: 'bit', default: true })
   activo: boolean;
 
