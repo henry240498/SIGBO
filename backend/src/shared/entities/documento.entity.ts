@@ -104,6 +104,12 @@ export class Documento {
   @Column({ type: 'uniqueidentifier', nullable: true })
   institucionId: string | null;
 
+  /** Opt-in explicito para que Snoopy pueda encontrar este documento
+   * (seccion 20 del pedido de Inteligencia Artificial): en false por
+   * defecto, la confidencialidad sigue aplicando ademas de este flag. */
+  @Column({ type: 'bit', default: false })
+  disponibleParaIa: boolean;
+
   @CreateDateColumn({ name: 'creado_en', type: 'datetimeoffset', precision: 3 })
   creadoEn: Date;
 

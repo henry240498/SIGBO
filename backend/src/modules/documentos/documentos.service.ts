@@ -174,6 +174,7 @@ export class DocumentosService {
       ...(dto.nivelConfidencialidadId !== undefined ? { nivelConfidencialidadId: dto.nivelConfidencialidadId } : {}),
       ...(dto.expedienteId !== undefined ? { expedienteId: dto.expedienteId } : {}),
       ...(dto.ordenEnExpediente !== undefined ? { ordenEnExpediente: dto.ordenEnExpediente } : {}),
+      ...(dto.disponibleParaIa !== undefined ? { disponibleParaIa: dto.disponibleParaIa } : {}),
       actualizadoPor: actorId,
     });
     const despues = await this.repo.findOne({ where: { id } });
@@ -428,6 +429,57 @@ export class DocumentosService {
         visibles.push(doc);
       } catch {
         // documento confidencial sin permiso: se omite de la lista, no se expone ni su existencia
+      }
+    }
+    return visibles;
+  }
+
+  /** Busqueda para la herramienta get_documentos de Snoopy (seccion 16-20
+   * del pedido de Inteligencia Artificial): solo documentos marcados
+   * `disponibleParaIa`, con el mismo chequeo de confidencialidad que ya
+   * usa `documentosDeEntidad()` -- nunca se relaja la seguridad porque el
+   * llamador sea la IA en vez de un humano navegando el modulo. */
+  async buscarParaIa(query: string, permisos: string[]): Promise<Documento[]> {
+    // Busqueda por palabra, no por frase exacta: la pregunta llega en
+    // lenguaje natural (seccion 16-17 del pedido de Inteligencia
+    // Artificial), no como el titulo exacto del documento -- ni siquiera
+    // todas las palabras extraidas de la pregunta ("documento", "archivo")
+    // tienen por que aparecer en el titulo. Coincide con CUALQUIERA de las
+    // palabras (OR) y prioriza los documentos que matchean mas palabras,
+    // en vez de exigir que las matcheen todas (AND), que es demasiado
+    // estricto para una extraccion de palabras clave imperfecta.
+    const palabras = query
+      .split(/\s+/)
+      .map((p) => p.trim())
+      .filter((p) => p.length > 1)
+      .slice(0, 6);
+    if (palabras.length === 0) return [];
+
+    const qb = this.repo.createQueryBuilder('d').where('d.disponibleParaIa = 1');
+    const condiciones = palabras.map((palabra, indice) => {
+      qb.setParameter(`p${indice}`, `%${palabra}%`);
+      return `(d.titulo LIKE :p${indice} OR d.numeroDocumental LIKE :p${indice})`;
+    });
+    qb.andWhere(`(${condiciones.join(' OR ')})`);
+    const candidatos = await qb.orderBy('d.fechaEmision', 'DESC').take(30).getMany();
+
+    const palabrasNormalizadas = palabras.map((p) => p.toLowerCase());
+    const documentos = candidatos
+      .map((doc) => {
+        const texto = `${doc.titulo} ${doc.numeroDocumental ?? ''}`.toLowerCase();
+        const coincidencias = palabrasNormalizadas.filter((p) => texto.includes(p)).length;
+        return { doc, coincidencias };
+      })
+      .sort((a, b) => b.coincidencias - a.coincidencias)
+      .slice(0, 5)
+      .map((x) => x.doc);
+    const visibles: Documento[] = [];
+    for (const doc of documentos) {
+      try {
+        await this.verificarAccesoConfidencial(doc, permisos);
+        visibles.push(doc);
+      } catch {
+        // documento confidencial sin permiso: se omite, igual que documentosDeEntidad()
       }
     }
     return visibles;

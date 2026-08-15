@@ -23,7 +23,7 @@ export const MODULOS: ModuloConfig[] = [
   { slug: 'publicaciones', nombre: 'Publicaciones', icono: 'document', permisoPrefijo: 'publicaciones:', disponible: true },
   { slug: 'denuncias', nombre: 'Denuncias', icono: 'alert', permisoPrefijo: 'denuncias:', disponible: true },
   { slug: 'seguridad', nombre: 'Seguridad', icono: 'lock', permisoPrefijo: 'seguridad:', disponible: true },
-  { slug: 'inteligencia', nombre: 'Inteligencia', icono: 'chart', permisoPrefijo: 'inteligencia:', disponible: false },
+  { slug: 'inteligencia', nombre: 'Inteligencia Artificial', icono: 'chart', permisoPrefijo: 'inteligencia:', disponible: true },
 ];
 
 export function moduloVisible(modulo: ModuloConfig, permisos: string[]): boolean {

@@ -84,6 +84,7 @@ export default function FichaDocumentoPage() {
   const [fechaVencimiento, setFechaVencimiento] = useState('');
   const [nivelConfidencialidadId, setNivelConfidencialidadId] = useState('');
   const [expedienteId, setExpedienteId] = useState('');
+  const [disponibleParaIa, setDisponibleParaIa] = useState(false);
 
   const [archivo, setArchivo] = useState<File | null>(null);
   const [motivoReemplazo, setMotivoReemplazo] = useState('');
@@ -135,6 +136,7 @@ export default function FichaDocumentoPage() {
       setFechaVencimiento(d.fechaVencimiento ?? '');
       setNivelConfidencialidadId(d.nivelConfidencialidadId ?? '');
       setExpedienteId(d.expedienteId ?? '');
+      setDisponibleParaIa(d.disponibleParaIa ?? false);
       setEstadoDestinoId(d.estadoId);
 
       const [vers, rels, fir] = await Promise.all([cargarVersionesDocumento(id), cargarRelacionesDocumento(id), cargarFirmasDocumento(id)]);
@@ -183,6 +185,7 @@ export default function FichaDocumentoPage() {
         fechaVencimiento: fechaVencimiento || null,
         nivelConfidencialidadId: nivelConfidencialidadId || null,
         expedienteId: expedienteId || null,
+        disponibleParaIa,
       });
       setMensaje('Datos actualizados.');
       await cargar();
@@ -441,6 +444,10 @@ export default function FichaDocumentoPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Expediente</label>
             <ComboBuscable opciones={opcionesExpediente} value={expedienteId} onChange={setExpedienteId} ningunaLabel="Sin expediente" disabled={!puedeEditar || esTerminal} />
           </div>
+          <label style={{ fontSize: 12, display: 'flex', gap: 6, alignItems: 'center' }}>
+            <input type="checkbox" checked={disponibleParaIa} onChange={(e) => setDisponibleParaIa(e.target.checked)} disabled={!puedeEditar || esTerminal} />
+            Disponible para Snoopy (Inteligencia Artificial) — la confidencialidad sigue aplicando igual
+          </label>
           {puedeEditar && !esTerminal && (
             <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
               {guardando ? 'Guardando...' : 'Guardar cambios'}

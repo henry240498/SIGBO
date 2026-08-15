@@ -12,6 +12,7 @@ const TABS = [
   { href: '/dashboard/seguridad/auditoria', label: 'Auditoría' },
   { href: '/dashboard/seguridad/apariencia', label: 'Apariencia' },
   { href: '/dashboard/seguridad/configuracion', label: 'Configuración global' },
+  { href: '/dashboard/seguridad/inteligencia-artificial', label: 'Inteligencia Artificial' },
 ];
 
 export default function SeguridadLayout({ children }: { children: React.ReactNode }) {

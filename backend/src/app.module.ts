@@ -18,6 +18,7 @@ import { AcademiaModule } from './modules/academia/academia.module';
 import { DepositoModule } from './modules/deposito/deposito.module';
 import { FinanzasModule } from './modules/finanzas/finanzas.module';
 import { DocumentosModule } from './modules/documentos/documentos.module';
+import { IaModule } from './modules/ia/ia.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { DocumentosModule } from './modules/documentos/documentos.module';
     DepositoModule,
     FinanzasModule,
     DocumentosModule,
+    IaModule,
   ],
 })
 export class AppModule {}

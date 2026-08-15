@@ -59,6 +59,7 @@ export interface Documento {
   anuladoPor: string | null;
   fechaAnulacion: string | null;
   institucionId: string | null;
+  disponibleParaIa: boolean;
   creadoEn: string;
   actualizadoEn: string;
   creadoPor: string | null;

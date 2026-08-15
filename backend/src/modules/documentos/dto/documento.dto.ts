@@ -53,6 +53,10 @@ export class UpdateDocumentoDto {
   @ApiProperty({ required: false }) @IsOptional() @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE }) nivelConfidencialidadId?: string;
   @ApiProperty({ required: false }) @IsOptional() @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE }) expedienteId?: string;
   @ApiProperty({ required: false }) @IsOptional() @Type(() => Number) @IsInt() ordenEnExpediente?: number;
+  @ApiProperty({ required: false, description: 'Si Snoopy puede encontrar este documento en busquedas (seccion 20 del pedido de IA)' })
+  @IsOptional()
+  @IsBoolean()
+  disponibleParaIa?: boolean;
 }
 
 export class CambiarEstadoDocumentoDto {
