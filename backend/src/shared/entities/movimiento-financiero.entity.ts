@@ -70,6 +70,18 @@ export class MovimientoFinanciero {
   @Column({ type: 'uniqueidentifier', nullable: true })
   ordenPagoId: string | null;
 
+  /** Socio Protector que origino el ingreso (Aporte) -- seccion 5/26
+   * del pedido: se distingue de bomberoId/entidadExterna para poder
+   * reconstruir el estado de cuenta de un socio sin ambiguedad. */
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  socioProtectorId: string | null;
+
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  aporteId: string | null;
+
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  facturaId: string | null;
+
   /** Referencia a deposito.entradas -- integracion compras/donaciones
    * (secciones 16-17): el egreso/ingreso apunta a la entrada de
    * Deposito que le dio origen en vez de reingresar los items. */

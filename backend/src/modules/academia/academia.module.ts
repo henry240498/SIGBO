@@ -18,11 +18,13 @@ import {
   ParticipanteExterno,
   Parametro,
   Rango,
+  SocioProtector,
   Usuario,
 } from '../../shared/entities';
 import { SeguridadModule } from '../seguridad/seguridad.module';
 import { OperacionesModule } from '../operaciones/operaciones.module';
 import { DocumentosModule } from '../documentos/documentos.module';
+import { FinanzasModule } from '../finanzas/finanzas.module';
 import { ActividadesAcademicasService } from './actividades-academicas.service';
 import { ActividadesAcademicasController } from './actividades-academicas.controller';
 import { InstructoresExternosService } from './instructores-externos.service';
@@ -66,10 +68,12 @@ import { ConsultasAcademiaController } from './consultas-academia.controller';
       HistorialInstitucional,
       CursoExternoCache,
       IdentidadInstitucional,
+      SocioProtector,
     ]),
     SeguridadModule,
     OperacionesModule,
     DocumentosModule,
+    FinanzasModule,
   ],
   controllers: [
     ActividadesAcademicasController,

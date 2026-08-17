@@ -51,6 +51,20 @@ export default function DashboardFinanzasPage() {
         <Tarjeta titulo="Pendiente de pago" valor={formatearGs(indicadores.pendienteDePago)} color={indicadores.pendienteDePago > 0 ? '#fbbf24' : undefined} />
       </div>
 
+      <div>
+        <h2 style={{ fontSize: 15, marginBottom: 10 }}>Socios Protectores y Facturacion</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
+          <Tarjeta titulo="Socios activos" valor={String(indicadores.sociosProtectores.activos)} color="#60a5fa" />
+          <Tarjeta titulo="Socios sin aporte este mes" valor={String(indicadores.sociosProtectores.sinAporteEsteMes)} color={indicadores.sociosProtectores.sinAporteEsteMes > 0 ? '#fbbf24' : undefined} />
+          <Tarjeta titulo="Aportes del mes" valor={formatearGs(indicadores.sociosProtectores.aportesMes)} color="#4ade80" />
+          <Tarjeta titulo="Aportes extraordinarios del mes" valor={formatearGs(indicadores.sociosProtectores.aportesExtraordinariosMes)} color="#4ade80" />
+          <Tarjeta titulo="Facturacion del mes" valor={formatearGs(indicadores.facturacion.totalMes)} />
+          <Tarjeta titulo="Notas de credito del mes" valor={formatearGs(indicadores.facturacion.notasCreditoMes)} color="#f87171" />
+          <Tarjeta titulo="Ingresos por Academia" valor={formatearGs(indicadores.ingresosPorOrigen.academia)} />
+          <Tarjeta titulo="Ingresos por Servicios" valor={formatearGs(indicadores.ingresosPorOrigen.servicios)} />
+        </div>
+      </div>
+
       <section className="card">
         <h2 style={{ fontSize: 15, marginBottom: 12 }}>Movimientos recientes</h2>
         {indicadores.movimientosRecientes.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay movimientos registrados.</p>}

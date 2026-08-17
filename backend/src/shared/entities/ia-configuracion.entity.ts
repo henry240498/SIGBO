@@ -92,6 +92,12 @@ export class ConfiguracionIa {
   @Column({ type: 'nvarchar' })
   modulosHabilitadosJson: string;
 
+  /** Antepone a la respuesta como se interpreto la consulta (modulo,
+   * intencion, filtros detectados) -- ayuda de confianza/depuracion,
+   * apagada por defecto. */
+  @Column({ type: 'bit', default: false })
+  explicarInterpretacion: boolean;
+
   @CreateDateColumn({ name: 'creado_en', type: 'datetimeoffset', precision: 3 })
   creadoEn: Date;
 

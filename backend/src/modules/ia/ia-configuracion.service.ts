@@ -86,6 +86,7 @@ export class IaConfiguracionService {
       ...(dto.limiteConsultasMinuto !== undefined ? { limiteConsultasMinuto: dto.limiteConsultasMinuto } : {}),
       ...(dto.limiteConsultasHora !== undefined ? { limiteConsultasHora: dto.limiteConsultasHora } : {}),
       ...(dto.modulosHabilitados !== undefined ? { modulosHabilitadosJson: JSON.stringify(dto.modulosHabilitados) } : {}),
+      ...(dto.explicarInterpretacion !== undefined ? { explicarInterpretacion: dto.explicarInterpretacion } : {}),
       actualizadoPor: actorId,
     });
     const nuevo = await this.obtener();

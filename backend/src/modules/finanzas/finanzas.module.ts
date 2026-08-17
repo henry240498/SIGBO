@@ -1,23 +1,32 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
+  AcuerdoAporte,
+  AplicacionBeneficio,
+  Aporte,
   Bombero,
   Caja,
   Cargo,
+  BeneficioSocio,
   Cuota,
   CuentaBancaria,
   Designacion,
   DocumentoRespaldo,
   EjercicioFiscal,
   EntradaDeposito,
+  Factura,
   IdentidadInstitucional,
   MovimientoBancario,
   MovimientoFinanciero,
+  NotaCredito,
+  NumeracionComprobante,
   OrdenPago,
   Parametro,
   Presupuesto,
   ProveedorDeposito,
   Rango,
+  SocioHistorialCodigo,
+  SocioProtector,
   TurnoCaja,
 } from '../../shared/entities';
 import { SeguridadModule } from '../seguridad/seguridad.module';
@@ -45,6 +54,20 @@ import { ConsultasFinanzasService } from './consultas-finanzas.service';
 import { ConsultasFinanzasController } from './consultas-finanzas.controller';
 import { ReportesFinanzasService } from './reportes-finanzas.service';
 import { ReportesFinanzasController } from './reportes-finanzas.controller';
+import { SociosProtectoresService } from './socios-protectores.service';
+import { SociosProtectoresController } from './socios-protectores.controller';
+import { AcuerdosAporteService } from './acuerdos-aporte.service';
+import { AcuerdosAporteController } from './acuerdos-aporte.controller';
+import { AportesService } from './aportes.service';
+import { AportesController } from './aportes.controller';
+import { BeneficiosSociosService } from './beneficios-socios.service';
+import { BeneficiosSociosController } from './beneficios-socios.controller';
+import { FacturasService } from './facturas.service';
+import { FacturasController } from './facturas.controller';
+import { NotasCreditoService } from './notas-credito.service';
+import { NotasCreditoController } from './notas-credito.controller';
+import { NumeracionesComprobantesService } from './numeraciones-comprobantes.service';
+import { NumeracionesComprobantesController } from './numeraciones-comprobantes.controller';
 
 @Module({
   imports: [
@@ -59,6 +82,15 @@ import { ReportesFinanzasController } from './reportes-finanzas.controller';
       MovimientoBancario,
       Presupuesto,
       OrdenPago,
+      SocioProtector,
+      SocioHistorialCodigo,
+      AcuerdoAporte,
+      Aporte,
+      BeneficioSocio,
+      AplicacionBeneficio,
+      Factura,
+      NotaCredito,
+      NumeracionComprobante,
       // Entidades de otros modulos que Finanzas consulta/referencia
       // directamente (mismo patron de bajo acoplamiento ya usado en
       // Deposito/Academia/Guardias): nunca se duplican sus estructuras.
@@ -82,6 +114,13 @@ import { ReportesFinanzasController } from './reportes-finanzas.controller';
     MovimientosBancariosController,
     PresupuestosController,
     OrdenesPagoController,
+    SociosProtectoresController,
+    AcuerdosAporteController,
+    AportesController,
+    BeneficiosSociosController,
+    FacturasController,
+    NotasCreditoController,
+    NumeracionesComprobantesController,
     DashboardFinanzasController,
     IntegracionFinanzasController,
     ConsultasFinanzasController,
@@ -96,10 +135,18 @@ import { ReportesFinanzasController } from './reportes-finanzas.controller';
     MovimientosBancariosService,
     PresupuestosService,
     OrdenesPagoService,
+    SociosProtectoresService,
+    AcuerdosAporteService,
+    AportesService,
+    BeneficiosSociosService,
+    FacturasService,
+    NotasCreditoService,
+    NumeracionesComprobantesService,
     DashboardFinanzasService,
     IntegracionFinanzasService,
     ConsultasFinanzasService,
     ReportesFinanzasService,
   ],
+  exports: [BeneficiosSociosService],
 })
 export class FinanzasModule {}

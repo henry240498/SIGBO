@@ -15,6 +15,10 @@ export class UpdateConfiguracionIaDto {
   @ApiProperty({ required: false, description: 'Activa el limitador de consultas por usuario (proteccion tecnica anti-abuso, apagado = "sin limites")' }) @IsOptional() @IsBoolean() limiteActivo?: boolean;
   @ApiProperty({ required: false }) @IsOptional() @IsInt() @Min(1) limiteConsultasMinuto?: number;
   @ApiProperty({ required: false }) @IsOptional() @IsInt() @Min(1) limiteConsultasHora?: number;
+  @ApiProperty({ required: false, description: 'Antepone a cada respuesta como se interpreto la consulta (modulo, intencion, filtros)' })
+  @IsOptional()
+  @IsBoolean()
+  explicarInterpretacion?: boolean;
   @ApiProperty({ required: false, type: [String], description: "Slugs de modulo habilitados para las herramientas de la IA, ej. ['personal','guardias']" })
   @IsOptional()
   @IsArray()

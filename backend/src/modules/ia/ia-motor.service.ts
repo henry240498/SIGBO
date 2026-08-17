@@ -30,6 +30,20 @@ const PATRONES_ANIMO = [
 ];
 const PATRONES_SALUDO = [/^(hola|buenas|buen dia|buenas tardes|buenas noches|hey|que tal|holis)\b/];
 const PATRONES_DESPEDIDA = [/^(chau|adios|nos vemos|hasta luego|bye|hasta la proxima)\b/];
+/** Preguntas sobre la IA misma, no sobre una tercera persona -- "quien es"
+ * sin nombre despues es autoreferencial (si hubiera un nombre, ej. "quien
+ * es Henry Martinez", el patron no matchea por el anclado $ y sigue de
+ * largo hasta get_personal, que es donde corresponde). */
+const PATRONES_IDENTIDAD = [
+  /^quien (sos|eres)$/,
+  /^quien (sos|eres) vos$/,
+  /^quien es$/,
+  /^quien era$/,
+  /^que (sos|eres)$/,
+  /quien (te crees|se cree) que (sos|eres|es)/,
+  /(tu historia|tu origen|de donde (sos|venis|eres))/,
+  /contame (tu historia|sobre vos|quien sos|de vos)/,
+];
 const PATRONES_AGRADECIMIENTO = [/gracias/, /te lo agradezco/, /muy amable/];
 const PATRONES_AYUDA = [/que (podes|puedes) hacer/, /^ayuda$/, /en que me (ayudas|podes ayudar)/, /que sabes hacer/, /para que servis/];
 const PATRONES_MODIFICACION = [
@@ -40,17 +54,55 @@ const PATRONES_MODIFICACION = [
   /(bloquea|bloquear|desbloquea|desbloquear)\b.*(usuario|cuenta)/,
 ];
 
+/** Terminos de estado que existen en mas de un modulo con significados
+ * distintos (seccion 13) -- si el mensaje queda reducido a uno de estos
+ * despues de sacar las palabras de pregunta genericas, hay que preguntar
+ * a que modulo se refiere en vez de adivinar. */
+const PALABRAS_ESTADO_AMBIGUAS = new Set(['activos', 'activo', 'activas', 'activa', 'disponibles', 'disponible']);
+const MODULOS_CON_ESTADO_AMBIGUO = ['personal', 'vehiculos', 'equipos'];
+const PATRONES_LIMPIEZA_AMBIGUEDAD = [/^cuant[oa]s\b/, /^que\b/, /\btenemos\b/, /\bhay\b/, /^los\b/, /^las\b/, /^y\b/];
+
 function normalizar(texto: string): string {
   return texto
     .toLowerCase()
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
+    // Los signos de apertura en espanol (¿¡) rompen los patrones anclados al
+    // inicio del mensaje (^y\s, ^cuant[oa]s, etc.): "¿y activos?" arranca
+    // con "¿", no con "y", y esos patrones nunca matchean si no se sacan
+    // antes. Se sacan TODOS los signos, no solo los de apertura, para que
+    // "che, activos?" tambien limpie bien el final.
+    .replace(/[¿?¡!.,;:]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 }
 
 function coincideAlguno(texto: string, patrones: RegExp[]): boolean {
   return patrones.some((p) => p.test(texto));
+}
+
+/** Fusiona los argumentos de una pregunta de seguimiento sobre los de la
+ * consulta anterior (secciones 12/23): las claves de `filtros` (y de
+ * `_resumen`, su descripcion legible por la misma clave) que el mensaje
+ * nuevo SI detecto pisan a las previas, las que no detecto se mantienen.
+ * Los tools upgradeados solo incluyen las claves que efectivamente
+ * reconocieron -- por eso un spread simple alcanza, sin necesidad de
+ * marcar explicitamente "esto no cambio". */
+function fusionarArgumentos(previo: Record<string, unknown>, nuevo: Record<string, unknown>): Record<string, unknown> {
+  const filtrosPrevios = (previo?.filtros as Record<string, unknown>) ?? {};
+  const filtrosNuevos = (nuevo?.filtros as Record<string, unknown>) ?? {};
+  const resumenPrevio = (previo?._resumen as Record<string, string>) ?? {};
+  const resumenNuevo = (nuevo?._resumen as Record<string, string>) ?? {};
+  return {
+    ...previo,
+    ...nuevo,
+    filtros: { ...filtrosPrevios, ...filtrosNuevos },
+    _resumen: { ...resumenPrevio, ...resumenNuevo },
+    // "¿y activos?" no repite "cuantos", pero tampoco cambio de tipo de
+    // pregunta -- si el mensaje nuevo no trae su propia intencion
+    // explicita, se hereda la de la consulta anterior en vez de perderla.
+    intent: nuevo.intent ?? previo.intent,
+  };
 }
 
 /** Motor de razonamiento LOCAL de Snoopy: sin llamadas salientes, sin
@@ -102,6 +154,15 @@ export class IaMotorService {
       return { ...sinRespuesta, contenidoRespuesta: config.saludo ? this.aplicarTono(config.saludo, config) : this.aplicarTono(`Hola ${usuario.username}, en que puedo ayudarte?`, config) };
     }
 
+    // "Quien sos", "quien es (vos)", "quien se cree que es", "tu historia":
+    // preguntas sobre la IA misma, no una busqueda de una tercera persona
+    // -- se resuelven ANTES de llegar a get_personal (que interpretaria
+    // "quien es" como el inicio de una busqueda de un bombero y quedaria
+    // esperando un nombre que nunca llega).
+    if (coincideAlguno(mensaje, PATRONES_IDENTIDAD)) {
+      return { ...sinRespuesta, contenidoRespuesta: this.mensajeIdentidad(config) };
+    }
+
     if (coincideAlguno(mensaje, PATRONES_DESPEDIDA)) {
       return { ...sinRespuesta, contenidoRespuesta: this.aplicarTono('Nos vemos! Cualquier cosa, aca estoy.', config) };
     }
@@ -121,16 +182,40 @@ export class IaMotorService {
     // claro pero no tiene permiso, quiere el mensaje explicito de "no tenes
     // permiso" (seccion 10), no un generico "no entendi tu consulta".
     const herramientasDelModulo = this.toolsService.herramientasDelModulo(modulosHabilitados);
+    const esPosibleSeguimiento = !!contextoPrevio && coincideAlguno(mensaje, MARCADORES_SEGUIMIENTO);
+
+    // Desambiguacion (seccion 13): un termino de estado suelto ("activos",
+    // "disponibles"), sin ninguna palabra propia de un modulo especifico,
+    // puede referirse a mas de un tema -- preguntar en vez de adivinar.
+    // Nunca se dispara sobre una pregunta de seguimiento ("¿y activos?"):
+    // ahi ya sabemos el tema por el contexto previo, no hay nada que
+    // desambiguar.
+    if (!esPosibleSeguimiento) {
+      const preguntaAmbiguedad = this.detectarAmbiguedad(mensaje, herramientasDelModulo);
+      if (preguntaAmbiguedad) {
+        return { ...sinRespuesta, contenidoRespuesta: this.aplicarTono(preguntaAmbiguedad, config) };
+      }
+    }
+
     let herramienta = this.elegirHerramienta(mensaje, herramientasDelModulo);
     let argumentos: Record<string, unknown> | null = null;
 
     if (herramienta) {
-      argumentos = herramienta.extraerArgumentos(mensaje, mensajeOriginal);
-    } else if (contextoPrevio && coincideAlguno(mensaje, MARCADORES_SEGUIMIENTO)) {
+      argumentos = await herramienta.extraerArgumentos(mensaje, mensajeOriginal);
+    } else if (esPosibleSeguimiento) {
       // Pregunta de seguimiento (seccion 51): sin match propio, pero hay
       // contexto previo y el mensaje "suena" a continuacion de esa consulta.
-      herramienta = this.toolsService.buscarPorNombre(contextoPrevio.herramienta) ?? null;
-      argumentos = contextoPrevio.argumentos;
+      // No se repite ciegamente la consulta anterior: se vuelve a extraer lo
+      // que el mensaje nuevo aporta (ej. "y activos" -> estado=ACTIVO) y se
+      // fusiona sobre los filtros previos (seccion 12/23) -- asi "¿y
+      // activos?" despues de "¿cuantos BC tenemos?" responde BC + activos,
+      // no solo BC de nuevo ni solo activos sin el tipo.
+      const herramientaPrevia = this.toolsService.buscarPorNombre(contextoPrevio.herramienta) ?? null;
+      if (herramientaPrevia) {
+        herramienta = herramientaPrevia;
+        const nuevosArgumentos = await herramienta.extraerArgumentos(mensaje, mensajeOriginal);
+        argumentos = fusionarArgumentos(contextoPrevio.argumentos, nuevosArgumentos);
+      }
     }
 
     if (!herramienta || !argumentos) {
@@ -150,8 +235,9 @@ export class IaMotorService {
 
     try {
       const resultado = await herramienta.ejecutar(argumentos, usuario);
+      const prefijoInterpretacion = config.explicarInterpretacion ? this.explicarInterpretacion(herramienta, argumentos) : '';
       return {
-        contenidoRespuesta: resultado.contenidoRespuesta,
+        contenidoRespuesta: prefijoInterpretacion + resultado.contenidoRespuesta,
         fuentes: resultado.fuentes,
         herramientaUsada: herramienta.nombre,
         argumentosUsados: argumentos,
@@ -190,6 +276,53 @@ export class IaMotorService {
       }
     }
     return mejorPuntaje >= 2 ? mejor : null;
+  }
+
+  /** Seccion 13 del pedido: no adivinar cuando un termino de estado solo
+   * ("activos", "disponibles") puede referirse a mas de un modulo
+   * habilitado. Solo dispara si el mensaje, sacando las palabras de
+   * pregunta genericas ("cuantos", "que", "tenemos", "hay"), queda
+   * reducido a UNA palabra de esa lista -- si trae cualquier otra palabra
+   * (ej. "bombero", "vehiculo") ya no es ambiguo, se resuelve normal. */
+  private detectarAmbiguedad(mensaje: string, herramientas: AiTool[]): string | null {
+    // Sacar signos ANTES de aplicar los patrones anclados al inicio
+    // (^cuant[oa]s, ^que...): "¿cuantos" no matchea /^cuant[oa]s/ porque el
+    // string arranca con "¿", no con "c".
+    let texto = mensaje.replace(/[¿?¡!.,;:]/g, ' ').replace(/\s+/g, ' ').trim();
+    for (const p of PATRONES_LIMPIEZA_AMBIGUEDAD) texto = texto.replace(p, ' ');
+    texto = texto.replace(/\s+/g, ' ').trim();
+    if (!PALABRAS_ESTADO_AMBIGUAS.has(texto)) return null;
+
+    const modulosQueUsanEsteEstado = herramientas.filter((t) => MODULOS_CON_ESTADO_AMBIGUO.includes(t.moduloSlug));
+    const slugsDisponibles = [...new Set(modulosQueUsanEsteEstado.map((t) => t.moduloSlug))];
+    if (slugsDisponibles.length <= 1) return null;
+
+    return `¿Te referís a ${slugsDisponibles.join(', ')}? Decime el tema y te respondo.`;
+  }
+
+  /** Seccion 25 del pedido: cuando esta activo en la configuracion, antepone
+   * como se interpreto la consulta. Solo las herramientas actualizadas al
+   * nuevo formato devuelven `_resumen` en sus argumentos -- las que todavia
+   * no lo tienen simplemente no muestran esta linea (no rompe nada). */
+  private explicarInterpretacion(herramienta: AiTool, argumentos: Record<string, unknown>): string {
+    const resumen = argumentos._resumen as Record<string, string> | undefined;
+    const partes = resumen ? Object.values(resumen) : [];
+    if (partes.length === 0) return '';
+    const intent = (argumentos.intent as string | undefined) ?? 'CONSULTAR';
+    return `Interpreté tu consulta como: ${intent} en ${herramienta.moduloSlug} — ${partes.join(', ')}.\n\n`;
+  }
+
+  /** Autopresentacion (seccion "quien sos"/"tu historia"): usa lo que la
+   * institucion configuro (descripcion, o el saludo si no hay descripcion)
+   * -- nunca un texto fijo en el codigo, porque nada del backend debe
+   * asumir el nombre/personaje "Snoopy" (es un valor de configuracion, no
+   * una constante). Solo si la institucion no configuro nada cae a un
+   * texto generico minimo. */
+  private mensajeIdentidad(config: ConfiguracionIa): string {
+    if (config.descripcion) return this.aplicarTono(config.descripcion, config);
+    if (config.saludo) return this.aplicarTono(config.saludo, config);
+    const personaje = config.personaje ? ` (${config.personaje})` : '';
+    return this.aplicarTono(`Soy ${config.nombre}${personaje}, el asistente de consulta de SIGBO. Puedo ayudarte a buscar informacion dentro del sistema.`, config);
   }
 
   private mensajeAyuda(config: ConfiguracionIa, herramientas: AiTool[]): string {

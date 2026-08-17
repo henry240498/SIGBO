@@ -25,12 +25,13 @@ export class MovimientosFinancierosController {
     @Query('cuentaBancariaId') cuentaBancariaId?: string,
     @Query('proveedorId') proveedorId?: string,
     @Query('bomberoId') bomberoId?: string,
+    @Query('socioProtectorId') socioProtectorId?: string,
     @Query('tipoIngresoId') tipoIngresoId?: string,
     @Query('categoriaEgresoId') categoriaEgresoId?: string,
     @Query('desde') desde?: string,
     @Query('hasta') hasta?: string,
   ) {
-    return this.service.findAll({ tipo, estado, cajaId, cuentaBancariaId, proveedorId, bomberoId, tipoIngresoId, categoriaEgresoId, desde, hasta });
+    return this.service.findAll({ tipo, estado, cajaId, cuentaBancariaId, proveedorId, bomberoId, socioProtectorId, tipoIngresoId, categoriaEgresoId, desde, hasta });
   }
 
   @Get(':id')

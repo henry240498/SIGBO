@@ -9,16 +9,27 @@ import {
   Equipo,
   Guardia,
   IdentidadInstitucional,
+  InscripcionActividadAcademica,
   MarcacionAsistencia,
   MovimientoFinanciero,
   Parametro,
+  Rango,
   Servicio,
+  TipoBombero,
   Vehiculo,
   Articulo,
 } from '../../../shared/entities';
 import { AuthenticatedUser } from '../../auth/types/authenticated-user';
 import { DocumentosService } from '../../documentos/documentos.service';
 import { AiTool, ResultadoHerramientaIa } from './ia-tool.interface';
+import {
+  detectarIntent,
+  ESTADO_BOMBERO_SINONIMOS,
+  ESTADO_EQUIPO_SINONIMOS,
+  ESTADO_VEHICULO_SINONIMOS,
+  resolverSinonimo,
+  resolverTipoBombero,
+} from './ia-nlu.util';
 
 export const SIN_PERMISO: ResultadoHerramientaIa = {
   contenidoRespuesta: 'No puedo mostrarte esa informacion porque no tenes permisos suficientes para acceder a esos datos.',
@@ -37,13 +48,22 @@ const PALABRAS_VACIAS = new Set([
   'es', 'son', 'del', 'mi', 'tu', 'nos', 'le', 'les', 'podes', 'puedes', 'decir', 'contame', 'muestrame',
 ]);
 
+/** Saca tildes preservando mayusculas -- los disparadores de extraerConsulta
+ * estan escritos sin tilde ("numero de", "informacion de"); sin esto,
+ * "número de bombero BC-61" no reconoce "numero de" como disparador (la
+ * tilde no matchea) y "número" queda pegado a la consulta, rompiendo la
+ * busqueda (termina buscando "numero BC-61" en vez de "BC-61"). */
+function quitarAcentos(texto: string): string {
+  return texto.normalize('NFD').replace(/[̀-ͯ]/g, '');
+}
+
 /** Extrae la "consulta libre" de un mensaje: saca las palabras disparadoras
  * dadas y las palabras vacias, conserva el resto (con mayusculas
  * originales -- puede ser un nombre propio). Motor deterministico, no una
  * comprension real del lenguaje: cubre las variantes de fraseo mas
  * comunes, no cualquier parafraseo (ver limitacion documentada). */
 function extraerConsulta(mensajeOriginal: string, disparadores: RegExp[]): string {
-  let texto = mensajeOriginal;
+  let texto = quitarAcentos(mensajeOriginal);
   for (const d of disparadores) texto = texto.replace(d, ' ');
   const palabras = texto
     .replace(/[¿?¡!.,;:]/g, ' ')
@@ -83,6 +103,9 @@ export class IaToolsService {
     @InjectRepository(Articulo) private readonly articuloRepo: Repository<Articulo>,
     @InjectRepository(IdentidadInstitucional) private readonly identidadRepo: Repository<IdentidadInstitucional>,
     @InjectRepository(Parametro) private readonly parametroRepo: Repository<Parametro>,
+    @InjectRepository(Rango) private readonly rangoRepo: Repository<Rango>,
+    @InjectRepository(TipoBombero) private readonly tipoBomberoRepo: Repository<TipoBombero>,
+    @InjectRepository(InscripcionActividadAcademica) private readonly inscripcionRepo: Repository<InscripcionActividadAcademica>,
     private readonly documentosService: DocumentosService,
   ) {}
 
@@ -162,23 +185,96 @@ export class IaToolsService {
   private getPersonal(): AiTool {
     return {
       nombre: 'get_personal',
-      descripcion: 'Busca personal (bomberos) por nombre, apellido o numero de bombero.',
+      descripcion: 'Busca, cuenta o lista personal (bomberos) por nombre, numero de bombero, tipo de bombero, estado, rango o si hace guardias.',
       moduloSlug: 'personal',
       permisoRequerido: 'personal:ver',
-      patrones: [/quien es\b/, /datos de\b/, /buscar? (bombero|personal)/, /numero de bombero/, /informacion de(l)? bombero/],
-      palabrasClave: ['bombero', 'bomberos', 'personal', 'rango', 'cargo'],
-      extraerArgumentos: (_n, original) => ({ query: extraerConsulta(original, [/quien es/gi, /datos de/gi, /informacion de/gi, /buscar?/gi, /bombero/gi, /personal/gi, /numero de/gi]) }),
+      patrones: [
+        /quien es\b/, /datos de\b/, /buscar? (bombero|personal)/, /numero de bombero/, /informacion de(l)? bombero/,
+        /cuant[oa]s (bomberos?|combatientes?|incorporados?|voluntarios?|fundadores?|honorarios?)/,
+        /(bomberos?|combatientes?|incorporados?|fundadores?) (activos?|suspendidos?|retirados?|de licencia)/,
+        /hac(e|en) guardias?/,
+        // Codigos de tipo de bombero sueltos (seccion 12 del pedido: "¿Cuantos
+        // BC tenemos?" debe reconocerse igual que "combatientes", sin la
+        // palabra completa) -- \b\b evita falsos positivos con palabras que
+        // solo contienen esas letras de casualidad.
+        /\b(bcf|bvaf|bva|bc|bi|bh|bj)\b/,
+      ],
+      palabrasClave: ['bombero', 'bomberos', 'personal', 'rango', 'cargo', 'combatiente', 'combatientes', 'incorporado', 'incorporados', 'fundador', 'fundadores', 'honorario', 'voluntario'],
+      extraerArgumentos: async (mensajeNormalizado, original) => {
+        const intent = detectarIntent(mensajeNormalizado);
+        const filtros: Record<string, unknown> = {};
+        const resumen: Record<string, string> = {};
+
+        const tipo = await resolverTipoBombero(mensajeNormalizado, this.tipoBomberoRepo);
+        if (tipo) {
+          filtros.tipoBomberoId = tipo.id;
+          resumen.tipoBomberoId = `Tipo: ${tipo.nombre} (${tipo.prefijo})`;
+        }
+
+        const estado = resolverSinonimo(mensajeNormalizado, ESTADO_BOMBERO_SINONIMOS);
+        if (estado) {
+          filtros.estado = estado;
+          resumen.estado = `Estado: ${estado}`;
+        }
+
+        if (/hac(e|en) guardias?/.test(mensajeNormalizado)) {
+          filtros.realizaGuardias = true;
+          resumen.realizaGuardias = 'Hace guardias: si';
+        }
+
+        // Busqueda libre por nombre/codigo -- solo si NO se detecto ningun
+        // filtro estructurado, para no mezclar "combatientes activos" (dos
+        // filtros) con una busqueda de texto que no viene al caso.
+        let query = '';
+        if (Object.keys(filtros).length === 0) {
+          query = extraerConsulta(original, [/quien es/gi, /datos de/gi, /informacion de/gi, /buscar?/gi, /bombero/gi, /personal/gi, /numero de/gi]);
+          if (query) resumen.query = `Busqueda: "${query}"`;
+        }
+
+        return { intent, filtros, query, _resumen: resumen };
+      },
       ejecutar: async (args) => {
+        const filtros = (args.filtros as Record<string, unknown>) ?? {};
         const query = String(args.query ?? '').trim();
-        if (!query) return { contenidoRespuesta: 'Decime el nombre, apellido o numero de bombero que buscas.', resumenAuditoria: 'Personal -> consulta vacia' };
-        const bomberos = await this.bomberoRepo
-          .createQueryBuilder('b')
-          .where('(b.nombre LIKE :q OR b.apellido LIKE :q OR b.numeroBombero LIKE :q) AND b.estado != :fallecido', { q: `%${query}%`, fallecido: 'FALLECIDO' })
-          .take(8)
-          .getMany();
+        const intent = (args.intent as string) ?? 'LISTAR';
+
+        if (Object.keys(filtros).length === 0 && !query) {
+          return { contenidoRespuesta: 'Decime el nombre, numero de bombero, tipo (combatiente, incorporado...) o estado que buscas.', resumenAuditoria: 'Personal -> consulta vacia' };
+        }
+
+        const qb = this.bomberoRepo.createQueryBuilder('b').where('b.estado != :fallecido', { fallecido: 'FALLECIDO' });
+        if (filtros.tipoBomberoId) qb.andWhere('b.tipoBomberoId = :tipoBomberoId', { tipoBomberoId: filtros.tipoBomberoId });
+        if (filtros.estado) qb.andWhere('b.estado = :estadoFiltro', { estadoFiltro: filtros.estado });
+        if (filtros.realizaGuardias) qb.andWhere('b.realizaGuardias = 1');
+
+        if (query) {
+          // "Henry Martinez" son dos palabras que caen en columnas distintas
+          // (nombre="HENRY WALTER", apellido="MARTINEZ CACERES") -- cada
+          // palabra debe matchear alguna columna, todas son obligatorias.
+          // COLLATE ..._CI_AI: la base es Modern_Spanish_CI_AS (sensible a
+          // tildes) -- sin esto no encuentra "MARTINEZ" buscando "Martinez".
+          const palabras = query.split(/\s+/).filter((p: string) => p.length > 0);
+          palabras.forEach((palabra: string, i: number) => {
+            qb.andWhere(
+              `(b.nombre COLLATE Modern_Spanish_CI_AI LIKE :q${i} OR b.apellido COLLATE Modern_Spanish_CI_AI LIKE :q${i} OR b.numeroBombero COLLATE Modern_Spanish_CI_AI LIKE :q${i})`,
+              { [`q${i}`]: `%${palabra}%` },
+            );
+          });
+        }
+
+        if (intent === 'CONTAR') {
+          const total = await qb.getCount();
+          const resumen = (args._resumen as Record<string, string>) ?? {};
+          const descripcionFiltro = Object.values(resumen).join(', ') || 'todos los bomberos';
+          return { contenidoRespuesta: `Hay ${total} bomberos que cumplen: ${descripcionFiltro}.`, resumenAuditoria: `Personal -> conteo (${descripcionFiltro}) = ${total}` };
+        }
+
+        const total = await qb.getCount();
+        const bomberos = await qb.take(8).getMany();
         if (bomberos.length === 0) return sinResultados('personal');
         const lineas = bomberos.map((b) => `${b.numeroBombero} - ${b.nombre} ${b.apellido} - ${b.rango}${b.cargo ? ` (${b.cargo})` : ''} - ${b.estado}`);
-        return { contenidoRespuesta: lineas.join('\n'), resumenAuditoria: `Personal -> busqueda "${query}" (${bomberos.length} resultados)` };
+        const nota = total > bomberos.length ? `\n(mostrando ${bomberos.length} de ${total})` : '';
+        return { contenidoRespuesta: lineas.join('\n') + nota, resumenAuditoria: `Personal -> listado (${total} resultados)` };
       },
     };
   }
@@ -213,24 +309,90 @@ export class IaToolsService {
   private getGuardias(): AiTool {
     return {
       nombre: 'get_guardias',
-      descripcion: 'Guardias programadas en un rango de fechas (por defecto los proximos 7 dias).',
+      descripcion: 'Guardias programadas en un periodo (semana, fin de semana o mes) -- lista turnos o, si se pregunta "quienes", el personal asignado.',
       moduloSlug: 'guardias',
       permisoRequerido: 'guardias:ver',
-      patrones: [/guardias? (de|para) (esta semana|los proximos|el mes)/, /proximas guardias/, /calendario de guardias/, /que guardias hay/],
-      palabrasClave: ['guardias', 'calendario', 'semana', 'proximas', 'programadas'],
-      extraerArgumentos: () => ({}),
-      ejecutar: async () => {
-        const desde = new Date().toISOString().slice(0, 10);
-        const hastaDate = new Date(desde);
-        hastaDate.setDate(hastaDate.getDate() + 7);
-        const hasta = hastaDate.toISOString().slice(0, 10);
+      patrones: [
+        /guardias? (de|para) (esta semana|los proximos|el mes)/, /guardias? del mes/, /proximas guardias/, /calendario de guardias/, /que guardias hay/,
+        /guardias? (de |para |este )?fin de semana/, /quien(es)?.*(guardia|guardias).*(fin de semana|semana|mes)/,
+      ],
+      palabrasClave: ['guardias', 'calendario', 'semana', 'proximas', 'programadas', 'finde'],
+      extraerArgumentos: (mensajeNormalizado) => {
+        const filtros: Record<string, unknown> = {};
+        const resumen: Record<string, string> = {};
+        const hoy = new Date();
+
+        let desde: Date;
+        let hasta: Date;
+        if (/fin de semana/.test(mensajeNormalizado)) {
+          const dia = hoy.getDay(); // 0=domingo .. 6=sabado
+          if (dia === 6 || dia === 0) {
+            desde = new Date(hoy);
+            hasta = dia === 6 ? new Date(hoy.getTime() + 86400000) : new Date(hoy);
+          } else {
+            desde = new Date(hoy.getTime() + (6 - dia) * 86400000);
+            hasta = new Date(desde.getTime() + 86400000);
+          }
+          resumen.periodo = 'Periodo: este fin de semana';
+        } else if (/(del mes|este mes|el mes)/.test(mensajeNormalizado)) {
+          desde = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+          hasta = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0);
+          resumen.periodo = 'Periodo: este mes';
+        } else {
+          desde = hoy;
+          hasta = new Date(hoy.getTime() + 7 * 86400000);
+          resumen.periodo = 'Periodo: proximos 7 dias';
+        }
+        filtros.desde = desde.toISOString().slice(0, 10);
+        filtros.hasta = hasta.toISOString().slice(0, 10);
+
+        const mostrarPersonas = /quien(es)?\b/.test(mensajeNormalizado) || /(personal|bomberos) (de|en) guardia/.test(mensajeNormalizado);
+        if (mostrarPersonas) {
+          filtros.mostrarPersonas = true;
+          resumen.mostrarPersonas = 'Mostrar: personal asignado';
+        }
+
+        return { intent: mostrarPersonas ? 'LISTAR' : detectarIntent(mensajeNormalizado), filtros, _resumen: resumen };
+      },
+      ejecutar: async (args) => {
+        const filtros = (args.filtros as Record<string, unknown>) ?? {};
+        const desde = String(filtros.desde ?? new Date().toISOString().slice(0, 10));
+        const hasta = String(filtros.hasta ?? desde);
+        const mostrarPersonas = !!filtros.mostrarPersonas;
+        const intent = (args.intent as string) ?? 'LISTAR';
+
         const guardias = await this.guardiaRepo
           .createQueryBuilder('g')
           .where('g.fecha >= :desde AND g.fecha <= :hasta', { desde, hasta })
           .orderBy('g.fecha', 'ASC')
-          .take(30)
+          .take(60)
           .getMany();
-        if (guardias.length === 0) return sinResultados('guardias en los proximos 7 dias');
+        if (guardias.length === 0) return sinResultados(`guardias entre ${desde} y ${hasta}`);
+
+        if (intent === 'CONTAR' && !mostrarPersonas) {
+          return { contenidoRespuesta: `Hay ${guardias.length} guardias programadas entre ${desde} y ${hasta}.`, resumenAuditoria: `Guardias -> conteo ${desde} a ${hasta} = ${guardias.length}` };
+        }
+
+        if (mostrarPersonas) {
+          const guardiaIds = guardias.map((g) => g.id);
+          const asignaciones = guardiaIds.length ? await this.asignacionRepo.createQueryBuilder('a').where('a.guardiaId IN (:...ids)', { ids: guardiaIds }).getMany() : [];
+          const bomberoIds = [...new Set(asignaciones.map((a) => a.bomberoId))];
+          const bomberos = bomberoIds.length ? await this.bomberoRepo.createQueryBuilder('b').where('b.id IN (:...ids)', { ids: bomberoIds }).getMany() : [];
+          const nombrePorId = new Map(bomberos.map((b) => [b.id, `${b.nombre} ${b.apellido} (${b.numeroBombero})`]));
+          const asignacionesPorGuardia = new Map<string, string[]>();
+          for (const a of asignaciones) {
+            const lista = asignacionesPorGuardia.get(a.guardiaId) ?? [];
+            lista.push(nombrePorId.get(a.bomberoId) ?? a.bomberoId);
+            asignacionesPorGuardia.set(a.guardiaId, lista);
+          }
+          if (asignaciones.length === 0) return sinResultados(`personal asignado a guardias entre ${desde} y ${hasta}`);
+          const bloques = guardias.map((g) => {
+            const personal = asignacionesPorGuardia.get(g.id) ?? [];
+            return personal.length ? `${g.fecha} (Turno ${g.turno}): ${personal.join(', ')}` : null;
+          }).filter((b): b is string => !!b);
+          return { contenidoRespuesta: bloques.join('\n'), resumenAuditoria: `Guardias -> personal asignado ${desde} a ${hasta}` };
+        }
+
         const lineas = guardias.map((g) => `${g.fecha} - Turno ${g.turno} (${g.horaInicio}-${g.horaFin}) - ${g.estado}`);
         return { contenidoRespuesta: lineas.join('\n'), resumenAuditoria: `Guardias -> listado ${desde} a ${hasta}` };
       },
@@ -293,16 +455,38 @@ export class IaToolsService {
   private getVehiculos(): AiTool {
     return {
       nombre: 'get_vehiculos',
-      descripcion: 'Lista los vehiculos/moviles y su estado actual.',
+      descripcion: 'Lista o cuenta vehiculos/moviles filtrando por estado (disponible, fuera de servicio, en mantenimiento, de baja).',
       moduloSlug: 'vehiculos',
       permisoRequerido: 'vehiculos:ver',
-      patrones: [/(que|cuales) (moviles|vehiculos) (estan|hay) disponibles/, /estado de(l)? (movil|vehiculo)/, /moviles disponibles/, /vehiculos disponibles/],
+      patrones: [
+        /(que|cuales) (moviles|vehiculos) (estan|hay) disponibles/, /estado de(l)? (movil|vehiculo)/, /moviles disponibles/, /vehiculos disponibles/,
+        /(moviles|vehiculos) fuera de servicio/, /(moviles|vehiculos) en mantenimiento/, /cuant[oa]s (moviles|vehiculos)/,
+      ],
       palabrasClave: ['vehiculo', 'vehiculos', 'movil', 'moviles', 'camion', 'ambulancia'],
-      extraerArgumentos: (mensajeNormalizado) => ({ soloDisponibles: /disponible/.test(mensajeNormalizado) }),
+      extraerArgumentos: (mensajeNormalizado) => {
+        const intent = detectarIntent(mensajeNormalizado);
+        const filtros: Record<string, unknown> = {};
+        const resumen: Record<string, string> = {};
+        const estado = resolverSinonimo(mensajeNormalizado, ESTADO_VEHICULO_SINONIMOS);
+        if (estado) {
+          filtros.estado = estado;
+          resumen.estado = `Estado: ${estado}`;
+        }
+        return { intent, filtros, _resumen: resumen };
+      },
       ejecutar: async (args) => {
-        const qb = this.vehiculoRepo.createQueryBuilder('v').orderBy('v.numeroInterno', 'ASC').take(30);
-        if (args.soloDisponibles) qb.where("v.estado = 'OPERATIVO'");
-        const vehiculos = await qb.getMany();
+        const filtros = (args.filtros as Record<string, unknown>) ?? {};
+        const intent = (args.intent as string) ?? 'LISTAR';
+        const qb = this.vehiculoRepo.createQueryBuilder('v').orderBy('v.numeroInterno', 'ASC');
+        if (filtros.estado) qb.andWhere('v.estado = :estado', { estado: filtros.estado });
+
+        if (intent === 'CONTAR') {
+          const total = await qb.getCount();
+          const descripcion = filtros.estado ? `estado ${filtros.estado}` : 'todos los estados';
+          return { contenidoRespuesta: `Hay ${total} vehiculos (${descripcion}).`, resumenAuditoria: `Vehiculos -> conteo (${descripcion}) = ${total}` };
+        }
+
+        const vehiculos = await qb.take(30).getMany();
         if (vehiculos.length === 0) return sinResultados('vehiculos');
         const lineas = vehiculos.map((v) => `${v.numeroInterno} - ${v.tipo}${v.marca ? ` ${v.marca}` : ''} - ${v.estado}${v.ubicacionActual ? ` - ${v.ubicacionActual}` : ''}`);
         return { contenidoRespuesta: lineas.join('\n'), resumenAuditoria: `Vehiculos -> listado (${vehiculos.length})` };
@@ -313,23 +497,50 @@ export class IaToolsService {
   private getEquipos(): AiTool {
     return {
       nombre: 'get_equipos',
-      descripcion: 'Busca equipos por codigo interno o nombre, devuelve estado y ubicacion registrada.',
+      descripcion: 'Busca equipos por codigo/nombre, o lista/cuenta por estado (prestado, disponible, en mantenimiento, danado, de baja).',
       moduloSlug: 'equipos',
       permisoRequerido: 'equipos:ver',
-      patrones: [/donde esta el equipo/, /estado del equipo/, /buscar equipo/],
-      palabrasClave: ['equipo', 'equipos'],
-      extraerArgumentos: (_n, original) => ({ query: extraerConsulta(original, [/donde esta/gi, /estado del?/gi, /buscar/gi, /equipo/gi]) }),
+      patrones: [/donde esta el equipo/, /estado del equipo/, /buscar equipo/, /(que |cuales |cuant[oa]s )?equipos? (estan |hay )?(prestados?|disponibles?|en mantenimiento|danados?|de baja)/],
+      palabrasClave: ['equipo', 'equipos', 'prestado', 'prestados'],
+      extraerArgumentos: (mensajeNormalizado, original) => {
+        const intent = detectarIntent(mensajeNormalizado);
+        const filtros: Record<string, unknown> = {};
+        const resumen: Record<string, string> = {};
+        const estado = resolverSinonimo(mensajeNormalizado, ESTADO_EQUIPO_SINONIMOS);
+        if (estado) {
+          filtros.estado = estado;
+          resumen.estado = `Estado: ${estado}`;
+        }
+        let query = '';
+        if (!estado) {
+          query = extraerConsulta(original, [/donde esta/gi, /estado del?/gi, /buscar/gi, /equipo/gi]);
+          if (query) resumen.query = `Busqueda: "${query}"`;
+        }
+        return { intent, filtros, query, _resumen: resumen };
+      },
       ejecutar: async (args) => {
+        const filtros = (args.filtros as Record<string, unknown>) ?? {};
         const query = String(args.query ?? '').trim();
-        if (!query) return { contenidoRespuesta: 'Decime el codigo o nombre del equipo que buscas.', resumenAuditoria: 'Equipos -> consulta vacia' };
-        const equipos = await this.equipoRepo
-          .createQueryBuilder('e')
-          .where('e.codigoInterno LIKE :q OR e.nombre LIKE :q', { q: `%${query}%` })
-          .take(8)
-          .getMany();
+        const intent = (args.intent as string) ?? 'LISTAR';
+
+        if (!filtros.estado && !query) {
+          return { contenidoRespuesta: 'Decime el codigo, nombre o estado (prestado, disponible...) del equipo que buscas.', resumenAuditoria: 'Equipos -> consulta vacia' };
+        }
+
+        const qb = this.equipoRepo.createQueryBuilder('e');
+        if (filtros.estado) qb.andWhere('e.estado = :estado', { estado: filtros.estado });
+        if (query) qb.andWhere('(e.codigoInterno COLLATE Modern_Spanish_CI_AI LIKE :q OR e.nombre COLLATE Modern_Spanish_CI_AI LIKE :q)', { q: `%${query}%` });
+
+        if (intent === 'CONTAR') {
+          const total = await qb.getCount();
+          const descripcion = filtros.estado ? `estado ${filtros.estado}` : `"${query}"`;
+          return { contenidoRespuesta: `Hay ${total} equipos con ${descripcion}.`, resumenAuditoria: `Equipos -> conteo (${descripcion}) = ${total}` };
+        }
+
+        const equipos = await qb.take(20).getMany();
         if (equipos.length === 0) return sinResultados('equipos');
         const lineas = equipos.map((e) => `${e.codigoInterno} - ${e.nombre} - ${e.estado}${e.ubicacion ? ` - Ubicacion: ${e.ubicacion}` : ' - Sin ubicacion registrada'}`);
-        return { contenidoRespuesta: lineas.join('\n'), resumenAuditoria: `Equipos -> busqueda "${query}" (${equipos.length})` };
+        return { contenidoRespuesta: lineas.join('\n'), resumenAuditoria: `Equipos -> listado (${equipos.length})` };
       },
     };
   }
@@ -359,13 +570,33 @@ export class IaToolsService {
   private getAcademia(): AiTool {
     return {
       nombre: 'get_academia',
-      descripcion: 'Actividades academicas internas (cursos, capacitaciones, talleres) y cursos externos disponibles en OBA/Thinkific.',
+      descripcion: 'Actividades academicas internas (cursos, capacitaciones, talleres), cursos externos de OBA, o cuantos participaron de un curso puntual.',
       moduloSlug: 'academia',
       permisoRequerido: 'academia:ver',
-      patrones: [/que cursos/, /cursos nuevos/, /capacitacion(es)? (disponibles|nuevas)/, /\boba\b/, /academia/],
+      patrones: [/que cursos/, /cursos nuevos/, /capacitacion(es)? (disponibles|nuevas)/, /\boba\b/, /academia/, /(cuant[oa]s|quienes) participaron (de|en)/],
       palabrasClave: ['curso', 'cursos', 'capacitacion', 'capacitaciones', 'academia', 'taller', 'oba'],
-      extraerArgumentos: () => ({}),
-      ejecutar: async () => {
+      extraerArgumentos: (mensajeNormalizado, original) => {
+        const esParticipacion = /participaron (de|en)/.test(mensajeNormalizado);
+        if (!esParticipacion) return { modo: 'listado' };
+        const nombreCurso = extraerConsulta(original, [/cuant[oa]s/gi, /quienes/gi, /participaron/gi, /de la/gi, /de el/gi, /del/gi, /en la/gi, /en el/gi, /de\b/gi, /en\b/gi]);
+        return { modo: 'participacion', nombreCurso, intent: detectarIntent(mensajeNormalizado), _resumen: { nombreCurso: `Curso: "${nombreCurso}"` } };
+      },
+      ejecutar: async (args) => {
+        if (args.modo === 'participacion') {
+          const nombreCurso = String(args.nombreCurso ?? '').trim();
+          if (!nombreCurso) return { contenidoRespuesta: 'Decime el nombre del curso o actividad que queres consultar.', resumenAuditoria: 'Academia -> consulta de participacion vacia' };
+          const actividad = await this.actividadRepo
+            .createQueryBuilder('a')
+            .where('a.nombre COLLATE Modern_Spanish_CI_AI LIKE :q', { q: `%${nombreCurso}%` })
+            .orderBy('a.fechaInicio', 'DESC')
+            .getOne();
+          if (!actividad) return sinResultados(`una actividad academica llamada "${nombreCurso}"`);
+          const total = await this.inscripcionRepo.createQueryBuilder('i').where('i.actividadId = :id', { id: actividad.id }).getCount();
+          return {
+            contenidoRespuesta: `${total} personas participaron de "${actividad.nombre}" (${actividad.fechaInicio} a ${actividad.fechaFin}).`,
+            resumenAuditoria: `Academia -> participacion "${actividad.nombre}" = ${total}`,
+          };
+        }
         const [actividades, cursosExternos] = await Promise.all([
           this.actividadRepo
             .createQueryBuilder('a')
@@ -451,7 +682,7 @@ export class IaToolsService {
         if (!query) return { contenidoRespuesta: 'Decime el nombre o codigo del articulo que buscas en Deposito.', resumenAuditoria: 'Deposito -> consulta vacia' };
         const articulos = await this.articuloRepo
           .createQueryBuilder('a')
-          .where('(a.nombre LIKE :q OR a.codigo LIKE :q) AND a.estado = :estado', { q: `%${query}%`, estado: 'ACTIVO' })
+          .where('(a.nombre COLLATE Modern_Spanish_CI_AI LIKE :q OR a.codigo COLLATE Modern_Spanish_CI_AI LIKE :q) AND a.estado = :estado', { q: `%${query}%`, estado: 'ACTIVO' })
           .take(8)
           .getMany();
         if (articulos.length === 0) return sinResultados('articulos de deposito');

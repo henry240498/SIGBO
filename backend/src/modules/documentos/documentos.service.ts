@@ -458,7 +458,7 @@ export class DocumentosService {
     const qb = this.repo.createQueryBuilder('d').where('d.disponibleParaIa = 1');
     const condiciones = palabras.map((palabra, indice) => {
       qb.setParameter(`p${indice}`, `%${palabra}%`);
-      return `(d.titulo LIKE :p${indice} OR d.numeroDocumental LIKE :p${indice})`;
+      return `(d.titulo COLLATE Modern_Spanish_CI_AI LIKE :p${indice} OR d.numeroDocumental COLLATE Modern_Spanish_CI_AI LIKE :p${indice})`;
     });
     qb.andWhere(`(${condiciones.join(' OR ')})`);
     const candidatos = await qb.orderBy('d.fechaEmision', 'DESC').take(30).getMany();

@@ -670,6 +670,7 @@ export default function DetalleActividadAcademicaPage() {
                 <th style={{ padding: '6px 4px' }}>Inscripción</th>
                 <th style={{ padding: '6px 4px' }}>Estado</th>
                 <th style={{ padding: '6px 4px' }}>Resultado final</th>
+                <th style={{ padding: '6px 4px' }}>Costo</th>
                 {puedeInscribir && <th style={{ padding: '6px 4px' }}>Acciones</th>}
               </tr>
             </thead>
@@ -713,6 +714,24 @@ export default function DetalleActividadAcademicaPage() {
                       />
                     ) : (
                       (p.resultadoFinal ?? '-')
+                    )}
+                  </td>
+                  <td style={{ padding: '6px 4px' }}>
+                    {p.costoBase != null ? (
+                      <span style={{ fontSize: 12 }}>
+                        {p.descuentoImporte ? (
+                          <>
+                            <span style={{ textDecoration: 'line-through', color: '#64748b' }}>Gs. {p.costoBase.toLocaleString('es-PY')}</span>
+                            {' '}
+                            <span style={{ color: '#4ade80' }}>Gs. {(p.costoFinal ?? 0).toLocaleString('es-PY')}</span>
+                            <span style={{ color: '#94a3b8' }}> (Socio Protector)</span>
+                          </>
+                        ) : (
+                          `Gs. ${p.costoBase.toLocaleString('es-PY')}`
+                        )}
+                      </span>
+                    ) : (
+                      '-'
                     )}
                   </td>
                   {puedeInscribir && (

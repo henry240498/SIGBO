@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsIn, IsInt, IsNotEmpty, IsOptional, IsString, Matches } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsBoolean, IsIn, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Matches, Min } from 'class-validator';
 import { GUID_REGEX, GUID_REGEX_MENSAJE } from '../../../shared/utils/guid';
 
 const ESTADOS_ACTIVIDAD = ['PLANIFICADA', 'ABIERTA', 'EN_CURSO', 'FINALIZADA', 'CANCELADA'];
@@ -37,6 +38,10 @@ export class CreateActividadAcademicaDto {
 
   @ApiProperty({ required: false }) @IsOptional() @IsInt() cupo?: number;
   @ApiProperty({ required: false }) @IsOptional() @IsString() requisitos?: string;
+
+  @ApiProperty({ required: false, description: 'Costo de la actividad -- vacio si no cobra. Base para el descuento de Socios Protectores (nunca se modifica al aplicar un beneficio).' })
+  @IsOptional() @Type(() => Number) @IsNumber() @Min(0)
+  costo?: number;
 
   @ApiProperty({ required: false, enum: ESTADOS_ACTIVIDAD, default: 'PLANIFICADA' })
   @IsOptional()

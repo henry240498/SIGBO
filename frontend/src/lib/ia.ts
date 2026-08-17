@@ -34,6 +34,7 @@ export interface ConfiguracionIa extends PerfilIa {
   limiteConsultasMinuto: number;
   limiteConsultasHora: number;
   modulosHabilitadosJson: string;
+  explicarInterpretacion: boolean;
   creadoEn: string;
   actualizadoEn: string;
   actualizadoPor: string | null;

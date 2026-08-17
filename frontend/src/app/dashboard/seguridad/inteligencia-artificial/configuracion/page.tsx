@@ -249,6 +249,7 @@ export default function ConfiguracionIaPage() {
   const [limiteMinuto, setLimiteMinuto] = useState('8');
   const [limiteHora, setLimiteHora] = useState('60');
   const [modulosHabilitados, setModulosHabilitados] = useState<string[]>([]);
+  const [explicarInterpretacion, setExplicarInterpretacion] = useState(false);
   const [motivo, setMotivo] = useState('');
 
   const [motivoEstado, setMotivoEstado] = useState('');
@@ -274,6 +275,7 @@ export default function ConfiguracionIaPage() {
       setLimiteMinuto(String(c.limiteConsultasMinuto));
       setLimiteHora(String(c.limiteConsultasHora));
       setMensajeMantenimiento(c.mensajeMantenimiento ?? '');
+      setExplicarInterpretacion(c.explicarInterpretacion);
       try {
         setModulosHabilitados(JSON.parse(c.modulosHabilitadosJson));
       } catch {
@@ -311,6 +313,7 @@ export default function ConfiguracionIaPage() {
         limiteConsultasMinuto: Number(limiteMinuto),
         limiteConsultasHora: Number(limiteHora),
         modulosHabilitados,
+        explicarInterpretacion,
         motivo: motivo || undefined,
       });
       setMensaje('Configuración actualizada.');
@@ -416,6 +419,10 @@ export default function ConfiguracionIaPage() {
           <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Instrucciones institucionales adicionales</label>
           <textarea className="input-field" rows={3} value={instrucciones} onChange={(e) => setInstrucciones(e.target.value)} placeholder="Reglas o contexto propio de esta institución para el asistente" />
         </div>
+        <label style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <input type="checkbox" checked={explicarInterpretacion} onChange={(e) => setExplicarInterpretacion(e.target.checked)} />
+          Explicar interpretación (antepone a cada respuesta cómo se entendió la consulta — módulo, intención y filtros detectados)
+        </label>
 
         <h3 style={{ fontSize: 14, marginTop: 6 }}>Límites de uso</h3>
         <p style={{ fontSize: 12, color: '#94a3b8' }}>

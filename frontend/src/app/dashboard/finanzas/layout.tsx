@@ -5,6 +5,9 @@ import { usePathname } from 'next/navigation';
 
 const TABS = [
   { href: '/dashboard/finanzas', label: 'Dashboard', exact: true },
+  { href: '/dashboard/finanzas/socios-protectores', label: 'Socios Protectores' },
+  { href: '/dashboard/finanzas/beneficios', label: 'Beneficios' },
+  { href: '/dashboard/finanzas/facturacion', label: 'Facturacion' },
   { href: '/dashboard/finanzas/movimientos', label: 'Movimientos' },
   { href: '/dashboard/finanzas/cajas', label: 'Cajas' },
   { href: '/dashboard/finanzas/cuentas-bancarias', label: 'Cuentas Bancarias' },

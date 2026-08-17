@@ -64,6 +64,7 @@ export class MovimientosFinancierosService {
     cuentaBancariaId?: string;
     proveedorId?: string;
     bomberoId?: string;
+    socioProtectorId?: string;
     tipoIngresoId?: string;
     categoriaEgresoId?: string;
     desde?: string;
@@ -76,6 +77,7 @@ export class MovimientosFinancierosService {
     if (filtros.cuentaBancariaId) qb.andWhere('m.cuentaBancariaId = :cuentaBancariaId', { cuentaBancariaId: filtros.cuentaBancariaId });
     if (filtros.proveedorId) qb.andWhere('m.proveedorId = :proveedorId', { proveedorId: filtros.proveedorId });
     if (filtros.bomberoId) qb.andWhere('m.bomberoId = :bomberoId', { bomberoId: filtros.bomberoId });
+    if (filtros.socioProtectorId) qb.andWhere('m.socioProtectorId = :socioProtectorId', { socioProtectorId: filtros.socioProtectorId });
     if (filtros.tipoIngresoId) qb.andWhere('m.tipoIngresoId = :tipoIngresoId', { tipoIngresoId: filtros.tipoIngresoId });
     if (filtros.categoriaEgresoId) qb.andWhere('m.categoriaEgresoId = :categoriaEgresoId', { categoriaEgresoId: filtros.categoriaEgresoId });
     if (filtros.desde) qb.andWhere('m.fecha >= :desde', { desde: filtros.desde });
@@ -132,6 +134,9 @@ export class MovimientosFinancierosService {
           responsableId: dto.responsableId ?? null,
           cuotaId: dto.cuotaId ?? null,
           depositoEntradaId: dto.depositoEntradaId ?? null,
+          socioProtectorId: dto.socioProtectorId ?? null,
+          aporteId: dto.aporteId ?? null,
+          facturaId: dto.facturaId ?? null,
           ejercicioId: ejercicio.id,
           observacion: dto.observacion ?? null,
           creadoPor: actorId,

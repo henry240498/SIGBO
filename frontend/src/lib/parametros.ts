@@ -49,7 +49,12 @@ export type TipoParametro =
   | 'ESTADO_DOCUMENTO'
   | 'NIVEL_CONFIDENCIALIDAD_DOCUMENTO'
   | 'MOTIVO_ANULACION_DOCUMENTO'
-  | 'ARCHIVO_FISICO_DOCUMENTO';
+  | 'ARCHIVO_FISICO_DOCUMENTO'
+  | 'ESTADO_SOCIO_PROTECTOR'
+  | 'PERIODICIDAD_APORTE'
+  | 'MEDIO_PAGO_FINANZAS'
+  | 'TIPO_BENEFICIO_SOCIO'
+  | 'MOTIVO_NOTA_CREDITO_FINANZAS';
 
 /** Carga parametros activos de un tipo, opcionalmente filtrados por padre
  * (jerarquia geografica). Usado por todos los combos parametricos de Personal. */

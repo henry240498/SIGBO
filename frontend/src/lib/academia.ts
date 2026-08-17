@@ -29,6 +29,7 @@ export interface ActividadAcademica {
   estado: EstadoActividadAcademica;
   observaciones: string | null;
   esExterna: boolean;
+  costo: number | null;
 }
 
 export interface InstructorExternoInput {
@@ -109,6 +110,10 @@ export interface ParticipanteDeActividad {
   resultadoFinalId: string | null;
   resultadoFinal: string | null;
   observaciones: string | null;
+  costoBase?: number | null;
+  beneficioAplicadoId?: string | null;
+  descuentoImporte?: number | null;
+  costoFinal?: number | null;
 }
 
 /* ------------------------------------------------------------------ */

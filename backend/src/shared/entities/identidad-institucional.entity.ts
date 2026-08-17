@@ -37,6 +37,9 @@ export class IdentidadInstitucional {
   @Column({ type: 'bit', default: false })
   mostrarSitioWeb: boolean;
 
+  @Column({ type: 'nvarchar', length: 30, nullable: true })
+  ruc: string | null;
+
   @Column({ type: 'nvarchar', length: 150, nullable: true })
   personeriaJuridica: string | null;
 

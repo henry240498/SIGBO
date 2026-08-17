@@ -12,6 +12,7 @@ export const CARPETA_IDENTIDAD_INSTITUCIONAL = 'identidad-institucional';
 export const CARPETA_FIRMAS_BOMBERO = 'firmas-bomberos';
 export const CARPETA_CERTIFICACIONES = 'certificaciones';
 export const CARPETA_DOCUMENTOS = 'documentos';
+export const CARPETA_COMPROBANTES_FINANZAS = 'comprobantes-finanzas';
 
 /** Guarda un archivo subido con nombre hasheado dentro de uploads/<carpeta> y devuelve la ruta servible. */
 export async function guardarImagen(file: Express.Multer.File, carpeta = 'apariencia'): Promise<string> {

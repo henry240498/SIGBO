@@ -219,6 +219,9 @@ export interface IndicadoresFinanzas {
   saldoMes: number;
   pendienteDePago: number;
   movimientosRecientes: MovimientoFinanciero[];
+  sociosProtectores: { activos: number; sinAporteEsteMes: number; aportesMes: number; aportesExtraordinariosMes: number };
+  facturacion: { totalMes: number; notasCreditoMes: number };
+  ingresosPorOrigen: { servicios: number; academia: number };
 }
 
 async function mensajeError(res: Response, porDefecto: string): Promise<string> {

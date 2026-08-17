@@ -63,6 +63,12 @@ export class ActividadAcademica {
   @Column({ type: 'nvarchar', nullable: true })
   requisitos: string | null;
 
+  /** Nullable: no todas las actividades cobran. Se usa como monto base
+   * para el calculo de descuentos de Socios Protectores -- nunca se
+   * modifica al aplicar un beneficio (ver InscripcionActividadAcademica). */
+  @Column({ type: 'decimal', precision: 15, scale: 2, nullable: true })
+  costo: number | null;
+
   @Column({ type: 'nvarchar', length: 20, default: 'PLANIFICADA' })
   estado: EstadoActividadAcademica;
 

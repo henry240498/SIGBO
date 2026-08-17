@@ -9,8 +9,10 @@ import {
   Parametro,
   ParticipanteExterno,
   Rango,
+  SocioProtector,
 } from '../../shared/entities';
 import { AuditoriaService } from '../seguridad/auditoria.service';
+import { BeneficiosSociosService } from '../finanzas/beneficios-socios.service';
 import { InscribirParticipanteDto } from './dto/inscribir-participante.dto';
 import { ActualizarInscripcionDto } from './dto/actualizar-inscripcion.dto';
 
@@ -24,7 +26,9 @@ export class InscripcionesAcademiaService {
     @InjectRepository(ParticipanteExterno) private readonly externoRepo: Repository<ParticipanteExterno>,
     @InjectRepository(Parametro) private readonly parametroRepo: Repository<Parametro>,
     @InjectRepository(HistorialInstitucional) private readonly historialRepo: Repository<HistorialInstitucional>,
+    @InjectRepository(SocioProtector) private readonly socioProtectorRepo: Repository<SocioProtector>,
     private readonly auditoriaService: AuditoriaService,
+    private readonly beneficiosSociosService: BeneficiosSociosService,
   ) {}
 
   private async verificarActividad(actividadId: string) {
@@ -79,6 +83,10 @@ export class InscripcionesAcademiaService {
           resultadoFinalId: i.resultadoFinalId,
           resultadoFinal: i.resultadoFinalId ? (resultadoPorId.get(i.resultadoFinalId) ?? null) : null,
           observaciones: i.observaciones,
+          costoBase: i.costoBase,
+          beneficioAplicadoId: i.beneficioAplicadoId,
+          descuentoImporte: i.descuentoImporte,
+          costoFinal: i.costoFinal,
         };
       }
       const x = externoPorId.get(i.participanteExternoId as string);
@@ -98,7 +106,7 @@ export class InscripcionesAcademiaService {
   }
 
   async inscribir(actividadId: string, dto: InscribirParticipanteDto, actorId: string, ip?: string) {
-    await this.verificarActividad(actividadId);
+    const actividad = await this.verificarActividad(actividadId);
 
     if (!dto.bomberoId && !dto.externo) {
       throw new BadRequestException('Debe indicar bomberoId o los datos de un participante externo');
@@ -135,6 +143,33 @@ export class InscripcionesAcademiaService {
       throw new BadRequestException('Esta persona ya esta inscrita en esta actividad');
     }
 
+    // Descuento de Socio Protector (seccion 12 del pedido): solo si la
+    // actividad tiene costo y el inscripto es un bombero vinculado a un
+    // Socio Protector activo con un beneficio aplicable -- el costo base
+    // de la actividad nunca se modifica, el calculo queda en la
+    // inscripcion y auditado en AplicacionBeneficio.
+    let costoBase: number | null = null;
+    let beneficioAplicadoId: string | null = null;
+    let descuentoImporte: number | null = null;
+    let costoFinal: number | null = null;
+    let socioParaBeneficio: SocioProtector | null = null;
+
+    if (actividad.costo != null && bomberoId) {
+      socioParaBeneficio = await this.socioProtectorRepo.findOne({ where: { bomberoId } });
+      if (socioParaBeneficio) {
+        const beneficio = await this.beneficiosSociosService.buscarAplicable(socioParaBeneficio.id, 'ACADEMIA', actividadId);
+        costoBase = actividad.costo;
+        if (beneficio) {
+          const simulacion = await this.beneficiosSociosService.simular(socioParaBeneficio.id, 'ACADEMIA', actividad.costo, actividadId);
+          descuentoImporte = simulacion.descuentoAplicado;
+          costoFinal = simulacion.montoFinal;
+          beneficioAplicadoId = beneficio.id;
+        } else {
+          costoFinal = actividad.costo;
+        }
+      }
+    }
+
     const inscripcion = await this.inscripcionRepo.save(
       this.inscripcionRepo.create({
         actividadId,
@@ -142,9 +177,18 @@ export class InscripcionesAcademiaService {
         participanteExternoId,
         fechaInscripcion: new Date().toISOString().slice(0, 10),
         estado: 'INSCRITO',
+        costoBase,
+        beneficioAplicadoId,
+        descuentoImporte,
+        costoFinal,
         creadoPor: actorId,
       }),
     );
+
+    if (beneficioAplicadoId && socioParaBeneficio) {
+      const beneficio = await this.beneficiosSociosService.findOne(beneficioAplicadoId);
+      await this.beneficiosSociosService.aplicar(beneficio, socioParaBeneficio.id, inscripcion.id, costoBase as number, actorId);
+    }
 
     await this.auditoriaService.registrar({
       usuarioId: actorId,

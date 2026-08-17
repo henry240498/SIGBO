@@ -32,7 +32,9 @@ export interface AiTool {
   palabrasClave: string[];
   /** Extrae los argumentos de `ejecutar` a partir del mensaje. Puede
    * devolver un objeto vacio -- no todas las herramientas necesitan
-   * parametros (ej. get_institucion, get_guardia_actual). */
-  extraerArgumentos: (mensajeNormalizado: string, mensajeOriginal: string) => Record<string, unknown>;
+   * parametros (ej. get_institucion, get_guardia_actual). Async porque
+   * resolver un filtro semantico (ej. tipo de bombero por alias) requiere
+   * consultar el catalogo real, nunca hardcodear el id. */
+  extraerArgumentos: (mensajeNormalizado: string, mensajeOriginal: string) => Record<string, unknown> | Promise<Record<string, unknown>>;
   ejecutar(argumentos: Record<string, unknown>, usuario: AuthenticatedUser): Promise<ResultadoHerramientaIa>;
 }

@@ -40,6 +40,22 @@ export class InscripcionActividadAcademica {
   @Column({ type: 'nvarchar', nullable: true })
   observaciones: string | null;
 
+  /** Snapshot del beneficio de Socio Protector aplicado al inscribirse
+   * (seccion 12 del pedido): el costo base de la actividad NUNCA se
+   * modifica, el descuento se guarda aca. Todo nullable porque la
+   * mayoria de las inscripciones no tienen costo ni beneficio. */
+  @Column({ type: 'decimal', precision: 15, scale: 2, nullable: true })
+  costoBase: number | null;
+
+  @Column({ type: 'uniqueidentifier', nullable: true })
+  beneficioAplicadoId: string | null;
+
+  @Column({ type: 'decimal', precision: 15, scale: 2, nullable: true })
+  descuentoImporte: number | null;
+
+  @Column({ type: 'decimal', precision: 15, scale: 2, nullable: true })
+  costoFinal: number | null;
+
   @CreateDateColumn({ name: 'creado_en', type: 'datetimeoffset', precision: 3 })
   creadoEn: Date;
 

@@ -69,6 +69,7 @@ export class ActividadesAcademicasService {
         estado: (dto.estado as any) ?? 'PLANIFICADA',
         observaciones: dto.observaciones ?? null,
         esExterna: dto.esExterna ?? false,
+        costo: dto.costo ?? null,
         creadoPor: actorId,
       }),
     );

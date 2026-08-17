@@ -56,6 +56,21 @@ export class RegistrarMovimientoFinancieroDto {
   @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
   depositoEntradaId?: string;
 
+  @ApiProperty({ required: false, description: 'finanzas.socios_protectores.id -- si este ingreso proviene de un Socio Protector' })
+  @IsOptional()
+  @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
+  socioProtectorId?: string;
+
+  @ApiProperty({ required: false, description: 'finanzas.aportes.id -- aporte que origino este movimiento' })
+  @IsOptional()
+  @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
+  aporteId?: string;
+
+  @ApiProperty({ required: false, description: 'finanzas.facturas.id -- factura relacionada a este movimiento' })
+  @IsOptional()
+  @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
+  facturaId?: string;
+
   @ApiProperty({ required: false }) @IsOptional() @IsString() observacion?: string;
 
   @ApiProperty({ required: false, type: DocumentoRespaldoInputDto })

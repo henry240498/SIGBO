@@ -30,6 +30,7 @@ export default function ActividadesAcademicasPage() {
   const [fechaFin, setFechaFin] = useState('');
   const [lugar, setLugar] = useState('');
   const [esExterna, setEsExterna] = useState(false);
+  const [costo, setCosto] = useState('');
 
   const puedeCrear = !!obtenerSesion()?.usuario.permisos.includes('academia:crear_curso');
 
@@ -71,6 +72,7 @@ export default function ActividadesAcademicasPage() {
         fechaFin,
         lugar: lugar || undefined,
         esExterna,
+        costo: costo ? Number(costo) : undefined,
       });
       router.push(`/dashboard/academia/${creada.id}`);
     } catch (err: any) {
@@ -141,6 +143,10 @@ export default function ActividadesAcademicasPage() {
           <div>
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label>
             <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+          </div>
+          <div style={{ maxWidth: 220 }}>
+            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Costo (vacio si no cobra)</label>
+            <input className="input-field" type="number" min={0} step="1" value={costo} onChange={(e) => setCosto(e.target.value)} />
           </div>
           <label style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
             <input type="checkbox" checked={esExterna} onChange={(e) => setEsExterna(e.target.checked)} />
