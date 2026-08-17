@@ -68,6 +68,13 @@ export interface ConversacionIa {
   ultimaActividadEn: string;
 }
 
+/** Version que devuelve el panel admin (`/ia/admin/conversaciones`): trae
+ * el username ya resuelto, no el usuarioId crudo. */
+export interface ConversacionIaAdmin extends ConversacionIa {
+  usuarioUsername: string | null;
+  usuarioEmail: string | null;
+}
+
 export interface MensajeIa {
   id: string;
   conversacionId: string;
@@ -252,7 +259,13 @@ export async function cargarTodasLasConversaciones(filtros?: { usuarioId?: strin
   if (filtros?.hasta) params.set('hasta', filtros.hasta);
   const res = await apiFetch(`/ia/admin/conversaciones?${params.toString()}`);
   if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo cargar las conversaciones'));
-  return res.json() as Promise<ConversacionIa[]>;
+  return res.json() as Promise<ConversacionIaAdmin[]>;
+}
+
+export async function eliminarConversacionIa(id: string) {
+  const res = await apiFetch(`/ia/admin/conversaciones/${id}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo eliminar la conversación'));
+  return res.json() as Promise<{ eliminado: boolean }>;
 }
 
 export async function cargarEjecucionesDeConversacion(id: string) {

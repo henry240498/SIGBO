@@ -21,6 +21,7 @@ import {
   Rango,
   Servicio,
   TipoBombero,
+  Usuario,
   Articulo,
   Vehiculo,
 } from '../../shared/entities';
@@ -69,6 +70,7 @@ import { IaDashboardController } from './ia-dashboard.controller';
       Rango,
       TipoBombero,
       InscripcionActividadAcademica,
+      Usuario,
     ]),
     SeguridadModule,
     DocumentosModule,

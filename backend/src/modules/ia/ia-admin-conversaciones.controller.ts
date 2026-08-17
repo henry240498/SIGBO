@@ -1,8 +1,11 @@
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Query, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { PermissionsGuard } from '../seguridad/guards/permissions.guard';
 import { RequirePermission } from '../seguridad/decorators/require-permission.decorator';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { AuthenticatedUser } from '../auth/types/authenticated-user';
 import { AuditoriaService } from '../seguridad/auditoria.service';
 import { IaConversacionesService } from './ia-conversaciones.service';
 
@@ -30,6 +33,13 @@ export class IaAdminConversacionesController {
   @RequirePermission('inteligencia:ver_conversaciones')
   ejecucionesDe(@Param('id') id: string) {
     return this.conversacionesService.ejecucionesDe(id);
+  }
+
+  @Delete('conversaciones/:id')
+  @RequirePermission('inteligencia:eliminar_conversaciones')
+  async eliminar(@Param('id') id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
+    await this.conversacionesService.eliminar(id, user.id, req.ip ?? null);
+    return { eliminado: true };
   }
 
   /** Auditoria administrativa del modulo (seccion 55): cambios de
