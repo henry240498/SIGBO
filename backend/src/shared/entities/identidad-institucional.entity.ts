@@ -79,6 +79,12 @@ export class IdentidadInstitucional {
   @Column({ type: 'bit', default: true })
   mostrarGeneradoSigbo: boolean;
 
+  /** Donde va el bloque titulo/numero/fecha en la cabecera de CUALQUIER
+   * documento generado por SIGBO (no por-plantilla: es de la identidad
+   * institucional, el mismo criterio que logos/pie de pagina). */
+  @Column({ type: 'nvarchar', length: 20, default: 'CENTRO' })
+  alineacionTitulo: 'IZQUIERDA' | 'CENTRO' | 'DERECHA';
+
   @UpdateDateColumn({ name: 'actualizado_en', type: 'datetimeoffset', precision: 3 })
   actualizadoEn: Date;
 

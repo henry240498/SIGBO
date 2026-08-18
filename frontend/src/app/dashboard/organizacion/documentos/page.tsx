@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { API_ORIGIN, obtenerSesion } from '@/lib/api';
 import {
   IdentidadInstitucional,
@@ -9,6 +9,9 @@ import {
   cargarIdentidadInstitucional,
   subirLogoInstitucional,
 } from '@/lib/organizacion';
+import { ComboBuscable } from '@/components/ComboBuscable';
+import { Parametro } from '@/lib/parametros';
+import { NumeracionDocumento, cargarNumeraciones, cargarTiposDocumento, guardarNumeracion } from '@/lib/documentos';
 
 const TIPOS_LINEA: Array<{ value: LineaDestacada['tipo']; label: string }> = [
   { value: 'SUBTITULO', label: 'Subtitulo institucional' },
@@ -42,6 +45,7 @@ export default function DocumentosInstitucionalesPage() {
   const [mostrarFechaFundacion, setMostrarFechaFundacion] = useState(true);
   const [mostrarLogoIzquierda, setMostrarLogoIzquierda] = useState(true);
   const [mostrarLogoDerecha, setMostrarLogoDerecha] = useState(true);
+  const [alineacionTitulo, setAlineacionTitulo] = useState<'IZQUIERDA' | 'CENTRO' | 'DERECHA'>('CENTRO');
   const [lineas, setLineas] = useState<LineaDestacada[]>([]);
   const [textoPiePagina, setTextoPiePagina] = useState('');
   const [mostrarNumeroPagina, setMostrarNumeroPagina] = useState(true);
@@ -64,6 +68,7 @@ export default function DocumentosInstitucionalesPage() {
     setMostrarFechaFundacion(data.mostrarFechaFundacion);
     setMostrarLogoIzquierda(data.mostrarLogoIzquierda);
     setMostrarLogoDerecha(data.mostrarLogoDerecha);
+    setAlineacionTitulo(data.alineacionTitulo ?? 'CENTRO');
     setTextoPiePagina(data.textoPiePagina ?? '');
     setMostrarNumeroPagina(data.mostrarNumeroPagina);
     setMostrarGeneradoSigbo(data.mostrarGeneradoSigbo);
@@ -120,6 +125,7 @@ export default function DocumentosInstitucionalesPage() {
         mostrarFechaFundacion,
         mostrarLogoIzquierda,
         mostrarLogoDerecha,
+        alineacionTitulo,
         lineasDestacadas: lineas.map((l, i) => ({ ...l, orden: i + 1 })),
         textoPiePagina: textoPiePagina || undefined,
         mostrarNumeroPagina,
@@ -133,6 +139,18 @@ export default function DocumentosInstitucionalesPage() {
       setGuardando(false);
     }
   }
+
+  const [numeraciones, setNumeraciones] = useState<NumeracionDocumento[] | null>(null);
+  const [tiposDocumento, setTiposDocumento] = useState<Parametro[]>([]);
+  const opcionesTipoDocumento = useMemo(() => tiposDocumento.map((t) => ({ value: t.id, label: t.nombre })), [tiposDocumento]);
+  const nombreTipoPorId = useMemo(() => new Map(tiposDocumento.map((t) => [t.id, t.nombre])), [tiposDocumento]);
+
+  useEffect(() => {
+    if (!puedeConfigurar) return;
+    cargarTiposDocumento().then(setTiposDocumento).catch(() => undefined);
+    cargarNumeraciones().then(setNumeraciones).catch(() => undefined);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [puedeConfigurar]);
 
   async function subirLogo(lado: 'izquierda' | 'derecha', archivo: File) {
     setError(null);
@@ -194,6 +212,21 @@ export default function DocumentosInstitucionalesPage() {
               onArchivo={(f) => subirLogo('derecha', f)}
               disabled={!puedeConfigurar}
             />
+          </div>
+        </section>
+
+        <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <h3 style={{ fontSize: 14 }}>Título del documento</h3>
+          <p style={{ fontSize: 12, color: '#94a3b8' }}>
+            Alineación del título, número y fecha en la cabecera de cualquier documento que genere SIGBO.
+          </p>
+          <div style={{ display: 'flex', gap: 16 }}>
+            {(['IZQUIERDA', 'CENTRO', 'DERECHA'] as const).map((valor) => (
+              <label key={valor} style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <input type="radio" name="alineacionTitulo" checked={alineacionTitulo === valor} onChange={() => setAlineacionTitulo(valor)} />
+                {valor === 'IZQUIERDA' ? 'Izquierda' : valor === 'CENTRO' ? 'Centro' : 'Derecha'}
+              </label>
+            ))}
           </div>
         </section>
 
@@ -271,7 +304,246 @@ export default function DocumentosInstitucionalesPage() {
           </button>
         )}
       </fieldset>
+
+      {puedeConfigurar && (
+        <SeccionNumeracion
+          numeraciones={numeraciones}
+          opcionesTipoDocumento={opcionesTipoDocumento}
+          nombreTipoPorId={nombreTipoPorId}
+          onGuardado={(actualizado) => {
+            setNumeraciones((prev) => {
+              const previas = prev ?? [];
+              const idx = previas.findIndex((n) => n.id === actualizado.id);
+              if (idx === -1) return [actualizado, ...previas];
+              const copia = [...previas];
+              copia[idx] = actualizado;
+              return copia;
+            });
+          }}
+        />
+      )}
     </div>
+  );
+}
+
+/** Numeracion de Documentos (secciones 3-13 del pedido): un numerador
+ * independiente por tipo+anio, con rango declarado, posicion vigente
+ * editable y vigencia por fecha. Vive en esta misma pantalla porque el
+ * pedido la ubica en "Organizacion Institucional -> Configuracion de
+ * Documentos -> Numeracion de Documentos", no como pantalla aparte. */
+function SeccionNumeracion({
+  numeraciones,
+  opcionesTipoDocumento,
+  nombreTipoPorId,
+  onGuardado,
+}: {
+  numeraciones: NumeracionDocumento[] | null;
+  opcionesTipoDocumento: Array<{ value: string; label: string }>;
+  nombreTipoPorId: Map<string, string>;
+  onGuardado: (n: NumeracionDocumento) => void;
+}) {
+  const anioActualDefecto = new Date().getFullYear();
+  const [mostrarForm, setMostrarForm] = useState(false);
+  const [guardando, setGuardando] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [mensaje, setMensaje] = useState<string | null>(null);
+
+  const [tipoDocumentoId, setTipoDocumentoId] = useState('');
+  const [anio, setAnio] = useState(String(anioActualDefecto));
+  const [ultimoNumero, setUltimoNumero] = useState('0');
+  const [mesActual, setMesActual] = useState('');
+  const [anioDesde, setAnioDesde] = useState('');
+  const [mesDesde, setMesDesde] = useState('');
+  const [numeroDesde, setNumeroDesde] = useState('');
+  const [anioHasta, setAnioHasta] = useState('');
+  const [mesHasta, setMesHasta] = useState('');
+  const [numeroHasta, setNumeroHasta] = useState('');
+  const [fechaVigenciaDesde, setFechaVigenciaDesde] = useState('');
+  const [fechaVigenciaHasta, setFechaVigenciaHasta] = useState('');
+
+  function editar(n: NumeracionDocumento) {
+    setTipoDocumentoId(n.tipoDocumentoId);
+    setAnio(String(n.anio));
+    setUltimoNumero(String(n.ultimoNumero));
+    setMesActual(n.mesActual != null ? String(n.mesActual) : '');
+    setAnioDesde(n.anioDesde != null ? String(n.anioDesde) : '');
+    setMesDesde(n.mesDesde != null ? String(n.mesDesde) : '');
+    setNumeroDesde(n.numeroDesde != null ? String(n.numeroDesde) : '');
+    setAnioHasta(n.anioHasta != null ? String(n.anioHasta) : '');
+    setMesHasta(n.mesHasta != null ? String(n.mesHasta) : '');
+    setNumeroHasta(n.numeroHasta != null ? String(n.numeroHasta) : '');
+    setFechaVigenciaDesde(n.fechaVigenciaDesde ?? '');
+    setFechaVigenciaHasta(n.fechaVigenciaHasta ?? '');
+    setMostrarForm(true);
+  }
+
+  function nuevo() {
+    setTipoDocumentoId('');
+    setAnio(String(anioActualDefecto));
+    setUltimoNumero('0');
+    setMesActual('');
+    setAnioDesde('');
+    setMesDesde('');
+    setNumeroDesde('');
+    setAnioHasta('');
+    setMesHasta('');
+    setNumeroHasta('');
+    setFechaVigenciaDesde('');
+    setFechaVigenciaHasta('');
+    setMostrarForm(true);
+  }
+
+  async function guardar(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setMensaje(null);
+    setGuardando(true);
+    try {
+      const numero = (v: string) => (v === '' ? undefined : Number(v));
+      const actualizado = await guardarNumeracion({
+        tipoDocumentoId,
+        anio: Number(anio),
+        ultimoNumero: numero(ultimoNumero),
+        mesActual: numero(mesActual),
+        anioDesde: numero(anioDesde),
+        mesDesde: numero(mesDesde),
+        numeroDesde: numero(numeroDesde),
+        anioHasta: numero(anioHasta),
+        mesHasta: numero(mesHasta),
+        numeroHasta: numero(numeroHasta),
+        fechaVigenciaDesde: fechaVigenciaDesde || undefined,
+        fechaVigenciaHasta: fechaVigenciaHasta || undefined,
+      });
+      onGuardado(actualizado);
+      setMensaje('Numeracion guardada.');
+      setMostrarForm(false);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setGuardando(false);
+    }
+  }
+
+  return (
+    <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <h3 style={{ fontSize: 14 }}>Numeracion de documentos</h3>
+          <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 2 }}>
+            Un numerador independiente por tipo de documento y año (ej. Resolucion 2026/47). El numero se sugiere al
+            crear un documento pero solo se consume si el documento se guarda con ese numero.
+          </p>
+        </div>
+        <button type="button" className="btn-primary" onClick={nuevo}>+ Nueva numeracion</button>
+      </div>
+
+      {error && <p style={{ color: '#f87171', fontSize: 13 }}>{error}</p>}
+      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+
+      {mostrarForm && (
+        <form onSubmit={guardar} className="card" style={{ background: '#0f172a', display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 }}>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de documento</label>
+              <ComboBuscable opciones={opcionesTipoDocumento} value={tipoDocumentoId} onChange={setTipoDocumentoId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar tipo..." />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Año</label>
+              <input className="input-field" type="number" value={anio} onChange={(e) => setAnio(e.target.value)} required />
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero actual (ultimo emitido)</label>
+              <input className="input-field" type="number" min={0} value={ultimoNumero} onChange={(e) => setUltimoNumero(e.target.value)} />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Mes actual</label>
+              <input className="input-field" type="number" min={1} max={12} value={mesActual} onChange={(e) => setMesActual(e.target.value)} />
+            </div>
+          </div>
+
+          <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 4 }}>Rango declarado (informativo/de control)</p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
+            <div>
+              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Año desde</label>
+              <input className="input-field" type="number" value={anioDesde} onChange={(e) => setAnioDesde(e.target.value)} />
+            </div>
+            <div>
+              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Mes desde</label>
+              <input className="input-field" type="number" min={1} max={12} value={mesDesde} onChange={(e) => setMesDesde(e.target.value)} />
+            </div>
+            <div>
+              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Numero desde</label>
+              <input className="input-field" type="number" value={numeroDesde} onChange={(e) => setNumeroDesde(e.target.value)} />
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
+            <div>
+              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Año hasta</label>
+              <input className="input-field" type="number" value={anioHasta} onChange={(e) => setAnioHasta(e.target.value)} />
+            </div>
+            <div>
+              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Mes hasta</label>
+              <input className="input-field" type="number" min={1} max={12} value={mesHasta} onChange={(e) => setMesHasta(e.target.value)} />
+            </div>
+            <div>
+              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Numero hasta</label>
+              <input className="input-field" type="number" value={numeroHasta} onChange={(e) => setNumeroHasta(e.target.value)} />
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de vigencia desde</label>
+              <input className="input-field" type="date" value={fechaVigenciaDesde} onChange={(e) => setFechaVigenciaDesde(e.target.value)} />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de vigencia hasta</label>
+              <input className="input-field" type="date" value={fechaVigenciaHasta} onChange={(e) => setFechaVigenciaHasta(e.target.value)} />
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button className="btn-primary" disabled={guardando || !tipoDocumentoId}>{guardando ? 'Guardando...' : 'Guardar numeracion'}</button>
+            <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => setMostrarForm(false)}>Cancelar</button>
+          </div>
+        </form>
+      )}
+
+      {numeraciones && numeraciones.length === 0 && <p style={{ fontSize: 13, color: '#94a3b8' }}>Sin numeraciones configuradas.</p>}
+      {numeraciones && numeraciones.length > 0 && (
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+          <thead>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
+              <th style={{ padding: '6px 4px' }}>Tipo</th>
+              <th style={{ padding: '6px 4px' }}>Año</th>
+              <th style={{ padding: '6px 4px' }}>Numero actual</th>
+              <th style={{ padding: '6px 4px' }}>Proximo</th>
+              <th style={{ padding: '6px 4px' }}>Vigencia</th>
+              <th style={{ padding: '6px 4px' }}></th>
+            </tr>
+          </thead>
+          <tbody>
+            {numeraciones.map((n) => (
+              <tr key={n.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <td style={{ padding: '6px 4px' }}>{nombreTipoPorId.get(n.tipoDocumentoId) ?? n.tipoDocumentoId}</td>
+                <td style={{ padding: '6px 4px' }}>{n.anio}</td>
+                <td style={{ padding: '6px 4px' }}>{n.ultimoNumero}</td>
+                <td style={{ padding: '6px 4px', color: '#94a3b8' }}>{n.anio}/{String(n.ultimoNumero + 1).padStart(2, '0')}</td>
+                <td style={{ padding: '6px 4px', color: '#94a3b8' }}>
+                  {n.fechaVigenciaDesde || n.fechaVigenciaHasta ? `${n.fechaVigenciaDesde ?? '...'} a ${n.fechaVigenciaHasta ?? '...'}` : '-'}
+                </td>
+                <td style={{ padding: '6px 4px' }}>
+                  <button type="button" className="btn-primary" style={{ padding: '3px 8px', fontSize: 11, background: '#475569' }} onClick={() => editar(n)}>Editar</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </section>
   );
 }
 

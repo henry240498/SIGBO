@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { obtenerSesion } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
+import { VisorDocumento } from '@/components/VisorDocumento';
 import { Parametro } from '@/lib/parametros';
 import {
   Documento,
@@ -13,6 +14,7 @@ import {
   cargarNivelesConfidencialidad,
   cargarTiposDocumento,
   crearDocumento,
+  previsualizarSiguienteNumero,
 } from '@/lib/documentos';
 
 const ORIGENES = [
@@ -32,6 +34,7 @@ function badgeVigencia(documento: Documento): { texto: string; color: string } |
 
 export default function ListadoDocumentosPage() {
   const [documentos, setDocumentos] = useState<Documento[] | null>(null);
+  const [documentoParaVisor, setDocumentoParaVisor] = useState<Documento | null>(null);
   const [tipos, setTipos] = useState<Parametro[]>([]);
   const [categorias, setCategorias] = useState<Parametro[]>([]);
   const [estados, setEstados] = useState<Parametro[]>([]);
@@ -55,7 +58,9 @@ export default function ListadoDocumentosPage() {
   const [fechaEmision, setFechaEmision] = useState(new Date().toISOString().slice(0, 10));
   const [fechaVencimiento, setFechaVencimiento] = useState('');
   const [nivelConfidencialidadId, setNivelConfidencialidadId] = useState('');
-  const [autoNumerar, setAutoNumerar] = useState(true);
+  const [numeroSugerido, setNumeroSugerido] = useState<string | null>(null);
+  const [numeroDocumental, setNumeroDocumental] = useState('');
+  const [cargandoSugerencia, setCargandoSugerencia] = useState(false);
 
   const permisos = obtenerSesion()?.usuario.permisos ?? [];
   const puedeCrear = permisos.includes('documentos:crear');
@@ -94,6 +99,27 @@ export default function ListadoDocumentosPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtroTipo, filtroEstado, filtroVencimiento]);
 
+  /** Sugerencia de "siguiente numero" (seccion 5 del pedido): se
+   * recalcula al cambiar tipo o año de emision, pero NUNCA consume el
+   * contador -- solo lo hace crearDocumento() cuando el usuario acepta
+   * la sugerencia sin editarla (autoNumerar: true). */
+  useEffect(() => {
+    if (!mostrarForm || !tipoDocumentoId) {
+      setNumeroSugerido(null);
+      return;
+    }
+    const anio = new Date(fechaEmision || Date.now()).getFullYear();
+    setCargandoSugerencia(true);
+    previsualizarSiguienteNumero(tipoDocumentoId, anio)
+      .then((r) => {
+        setNumeroSugerido(r.formato);
+        setNumeroDocumental((prev) => (prev === '' || (numeroSugerido && prev === numeroSugerido) ? r.formato : prev));
+      })
+      .catch(() => setNumeroSugerido(null))
+      .finally(() => setCargandoSugerencia(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mostrarForm, tipoDocumentoId, fechaEmision]);
+
   function limpiarForm() {
     setTipoDocumentoId('');
     setCategoriaDocumentoId('');
@@ -103,7 +129,8 @@ export default function ListadoDocumentosPage() {
     setFechaEmision(new Date().toISOString().slice(0, 10));
     setFechaVencimiento('');
     setNivelConfidencialidadId('');
-    setAutoNumerar(true);
+    setNumeroSugerido(null);
+    setNumeroDocumental('');
   }
 
   async function crear(e: React.FormEvent) {
@@ -112,6 +139,11 @@ export default function ListadoDocumentosPage() {
     setMensaje(null);
     setGuardando(true);
     try {
+      // Seccion 6 del pedido: aceptar la sugerencia tal cual consume el
+      // numerador (autoNumerar, el backend hace el incremento atomico);
+      // editarla o borrarla nunca toca el contador -- se guarda como
+      // numero manual (o sin numero, si se borro).
+      const aceptaSugerencia = !!numeroSugerido && numeroDocumental === numeroSugerido;
       const documento = await crearDocumento({
         tipoDocumentoId,
         categoriaDocumentoId: categoriaDocumentoId || undefined,
@@ -121,7 +153,8 @@ export default function ListadoDocumentosPage() {
         fechaEmision,
         fechaVencimiento: fechaVencimiento || undefined,
         nivelConfidencialidadId: nivelConfidencialidadId || undefined,
-        autoNumerar,
+        autoNumerar: aceptaSugerencia,
+        numeroDocumental: aceptaSugerencia ? undefined : numeroDocumental || undefined,
       });
       setMensaje(`Documento creado${documento.numeroDocumental ? ` (${documento.numeroDocumental})` : ''}.`);
       limpiarForm();
@@ -223,10 +256,24 @@ export default function ListadoDocumentosPage() {
             </div>
           </div>
 
-          <label style={{ fontSize: 12, display: 'flex', gap: 6, alignItems: 'center' }}>
-            <input type="checkbox" checked={autoNumerar} onChange={(e) => setAutoNumerar(e.target.checked)} />
-            Numerar automaticamente (por tipo + año)
-          </label>
+          <div>
+            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero documental</label>
+            <input
+              className="input-field"
+              value={numeroDocumental}
+              onChange={(e) => setNumeroDocumental(e.target.value)}
+              placeholder={cargandoSugerencia ? 'Calculando sugerencia...' : tipoDocumentoId ? 'Sin numerar' : 'Elegi un tipo de documento primero'}
+            />
+            <p style={{ fontSize: 11, color: '#64748b', marginTop: 4 }}>
+              {numeroSugerido
+                ? numeroDocumental === numeroSugerido
+                  ? `Sugerido: ${numeroSugerido} (se asigna recien al guardar). Podes editarlo o borrarlo.`
+                  : numeroDocumental
+                    ? 'Numero manual -- no consume el numerador automatico.'
+                    : 'Sin numero -- documento no numerado.'
+                : 'Este tipo de documento aun no tiene numeracion configurada (Organizacion Institucional -> Configuracion de Documentos).'}
+            </p>
+          </div>
 
           <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando || !tipoDocumentoId}>
             {guardando ? 'Guardando...' : 'Crear documento'}
@@ -245,6 +292,7 @@ export default function ListadoDocumentosPage() {
               <th style={{ padding: '6px 4px' }}>Emision</th>
               <th style={{ padding: '6px 4px' }}>Vigencia</th>
               <th style={{ padding: '6px 4px' }}>Estado</th>
+              <th style={{ padding: '6px 4px' }}></th>
             </tr>
           </thead>
           <tbody>
@@ -264,12 +312,26 @@ export default function ListadoDocumentosPage() {
                   <td style={{ padding: '6px 4px' }}>
                     <span className="badge" style={{ background: '#334155' }}>{estadoPorId.get(d.estadoId) ?? '-'}</span>
                   </td>
+                  <td style={{ padding: '6px 4px' }}>
+                    {d.archivoUrl && (
+                      <button
+                        type="button"
+                        className="btn-primary"
+                        style={{ padding: '3px 8px', fontSize: 11, background: '#334155' }}
+                        onClick={() => setDocumentoParaVisor(d)}
+                      >
+                        👁 Ver
+                      </button>
+                    )}
+                  </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       )}
+
+      {documentoParaVisor && <VisorDocumento documento={documentoParaVisor} onCerrar={() => setDocumentoParaVisor(null)} />}
     </div>
   );
 }

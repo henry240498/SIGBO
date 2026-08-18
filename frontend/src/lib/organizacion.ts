@@ -31,6 +31,7 @@ export interface IdentidadInstitucional {
   mostrarLogoIzquierda: boolean;
   logoDerechaUrl: string | null;
   mostrarLogoDerecha: boolean;
+  alineacionTitulo: 'IZQUIERDA' | 'CENTRO' | 'DERECHA';
   lineasDestacadas: string;
   textoPiePagina: string | null;
   mostrarNumeroPagina: boolean;

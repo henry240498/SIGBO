@@ -6,6 +6,12 @@ import { FirmanteResuelto } from './firmantes-institucionales';
 
 const MARGEN = 40;
 
+const ALINEACION_PDFKIT: Record<'IZQUIERDA' | 'CENTRO' | 'DERECHA', 'left' | 'center' | 'right'> = {
+  IZQUIERDA: 'left',
+  CENTRO: 'center',
+  DERECHA: 'right',
+};
+
 function rutaAbsoluta(rutaServida: string | null): string | null {
   if (!rutaServida) return null;
   const absoluta = join(process.cwd(), rutaServida.replace(/^\//, ''));
@@ -66,11 +72,20 @@ export function generarDocumentoPlantillaPdf(snapshot: DocumentoPlantillaSnapsho
     }
 
     encabezadoInstitucional();
-    doc.fontSize(13).font('Helvetica-Bold').text(snapshot.titulo, { align: 'center' });
+    // encabezadoInstitucional() posiciona cada linea con un x explicito
+    // (xCentro, para esquivar los logos) -- pdfkit deja doc.x en ese valor
+    // despues de un text() con x/y explicitos, asi que hay que resetearlo
+    // aca o el bloque titulo/numero/fecha hereda ese corrimiento y termina
+    // centrado respecto de una caja angosta, no de la pagina completa.
+    const alineacion = ALINEACION_PDFKIT[inst.alineacionTitulo] ?? 'center';
+    doc.x = MARGEN;
+    doc.fontSize(13).font('Helvetica-Bold').text(snapshot.titulo, MARGEN, doc.y, { width: ancho, align: alineacion });
     if (snapshot.numeroDocumental) {
-      doc.fontSize(10).font('Helvetica').text(`N.° ${snapshot.numeroDocumental}`, { align: 'center' });
+      doc.x = MARGEN;
+      doc.fontSize(10).font('Helvetica').text(`N.° ${snapshot.numeroDocumental}`, MARGEN, doc.y, { width: ancho, align: alineacion });
     }
-    doc.fontSize(9).fillColor('#64748b').text(snapshot.fecha, { align: 'center' });
+    doc.x = MARGEN;
+    doc.fontSize(9).fillColor('#64748b').text(snapshot.fecha, MARGEN, doc.y, { width: ancho, align: alineacion });
     doc.fillColor('#000000');
     doc.moveDown(1.2);
 

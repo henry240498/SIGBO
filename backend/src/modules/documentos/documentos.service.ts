@@ -5,6 +5,7 @@ import { Documento, DocumentoRelacion, NumeracionDocumento, Parametro, VersionAr
 import { AuditoriaService } from '../seguridad/auditoria.service';
 import { guardarImagen, CARPETA_DOCUMENTOS } from '../../shared/utils/almacenamiento';
 import { AnularDocumentoDto, CambiarEstadoDocumentoDto, CreateDocumentoDto, CrearRelacionDto, UpdateDocumentoDto } from './dto/documento.dto';
+import { GuardarNumeracionDto } from './dto/numeracion.dto';
 
 export type AlertaVigencia = 'VIGENTE' | 'PROXIMO_A_VENCER' | 'VENCIDO' | null;
 
@@ -125,29 +126,34 @@ export class DocumentosService {
       numeroDocumental = await this.siguienteNumero(dto.tipoDocumentoId, anio);
     }
 
-    const documento = await this.repo.save(
-      this.repo.create({
-        numeroDocumental,
-        tipoDocumentoId: dto.tipoDocumentoId,
-        categoriaDocumentoId: dto.categoriaDocumentoId ?? null,
-        titulo: dto.titulo,
-        descripcion: dto.descripcion ?? null,
-        origen: dto.origen as any,
-        fechaEmision: dto.fechaEmision,
-        fechaInicioVigencia: dto.fechaInicioVigencia ?? null,
-        fechaVencimiento: dto.fechaVencimiento ?? null,
-        estadoId: estadoBorrador,
-        nivelConfidencialidadId: dto.nivelConfidencialidadId ?? null,
-        esFisico: dto.esFisico ?? false,
-        archivoFisicoId: dto.archivoFisicoId ?? null,
-        estante: dto.estante ?? null,
-        caja: dto.caja ?? null,
-        carpeta: dto.carpeta ?? null,
-        expedienteId: dto.expedienteId ?? null,
-        ordenEnExpediente: dto.ordenEnExpediente ?? null,
-        creadoPor: actorId,
-      }),
-    );
+    let documento: Documento;
+    try {
+      documento = await this.repo.save(
+        this.repo.create({
+          numeroDocumental,
+          tipoDocumentoId: dto.tipoDocumentoId,
+          categoriaDocumentoId: dto.categoriaDocumentoId ?? null,
+          titulo: dto.titulo,
+          descripcion: dto.descripcion ?? null,
+          origen: dto.origen as any,
+          fechaEmision: dto.fechaEmision,
+          fechaInicioVigencia: dto.fechaInicioVigencia ?? null,
+          fechaVencimiento: dto.fechaVencimiento ?? null,
+          estadoId: estadoBorrador,
+          nivelConfidencialidadId: dto.nivelConfidencialidadId ?? null,
+          esFisico: dto.esFisico ?? false,
+          archivoFisicoId: dto.archivoFisicoId ?? null,
+          estante: dto.estante ?? null,
+          caja: dto.caja ?? null,
+          carpeta: dto.carpeta ?? null,
+          expedienteId: dto.expedienteId ?? null,
+          ordenEnExpediente: dto.ordenEnExpediente ?? null,
+          creadoPor: actorId,
+        }),
+      );
+    } catch (error) {
+      throw this.traducirErrorNumeroDuplicado(error, numeroDocumental);
+    }
 
     await this.auditoriaService.registrar({
       usuarioId: actorId,
@@ -498,9 +504,18 @@ export class DocumentosService {
   }
 
   /* ------------------------------------------------------------ */
-  /* Numeracion documental (seccion 7)                                */
+  /* Numeracion documental (secciones 3-13 del pedido)                */
   /* ------------------------------------------------------------ */
 
+  private formatearNumero(anio: number, numero: number): string {
+    return `${anio}/${String(numero).padStart(2, '0')}`;
+  }
+
+  /** Consume el siguiente numero (avanza el contador). Solo debe
+   * llamarse en el momento real de creacion del documento -- nunca
+   * para mostrar una sugerencia, porque una vez llamado el numero
+   * queda tomado aunque el usuario despues no guarde nada (seccion 6:
+   * "si el numero sugerido no se usa, el numerador no debe avanzar"). */
   async siguienteNumero(tipoDocumentoId: string, anio: number, institucionId?: string | null): Promise<string> {
     let contador = await this.numeracionRepo.findOne({ where: { tipoDocumentoId, anio, institucionId: institucionId ?? undefined } });
     if (!contador) {
@@ -508,7 +523,84 @@ export class DocumentosService {
     }
     const siguiente = contador.ultimoNumero + 1;
     await this.numeracionRepo.update(contador.id, { ultimoNumero: siguiente });
-    return `${String(siguiente).padStart(2, '0')}/${anio}`;
+    return this.formatearNumero(anio, siguiente);
+  }
+
+  /** Version de solo lectura de siguienteNumero(): calcula que numero
+   * se ASIGNARIA sin consumirlo (seccion 5-6 del pedido -- sugerencia
+   * que el usuario puede aceptar o descartar). No crea la fila del
+   * contador si todavia no existe, para no dejar registros huerfanos
+   * por cada vez que alguien abre el formulario de "nuevo documento". */
+  async previsualizarSiguienteNumero(tipoDocumentoId: string, anio: number, institucionId?: string | null): Promise<{ numero: number; formato: string }> {
+    const contador = await this.numeracionRepo.findOne({ where: { tipoDocumentoId, anio, institucionId: institucionId ?? undefined } });
+    const siguiente = (contador?.ultimoNumero ?? 0) + 1;
+    return { numero: siguiente, formato: this.formatearNumero(anio, siguiente) };
+  }
+
+  /** SQL Server 2627/2601 = violacion de indice/constraint unico --
+   * aca es casi siempre UQ_doci_tipo_numero (migracion 069): alguien
+   * escribio a mano un numero institucional que ya existe para ese
+   * tipo de documento (seccion 8 del pedido). */
+  private traducirErrorNumeroDuplicado(error: unknown, numeroDocumental: string | null): Error {
+    const numero = (error as { number?: number })?.number;
+    if ((numero === 2627 || numero === 2601) && numeroDocumental) {
+      return new ConflictException(`Ya existe un documento de este tipo con el numero "${numeroDocumental}"`);
+    }
+    return error as Error;
+  }
+
+  async listarNumeraciones() {
+    return this.numeracionRepo.find({ order: { anio: 'DESC' } });
+  }
+
+  /** Alta/edicion de la configuracion de numeracion (seccion 10-11):
+   * upsert por (tipoDocumentoId, anio) -- nunca borra una fila
+   * existente (seccion 13, historial), y audita quien crea/modifica
+   * cada version igual que el resto del modulo (AuditoriaService, sin
+   * tabla de auditoria propia). */
+  async guardarNumeracion(dto: GuardarNumeracionDto, actorId: string, ip?: string) {
+    const existente = await this.numeracionRepo.findOne({ where: { tipoDocumentoId: dto.tipoDocumentoId, anio: dto.anio, institucionId: undefined } });
+
+    const campos = {
+      tipoDocumentoId: dto.tipoDocumentoId,
+      anio: dto.anio,
+      ...(dto.ultimoNumero !== undefined ? { ultimoNumero: dto.ultimoNumero } : {}),
+      ...(dto.mesActual !== undefined ? { mesActual: dto.mesActual } : {}),
+      ...(dto.anioDesde !== undefined ? { anioDesde: dto.anioDesde } : {}),
+      ...(dto.mesDesde !== undefined ? { mesDesde: dto.mesDesde } : {}),
+      ...(dto.numeroDesde !== undefined ? { numeroDesde: dto.numeroDesde } : {}),
+      ...(dto.anioHasta !== undefined ? { anioHasta: dto.anioHasta } : {}),
+      ...(dto.mesHasta !== undefined ? { mesHasta: dto.mesHasta } : {}),
+      ...(dto.numeroHasta !== undefined ? { numeroHasta: dto.numeroHasta } : {}),
+      ...(dto.fechaVigenciaDesde !== undefined ? { fechaVigenciaDesde: dto.fechaVigenciaDesde } : {}),
+      ...(dto.fechaVigenciaHasta !== undefined ? { fechaVigenciaHasta: dto.fechaVigenciaHasta } : {}),
+    };
+
+    if (!existente) {
+      const creado = await this.numeracionRepo.save(this.numeracionRepo.create({ ...campos, ultimoNumero: dto.ultimoNumero ?? 0, creadoPor: actorId, actualizadoPor: actorId }));
+      await this.auditoriaService.registrar({
+        usuarioId: actorId,
+        accion: 'CREAR_NUMERACION',
+        recurso: 'documentos.numeraciones',
+        recursoId: creado.id,
+        datosDespues: creado,
+        ip: ip ?? null,
+      });
+      return creado;
+    }
+
+    await this.numeracionRepo.update(existente.id, { ...campos, actualizadoPor: actorId });
+    const actualizado = await this.numeracionRepo.findOne({ where: { id: existente.id } });
+    await this.auditoriaService.registrar({
+      usuarioId: actorId,
+      accion: 'EDITAR_NUMERACION',
+      recurso: 'documentos.numeraciones',
+      recursoId: existente.id,
+      datosAntes: existente,
+      datosDespues: actualizado,
+      ip: ip ?? null,
+    });
+    return actualizado;
   }
 
   /* ------------------------------------------------------------ */

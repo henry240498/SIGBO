@@ -344,6 +344,79 @@ export async function descargarArchivoDocumento(id: string, nombreArchivo: strin
   URL.revokeObjectURL(url);
 }
 
+/** Formatos que el visor integrado puede mostrar sin descargar primero
+ * (seccion 1 del pedido) -- debe coincidir con MIME_PREVISUALIZABLE del
+ * controller. */
+export const EXTENSIONES_PREVISUALIZABLES = ['pdf', 'png', 'jpg', 'jpeg'];
+
+/** Trae el archivo como blob para el visor integrado (Content-Disposition:
+ * inline en el backend, pero igual llega como blob aca porque fetch no
+ * distingue eso -- el que decide "mostrar en pantalla en vez de bajar" es
+ * el <iframe>/<img> del componente, no el navegador). */
+export async function obtenerBlobPrevisualizacion(id: string): Promise<{ blob: Blob; tipo: string }> {
+  const res = await apiFetch(`/documentos/${id}/vista-previa`);
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo generar la vista previa'));
+  const blob = await res.blob();
+  return { blob, tipo: res.headers.get('Content-Type') ?? blob.type };
+}
+
+/* ------------------------------------------------------------------ */
+/* Numeracion de documentos (Organizacion Institucional -> Configuracion */
+/* de Documentos -> Numeracion, secciones 3-13 del pedido)              */
+/* ------------------------------------------------------------------ */
+
+export interface NumeracionDocumento {
+  id: string;
+  tipoDocumentoId: string;
+  anio: number;
+  mesActual: number | null;
+  institucionId: string | null;
+  ultimoNumero: number;
+  anioDesde: number | null;
+  mesDesde: number | null;
+  numeroDesde: number | null;
+  anioHasta: number | null;
+  mesHasta: number | null;
+  numeroHasta: number | null;
+  fechaVigenciaDesde: string | null;
+  fechaVigenciaHasta: string | null;
+  creadoEn: string;
+  creadoPor: string | null;
+  actualizadoEn: string;
+  actualizadoPor: string | null;
+}
+
+export async function cargarNumeraciones() {
+  const res = await apiFetch('/documentos/numeraciones');
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo cargar la numeracion de documentos'));
+  return res.json() as Promise<NumeracionDocumento[]>;
+}
+
+export async function guardarNumeracion(payload: {
+  tipoDocumentoId: string;
+  anio: number;
+  ultimoNumero?: number;
+  mesActual?: number;
+  anioDesde?: number;
+  mesDesde?: number;
+  numeroDesde?: number;
+  anioHasta?: number;
+  mesHasta?: number;
+  numeroHasta?: number;
+  fechaVigenciaDesde?: string;
+  fechaVigenciaHasta?: string;
+}) {
+  const res = await apiFetch('/documentos/numeraciones', { method: 'PUT', body: JSON.stringify(payload) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo guardar la numeracion'));
+  return res.json() as Promise<NumeracionDocumento>;
+}
+
+export async function previsualizarSiguienteNumero(tipoDocumentoId: string, anio: number) {
+  const res = await apiFetch(`/documentos/numeraciones/${tipoDocumentoId}/siguiente?anio=${anio}`);
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo calcular el siguiente numero'));
+  return res.json() as Promise<{ numero: number; formato: string }>;
+}
+
 /* ------------------------------------------------------------------ */
 /* Dashboard / consultas                                                */
 /* ------------------------------------------------------------------ */

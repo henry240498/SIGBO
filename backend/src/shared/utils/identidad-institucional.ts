@@ -12,6 +12,7 @@ export interface EncabezadoInstitucional {
   fechaFundacion: string | null;
   logoIzquierdaUrl: string | null;
   logoDerechaUrl: string | null;
+  alineacionTitulo: 'IZQUIERDA' | 'CENTRO' | 'DERECHA';
   piePaginaInstitucional: { texto: string | null; mostrarNumeroPagina: boolean; mostrarGeneradoSigbo: boolean };
 }
 
@@ -40,6 +41,7 @@ export async function resolverEncabezadoInstitucional(
     fechaFundacion: identidad?.mostrarFechaFundacion ? identidad.fechaFundacion : null,
     logoIzquierdaUrl: identidad?.mostrarLogoIzquierda ? identidad.logoIzquierdaUrl : null,
     logoDerechaUrl: identidad?.mostrarLogoDerecha ? identidad.logoDerechaUrl : null,
+    alineacionTitulo: identidad?.alineacionTitulo ?? 'CENTRO',
     piePaginaInstitucional: {
       texto: identidad?.textoPiePagina ?? null,
       mostrarNumeroPagina: identidad?.mostrarNumeroPagina ?? false,

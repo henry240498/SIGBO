@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -19,12 +19,25 @@ import {
   SubirArchivoDto,
   UpdateDocumentoDto,
 } from './dto/documento.dto';
+import { GuardarNumeracionDto } from './dto/numeracion.dto';
 
 /** Extensiones/mimetypes permitidos (seccion 26 del pedido): PDF, Word,
  * Excel, imagenes -- validado realmente en backend via fileFilter de
  * multer, nunca solo por el input del frontend. */
 const MIMETYPES_PERMITIDOS = /^(application\/pdf|application\/msword|application\/vnd\.openxmlformats-officedocument\.wordprocessingml\.document|application\/vnd\.ms-excel|application\/vnd\.openxmlformats-officedocument\.spreadsheetml\.sheet|image\/jpe?g|image\/png)$/;
 const TAMANO_MAXIMO_BYTES = 20 * 1024 * 1024; // 20MB
+
+/** Formatos que el navegador puede renderizar sin conversion (seccion 1
+ * del pedido): PDF e imagenes van directo al visor integrado. Word/Excel
+ * no tienen motor de conversion disponible en este entorno -- el
+ * frontend lo detecta por `archivoExtension` y ofrece descargar en vez
+ * de forzar un iframe que el navegador no sabe interpretar. */
+const MIME_PREVISUALIZABLE: Record<string, string> = {
+  pdf: 'application/pdf',
+  png: 'image/png',
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+};
 
 @ApiTags('documentos')
 @ApiBearerAuth()
@@ -87,6 +100,35 @@ export class DocumentosController {
     });
   }
 
+  /** Configuracion de numeracion (secciones 3-13): declarada ANTES de
+   * `:id` por el mismo motivo que `auditoria` arriba -- si no, Nest
+   * interpretaria "numeraciones" como un id de documento. Gateada por
+   * `organizacion:documentos_configurar` (la MISMA que ya protege la
+   * pantalla Organizacion Institucional -> Configuracion de Documentos,
+   * seccion 16: "restringir a usuarios autorizados" sin inventar un
+   * permiso nuevo para lo que ya es esa pantalla). */
+  @Get('numeraciones')
+  @RequirePermission('organizacion:documentos_configurar')
+  numeraciones() {
+    return this.service.listarNumeraciones();
+  }
+
+  @Put('numeraciones')
+  @RequirePermission('organizacion:documentos_configurar')
+  guardarNumeracion(@Body() dto: GuardarNumeracionDto, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
+    return this.service.guardarNumeracion(dto, user.id, req.ip);
+  }
+
+  /** Sugerencia de "siguiente numero" sin consumirlo (seccion 5-6):
+   * gateada por `documentos:crear` -- cualquiera que pueda crear un
+   * documento necesita ver la sugerencia antes de decidir aceptarla o
+   * escribir un numero distinto. */
+  @Get('numeraciones/:tipoDocumentoId/siguiente')
+  @RequirePermission('documentos:crear')
+  previsualizarSiguienteNumero(@Param('tipoDocumentoId') tipoDocumentoId: string, @Query('anio') anio?: string) {
+    return this.service.previsualizarSiguienteNumero(tipoDocumentoId, anio ? Number(anio) : new Date().getFullYear());
+  }
+
   @Get(':id')
   @RequirePermission('documentos:ver')
   async findOne(@Param('id') id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
@@ -128,6 +170,32 @@ export class DocumentosController {
     } else {
       res.download(rutaAbsoluta);
     }
+  }
+
+  /** Vista previa embebida (seccion 1 del pedido): mismo chequeo de
+   * permisos/confidencialidad que descargar(), pero `Content-Disposition:
+   * inline` en vez de `attachment` -- el navegador renderiza en vez de
+   * forzar el dialogo de guardado. Nunca modifica el archivo original.
+   * Solo PDF/imagen (MIME_PREVISUALIZABLE); otros formatos responden 415
+   * para que el frontend ofrezca descargar en su lugar. */
+  @Get(':id/vista-previa')
+  @RequirePermission('documentos:ver')
+  async previsualizar(@Param('id') id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request, @Res() res: Response) {
+    const documento = await this.service.findOne(id, user.permisos);
+    if (!documento.archivoUrl) {
+      res.status(404).json({ message: 'Este documento no tiene un archivo digital cargado' });
+      return;
+    }
+    const mime = MIME_PREVISUALIZABLE[(documento.archivoExtension ?? '').toLowerCase()];
+    if (!mime) {
+      res.status(415).json({ message: 'Este formato no admite vista previa en el navegador -- descargue el archivo' });
+      return;
+    }
+    await this.service.registrarVista(id, user.id, req.ip);
+    const rutaAbsoluta = join(process.cwd(), documento.archivoUrl.replace(/^\//, ''));
+    res.setHeader('Content-Type', mime);
+    res.setHeader('Content-Disposition', 'inline');
+    res.sendFile(rutaAbsoluta);
   }
 
   @Post()

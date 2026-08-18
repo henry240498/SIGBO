@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsBoolean, IsOptional, IsString, MaxLength, ValidateNested } from 'class-validator';
+import { IsArray, IsBoolean, IsIn, IsOptional, IsString, MaxLength, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
+
+const ALINEACIONES_TITULO = ['IZQUIERDA', 'CENTRO', 'DERECHA'];
 
 export class LineaDestacadaDto {
   @ApiProperty() @IsString() texto: string;
@@ -32,6 +34,11 @@ export class ActualizarIdentidadInstitucionalDto {
 
   @ApiProperty({ required: false }) @IsOptional() @IsBoolean() mostrarLogoIzquierda?: boolean;
   @ApiProperty({ required: false }) @IsOptional() @IsBoolean() mostrarLogoDerecha?: boolean;
+
+  @ApiProperty({ required: false, enum: ALINEACIONES_TITULO, description: 'Alineacion del titulo/numero/fecha en la cabecera de cualquier documento generado por SIGBO' })
+  @IsOptional()
+  @IsIn(ALINEACIONES_TITULO)
+  alineacionTitulo?: 'IZQUIERDA' | 'CENTRO' | 'DERECHA';
 
   @ApiProperty({ required: false, type: [LineaDestacadaDto] })
   @IsOptional()

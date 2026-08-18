@@ -1,11 +1,12 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { obtenerSesion } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { Parametro, resolverNombres } from '@/lib/parametros';
 import { cargarBomberos, BomberoResumen, cargarCatalogo, Catalogo } from '@/lib/personal';
+import { VisorDocumento } from '@/components/VisorDocumento';
 import {
   Documento,
   DocumentoRelacion,
@@ -32,6 +33,7 @@ import {
   crearRelacionDocumento,
   definirFirmantes,
   descargarArchivoDocumento,
+  eliminarDocumento,
   eliminarRelacionDocumento,
   firmarAutomatico,
   publicarDocumento,
@@ -56,7 +58,9 @@ function badgeVigencia(documento: Documento): { texto: string; color: string } |
 
 export default function FichaDocumentoPage() {
   const params = useParams();
+  const router = useRouter();
   const id = params.id as string;
+  const [mostrarVisor, setMostrarVisor] = useState(false);
 
   const [documento, setDocumento] = useState<Documento | null>(null);
   const [versiones, setVersiones] = useState<VersionArchivoDocumento[] | null>(null);
@@ -110,6 +114,7 @@ export default function FichaDocumentoPage() {
   const puedeDescargar = permisos.includes('documentos:descargar');
   const puedeAprobar = permisos.includes('documentos:aprobar');
   const puedeAnular = permisos.includes('documentos:anular');
+  const puedeEliminar = permisos.includes('documentos:eliminar');
   const puedeAdministrar = permisos.includes('documentos:administrar');
   const puedeVerAuditoria = permisos.includes('documentos:ver_auditoria');
   const puedeFirmar = permisos.includes('documentos:firmar');
@@ -254,6 +259,20 @@ export default function FichaDocumentoPage() {
     }
   }
 
+  async function eliminar() {
+    if (!window.confirm('¿Eliminar este documento? Queda archivado y registrado en auditoria -- el archivo no se borra fisicamente.')) return;
+    setError(null);
+    setMensaje(null);
+    setGuardando(true);
+    try {
+      await eliminarDocumento(id);
+      router.push('/dashboard/documentos/listado');
+    } catch (err: any) {
+      setError(err.message);
+      setGuardando(false);
+    }
+  }
+
   async function anular(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
@@ -389,8 +408,14 @@ export default function FichaDocumentoPage() {
               {mostrarAnular ? 'Cancelar anulacion' : 'Anular'}
             </button>
           )}
+          {documento.archivoUrl && (
+            <button className="btn-primary" style={{ background: '#334155' }} onClick={() => setMostrarVisor(true)}>👁 Previsualizar</button>
+          )}
           {puedeDescargar && documento.archivoUrl && (
-            <button className="btn-primary" style={{ background: '#334155' }} onClick={descargar}>Descargar archivo</button>
+            <button className="btn-primary" style={{ background: '#334155' }} onClick={descargar}>⬇ Descargar archivo</button>
+          )}
+          {puedeEliminar && !esTerminal && (
+            <button className="btn-primary" style={{ background: '#7f1d1d' }} disabled={guardando} onClick={eliminar}>🗑 Eliminar</button>
           )}
         </div>
 
@@ -584,6 +609,8 @@ export default function FichaDocumentoPage() {
           ))}
         </div>
       )}
+
+      {mostrarVisor && <VisorDocumento documento={documento} onCerrar={() => setMostrarVisor(false)} />}
     </div>
   );
 }

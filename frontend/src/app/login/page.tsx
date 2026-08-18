@@ -13,7 +13,7 @@ interface Apariencia {
 
 function IconoUsuario() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" style={{ flexShrink: 0 }}>
       <circle cx="12" cy="8" r="4" />
       <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
     </svg>
@@ -22,7 +22,7 @@ function IconoUsuario() {
 
 function IconoCandado() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" style={{ flexShrink: 0 }}>
       <rect x="5" y="11" width="14" height="9" rx="2" />
       <path d="M8 11V7a4 4 0 0 1 8 0v4" />
     </svg>
@@ -105,11 +105,14 @@ export default function LoginPage() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 8,
-            border: '1px solid #334155',
-            borderRadius: 8,
-            padding: '10px 12px',
-            marginBottom: 12,
+            gap: 10,
+            border: '1px solid rgba(148, 163, 184, 0.18)',
+            borderRadius: 14,
+            padding: '15px 18px',
+            marginBottom: 16,
+            background: 'rgba(15, 23, 42, 0.88)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
           }}
         >
           <IconoUsuario />
@@ -119,7 +122,7 @@ export default function LoginPage() {
             placeholder="Usuario"
             autoFocus
             required
-            style={{ border: 'none', background: 'transparent', outline: 'none', flex: 1, color: '#e2e8f0', fontSize: 14 }}
+            style={{ border: 'none', background: 'transparent', outline: 'none', flex: 1, color: '#e2e8f0', fontSize: 16 }}
           />
         </div>
 
@@ -127,10 +130,13 @@ export default function LoginPage() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 8,
-            border: '1px solid #334155',
-            borderRadius: 8,
-            padding: '10px 12px',
+            gap: 10,
+            border: '1px solid rgba(148, 163, 184, 0.18)',
+            borderRadius: 14,
+            padding: '15px 18px',
+            background: 'rgba(15, 23, 42, 0.88)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
           }}
         >
           <IconoCandado />
@@ -140,7 +146,7 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Contrasena"
             required
-            style={{ border: 'none', background: 'transparent', outline: 'none', flex: 1, color: '#e2e8f0', fontSize: 14 }}
+            style={{ border: 'none', background: 'transparent', outline: 'none', flex: 1, color: '#e2e8f0', fontSize: 16 }}
           />
         </div>
 
