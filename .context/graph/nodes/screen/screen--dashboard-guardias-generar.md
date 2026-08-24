@@ -7,14 +7,14 @@ dominio: guardias
 resumen: Pantalla /dashboard/guardias/generar.
 ruta: /dashboard/guardias/generar
 capa: frontend
-permisos: [guardias:crear]
+permisos: [guardias:crear, guardias:ordenes_crear, guardias:ordenes_editar]
 archivos:
   - frontend/src/app/dashboard/guardias/generar/page.tsx
 edges:
   - [belongs_to, domain--guardias]
   - [uses, component--front-api]
   - [uses, component--front-guardias]
-terminos: [guardias, generar, crear]
+terminos: [guardias, generar, crear, ordenes, editar]
 ---
 
 # /dashboard/guardias/generar
@@ -22,7 +22,7 @@ terminos: [guardias, generar, crear]
 Pantalla /dashboard/guardias/generar.
 
 - **Ruta:** `/dashboard/guardias/generar`
-- **Permisos referenciados:** `guardias:crear`
+- **Permisos referenciados:** `guardias:crear`, `guardias:ordenes_crear`, `guardias:ordenes_editar`
 
 ## Archivos
 

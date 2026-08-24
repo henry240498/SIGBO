@@ -181,7 +181,7 @@ export default function ArticuloDetallePage() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <button
+          <button type="button"
             onClick={() => router.push('/dashboard/deposito/articulos')}
             style={{ background: 'none', border: 'none', color: '#60a5fa', cursor: 'pointer', fontSize: 12, padding: 0, marginBottom: 6 }}
           >
@@ -252,7 +252,7 @@ export default function ArticuloDetallePage() {
             </label>
           </div>
           {puedeEditar && (
-            <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+            <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
               {guardando ? 'Guardando...' : 'Guardar cambios'}
             </button>
           )}
@@ -295,7 +295,7 @@ export default function ArticuloDetallePage() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
             <h2 style={{ fontSize: 15 }}>Lotes ({lotes?.length ?? 0})</h2>
             {puedeCrear && (
-              <button className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setMostrarFormLote(!mostrarFormLote)}>
+              <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} onClick={() => setMostrarFormLote(!mostrarFormLote)}>
                 {mostrarFormLote ? 'Cancelar' : '+ Nuevo lote'}
               </button>
             )}
@@ -319,7 +319,7 @@ export default function ArticuloDetallePage() {
                 <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cantidad</label>
                 <input className="input-field" type="number" min={0} step="0.01" value={cantidadLote} onChange={(e) => setCantidadLote(e.target.value)} required />
               </div>
-              <button className="btn-primary" disabled={guardandoLote}>
+              <button type="button" className="btn-primary" disabled={guardandoLote}>
                 {guardandoLote ? 'Guardando...' : 'Crear'}
               </button>
             </form>

@@ -78,7 +78,7 @@ export default function EquipoDetallePage() {
 
       <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid #1f2937' }}>
         {SUBTABS.map((t) => (
-          <button
+          <button type="button"
             key={t.id}
             onClick={() => setVista(t.id)}
             style={{
@@ -212,7 +212,7 @@ function TabDatos({
         )}
 
         {puedeEditar && (
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} onClick={() => setEditando(true)}>Editar datos</button>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} onClick={() => setEditando(true)}>Editar datos</button>
         )}
       </div>
     );
@@ -241,7 +241,7 @@ function TabDatos({
         <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Vencimiento</label><input className="input-field" type="date" value={campo('fechaVencimiento')} onChange={(e) => setCampos({ ...campos, fechaVencimiento: e.target.value })} /></div>
       </div>
       <div style={{ display: 'flex', gap: 8 }}>
-        <button className="btn-primary" disabled={guardando}>{guardando ? 'Guardando...' : 'Guardar cambios'}</button>
+        <button type="submit" className="btn-primary" disabled={guardando}>{guardando ? 'Guardando...' : 'Guardar cambios'}</button>
         <button type="button" style={{ background: '#475569', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 14px' }} onClick={() => setEditando(false)}>Cancelar</button>
       </div>
     </form>
@@ -326,7 +326,7 @@ function TabPrestamo({ equipo, puedeEditar, onCambio }: { equipo: Equipo; puedeE
             {(prestamoActivo.registro as any).fechaDevolucionComprometida && ` — devolucion comprometida ${new Date((prestamoActivo.registro as any).fechaDevolucionComprometida).toLocaleDateString()}`}
           </p>
           {puedePrestar && (
-            <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={procesando} onClick={devolver}>
+            <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={procesando} onClick={devolver}>
               {procesando ? 'Procesando...' : 'Registrar devolucion'}
             </button>
           )}
@@ -348,7 +348,7 @@ function TabPrestamo({ equipo, puedeEditar, onCambio }: { equipo: Equipo; puedeE
                 <input className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
               </div>
             </div>
-            <button className="btn-primary" disabled={!bomberoId || procesando} style={{ alignSelf: 'flex-start' }}>
+            <button type="submit" className="btn-primary" disabled={!bomberoId || procesando} style={{ alignSelf: 'flex-start' }}>
               {procesando ? 'Guardando...' : 'Prestar equipo'}
             </button>
           </form>
@@ -394,7 +394,7 @@ function TabMantenimientos({ equipoId, puedeEditar }: { equipoId: string; puedeE
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {puedeEditar && (
-        <button className="btn-primary" style={{ alignSelf: 'flex-start' }} onClick={() => setMostrarForm((v) => !v)}>
+        <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} onClick={() => setMostrarForm((v) => !v)}>
           {mostrarForm ? 'Cancelar' : 'Registrar mantenimiento'}
         </button>
       )}
@@ -411,7 +411,7 @@ function TabMantenimientos({ equipoId, puedeEditar }: { equipoId: string; puedeE
             <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Costo</label><input className="input-field" type="number" value={costo} onChange={(e) => setCosto(e.target.value)} /></div>
           </div>
           <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label><input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required /></div>
-          <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>{guardando ? 'Guardando...' : 'Guardar'}</button>
+          <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>{guardando ? 'Guardando...' : 'Guardar'}</button>
         </form>
       )}
       {items && items.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin mantenimientos registrados.</p>}

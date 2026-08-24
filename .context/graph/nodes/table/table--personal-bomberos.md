@@ -4,7 +4,7 @@ tipo: TABLE
 nombre: personal.bomberos
 nivel: L2
 dominio: personal
-resumen: Tabla personal.bomberos (70 columnas). Creada en 003_personal.sql, modificada por 009_foreign_keys.sql, 012_organizacion.sql, 016_personal_expansion.sql, 017_tipos_bombero.sql, 018_parametros_y_normalizacion_personal.sql, 026_guardias_planificacion.sql.
+resumen: Tabla personal.bomberos (71 columnas). Creada en 003_personal.sql, modificada por 009_foreign_keys.sql, 012_organizacion.sql, 016_personal_expansion.sql, 017_tipos_bombero.sql, 018_parametros_y_normalizacion_personal.sql, 026_guardias_planificacion.sql, 032_personal_autorizacion_firma.sql.
 tabla: bomberos
 archivos:
   - database/migrations/003_personal.sql
@@ -14,6 +14,7 @@ archivos:
   - database/migrations/017_tipos_bombero.sql
   - database/migrations/018_parametros_y_normalizacion_personal.sql
   - database/migrations/026_guardias_planificacion.sql
+  - database/migrations/032_personal_autorizacion_firma.sql
 edges:
   - [defined_in, file--003-personal]
   - [belongs_to, domain--personal]
@@ -22,9 +23,9 @@ terminos: [personal, bomberos, cedula, nombre, apellido, fecha, nacimiento, sexo
 
 # personal.bomberos
 
-Tabla personal.bomberos (70 columnas). Creada en 003_personal.sql, modificada por 009_foreign_keys.sql, 012_organizacion.sql, 016_personal_expansion.sql, 017_tipos_bombero.sql, 018_parametros_y_normalizacion_personal.sql, 026_guardias_planificacion.sql.
+Tabla personal.bomberos (71 columnas). Creada en 003_personal.sql, modificada por 009_foreign_keys.sql, 012_organizacion.sql, 016_personal_expansion.sql, 017_tipos_bombero.sql, 018_parametros_y_normalizacion_personal.sql, 026_guardias_planificacion.sql, 032_personal_autorizacion_firma.sql.
 
-- **Esquema:** personal · **Columnas:** 70
+- **Esquema:** personal · **Columnas:** 71
 - **UNIQUE:** `cedula`, `numero_bombero`
 
 ## Restricciones CHECK (reglas que la BD impone)
@@ -107,12 +108,13 @@ Tabla personal.bomberos (70 columnas). Creada en 003_personal.sql, modificada po
 | frecuencia_normal_mensual | INT |
 | frecuencia_especial_mensual | INT |
 | dia_preferente_guardia | NVARCHAR(10) |
+| autorizado_firma_digital | BIT |
 
 ## Donde se usa
 
-- **Pantallas:** `/`, `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`, `/dashboard/guardias`, `/dashboard/guardias/[id]`, `/dashboard/guardias/esquemas-horario`, `/dashboard/guardias/generar`, `/dashboard/guardias/grupos`, `/dashboard/guardias/grupos/[id]`, `/dashboard/guardias/ordenes`, `/dashboard/guardias/ordenes/[id]`, `/dashboard/guardias/ordenes/configuracion`, `/dashboard/guardias/ordenes/nueva`, `/dashboard/guardias/pernoctes`, `/dashboard/guardias/requisitos`, `/dashboard/guardias/sorteos`, `/dashboard/guardias/sorteos/[id]`, `/dashboard/organizacion/ascensos`, `/dashboard/organizacion/designaciones`, `/dashboard/organizacion/feriados`, `/dashboard/personal/[id]`, `/dashboard/publicaciones`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`
-- **Endpoints:** ActividadProfesionalController, AscensosController, BitacoraController, BomberosController, CondicionController, DesignacionesController, EspecialidadesBomberoController, EventosAsistenciaController, FojaServicioController, GruposGuardiaController, GuardiasController, HistorialInstitucionalController, IdiomasController, ImportacionesController, MarcacionesController, NovedadesController, OrdenesGuardiaController, PernoctesController, PublicacionesController, SegurosBomberoController, ServiciosController, SorteosController
-- **Servicios:** ActividadProfesionalService, AscensosService, BitacoraService, BomberosService, CondicionService, DesignacionesService, ElegibilidadService, EspecialidadesBomberoService, EventosAsistenciaService, FojaServicioService, GeneracionService, GruposGuardiaService, GuardiasService, HistorialInstitucionalService, IdiomasService, ImportacionesService, MarcacionesService, NovedadesService, OrdenesGuardiaService, PernoctesService, PublicacionesService, SegurosBomberoService, ServiciosService, SorteosService
+- **Pantallas:** `/`, `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`, `/dashboard/deposito`, `/dashboard/deposito/articulos`, `/dashboard/deposito/articulos/[id]`, `/dashboard/deposito/bajas`, `/dashboard/deposito/categorias`, `/dashboard/deposito/entradas`, `/dashboard/deposito/incidencias`, `/dashboard/deposito/inventarios-fisicos`, `/dashboard/deposito/inventarios-fisicos/[id]`, `/dashboard/deposito/mantenimientos`, `/dashboard/deposito/movimientos`, `/dashboard/deposito/prestamos`, `/dashboard/deposito/proveedores`, `/dashboard/deposito/ubicaciones`, `/dashboard/documentos`, `/dashboard/documentos/[id]`, `/dashboard/documentos/auditoria`, `/dashboard/documentos/expedientes`, `/dashboard/documentos/expedientes/[id]`, `/dashboard/documentos/listado`, `/dashboard/documentos/plantillas`, `/dashboard/documentos/vencimientos`, `/dashboard/finanzas`, `/dashboard/finanzas/beneficios`, `/dashboard/finanzas/cajas`, `/dashboard/finanzas/cuentas-bancarias`, `/dashboard/finanzas/cuotas`, `/dashboard/finanzas/ejercicios-fiscales`, `/dashboard/finanzas/facturacion`, `/dashboard/finanzas/movimientos`, `/dashboard/finanzas/movimientos-bancarios`, `/dashboard/finanzas/ordenes-pago`, `/dashboard/finanzas/presupuesto`, `/dashboard/finanzas/socios-protectores`, `/dashboard/finanzas/socios-protectores/[id]`, `/dashboard/guardias`, `/dashboard/guardias/[id]`, `/dashboard/guardias/esquemas-horario`, `/dashboard/guardias/generar`, `/dashboard/guardias/grupos`, `/dashboard/guardias/grupos/[id]`, `/dashboard/guardias/ordenes`, `/dashboard/guardias/ordenes/[id]`, `/dashboard/guardias/ordenes/configuracion`, `/dashboard/guardias/ordenes/nueva`, `/dashboard/guardias/pernoctes`, `/dashboard/guardias/requisitos`, `/dashboard/guardias/sorteos`, `/dashboard/guardias/sorteos/[id]`, `/dashboard/organizacion/ascensos`, `/dashboard/organizacion/designaciones`, `/dashboard/organizacion/documentos`, `/dashboard/organizacion/feriados`, `/dashboard/personal/[id]`, `/dashboard/publicaciones`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`
+- **Endpoints:** ActividadProfesionalController, ActividadesAcademicasController, AscensosController, BitacoraController, BomberosController, CertificacionesAcademiaController, CondicionController, ConsultasAcademiaController, DesignacionesController, EspecialidadesBomberoController, EvaluacionesAcademiaController, EventosAsistenciaController, FirmasDocumentoController, FojaServicioController, GruposGuardiaController, GuardiasController, HistorialInstitucionalController, IdiomasController, ImportacionesController, InscripcionesAcademiaController, IntegracionDepositoController, MarcacionesController, NovedadesController, OrdenesGuardiaController, PernoctesController, PlantillasController, PublicacionesController, ReportesAcademiaController, ReportesFinanzasController, SegurosBomberoController, ServiciosController, SociosProtectoresController, SorteosController
+- **Servicios:** ActividadProfesionalService, ActividadesAcademicasService, AscensosService, BitacoraService, BomberosService, CertificacionesAcademiaService, CondicionService, ConsultasAcademiaService, DesignacionesService, ElegibilidadService, EspecialidadesBomberoService, EvaluacionesAcademiaService, EventosAsistenciaService, FirmasDocumentoService, FojaServicioService, GeneracionService, GruposGuardiaService, GuardiasService, HistorialInstitucionalService, IaToolsService, IdiomasService, ImportacionesService, InscripcionesAcademiaService, IntegracionDepositoService, MarcacionesService, NovedadesService, OrdenesGuardiaService, PernoctesService, PlantillasService, PublicacionesService, ReportesAcademiaService, ReportesFinanzasService, SegurosBomberoService, ServiciosService, SociosProtectoresService, SorteosService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -126,6 +128,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - `database/migrations/017_tipos_bombero.sql`
 - `database/migrations/018_parametros_y_normalizacion_personal.sql`
 - `database/migrations/026_guardias_planificacion.sql`
+- `database/migrations/032_personal_autorizacion_firma.sql`
 
 ## Relaciones
 
@@ -156,33 +159,44 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[table--operaciones-inspecciones-estacion|operaciones.inspecciones_estacion]] `references` →
 - [[table--operaciones-novedades-guardia|operaciones.novedades_guardia]] `references` →
 - [[table--operaciones-sorteo-participantes|operaciones.sorteo_participantes]] `references` →
+- [[table--academia-actividades|academia.actividades]] `references` →
+- [[table--academia-instructores-actividad|academia.instructores_actividad]] `references` →
+- [[table--academia-inscripciones|academia.inscripciones]] `references` →
+- [[table--academia-evaluaciones|academia.evaluaciones]] `references` →
+- [[table--deposito-tenencias|deposito.tenencias]] `references` →
+- [[table--deposito-movimientos|deposito.movimientos]] `references` →
+- [[table--deposito-movimientos|deposito.movimientos]] `references` →
+- [[table--deposito-movimientos|deposito.movimientos]] `references` →
+- [[table--deposito-bajas|deposito.bajas]] `references` →
+- [[table--deposito-bajas|deposito.bajas]] `references` →
+- [[table--deposito-prestamos|deposito.prestamos]] `references` →
+- [[table--deposito-prestamos|deposito.prestamos]] `references` →
+- [[table--deposito-inventarios-fisicos|deposito.inventarios_fisicos]] `references` →
+- [[table--deposito-mantenimientos|deposito.mantenimientos]] `references` →
+- [[table--finanzas-cajas|finanzas.cajas]] `references` →
+- [[table--finanzas-cuentas-bancarias|finanzas.cuentas_bancarias]] `references` →
+- [[table--finanzas-movimientos-financieros|finanzas.movimientos_financieros]] `references` →
+- [[table--finanzas-movimientos-financieros|finanzas.movimientos_financieros]] `references` →
+- [[table--finanzas-cuotas|finanzas.cuotas]] `references` →
+- [[table--documentos-firmas-documento|documentos.firmas_documento]] `references` →
+- [[table--finanzas-socios-protectores|finanzas.socios_protectores]] `references` →
 - [[entity--bombero|Bombero]] `persisted_in` →
+- [[service--academia-actividades-academicas|ActividadesAcademicasService]] `reads` →
+- [[service--academia-certificaciones-academia|CertificacionesAcademiaService]] `reads` →
+- [[service--academia-consultas-academia|ConsultasAcademiaService]] `reads` →
+- [[service--academia-evaluaciones-academia|EvaluacionesAcademiaService]] `reads` →
+- [[service--academia-inscripciones-academia|InscripcionesAcademiaService]] `reads` →
+- [[service--academia-reportes-academia|ReportesAcademiaService]] `reads` →
+- [[service--deposito-integracion-deposito|IntegracionDepositoService]] `reads` →
+- [[service--documentos-firmas-documento|FirmasDocumentoService]] `reads` →
+- [[service--documentos-plantillas|PlantillasService]] `reads` →
+- [[service--finanzas-reportes-finanzas|ReportesFinanzasService]] `reads` →
+- [[service--finanzas-socios-protectores|SociosProtectoresService]] `reads` →
 - [[service--guardias-bitacora|BitacoraService]] `reads` →
 - [[service--guardias-elegibilidad|ElegibilidadService]] `reads` →
 - [[service--guardias-generacion|GeneracionService]] `reads` →
 - [[service--guardias-grupos-guardia|GruposGuardiaService]] `reads` →
 - [[service--guardias-guardias|GuardiasService]] `reads` →
-- [[service--guardias-novedades|NovedadesService]] `reads` →
-- [[service--guardias-ordenes-guardia|OrdenesGuardiaService]] `reads` →
-- [[service--guardias-pernoctes|PernoctesService]] `reads` →
-- [[service--guardias-sorteos|SorteosService]] `reads` →
-- [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `reads` →
-- [[service--operaciones-importaciones|ImportacionesService]] `reads` →
-- [[service--operaciones-marcaciones|MarcacionesService]] `reads` →
-- [[service--organizacion-ascensos|AscensosService]] `reads` →
-- [[service--organizacion-designaciones|DesignacionesService]] `reads` →
-- [[service--personal-actividad-profesional|ActividadProfesionalService]] `reads` →
-- [[service--personal-bomberos|BomberosService]] `reads` →
-- [[service--personal-condicion|CondicionService]] `reads` →
-- [[service--personal-especialidades-bombero|EspecialidadesBomberoService]] `reads` →
-- [[service--personal-foja-servicio|FojaServicioService]] `reads` →
-- [[service--personal-historial-institucional|HistorialInstitucionalService]] `reads` →
-- [[service--personal-idiomas|IdiomasService]] `reads` →
-- [[service--personal-seguros-bombero|SegurosBomberoService]] `reads` →
-- [[service--publicaciones-publicaciones|PublicacionesService]] `reads` →
-- [[service--servicios-servicios|ServiciosService]] `reads` →
-- [[rule--cedula-y-numero-bombero-unicos|Cedula y numero de bombero son unicos en toda la institucion]] `affects` →
-- [[rule--identidad-y-tiempo-en-sql-server|PK UNIQUEIDENTIFIER con NEWSEQUENTIALID y tiempos en DATETIMEOFFSET(3)]] `affects` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

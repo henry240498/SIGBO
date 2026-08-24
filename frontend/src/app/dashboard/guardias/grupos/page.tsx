@@ -67,7 +67,7 @@ export default function GruposGuardiaPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Grupos de guardia ({grupos?.length ?? 0})</h2>
         {puedeCrear && (
-          <button className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
             {mostrarForm ? 'Cancelar' : 'Nuevo grupo'}
           </button>
         )}
@@ -109,7 +109,7 @@ export default function GruposGuardiaPage() {
             El ciclo de rotacion es lo que le permite a la generacion automatica (Guardias → Generar) elegir este
             grupo cuando corresponda. Sin ciclo definido, el grupo nunca se elige automaticamente.
           </p>
-          <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
+          <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
             {guardando ? 'Guardando...' : 'Crear grupo'}
           </button>
         </form>

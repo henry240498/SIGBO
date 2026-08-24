@@ -52,9 +52,9 @@ Tabla equipos.equipos (22 columnas). Creada en 006_vehiculos_equipos.sql, modifi
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/registro`, `/dashboard/equipos`, `/dashboard/equipos/[id]`, `/dashboard/equipos/categorias`, `/dashboard/guardias/[id]`, `/dashboard/guardias/grupos`, `/dashboard/guardias/grupos/[id]`, `/dashboard/guardias/ordenes/configuracion`, `/dashboard/guardias/pernoctes`, `/dashboard/guardias/requisitos`, `/dashboard/organizacion/ascensos`, `/dashboard/organizacion/cuarteles`, `/dashboard/organizacion/designaciones`, `/dashboard/organizacion/turnos`, `/dashboard/personal`, `/dashboard/personal/[id]`, `/dashboard/personal/nuevo`, `/dashboard/seguridad/usuarios`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
-- **Endpoints:** EquipamientoBomberoController, EquiposController, InspeccionesMovilController
-- **Servicios:** EquipamientoBomberoService, EquiposService, InspeccionesMovilService
+- **Pantallas:** `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/registro`, `/dashboard/deposito`, `/dashboard/deposito/articulos`, `/dashboard/deposito/articulos/[id]`, `/dashboard/deposito/bajas`, `/dashboard/deposito/categorias`, `/dashboard/deposito/entradas`, `/dashboard/deposito/incidencias`, `/dashboard/deposito/inventarios-fisicos`, `/dashboard/deposito/inventarios-fisicos/[id]`, `/dashboard/deposito/mantenimientos`, `/dashboard/deposito/movimientos`, `/dashboard/deposito/prestamos`, `/dashboard/deposito/proveedores`, `/dashboard/deposito/ubicaciones`, `/dashboard/documentos/[id]`, `/dashboard/documentos/plantillas`, `/dashboard/equipos`, `/dashboard/equipos/[id]`, `/dashboard/equipos/categorias`, `/dashboard/finanzas/beneficios`, `/dashboard/finanzas/cajas`, `/dashboard/finanzas/cuentas-bancarias`, `/dashboard/finanzas/cuotas`, `/dashboard/finanzas/movimientos`, `/dashboard/finanzas/ordenes-pago`, `/dashboard/finanzas/socios-protectores`, `/dashboard/guardias/[id]`, `/dashboard/guardias/grupos`, `/dashboard/guardias/grupos/[id]`, `/dashboard/guardias/ordenes/configuracion`, `/dashboard/guardias/pernoctes`, `/dashboard/guardias/requisitos`, `/dashboard/organizacion/ascensos`, `/dashboard/organizacion/cuarteles`, `/dashboard/organizacion/designaciones`, `/dashboard/organizacion/turnos`, `/dashboard/personal`, `/dashboard/personal/[id]`, `/dashboard/personal/nuevo`, `/dashboard/seguridad/usuarios`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
+- **Endpoints:** BajasController, ConsultasDepositoController, EntradasController, EquipamientoBomberoController, EquiposController, InspeccionesMovilController, IntegracionDepositoController, MantenimientosController, MovimientosDepositoController, PrestamosController
+- **Servicios:** BajasService, ConsultasDepositoService, EntradasService, EquipamientoBomberoService, EquiposService, IaToolsService, InspeccionesMovilService, IntegracionDepositoService, MantenimientosService, MovimientosDepositoService, PrestamosService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -72,10 +72,26 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 
 ## Referenciado por
 
+- [[table--deposito-tenencias|deposito.tenencias]] `references` →
+- [[table--deposito-movimientos|deposito.movimientos]] `references` →
+- [[table--deposito-entrada-items|deposito.entrada_items]] `references` →
+- [[table--deposito-bajas|deposito.bajas]] `references` →
+- [[table--deposito-prestamo-items|deposito.prestamo_items]] `references` →
+- [[table--deposito-inventario-fisico-items|deposito.inventario_fisico_items]] `references` →
+- [[table--deposito-incidencias|deposito.incidencias]] `references` →
+- [[table--deposito-mantenimientos|deposito.mantenimientos]] `references` →
 - [[entity--equipo|Equipo]] `persisted_in` →
+- [[service--deposito-bajas|BajasService]] `reads` →
+- [[service--deposito-consultas-deposito|ConsultasDepositoService]] `reads` →
+- [[service--deposito-entradas|EntradasService]] `reads` →
+- [[service--deposito-integracion-deposito|IntegracionDepositoService]] `reads` →
+- [[service--deposito-mantenimientos|MantenimientosService]] `reads` →
+- [[service--deposito-movimientos-deposito|MovimientosDepositoService]] `reads` →
+- [[service--deposito-prestamos|PrestamosService]] `reads` →
 - [[service--equipos-equipamiento-bombero|EquipamientoBomberoService]] `reads` →
 - [[service--equipos-equipos|EquiposService]] `reads` →
 - [[service--guardias-inspecciones-movil|InspeccionesMovilService]] `reads` →
+- [[service--ia-ia-tools|IaToolsService]] `reads` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

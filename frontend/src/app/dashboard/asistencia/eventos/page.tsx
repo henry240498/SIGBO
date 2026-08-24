@@ -76,7 +76,7 @@ export default function EventosPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Eventos ({eventos?.length ?? 0})</h2>
         {puedeCrear && (
-          <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Nuevo evento'}
           </button>
         )}
@@ -138,7 +138,7 @@ export default function EventosPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
             <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Crear evento'}
           </button>
         </form>

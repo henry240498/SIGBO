@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
 
@@ -35,6 +36,7 @@ interface Designacion {
 }
 
 export default function DesignacionesPage() {
+  const confirmar = useConfirmacion();
   const [designaciones, setDesignaciones] = useState<Designacion[] | null>(null);
   const [bomberos, setBomberos] = useState<Bombero[]>([]);
   const [cargos, setCargos] = useState<Opcion[]>([]);
@@ -118,7 +120,7 @@ export default function DesignacionesPage() {
 
   async function anular(id: string) {
     setError(null);
-    if (!window.confirm('Anular esta designacion?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Anular esta designacion?', confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/organizacion/designaciones/${id}/baja`, { method: 'PATCH' });
     if (!res.ok) {
       setError('No se pudo anular la designacion');
@@ -134,13 +136,13 @@ export default function DesignacionesPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Designaciones ({designaciones?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/designaciones/exportar/excel', 'designaciones.xlsx')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/designaciones/exportar/excel', 'designaciones.xlsx')}>
             Exportar a Excel
           </button>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/designaciones/exportar/pdf', 'designaciones.pdf')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/designaciones/exportar/pdf', 'designaciones.pdf')}>
             Exportar a PDF
           </button>
-          <button className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
             {mostrarForm ? 'Cancelar' : 'Nueva designacion'}
           </button>
         </div>
@@ -212,7 +214,7 @@ export default function DesignacionesPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
             <input className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
           </div>
-          <button className="btn-primary" style={{ gridColumn: '1 / -1', justifySelf: 'start' }}>
+          <button type="submit" className="btn-primary" style={{ gridColumn: '1 / -1', justifySelf: 'start' }}>
             Crear designacion
           </button>
         </form>
@@ -246,7 +248,7 @@ export default function DesignacionesPage() {
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 8 }}>
                   {d.estado === 'ACTIVA' && (
-                    <button
+                    <button type="button"
                       onClick={() => finalizar(d.id)}
                       style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
                     >
@@ -254,7 +256,7 @@ export default function DesignacionesPage() {
                     </button>
                   )}
                   {!d.eliminadoEn && (
-                    <button
+                    <button type="button"
                       onClick={() => anular(d.id)}
                       style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
                     >

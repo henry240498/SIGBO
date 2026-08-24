@@ -80,7 +80,7 @@ export default function EquiposPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Equipos ({equipos?.length ?? 0})</h2>
         {puedeCrear && (
-          <button className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
             {mostrarForm ? 'Cancelar' : 'Nuevo equipo'}
           </button>
         )}
@@ -140,7 +140,7 @@ export default function EquiposPage() {
               <input className="input-field" value={modelo} onChange={(e) => setModelo(e.target.value)} />
             </div>
           </div>
-          <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
+          <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
             {guardando ? 'Guardando...' : 'Crear equipo'}
           </button>
         </form>

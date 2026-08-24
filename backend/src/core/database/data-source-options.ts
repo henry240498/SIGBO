@@ -3,6 +3,45 @@ import { DataSourceOptions } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import * as entities from '../../shared/entities';
 
+function booleanoConfiguracion(
+  entorno: Record<string, string | undefined>,
+  nombre: string,
+  predeterminado: boolean,
+): boolean {
+  const valor = entorno[nombre]?.toLowerCase();
+  if (valor === undefined || valor === '') return predeterminado;
+  if (valor === 'true') return true;
+  if (valor === 'false') return false;
+  throw new Error(nombre + ' debe ser true o false.');
+}
+
+/**
+ * SQL Server local puede usar certificado autofirmado, pero un despliegue de
+ * produccion debe declarar cifrado y validacion de certificado de forma
+ * explicita. Fallar al iniciar evita una degradacion silenciosa de TLS.
+ */
+export function obtenerSeguridadMssql(
+  entorno: Record<string, string | undefined> = process.env,
+): { encrypt: boolean; trustServerCertificate: boolean } {
+  const encrypt = booleanoConfiguracion(entorno, 'DB_ENCRYPT', false);
+  const trustServerCertificate = booleanoConfiguracion(
+    entorno,
+    'DB_TRUST_SERVER_CERTIFICATE',
+    true,
+  );
+  if (
+    entorno.NODE_ENV === 'production' &&
+    (!encrypt || trustServerCertificate)
+  ) {
+    throw new Error(
+      'En produccion DB_ENCRYPT=true y DB_TRUST_SERVER_CERTIFICATE=false son obligatorios.',
+    );
+  }
+  return { encrypt, trustServerCertificate };
+}
+
+const seguridadMssql = obtenerSeguridadMssql();
+
 export const dataSourceOptions: DataSourceOptions = {
   type: 'mssql',
   host: process.env.DB_HOST ?? 'localhost',
@@ -12,8 +51,7 @@ export const dataSourceOptions: DataSourceOptions = {
   database: process.env.DB_NAME ?? 'sigbo_cbvc',
   options: {
     ...(process.env.DB_INSTANCE ? { instanceName: process.env.DB_INSTANCE } : {}),
-    encrypt: process.env.DB_ENCRYPT === 'true',
-    trustServerCertificate: process.env.DB_TRUST_SERVER_CERTIFICATE !== 'false',
+    ...seguridadMssql,
     connectTimeout: 15000,
   },
   requestTimeout: 15000,

@@ -84,7 +84,7 @@ tecnica.
 ## Relaciones
 
 - `constrains` → [[api--denuncias-denuncias-publicas|DenunciasPublicasController]]
-- `depends_on` → [[dependency--nestjs|NestJS 10 + TypeORM 0.3]]
+- `depends_on` → [[dependency--nestjs|NestJS 11 + TypeORM 0.3]]
 - `belongs_to` → [[domain--denuncias|Denuncias]]
 
 ## Referenciado por

@@ -115,7 +115,7 @@ export default function PresupuestoPage() {
             </a>
           )}
           {puedeAdministrar && ejercicioId && (
-            <button
+            <button type="button"
               className="btn-primary"
               onClick={() => {
                 limpiarForm();
@@ -155,7 +155,7 @@ export default function PresupuestoPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
             <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear partida'}
           </button>
         </form>
@@ -198,7 +198,7 @@ export default function PresupuestoPage() {
                 </td>
                 <td style={{ padding: '6px 4px' }}>
                   {puedeAdministrar && (
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(p)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(p)}>
                       Editar
                     </button>
                   )}

@@ -15,7 +15,7 @@
 
 ## 1. Stack y principios generales
 
-- **Next.js 14, App Router, TypeScript, React 18.** Todas las páginas son
+- **Next.js 16, App Router, TypeScript, React 19.** Todas las páginas son
   `'use client'` — no hay Server Components con datos; todo se carga desde el
   cliente contra la API vía `fetch`.
 - **Sin librería de UI** (no Material UI, no Chakra, no shadcn, no Ant Design).
@@ -237,7 +237,7 @@ El más común (12 pantallas de Organización lo usan). Estructura, en orden:
    botones pequeños (`padding:'4px 8px', fontSize:12`): "Editar" (azul por
    defecto), y "Eliminar"/"Reactivar" alternados según `eliminadoEn === null`
    (rojo `#7f1d1d` para eliminar, verde `#166534` para reactivar). Borrado siempre
-   vía `window.confirm(...)` antes de llamar a la API — nunca se borra sin
+   mediante `useConfirmacion()` antes de llamar a la API — nunca se borra sin
    confirmación.
 
 ### 5.2 Molde B — Listado simple de solo lectura
@@ -386,10 +386,11 @@ componente si le falta algo.
 - **Enlaces de "quitar" de una lista dinámica**: nunca un botón `.btn-primary`
   rojo — siempre texto plano subrayado:
   `style={{background:'none', border:'none', color:'#f87171', cursor:'pointer', textDecoration:'underline'}}`.
-- **Confirmaciones destructivas**: `window.confirm('¿Pregunta clara?')` nativo del
-  navegador — no hay modal custom de confirmación en todo el sistema. Para
-  entradas de texto puntuales (motivo de baja, nueva contraseña temporal) se usa
-  `window.prompt(...)`, también nativo.
+- **Confirmaciones destructivas**: usar `useConfirmacion()` del
+  `ConfirmProvider`; ofrece foco inicial, ciclo de foco, Escape y restauración
+  del foco. Para entradas de texto puntuales usar `useEntradaConfirmada()` del
+  `InputProvider`; no usar `window.confirm`, `window.prompt` ni
+  `window.alert`.
 - **Loading state**: `<p style={{color:'#94a3b8'}}>Cargando...</p>` como único
   contenido de la página mientras el dato principal es `null` — no hay
   spinners/skeletons en ningún lado del sistema.
@@ -401,22 +402,24 @@ componente si le falta algo.
 ## 7. Integración con la API (frontend/src/lib/)
 
 ### 7.1 `apiFetch` (`lib/api.ts`) — usar SIEMPRE para llamadas JSON
-Envuelve `fetch` agregando automáticamente `Content-Type: application/json` y el
-header `Authorization: Bearer <accessToken>` desde la sesión en `localStorage`
-(`sigbo_sesion`). Si la respuesta es `401`, intenta refrescar el token una vez
-(`POST /auth/refresh`) y reintenta la request original antes de devolver el error.
+Envuelve `fetch` agregando `Content-Type: application/json`,
+`X-SIGBO-Request: 1` y `credentials: 'include'`. Las credenciales de
+autenticación están en cookies HttpOnly; `localStorage` conserva únicamente el
+perfil mínimo de sesión para la interfaz. Si una respuesta es `401`, intenta
+renovar una vez mediante `POST /auth/refresh` y reintenta la solicitud.
 **Nunca usar `fetch` directo para JSON** — solo `apiFetch`.
 
 ### 7.2 `fetch` manual — solo para `multipart/form-data` (subida de archivos)
 Como `apiFetch` fuerza `Content-Type: application/json`, las subidas de archivo
-(foto de perfil, imágenes de apariencia) arman el header a mano:
+(foto de perfil, imágenes de apariencia) usan `fetch` con `FormData`, cookies
+incluidas y la cabecera CSRF:
 ```tsx
 const formData = new FormData();
 formData.append('archivo', archivo);
-const sesion = obtenerSesion();
-const headers: HeadersInit = {};
-if (sesion) headers['Authorization'] = `Bearer ${sesion.accessToken}`;
-const res = await fetch(`${API_ORIGIN}/api/v1/...`, { method: 'PUT', headers, body: formData });
+const headers: HeadersInit = { 'X-SIGBO-Request': '1' };
+const res = await fetch(`${API_ORIGIN}/api/v1/...`, {
+  method: 'PUT', headers, body: formData, credentials: 'include'
+});
 ```
 Nótese `API_ORIGIN` (sin el sufijo `/api/v1`) + el prefijo escrito a mano, porque
 `apiFetch` no se usa acá.
@@ -484,8 +487,8 @@ usan 👤. Logo por defecto del sistema (sin apariencia configurada): 🚒.
 - No ofrecer exportación a CSV — el estándar del sistema es Excel + PDF.
 - No agregar spinners/skeletons/animaciones de carga — el patrón establecido es
   el texto simple "Cargando...".
-- No agregar modales de confirmación custom — `window.confirm`/`window.prompt`
-  nativos son el patrón establecido.
+- No usar `window.confirm`, `window.prompt` o `window.alert`; utilizar los
+  proveedores compartidos de confirmación y entrada.
 - No hacer la UI responsive/mobile — el sistema está diseñado como panel de
   escritorio de una sola columna con sidebar fijo de `240px`; no hay media
   queries ni breakpoints en ningún archivo del proyecto.
@@ -506,7 +509,7 @@ usan 👤. Logo por defecto del sistema (sin apariencia configurada): 🚒.
    `useEffect`; nunca `fetch` directo salvo subida de archivos (§7.2).
 5. Incluir siempre los dos `<p>` de error/mensaje (§5.1 punto 3), aunque la
    pantalla sea simple.
-6. Si hay acción destructiva, `window.confirm` antes de ejecutarla.
+6. Si hay acción destructiva, solicitarla con `useConfirmacion()` antes de ejecutarla.
 7. Si hay export, usar `descargarArchivo` hacia un endpoint `/exportar/excel` y
    `/exportar/pdf` — nunca CSV.
 8. Ocultar acciones según `obtenerSesion()?.usuario.permisos`, sabiendo que es

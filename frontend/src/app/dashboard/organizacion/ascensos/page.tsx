@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
 
@@ -30,6 +31,7 @@ interface Ascenso {
 }
 
 export default function AscensosPage() {
+  const confirmar = useConfirmacion();
   const [ascensos, setAscensos] = useState<Ascenso[] | null>(null);
   const [bomberos, setBomberos] = useState<Bombero[]>([]);
   const [rangos, setRangos] = useState<Opcion[]>([]);
@@ -93,7 +95,7 @@ export default function AscensosPage() {
 
   async function anular(id: string) {
     setError(null);
-    if (!window.confirm('Anular este ascenso? Si el bombero no tuvo ascensos posteriores, se revertira su rango.')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Anular este ascenso? Si el bombero no tuvo ascensos posteriores, se revertira su rango.', confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/organizacion/ascensos/${id}/anular`, { method: 'PATCH' });
     if (!res.ok) {
       setError('No se pudo anular el ascenso');
@@ -109,13 +111,13 @@ export default function AscensosPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Ascensos ({ascensos?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/ascensos/exportar/excel', 'ascensos.xlsx')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/ascensos/exportar/excel', 'ascensos.xlsx')}>
             Exportar a Excel
           </button>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/ascensos/exportar/pdf', 'ascensos.pdf')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/ascensos/exportar/pdf', 'ascensos.pdf')}>
             Exportar a PDF
           </button>
-          <button className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
             {mostrarForm ? 'Cancelar' : 'Registrar ascenso'}
           </button>
         </div>
@@ -164,7 +166,7 @@ export default function AscensosPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo</label>
             <input className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
           </div>
-          <button className="btn-primary" style={{ gridColumn: '1 / -1', justifySelf: 'start' }}>
+          <button type="submit" className="btn-primary" style={{ gridColumn: '1 / -1', justifySelf: 'start' }}>
             Registrar ascenso
           </button>
         </form>
@@ -196,7 +198,7 @@ export default function AscensosPage() {
                 </td>
                 <td style={{ padding: '6px 4px' }}>
                   {a.estado === 'REGISTRADO' && (
-                    <button
+                    <button type="button"
                       onClick={() => anular(a.id)}
                       style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
                     >

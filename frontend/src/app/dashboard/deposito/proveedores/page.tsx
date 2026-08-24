@@ -111,7 +111,7 @@ export default function ProveedoresDepositoPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Proveedores ({proveedores?.length ?? 0})</h2>
         {puedeCrear && (
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               limpiarForm();
@@ -184,7 +184,7 @@ export default function ProveedoresDepositoPage() {
             )}
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+            <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
               {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear proveedor'}
             </button>
             {editandoId && (
@@ -232,7 +232,7 @@ export default function ProveedoresDepositoPage() {
                 </td>
                 <td style={{ padding: '6px 4px' }}>
                   {puedeEditar && (
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(p)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(p)}>
                       Editar
                     </button>
                   )}

@@ -78,7 +78,7 @@ export default function ConfiguracionOrdenesPage() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 900 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Configuracion de la Orden de Guardia</h2>
-        <button className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/guardias/ordenes')}>
+        <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/guardias/ordenes')}>
           Volver
         </button>
       </div>
@@ -163,7 +163,7 @@ export default function ConfiguracionOrdenesPage() {
           </div>
         </section>
 
-        <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
+        <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
           {guardando ? 'Guardando...' : 'Guardar configuracion'}
         </button>
       </form>

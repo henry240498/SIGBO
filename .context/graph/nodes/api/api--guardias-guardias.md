@@ -4,22 +4,22 @@ tipo: API
 nombre: GuardiasController
 nivel: L2
 dominio: guardias
-resumen: Superficie HTTP de guardias bajo /api/v1/guardias.
+resumen: "Los controladores con subrutas literales se registran antes de éste en GuardiasModule. Así Express 5 no necesita expresiones regulares embebidas en el path; ParseUUIDPipe mantiene la validación del identificador."
 prefijo: /api/v1/guardias
 capa: backend
-permisos: [guardias:ver, guardias:crear, guardias:editar, guardias:eliminar, guardias:asignar]
+permisos: [guardias:ver, guardias:crear, guardias:editar, guardias:eliminar, guardias:asignar, guardias:reemplazar]
 archivos:
   - backend/src/modules/guardias/guardias.controller.ts
 edges:
   - [belongs_to, domain--guardias]
   - [exposes, service--guardias-guardias]
   - [exposes, service--guardias-generacion]
-terminos: [guardias, ver, crear, editar, eliminar, asignar]
+terminos: [guardias, ver, crear, editar, eliminar, asignar, reemplazar]
 ---
 
 # GuardiasController
 
-Superficie HTTP de guardias bajo /api/v1/guardias.
+Los controladores con subrutas literales se registran antes de éste en GuardiasModule. Así Express 5 no necesita expresiones regulares embebidas en el path; ParseUUIDPipe mantiene la validación del identificador.
 
 - **Prefijo:** `/api/v1/guardias`
 
@@ -29,15 +29,17 @@ Superficie HTTP de guardias bajo /api/v1/guardias.
 |---|---|---|
 | GET | `/guardias` | `guardias:ver` |
 | POST | `/guardias/generar` | `guardias:crear` |
-| GET | `/guardias/`:id(${GUID_PATH}` | `guardias:ver` |
+| GET | `/guardias/:id` | `guardias:ver` |
 | POST | `/guardias` | `guardias:crear` |
-| PATCH | `/guardias/`:id(${GUID_PATH}` | `guardias:editar` |
-| POST | `/guardias/`:id(${GUID_PATH}` | `guardias:eliminar` |
-| GET | `/guardias/`:id(${GUID_PATH}` | `guardias:ver` |
-| POST | `/guardias/`:id(${GUID_PATH}` | `guardias:asignar` |
-| DELETE | `/guardias/`:id(${GUID_PATH}` | `guardias:editar` |
-| POST | `/guardias/`:id(${GUID_PATH}` | `guardias:editar` |
-| GET | `/guardias/`:id(${GUID_PATH}` | `guardias:ver` |
+| PATCH | `/guardias/:id` | `guardias:editar` |
+| POST | `/guardias/:id/anular` | `guardias:eliminar` |
+| GET | `/guardias/:id/asignaciones` | `guardias:ver` |
+| POST | `/guardias/:id/asignaciones` | `guardias:asignar` |
+| POST | `/guardias/:id/asignaciones/:asignacionId/reemplazar` | `guardias:reemplazar` |
+| DELETE | `/guardias/:id/asignaciones/:asignacionId` | `guardias:editar` |
+| POST | `/guardias/:id/asignaciones/:asignacionId/horario` | `guardias:editar` |
+| POST | `/guardias/:id/asignaciones/:asignacionId/presencia` | `guardias:editar` |
+| GET | `/guardias/:id/cumplimiento/:bomberoId` | `guardias:ver` |
 
 ## Archivos
 

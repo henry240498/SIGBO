@@ -34,7 +34,7 @@ Tabla vehiculos.checklist_items (7 columnas). Creada en 023_moviles.sql.
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/equipos/[id]`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
+- **Pantallas:** `/dashboard/deposito/articulos/[id]`, `/dashboard/deposito/bajas`, `/dashboard/deposito/incidencias`, `/dashboard/deposito/movimientos`, `/dashboard/equipos/[id]`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
 - **Endpoints:** ChecklistItemsController, InspeccionesMovilController
 - **Servicios:** ChecklistItemsService, InspeccionesMovilService
 

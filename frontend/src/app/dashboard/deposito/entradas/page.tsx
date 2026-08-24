@@ -148,7 +148,7 @@ export default function EntradasDepositoPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Entradas ({entradas?.length ?? 0})</h2>
         {puedeCrear && (
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               limpiarForm();
@@ -262,7 +262,7 @@ export default function EntradasDepositoPage() {
             </button>
           </div>
 
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Registrar entrada'}
           </button>
         </form>

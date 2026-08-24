@@ -226,7 +226,7 @@ export default function SociosProtectoresPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Socios Protectores ({socios?.length ?? 0})</h2>
         {puedeCrear && (
-          <button className="btn-primary" onClick={() => (mostrarForm ? setMostrarForm(false) : nuevo())}>
+          <button type="button" className="btn-primary" onClick={() => (mostrarForm ? setMostrarForm(false) : nuevo())}>
             {mostrarForm ? 'Cancelar' : '+ Nuevo socio'}
           </button>
         )}
@@ -378,7 +378,7 @@ export default function SociosProtectoresPage() {
             <input className="input-field" value={form.observaciones} onChange={(e) => setForm({ ...form, observaciones: e.target.value })} />
           </div>
 
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : form.id ? 'Guardar cambios' : 'Crear socio protector'}
           </button>
         </form>
@@ -417,7 +417,7 @@ export default function SociosProtectoresPage() {
                     Ver
                   </Link>
                   {puedeEditar && (
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(s)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(s)}>
                       Editar
                     </button>
                   )}

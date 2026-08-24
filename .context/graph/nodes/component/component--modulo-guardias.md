@@ -20,7 +20,7 @@ Modulo NestJS que cablea controladores, servicios y repositorios de guardias.
 
 ## Entidades registradas (forFeature)
 
-Guardia, AsignacionGuardia, CambioGuardia, GrupoGuardia, GrupoGuardiaMiembro, Pernocte, InspeccionEstacion, NovedadGuardia, RequisitoRolGuardia, EsquemaHorarioGuardia, Feriado, Rango, SorteoGuardia, SorteoParticipante, InspeccionMovil, Vehiculo, ChecklistItemVehiculo, Equipo, Servicio, EventoAsistencia, ParticipanteEvento, PrestamoEquipo, Bombero, MarcacionAsistencia, Parametro, Usuario, VehiculoAutorizado, OrdenGuardia, OrdenGuardiaConfiguracion, OrdenGuardiaModificacion, Cargo, Designacion
+Guardia, AsignacionGuardia, CambioGuardia, GrupoGuardia, GrupoGuardiaMiembro, Pernocte, InspeccionEstacion, NovedadGuardia, RequisitoRolGuardia, EsquemaHorarioGuardia, Feriado, Rango, SorteoGuardia, SorteoParticipante, InspeccionMovil, Vehiculo, ChecklistItemVehiculo, Equipo, Servicio, EventoAsistencia, ParticipanteEvento, PrestamoEquipo, Bombero, MarcacionAsistencia, Parametro, Usuario, VehiculoAutorizado, OrdenGuardia, OrdenGuardiaConfiguracion, OrdenGuardiaModificacion, Cargo, Designacion, IdentidadInstitucional
 
 ## Archivos
 

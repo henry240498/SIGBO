@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
 
@@ -22,6 +23,7 @@ interface Bombero {
 }
 
 export default function TurnosPage() {
+  const confirmar = useConfirmacion();
   const [turnos, setTurnos] = useState<Turno[] | null>(null);
   const [bomberos, setBomberos] = useState<Bombero[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -125,7 +127,7 @@ export default function TurnosPage() {
 
   async function darBaja(id: string) {
     setError(null);
-    if (!window.confirm('Dar de baja este turno?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Dar de baja este turno?', confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/organizacion/turnos/${id}/baja`, { method: 'PATCH' });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
@@ -158,7 +160,7 @@ export default function TurnosPage() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10 }}>
         <h2 style={{ fontSize: 16 }}>Turnos ({turnos?.length ?? 0})</h2>
-        <button
+        <button type="button"
           className="btn-primary"
           onClick={() => {
             if (mostrarForm) {
@@ -198,10 +200,10 @@ export default function TurnosPage() {
           />
           Mostrar eliminados
         </label>
-        <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/turnos/exportar/excel', 'turnos.xlsx')}>
+        <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/turnos/exportar/excel', 'turnos.xlsx')}>
           Exportar a Excel
         </button>
-        <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/turnos/exportar/pdf', 'turnos.pdf')}>
+        <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/turnos/exportar/pdf', 'turnos.pdf')}>
           Exportar a PDF
         </button>
       </div>
@@ -262,7 +264,7 @@ export default function TurnosPage() {
             </select>
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
-            <button className="btn-primary" style={{ alignSelf: 'flex-start' }}>
+            <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }}>
               {editandoId ? 'Guardar cambios' : 'Crear turno'}
             </button>
             <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={cancelar}>
@@ -297,11 +299,11 @@ export default function TurnosPage() {
                   <span className="badge">{t.estado}</span>
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(t)}>
+                  <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(t)}>
                     Editar
                   </button>
                   {t.eliminadoEn == null ? (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                       onClick={() => darBaja(t.id)}
@@ -309,7 +311,7 @@ export default function TurnosPage() {
                       Eliminar
                     </button>
                   ) : (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#166534' }}
                       onClick={() => reactivar(t.id)}

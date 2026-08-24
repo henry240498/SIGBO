@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
 import { cargarParametros, Parametro, TipoParametro } from '@/lib/parametros';
@@ -41,6 +42,7 @@ const CADENA_ANCESTROS: Partial<Record<TipoParametro, { tipo: TipoParametro; lab
 };
 
 export default function ParametrosPage() {
+  const confirmar = useConfirmacion();
   const [familia, setFamilia] = useState<TipoParametro>('PAIS');
   const [cadena, setCadena] = useState<Record<string, string>>({});
   const [opcionesCadena, setOpcionesCadena] = useState<Record<string, Parametro[]>>({});
@@ -171,7 +173,7 @@ export default function ParametrosPage() {
   }
 
   async function darBaja(id: string) {
-    if (!window.confirm(`Dar de baja este ${familiaActual.labelSingular}?`)) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: `Dar de baja este ${familiaActual.labelSingular}?`, confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/organizacion/parametros/${id}/baja`, { method: 'PATCH' });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
@@ -203,7 +205,7 @@ export default function ParametrosPage() {
 
       <div className="card" style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         {FAMILIAS.map((f) => (
-          <button
+          <button type="button"
             key={f.tipo}
             onClick={() => cambiarFamilia(f.tipo)}
             className="btn-primary"
@@ -259,7 +261,7 @@ export default function ParametrosPage() {
               {familiaActual.label} ({items?.length ?? 0})
             </h3>
             <div style={{ display: 'flex', gap: 8 }}>
-              <button
+              <button type="button"
                 className="btn-primary"
                 onClick={() =>
                   descargarArchivo(`/organizacion/parametros/exportar/excel?tipo=${familia}`, `parametros-${familia}.xlsx`)
@@ -267,7 +269,7 @@ export default function ParametrosPage() {
               >
                 Exportar a Excel
               </button>
-              <button
+              <button type="button"
                 className="btn-primary"
                 onClick={() =>
                   descargarArchivo(`/organizacion/parametros/exportar/pdf?tipo=${familia}`, `parametros-${familia}.pdf`)
@@ -275,7 +277,7 @@ export default function ParametrosPage() {
               >
                 Exportar a PDF
               </button>
-              <button
+              <button type="button"
                 className="btn-primary"
                 onClick={() => {
                   if (mostrarForm) {
@@ -336,7 +338,7 @@ export default function ParametrosPage() {
                 <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
               </div>
               <div style={{ display: 'flex', gap: 8 }}>
-                <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
+                <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
                   {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear'}
                 </button>
               </div>
@@ -368,11 +370,11 @@ export default function ParametrosPage() {
                       </span>
                     </td>
                     <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(p)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(p)}>
                         Editar
                       </button>
                       {p.eliminadoEn === null ? (
-                        <button
+                        <button type="button"
                           className="btn-primary"
                           style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                           onClick={() => darBaja(p.id)}
@@ -380,7 +382,7 @@ export default function ParametrosPage() {
                           Eliminar
                         </button>
                       ) : (
-                        <button
+                        <button type="button"
                           className="btn-primary"
                           style={{ padding: '4px 8px', fontSize: 12, background: '#166534' }}
                           onClick={() => reactivar(p.id)}

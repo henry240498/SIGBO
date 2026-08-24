@@ -56,8 +56,8 @@ export class AparienciaController {
       storage: memoryStorage(),
       limits: { fileSize: 5 * 1024 * 1024 },
       fileFilter: (_req, file, callback) => {
-        if (!/^image\/(png|jpe?g|webp|gif|svg\+xml)$/.test(file.mimetype)) {
-          callback(new BadRequestException('El archivo debe ser una imagen (png, jpg, webp, gif o svg)'), false);
+        if (!/^image\/(png|jpe?g|webp|gif)$/.test(file.mimetype)) {
+          callback(new BadRequestException('El archivo debe ser una imagen PNG, JPG, WEBP o GIF'), false);
           return;
         }
         callback(null, true);

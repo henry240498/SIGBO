@@ -2,7 +2,7 @@ import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/commo
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Usuario, UsuarioCorreo, UsuarioTelefono } from '../../shared/entities';
-import { borrarImagenSiExiste, guardarImagen } from '../../shared/utils/almacenamiento';
+import { borrarImagenSiExiste, guardarImagenRestringida, leerBufferRestringido, mimeImagenPorReferencia } from '../../shared/utils/almacenamiento';
 import { AparienciaService } from './apariencia.service';
 import { ActualizarPerfilDto } from './dto/actualizar-perfil.dto';
 
@@ -69,6 +69,18 @@ export class PerfilService {
     return this.guardarFoto(usuarioId, file);
   }
 
+  async obtenerFoto(usuarioId: string): Promise<{ buffer: Buffer; mimeType: string }> {
+    const usuario = await this.usuarioRepo.findOne({ where: { id: usuarioId } });
+    if (!usuario?.avatarUrl) throw new NotFoundException('Este usuario no tiene una foto de perfil registrada');
+    const mimeType = mimeImagenPorReferencia(usuario.avatarUrl);
+    if (!mimeType) throw new NotFoundException('La foto de perfil tiene un formato no disponible');
+    try {
+      return { buffer: await leerBufferRestringido(usuario.avatarUrl, CARPETA_FOTOS), mimeType };
+    } catch {
+      throw new NotFoundException('El archivo de foto de perfil no está disponible');
+    }
+  }
+
   private async guardarCambios(usuarioId: string, dto: ActualizarPerfilDto) {
     const usuario = await this.usuarioRepo.findOne({ where: { id: usuarioId } });
     if (!usuario) throw new NotFoundException(`Usuario ${usuarioId} no encontrado`);
@@ -106,7 +118,7 @@ export class PerfilService {
     if (!usuario) throw new NotFoundException(`Usuario ${usuarioId} no encontrado`);
 
     const rutaAnterior = usuario.avatarUrl;
-    const nuevaRuta = await guardarImagen(file, CARPETA_FOTOS);
+    const nuevaRuta = await guardarImagenRestringida(file, CARPETA_FOTOS);
     await this.usuarioRepo.update(usuarioId, { avatarUrl: nuevaRuta });
     await borrarImagenSiExiste(rutaAnterior, CARPETA_FOTOS);
 

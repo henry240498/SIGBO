@@ -1,9 +1,11 @@
 'use client';
 
 import { Fragment, useEffect, useMemo, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { apiFetch, API_ORIGIN, obtenerSesion } from '@/lib/api';
+import { apiFetch, API_ORIGIN, descargarArchivo, obtenerSesion } from '@/lib/api';
+import { formatearJsonSeguro } from '@/lib/json-seguro';
 import { cargarParametros, obtenerParametro, resolverNombres, Parametro, TipoParametro } from '@/lib/parametros';
 import { HistorialAsignacion, cargarHistorialGuardiasPersonal } from '@/lib/guardias';
 import { subirFirmaDigital, eliminarFirmaDigital, cambiarAutorizacionFirma } from '@/lib/personal';
@@ -128,6 +130,7 @@ function campoTexto(label: string, valor: string | null | undefined) {
 /* ------------------------------------------------------------------ */
 
 export default function ExpedienteBomberoPage() {
+  const confirmar = useConfirmacion();
   const params = useParams();
   const router = useRouter();
   const id = params.id as string;
@@ -159,13 +162,12 @@ export default function ExpedienteBomberoPage() {
 
   async function eliminarFisico() {
     if (!bombero) return;
-    if (
-      !window.confirm(
-        `ELIMINAR PERMANENTEMENTE a ${bombero.nombre} ${bombero.apellido}? Esta accion no se puede deshacer. ` +
-          `Solo es posible si no tiene datos relacionados en el resto del sistema.`,
-      )
-    )
-      return;
+    if (!await confirmar({
+      titulo: 'Eliminar expediente',
+      mensaje: `ELIMINAR PERMANENTEMENTE a ${bombero.nombre} ${bombero.apellido}? Esta accion no se puede deshacer. Solo es posible si no tiene datos relacionados en el resto del sistema.`,
+      confirmar: 'Eliminar permanentemente',
+      peligro: true,
+    })) return;
     const res = await apiFetch(`/personal/bomberos/${id}`, { method: 'DELETE' });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
@@ -228,11 +230,11 @@ export default function ExpedienteBomberoPage() {
           </div>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/personal')}>
+          <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/personal')}>
             Volver al listado
           </button>
           {puedeEliminarFisico && (
-            <button className="btn-primary" style={{ background: '#7f1d1d' }} onClick={eliminarFisico}>
+            <button type="button" className="btn-primary" style={{ background: '#7f1d1d' }} onClick={eliminarFisico}>
               Eliminar fisicamente
             </button>
           )}
@@ -243,7 +245,7 @@ export default function ExpedienteBomberoPage() {
 
       <nav style={{ display: 'flex', gap: 4, flexWrap: 'wrap', borderBottom: '1px solid #334155', paddingBottom: 0 }}>
         {TABS.map((tab) => (
-          <button
+          <button type="button"
             key={tab.id}
             onClick={() => setSeccion(tab.id)}
             style={{
@@ -452,7 +454,7 @@ function TabDatosPersonales({
     return (
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         {puedeEditar && (
-          <button className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={() => setEditando(true)}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={() => setEditando(true)}>
             Editar
           </button>
         )}
@@ -597,7 +599,7 @@ function TabDatosPersonales({
       </p>
 
       <div style={{ display: 'flex', gap: 8 }}>
-        <button className="btn-primary" disabled={guardando}>
+        <button type="submit" className="btn-primary" disabled={guardando}>
           {guardando ? 'Guardando...' : 'Guardar cambios'}
         </button>
         <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => setEditando(false)}>
@@ -693,7 +695,7 @@ function TabInstitucional({
     return (
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         {puedeEditar && (
-          <button className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={() => setEditando(true)}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={() => setEditando(true)}>
             Editar
           </button>
         )}
@@ -861,7 +863,7 @@ function TabInstitucional({
       </div>
 
       <div style={{ display: 'flex', gap: 8 }}>
-        <button className="btn-primary" disabled={guardando}>
+        <button type="submit" className="btn-primary" disabled={guardando}>
           {guardando ? 'Guardando...' : 'Guardar cambios'}
         </button>
         <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => setEditando(false)}>
@@ -964,7 +966,7 @@ function TabTipoBombero({
           </div>
           {error && <p style={{ color: '#f87171' }}>{error}</p>}
           {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando} onClick={guardar}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando} onClick={guardar}>
             {guardando ? 'Guardando...' : 'Guardar tipo'}
           </button>
         </>
@@ -985,7 +987,7 @@ function TabTipoBombero({
             />
             {errorCodigo && <p style={{ color: '#f87171', marginTop: 6 }}>{errorCodigo}</p>}
             {mensajeCodigo && <p style={{ color: '#4ade80', fontSize: 13, marginTop: 6 }}>{mensajeCodigo}</p>}
-            <button
+            <button type="button"
               className="btn-primary"
               style={{ alignSelf: 'flex-start', marginTop: 8 }}
               disabled={guardandoCodigo || codigo.trim() === bombero.numeroBombero}
@@ -1090,7 +1092,7 @@ function TabHistorial({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {puedeEditar && (
-        <button className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={() => setMostrarForm(!mostrarForm)}>
+        <button type="button" className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={() => setMostrarForm(!mostrarForm)}>
           {mostrarForm ? 'Cancelar' : 'Registrar reconocimiento / sancion'}
         </button>
       )}
@@ -1122,7 +1124,7 @@ function TabHistorial({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
             <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Registrar'}
           </button>
         </form>
@@ -1329,7 +1331,7 @@ function TabEspecialidades({ bomberoId, puedeEditar }: { bomberoId: string; pued
   return (
     <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       {puedeEditar && (
-        <button className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={iniciarEdicion}>
+        <button type="button" className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={iniciarEdicion}>
           Editar especialidades
         </button>
       )}
@@ -1477,7 +1479,7 @@ function TabCondicion({ bomberoId, puedeEditar, onGuardado }: { bomberoId: strin
           ))}
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" disabled={guardando}>
+          <button type="submit" className="btn-primary" disabled={guardando}>
             {guardando ? 'Guardando...' : 'Guardar cambios'}
           </button>
           <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => setEditando(false)}>
@@ -1491,7 +1493,7 @@ function TabCondicion({ bomberoId, puedeEditar, onGuardado }: { bomberoId: strin
   return (
     <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {puedeEditar && (
-        <button className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={iniciarEdicion}>
+        <button type="button" className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={iniciarEdicion}>
           {condicion ? 'Editar' : 'Definir condicion'}
         </button>
       )}
@@ -1534,6 +1536,7 @@ const CERT_VACIO = {
 };
 
 function TabFormacion({ bomberoId }: { bomberoId: string }) {
+  const confirmar = useConfirmacion();
   const [actividades, setActividades] = useState<FormacionAcademica[] | null>(null);
   const [certificaciones, setCertificaciones] = useState<Certificacion[] | null>(null);
   const [mostrarForm, setMostrarForm] = useState(false);
@@ -1591,7 +1594,7 @@ function TabFormacion({ bomberoId }: { bomberoId: string }) {
   }
 
   async function quitarCertificacion(id: string) {
-    if (!window.confirm('Eliminar esta certificacion?')) return;
+    if (!await confirmar({ titulo: 'Eliminar certificación', mensaje: '¿Eliminar esta certificación?', confirmar: 'Eliminar', peligro: true })) return;
     setError(null);
     try {
       await eliminarCertificacion(id);
@@ -1646,7 +1649,7 @@ function TabFormacion({ bomberoId }: { bomberoId: string }) {
       <div className="card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
           <h3 style={{ fontSize: 14 }}>Certificaciones ({certificaciones?.length ?? 0})</h3>
-          <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Cargar certificado'}
           </button>
         </div>
@@ -1703,7 +1706,7 @@ function TabFormacion({ bomberoId }: { bomberoId: string }) {
                 onChange={(e) => setArchivo(e.target.files?.[0] ?? null)}
               />
             </div>
-            <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+            <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
               {guardando ? 'Guardando...' : 'Guardar certificación'}
             </button>
           </form>
@@ -1745,7 +1748,7 @@ function TabFormacion({ bomberoId }: { bomberoId: string }) {
                     )}
                   </td>
                   <td style={{ padding: '6px 4px' }}>
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 11, background: '#7f1d1d' }}
                       onClick={() => quitarCertificacion(c.id)}
@@ -1879,7 +1882,7 @@ function TabActividadProfesional({ bomberoId, puedeEditar }: { bomberoId: string
           />
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" disabled={guardando}>
+          <button type="submit" className="btn-primary" disabled={guardando}>
             {guardando ? 'Guardando...' : 'Guardar cambios'}
           </button>
           <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => setEditando(false)}>
@@ -1893,7 +1896,7 @@ function TabActividadProfesional({ bomberoId, puedeEditar }: { bomberoId: string
   return (
     <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {puedeEditar && (
-        <button className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={iniciarEdicion}>
+        <button type="button" className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={iniciarEdicion}>
           Editar
         </button>
       )}
@@ -2082,7 +2085,7 @@ function TabIdiomas({ bomberoId, puedeEditar }: { bomberoId: string; puedeEditar
   return (
     <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       {puedeEditar && (
-        <button className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={iniciarEdicion}>
+        <button type="button" className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={iniciarEdicion}>
           Editar idiomas
         </button>
       )}
@@ -2197,6 +2200,7 @@ function formatearFechaHora(valor: string | null): string {
 }
 
 function TabEquipamiento({ bomberoId, puedeEditar }: { bomberoId: string; puedeEditar: boolean }) {
+  const confirmar = useConfirmacion();
   const [items, setItems] = useState<Prestamo[] | null>(null);
   const [equipos, setEquipos] = useState<Catalogo[]>([]);
   const [mostrarForm, setMostrarForm] = useState(false);
@@ -2253,7 +2257,7 @@ function TabEquipamiento({ bomberoId, puedeEditar }: { bomberoId: string; puedeE
   }
 
   async function devolver(prestamoId: string) {
-    if (!window.confirm('Registrar devolucion de este equipo?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Registrar devolucion de este equipo?', confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/personal/bomberos/equipamiento/${prestamoId}/devolucion`, {
       method: 'PATCH',
       body: JSON.stringify({}),
@@ -2269,7 +2273,7 @@ function TabEquipamiento({ bomberoId, puedeEditar }: { bomberoId: string; puedeE
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {puedeEditar && puedePrestar && (
-        <button className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={() => setMostrarForm(!mostrarForm)}>
+        <button type="button" className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={() => setMostrarForm(!mostrarForm)}>
           {mostrarForm ? 'Cancelar' : 'Registrar prestamo'}
         </button>
       )}
@@ -2300,7 +2304,7 @@ function TabEquipamiento({ bomberoId, puedeEditar }: { bomberoId: string; puedeE
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
             <input className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Registrar prestamo'}
           </button>
         </form>
@@ -2332,7 +2336,7 @@ function TabEquipamiento({ bomberoId, puedeEditar }: { bomberoId: string; puedeE
                   </td>
                   <td style={{ padding: '6px 4px' }}>
                     {puedeEditar && puedePrestar && p.estado === 'PRESTADO' && (
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => devolver(p.id)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => devolver(p.id)}>
                         Registrar devolucion
                       </button>
                     )}
@@ -2574,7 +2578,7 @@ function TabVehiculos({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
   return (
     <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       {puedeEditar && (
-        <button className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={iniciarEdicion}>
+        <button type="button" className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={iniciarEdicion}>
           Editar vehiculos autorizados
         </button>
       )}
@@ -2700,7 +2704,7 @@ function TabSalud({ bombero, puedeEditar, onGuardado }: { bombero: Bombero; pued
       {!editando ? (
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           {puedeEditar && (
-            <button className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={iniciarEdicion}>
+            <button type="button" className="btn-primary" style={{ alignSelf: 'flex-end' }} onClick={iniciarEdicion}>
               Editar
             </button>
           )}
@@ -2777,7 +2781,7 @@ function TabSalud({ bombero, puedeEditar, onGuardado }: { bombero: Bombero; pued
             <input className="input-field" value={form.medicamentos} onChange={(e) => setForm({ ...form, medicamentos: e.target.value })} />
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn-primary" disabled={guardando}>
+            <button type="submit" className="btn-primary" disabled={guardando}>
               {guardando ? 'Guardando...' : 'Guardar cambios'}
             </button>
             <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => setEditando(false)}>
@@ -2876,7 +2880,7 @@ function TabFirmaDigital({ bombero, onGuardado }: { bombero: Bombero; onGuardado
       {bombero.firmaDigitalUrl ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <img
-            src={`${API_ORIGIN}${bombero.firmaDigitalUrl}`}
+            src={`${API_ORIGIN}/api/v1/personal/bomberos/${bombero.id}/firma-digital`}
             alt="Firma digital"
             style={{ maxWidth: 260, maxHeight: 120, background: '#fff', borderRadius: 6, padding: 8 }}
           />
@@ -2891,7 +2895,7 @@ function TabFirmaDigital({ bombero, onGuardado }: { bombero: Bombero; onGuardado
                 onChange={(e) => e.target.files?.[0] && subirArchivo(e.target.files[0])}
               />
             </label>
-            <button className="btn-primary" style={{ background: '#7f1d1d' }} onClick={eliminar} disabled={eliminando}>
+            <button type="button" className="btn-primary" style={{ background: '#7f1d1d' }} onClick={eliminar} disabled={eliminando}>
               {eliminando ? 'Eliminando...' : 'Eliminar firma'}
             </button>
           </div>
@@ -2954,6 +2958,7 @@ interface SeguroBombero {
 }
 
 function SeccionSeguros({ bomberoId }: { bomberoId: string }) {
+  const confirmar = useConfirmacion();
   const [items, setItems] = useState<SeguroBombero[] | null>(null);
   const [nombres, setNombres] = useState<Map<string, string>>(new Map());
   const [aseguradoras, setAseguradoras] = useState<Parametro[]>([]);
@@ -3068,7 +3073,7 @@ function SeccionSeguros({ bomberoId }: { bomberoId: string }) {
   }
 
   async function darBaja(id: string) {
-    if (!window.confirm('Dar de baja este seguro?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Dar de baja este seguro?', confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/personal/bomberos/${bomberoId}/seguros/${id}/baja`, { method: 'PATCH' });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
@@ -3085,7 +3090,7 @@ function SeccionSeguros({ bomberoId }: { bomberoId: string }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h3 style={{ fontSize: 14 }}>Seguros ({items?.length ?? 0})</h3>
         {puedeCrear && (
-          <button className="btn-primary" onClick={mostrarForm ? () => setMostrarForm(false) : abrirNuevo}>
+          <button type="button" className="btn-primary" onClick={mostrarForm ? () => setMostrarForm(false) : abrirNuevo}>
             {mostrarForm ? 'Cancelar' : '+ Agregar seguro'}
           </button>
         )}
@@ -3153,7 +3158,7 @@ function SeccionSeguros({ bomberoId }: { bomberoId: string }) {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
             <input className="input-field" value={form.observaciones} onChange={(e) => setForm({ ...form, observaciones: e.target.value })} />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear seguro'}
           </button>
         </form>
@@ -3188,12 +3193,12 @@ function SeccionSeguros({ bomberoId }: { bomberoId: string }) {
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6 }}>
                   {puedeEditar && (
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(s)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(s)}>
                       Editar
                     </button>
                   )}
                   {puedeEliminar && s.estado === 'ACTIVO' && (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                       onClick={() => darBaja(s.id)}
@@ -3260,7 +3265,7 @@ function TabFoja({ bomberoId, puedeEditar }: { bomberoId: string; puedeEditar: b
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {puedeEditar && puedeGenerar && (
-        <button className="btn-primary" style={{ alignSelf: 'flex-end' }} disabled={generando} onClick={generar}>
+        <button type="button" className="btn-primary" style={{ alignSelf: 'flex-end' }} disabled={generando} onClick={generar}>
           {generando ? 'Generando...' : `Generar foja de servicio ${new Date().getFullYear()}`}
         </button>
       )}
@@ -3290,6 +3295,7 @@ function TabFoja({ bomberoId, puedeEditar }: { bomberoId: string; puedeEditar: b
 
 function FilaFoja({ bomberoId, anio }: { bomberoId: string; anio: number }) {
   const [foja, setFoja] = useState<{ archivoPdfUrl: string | null; archivoDocxUrl: string | null } | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     apiFetch(`/personal/bomberos/${bomberoId}/foja-servicio/${anio}`)
@@ -3297,20 +3303,22 @@ function FilaFoja({ bomberoId, anio }: { bomberoId: string; anio: number }) {
       .catch(() => undefined);
   }, [bomberoId, anio]);
 
+  async function descargar(formato: 'pdf' | 'docx') {
+    try {
+      setError(null);
+      await descargarArchivo(`/api/v1/personal/bomberos/${bomberoId}/foja-servicio/${anio}/archivos/${formato}`, `foja-servicio-${anio}.${formato}`);
+    } catch (err: any) {
+      setError(err.message ?? 'No se pudo descargar el archivo');
+    }
+  }
+
   return (
     <tr style={{ borderBottom: '1px solid #1f2937' }}>
       <td style={{ padding: '6px 4px' }}>{anio}</td>
       <td style={{ padding: '6px 4px', display: 'flex', gap: 10 }}>
-        {foja?.archivoPdfUrl && (
-          <a href={`${API_ORIGIN}${foja.archivoPdfUrl}`} target="_blank" rel="noreferrer" style={{ color: '#60a5fa' }}>
-            PDF
-          </a>
-        )}
-        {foja?.archivoDocxUrl && (
-          <a href={`${API_ORIGIN}${foja.archivoDocxUrl}`} target="_blank" rel="noreferrer" style={{ color: '#60a5fa' }}>
-            Word
-          </a>
-        )}
+        {foja?.archivoPdfUrl && <button type="button" className="link-button" onClick={() => descargar('pdf')}>PDF</button>}
+        {foja?.archivoDocxUrl && <button type="button" className="link-button" onClick={() => descargar('docx')}>Word</button>}
+        {error && <span role="alert" style={{ color: '#f87171' }}>{error}</span>}
       </td>
     </tr>
   );
@@ -3411,7 +3419,7 @@ function TabAuditoria({ bomberoId }: { bomberoId: string }) {
                 </td>
                 <td style={{ padding: '6px 4px' }}>{log.ip ?? ''}</td>
                 <td style={{ padding: '6px 4px' }}>
-                  <button
+                  <button type="button"
                     className="btn-primary"
                     style={{ padding: '4px 8px', fontSize: 12 }}
                     onClick={() => setExpandido(expandido === log.id ? null : log.id)}
@@ -3425,10 +3433,10 @@ function TabAuditoria({ bomberoId }: { bomberoId: string }) {
                   <td colSpan={4} style={{ padding: '6px 4px', background: '#0f172a' }}>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, fontSize: 11 }}>
                       <pre style={{ whiteSpace: 'pre-wrap' }}>
-                        Antes: {log.datosAntes ? JSON.stringify(JSON.parse(log.datosAntes), null, 2) : '(nada)'}
+                        Antes: {formatearJsonSeguro(log.datosAntes)}
                       </pre>
                       <pre style={{ whiteSpace: 'pre-wrap' }}>
-                        Despues: {log.datosDespues ? JSON.stringify(JSON.parse(log.datosDespues), null, 2) : '(nada)'}
+                        Despues: {formatearJsonSeguro(log.datosDespues)}
                       </pre>
                     </div>
                   </td>

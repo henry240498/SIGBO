@@ -115,9 +115,15 @@ if (enDisco !== nodes.length) {
 
 // ------------------------- 4.5 numeracion de migraciones (rule--migracion-nunca-se-edita)
 
-const MIGRACIONES = join(dirname(CONTEXT_DIR), 'database', 'migrations');
+const REPO = dirname(CONTEXT_DIR);
+const MIGRACIONES = join(REPO, 'database', 'migrations');
+const RUNNER_MIGRACIONES = join(REPO, 'database', 'run-migrations.ps1');
 if (existsSync(MIGRACIONES)) {
   const sql = readdirSync(MIGRACIONES).filter((f) => f.endsWith('.sql')).sort();
+  const bloqueOrden = existsSync(RUNNER_MIGRACIONES)
+    ? /\$ordenMigraciones\s*=\s*@\(([\s\S]*?)\)/.exec(readFileSync(RUNNER_MIGRACIONES, 'utf8'))?.[1] ?? ''
+    : '';
+  const ordenExplicito = new Set([...bloqueOrden.matchAll(/"([^"\r\n]+\.sql)"/g)].map((m) => m[1]));
   const porPrefijo = new Map();
   for (const f of sql) {
     const m = /^(\d+)_/.exec(f);
@@ -127,9 +133,12 @@ if (existsSync(MIGRACIONES)) {
   }
   for (const [prefijo, archivos] of porPrefijo) {
     if (archivos.length > 1) {
+      const todosEnManifiesto = archivos.every((archivo) => ordenExplicito.has(archivo));
+      if (!todosEnManifiesto) {
       // No es un error del grafo, es un riesgo real del esquema: con dos archivos
       // del mismo numero el orden depende del filesystem, no de la numeracion.
       avisos.push(`prefijo de migracion duplicado ${prefijo}: ${archivos.join(' + ')} — el orden de ejecucion no esta garantizado`);
+      }
     }
   }
   const numeros = [...porPrefijo.keys()].map(Number).sort((a, b) => a - b);

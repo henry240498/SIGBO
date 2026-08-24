@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { obtenerSesion } from '@/lib/api';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import {
   ConversacionIa,
   ConversacionIaAdmin,
@@ -36,7 +37,7 @@ function DetalleConversacion({ id, onCerrar }: { id: string; onCerrar: () => voi
       <div className="card" style={{ width: 640, maxHeight: '85vh', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <h3 style={{ fontSize: 15 }}>Conversación</h3>
-          <button className="btn-primary" style={{ background: '#475569', padding: '4px 10px' }} onClick={onCerrar}>Cerrar</button>
+          <button type="button" className="btn-primary" style={{ background: '#475569', padding: '4px 10px' }} onClick={onCerrar}>Cerrar</button>
         </div>
         {error && <p style={{ color: '#f87171', fontSize: 13 }}>{error}</p>}
         {!datos && !error && <p style={{ color: '#94a3b8', fontSize: 13 }}>Cargando...</p>}
@@ -68,6 +69,7 @@ function DetalleConversacion({ id, onCerrar }: { id: string; onCerrar: () => voi
 }
 
 export default function ConversacionesIaPage() {
+  const confirmar = useConfirmacion();
   const [conversaciones, setConversaciones] = useState<ConversacionIaAdmin[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
@@ -111,7 +113,7 @@ export default function ConversacionesIaPage() {
 
   async function eliminarSeleccionadas() {
     if (seleccionadas.size === 0) return;
-    if (!window.confirm(`¿Eliminar ${seleccionadas.size} conversación(es)? Esta acción no se puede deshacer.`)) return;
+    if (!await confirmar({ titulo: 'Eliminar conversaciones', mensaje: `¿Eliminar ${seleccionadas.size} conversación(es)? Esta acción no se puede deshacer.`, confirmar: 'Eliminar', peligro: true })) return;
     setError(null);
     setMensaje(null);
     setEliminando(true);
@@ -130,7 +132,7 @@ export default function ConversacionesIaPage() {
   }
 
   async function eliminarUna(id: string) {
-    if (!window.confirm('¿Eliminar esta conversación? Esta acción no se puede deshacer.')) return;
+    if (!await confirmar({ titulo: 'Eliminar conversación', mensaje: '¿Eliminar esta conversación? Esta acción no se puede deshacer.', confirmar: 'Eliminar', peligro: true })) return;
     setError(null);
     setMensaje(null);
     try {
@@ -152,7 +154,7 @@ export default function ConversacionesIaPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Conversaciones ({conversaciones?.length ?? 0})</h2>
         {puedeEliminar && seleccionadas.size > 0 && (
-          <button className="btn-primary" style={{ background: '#7f1d1d' }} disabled={eliminando} onClick={eliminarSeleccionadas}>
+          <button type="button" className="btn-primary" style={{ background: '#7f1d1d' }} disabled={eliminando} onClick={eliminarSeleccionadas}>
             {eliminando ? 'Eliminando...' : `Eliminar seleccionadas (${seleccionadas.size})`}
           </button>
         )}
@@ -194,7 +196,7 @@ export default function ConversacionesIaPage() {
                 </td>
                 {puedeEliminar && (
                   <td style={{ padding: '6px 4px' }}>
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 11, background: '#7f1d1d' }} onClick={() => eliminarUna(c.id)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 11, background: '#7f1d1d' }} onClick={() => eliminarUna(c.id)}>
                       Eliminar
                     </button>
                   </td>

@@ -176,7 +176,7 @@ export default function MovimientosDepositoPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Movimientos ({movimientos?.length ?? 0})</h2>
         {puedeRegistrar && (
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               limpiarForm();
@@ -205,7 +205,7 @@ export default function MovimientosDepositoPage() {
           <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Hasta</label>
           <input className="input-field" type="date" value={hasta} onChange={(e) => setHasta(e.target.value)} />
         </div>
-        <button
+        <button type="button"
           className="btn-primary"
           style={{ background: '#475569' }}
           onClick={() => {
@@ -292,7 +292,7 @@ export default function MovimientosDepositoPage() {
             <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
 
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Registrar movimiento'}
           </button>
         </form>

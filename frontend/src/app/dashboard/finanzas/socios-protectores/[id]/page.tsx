@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'next/navigation';
+import { useEntradaConfirmada } from '@/app/components/InputProvider';
 import { obtenerSesion } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { Parametro, resolverNombres } from '@/lib/parametros';
@@ -31,6 +32,7 @@ function colorEstadoAcuerdo(estado: string) {
 }
 
 export default function SocioProtectorDetallePage() {
+  const solicitarEntrada = useEntradaConfirmada();
   const { id } = useParams<{ id: string }>();
 
   const [datos, setDatos] = useState<EstadoDeCuentaSocio | null>(null);
@@ -162,7 +164,7 @@ export default function SocioProtectorDetallePage() {
   }
 
   async function anular(aporteId: string) {
-    const motivoAnulacionId = window.prompt('ID del parametro de motivo de anulacion (organizacion.parametros, tipo MOTIVO_ANULACION_FINANZAS):');
+    const motivoAnulacionId = await solicitarEntrada({ titulo: 'Anular aporte', mensaje: 'Indique el ID del parámetro de motivo de anulación (organización.parametros, tipo MOTIVO_ANULACION_FINANZAS).', etiqueta: 'ID del motivo', confirmar: 'Continuar', requerida: true });
     if (!motivoAnulacionId) return;
     try {
       await anularAporte(aporteId, motivoAnulacionId);
@@ -222,7 +224,7 @@ export default function SocioProtectorDetallePage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h3 style={{ fontSize: 14 }}>Acuerdos de aporte</h3>
           {puedeCrear && (
-            <button className="btn-primary" style={{ padding: '4px 10px', fontSize: 12 }} onClick={() => setMostrarAcuerdo(!mostrarAcuerdo)}>
+            <button type="button" className="btn-primary" style={{ padding: '4px 10px', fontSize: 12 }} onClick={() => setMostrarAcuerdo(!mostrarAcuerdo)}>
               {mostrarAcuerdo ? 'Cancelar' : '+ Nuevo acuerdo'}
             </button>
           )}
@@ -245,7 +247,7 @@ export default function SocioProtectorDetallePage() {
               <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Medio de pago preferido</label>
               <ComboBuscable opciones={opcionesMedioPago} value={acMedioPagoId} onChange={setAcMedioPagoId} ningunaLabel="-- --" />
             </div>
-            <button className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} disabled={guardando || !acPeriodicidadId}>
+            <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} disabled={guardando || !acPeriodicidadId}>
               Guardar
             </button>
           </form>
@@ -283,7 +285,7 @@ export default function SocioProtectorDetallePage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h3 style={{ fontSize: 14 }}>Aportes</h3>
           {puedeRegistrarAporte && (
-            <button className="btn-primary" style={{ padding: '4px 10px', fontSize: 12 }} onClick={() => setMostrarAporte(!mostrarAporte)}>
+            <button type="button" className="btn-primary" style={{ padding: '4px 10px', fontSize: 12 }} onClick={() => setMostrarAporte(!mostrarAporte)}>
               {mostrarAporte ? 'Cancelar' : '+ Registrar aporte'}
             </button>
           )}
@@ -329,7 +331,7 @@ export default function SocioProtectorDetallePage() {
                 <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>N° comprobante</label>
                 <input className="input-field" value={apNumeroComprobante} onChange={(e) => setApNumeroComprobante(e.target.value)} />
               </div>
-              <button className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} disabled={guardando || (!apCajaId && !apCuentaId)}>
+              <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} disabled={guardando || (!apCajaId && !apCuentaId)}>
                 Registrar
               </button>
             </div>
@@ -362,7 +364,7 @@ export default function SocioProtectorDetallePage() {
                   </td>
                   <td style={{ padding: '6px 4px' }}>
                     {puedeEditarAporte && a.estado === 'REGISTRADO' && (
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 11, background: '#7f1d1d' }} onClick={() => anular(a.id)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 11, background: '#7f1d1d' }} onClick={() => anular(a.id)}>
                         Anular
                       </button>
                     )}
@@ -406,7 +408,7 @@ export default function SocioProtectorDetallePage() {
       </div>
 
       <div className="card">
-        <button className="btn-primary" style={{ padding: '4px 10px', fontSize: 12, background: '#475569' }} onClick={verHistorial}>
+        <button type="button" className="btn-primary" style={{ padding: '4px 10px', fontSize: 12, background: '#475569' }} onClick={verHistorial}>
           {mostrarHistorial ? 'Ocultar historial de codigo' : 'Ver historial de codigo'}
         </button>
         {mostrarHistorial && (

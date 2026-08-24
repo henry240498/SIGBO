@@ -110,10 +110,10 @@ export default function ConsultaMarcaciones({ bomberos, tipos }: Props) {
           </div>
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
-          <button className="btn-primary" disabled={cargando} onClick={() => buscar(1)}>
+          <button type="button" className="btn-primary" disabled={cargando} onClick={() => buscar(1)}>
             {cargando ? 'Buscando...' : 'Buscar'}
           </button>
-          <button
+          <button type="button"
             onClick={limpiarFiltros}
             style={{ background: 'transparent', border: '1px solid #334155', borderRadius: 6, padding: '8px 14px', color: '#e2e8f0' }}
           >
@@ -172,7 +172,7 @@ export default function ConsultaMarcaciones({ bomberos, tipos }: Props) {
 
           {totalPaginas > 1 && (
             <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-              <button
+              <button type="button"
                 disabled={cargando || page <= 1}
                 onClick={() => buscar(page - 1)}
                 style={{ background: 'transparent', border: '1px solid #334155', borderRadius: 6, padding: '6px 12px', color: '#e2e8f0' }}
@@ -180,7 +180,7 @@ export default function ConsultaMarcaciones({ bomberos, tipos }: Props) {
                 Anterior
               </button>
               <span style={{ fontSize: 13, color: '#94a3b8' }}>Pagina {page} de {totalPaginas}</span>
-              <button
+              <button type="button"
                 disabled={cargando || page >= totalPaginas}
                 onClick={() => buscar(page + 1)}
                 style={{ background: 'transparent', border: '1px solid #334155', borderRadius: 6, padding: '6px 12px', color: '#e2e8f0' }}

@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, ParseUUIDPipe, Post, Put, Query, Req, Res, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { PermissionsGuard } from '../seguridad/guards/permissions.guard';
 import { RequirePermission } from '../seguridad/decorators/require-permission.decorator';
@@ -12,11 +12,8 @@ import { CreateOrdenGuardiaDto } from './dto/create-orden-guardia.dto';
 import { ActualizarConfiguracionOrdenDto } from './dto/actualizar-configuracion-orden.dto';
 import { AnularOrdenGuardiaDto, RegistrarModificacionOrdenDto } from './dto/anular-orden-guardia.dto';
 
-/** "ordenes" (y "configuracion") nunca matchean la forma de un GUID, asi que
- * no hay riesgo de colision con GuardiasController#findOne
- * (`guardias/:id(${GUID_PATH})`) sin importar el orden de registro de
- * controllers -- mismo mecanismo defensivo ya documentado alli. */
-const GUID_PATH = '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}';
+/** Las rutas literales preceden a :id y el módulo registra este controlador
+ * antes del recurso raíz de Guardias; ParseUUIDPipe valida cada id. */
 
 @ApiTags('guardias/ordenes')
 @ApiBearerAuth()
@@ -52,64 +49,83 @@ export class OrdenesGuardiaController {
     return this.service.crear(dto, user.id, req.ip);
   }
 
-  @Get(`:id(${GUID_PATH})`)
+  @Get(':id')
   @RequirePermission('guardias:ordenes_ver')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.service.findOne(id);
   }
 
-  @Post(`:id(${GUID_PATH})/regenerar-preview`)
+  @Get(':id/archivos/:formato')
+  @RequirePermission('guardias:ordenes_ver')
+  async descargarArchivo(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Param('formato') formato: string,
+    @Res() res: Response,
+  ) {
+    if (formato !== 'pdf' && formato !== 'docx') throw new BadRequestException('Formato de archivo no válido');
+    const buffer = await this.service.descargarArchivo(id, formato);
+    res.set({
+      'Content-Type': formato === 'pdf' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'Content-Length': String(buffer.length),
+      'Content-Disposition': `attachment; filename="orden-guardia-${id}.${formato}"`,
+      'Cache-Control': 'private, no-store',
+      'X-Content-Type-Options': 'nosniff',
+    });
+    res.send(buffer);
+  }
+
+  @Post(':id/regenerar-preview')
   @RequirePermission('guardias:ordenes_editar')
-  regenerarPreview(@Param('id') id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
+  regenerarPreview(@Param('id', ParseUUIDPipe) id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
     return this.service.regenerarPreview(id, user.id, req.ip);
   }
 
-  @Post(`:id(${GUID_PATH})/generar-documentos`)
+  @Post(':id/generar-documentos')
   @RequirePermission('guardias:ordenes_editar')
-  generarDocumentos(@Param('id') id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
+  generarDocumentos(@Param('id', ParseUUIDPipe) id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
     return this.service.generarDocumentos(id, user.id, req.ip);
   }
 
-  @Post(`:id(${GUID_PATH})/revisar`)
+  @Post(':id/revisar')
   @RequirePermission('guardias:ordenes_editar')
-  revisar(@Param('id') id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
+  revisar(@Param('id', ParseUUIDPipe) id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
     return this.service.revisar(id, user.id, req.ip);
   }
 
-  @Post(`:id(${GUID_PATH})/volver-borrador`)
+  @Post(':id/volver-borrador')
   @RequirePermission('guardias:ordenes_editar')
-  volverABorrador(@Param('id') id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
+  volverABorrador(@Param('id', ParseUUIDPipe) id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
     return this.service.volverABorrador(id, user.id, req.ip);
   }
 
-  @Post(`:id(${GUID_PATH})/aprobar`)
+  @Post(':id/aprobar')
   @RequirePermission('guardias:ordenes_aprobar')
-  aprobar(@Param('id') id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
+  aprobar(@Param('id', ParseUUIDPipe) id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
     return this.service.aprobar(id, user.id, req.ip);
   }
 
-  @Post(`:id(${GUID_PATH})/publicar`)
+  @Post(':id/publicar')
   @RequirePermission('guardias:ordenes_publicar')
-  publicar(@Param('id') id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
+  publicar(@Param('id', ParseUUIDPipe) id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
     return this.service.publicar(id, user.id, req.ip);
   }
 
-  @Post(`:id(${GUID_PATH})/anular`)
+  @Post(':id/anular')
   @RequirePermission('guardias:ordenes_anular')
-  anular(@Param('id') id: string, @Body() dto: AnularOrdenGuardiaDto, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
+  anular(@Param('id', ParseUUIDPipe) id: string, @Body() dto: AnularOrdenGuardiaDto, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
     return this.service.anular(id, dto, user.id, req.ip);
   }
 
-  @Get(`:id(${GUID_PATH})/modificaciones`)
+  @Get(':id/modificaciones')
   @RequirePermission('guardias:ordenes_ver')
-  listarModificaciones(@Param('id') id: string) {
+  listarModificaciones(@Param('id', ParseUUIDPipe) id: string) {
     return this.service.listarModificaciones(id);
   }
 
-  @Post(`:id(${GUID_PATH})/modificaciones`)
+  @Post(':id/modificaciones')
   @RequirePermission('guardias:ordenes_editar')
   registrarModificacion(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: RegistrarModificacionOrdenDto,
     @CurrentUser() user: AuthenticatedUser,
     @Req() req: Request,

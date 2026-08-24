@@ -94,11 +94,11 @@ export default function ChatInteligenciaPage() {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr', gap: 16, height: 'calc(100vh - 160px)', minHeight: 480 }}>
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10, overflowY: 'auto' }}>
-        <button className="btn-primary" onClick={nuevaConversacion}>+ Nueva conversación</button>
+        <button type="button" className="btn-primary" onClick={nuevaConversacion}>+ Nueva conversación</button>
         <div style={{ fontSize: 11, color: '#94a3b8', marginTop: 4 }}>Historial</div>
         {historial.length === 0 && <p style={{ fontSize: 12, color: '#64748b' }}>Sin conversaciones todavía.</p>}
         {historial.map((c) => (
-          <button
+          <button type="button"
             key={c.id}
             onClick={() => abrirConversacion(c.id)}
             style={{
@@ -178,7 +178,7 @@ export default function ChatInteligenciaPage() {
             disabled={enviando || inactivo}
             maxLength={4000}
           />
-          <button className="btn-primary" disabled={enviando || inactivo || !texto.trim()}>
+          <button type="button" className="btn-primary" disabled={enviando || inactivo || !texto.trim()}>
             ➤
           </button>
         </form>

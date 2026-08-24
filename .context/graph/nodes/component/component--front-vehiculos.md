@@ -40,6 +40,10 @@ Helper de frontend "vehiculos" (23 exportaciones, consume 7 endpoint(s)).
 
 ## Referenciado por
 
+- [[screen--dashboard-deposito-articulos-id|/dashboard/deposito/articulos/[id]]] `uses` →
+- [[screen--dashboard-deposito-bajas|/dashboard/deposito/bajas]] `uses` →
+- [[screen--dashboard-deposito-incidencias|/dashboard/deposito/incidencias]] `uses` →
+- [[screen--dashboard-deposito-movimientos|/dashboard/deposito/movimientos]] `uses` →
 - [[screen--dashboard-equipos-id|/dashboard/equipos/[id]]] `uses` →
 - [[screen--dashboard-servicios-nuevo|/dashboard/servicios/nuevo]] `uses` →
 - [[screen--dashboard-vehiculos-checklist-items|/dashboard/vehiculos/checklist-items]] `uses` →

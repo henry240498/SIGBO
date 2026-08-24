@@ -52,15 +52,10 @@ Ordenadas por cuánto se tarda en darse cuenta:
 
 ### 1. "Mi cambio no surte efecto"
 
-`start-sigbo.ps1` **no reinicia** un servicio que ya escucha: sigue corriendo el proceso
-viejo. Antes de dudar del código:
-
-```powershell
-Get-Process node | Select-Object Id, StartTime
-```
-
-Si el `StartTime` es anterior a tu edición, no es tu código el que corre.
-Ver [[error--start-script-no-reinicia-servicios]].
+`start-sigbo.ps1` recompila y reinicia las instancias previas de SIGBO que ocupen
+los puertos 3000 o 3001. Si detecta un proceso ajeno en esos puertos, aborta sin
+terminarlo y muestra su línea de comando; no se debe matar procesos ajenos por
+suposición.
 
 ### 2. Buscar el esquema `guardias`
 
@@ -89,7 +84,6 @@ node .context/graph/context.mjs --tipo ERROR --level L2
 - [[error--tcp-sqlexpress-deshabilitado]] — SQLEXPRESS viene con TCP apagado
 - [[error--pool-conexion-colgada]] — timeouts de exactamente 15 s en todo
 - [[error--quoted-identifier-en-migraciones]] — migraciones que fallan solo en el runner
-- [[error--start-script-no-reinicia-servicios]] — el cambio que "no surte efecto"
 - [[error--413-croquis-grande]] — 413 al guardar una comunicación con croquis
 - [[error--context-borrado-del-disco]] — por qué este directorio tiene que estar en git
 

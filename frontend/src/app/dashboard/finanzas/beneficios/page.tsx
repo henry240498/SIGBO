@@ -150,7 +150,7 @@ export default function BeneficiosPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Beneficios de Socios Protectores ({beneficios?.length ?? 0})</h2>
         {puedeAdministrar && (
-          <button className="btn-primary" onClick={() => (mostrarForm ? setMostrarForm(false) : nuevo())}>
+          <button type="button" className="btn-primary" onClick={() => (mostrarForm ? setMostrarForm(false) : nuevo())}>
             {mostrarForm ? 'Cancelar' : '+ Nuevo beneficio'}
           </button>
         )}
@@ -207,7 +207,7 @@ export default function BeneficiosPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Condiciones</label>
             <input className="input-field" value={form.condiciones} onChange={(e) => setForm({ ...form, condiciones: e.target.value })} />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : form.id ? 'Guardar cambios' : 'Crear beneficio'}
           </button>
         </form>
@@ -241,8 +241,8 @@ export default function BeneficiosPage() {
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6 }}>
                   {puedeAdministrar && (
                     <>
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 11 }} onClick={() => editar(b)}>Editar</button>
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 11, background: '#475569' }} onClick={() => alternarEstado(b)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 11 }} onClick={() => editar(b)}>Editar</button>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 11, background: '#475569' }} onClick={() => alternarEstado(b)}>
                         {b.estado === 'ACTIVO' ? 'Desactivar' : 'Activar'}
                       </button>
                     </>

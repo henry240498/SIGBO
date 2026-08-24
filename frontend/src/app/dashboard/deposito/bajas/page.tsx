@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { obtenerSesion } from '@/lib/api';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { Parametro, resolverNombres } from '@/lib/parametros';
 import { cargarBomberos, BomberoResumen } from '@/lib/personal';
@@ -19,6 +20,7 @@ import {
 } from '@/lib/deposito';
 
 export default function BajasDepositoPage() {
+  const confirmar = useConfirmacion();
   const [bajas, setBajas] = useState<BajaDeposito[] | null>(null);
   const [motivos, setMotivos] = useState<Parametro[]>([]);
   const [articulos, setArticulos] = useState<Articulo[]>([]);
@@ -98,7 +100,7 @@ export default function BajasDepositoPage() {
 
   async function registrar(e: React.FormEvent) {
     e.preventDefault();
-    if (!window.confirm('¿Confirmar la baja de este elemento? Esta accion queda registrada permanentemente en el historico.')) return;
+    if (!await confirmar({ titulo: 'Registrar baja', mensaje: '¿Confirmar la baja de este elemento? Esta acción queda registrada permanentemente en el histórico.', confirmar: 'Registrar baja', peligro: true })) return;
     setError(null);
     setMensaje(null);
     setGuardando(true);
@@ -133,7 +135,7 @@ export default function BajasDepositoPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Bajas ({bajas?.length ?? 0})</h2>
         {puedeDarBaja && (
-          <button
+          <button type="button"
             className="btn-primary"
             style={{ background: '#7f1d1d' }}
             onClick={() => {
@@ -212,7 +214,7 @@ export default function BajasDepositoPage() {
             <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
 
-          <button className="btn-primary" style={{ alignSelf: 'flex-start', background: '#7f1d1d' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start', background: '#7f1d1d' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Confirmar baja'}
           </button>
         </form>

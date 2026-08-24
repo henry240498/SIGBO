@@ -70,7 +70,7 @@ export default function PernoctesGeneralPage() {
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo (opcional)</label>
               <input className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
             </div>
-            <button className="btn-primary" onClick={agregar} disabled={!bomberoId}>Registrar pernocte</button>
+            <button type="button" className="btn-primary" onClick={agregar} disabled={!bomberoId}>Registrar pernocte</button>
           </>
         )}
       </div>

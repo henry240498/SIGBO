@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { coincideBusqueda } from '@/lib/texto';
 
 export interface OpcionCombo {
@@ -16,6 +16,7 @@ interface ComboBuscableProps {
   ningunaLabel?: string;
   maxWidth?: number;
   disabled?: boolean;
+  ariaLabel?: string;
 }
 
 /**
@@ -35,11 +36,15 @@ export function ComboBuscable({
   ningunaLabel = 'NINGUNA',
   maxWidth,
   disabled,
+  ariaLabel = 'Seleccionar opcion',
 }: ComboBuscableProps) {
   const [abierto, setAbierto] = useState(false);
   const [busqueda, setBusqueda] = useState('');
   const contenedorRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const disparadorRef = useRef<HTMLButtonElement>(null);
+  const idBase = useId().replace(/:/g, '');
+  const listaId = `combo-buscable-${idBase}`;
 
   const opcionActual = opciones.find((o) => o.value === value);
   const etiquetaActual = value ? opcionActual?.label ?? value : ningunaLabel;
@@ -62,6 +67,7 @@ export function ComboBuscable({
       if (e.key === 'Escape') {
         setAbierto(false);
         setBusqueda('');
+        window.setTimeout(() => disparadorRef.current?.focus(), 0);
       }
     }
     document.addEventListener('mousedown', alClicFuera);
@@ -83,15 +89,54 @@ export function ComboBuscable({
     onChange(opcion.value);
     setAbierto(false);
     setBusqueda('');
+    window.setTimeout(() => disparadorRef.current?.focus(), 0);
+  }
+
+  function cerrar() {
+    setAbierto(false);
+    setBusqueda('');
+  }
+
+  function enfocarOpcion(indice: number) {
+    document.getElementById(`${listaId}-opcion-${indice}`)?.focus();
+  }
+
+  function alTecladoBuscar(evento: React.KeyboardEvent<HTMLInputElement>) {
+    if (evento.key === 'ArrowDown' && opcionesFiltradas.length > 0) {
+      evento.preventDefault();
+      enfocarOpcion(0);
+    }
+  }
+
+  function alTecladoOpcion(evento: React.KeyboardEvent<HTMLButtonElement>, indice: number) {
+    if (evento.key === 'ArrowDown' && indice < opcionesFiltradas.length - 1) {
+      evento.preventDefault();
+      enfocarOpcion(indice + 1);
+    } else if (evento.key === 'ArrowUp') {
+      evento.preventDefault();
+      if (indice === 0) inputRef.current?.focus();
+      else enfocarOpcion(indice - 1);
+    } else if (evento.key === 'Home') {
+      evento.preventDefault();
+      enfocarOpcion(0);
+    } else if (evento.key === 'End') {
+      evento.preventDefault();
+      enfocarOpcion(opcionesFiltradas.length - 1);
+    }
   }
 
   return (
     <div ref={contenedorRef} style={{ position: 'relative', maxWidth, width: maxWidth ? undefined : '100%' }}>
       <button
+        ref={disparadorRef}
         type="button"
         className="input-field"
-        onClick={abierto ? () => setAbierto(false) : abrir}
+        onClick={abierto ? cerrar : abrir}
         disabled={disabled}
+        aria-label={ariaLabel}
+        aria-haspopup="listbox"
+        aria-expanded={abierto}
+        aria-controls={abierto ? listaId : undefined}
         style={{
           textAlign: 'left',
           display: 'flex',
@@ -125,20 +170,32 @@ export function ComboBuscable({
             className="input-field"
             style={{ border: 'none', borderBottom: '1px solid #334155', borderRadius: 0 }}
             placeholder={placeholderBusqueda}
+            aria-label={`Buscar en ${ariaLabel}`}
+            aria-controls={listaId}
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
+            onKeyDown={alTecladoBuscar}
           />
-          <div style={{ maxHeight: 240, overflowY: 'auto' }}>
+          <div id={listaId} role="listbox" aria-label={`Opciones de ${ariaLabel}`} style={{ maxHeight: 240, overflowY: 'auto' }}>
             {opcionesFiltradas.length === 0 && (
-              <div style={{ padding: '10px 12px', fontSize: 13, color: '#94a3b8' }}>Sin resultados</div>
+              <div role="status" style={{ padding: '10px 12px', fontSize: 13, color: '#94a3b8' }}>Sin resultados</div>
             )}
-            {opcionesFiltradas.map((o) => (
-              <div
+            {opcionesFiltradas.map((o, indice) => (
+              <button
+                id={`${listaId}-opcion-${indice}`}
+                type="button"
+                role="option"
                 key={o.value || '(ninguna)'}
+                tabIndex={indice === 0 ? 0 : -1}
                 onClick={() => seleccionar(o)}
+                onKeyDown={(evento) => alTecladoOpcion(evento, indice)}
+                aria-selected={o.value === value}
                 style={{
+                  width: '100%',
+                  border: 'none',
                   padding: '8px 12px',
                   fontSize: 13,
+                  textAlign: 'left',
                   cursor: 'pointer',
                   background: o.value === value ? '#2563eb' : 'transparent',
                   color: o.value === value ? '#fff' : '#e2e8f0',
@@ -151,7 +208,7 @@ export function ComboBuscable({
                 }}
               >
                 {o.label}
-              </div>
+              </button>
             ))}
           </div>
         </div>

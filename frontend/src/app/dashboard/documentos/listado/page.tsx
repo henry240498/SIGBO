@@ -172,7 +172,7 @@ export default function ListadoDocumentosPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Documentos ({documentos?.length ?? 0})</h2>
         {puedeCrear && (
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               limpiarForm();
@@ -207,7 +207,7 @@ export default function ListadoDocumentosPage() {
             ningunaLabel="Todos"
           />
         </div>
-        <button className="btn-primary" style={{ padding: '8px 14px' }} onClick={cargar}>
+        <button type="button" className="btn-primary" style={{ padding: '8px 14px' }} onClick={cargar}>
           Buscar
         </button>
       </div>
@@ -275,7 +275,7 @@ export default function ListadoDocumentosPage() {
             </p>
           </div>
 
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando || !tipoDocumentoId}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando || !tipoDocumentoId}>
             {guardando ? 'Guardando...' : 'Crear documento'}
           </button>
         </form>

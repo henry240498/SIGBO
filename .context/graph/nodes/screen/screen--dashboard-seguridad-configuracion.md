@@ -11,6 +11,8 @@ archivos:
   - frontend/src/app/dashboard/seguridad/configuracion/page.tsx
 edges:
   - [belongs_to, domain--seguridad]
+  - [uses, component--front-confirmprovider]
+  - [uses, component--front-inputprovider]
   - [uses, component--front-api]
   - [uses, component--front-configuracion]
 terminos: [seguridad, configuracion]
@@ -29,6 +31,8 @@ Pantalla /dashboard/seguridad/configuracion.
 ## Relaciones
 
 - `belongs_to` → [[domain--seguridad|Seguridad]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
+- `uses` → [[component--front-inputprovider|InputProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-configuracion|configuracion]]
 

@@ -103,7 +103,7 @@ export default function MovimientosBancariosPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Conciliacion bancaria ({movimientos?.length ?? 0})</h2>
         {puedeCrear && (
-          <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Cargar movimiento de extracto'}
           </button>
         )}
@@ -156,7 +156,7 @@ export default function MovimientosBancariosPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
             <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Cargar movimiento'}
           </button>
         </form>
@@ -190,10 +190,10 @@ export default function MovimientosBancariosPage() {
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                   {puedeConciliar && m.estadoConciliacion === 'PENDIENTE' && (
                     <>
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#16a34a' }} onClick={() => conciliar(m, 'CONCILIADO')}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#16a34a' }} onClick={() => conciliar(m, 'CONCILIADO')}>
                         Conciliar
                       </button>
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }} onClick={() => conciliar(m, 'DIFERENCIA')}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }} onClick={() => conciliar(m, 'DIFERENCIA')}>
                         Marcar diferencia
                       </button>
                     </>

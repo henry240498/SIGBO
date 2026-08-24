@@ -12,6 +12,7 @@ archivos:
   - frontend/src/app/dashboard/personal/page.tsx
 edges:
   - [belongs_to, domain--personal]
+  - [uses, component--front-inputprovider]
   - [uses, component--front-api]
   - [uses, component--front-exportar]
   - [uses, component--front-texto]
@@ -38,6 +39,7 @@ Pantalla /dashboard/personal, consume 1 endpoint(s).
 ## Relaciones
 
 - `belongs_to` → [[domain--personal|Personal]]
+- `uses` → [[component--front-inputprovider|InputProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-exportar|exportar]]
 - `uses` → [[component--front-texto|texto]]

@@ -3,16 +3,16 @@ id: component--front-api
 tipo: COMPONENT
 nombre: api
 nivel: L2
-resumen: "Helper de frontend \"api\" (9 exportaciones)."
+resumen: "Helper de frontend \"api\" (11 exportaciones)."
 capa: frontend
 archivos:
   - frontend/src/lib/api.ts
-terminos: [api, url, origin, sesion, guardar, obtener, cerrar, local, login, logout, fetch]
+terminos: [api, url, origin, descargar, archivo, sesion, evento, finalizada, guardar, obtener, cerrar, local, login, logout, fetch]
 ---
 
 # api
 
-Helper de frontend "api" (9 exportaciones).
+Helper de frontend "api" (11 exportaciones).
 
 
 ## Archivos
@@ -21,6 +21,11 @@ Helper de frontend "api" (9 exportaciones).
 
 ## Referenciado por
 
+- [[screen--dashboard-academia-cursos-externos|/dashboard/academia/cursos-externos]] `uses` →
+- [[screen--dashboard-academia-instructores-externos|/dashboard/academia/instructores-externos]] `uses` →
+- [[screen--dashboard-academia|/dashboard/academia]] `uses` →
+- [[screen--dashboard-academia-id|/dashboard/academia/[id]]] `uses` →
+- [[screen--dashboard-academia-id|/dashboard/academia/[id]]] `uses` →
 - [[screen--dashboard-asistencia-auditoria|/dashboard/asistencia/auditoria]] `uses` →
 - [[screen--dashboard-asistencia-eventos|/dashboard/asistencia/eventos]] `uses` →
 - [[screen--dashboard-asistencia-eventos-id|/dashboard/asistencia/eventos/[id]]] `uses` →
@@ -29,9 +34,38 @@ Helper de frontend "api" (9 exportaciones).
 - [[screen--dashboard-asistencia-tolerancias|/dashboard/asistencia/tolerancias]] `uses` →
 - [[screen--dashboard-denuncias|/dashboard/denuncias]] `uses` →
 - [[screen--dashboard-denuncias-id|/dashboard/denuncias/[id]]] `uses` →
+- [[screen--dashboard-deposito-articulos|/dashboard/deposito/articulos]] `uses` →
+- [[screen--dashboard-deposito-articulos-id|/dashboard/deposito/articulos/[id]]] `uses` →
+- [[screen--dashboard-deposito-bajas|/dashboard/deposito/bajas]] `uses` →
+- [[screen--dashboard-deposito-categorias|/dashboard/deposito/categorias]] `uses` →
+- [[screen--dashboard-deposito-entradas|/dashboard/deposito/entradas]] `uses` →
+- [[screen--dashboard-deposito-incidencias|/dashboard/deposito/incidencias]] `uses` →
+- [[screen--dashboard-deposito-inventarios-fisicos|/dashboard/deposito/inventarios-fisicos]] `uses` →
+- [[screen--dashboard-deposito-inventarios-fisicos-id|/dashboard/deposito/inventarios-fisicos/[id]]] `uses` →
+- [[screen--dashboard-deposito-mantenimientos|/dashboard/deposito/mantenimientos]] `uses` →
+- [[screen--dashboard-deposito-movimientos|/dashboard/deposito/movimientos]] `uses` →
+- [[screen--dashboard-deposito-prestamos|/dashboard/deposito/prestamos]] `uses` →
+- [[screen--dashboard-deposito-proveedores|/dashboard/deposito/proveedores]] `uses` →
+- [[screen--dashboard-deposito-ubicaciones|/dashboard/deposito/ubicaciones]] `uses` →
+- [[screen--dashboard-documentos-expedientes|/dashboard/documentos/expedientes]] `uses` →
+- [[screen--dashboard-documentos-listado|/dashboard/documentos/listado]] `uses` →
+- [[screen--dashboard-documentos-plantillas|/dashboard/documentos/plantillas]] `uses` →
+- [[screen--dashboard-documentos-id|/dashboard/documentos/[id]]] `uses` →
 - [[screen--dashboard-equipos-categorias|/dashboard/equipos/categorias]] `uses` →
 - [[screen--dashboard-equipos|/dashboard/equipos]] `uses` →
 - [[screen--dashboard-equipos-id|/dashboard/equipos/[id]]] `uses` →
+- [[screen--dashboard-finanzas-beneficios|/dashboard/finanzas/beneficios]] `uses` →
+- [[screen--dashboard-finanzas-cajas|/dashboard/finanzas/cajas]] `uses` →
+- [[screen--dashboard-finanzas-cuentas-bancarias|/dashboard/finanzas/cuentas-bancarias]] `uses` →
+- [[screen--dashboard-finanzas-cuotas|/dashboard/finanzas/cuotas]] `uses` →
+- [[screen--dashboard-finanzas-ejercicios-fiscales|/dashboard/finanzas/ejercicios-fiscales]] `uses` →
+- [[screen--dashboard-finanzas-facturacion|/dashboard/finanzas/facturacion]] `uses` →
+- [[screen--dashboard-finanzas-movimientos|/dashboard/finanzas/movimientos]] `uses` →
+- [[screen--dashboard-finanzas-movimientos-bancarios|/dashboard/finanzas/movimientos-bancarios]] `uses` →
+- [[screen--dashboard-finanzas-ordenes-pago|/dashboard/finanzas/ordenes-pago]] `uses` →
+- [[screen--dashboard-finanzas-presupuesto|/dashboard/finanzas/presupuesto]] `uses` →
+- [[screen--dashboard-finanzas-socios-protectores|/dashboard/finanzas/socios-protectores]] `uses` →
+- [[screen--dashboard-finanzas-socios-protectores-id|/dashboard/finanzas/socios-protectores/[id]]] `uses` →
 - [[screen--dashboard-guardias-auditoria|/dashboard/guardias/auditoria]] `uses` →
 - [[screen--dashboard-guardias-esquemas-horario|/dashboard/guardias/esquemas-horario]] `uses` →
 - [[screen--dashboard-guardias-generar|/dashboard/guardias/generar]] `uses` →
@@ -45,42 +79,8 @@ Helper de frontend "api" (9 exportaciones).
 - [[screen--dashboard-guardias-sorteos|/dashboard/guardias/sorteos]] `uses` →
 - [[screen--dashboard-guardias-sorteos-id|/dashboard/guardias/sorteos/[id]]] `uses` →
 - [[screen--dashboard-guardias-id|/dashboard/guardias/[id]]] `uses` →
+- [[screen--dashboard-inteligencia|/dashboard/inteligencia]] `uses` →
 - [[screen--dashboard-mi-perfil|/dashboard/mi-perfil]] `uses` →
-- [[screen--dashboard-mi-perfil-preferencias|/dashboard/mi-perfil/preferencias]] `uses` →
-- [[screen--dashboard-mi-perfil-seguridad|/dashboard/mi-perfil/seguridad]] `uses` →
-- [[screen--dashboard-organizacion-ascensos|/dashboard/organizacion/ascensos]] `uses` →
-- [[screen--dashboard-organizacion-brigadas|/dashboard/organizacion/brigadas]] `uses` →
-- [[screen--dashboard-organizacion-cargos|/dashboard/organizacion/cargos]] `uses` →
-- [[screen--dashboard-organizacion-companias|/dashboard/organizacion/companias]] `uses` →
-- [[screen--dashboard-organizacion-cuarteles|/dashboard/organizacion/cuarteles]] `uses` →
-- [[screen--dashboard-organizacion-departamentos|/dashboard/organizacion/departamentos]] `uses` →
-- [[screen--dashboard-organizacion-designaciones|/dashboard/organizacion/designaciones]] `uses` →
-- [[screen--dashboard-organizacion-especialidades|/dashboard/organizacion/especialidades]] `uses` →
-- [[screen--dashboard-organizacion-feriados|/dashboard/organizacion/feriados]] `uses` →
-- [[screen--dashboard-organizacion-guardias|/dashboard/organizacion/guardias]] `uses` →
-- [[screen--dashboard-organizacion|/dashboard/organizacion]] `uses` →
-- [[screen--dashboard-organizacion-parametros|/dashboard/organizacion/parametros]] `uses` →
-- [[screen--dashboard-organizacion-rangos|/dashboard/organizacion/rangos]] `uses` →
-- [[screen--dashboard-organizacion-tipos-bombero|/dashboard/organizacion/tipos-bombero]] `uses` →
-- [[screen--dashboard-organizacion-turnos|/dashboard/organizacion/turnos]] `uses` →
-- [[screen--dashboard-organizacion-unidades|/dashboard/organizacion/unidades]] `uses` →
-- [[screen--dashboard|/dashboard]] `uses` →
-- [[screen--dashboard-personal-nuevo|/dashboard/personal/nuevo]] `uses` →
-- [[screen--dashboard-personal|/dashboard/personal]] `uses` →
-- [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `uses` →
-- [[screen--dashboard-seguridad-apariencia|/dashboard/seguridad/apariencia]] `uses` →
-- [[screen--dashboard-seguridad-auditoria|/dashboard/seguridad/auditoria]] `uses` →
-- [[screen--dashboard-seguridad-configuracion|/dashboard/seguridad/configuracion]] `uses` →
-- [[screen--dashboard-seguridad|/dashboard/seguridad]] `uses` →
-- [[screen--dashboard-seguridad-permisos|/dashboard/seguridad/permisos]] `uses` →
-- [[screen--dashboard-seguridad-roles|/dashboard/seguridad/roles]] `uses` →
-- [[screen--dashboard-seguridad-sesiones|/dashboard/seguridad/sesiones]] `uses` →
-- [[screen--dashboard-seguridad-usuarios|/dashboard/seguridad/usuarios]] `uses` →
-- [[screen--dashboard-seguridad-usuarios-id|/dashboard/seguridad/usuarios/[id]]] `uses` →
-- [[screen--dashboard-servicios-nuevo|/dashboard/servicios/nuevo]] `uses` →
-- [[screen--dashboard-vehiculos-checklist-items|/dashboard/vehiculos/checklist-items]] `uses` →
-- [[screen--dashboard-vehiculos|/dashboard/vehiculos]] `uses` →
-- [[screen--dashboard-vehiculos-id|/dashboard/vehiculos/[id]]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

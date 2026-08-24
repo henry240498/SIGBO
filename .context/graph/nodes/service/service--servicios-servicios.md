@@ -23,6 +23,7 @@ edges:
   - [reads, table--personal-bomberos]
   - [uses, entity--vehiculo]
   - [reads, table--vehiculos-vehiculos]
+  - [uses, service--documentos-documentos]
 terminos: [servicios, servicio, tipo, comunicacion, log, auditoria, bombero, vehiculo]
 ---
 
@@ -55,6 +56,7 @@ Logica de negocio de servicios (modulo servicios).
 - `reads` → [[table--personal-bomberos|personal.bomberos]]
 - `uses` → [[entity--vehiculo|Vehiculo]]
 - `reads` → [[table--vehiculos-vehiculos|vehiculos.vehiculos]]
+- `uses` → [[service--documentos-documentos|DocumentosService]]
 
 ## Referenciado por
 

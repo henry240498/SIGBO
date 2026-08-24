@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
 
@@ -16,6 +17,7 @@ interface Compania {
 }
 
 export default function CompaniasPage() {
+  const confirmar = useConfirmacion();
   const [companias, setCompanias] = useState<Compania[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
@@ -113,7 +115,7 @@ export default function CompaniasPage() {
 
   async function darBaja(id: string) {
     setError(null);
-    if (!window.confirm('Dar de baja esta compania?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Dar de baja esta compania?', confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/organizacion/companias/${id}/baja`, { method: 'PATCH' });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
@@ -141,13 +143,13 @@ export default function CompaniasPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Companias ({companias?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/companias/exportar/excel', 'companias.xlsx')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/companias/exportar/excel', 'companias.xlsx')}>
             Exportar a Excel
           </button>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/companias/exportar/pdf', 'companias.pdf')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/companias/exportar/pdf', 'companias.pdf')}>
             Exportar a PDF
           </button>
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               if (mostrarForm) {
@@ -222,7 +224,7 @@ export default function CompaniasPage() {
             <input className="input-field" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
+            <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
               {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear compania'}
             </button>
             {editandoId && (
@@ -267,11 +269,11 @@ export default function CompaniasPage() {
                   </span>
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(c)}>
+                  <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(c)}>
                     Editar
                   </button>
                   {c.eliminadoEn === null ? (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                       onClick={() => darBaja(c.id)}
@@ -279,7 +281,7 @@ export default function CompaniasPage() {
                       Eliminar
                     </button>
                   ) : (
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => reactivar(c.id)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => reactivar(c.id)}>
                       Reactivar
                     </button>
                   )}

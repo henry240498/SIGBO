@@ -80,7 +80,7 @@ export default function ExpedientesPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Expedientes ({expedientes?.length ?? 0})</h2>
         {puedeCrear && (
-          <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Nuevo expediente'}
           </button>
         )}
@@ -118,7 +118,7 @@ export default function ExpedientesPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
             <textarea className="input-field" rows={2} value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Crear expediente'}
           </button>
         </form>
@@ -147,10 +147,10 @@ export default function ExpedientesPage() {
                 </td>
                 <td style={{ padding: '6px 4px' }}>
                   {puedeEditar && e.estado === 'ABIERTO' && (
-                    <button className="btn-primary" style={{ padding: '3px 8px', fontSize: 11 }} onClick={() => cerrar(e.id)}>Cerrar</button>
+                    <button type="button" className="btn-primary" style={{ padding: '3px 8px', fontSize: 11 }} onClick={() => cerrar(e.id)}>Cerrar</button>
                   )}
                   {puedeEditar && e.estado === 'CERRADO' && (
-                    <button className="btn-primary" style={{ padding: '3px 8px', fontSize: 11, background: '#475569' }} onClick={() => reabrir(e.id)}>Reabrir</button>
+                    <button type="button" className="btn-primary" style={{ padding: '3px 8px', fontSize: 11, background: '#475569' }} onClick={() => reabrir(e.id)}>Reabrir</button>
                   )}
                 </td>
               </tr>

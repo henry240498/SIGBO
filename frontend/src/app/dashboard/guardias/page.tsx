@@ -66,7 +66,7 @@ export default function GuardiasPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Guardias ({guardias?.length ?? 0})</h2>
         {puedeCrear && (
-          <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Nueva guardia'}
           </button>
         )}
@@ -127,7 +127,7 @@ export default function GuardiasPage() {
               El personal titular del grupo seleccionado se cargara automaticamente al crear la guardia.
             </p>
           )}
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Crear guardia'}
           </button>
         </form>

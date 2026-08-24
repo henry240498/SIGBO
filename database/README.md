@@ -1,58 +1,66 @@
-# Base de datos SIGBO-CBVC — Réplica reconstruida
+# Base de datos SIGBO-CBVC
 
-Este directorio contiene la reconstrucción de la base de datos del sistema
-**SIGBO-CBVC** (SQL Server 2019 Express), generada a partir de la documentación
-técnica disponible del proyecto — no del código fuente original, que no está
-presente en este repositorio. **Antes de usar nada de esta carpeta, leer
-[`REPORTE_REPLICACION.md`](REPORTE_REPLICACION.md) sección 0 y 10**: explica
-exactamente de dónde sale cada dato y qué no se pudo verificar.
+La ruta vigente para la base de datos es `database/migrations/`, ejecutada por
+`run-migrations.ps1`. Las migraciones están ordenadas mediante un manifiesto
+explícito y verificadas con SHA-256 antes de conectarse a SQL Server.
 
-## Ejecución rápida
+## Instalación local
 
-Contra una instancia SQL Server 2019 Express (o superior) vacía, con `sqlcmd`:
+Requiere SQL Server compatible, `sqlcmd` y una cuenta de Windows con permiso para
+crear o modificar la base local:
 
-```bash
-sqlcmd -S <servidor> -E -i scripts/01_create_database.sql
-sqlcmd -S <servidor> -E -d sigbo_cbvc -i scripts/02_create_schemas.sql
-sqlcmd -S <servidor> -E -d sigbo_cbvc -i scripts/03_create_types.sql
-sqlcmd -S <servidor> -E -d sigbo_cbvc -i scripts/04_create_tables.sql
-sqlcmd -S <servidor> -E -d sigbo_cbvc -i scripts/05_create_sequences.sql
-sqlcmd -S <servidor> -E -d sigbo_cbvc -i scripts/06_create_constraints.sql
-sqlcmd -S <servidor> -E -d sigbo_cbvc -i scripts/07_create_indexes.sql
-sqlcmd -S <servidor> -E -d sigbo_cbvc -i scripts/08_create_functions.sql
-sqlcmd -S <servidor> -E -d sigbo_cbvc -i scripts/09_create_procedures.sql
-sqlcmd -S <servidor> -E -d sigbo_cbvc -i scripts/10_create_triggers.sql
-sqlcmd -S <servidor> -E -d sigbo_cbvc -i scripts/11_create_views.sql
-sqlcmd -S <servidor> -E -d sigbo_cbvc -i scripts/12_insert_master_data.sql
-# 13_insert_initial_data.sql es una plantilla: completar solo si se dispone de datos reales
-sqlcmd -S <servidor> -E -d sigbo_cbvc -i scripts/14_validation.sql
+```powershell
+cd database
+.\run-migrations.ps1 -Server ".\SQLEXPRESS"
 ```
 
-(`-E` = Windows Authentication; usar `-U <usuario> -P <password>` para autenticación SQL.)
+El nombre de base soportado actualmente es `sigbo_cbvc`, porque la migración
+histórica inicial lo crea de forma explícita. El parámetro `-Database` se rechaza
+para otro nombre en vez de crear o migrar una base equivocada.
 
-Antes de `12_insert_master_data.sql`, asegurarse de que exista la fila del rol
-"Administrador General" en `seguridad.roles` — ver `REPORTE_REPLICACION.md`
-sección 8, apartado final.
+`install_local.ps1` es un punto de entrada seguro equivalente. Ya no configura
+TCP/IP, autenticación mixta ni usuarios SQL, y nunca carga datos sintéticos:
 
-## Contenido
+```powershell
+.\install_local.ps1 -ValidateOnly
+```
 
-| Archivo | Qué hace |
-|---|---|
-| `REPORTE_REPLICACION.md` | Reporte completo: arquitectura, diccionario de datos, relaciones, información faltante, riesgos |
-| `scripts/01`–`14` | Scripts SQL Server ejecutables, en orden, ver `REPORTE_REPLICACION.md` secciones 7-8 |
+Para comprobar manifiesto, hashes y sintaxis PowerShell sin requerir SQL Server:
 
-## Qué NO incluye esta carpeta
+```powershell
+.\run-migrations.ps1 -ValidateOnly
+```
 
-- Datos operativos reales (usuarios, bomberos, servicios, etc.) — no estaban
-  disponibles. `13_insert_initial_data.sql` es una plantilla vacía con instrucciones.
-- Ningún secreto, credencial, cadena de conexión o backup real.
-- Estructura de un eventual modelo multi-institución: no está implementada en el
-  sistema documentado, así que no se inventó aquí.
+## Historial de migraciones
 
-## Origen de los datos de esta carpeta
+Al instalar una base vacía, el ejecutor crea `dbo.__sigbo_migrations` y registra
+el hash de cada script aplicado. Las siguientes ejecuciones omiten las migraciones
+ya registradas y aplican sólo las nuevas declaradas al final del manifiesto.
 
-Ver `REPORTE_REPLICACION.md` sección 0. En resumen: el repositorio de GitHub
-`SIGBO` es un scaffold inicial sin base de datos configurada; la estructura real se
-reconstruyó a partir de `SIGBO-CBVC_Documentacion_Sistema_2026-08-04.docx`
-(documentación técnica del sistema, no el código fuente), que fue la mejor
-evidencia disponible en esta máquina.
+Si una base ya contiene tablas SIGBO pero no tiene ese historial, el ejecutor se
+detiene. No se debe reaplicar DDL histórico a esa base: primero corresponde una
+línea base y validación técnica/institucional de la instalación existente.
+
+No se edita una migración ya aplicada. Para cambiar el esquema:
+
+1. Crear un archivo nuevo con el siguiente prefijo libre.
+2. Añadirlo al final de `run-migrations.ps1`.
+3. Añadir su SHA-256 a `migrations.sha256`.
+4. Ejecutar `-ValidateOnly` y una migración contra una base controlada.
+
+## Configuración de la aplicación
+
+Copiar `backend/.env.example` a `backend/.env` y definir credenciales, secretos
+JWT y orígenes CORS del entorno. No se versionan contraseñas ni se crean logins
+con privilegios amplios desde los scripts de migración.
+
+En desarrollo, `npm run seed` requiere una `SIGBO_DEMO_PASSWORD` local y crea
+cuentas de demostración sólo fuera de producción. Consulte
+[CREDENCIALES-Y-ROLES.md](../docs/CREDENCIALES-Y-ROLES.md).
+
+## Material histórico
+
+`database/scripts/` y [REPORTE_REPLICACION.md](REPORTE_REPLICACION.md) se
+conservan como evidencia de una reconstrucción anterior. No son la ruta de
+instalación ni describen el estado actual de NestJS, Next.js, autenticación o
+migraciones. No ejecutar scripts de esa carpeta para instalar SIGBO.

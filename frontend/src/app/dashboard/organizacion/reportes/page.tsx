@@ -35,14 +35,14 @@ export default function ReportesPage() {
           <div key={r.ruta} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <div style={{ fontWeight: 600 }}>{r.nombre}</div>
             <div style={{ display: 'flex', gap: 8 }}>
-              <button
+              <button type="button"
                 className="btn-primary"
                 style={{ flex: 1 }}
                 onClick={() => descargarArchivo(`/organizacion/${r.ruta}/exportar/excel`, `${r.ruta}.xlsx`)}
               >
                 Excel
               </button>
-              <button
+              <button type="button"
                 className="btn-primary"
                 style={{ flex: 1 }}
                 onClick={() => descargarArchivo(`/organizacion/${r.ruta}/exportar/pdf`, `${r.ruta}.pdf`)}

@@ -23,9 +23,9 @@ Entidad Rango, persistida en organizacion.rangos.
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/guardias`, `/dashboard/guardias/[id]`, `/dashboard/guardias/esquemas-horario`, `/dashboard/guardias/generar`, `/dashboard/guardias/grupos`, `/dashboard/guardias/grupos/[id]`, `/dashboard/guardias/ordenes`, `/dashboard/guardias/ordenes/[id]`, `/dashboard/guardias/ordenes/configuracion`, `/dashboard/guardias/ordenes/nueva`, `/dashboard/guardias/pernoctes`, `/dashboard/guardias/requisitos`, `/dashboard/guardias/sorteos`, `/dashboard/guardias/sorteos/[id]`, `/dashboard/organizacion/ascensos`, `/dashboard/organizacion/feriados`, `/dashboard/organizacion/rangos`, `/dashboard/personal/[id]`
-- **Endpoints:** AscensosController, FojaServicioController, GuardiasController, OrdenesGuardiaController, RangosController
-- **Servicios:** AscensosService, DashboardService, ElegibilidadService, FojaServicioService, GeneracionService, OrdenesGuardiaService, RangosService
+- **Pantallas:** `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/documentos`, `/dashboard/documentos/[id]`, `/dashboard/documentos/auditoria`, `/dashboard/documentos/expedientes`, `/dashboard/documentos/expedientes/[id]`, `/dashboard/documentos/listado`, `/dashboard/documentos/plantillas`, `/dashboard/documentos/vencimientos`, `/dashboard/finanzas`, `/dashboard/finanzas/beneficios`, `/dashboard/finanzas/cajas`, `/dashboard/finanzas/cuentas-bancarias`, `/dashboard/finanzas/cuotas`, `/dashboard/finanzas/ejercicios-fiscales`, `/dashboard/finanzas/facturacion`, `/dashboard/finanzas/movimientos`, `/dashboard/finanzas/movimientos-bancarios`, `/dashboard/finanzas/ordenes-pago`, `/dashboard/finanzas/presupuesto`, `/dashboard/finanzas/socios-protectores/[id]`, `/dashboard/guardias`, `/dashboard/guardias/[id]`, `/dashboard/guardias/esquemas-horario`, `/dashboard/guardias/generar`, `/dashboard/guardias/grupos`, `/dashboard/guardias/grupos/[id]`, `/dashboard/guardias/ordenes`, `/dashboard/guardias/ordenes/[id]`, `/dashboard/guardias/ordenes/configuracion`, `/dashboard/guardias/ordenes/nueva`, `/dashboard/guardias/pernoctes`, `/dashboard/guardias/requisitos`, `/dashboard/guardias/sorteos`, `/dashboard/guardias/sorteos/[id]`, `/dashboard/organizacion/ascensos`, `/dashboard/organizacion/documentos`, `/dashboard/organizacion/feriados`, `/dashboard/organizacion/rangos`, `/dashboard/personal/[id]`
+- **Endpoints:** ActividadesAcademicasController, AscensosController, FirmasDocumentoController, FojaServicioController, GuardiasController, InscripcionesAcademiaController, OrdenesGuardiaController, PlantillasController, RangosController, ReportesAcademiaController, ReportesFinanzasController
+- **Servicios:** ActividadesAcademicasService, AscensosService, DashboardService, ElegibilidadService, FirmasDocumentoService, FojaServicioService, GeneracionService, IaToolsService, InscripcionesAcademiaService, OrdenesGuardiaService, PlantillasService, RangosService, ReportesAcademiaService, ReportesFinanzasService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -41,9 +41,16 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 
 ## Referenciado por
 
+- [[service--academia-actividades-academicas|ActividadesAcademicasService]] `uses` →
+- [[service--academia-inscripciones-academia|InscripcionesAcademiaService]] `uses` →
+- [[service--academia-reportes-academia|ReportesAcademiaService]] `uses` →
+- [[service--documentos-firmas-documento|FirmasDocumentoService]] `uses` →
+- [[service--documentos-plantillas|PlantillasService]] `uses` →
+- [[service--finanzas-reportes-finanzas|ReportesFinanzasService]] `uses` →
 - [[service--guardias-elegibilidad|ElegibilidadService]] `uses` →
 - [[service--guardias-generacion|GeneracionService]] `uses` →
 - [[service--guardias-ordenes-guardia|OrdenesGuardiaService]] `uses` →
+- [[service--ia-ia-tools|IaToolsService]] `uses` →
 - [[service--organizacion-ascensos|AscensosService]] `uses` →
 - [[service--organizacion-dashboard|DashboardService]] `uses` →
 - [[service--organizacion-rangos|RangosService]] `uses` →

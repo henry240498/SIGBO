@@ -4,23 +4,24 @@ tipo: TABLE
 nombre: operaciones.eventos_asistencia
 nivel: L2
 dominio: asistencia
-resumen: Tabla operaciones.eventos_asistencia (13 columnas). Creada en 005_operaciones.sql, modificada por 009_foreign_keys.sql, 020_asistencia.sql.
+resumen: Tabla operaciones.eventos_asistencia (14 columnas). Creada en 005_operaciones.sql, modificada por 009_foreign_keys.sql, 020_asistencia.sql, 037_academia_integracion_asistencia_certificaciones.sql.
 tabla: eventos_asistencia
 archivos:
   - database/migrations/005_operaciones.sql
   - database/migrations/009_foreign_keys.sql
   - database/migrations/020_asistencia.sql
+  - database/migrations/037_academia_integracion_asistencia_certificaciones.sql
 edges:
   - [defined_in, file--005-operaciones]
   - [belongs_to, domain--asistencia]
-terminos: [operaciones, eventos, asistencia, nombre, descripcion, fecha, inicio, fin, ubicacion, responsable, estado, metadata, creado, actualizado, tipo, evento, institucion]
+terminos: [operaciones, eventos, asistencia, nombre, descripcion, fecha, inicio, fin, ubicacion, responsable, estado, metadata, creado, actualizado, tipo, evento, institucion, actividad, academica]
 ---
 
 # operaciones.eventos_asistencia
 
-Tabla operaciones.eventos_asistencia (13 columnas). Creada en 005_operaciones.sql, modificada por 009_foreign_keys.sql, 020_asistencia.sql.
+Tabla operaciones.eventos_asistencia (14 columnas). Creada en 005_operaciones.sql, modificada por 009_foreign_keys.sql, 020_asistencia.sql, 037_academia_integracion_asistencia_certificaciones.sql.
 
-- **Esquema:** operaciones · **Columnas:** 13
+- **Esquema:** operaciones · **Columnas:** 14
 
 ## Columnas
 
@@ -39,12 +40,13 @@ Tabla operaciones.eventos_asistencia (13 columnas). Creada en 005_operaciones.sq
 | actualizado_en | DATETIMEOFFSET(3) |
 | tipo_evento_id | UNIQUEIDENTIFIER |
 | institucion_id | UNIQUEIDENTIFIER |
+| actividad_academica_id | UNIQUEIDENTIFIER |
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
-- **Endpoints:** BitacoraController, DashboardAsistenciaController, EventosAsistenciaController, MarcacionesController
-- **Servicios:** BitacoraService, DashboardAsistenciaService, EventosAsistenciaService
+- **Pantallas:** `/dashboard/academia/[id]`, `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
+- **Endpoints:** BitacoraController, DashboardAsistenciaController, EventosAsistenciaController, MarcacionesController, SesionesAcademiaController
+- **Servicios:** BitacoraService, DashboardAsistenciaService, EventosAsistenciaService, SesionesAcademiaService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -54,6 +56,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - `database/migrations/005_operaciones.sql`
 - `database/migrations/009_foreign_keys.sql`
 - `database/migrations/020_asistencia.sql`
+- `database/migrations/037_academia_integracion_asistencia_certificaciones.sql`
 
 ## Relaciones
 
@@ -64,6 +67,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 
 - [[table--operaciones-participantes-evento|operaciones.participantes_evento]] `references` →
 - [[entity--evento-asistencia|EventoAsistencia]] `persisted_in` →
+- [[service--academia-sesiones-academia|SesionesAcademiaService]] `reads` →
 - [[service--guardias-bitacora|BitacoraService]] `reads` →
 - [[service--operaciones-dashboard-asistencia|DashboardAsistenciaService]] `reads` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `reads` →

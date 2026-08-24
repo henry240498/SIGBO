@@ -15,8 +15,9 @@ import {
   WidthType,
 } from 'docx';
 import { existsSync, readFileSync } from 'fs';
-import { extname, join } from 'path';
+import { extname } from 'path';
 import { OrdenGuardiaSnapshot } from '../../modules/guardias/types/orden-guardia-snapshot';
+import { rutaAbsolutaAlmacenamiento } from './almacenamiento';
 
 const SIN_BORDE = {
   top: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
@@ -49,7 +50,8 @@ function datosImagen(rutaServida: string | null): { data: Buffer; type: 'png' | 
   if (!rutaServida) return null;
   const tipo = TIPOS_IMAGEN_DOCX[extname(rutaServida).toLowerCase()];
   if (!tipo) return null;
-  const absoluta = join(process.cwd(), rutaServida.replace(/^\//, ''));
+  const absoluta = rutaAbsolutaAlmacenamiento(rutaServida);
+  if (!absoluta) return null;
   if (!existsSync(absoluta)) return null;
   try {
     return { data: readFileSync(absoluta), type: tipo };

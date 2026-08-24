@@ -78,7 +78,7 @@ export default function DetalleSorteoPage() {
               Ejecutado {new Date(sorteo.ejecutadoEn).toLocaleString()}
             </p>
           </div>
-          <button className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/guardias/sorteos')}>
+          <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/guardias/sorteos')}>
             Volver
           </button>
         </div>
@@ -104,7 +104,7 @@ export default function DetalleSorteoPage() {
                 placeholderBusqueda="Buscar esquema..."
               />
             </div>
-            <button className="btn-primary" onClick={crearGuardia} disabled={creando || (!esquemaHorarioId && !sorteo.esquemaHorarioId)}>
+            <button type="button" className="btn-primary" onClick={crearGuardia} disabled={creando || (!esquemaHorarioId && !sorteo.esquemaHorarioId)}>
               {creando ? 'Creando...' : 'Crear guardia con los seleccionados'}
             </button>
           </div>

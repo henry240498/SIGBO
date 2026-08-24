@@ -8,7 +8,7 @@ export class GuardarComunicacionDto {
   tipo: 'OTRAS_OCURRENCIAS' | 'INCENDIO';
 
   /** Datos completos del formulario, preservados para consulta e impresión. */
-  @ApiProperty({ type: 'object' })
+  @ApiProperty({ type: 'object', additionalProperties: true })
   @IsObject()
   formulario: Record<string, unknown>;
 

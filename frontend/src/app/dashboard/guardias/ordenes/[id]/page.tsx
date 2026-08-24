@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useEntradaConfirmada } from '@/app/components/InputProvider';
 import { useParams, useRouter } from 'next/navigation';
-import { API_ORIGIN, descargarArchivo, obtenerSesion } from '@/lib/api';
+import { descargarArchivo, obtenerSesion } from '@/lib/api';
+import { parsearJsonSeguro } from '@/lib/json-seguro';
 import {
   OrdenGuardia,
   OrdenGuardiaModificacion,
@@ -28,6 +30,7 @@ const COLOR_ESTADO: Record<string, string> = {
 };
 
 export default function DetalleOrdenGuardiaPage() {
+  const solicitarEntrada = useEntradaConfirmada();
   const params = useParams();
   const router = useRouter();
   const ordenId = params.id as string;
@@ -76,19 +79,24 @@ export default function DetalleOrdenGuardiaPage() {
   }
 
   async function anular() {
-    const motivo = window.prompt('Motivo de la anulacion:');
+    const motivo = await solicitarEntrada({ titulo: 'Anular orden de guardia', mensaje: 'La anulación requiere un motivo.', etiqueta: 'Motivo', confirmar: 'Anular', peligro: true, requerida: true });
     if (motivo == null) return;
-    if (!motivo.trim()) {
-      window.alert('El motivo es obligatorio.');
-      return;
-    }
     await ejecutar(() => anularOrden(ordenId, motivo.trim()), 'Orden anulada');
   }
 
   async function descargarPdf() {
     if (!orden?.archivoPdfUrl) return;
     try {
-      await descargarArchivo(orden.archivoPdfUrl, `orden-guardia-${orden.numero}-${orden.anio}.pdf`);
+      await descargarArchivo(`/api/v1/guardias/ordenes/${orden.id}/archivos/pdf`, `orden-guardia-${orden.numero}-${orden.anio}.pdf`);
+    } catch (err: any) {
+      setError(err.message);
+    }
+  }
+
+  async function descargarDocx() {
+    if (!orden?.archivoDocxUrl) return;
+    try {
+      await descargarArchivo(`/api/v1/guardias/ordenes/${orden.id}/archivos/docx`, `orden-guardia-${orden.numero}-${orden.anio}.docx`);
     } catch (err: any) {
       setError(err.message);
     }
@@ -97,7 +105,8 @@ export default function DetalleOrdenGuardiaPage() {
   if (error && !orden) return <p style={{ color: '#f87171' }}>{error}</p>;
   if (!orden) return <p style={{ color: '#94a3b8' }}>Cargando orden...</p>;
 
-  const snapshot = JSON.parse(orden.contenidoJson) as OrdenGuardiaSnapshot;
+  const snapshot = parsearJsonSeguro<OrdenGuardiaSnapshot>(orden.contenidoJson);
+  if (!snapshot) return <p style={{ color: '#f87171' }}>No se pudo leer el contenido histórico de esta orden.</p>;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -114,7 +123,7 @@ export default function DetalleOrdenGuardiaPage() {
               <p style={{ fontSize: 12, color: '#f87171', marginTop: 8 }}>Motivo de anulacion: {orden.anuladaMotivo}</p>
             )}
           </div>
-          <button className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/guardias/ordenes')}>
+          <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/guardias/ordenes')}>
             Volver
           </button>
         </div>
@@ -126,52 +135,43 @@ export default function DetalleOrdenGuardiaPage() {
       <div className="card" style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         {puedeEditar && orden.estado === 'BORRADOR' && (
           <>
-            <button className="btn-primary" disabled={procesando} onClick={() => ejecutar(() => regenerarPreviewOrden(ordenId), 'Vista previa regenerada')}>
+            <button type="button" className="btn-primary" disabled={procesando} onClick={() => ejecutar(() => regenerarPreviewOrden(ordenId), 'Vista previa regenerada')}>
               Regenerar vista previa
             </button>
-            <button className="btn-primary" disabled={procesando} onClick={() => ejecutar(() => generarDocumentosOrden(ordenId), 'Documentos generados')}>
+            <button type="button" className="btn-primary" disabled={procesando} onClick={() => ejecutar(() => generarDocumentosOrden(ordenId), 'Documentos generados')}>
               Generar PDF/Word (borrador)
             </button>
-            <button className="btn-primary" disabled={procesando} onClick={() => ejecutar(() => revisarOrden(ordenId), 'Pasada a revisada')}>
+            <button type="button" className="btn-primary" disabled={procesando} onClick={() => ejecutar(() => revisarOrden(ordenId), 'Pasada a revisada')}>
               Marcar como revisada
             </button>
           </>
         )}
         {puedeEditar && (orden.estado === 'REVISADA' || orden.estado === 'APROBADA') && (
-          <button className="btn-primary" style={{ background: '#475569' }} disabled={procesando} onClick={() => ejecutar(() => volverABorradorOrden(ordenId), 'Vuelta a borrador')}>
+          <button type="button" className="btn-primary" style={{ background: '#475569' }} disabled={procesando} onClick={() => ejecutar(() => volverABorradorOrden(ordenId), 'Vuelta a borrador')}>
             Volver a borrador
           </button>
         )}
         {puedeAprobar && orden.estado === 'REVISADA' && (
-          <button className="btn-primary" style={{ background: '#854d0e' }} disabled={procesando} onClick={() => ejecutar(() => aprobarOrden(ordenId), 'Orden aprobada')}>
+          <button type="button" className="btn-primary" style={{ background: '#854d0e' }} disabled={procesando} onClick={() => ejecutar(() => aprobarOrden(ordenId), 'Orden aprobada')}>
             Aprobar
           </button>
         )}
         {puedePublicar && orden.estado === 'APROBADA' && (
-          <button className="btn-primary" style={{ background: '#166534' }} disabled={procesando} onClick={() => ejecutar(() => publicarOrden(ordenId), 'Orden publicada')}>
+          <button type="button" className="btn-primary" style={{ background: '#166534' }} disabled={procesando} onClick={() => ejecutar(() => publicarOrden(ordenId), 'Orden publicada')}>
             Publicar
           </button>
         )}
         {puedeAnular && orden.estado !== 'ANULADA' && (
-          <button className="btn-primary" style={{ background: '#7f1d1d' }} disabled={procesando} onClick={anular}>
+          <button type="button" className="btn-primary" style={{ background: '#7f1d1d' }} disabled={procesando} onClick={anular}>
             Anular
           </button>
         )}
         {orden.archivoPdfUrl && (
-          <a href={`${API_ORIGIN}${orden.archivoPdfUrl}`} target="_blank" rel="noreferrer" className="btn-primary" style={{ textDecoration: 'none', display: 'inline-block' }}>
-            Visualizar PDF
-          </a>
-        )}
-        {orden.archivoPdfUrl && (
-          <button className="btn-primary" style={{ background: '#475569' }} onClick={descargarPdf}>
+          <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={descargarPdf}>
             Descargar PDF
           </button>
         )}
-        {orden.archivoDocxUrl && (
-          <a href={`${API_ORIGIN}${orden.archivoDocxUrl}`} target="_blank" rel="noreferrer" className="btn-primary" style={{ textDecoration: 'none', display: 'inline-block' }}>
-            Descargar Word
-          </a>
-        )}
+        {orden.archivoDocxUrl && <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={descargarDocx}>Descargar Word</button>}
       </div>
 
       <VistaPreviaOrden snapshot={snapshot} />
@@ -339,7 +339,7 @@ function PanelModificaciones({
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h3 style={{ fontSize: 15 }}>Modificaciones ({modificaciones?.length ?? 0})</h3>
         {puedeEditar && (
-          <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => setMostrarForm((v) => !v)}>
+          <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => setMostrarForm((v) => !v)}>
             {mostrarForm ? 'Cancelar' : 'Registrar modificacion'}
           </button>
         )}
@@ -382,7 +382,7 @@ function PanelModificaciones({
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo</label>
             <input className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} required />
           </div>
-          <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
+          <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
             {guardando ? 'Guardando...' : 'Registrar'}
           </button>
         </form>

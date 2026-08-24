@@ -110,7 +110,7 @@ export default function ArticulosPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Articulos ({articulos?.length ?? 0})</h2>
         {puedeCrear && (
-          <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Nuevo articulo'}
           </button>
         )}
@@ -133,7 +133,7 @@ export default function ArticulosPage() {
           <input type="checkbox" checked={soloStockBajo} onChange={(e) => setSoloStockBajo(e.target.checked)} />
           Solo stock bajo
         </label>
-        <button
+        <button type="button"
           className="btn-primary"
           style={{ background: '#475569' }}
           onClick={() => {
@@ -197,7 +197,7 @@ export default function ArticulosPage() {
           <p style={{ fontSize: 12, color: '#64748b' }}>
             El stock inicial se carga con un movimiento de tipo Entrada desde la pantalla de Movimientos o Entradas, no desde este formulario.
           </p>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Crear articulo'}
           </button>
         </form>

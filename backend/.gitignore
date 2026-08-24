@@ -1,7 +1,7 @@
 node_modules/
 dist/
+private_uploads/
 
 # Secretos locales: NO versionar. La plantilla versionada es .env.example
-.env
-.env.local
-.env.*.local
+.env*
+!.env.example

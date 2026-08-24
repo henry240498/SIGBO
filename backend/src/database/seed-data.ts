@@ -123,7 +123,6 @@ export const PERMISOS: PermisoSeed[] = [
 export interface RolSeed {
   slug: string;
   username: string;
-  password: string;
   nombre: string;
   descripcion: string;
   color: string;
@@ -136,7 +135,6 @@ export const ROLES: RolSeed[] = [
   {
     slug: 'ADMIN',
     username: 'admin',
-    password: 'Admin#2026!',
     nombre: 'Administrador General',
     descripcion: 'Acceso completo a todas las funcionalidades del sistema',
     color: '#DC2626',
@@ -147,7 +145,6 @@ export const ROLES: RolSeed[] = [
   {
     slug: 'COMANDANTE',
     username: 'comandante',
-    password: 'Comandante#2026!',
     nombre: 'Comandante',
     descripcion: 'Acceso a todas las operaciones y gestion de personal',
     color: '#2563EB',
@@ -167,7 +164,6 @@ export const ROLES: RolSeed[] = [
   {
     slug: 'JEFE_GUARDIA',
     username: 'jefe_guardia',
-    password: 'JefeGuardia#2026!',
     nombre: 'Jefe de Guardia',
     descripcion: 'Gestion de la guardia actual y servicios en curso',
     color: '#16A34A',
@@ -184,7 +180,6 @@ export const ROLES: RolSeed[] = [
   {
     slug: 'INSTRUCTOR',
     username: 'instructor',
-    password: 'Instructor#2026!',
     nombre: 'Instructor',
     descripcion: 'Gestion de cursos y academia',
     color: '#D97706',
@@ -201,7 +196,6 @@ export const ROLES: RolSeed[] = [
   {
     slug: 'BOMBERO',
     username: 'bombero',
-    password: 'Bombero#2026!',
     nombre: 'Bombero Operativo',
     descripcion: 'Funcionalidades basicas para bomberos activos',
     color: '#6B7280',
@@ -218,7 +212,6 @@ export const ROLES: RolSeed[] = [
   {
     slug: 'TESORERO',
     username: 'tesorero',
-    password: 'Tesorero#2026!',
     nombre: 'Tesorero',
     descripcion: 'Gestion financiera completa',
     color: '#7C3AED',
@@ -233,7 +226,6 @@ export const ROLES: RolSeed[] = [
   {
     slug: 'DEPOSITO',
     username: 'deposito',
-    password: 'Deposito#2026!',
     nombre: 'Encargado de Deposito',
     descripcion: 'Control de inventario, stock de consumibles y prestamos de equipos',
     color: '#0891B2',

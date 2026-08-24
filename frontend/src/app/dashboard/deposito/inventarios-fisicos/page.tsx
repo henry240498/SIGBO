@@ -74,7 +74,7 @@ export default function InventariosFisicosPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Inventarios fisicos ({inventarios?.length ?? 0})</h2>
         {puedeCrear && (
-          <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Nuevo inventario fisico'}
           </button>
         )}
@@ -110,7 +110,7 @@ export default function InventariosFisicosPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
             <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Creando...' : 'Crear e ir a cargar items'}
           </button>
         </form>

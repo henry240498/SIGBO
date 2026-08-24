@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { obtenerSesion } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import {
@@ -79,6 +80,7 @@ const COLOR_ESTADO_INSCRIPCION: Record<string, string> = {
 };
 
 export default function DetalleActividadAcademicaPage() {
+  const confirmar = useConfirmacion();
   const params = useParams();
   const router = useRouter();
   const actividadId = params.id as string;
@@ -231,7 +233,7 @@ export default function DetalleActividadAcademicaPage() {
   }
 
   async function quitar(instructorId: string) {
-    if (!window.confirm('Quitar este instructor de la actividad?')) return;
+    if (!await confirmar({ titulo: 'Quitar instructor', mensaje: '¿Quitar este instructor de la actividad?', confirmar: 'Quitar', peligro: true })) return;
     setError(null);
     try {
       await quitarInstructor(actividadId, instructorId);
@@ -297,7 +299,7 @@ export default function DetalleActividadAcademicaPage() {
   }
 
   async function quitarParticipanteDeActividad(inscripcionId: string) {
-    if (!window.confirm('Quitar este participante de la actividad?')) return;
+    if (!await confirmar({ titulo: 'Quitar participante', mensaje: '¿Quitar este participante de la actividad?', confirmar: 'Quitar', peligro: true })) return;
     setError(null);
     try {
       await quitarParticipante(actividadId, inscripcionId);
@@ -433,13 +435,13 @@ export default function DetalleActividadAcademicaPage() {
             </div>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn-primary" style={{ background: '#475569' }} onClick={() => generarReporte('pdf')} disabled={generandoReporte !== null}>
+            <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => generarReporte('pdf')} disabled={generandoReporte !== null}>
               {generandoReporte === 'pdf' ? 'Generando...' : 'Reporte PDF'}
             </button>
-            <button className="btn-primary" style={{ background: '#475569' }} onClick={() => generarReporte('docx')} disabled={generandoReporte !== null}>
+            <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => generarReporte('docx')} disabled={generandoReporte !== null}>
               {generandoReporte === 'docx' ? 'Generando...' : 'Reporte DOCX'}
             </button>
-            <button className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/academia')}>
+            <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/academia')}>
               Volver
             </button>
           </div>
@@ -483,7 +485,7 @@ export default function DetalleActividadAcademicaPage() {
                 placeholderBusqueda="Buscar por codigo o nombre..."
               />
             </div>
-            <button className="btn-primary" onClick={agregarBombero} disabled={!bomberoSeleccionado}>
+            <button type="button" className="btn-primary" onClick={agregarBombero} disabled={!bomberoSeleccionado}>
               Agregar personal
             </button>
             <button
@@ -524,7 +526,7 @@ export default function DetalleActividadAcademicaPage() {
                   <input className="input-field" value={externo.telefono} onChange={(e) => setExterno({ ...externo, telefono: e.target.value })} />
                 </div>
               </div>
-              <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+              <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
                 {guardando ? 'Guardando...' : 'Agregar externo'}
               </button>
             </form>
@@ -560,7 +562,7 @@ export default function DetalleActividadAcademicaPage() {
                   </td>
                   {puedeGestionarInstructores && (
                     <td style={{ padding: '6px 4px' }}>
-                      <button
+                      <button type="button"
                         className="btn-primary"
                         style={{ padding: '4px 8px', fontSize: 11, background: '#7f1d1d' }}
                         onClick={() => quitar(i.id)}
@@ -589,7 +591,7 @@ export default function DetalleActividadAcademicaPage() {
                 placeholderBusqueda="Buscar por codigo o nombre..."
               />
             </div>
-            <button className="btn-primary" onClick={agregarParticipanteBombero} disabled={!participanteSeleccionado}>
+            <button type="button" className="btn-primary" onClick={agregarParticipanteBombero} disabled={!participanteSeleccionado}>
               Inscribir personal
             </button>
             <button
@@ -650,7 +652,7 @@ export default function DetalleActividadAcademicaPage() {
                   />
                 </div>
               </div>
-              <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardandoParticipante}>
+              <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardandoParticipante}>
                 {guardandoParticipante ? 'Guardando...' : 'Inscribir externo'}
               </button>
             </form>
@@ -736,7 +738,7 @@ export default function DetalleActividadAcademicaPage() {
                   </td>
                   {puedeInscribir && (
                     <td style={{ padding: '6px 4px' }}>
-                      <button
+                      <button type="button"
                         className="btn-primary"
                         style={{ padding: '4px 8px', fontSize: 11, background: '#7f1d1d' }}
                         onClick={() => quitarParticipanteDeActividad(p.id)}
@@ -756,7 +758,7 @@ export default function DetalleActividadAcademicaPage() {
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h3 style={{ fontSize: 14 }}>Sesiones ({sesiones?.length ?? 0})</h3>
-            <button className="btn-primary" onClick={() => setMostrarFormSesion(!mostrarFormSesion)}>
+            <button type="button" className="btn-primary" onClick={() => setMostrarFormSesion(!mostrarFormSesion)}>
               {mostrarFormSesion ? 'Cancelar' : '+ Nueva sesión'}
             </button>
           </div>
@@ -786,7 +788,7 @@ export default function DetalleActividadAcademicaPage() {
                   <ComboBuscable opciones={opcionesTipoEvento} value={sesionTipoEventoId} onChange={setSesionTipoEventoId} ningunaLabel="Sin definir" />
                 </div>
               </div>
-              <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardandoSesion}>
+              <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardandoSesion}>
                 {guardandoSesion ? 'Guardando...' : 'Crear sesión'}
               </button>
             </form>
@@ -830,7 +832,7 @@ export default function DetalleActividadAcademicaPage() {
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h3 style={{ fontSize: 14 }}>Evaluaciones ({evaluaciones?.length ?? 0})</h3>
-            <button className="btn-primary" onClick={() => setMostrarFormEvaluacion(!mostrarFormEvaluacion)}>
+            <button type="button" className="btn-primary" onClick={() => setMostrarFormEvaluacion(!mostrarFormEvaluacion)}>
               {mostrarFormEvaluacion ? 'Cancelar' : '+ Nueva evaluación'}
             </button>
           </div>
@@ -851,7 +853,7 @@ export default function DetalleActividadAcademicaPage() {
                   <input className="input-field" type="date" value={evalFecha} onChange={(e) => setEvalFecha(e.target.value)} />
                 </div>
               </div>
-              <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardandoEvaluacion || !evalTipoId}>
+              <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardandoEvaluacion || !evalTipoId}>
                 {guardandoEvaluacion ? 'Guardando...' : 'Crear evaluación'}
               </button>
             </form>

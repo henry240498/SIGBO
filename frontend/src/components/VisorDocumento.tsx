@@ -102,9 +102,9 @@ export function VisorDocumento({ documento, onCerrar }: { documento: Documento; 
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
             {documento.archivoUrl && (
-              <button className="btn-primary" style={{ background: '#334155', padding: '6px 12px' }} onClick={descargar}>Descargar</button>
+              <button type="button" className="btn-primary" style={{ background: '#334155', padding: '6px 12px' }} onClick={descargar}>Descargar</button>
             )}
-            <button className="btn-primary" style={{ background: '#475569', padding: '6px 12px' }} onClick={onCerrar}>Cerrar</button>
+            <button type="button" className="btn-primary" style={{ background: '#475569', padding: '6px 12px' }} onClick={onCerrar}>Cerrar</button>
           </div>
         </div>
 

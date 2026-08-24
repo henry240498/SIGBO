@@ -12,6 +12,7 @@ archivos:
   - frontend/src/app/dashboard/vehiculos/checklist-items/page.tsx
 edges:
   - [belongs_to, domain--vehiculos]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-vehiculos]
 terminos: [vehiculos, checklist, items, editar]
@@ -31,6 +32,7 @@ Pantalla /dashboard/vehiculos/checklist-items.
 ## Relaciones
 
 - `belongs_to` → [[domain--vehiculos|Vehículos]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-vehiculos|vehiculos]]
 

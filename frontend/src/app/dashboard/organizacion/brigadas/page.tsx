@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
 
@@ -14,6 +15,7 @@ interface Brigada {
 }
 
 export default function BrigadasPage() {
+  const confirmar = useConfirmacion();
   const [brigadas, setBrigadas] = useState<Brigada[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
@@ -99,7 +101,7 @@ export default function BrigadasPage() {
 
   async function darBaja(id: string) {
     setError(null);
-    if (!window.confirm('Dar de baja esta brigada?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Dar de baja esta brigada?', confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/organizacion/brigadas/${id}/baja`, { method: 'PATCH' });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
@@ -135,13 +137,13 @@ export default function BrigadasPage() {
       >
         <h2 style={{ fontSize: 16 }}>Brigadas ({brigadas?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/brigadas/exportar/excel', 'brigadas.xlsx')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/brigadas/exportar/excel', 'brigadas.xlsx')}>
             Exportar a Excel
           </button>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/brigadas/exportar/pdf', 'brigadas.pdf')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/brigadas/exportar/pdf', 'brigadas.pdf')}>
             Exportar a PDF
           </button>
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               if (mostrarForm) {
@@ -215,7 +217,7 @@ export default function BrigadasPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
             <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }}>
+          <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }}>
             {editandoId ? 'Guardar cambios' : 'Crear brigada'}
           </button>
         </form>
@@ -253,7 +255,7 @@ export default function BrigadasPage() {
                   </span>
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  <button
+                  <button type="button"
                     className="btn-primary"
                     style={{ padding: '4px 8px', fontSize: 12 }}
                     onClick={() => iniciarEdicion(b)}
@@ -261,7 +263,7 @@ export default function BrigadasPage() {
                     Editar
                   </button>
                   {b.eliminadoEn === null ? (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                       onClick={() => darBaja(b.id)}
@@ -269,7 +271,7 @@ export default function BrigadasPage() {
                       Eliminar
                     </button>
                   ) : (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#166534' }}
                       onClick={() => reactivar(b.id)}

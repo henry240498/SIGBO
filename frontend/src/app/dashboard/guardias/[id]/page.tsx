@@ -1,8 +1,11 @@
 'use client';
 
 import { Fragment, useEffect, useMemo, useState } from 'react';
+import { useEntradaConfirmada } from '@/app/components/InputProvider';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { useParams, useRouter } from 'next/navigation';
 import { obtenerSesion } from '@/lib/api';
+import { formatearJsonSeguro } from '@/lib/json-seguro';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import {
   BomberoResumen,
@@ -89,7 +92,7 @@ export default function DetalleGuardiaPage() {
 
       <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid #1f2937' }}>
         {SUBTABS.map((t) => (
-          <button
+          <button type="button"
             key={t.id}
             onClick={() => setVista(t.id)}
             style={{
@@ -127,6 +130,7 @@ function CabeceraGuardia({
   onCambiada: () => void;
   onVolver: () => void;
 }) {
+  const solicitarEntrada = useEntradaConfirmada();
   const [editando, setEditando] = useState(false);
   const [fecha, setFecha] = useState(guardia.fecha);
   const [turno, setTurno] = useState(guardia.turno);
@@ -177,12 +181,8 @@ function CabeceraGuardia({
   }
 
   async function anular() {
-    const motivo = window.prompt('Motivo de la anulacion:');
+    const motivo = await solicitarEntrada({ titulo: 'Anular guardia', mensaje: 'La anulación requiere un motivo.', etiqueta: 'Motivo', confirmar: 'Anular', peligro: true, requerida: true });
     if (motivo == null) return;
-    if (!motivo.trim()) {
-      window.alert('El motivo es obligatorio para anular una guardia.');
-      return;
-    }
     setError(null);
     try {
       await anularGuardia(guardia.id, motivo.trim());
@@ -193,7 +193,7 @@ function CabeceraGuardia({
   }
 
   async function cerrar() {
-    const observacion = window.prompt('Observacion de cierre (opcional):') ?? undefined;
+    const observacion = (await solicitarEntrada({ titulo: 'Cerrar guardia', mensaje: 'Puede registrar una observación para el cierre.', etiqueta: 'Observación', confirmar: 'Cerrar' })) ?? undefined;
     setError(null);
     try {
       await cerrarGuardia(guardia.id, observacion || undefined);
@@ -204,12 +204,8 @@ function CabeceraGuardia({
   }
 
   async function reabrir() {
-    const motivo = window.prompt('Motivo de la reapertura:');
+    const motivo = await solicitarEntrada({ titulo: 'Reabrir guardia', mensaje: 'La reapertura requiere un motivo.', etiqueta: 'Motivo', confirmar: 'Reabrir', requerida: true });
     if (motivo == null) return;
-    if (!motivo.trim()) {
-      window.alert('El motivo es obligatorio para reabrir una guardia.');
-      return;
-    }
     setError(null);
     try {
       await reabrirGuardia(guardia.id, motivo.trim());
@@ -260,7 +256,7 @@ function CabeceraGuardia({
           <input className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" disabled={guardando}>{guardando ? 'Guardando...' : 'Guardar cambios'}</button>
+          <button type="submit" className="btn-primary" disabled={guardando}>{guardando ? 'Guardando...' : 'Guardar cambios'}</button>
           <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => setEditando(false)}>
             Cancelar
           </button>
@@ -292,18 +288,18 @@ function CabeceraGuardia({
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {puedeEditar && guardia.estado !== 'ANULADA' && (
-            <button className="btn-primary" onClick={abrirEdicion}>Editar</button>
+            <button type="button" className="btn-primary" onClick={abrirEdicion}>Editar</button>
           )}
           {puedeEditar && guardia.estado !== 'ANULADA' && guardia.estado !== 'FINALIZADA' && (
-            <button className="btn-primary" style={{ background: '#166534' }} onClick={cerrar}>Cerrar guardia</button>
+            <button type="button" className="btn-primary" style={{ background: '#166534' }} onClick={cerrar}>Cerrar guardia</button>
           )}
           {puedeEditar && guardia.estado === 'FINALIZADA' && (
-            <button className="btn-primary" style={{ background: '#1d4ed8' }} onClick={reabrir}>Reabrir</button>
+            <button type="button" className="btn-primary" style={{ background: '#1d4ed8' }} onClick={reabrir}>Reabrir</button>
           )}
           {puedeAnular && guardia.estado !== 'ANULADA' && (
-            <button className="btn-primary" style={{ background: '#7f1d1d' }} onClick={anular}>Anular</button>
+            <button type="button" className="btn-primary" style={{ background: '#7f1d1d' }} onClick={anular}>Anular</button>
           )}
-          <button className="btn-primary" style={{ background: '#475569' }} onClick={onVolver}>
+          <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={onVolver}>
             Volver
           </button>
         </div>
@@ -315,6 +311,7 @@ function CabeceraGuardia({
 const COLOR_TIPO_PARTICIPACION: Record<string, string> = { TITULAR: '#334155', REFUERZO: '#1d4ed8', REEMPLAZO: '#854d0e' };
 
 function TabPersonal({ guardiaId }: { guardiaId: string }) {
+  const confirmar = useConfirmacion();
   const [asignaciones, setAsignaciones] = useState<AsignacionGuardia[] | null>(null);
   const [bomberos, setBomberos] = useState<BomberoResumen[]>([]);
   const [tiposBombero, setTiposBombero] = useState<TipoBombero[]>([]);
@@ -401,7 +398,7 @@ function TabPersonal({ guardiaId }: { guardiaId: string }) {
   }
 
   async function quitar(asignacionId: string) {
-    if (!window.confirm('Quitar esta asignacion?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Quitar esta asignacion?', confirmar: 'Continuar', peligro: true })) return;
     setError(null);
     try {
       await quitarAsignacionGuardia(guardiaId, asignacionId);
@@ -500,7 +497,7 @@ function TabPersonal({ guardiaId }: { guardiaId: string }) {
                 <input className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
               </div>
             )}
-            <button className="btn-primary" onClick={asignar} disabled={!bomberoSeleccionado}>
+            <button type="button" className="btn-primary" onClick={asignar} disabled={!bomberoSeleccionado}>
               Asignar
             </button>
           </div>
@@ -539,15 +536,15 @@ function TabPersonal({ guardiaId }: { guardiaId: string }) {
                     </td>
                     {puedeEditar && (
                       <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                        <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => abrirHorario(a)}>
+                        <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => abrirHorario(a)}>
                           Horario/Presencia
                         </button>
                         {puedeReemplazar && a.estado !== 'REEMPLAZADO' && (
-                          <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#1d4ed8' }} onClick={() => abrirReemplazo(a)}>
+                          <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#1d4ed8' }} onClick={() => abrirReemplazo(a)}>
                             Reemplazar
                           </button>
                         )}
-                        <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }} onClick={() => quitar(a.id)}>
+                        <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }} onClick={() => quitar(a.id)}>
                           Quitar
                         </button>
                       </td>
@@ -570,8 +567,8 @@ function TabPersonal({ guardiaId }: { guardiaId: string }) {
                             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo (opcional)</label>
                             <input className="input-field" value={motivoReemplazo} onChange={(e) => setMotivoReemplazo(e.target.value)} />
                           </div>
-                          <button className="btn-primary" onClick={() => confirmarReemplazo(a.id)} disabled={!bomberoReemplazoId}>Confirmar reemplazo</button>
-                          <button style={{ background: '#475569', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 14px' }} onClick={() => setReemplazandoId(null)}>Cancelar</button>
+                          <button type="button" className="btn-primary" onClick={() => confirmarReemplazo(a.id)} disabled={!bomberoReemplazoId}>Confirmar reemplazo</button>
+                          <button type="button" style={{ background: '#475569', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 14px' }} onClick={() => setReemplazandoId(null)}>Cancelar</button>
                         </div>
                         {a.rol && (
                           <p style={{ fontSize: 11, color: '#94a3b8', marginTop: 6 }}>
@@ -604,8 +601,8 @@ function TabPersonal({ guardiaId }: { guardiaId: string }) {
                             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo</label>
                             <input className="input-field" value={motivoPresencia} onChange={(e) => setMotivoPresencia(e.target.value)} />
                           </div>
-                          <button className="btn-primary" onClick={() => guardarHorario(a.id)}>Guardar</button>
-                          <button style={{ background: '#475569', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 14px' }} onClick={() => setEditandoHorario(null)}>Cancelar</button>
+                          <button type="button" className="btn-primary" onClick={() => guardarHorario(a.id)}>Guardar</button>
+                          <button type="button" style={{ background: '#475569', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 14px' }} onClick={() => setEditandoHorario(null)}>Cancelar</button>
                         </div>
                       </td>
                     </tr>
@@ -674,7 +671,7 @@ function TabPernoctes({ guardiaId, fecha }: { guardiaId: string; fecha: string }
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo (opcional)</label>
             <input className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
           </div>
-          <button className="btn-primary" onClick={agregar} disabled={!bomberoId}>Registrar pernocte</button>
+          <button type="button" className="btn-primary" onClick={agregar} disabled={!bomberoId}>Registrar pernocte</button>
         </div>
       )}
       {pernoctes && pernoctes.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin pernoctantes registrados.</p>}
@@ -756,7 +753,7 @@ function TabEstacion({ guardiaId }: { guardiaId: string }) {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
             <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
-          <button className="btn-primary" onClick={agregar} disabled={!sector}>Registrar</button>
+          <button type="button" className="btn-primary" onClick={agregar} disabled={!sector}>Registrar</button>
         </div>
       )}
       {inspecciones && inspecciones.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin inspecciones registradas.</p>}
@@ -816,7 +813,7 @@ function TabNovedades({ guardiaId }: { guardiaId: string }) {
       {puedeEditar && (
         <div className="card" style={{ display: 'flex', gap: 10 }}>
           <input className="input-field" style={{ flex: 1 }} value={texto} onChange={(e) => setTexto(e.target.value)} placeholder="Nueva novedad..." />
-          <button className="btn-primary" onClick={agregar} disabled={!texto.trim()}>Agregar</button>
+          <button type="button" className="btn-primary" onClick={agregar} disabled={!texto.trim()}>Agregar</button>
         </div>
       )}
       {novedades && novedades.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin novedades registradas.</p>}
@@ -835,6 +832,7 @@ function TabNovedades({ guardiaId }: { guardiaId: string }) {
 }
 
 function TabMoviles({ guardiaId }: { guardiaId: string }) {
+  const solicitarEntrada = useEntradaConfirmada();
   const [moviles, setMoviles] = useState<MovilARevisar[] | null>(null);
   const [inspecciones, setInspecciones] = useState<InspeccionMovil[] | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -930,7 +928,7 @@ function TabMoviles({ guardiaId }: { guardiaId: string }) {
                       </td>
                       {puedeEditar && (
                         <td style={{ padding: '6px 4px', display: 'flex', gap: 6 }}>
-                          <button
+                          <button type="button"
                             className="btn-primary"
                             style={{ padding: '4px 8px', fontSize: 12, background: '#166534' }}
                             disabled={guardandoId === clave}
@@ -938,12 +936,12 @@ function TabMoviles({ guardiaId }: { guardiaId: string }) {
                           >
                             OK
                           </button>
-                          <button
+                          <button type="button"
                             className="btn-primary"
                             style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                             disabled={guardandoId === clave}
-                            onClick={() => {
-                              const obs = window.prompt('Observacion (obligatoria para NO OK):');
+                            onClick={async () => {
+                              const obs = await solicitarEntrada({ titulo: 'Registrar ítem no conforme', mensaje: 'La observación es obligatoria para marcar NO OK.', etiqueta: 'Observación', confirmar: 'Registrar', peligro: true, requerida: true });
                               if (!obs || !obs.trim()) return;
                               setObservacion(obs.trim());
                               registrar(vehiculo.id, item.id, 'NO_OK');
@@ -1048,7 +1046,7 @@ function TabBitacora({ guardiaId }: { guardiaId: string }) {
         <div className="card">
           <h3 style={{ fontSize: 14, marginBottom: 10 }}>Resumen de cierre</h3>
           <pre style={{ fontSize: 12, whiteSpace: 'pre-wrap', color: '#94a3b8' }}>
-            {JSON.stringify(JSON.parse(bitacora.guardia.cierreResumen), null, 2)}
+            {formatearJsonSeguro(bitacora.guardia.cierreResumen)}
           </pre>
         </div>
       )}

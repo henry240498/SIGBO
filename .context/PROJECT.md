@@ -41,9 +41,9 @@ cd frontend; npm run dev          # http://localhost:3000
 O `start-sigbo.ps1`, que hace las dos cosas y abre el navegador. Los logs quedan en
 `logs/`.
 
-**Trampa conocida:** ese script no reinicia servicios que ya escuchan. Si tu cambio "no
-surte efecto", revisá [[error--start-script-no-reinicia-servicios]] antes de depurar
-cualquier otra cosa.
+El iniciador recompila y reinicia solo procesos de SIGBO previamente detectados en los
+puertos 3000/3001. Si uno pertenece a otro proyecto, se detiene con un mensaje para
+evitar terminarlo accidentalmente.
 
 - Swagger: `http://localhost:3001/api/docs`
 - Credenciales de desarrollo: `docs/CREDENCIALES-Y-ROLES.md` (7 roles, 7 usuarios)

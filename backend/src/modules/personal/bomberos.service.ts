@@ -2,7 +2,7 @@ import { BadRequestException, ConflictException, Injectable, NotFoundException }
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Bombero, HistorialCodigo, HistorialInstitucional } from '../../shared/entities';
-import { borrarImagenSiExiste, guardarImagen, CARPETA_FIRMAS_BOMBERO } from '../../shared/utils/almacenamiento';
+import { borrarImagenSiExiste, guardarImagenRestringida, leerBufferRestringido, mimeImagenPorReferencia, CARPETA_FIRMAS_BOMBERO } from '../../shared/utils/almacenamiento';
 import { AuditoriaService } from '../seguridad/auditoria.service';
 import { CreateBomberoDto } from './dto/create-bombero.dto';
 import { UpdateBomberoDto } from './dto/update-bombero.dto';
@@ -276,13 +276,25 @@ export class BomberosService {
     const anterior = await this.findOne(id);
     const rutaAnterior = anterior.firmaDigitalUrl;
 
-    const nuevaRuta = await guardarImagen(file, CARPETA_FIRMAS_BOMBERO);
+    const nuevaRuta = await guardarImagenRestringida(file, CARPETA_FIRMAS_BOMBERO);
     await this.bomberoRepo.update(id, { firmaDigitalUrl: nuevaRuta, actualizadoPor: actorId });
     await borrarImagenSiExiste(rutaAnterior, CARPETA_FIRMAS_BOMBERO);
 
     const actualizado = await this.findOne(id);
     await this.registrarAuditoria(actorId, 'FIRMA_DIGITAL_CARGADA', id, anterior, actualizado, ip);
     return actualizado;
+  }
+
+  async obtenerFirmaDigital(id: string): Promise<{ buffer: Buffer; mimeType: string }> {
+    const bombero = await this.findOne(id);
+    if (!bombero.firmaDigitalUrl) throw new NotFoundException('Este bombero no tiene una firma digital registrada');
+    const mimeType = mimeImagenPorReferencia(bombero.firmaDigitalUrl);
+    if (!mimeType) throw new NotFoundException('La firma digital tiene un formato no disponible');
+    try {
+      return { buffer: await leerBufferRestringido(bombero.firmaDigitalUrl, CARPETA_FIRMAS_BOMBERO), mimeType };
+    } catch {
+      throw new NotFoundException('El archivo de firma digital no está disponible');
+    }
   }
 
   async eliminarFirmaDigital(id: string, actorId: string, ip?: string) {

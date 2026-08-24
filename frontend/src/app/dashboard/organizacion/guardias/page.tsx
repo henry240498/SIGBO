@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
 
@@ -17,6 +18,7 @@ interface TipoGuardia {
 }
 
 export default function TiposGuardiaPage() {
+  const confirmar = useConfirmacion();
   const [tiposGuardia, setTiposGuardia] = useState<TipoGuardia[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
@@ -113,7 +115,7 @@ export default function TiposGuardiaPage() {
 
   async function darBaja(id: string) {
     setError(null);
-    if (!window.confirm('Dar de baja este tipo de guardia?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Dar de baja este tipo de guardia?', confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/organizacion/tipos-guardia/${id}/baja`, { method: 'PATCH' });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
@@ -141,13 +143,13 @@ export default function TiposGuardiaPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
         <h2 style={{ fontSize: 16 }}>Tipos de Guardia ({tiposGuardia?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/tipos-guardia/exportar/excel', 'guardias.xlsx')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/tipos-guardia/exportar/excel', 'guardias.xlsx')}>
             Exportar a Excel
           </button>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/tipos-guardia/exportar/pdf', 'guardias.pdf')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/tipos-guardia/exportar/pdf', 'guardias.pdf')}>
             Exportar a PDF
           </button>
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               if (mostrarForm) {
@@ -218,7 +220,7 @@ export default function TiposGuardiaPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
             <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }}>
+          <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }}>
             {editandoId ? 'Guardar cambios' : 'Crear tipo de guardia'}
           </button>
         </form>
@@ -247,11 +249,11 @@ export default function TiposGuardiaPage() {
                   </span>
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(tg)}>
+                  <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(tg)}>
                     Editar
                   </button>
                   {tg.eliminadoEn === null ? (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                       onClick={() => darBaja(tg.id)}
@@ -259,7 +261,7 @@ export default function TiposGuardiaPage() {
                       Eliminar
                     </button>
                   ) : (
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => reactivar(tg.id)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => reactivar(tg.id)}>
                       Reactivar
                     </button>
                   )}

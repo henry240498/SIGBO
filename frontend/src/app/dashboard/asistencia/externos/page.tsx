@@ -85,7 +85,7 @@ export default function ExternosPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Personas Externas ({externos?.length ?? 0})</h2>
         {puedeCrear && (
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               if (mostrarForm) {
@@ -151,7 +151,7 @@ export default function ExternosPage() {
               <input className="input-field" value={form.observacion} onChange={(e) => setForm({ ...form, observacion: e.target.value })} />
             </div>
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear'}
           </button>
         </form>
@@ -180,7 +180,7 @@ export default function ExternosPage() {
                 <td style={{ padding: '6px 4px' }}>{x.institucionProcedencia ?? ''}</td>
                 {puedeEditar && (
                   <td style={{ padding: '6px 4px' }}>
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(x)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(x)}>
                       Editar
                     </button>
                   </td>

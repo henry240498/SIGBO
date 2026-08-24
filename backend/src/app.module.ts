@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { CsrfMiddleware } from './modules/auth/csrf.middleware';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from './core/database/data-source-options';
@@ -19,6 +20,7 @@ import { DepositoModule } from './modules/deposito/deposito.module';
 import { FinanzasModule } from './modules/finanzas/finanzas.module';
 import { DocumentosModule } from './modules/documentos/documentos.module';
 import { IaModule } from './modules/ia/ia.module';
+import { SaludModule } from './modules/salud/salud.module';
 
 @Module({
   imports: [
@@ -41,6 +43,11 @@ import { IaModule } from './modules/ia/ia.module';
     FinanzasModule,
     DocumentosModule,
     IaModule,
+    SaludModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(CsrfMiddleware).forRoutes('*');
+  }
+}

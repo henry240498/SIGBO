@@ -1,11 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { obtenerSesion } from '@/lib/api';
 import { Catalogo, TipoBombero, cargarCatalogo, cargarTiposBombero } from '@/lib/personal';
 import { ROLES_GUARDIA_BASE, RequisitoRolGuardia, cargarRequisitosRol, crearRequisitoRol, eliminarRequisitoRol, toggleActivoRequisito } from '@/lib/guardias';
 
 export default function RequisitosRolPage() {
+  const confirmar = useConfirmacion();
   const [requisitos, setRequisitos] = useState<RequisitoRolGuardia[] | null>(null);
   const [cargos, setCargos] = useState<Catalogo[]>([]);
   const [rangos, setRangos] = useState<Catalogo[]>([]);
@@ -73,7 +75,7 @@ export default function RequisitosRolPage() {
   }
 
   async function eliminar(id: string) {
-    if (!window.confirm('Eliminar este requisito?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Eliminar este requisito?', confirmar: 'Continuar', peligro: true })) return;
     try {
       await eliminarRequisitoRol(id);
       await cargar();
@@ -134,7 +136,7 @@ export default function RequisitosRolPage() {
               </select>
             </div>
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }}>Agregar requisito</button>
+          <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }}>Agregar requisito</button>
         </form>
       )}
 
@@ -163,10 +165,10 @@ export default function RequisitosRolPage() {
                 </td>
                 {puedeGestionar && (
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6 }}>
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => toggle(r)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => toggle(r)}>
                       {r.activo ? 'Desactivar' : 'Activar'}
                     </button>
-                    <button
+                    <button type="button"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d', color: '#fff', border: 'none', borderRadius: 6 }}
                       onClick={() => eliminar(r.id)}
                     >

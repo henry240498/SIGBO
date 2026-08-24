@@ -299,7 +299,7 @@ export default function DocumentosInstitucionalesPage() {
         </section>
 
         {puedeConfigurar && (
-          <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }} onClick={guardar}>
+          <button type="button" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }} onClick={guardar}>
             {guardando ? 'Guardando...' : 'Guardar configuracion'}
           </button>
         )}
@@ -506,7 +506,7 @@ function SeccionNumeracion({
           </div>
 
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn-primary" disabled={guardando || !tipoDocumentoId}>{guardando ? 'Guardando...' : 'Guardar numeracion'}</button>
+            <button type="button" className="btn-primary" disabled={guardando || !tipoDocumentoId}>{guardando ? 'Guardando...' : 'Guardar numeracion'}</button>
             <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => setMostrarForm(false)}>Cancelar</button>
           </div>
         </form>

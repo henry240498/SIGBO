@@ -28,7 +28,7 @@ Logica de negocio de perfil (modulo seguridad).
 
 ## Metodos
 
-`puedeEditar()` · `obtenerPerfil()` · `actualizarPerfilPropio()` · `actualizarPerfilComoAdmin()` · `actualizarFotoPropia()` · `actualizarFotoComoAdmin()`
+`puedeEditar()` · `obtenerPerfil()` · `actualizarPerfilPropio()` · `actualizarPerfilComoAdmin()` · `actualizarFotoPropia()` · `actualizarFotoComoAdmin()` · `obtenerFoto()`
 
 ## Archivos
 

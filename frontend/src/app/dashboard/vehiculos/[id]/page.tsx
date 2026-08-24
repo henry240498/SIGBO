@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { useParams } from 'next/navigation';
 import { obtenerSesion } from '@/lib/api';
 import {
@@ -69,7 +70,7 @@ export default function VehiculoDetallePage() {
 
       <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid #1f2937' }}>
         {SUBTABS.map((t) => (
-          <button
+          <button type="button"
             key={t.id}
             onClick={() => setVista(t.id)}
             style={{
@@ -97,6 +98,7 @@ export default function VehiculoDetallePage() {
 }
 
 function TabDatos({ vehiculo, puedeEditar, onCambio }: { vehiculo: Vehiculo; puedeEditar: boolean; onCambio: () => void }) {
+  const confirmar = useConfirmacion();
   const [editando, setEditando] = useState(false);
   const [campos, setCampos] = useState(vehiculo);
   const [guardando, setGuardando] = useState(false);
@@ -147,7 +149,7 @@ function TabDatos({ vehiculo, puedeEditar, onCambio }: { vehiculo: Vehiculo; pue
   }
 
   async function baja() {
-    if (!window.confirm('Dar de baja este movil?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Dar de baja este movil?', confirmar: 'Continuar', peligro: true })) return;
     try {
       await darBajaVehiculo(vehiculo.id, motivoBaja || undefined);
       onCambio();
@@ -184,7 +186,7 @@ function TabDatos({ vehiculo, puedeEditar, onCambio }: { vehiculo: Vehiculo; pue
         )}
         {puedeEditar && (
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn-primary" onClick={() => setEditando(true)}>Editar datos</button>
+            <button type="button" className="btn-primary" onClick={() => setEditando(true)}>Editar datos</button>
             {vehiculo.estado !== 'BAJA' && (
               <>
                 <input
@@ -194,7 +196,7 @@ function TabDatos({ vehiculo, puedeEditar, onCambio }: { vehiculo: Vehiculo; pue
                   value={motivoBaja}
                   onChange={(e) => setMotivoBaja(e.target.value)}
                 />
-                <button style={{ background: '#7f1d1d', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 14px' }} onClick={baja}>
+                <button type="button" style={{ background: '#7f1d1d', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 14px' }} onClick={baja}>
                   Dar de baja
                 </button>
               </>
@@ -231,7 +233,7 @@ function TabDatos({ vehiculo, puedeEditar, onCambio }: { vehiculo: Vehiculo; pue
         <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Seguro vencimiento</label><input className="input-field" type="date" value={campo('seguroVencimiento')} onChange={(e) => setCampos({ ...campos, seguroVencimiento: e.target.value })} /></div>
       </div>
       <div style={{ display: 'flex', gap: 8 }}>
-        <button className="btn-primary" disabled={guardando}>{guardando ? 'Guardando...' : 'Guardar cambios'}</button>
+        <button type="submit" className="btn-primary" disabled={guardando}>{guardando ? 'Guardando...' : 'Guardar cambios'}</button>
         <button type="button" style={{ background: '#475569', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 14px' }} onClick={() => setEditando(false)}>Cancelar</button>
       </div>
     </form>
@@ -279,7 +281,7 @@ function TabMantenimientos({ vehiculoId, puedeEditar }: { vehiculoId: string; pu
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {puedeEditar && (
-        <button className="btn-primary" style={{ alignSelf: 'flex-start' }} onClick={() => setMostrarForm((v) => !v)}>
+        <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} onClick={() => setMostrarForm((v) => !v)}>
           {mostrarForm ? 'Cancelar' : 'Registrar mantenimiento'}
         </button>
       )}
@@ -297,7 +299,7 @@ function TabMantenimientos({ vehiculoId, puedeEditar }: { vehiculoId: string; pu
             <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Kilometraje</label><input className="input-field" type="number" value={kilometraje} onChange={(e) => setKilometraje(e.target.value)} /></div>
           </div>
           <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label><input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required /></div>
-          <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>{guardando ? 'Guardando...' : 'Guardar'}</button>
+          <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>{guardando ? 'Guardando...' : 'Guardar'}</button>
         </form>
       )}
       {items && items.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin mantenimientos registrados.</p>}
@@ -360,7 +362,7 @@ function TabCombustible({ vehiculoId, puedeEditar }: { vehiculoId: string; puede
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {puedeEditar && (
-        <button className="btn-primary" style={{ alignSelf: 'flex-start' }} onClick={() => setMostrarForm((v) => !v)}>
+        <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} onClick={() => setMostrarForm((v) => !v)}>
           {mostrarForm ? 'Cancelar' : 'Registrar carga de combustible'}
         </button>
       )}
@@ -373,7 +375,7 @@ function TabCombustible({ vehiculoId, puedeEditar }: { vehiculoId: string; puede
             <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Kilometraje actual</label><input className="input-field" type="number" value={kilometrajeActual} onChange={(e) => setKilometrajeActual(e.target.value)} required /></div>
             <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Costo</label><input className="input-field" type="number" value={costo} onChange={(e) => setCosto(e.target.value)} /></div>
           </div>
-          <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>{guardando ? 'Guardando...' : 'Guardar'}</button>
+          <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>{guardando ? 'Guardando...' : 'Guardar'}</button>
         </form>
       )}
       {items && items.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin cargas de combustible registradas.</p>}

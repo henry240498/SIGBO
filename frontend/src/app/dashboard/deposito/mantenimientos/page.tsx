@@ -70,7 +70,7 @@ function FilaFinalizar({ mantenimiento, ubicaciones, onFinalizado }: { mantenimi
         <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Observacion</label>
         <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
       </div>
-      <button className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} onClick={confirmar} disabled={guardando}>
+      <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} onClick={confirmar} disabled={guardando}>
         {guardando ? 'Guardando...' : 'Finalizar'}
       </button>
     </div>
@@ -182,7 +182,7 @@ export default function MantenimientosDepositoPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Mantenimientos ({mantenimientos?.length ?? 0})</h2>
         {puedeRegistrar && (
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               limpiarForm();
@@ -263,7 +263,7 @@ export default function MantenimientosDepositoPage() {
             <input className="input-field" type="date" style={{ maxWidth: 220 }} value={fechaEstimadaSalida} onChange={(e) => setFechaEstimadaSalida(e.target.value)} />
           </div>
 
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Registrar ingreso'}
           </button>
         </form>
@@ -297,7 +297,7 @@ export default function MantenimientosDepositoPage() {
                   </td>
                   <td style={{ padding: '6px 4px' }}>
                     {puedeRegistrar && m.estado === 'EN_PROCESO' && (
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => setExpandidoId(expandidoId === m.id ? null : m.id)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => setExpandidoId(expandidoId === m.id ? null : m.id)}>
                         {expandidoId === m.id ? 'Cerrar' : 'Finalizar'}
                       </button>
                     )}

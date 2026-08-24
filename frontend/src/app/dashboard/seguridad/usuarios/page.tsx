@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useEntradaConfirmada } from '@/app/components/InputProvider';
 import Link from 'next/link';
 import { apiFetch } from '@/lib/api';
 
@@ -37,6 +38,7 @@ interface Bombero {
 const ESTADOS = ['ACTIVO', 'INACTIVO', 'BLOQUEADO', 'PENDIENTE_VERIFICACION'];
 
 export default function UsuariosPage() {
+  const solicitarEntrada = useEntradaConfirmada();
   const [usuarios, setUsuarios] = useState<Usuario[] | null>(null);
   const [roles, setRoles] = useState<Rol[]>([]);
   const [bomberos, setBomberos] = useState<Bombero[]>([]);
@@ -127,7 +129,7 @@ export default function UsuariosPage() {
 
   async function darBaja(id: string) {
     setError(null);
-    const motivo = window.prompt('Motivo de la baja (opcional):') ?? undefined;
+    const motivo = (await solicitarEntrada({ titulo: 'Dar de baja usuario', mensaje: 'Puede registrar un motivo para la baja.', etiqueta: 'Motivo', confirmar: 'Continuar', peligro: true })) ?? undefined;
     const res = await apiFetch(`/seguridad/usuarios/${id}/baja`, {
       method: 'PATCH',
       body: JSON.stringify({ motivo }),
@@ -141,7 +143,7 @@ export default function UsuariosPage() {
 
   async function resetearPassword(id: string) {
     setError(null);
-    const nueva = window.prompt('Nueva contrasena temporal (min 8, mayuscula, minuscula, numero y especial):');
+    const nueva = await solicitarEntrada({ titulo: 'Restablecer contraseña', mensaje: 'Indique una contraseña temporal con al menos 8 caracteres, mayúscula, minúscula, número y símbolo.', etiqueta: 'Contraseña temporal', confirmar: 'Restablecer', tipo: 'password', requerida: true });
     if (!nueva) return;
     const res = await apiFetch(`/seguridad/usuarios/${id}/password`, {
       method: 'PATCH',
@@ -159,7 +161,7 @@ export default function UsuariosPage() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Usuarios ({usuarios?.length ?? 0})</h2>
-        <button className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
+        <button type="button" className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
           {mostrarForm ? 'Cancelar' : 'Nuevo usuario'}
         </button>
       </div>
@@ -230,7 +232,7 @@ export default function UsuariosPage() {
             </div>
           </div>
 
-          <button className="btn-primary" disabled={creando} style={{ alignSelf: 'flex-start' }}>
+          <button type="submit" className="btn-primary" disabled={creando} style={{ alignSelf: 'flex-start' }}>
             {creando ? 'Creando...' : 'Crear usuario'}
           </button>
         </form>
@@ -274,13 +276,13 @@ export default function UsuariosPage() {
                     ))}
                   </td>
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => bloquear(u.id, !bloqueado)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => bloquear(u.id, !bloqueado)}>
                       {bloqueado ? 'Desbloquear' : 'Bloquear'}
                     </button>
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => resetearPassword(u.id)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => resetearPassword(u.id)}>
                       Resetear password
                     </button>
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }} onClick={() => darBaja(u.id)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }} onClick={() => darBaja(u.id)}>
                       Dar de baja
                     </button>
                   </td>

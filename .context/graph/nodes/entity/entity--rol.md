@@ -19,13 +19,13 @@ terminos: [rol, roles, seguridad]
 Entidad Rol, persistida en seguridad.roles.
 
 - **Tabla:** [[table--seguridad-roles|seguridad.roles]]
-- **Columnas mapeadas:** 13
+- **Columnas mapeadas:** 14
 
 ## Donde se usa
 
 - **Pantallas:** `/dashboard/mi-perfil`, `/dashboard/organizacion`, `/dashboard/seguridad`, `/dashboard/seguridad/roles`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
 - **Endpoints:** AuthController, DashboardController, DashboardController, MeController, RolesController, UsuariosController
-- **Servicios:** AuthService, DashboardService, RolesService, UsuariosService
+- **Servicios:** AuthService, DashboardService, PolicyEngineService, RolesService, UsuariosService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -43,6 +43,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 
 - [[service--auth-auth|AuthService]] `uses` →
 - [[service--seguridad-dashboard|DashboardService]] `uses` →
+- [[service--seguridad-policy-engine|PolicyEngineService]] `uses` →
 - [[service--seguridad-roles|RolesService]] `uses` →
 - [[service--seguridad-usuarios|UsuariosService]] `uses` →
 

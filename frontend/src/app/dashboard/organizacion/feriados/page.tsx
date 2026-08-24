@@ -1,6 +1,7 @@
 'use client';
 
 import { Fragment, useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { obtenerSesion } from '@/lib/api';
 import {
   Feriado,
@@ -14,6 +15,7 @@ import {
 } from '@/lib/guardias';
 
 export default function FeriadosPage() {
+  const confirmar = useConfirmacion();
   const [feriados, setFeriados] = useState<Feriado[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
@@ -101,7 +103,7 @@ export default function FeriadosPage() {
   }
 
   async function eliminar(id: string) {
-    if (!window.confirm('Desactivar este feriado? No se elimina fisicamente, se conserva el historico.')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Desactivar este feriado? No se elimina fisicamente, se conserva el historico.', confirmar: 'Continuar', peligro: true })) return;
     setError(null);
     try {
       await eliminarFeriado(id);
@@ -143,7 +145,7 @@ export default function FeriadosPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10 }}>
         <h2 style={{ fontSize: 16 }}>Feriados ({feriados?.length ?? 0})</h2>
         {puedeCrear && (
-          <button className="btn-primary" onClick={() => (mostrarForm ? cancelar() : setMostrarForm(true))}>
+          <button type="button" className="btn-primary" onClick={() => (mostrarForm ? cancelar() : setMostrarForm(true))}>
             {mostrarForm ? 'Cancelar' : 'Nuevo feriado'}
           </button>
         )}
@@ -199,7 +201,7 @@ export default function FeriadosPage() {
             <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn-primary" disabled={guardando}>{guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear feriado'}</button>
+            <button type="submit" className="btn-primary" disabled={guardando}>{guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear feriado'}</button>
             <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={cancelar}>Cancelar</button>
           </div>
         </form>
@@ -235,12 +237,12 @@ export default function FeriadosPage() {
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                     {puedeEditar && f.activo && (
                       <>
-                        <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(f)}>Editar</button>
-                        <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#1d4ed8' }} onClick={() => abrirMover(f)}>Mover</button>
+                        <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(f)}>Editar</button>
+                        <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#1d4ed8' }} onClick={() => abrirMover(f)}>Mover</button>
                       </>
                     )}
                     {puedeEliminar && f.activo && (
-                      <button style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d', color: '#fff', border: 'none', borderRadius: 6 }} onClick={() => eliminar(f.id)}>Desactivar</button>
+                      <button type="button" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d', color: '#fff', border: 'none', borderRadius: 6 }} onClick={() => eliminar(f.id)}>Desactivar</button>
                     )}
                   </td>
                 </tr>
@@ -257,7 +259,7 @@ export default function FeriadosPage() {
                             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo del traslado</label>
                             <input className="input-field" value={motivoTraslado} onChange={(e) => setMotivoTraslado(e.target.value)} />
                           </div>
-                          <button className="btn-primary" onClick={() => confirmarMover(f.id)}>Confirmar traslado</button>
+                          <button type="button" className="btn-primary" onClick={() => confirmarMover(f.id)}>Confirmar traslado</button>
                           <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => setMoviendoId(null)}>Cerrar</button>
                         </div>
                         {resultadoTraslado && (

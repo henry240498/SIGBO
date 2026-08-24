@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import { obtenerSesion } from '@/lib/api';
+import { useEntradaConfirmada } from '@/app/components/InputProvider';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { cargarBomberos, BomberoResumen } from '@/lib/personal';
 import { Caja, CuentaBancaria, Cuota, anularCuota, cargarCajas, cargarCuentasBancarias, cargarCuotas, crearCuota, exonerarCuota, pagarCuota } from '@/lib/finanzas';
@@ -66,7 +67,7 @@ function FilaPago({ cuota, cajas, cuentas, onPagada }: { cuota: Cuota; cajas: Ca
       ) : (
         <ComboBuscable opciones={opcionesCuenta} value={cuentaBancariaId} onChange={setCuentaBancariaId} ningunaLabel="-- cuenta --" />
       )}
-      <button className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} disabled={guardando || !fecha || (!cajaId && !cuentaBancariaId)} onClick={confirmar}>
+      <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} disabled={guardando || !fecha || (!cajaId && !cuentaBancariaId)} onClick={confirmar}>
         {guardando ? 'Guardando...' : 'Confirmar pago'}
       </button>
     </div>
@@ -74,6 +75,7 @@ function FilaPago({ cuota, cajas, cuentas, onPagada }: { cuota: Cuota; cajas: Ca
 }
 
 export default function CuotasPage() {
+  const solicitarEntrada = useEntradaConfirmada();
   const [cuotas, setCuotas] = useState<Cuota[] | null>(null);
   const [bomberos, setBomberos] = useState<BomberoResumen[]>([]);
   const [cajas, setCajas] = useState<Caja[]>([]);
@@ -144,7 +146,7 @@ export default function CuotasPage() {
   }
 
   async function anular(c: Cuota) {
-    const motivo = window.prompt('Motivo de la anulacion:');
+    const motivo = await solicitarEntrada({ titulo: 'Anular cuota', mensaje: 'Indique el motivo de la anulación.', etiqueta: 'Motivo', confirmar: 'Anular', requerida: true, peligro: true });
     if (!motivo) return;
     try {
       await anularCuota(c.id, motivo);
@@ -156,7 +158,7 @@ export default function CuotasPage() {
   }
 
   async function exonerar(c: Cuota) {
-    const motivo = window.prompt('Motivo de la exoneracion:');
+    const motivo = await solicitarEntrada({ titulo: 'Exonerar cuota', mensaje: 'Indique el motivo de la exoneración.', etiqueta: 'Motivo', confirmar: 'Exonerar', requerida: true });
     if (!motivo) return;
     try {
       await exonerarCuota(c.id, motivo);
@@ -172,7 +174,7 @@ export default function CuotasPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Cuotas ({cuotas?.length ?? 0})</h2>
         {puedeCrear && (
-          <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Nueva cuota'}
           </button>
         )}
@@ -227,7 +229,7 @@ export default function CuotasPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
             <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Crear cuota'}
           </button>
         </form>
@@ -259,17 +261,17 @@ export default function CuotasPage() {
                   </td>
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                     {puedeCrear && (c.estado === 'PENDIENTE' || c.estado === 'PARCIAL') && (
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => setExpandidaId(expandidaId === c.id ? null : c.id)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => setExpandidaId(expandidaId === c.id ? null : c.id)}>
                         {expandidaId === c.id ? 'Cerrar' : 'Pagar'}
                       </button>
                     )}
                     {puedeEditar && c.estado === 'PENDIENTE' && (
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#475569' }} onClick={() => exonerar(c)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#475569' }} onClick={() => exonerar(c)}>
                         Exonerar
                       </button>
                     )}
                     {puedeAnular && c.estado === 'PENDIENTE' && (
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }} onClick={() => anular(c)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }} onClick={() => anular(c)}>
                         Anular
                       </button>
                     )}

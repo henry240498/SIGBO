@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
 
@@ -22,6 +23,7 @@ function truncar(texto: string | null, largo = 60) {
 }
 
 export default function EspecialidadesPage() {
+  const confirmar = useConfirmacion();
   const [especialidades, setEspecialidades] = useState<Especialidad[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
@@ -118,7 +120,7 @@ export default function EspecialidadesPage() {
 
   async function darBaja(id: string) {
     setError(null);
-    if (!window.confirm('Dar de baja esta especialidad?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Dar de baja esta especialidad?', confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/organizacion/especialidades/${id}/baja`, { method: 'PATCH' });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
@@ -146,13 +148,13 @@ export default function EspecialidadesPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
         <h2 style={{ fontSize: 16 }}>Especialidades ({especialidades?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/especialidades/exportar/excel', 'especialidades.xlsx')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/especialidades/exportar/excel', 'especialidades.xlsx')}>
             Exportar a Excel
           </button>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/especialidades/exportar/pdf', 'especialidades.pdf')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/especialidades/exportar/pdf', 'especialidades.pdf')}>
             Exportar a PDF
           </button>
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               if (mostrarForm) {
@@ -222,7 +224,7 @@ export default function EspecialidadesPage() {
               onChange={(e) => setRequisitos(e.target.value)}
             />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }}>
+          <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }}>
             {editandoId ? 'Guardar cambios' : 'Crear especialidad'}
           </button>
         </form>
@@ -251,11 +253,11 @@ export default function EspecialidadesPage() {
                   </span>
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(e)}>
+                  <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(e)}>
                     Editar
                   </button>
                   {e.eliminadoEn === null ? (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                       onClick={() => darBaja(e.id)}
@@ -263,7 +265,7 @@ export default function EspecialidadesPage() {
                       Eliminar
                     </button>
                   ) : (
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => reactivar(e.id)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => reactivar(e.id)}>
                       Reactivar
                     </button>
                   )}

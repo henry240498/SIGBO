@@ -27,6 +27,7 @@ Superficie HTTP de perfil bajo /api/v1/seguridad.
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
 | GET | `/seguridad/mi-perfil` | — |
+| GET | `/seguridad/mi-perfil/foto` | — |
 | PUT | `/seguridad/mi-perfil` | — |
 | GET | `/seguridad/usuarios/:id/perfil` | `seguridad:ver_usuarios` |
 | PUT | `/seguridad/usuarios/:id/perfil` | `seguridad:editar_usuario` |

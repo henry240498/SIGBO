@@ -1,89 +1,14 @@
 /**
- * ============================================================================
- * SIGBO-CBVC — DataSource de TypeORM apuntando a la BD LOCAL
- * ============================================================================
- * ARCHIVO NO ACTIVO A PROPOSITO.
+ * Plantilla opcional para herramientas de TypeORM que requieran un DataSource
+ * explícito (por ejemplo, una inspección local). El backend ya está conectado
+ * mediante `src/core/database/data-source-options.ts` y `AppModule`; no hay
+ * que instalar dependencias ni modificar el módulo raíz.
  *
- * Termina en `.ts.example` para que `tsc` NO lo compile: el backend actual
- * (backend/package.json) todavia no tiene instaladas las dependencias
- * `typeorm`, `@nestjs/typeorm`, `mssql` ni `@nestjs/config`, y activarlo tal
- * cual romperia `npm run build`.
- *
- * PARA ACTIVARLO (2 pasos):
- *
- *   1) Instalar dependencias:
- *        cd backend
- *        npm install typeorm @nestjs/typeorm mssql @nestjs/config
- *
- *   2) Renombrar este archivo y registrarlo en el modulo raiz:
- *        ren src\database\data-source.ts.example data-source.ts
- *
- *      y en src/app.module.ts:
- *
- *        import { Module } from '@nestjs/common';
- *        import { ConfigModule } from '@nestjs/config';
- *        import { TypeOrmModule } from '@nestjs/typeorm';
- *        import { typeOrmConfig } from './database/data-source';
- *
- *        @Module({
- *          imports: [
- *            ConfigModule.forRoot({ isGlobal: true }),
- *            TypeOrmModule.forRoot(typeOrmConfig),
- *          ],
- *        })
- *        export class AppModule {}
- *
- * No se modifico app.module.ts automaticamente para no romper el scaffold
- * actual ni tocar logica de la aplicacion.
- * ============================================================================
+ * Para usarla, cópiela como `src/database/data-source.ts`. No active
+ * `synchronize`: el esquema de SIGBO lo administran las migraciones SQL.
  */
+import { DataSource } from 'typeorm';
+import { dataSourceOptions } from '../core/database/data-source-options';
 
-import { DataSource, DataSourceOptions } from 'typeorm';
-
-/** Lanza si el host configurado no es local. */
-function assertLocal(host: string): string {
-  const locales = ['localhost', '127.0.0.1', '::1'];
-  if (!locales.includes(host)) {
-    throw new Error(
-      `[SIGBO] DB_HOST="${host}" no es local. Esta configuracion solo admite ` +
-        `localhost / 127.0.0.1. Abortando para no tocar una base remota.`,
-    );
-  }
-  return host;
-}
-
-const host = assertLocal(process.env.DB_HOST ?? 'localhost');
-
-export const typeOrmConfig: DataSourceOptions = {
-  type: 'mssql',
-  host,
-  port: Number(process.env.DB_PORT ?? 1433),
-  database: process.env.DB_NAME ?? 'sigbo_cbvc',
-  username: process.env.DB_USER ?? 'sigbo_app',
-  password: process.env.DB_PASSWORD ?? '',
-
-  // La estructura la gobiernan los scripts de database/scripts/.
-  // synchronize NUNCA debe activarse: TypeORM reescribiria el esquema.
-  synchronize: false,
-  migrationsRun: false,
-  logging: process.env.DB_LOGGING === 'true',
-
-  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-
-  options: {
-    // SQL Server Express local: sin cifrado, certificado autofirmado.
-    encrypt: process.env.DB_ENCRYPT === 'true',
-    trustServerCertificate: process.env.DB_TRUST_SERVER_CERTIFICATE !== 'false',
-    // Si se vuelve a puertos dinamicos, quitar `port` y usar:
-    // instanceName: process.env.DB_INSTANCE ?? 'SQLEXPRESS',
-  },
-
-  // El sistema usa NEWSEQUENTIALID() como DEFAULT de las PK y NO genera GUID
-  // RFC 4122: por eso el proyecto valida los ids con un GUID_REGEX propio en
-  // vez de @IsUUID() de class-validator (ver REPORTE_REPLICACION.md 2.1).
-  extra: {
-    trustServerCertificate: true,
-  },
-};
-
-export const AppDataSource = new DataSource(typeOrmConfig);
+export const AppDataSource = new DataSource(dataSourceOptions);
+export default AppDataSource;

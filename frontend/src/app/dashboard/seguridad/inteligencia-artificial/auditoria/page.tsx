@@ -43,7 +43,7 @@ export default function AuditoriaIaPage() {
           <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Hasta</label>
           <input className="input-field" type="date" value={hasta} onChange={(e) => setHasta(e.target.value)} />
         </div>
-        <button className="btn-primary" onClick={cargar}>Filtrar</button>
+        <button type="button" className="btn-primary" onClick={cargar}>Filtrar</button>
       </div>
 
       {error && <p style={{ color: '#f87171' }}>{error}</p>}

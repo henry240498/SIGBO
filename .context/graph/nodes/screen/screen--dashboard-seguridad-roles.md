@@ -11,6 +11,7 @@ archivos:
   - frontend/src/app/dashboard/seguridad/roles/page.tsx
 edges:
   - [belongs_to, domain--seguridad]
+  - [uses, component--front-inputprovider]
   - [uses, component--front-api]
   - [uses, component--front-confirmprovider]
   - [calls, api--seguridad-roles]
@@ -38,6 +39,7 @@ Pantalla /dashboard/seguridad/roles, consume 3 endpoint(s).
 ## Relaciones
 
 - `belongs_to` → [[domain--seguridad|Seguridad]]
+- `uses` → [[component--front-inputprovider|InputProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `calls` → [[api--seguridad-roles|RolesController]]

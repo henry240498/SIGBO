@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
 
@@ -22,6 +23,7 @@ interface Brigada {
 }
 
 export default function UnidadesPage() {
+  const confirmar = useConfirmacion();
   const [unidades, setUnidades] = useState<Unidad[] | null>(null);
   const [brigadas, setBrigadas] = useState<Brigada[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -123,7 +125,7 @@ export default function UnidadesPage() {
 
   async function darBaja(id: string) {
     setError(null);
-    if (!window.confirm('Dar de baja esta unidad?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Dar de baja esta unidad?', confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/organizacion/unidades/${id}/baja`, { method: 'PATCH' });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
@@ -157,13 +159,13 @@ export default function UnidadesPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
         <h2 style={{ fontSize: 16 }}>Unidades ({unidades?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/unidades/exportar/excel', 'unidades.xlsx')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/unidades/exportar/excel', 'unidades.xlsx')}>
             Exportar a Excel
           </button>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/unidades/exportar/pdf', 'unidades.pdf')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/unidades/exportar/pdf', 'unidades.pdf')}>
             Exportar a PDF
           </button>
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               if (mostrarForm) {
@@ -237,7 +239,7 @@ export default function UnidadesPage() {
               </select>
             </div>
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }}>
+          <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }}>
             {editandoId ? 'Guardar cambios' : 'Crear unidad'}
           </button>
         </form>
@@ -266,11 +268,11 @@ export default function UnidadesPage() {
                   </span>
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(u)}>
+                  <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(u)}>
                     Editar
                   </button>
                   {u.eliminadoEn === null ? (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                       onClick={() => darBaja(u.id)}
@@ -278,7 +280,7 @@ export default function UnidadesPage() {
                       Eliminar
                     </button>
                   ) : (
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => reactivar(u.id)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => reactivar(u.id)}>
                       Reactivar
                     </button>
                   )}

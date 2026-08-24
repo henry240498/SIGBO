@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import Link from 'next/link';
 import { apiFetch } from '@/lib/api';
 import { cargarVehiculos } from '@/lib/vehiculos';
@@ -362,6 +363,7 @@ function validarFinalizacion(tipo: TipoComunicacion, datos: Valores): { mensajes
 }
 
 export default function NuevoServicioPage() {
+  const confirmar = useConfirmacion();
   const [tipo, setTipo] = useState<TipoComunicacion>('OTRAS_OCURRENCIAS');
   const [datos, setDatos] = useState<Valores>(() => nuevoFormulario());
   const [paso, setPaso] = useState(1);
@@ -482,7 +484,7 @@ export default function NuevoServicioPage() {
         setAviso('Revise los campos indicados antes de finalizar.');
         return;
       }
-      if (!window.confirm('¿Desea validar y finalizar esta comunicación? Luego quedará bloqueada para edición ordinaria.')) return;
+      if (!await confirmar({ titulo: 'Finalizar comunicación', mensaje: '¿Desea validar y finalizar esta comunicación? Luego quedará bloqueada para edición ordinaria.', confirmar: 'Finalizar', peligro: true })) return;
     }
     setGuardando(true);
     setErrores([]);
@@ -763,6 +765,7 @@ function Nomina({ filas, disabled, actualizar }: { filas: Valores[]; disabled?: 
 }
 
 function Croquis({ valor, disabled, onChange }: { valor: Valores; disabled?: boolean; onChange: (valor: Valores) => void }) {
+  const confirmar = useConfirmacion();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [dibujando, setDibujando] = useState(false);
   const [herramienta, setHerramienta] = useState<'lapiz' | 'borrador'>('lapiz');
@@ -843,5 +846,11 @@ function Croquis({ valor, disabled, onChange }: { valor: Valores; disabled?: boo
     lector.readAsDataURL(archivo);
     evento.target.value = '';
   };
-  return <div className="croquis-placeholder"><div className="croquis-heading"><div><strong>Croquis o mapa situacional</strong><p>Dibuje con mouse, dedo o lápiz; también puede adjuntar una imagen. El PNG se conserva con el borrador.</p></div>{!disabled && <div className="croquis-tools"><button type="button" className={herramienta === 'lapiz' ? 'active' : ''} onClick={() => setHerramienta('lapiz')}>Lápiz</button><button type="button" className={herramienta === 'borrador' ? 'active' : ''} onClick={() => setHerramienta('borrador')}>Borrador</button><button type="button" onClick={deshacer}>Deshacer</button><button type="button" onClick={rehacer}>Rehacer</button><label>Adjuntar imagen<input type="file" accept="image/png,image/jpeg,image/webp" onChange={adjuntar} /></label><button type="button" className="danger" onClick={() => { if (window.confirm('¿Desea limpiar el croquis? Esta acción se puede deshacer antes de guardar.')) { const canvas = canvasRef.current; canvas?.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height); confirmarTrazo(); } }}>Limpiar</button></div>}</div><canvas className="croquis-canvas" ref={canvasRef} width="1200" height="600" onPointerDown={iniciar} onPointerMove={dibujar} onPointerUp={terminar} onPointerCancel={terminar} onPointerLeave={terminar} /></div>;
+  const limpiar = async () => {
+    if (!await confirmar({ titulo: 'Limpiar croquis', mensaje: '¿Desea limpiar el croquis? Esta acción se puede deshacer antes de guardar.', confirmar: 'Limpiar', peligro: true })) return;
+    const canvas = canvasRef.current;
+    canvas?.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
+    confirmarTrazo();
+  };
+  return <div className="croquis-placeholder"><div className="croquis-heading"><div><strong>Croquis o mapa situacional</strong><p>Dibuje con mouse, dedo o lápiz; también puede adjuntar una imagen. El PNG se conserva con el borrador.</p></div>{!disabled && <div className="croquis-tools"><button type="button" className={herramienta === 'lapiz' ? 'active' : ''} onClick={() => setHerramienta('lapiz')}>Lápiz</button><button type="button" className={herramienta === 'borrador' ? 'active' : ''} onClick={() => setHerramienta('borrador')}>Borrador</button><button type="button" onClick={deshacer}>Deshacer</button><button type="button" onClick={rehacer}>Rehacer</button><label>Adjuntar imagen<input type="file" accept="image/png,image/jpeg,image/webp" onChange={adjuntar} /></label><button type="button" className="danger" onClick={limpiar}>Limpiar</button></div>}</div><canvas className="croquis-canvas" ref={canvasRef} width="1200" height="600" onPointerDown={iniciar} onPointerMove={dibujar} onPointerUp={terminar} onPointerCancel={terminar} onPointerLeave={terminar} /></div>;
 }

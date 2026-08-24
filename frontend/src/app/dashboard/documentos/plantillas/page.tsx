@@ -85,7 +85,7 @@ function ModalGenerar({ plantilla, categorias, onCerrar, onGenerado }: { plantil
         </label>
         <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 6 }}>
           <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={onCerrar}>Cancelar</button>
-          <button className="btn-primary" disabled={guardando}>{guardando ? 'Generando...' : 'Generar documento'}</button>
+          <button type="button" className="btn-primary" disabled={guardando}>{guardando ? 'Generando...' : 'Generar documento'}</button>
         </div>
       </form>
     </div>
@@ -169,7 +169,7 @@ export default function PlantillasPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Plantillas ({plantillas?.length ?? 0})</h2>
         {puedeAdministrar && (
-          <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Nueva plantilla'}
           </button>
         )}
@@ -198,7 +198,7 @@ export default function PlantillasPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Contenido (usar {'{{CAMPO}}'} para placeholders)</label>
             <textarea className="input-field" rows={8} value={contenido} onChange={(e) => setContenido(e.target.value)} required />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Crear plantilla'}
           </button>
         </form>
@@ -225,10 +225,10 @@ export default function PlantillasPage() {
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6 }}>
                   {puedeCrear && p.activa && (
-                    <button className="btn-primary" style={{ padding: '3px 8px', fontSize: 11 }} onClick={() => setPlantillaGenerar(p)}>Generar</button>
+                    <button type="button" className="btn-primary" style={{ padding: '3px 8px', fontSize: 11 }} onClick={() => setPlantillaGenerar(p)}>Generar</button>
                   )}
                   {puedeAdministrar && (
-                    <button className="btn-primary" style={{ padding: '3px 8px', fontSize: 11, background: '#475569' }} onClick={() => alternarActiva(p)}>
+                    <button type="button" className="btn-primary" style={{ padding: '3px 8px', fontSize: 11, background: '#475569' }} onClick={() => alternarActiva(p)}>
                       {p.activa ? 'Desactivar' : 'Activar'}
                     </button>
                   )}

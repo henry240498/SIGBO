@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { API_ORIGIN, descargarArchivo, obtenerSesion } from '@/lib/api';
+import { descargarArchivo, obtenerSesion } from '@/lib/api';
 import { OrdenGuardia, ResultadoGeneracion, crearOrdenGuardia, generarDocumentosOrden, generarPlanificacion } from '@/lib/guardias';
 
 export default function GenerarPlanificacionPage() {
@@ -63,7 +63,7 @@ export default function GenerarPlanificacionPage() {
   async function descargarPdf() {
     if (!ordenGenerada?.archivoPdfUrl) return;
     try {
-      await descargarArchivo(ordenGenerada.archivoPdfUrl, `orden-guardia-${ordenGenerada.numero}-${ordenGenerada.anio}.pdf`);
+      await descargarArchivo(`/api/v1/guardias/ordenes/${ordenGenerada.id}/archivos/pdf`, `orden-guardia-${ordenGenerada.numero}-${ordenGenerada.anio}.pdf`);
     } catch (err: any) {
       setError(err.message);
     }
@@ -105,7 +105,7 @@ export default function GenerarPlanificacionPage() {
           <input type="checkbox" checked={regenerarExistentes} onChange={(e) => setRegenerarExistentes(e.target.checked)} />
           Regenerar guardias ya planificadas en el rango (las anteriores quedan anuladas, nunca se borran)
         </label>
-        <button className="btn-primary" disabled={generando} style={{ alignSelf: 'flex-start' }}>
+        <button type="submit" className="btn-primary" disabled={generando} style={{ alignSelf: 'flex-start' }}>
           {generando ? 'Generando...' : 'Generar planificacion'}
         </button>
       </form>
@@ -160,7 +160,7 @@ export default function GenerarPlanificacionPage() {
                       : 'Las guardias de este periodo ya estaban planificadas. Puede crear la Orden y el PDF con membrete usando esas guardias existentes.'}
                   </p>
                   {!ordenGenerada ? (
-                    <button className="btn-primary" disabled={generandoPdf} onClick={crearOrdenYPdf}>
+                    <button type="button" className="btn-primary" disabled={generandoPdf} onClick={crearOrdenYPdf}>
                       {generandoPdf ? 'Generando PDF...' : 'Generar orden y PDF con membrete'}
                     </button>
                   ) : (
@@ -169,12 +169,7 @@ export default function GenerarPlanificacionPage() {
                         Ver orden
                       </Link>
                       {ordenGenerada.archivoPdfUrl && (
-                        <a href={`${API_ORIGIN}${ordenGenerada.archivoPdfUrl}`} target="_blank" rel="noreferrer" className="btn-primary" style={{ textDecoration: 'none' }}>
-                          Visualizar PDF
-                        </a>
-                      )}
-                      {ordenGenerada.archivoPdfUrl && (
-                        <button className="btn-primary" style={{ background: '#475569' }} onClick={descargarPdf}>
+                        <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={descargarPdf}>
                           Descargar PDF
                         </button>
                       )}

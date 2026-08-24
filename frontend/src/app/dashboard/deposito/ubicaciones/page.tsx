@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { obtenerSesion } from '@/lib/api';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { cargarCatalogo, Catalogo } from '@/lib/personal';
 import { Parametro } from '@/lib/parametros';
@@ -15,6 +16,7 @@ import {
 } from '@/lib/deposito';
 
 export default function UbicacionesDepositoPage() {
+  const confirmar = useConfirmacion();
   const [ubicaciones, setUbicaciones] = useState<UbicacionDeposito[] | null>(null);
   const [tipos, setTipos] = useState<Parametro[]>([]);
   const [cuarteles, setCuarteles] = useState<Catalogo[]>([]);
@@ -122,7 +124,7 @@ export default function UbicacionesDepositoPage() {
   }
 
   async function eliminar(u: UbicacionDeposito) {
-    if (!window.confirm(`¿Eliminar la ubicacion "${u.nombre}"?`)) return;
+    if (!await confirmar({ titulo: 'Eliminar ubicación', mensaje: `¿Eliminar la ubicación "${u.nombre}"?`, confirmar: 'Eliminar', peligro: true })) return;
     setError(null);
     try {
       await eliminarUbicacionDeposito(u.id);
@@ -138,7 +140,7 @@ export default function UbicacionesDepositoPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Ubicaciones ({ubicaciones?.length ?? 0})</h2>
         {puedeCrear && (
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               limpiarForm();
@@ -199,7 +201,7 @@ export default function UbicacionesDepositoPage() {
             </div>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+            <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
               {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear ubicacion'}
             </button>
             {editandoId && (
@@ -248,12 +250,12 @@ export default function UbicacionesDepositoPage() {
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                   {puedeEditar && (
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(u)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(u)}>
                       Editar
                     </button>
                   )}
                   {puedeEliminar && (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                       onClick={() => eliminar(u)}

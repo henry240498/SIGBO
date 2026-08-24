@@ -9,6 +9,7 @@ import { UpdateRolDto } from './dto/update-rol.dto';
 import { DuplicarRolDto } from './dto/duplicar-rol.dto';
 import { CopiarPermisosDto } from './dto/copiar-permisos.dto';
 import { SetPermisosDto } from './dto/set-permisos.dto';
+import { SesionesService } from './sesiones.service';
 
 @Injectable()
 export class RolesService {
@@ -19,7 +20,14 @@ export class RolesService {
     @InjectRepository(AsignacionRol) private readonly asignacionRolRepo: Repository<AsignacionRol>,
     @InjectRepository(Permiso) private readonly permisoRepo: Repository<Permiso>,
     private readonly auditoriaService: AuditoriaService,
+    private readonly sesionesService: SesionesService,
   ) {}
+
+  private async cerrarSesionesDeRol(rolId: string): Promise<void> {
+    const asignaciones = await this.asignacionRolRepo.find({ where: { rolId } });
+    await Promise.all([...new Set(asignaciones.map((asignacion) => asignacion.usuarioId))]
+      .map((usuarioId) => this.sesionesService.cerrarTodas(usuarioId)));
+  }
 
   findAll() {
     return this.rolRepo.find({ order: { prioridad: 'DESC' } });
@@ -127,6 +135,7 @@ export class RolesService {
   async activar(id: string, activo: boolean, ctx: AccionContexto) {
     await this.findOne(id);
     await this.rolRepo.update(id, { activo });
+    await this.cerrarSesionesDeRol(id);
 
     await this.auditoriaService.registrar({
       usuarioId: ctx.actorId,
@@ -213,6 +222,7 @@ export class RolesService {
       ip: ctx.ip,
       userAgent: ctx.userAgent,
     });
+    if (agregados > 0) await this.cerrarSesionesDeRol(id);
 
     return this.getPermisos(id);
   }
@@ -233,6 +243,7 @@ export class RolesService {
         this.asignacionPermisoRolRepo.create({ rolId: id, permisoId, asignadoPor: ctx.actorId }),
       );
     }
+    if (aQuitar.length > 0 || aAgregar.length > 0) await this.cerrarSesionesDeRol(id);
 
     await this.auditoriaService.registrar({
       usuarioId: ctx.actorId,

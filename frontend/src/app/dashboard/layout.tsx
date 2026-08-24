@@ -3,7 +3,14 @@
 import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { API_ORIGIN, apiFetch, logout, obtenerSesion, Sesion } from '@/lib/api';
+import {
+  API_ORIGIN,
+  apiFetch,
+  EVENTO_SESION_FINALIZADA,
+  logout,
+  obtenerSesion,
+  Sesion,
+} from '@/lib/api';
 import { MODULOS, moduloVisible, IconoModulo } from '@/lib/modulos';
 import { SystemIcon } from '@/app/components/SystemIcon';
 
@@ -19,9 +26,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const current = obtenerSesion();
     if (!current) router.replace('/login');
     else setSesion(current);
-    const sync=(event:StorageEvent)=>{if(event.key==='sigbo_sesion'&&!event.newValue)router.replace('/login')};
+    const redirigirAlLogin = () => router.replace('/login');
+    const sync=(event:StorageEvent)=>{if(event.key==='sigbo_sesion'&&!event.newValue)redirigirAlLogin()};
     window.addEventListener('storage',sync);
-    return()=>window.removeEventListener('storage',sync);
+    window.addEventListener(EVENTO_SESION_FINALIZADA, redirigirAlLogin);
+    return()=>{
+      window.removeEventListener('storage',sync);
+      window.removeEventListener(EVENTO_SESION_FINALIZADA, redirigirAlLogin);
+    };
   }, [router]);
 
   useEffect(() => {
@@ -55,7 +67,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </nav>
         <div className="sidebar-footer">
           <MenuLink href="/dashboard/mi-perfil" icono="user" nombre="Mi perfil" activo={pathname === '/dashboard/mi-perfil'} />
-          <button className="logout-button" onClick={onLogout}>Cerrar sesión</button>
+          <button type="button" className="logout-button" onClick={onLogout}>Cerrar sesión</button>
         </div>
       </aside>
 

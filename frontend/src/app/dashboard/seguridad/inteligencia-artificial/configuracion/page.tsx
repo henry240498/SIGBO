@@ -202,7 +202,7 @@ function ZonaPeligro({ onEliminado }: { onEliminado: () => void }) {
         deja un registro permanente en Seguridad → Auditoría con todo lo que hizo la IA desde su creación. Esta acción no se puede deshacer.
       </p>
       {!abierto && (
-        <button className="btn-primary" style={{ background: '#7f1d1d', marginTop: 10 }} onClick={() => setAbierto(true)}>
+        <button type="button" className="btn-primary" style={{ background: '#7f1d1d', marginTop: 10 }} onClick={() => setAbierto(true)}>
           Eliminar IA
         </button>
       )}
@@ -217,8 +217,8 @@ function ZonaPeligro({ onEliminado }: { onEliminado: () => void }) {
             <input className="input-field" value={confirmacion} onChange={(e) => setConfirmacion(e.target.value)} placeholder="DELETE" />
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn-primary" style={{ background: '#475569' }} onClick={() => setAbierto(false)}>Cancelar</button>
-            <button className="btn-primary" style={{ background: '#7f1d1d' }} disabled={confirmacion !== 'DELETE' || eliminando} onClick={eliminar}>
+            <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => setAbierto(false)}>Cancelar</button>
+            <button type="button" className="btn-primary" style={{ background: '#7f1d1d' }} disabled={confirmacion !== 'DELETE' || eliminando} onClick={eliminar}>
               {eliminando ? 'Eliminando...' : 'Confirmar borrado definitivo'}
             </button>
           </div>
@@ -369,9 +369,9 @@ export default function ConfiguracionIaPage() {
             <input className="input-field" placeholder="Mensaje a mostrar en mantenimiento (opcional)" value={mensajeMantenimiento} onChange={(e) => setMensajeMantenimiento(e.target.value)} />
           )}
           <div style={{ display: 'flex', gap: 8 }}>
-            {config.estado !== 'ACTIVA' && <button className="btn-primary" onClick={() => aplicarEstado('ACTIVA')}>Activar</button>}
-            {config.estado !== 'MANTENIMIENTO' && <button className="btn-primary" style={{ background: '#451a03' }} onClick={() => aplicarEstado('MANTENIMIENTO')}>Modo mantenimiento</button>}
-            {config.estado !== 'INACTIVA' && <button className="btn-primary" style={{ background: '#7f1d1d' }} onClick={() => aplicarEstado('INACTIVA')}>Desactivar (emergencia)</button>}
+            {config.estado !== 'ACTIVA' && <button type="button" className="btn-primary" onClick={() => aplicarEstado('ACTIVA')}>Activar</button>}
+            {config.estado !== 'MANTENIMIENTO' && <button type="button" className="btn-primary" style={{ background: '#451a03' }} onClick={() => aplicarEstado('MANTENIMIENTO')}>Modo mantenimiento</button>}
+            {config.estado !== 'INACTIVA' && <button type="button" className="btn-primary" style={{ background: '#7f1d1d' }} onClick={() => aplicarEstado('INACTIVA')}>Desactivar (emergencia)</button>}
           </div>
         </div>
       )}
@@ -462,13 +462,13 @@ export default function ConfiguracionIaPage() {
           <input className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
         </div>
 
-        <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+        <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
           {guardando ? 'Guardando...' : 'Guardar configuración'}
         </button>
       </form>
 
       <div className="card">
-        <button className="btn-primary" style={{ background: '#334155' }} onClick={abrirHistorial}>
+        <button type="button" className="btn-primary" style={{ background: '#334155' }} onClick={abrirHistorial}>
           {mostrarHistorial ? 'Ocultar historial' : 'Ver historial de cambios'}
         </button>
         {mostrarHistorial && historial && (

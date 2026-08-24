@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
 
@@ -19,6 +20,7 @@ interface Rango {
 }
 
 export default function RangosPage() {
+  const confirmar = useConfirmacion();
   const [rangos, setRangos] = useState<Rango[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
@@ -145,7 +147,7 @@ export default function RangosPage() {
 
   async function darBaja(id: string) {
     setError(null);
-    if (!window.confirm('Dar de baja este rango?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Dar de baja este rango?', confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/organizacion/rangos/${id}/baja`, { method: 'PATCH' });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
@@ -173,13 +175,13 @@ export default function RangosPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Rangos ({rangos?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/rangos/exportar/excel', 'rangos.xlsx')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/rangos/exportar/excel', 'rangos.xlsx')}>
             Exportar a Excel
           </button>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/rangos/exportar/pdf', 'rangos.pdf')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/rangos/exportar/pdf', 'rangos.pdf')}>
             Exportar a PDF
           </button>
-          <button className="btn-primary" onClick={mostrarForm ? cancelarForm : abrirNuevo}>
+          <button type="button" className="btn-primary" onClick={mostrarForm ? cancelarForm : abrirNuevo}>
             {mostrarForm ? 'Cancelar' : 'Nuevo rango'}
           </button>
         </div>
@@ -286,7 +288,7 @@ export default function RangosPage() {
             <input className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
+            <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
               {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear rango'}
             </button>
             {editandoId && (
@@ -345,11 +347,11 @@ export default function RangosPage() {
                   </span>
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(r)}>
+                  <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(r)}>
                     Editar
                   </button>
                   {r.eliminadoEn === null ? (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                       onClick={() => darBaja(r.id)}
@@ -357,7 +359,7 @@ export default function RangosPage() {
                       Eliminar
                     </button>
                   ) : (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#166534' }}
                       onClick={() => reactivar(r.id)}

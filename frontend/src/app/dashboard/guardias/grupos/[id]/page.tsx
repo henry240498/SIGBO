@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { obtenerSesion } from '@/lib/api';
@@ -20,6 +21,7 @@ import {
 } from '@/lib/guardias';
 
 export default function DetalleGrupoGuardiaPage() {
+  const confirmar = useConfirmacion();
   const params = useParams();
   const router = useRouter();
   const grupoId = params.id as string;
@@ -109,7 +111,7 @@ export default function DetalleGrupoGuardiaPage() {
   }
 
   async function quitar(miembroId: string) {
-    if (!window.confirm('Quitar este miembro del grupo?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Quitar este miembro del grupo?', confirmar: 'Continuar', peligro: true })) return;
     setError(null);
     try {
       await quitarMiembroGrupo(grupoId, miembroId);
@@ -130,7 +132,7 @@ export default function DetalleGrupoGuardiaPage() {
             <h2 style={{ fontSize: 18 }}>{grupo.nombre}</h2>
             <span className="badge" style={{ marginTop: 6, display: 'inline-block' }}>{grupo.estado}</span>
           </div>
-          <button className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/guardias/grupos')}>
+          <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/guardias/grupos')}>
             Volver
           </button>
         </div>
@@ -142,7 +144,7 @@ export default function DetalleGrupoGuardiaPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h3 style={{ fontSize: 14 }}>Configuracion de rotacion / capacidad</h3>
           {puedeEditar && !editandoConfig && (
-            <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={abrirConfig}>Editar</button>
+            <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={abrirConfig}>Editar</button>
           )}
         </div>
         {!editandoConfig && (
@@ -194,7 +196,7 @@ export default function DetalleGrupoGuardiaPage() {
               </div>
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
-              <button className="btn-primary" disabled={guardandoConfig} onClick={guardarConfig}>{guardandoConfig ? 'Guardando...' : 'Guardar cambios'}</button>
+              <button type="button" className="btn-primary" disabled={guardandoConfig} onClick={guardarConfig}>{guardandoConfig ? 'Guardando...' : 'Guardar cambios'}</button>
               <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => setEditandoConfig(false)}>Cancelar</button>
             </div>
           </div>
@@ -214,7 +216,7 @@ export default function DetalleGrupoGuardiaPage() {
               <option value="CHOFER">CHOFER</option>
             </select>
           </div>
-          <button className="btn-primary" onClick={agregar} disabled={!bomberoId}>Agregar</button>
+          <button type="button" className="btn-primary" onClick={agregar} disabled={!bomberoId}>Agregar</button>
         </div>
       )}
 
@@ -237,7 +239,7 @@ export default function DetalleGrupoGuardiaPage() {
                   <td style={{ padding: '6px 4px' }}><span className="badge">{m.rol}</span></td>
                   {puedeEditar && (
                     <td style={{ padding: '6px 4px' }}>
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }} onClick={() => quitar(m.id)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }} onClick={() => quitar(m.id)}>
                         Quitar
                       </button>
                     </td>

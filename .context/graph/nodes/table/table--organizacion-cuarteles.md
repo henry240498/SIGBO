@@ -66,6 +66,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 ## Referenciado por
 
 - [[table--organizacion-designaciones|organizacion.designaciones]] `references` →
+- [[table--deposito-ubicaciones|deposito.ubicaciones]] `references` →
 - [[entity--cuartel|Cuartel]] `persisted_in` →
 - [[service--organizacion-cuarteles|CuartelsService]] `reads` →
 - [[service--organizacion-dashboard|DashboardService]] `reads` →

@@ -56,6 +56,7 @@ Helper de frontend "asistencia" (42 exportaciones, consume 15 endpoint(s)).
 
 ## Referenciado por
 
+- [[screen--dashboard-academia-id|/dashboard/academia/[id]]] `uses` →
 - [[screen--dashboard-asistencia-eventos|/dashboard/asistencia/eventos]] `uses` →
 - [[screen--dashboard-asistencia-eventos-id|/dashboard/asistencia/eventos/[id]]] `uses` →
 - [[screen--dashboard-asistencia-externos|/dashboard/asistencia/externos]] `uses` →

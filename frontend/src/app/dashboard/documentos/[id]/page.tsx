@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { obtenerSesion } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { Parametro, resolverNombres } from '@/lib/parametros';
@@ -57,6 +58,7 @@ function badgeVigencia(documento: Documento): { texto: string; color: string } |
 }
 
 export default function FichaDocumentoPage() {
+  const confirmar = useConfirmacion();
   const params = useParams();
   const router = useRouter();
   const id = params.id as string;
@@ -260,7 +262,7 @@ export default function FichaDocumentoPage() {
   }
 
   async function eliminar() {
-    if (!window.confirm('¿Eliminar este documento? Queda archivado y registrado en auditoria -- el archivo no se borra fisicamente.')) return;
+    if (!await confirmar({ titulo: 'Archivar documento', mensaje: '¿Eliminar este documento? Queda archivado y registrado en auditoría; el archivo no se borra físicamente.', confirmar: 'Archivar', peligro: true })) return;
     setError(null);
     setMensaje(null);
     setGuardando(true);
@@ -392,30 +394,30 @@ export default function FichaDocumentoPage() {
 
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 14 }}>
           {puedeAprobar && estadoActual === 'Pendiente' && (
-            <button className="btn-primary" disabled={guardando} onClick={() => accionSimple(aprobarDocumento, 'Documento aprobado.')}>Aprobar</button>
+            <button type="button" className="btn-primary" disabled={guardando} onClick={() => accionSimple(aprobarDocumento, 'Documento aprobado.')}>Aprobar</button>
           )}
           {puedeAprobar && (estadoActual === 'Aprobado' || estadoActual === 'Firmado' || estadoActual === 'Borrador') && (
-            <button className="btn-primary" disabled={guardando} onClick={() => accionSimple(publicarDocumento, 'Documento publicado.')}>Publicar</button>
+            <button type="button" className="btn-primary" disabled={guardando} onClick={() => accionSimple(publicarDocumento, 'Documento publicado.')}>Publicar</button>
           )}
           {puedeEditar && !esTerminal && (
-            <button className="btn-primary" style={{ background: '#475569' }} disabled={guardando} onClick={() => accionSimple(archivarDocumento, 'Documento archivado.')}>Archivar</button>
+            <button type="button" className="btn-primary" style={{ background: '#475569' }} disabled={guardando} onClick={() => accionSimple(archivarDocumento, 'Documento archivado.')}>Archivar</button>
           )}
           {puedeAdministrar && estadoActual === 'Archivado' && (
-            <button className="btn-primary" disabled={guardando} onClick={() => accionSimple(reabrirDocumento, 'Documento reabierto.')}>Reabrir</button>
+            <button type="button" className="btn-primary" disabled={guardando} onClick={() => accionSimple(reabrirDocumento, 'Documento reabierto.')}>Reabrir</button>
           )}
           {puedeAnular && !esTerminal && (
-            <button className="btn-primary" style={{ background: '#7f1d1d' }} disabled={guardando} onClick={() => setMostrarAnular(!mostrarAnular)}>
+            <button type="button" className="btn-primary" style={{ background: '#7f1d1d' }} disabled={guardando} onClick={() => setMostrarAnular(!mostrarAnular)}>
               {mostrarAnular ? 'Cancelar anulacion' : 'Anular'}
             </button>
           )}
           {documento.archivoUrl && (
-            <button className="btn-primary" style={{ background: '#334155' }} onClick={() => setMostrarVisor(true)}>👁 Previsualizar</button>
+            <button type="button" className="btn-primary" style={{ background: '#334155' }} onClick={() => setMostrarVisor(true)}>👁 Previsualizar</button>
           )}
           {puedeDescargar && documento.archivoUrl && (
-            <button className="btn-primary" style={{ background: '#334155' }} onClick={descargar}>⬇ Descargar archivo</button>
+            <button type="button" className="btn-primary" style={{ background: '#334155' }} onClick={descargar}>⬇ Descargar archivo</button>
           )}
           {puedeEliminar && !esTerminal && (
-            <button className="btn-primary" style={{ background: '#7f1d1d' }} disabled={guardando} onClick={eliminar}>🗑 Eliminar</button>
+            <button type="button" className="btn-primary" style={{ background: '#7f1d1d' }} disabled={guardando} onClick={eliminar}>🗑 Eliminar</button>
           )}
         </div>
 
@@ -429,7 +431,7 @@ export default function FichaDocumentoPage() {
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Detalle</label>
               <input className="input-field" value={detalleAnulacion} onChange={(e) => setDetalleAnulacion(e.target.value)} />
             </div>
-            <button className="btn-primary" style={{ background: '#7f1d1d', alignSelf: 'flex-start' }} disabled={guardando || !motivoAnulacionId}>
+            <button type="button" className="btn-primary" style={{ background: '#7f1d1d', alignSelf: 'flex-start' }} disabled={guardando || !motivoAnulacionId}>
               Confirmar anulacion
             </button>
           </form>
@@ -474,7 +476,7 @@ export default function FichaDocumentoPage() {
             Disponible para Snoopy (Inteligencia Artificial) — la confidencialidad sigue aplicando igual
           </label>
           {puedeEditar && !esTerminal && (
-            <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+            <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
               {guardando ? 'Guardando...' : 'Guardar cambios'}
             </button>
           )}
@@ -506,7 +508,7 @@ export default function FichaDocumentoPage() {
                 {documento.archivoUrl && (
                   <input className="input-field" placeholder="Motivo del reemplazo (requerido)" value={motivoReemplazo} onChange={(e) => setMotivoReemplazo(e.target.value)} />
                 )}
-                <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={!archivo || guardando} onClick={subir}>
+                <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={!archivo || guardando} onClick={subir}>
                   {documento.archivoUrl ? 'Cargar nueva version' : 'Subir archivo'}
                 </button>
               </div>
@@ -536,8 +538,8 @@ export default function FichaDocumentoPage() {
                   <span className="badge" style={{ background: '#166534' }}>Firmado</span>
                 ) : puedeFirmar && !esTerminal ? (
                   <span style={{ display: 'flex', gap: 6 }}>
-                    <button className="btn-primary" style={{ padding: '3px 8px', fontSize: 11 }} onClick={() => firmar(f.id)}>Firmar digital</button>
-                    <button className="btn-primary" style={{ padding: '3px 8px', fontSize: 11, background: '#475569' }} onClick={() => firmarManual(f.id)}>Confirmar manuscrita</button>
+                    <button type="button" className="btn-primary" style={{ padding: '3px 8px', fontSize: 11 }} onClick={() => firmar(f.id)}>Firmar digital</button>
+                    <button type="button" className="btn-primary" style={{ padding: '3px 8px', fontSize: 11, background: '#475569' }} onClick={() => firmarManual(f.id)}>Confirmar manuscrita</button>
                   </span>
                 ) : (
                   <span className="badge" style={{ background: '#334155' }}>Pendiente</span>
@@ -550,7 +552,7 @@ export default function FichaDocumentoPage() {
                 <ComboBuscable opciones={opcionesCargo} value={firmanteCargoId} onChange={(v) => { setFirmanteCargoId(v); if (v) setFirmanteBomberoId(''); }} ningunaLabel="Por cargo: ninguno" />
                 <ComboBuscable opciones={opcionesBombero} value={firmanteBomberoId} onChange={(v) => { setFirmanteBomberoId(v); if (v) setFirmanteCargoId(''); }} ningunaLabel="Por persona: ninguno" placeholderBusqueda="Buscar bombero..." />
                 <input className="input-field" placeholder="Etiqueta del rol (opcional)" value={firmanteEtiqueta} onChange={(e) => setFirmanteEtiqueta(e.target.value)} />
-                <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando || (!firmanteCargoId && !firmanteBomberoId)}>
+                <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando || (!firmanteCargoId && !firmanteBomberoId)}>
                   Agregar firmante
                 </button>
               </form>
@@ -569,7 +571,7 @@ export default function FichaDocumentoPage() {
               {r.etiqueta ?? r.registroId}
             </span>
             {puedeEditar && !esTerminal && (
-              <button className="btn-primary" style={{ padding: '3px 8px', fontSize: 11, background: '#7f1d1d' }} onClick={() => quitarRelacion(r.id)}>Quitar</button>
+              <button type="button" className="btn-primary" style={{ padding: '3px 8px', fontSize: 11, background: '#7f1d1d' }} onClick={() => quitarRelacion(r.id)}>Quitar</button>
             )}
           </div>
         ))}
@@ -591,7 +593,7 @@ export default function FichaDocumentoPage() {
               <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Etiqueta</label>
               <input className="input-field" value={nuevaRelEtiqueta} onChange={(e) => setNuevaRelEtiqueta(e.target.value)} />
             </div>
-            <button className="btn-primary" style={{ padding: '8px 12px' }} disabled={guardando}>Relacionar</button>
+            <button type="button" className="btn-primary" style={{ padding: '8px 12px' }} disabled={guardando}>Relacionar</button>
           </form>
         )}
       </div>

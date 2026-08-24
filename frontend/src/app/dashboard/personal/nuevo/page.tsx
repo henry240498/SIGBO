@@ -478,7 +478,7 @@ export default function NuevoBomberoPage() {
         </section>
 
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" disabled={guardando}>
+          <button type="submit" className="btn-primary" disabled={guardando}>
             {guardando ? 'Guardando...' : 'Crear bombero'}
           </button>
           <button

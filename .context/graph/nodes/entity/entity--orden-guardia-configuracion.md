@@ -19,7 +19,7 @@ terminos: [orden, guardia, configuracion, operaciones]
 Configuracion institucional de la Orden de Guardia (fila unica, patron ConfiguracionSistema/AparienciaService): textos de plantilla, reglas de reemplazo (tambien enforced como validacion real, no solo texto), pie de pagina y los dos cargos firmantes -- nunca nombres fijos en codigo, se resuelven contra `organizacion.designaciones` al generar el snapshot.
 
 - **Tabla:** [[table--operaciones-orden-guardia-configuracion|operaciones.orden_guardia_configuracion]]
-- **Columnas mapeadas:** 14
+- **Columnas mapeadas:** 11
 
 ## Donde se usa
 

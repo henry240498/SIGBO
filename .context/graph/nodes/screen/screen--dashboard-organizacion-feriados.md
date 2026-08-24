@@ -12,6 +12,7 @@ archivos:
   - frontend/src/app/dashboard/organizacion/feriados/page.tsx
 edges:
   - [belongs_to, domain--organizacion]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-guardias]
 terminos: [organizacion, feriados, crear, editar, eliminar]
@@ -31,6 +32,7 @@ Pantalla /dashboard/organizacion/feriados.
 ## Relaciones
 
 - `belongs_to` → [[domain--organizacion|Organización Institucional]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-guardias|guardias]]
 

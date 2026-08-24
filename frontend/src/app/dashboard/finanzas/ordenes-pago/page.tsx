@@ -82,37 +82,37 @@ function PanelAcciones({
       {error && <p style={{ color: '#f87171', fontSize: 12 }}>{error}</p>}
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         {puedeCrear && orden.estado === 'BORRADOR' && (
-          <button className="btn-primary" style={{ padding: '4px 10px', fontSize: 12 }} disabled={guardando} onClick={() => ejecutar(() => solicitarOrdenPago(orden.id, orden.version))}>
+          <button type="button" className="btn-primary" style={{ padding: '4px 10px', fontSize: 12 }} disabled={guardando} onClick={() => ejecutar(() => solicitarOrdenPago(orden.id, orden.version))}>
             Solicitar
           </button>
         )}
         {puedeCrear && orden.estado === 'SOLICITADO' && (
-          <button className="btn-primary" style={{ padding: '4px 10px', fontSize: 12 }} disabled={guardando} onClick={() => ejecutar(() => enviarAutorizacionOrdenPago(orden.id, orden.version))}>
+          <button type="button" className="btn-primary" style={{ padding: '4px 10px', fontSize: 12 }} disabled={guardando} onClick={() => ejecutar(() => enviarAutorizacionOrdenPago(orden.id, orden.version))}>
             Enviar a autorizacion
           </button>
         )}
         {puedeAutorizar && orden.estado === 'PENDIENTE_AUTORIZACION' && (
-          <button className="btn-primary" style={{ padding: '4px 10px', fontSize: 12, background: '#16a34a' }} disabled={guardando} onClick={() => ejecutar(() => autorizarOrdenPago(orden.id, orden.version))}>
+          <button type="button" className="btn-primary" style={{ padding: '4px 10px', fontSize: 12, background: '#16a34a' }} disabled={guardando} onClick={() => ejecutar(() => autorizarOrdenPago(orden.id, orden.version))}>
             Autorizar
           </button>
         )}
         {puedeAutorizar && orden.estado === 'PENDIENTE_AUTORIZACION' && (
-          <button className="btn-primary" style={{ padding: '4px 10px', fontSize: 12, background: '#7f1d1d' }} onClick={() => setMostrarRechazar(!mostrarRechazar)}>
+          <button type="button" className="btn-primary" style={{ padding: '4px 10px', fontSize: 12, background: '#7f1d1d' }} onClick={() => setMostrarRechazar(!mostrarRechazar)}>
             Rechazar
           </button>
         )}
         {puedeCrear && orden.estado === 'RECHAZADO' && (
-          <button className="btn-primary" style={{ padding: '4px 10px', fontSize: 12, background: '#475569' }} disabled={guardando} onClick={() => ejecutar(() => reabrirOrdenPago(orden.id, orden.version))}>
+          <button type="button" className="btn-primary" style={{ padding: '4px 10px', fontSize: 12, background: '#475569' }} disabled={guardando} onClick={() => ejecutar(() => reabrirOrdenPago(orden.id, orden.version))}>
             Volver a borrador
           </button>
         )}
         {puedeCrear && orden.estado === 'AUTORIZADO' && (
-          <button className="btn-primary" style={{ padding: '4px 10px', fontSize: 12, background: '#16a34a' }} onClick={() => setMostrarPagar(!mostrarPagar)}>
+          <button type="button" className="btn-primary" style={{ padding: '4px 10px', fontSize: 12, background: '#16a34a' }} onClick={() => setMostrarPagar(!mostrarPagar)}>
             Pagar
           </button>
         )}
         {puedeAnular && !['PAGADO', 'ANULADO', 'RECHAZADO'].includes(orden.estado) && (
-          <button className="btn-primary" style={{ padding: '4px 10px', fontSize: 12, background: '#7f1d1d' }} onClick={() => setMostrarAnular(!mostrarAnular)}>
+          <button type="button" className="btn-primary" style={{ padding: '4px 10px', fontSize: 12, background: '#7f1d1d' }} onClick={() => setMostrarAnular(!mostrarAnular)}>
             Anular
           </button>
         )}
@@ -121,7 +121,7 @@ function PanelAcciones({
       {mostrarRechazar && (
         <div style={{ display: 'flex', gap: 8 }}>
           <input className="input-field" placeholder="Motivo del rechazo" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
-          <button
+          <button type="button"
             className="btn-primary"
             style={{ padding: '4px 10px', fontSize: 12, background: '#7f1d1d' }}
             disabled={guardando || !motivo}
@@ -135,7 +135,7 @@ function PanelAcciones({
       {mostrarAnular && (
         <div style={{ display: 'flex', gap: 8 }}>
           <input className="input-field" placeholder="Motivo de anulacion" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
-          <button
+          <button type="button"
             className="btn-primary"
             style={{ padding: '4px 10px', fontSize: 12, background: '#7f1d1d' }}
             disabled={guardando || !motivo}
@@ -158,7 +158,7 @@ function PanelAcciones({
           ) : (
             <ComboBuscable opciones={opcionesCuenta} value={cuentaBancariaId} onChange={setCuentaBancariaId} ningunaLabel="-- cuenta --" />
           )}
-          <button
+          <button type="button"
             className="btn-primary"
             style={{ padding: '4px 10px', fontSize: 12, background: '#16a34a' }}
             disabled={guardando || !fechaPago || (!cajaId && !cuentaBancariaId)}
@@ -267,7 +267,7 @@ export default function OrdenesPagoPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Ordenes de pago ({ordenes?.length ?? 0})</h2>
         {puedeCrear && (
-          <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Nueva orden'}
           </button>
         )}
@@ -313,7 +313,7 @@ export default function OrdenesPagoPage() {
               <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
             </div>
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Crear orden (Borrador)'}
           </button>
         </form>
@@ -342,7 +342,7 @@ export default function OrdenesPagoPage() {
                     <span className="badge" style={colorEstado(o.estado)}>{o.estado}</span>
                   </td>
                   <td style={{ padding: '6px 4px' }}>
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => setExpandidaId(expandidaId === o.id ? null : o.id)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => setExpandidaId(expandidaId === o.id ? null : o.id)}>
                       {expandidaId === o.id ? 'Ocultar' : 'Gestionar'}
                     </button>
                   </td>

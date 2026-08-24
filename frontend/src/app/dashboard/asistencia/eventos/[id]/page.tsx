@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { useParams, useRouter } from 'next/navigation';
 import { obtenerSesion } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
@@ -35,6 +36,7 @@ const COLOR_ESTADO: Record<string, string> = {
 };
 
 export default function DetalleEventoPage() {
+  const confirmar = useConfirmacion();
   const params = useParams();
   const router = useRouter();
   const eventoId = params.id as string;
@@ -140,7 +142,7 @@ export default function DetalleEventoPage() {
   }
 
   async function quitar(participanteId: string) {
-    if (!window.confirm('Quitar a esta persona del evento?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Quitar a esta persona del evento?', confirmar: 'Continuar', peligro: true })) return;
     setError(null);
     try {
       await quitarParticipante(eventoId, participanteId);
@@ -164,7 +166,7 @@ export default function DetalleEventoPage() {
               <span className="badge">{evento.estado}</span>
             </div>
           </div>
-          <button className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/asistencia/eventos')}>
+          <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/asistencia/eventos')}>
             Volver
           </button>
         </div>
@@ -200,7 +202,7 @@ export default function DetalleEventoPage() {
                 placeholderBusqueda="Buscar por codigo o nombre..."
               />
             </div>
-            <button className="btn-primary" onClick={agregarBombero} disabled={!bomberoSeleccionado}>
+            <button type="button" className="btn-primary" onClick={agregarBombero} disabled={!bomberoSeleccionado}>
               Agregar personal
             </button>
             <button
@@ -245,7 +247,7 @@ export default function DetalleEventoPage() {
                   <input className="input-field" value={externo.observacion} onChange={(e) => setExterno({ ...externo, observacion: e.target.value })} />
                 </div>
               </div>
-              <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+              <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
                 {guardando ? 'Guardando...' : 'Agregar externo'}
               </button>
             </form>
@@ -289,7 +291,7 @@ export default function DetalleEventoPage() {
                   {puedeEditar && (
                     <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                       {p.tipoParticipante === 'PERSONAL' && (
-                        <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 11 }} onClick={() => calcularDesde(p.id)}>
+                        <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 11 }} onClick={() => calcularDesde(p.id)}>
                           Calcular desde marcaciones
                         </button>
                       )}
@@ -305,7 +307,7 @@ export default function DetalleEventoPage() {
                           </option>
                         ))}
                       </select>
-                      <button
+                      <button type="button"
                         className="btn-primary"
                         style={{ padding: '4px 8px', fontSize: 11, background: '#7f1d1d' }}
                         onClick={() => quitar(p.id)}

@@ -29,8 +29,8 @@ export default function VencimientosDocumentosPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Vencimientos ({documentos?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 6 }}>
-          <button className="btn-primary" style={{ background: vista === 'PROXIMOS' ? undefined : '#334155' }} onClick={() => setVista('PROXIMOS')}>Proximos a vencer</button>
-          <button className="btn-primary" style={{ background: vista === 'VENCIDOS' ? '#7f1d1d' : '#334155' }} onClick={() => setVista('VENCIDOS')}>Vencidos</button>
+          <button type="button" className="btn-primary" style={{ background: vista === 'PROXIMOS' ? undefined : '#334155' }} onClick={() => setVista('PROXIMOS')}>Proximos a vencer</button>
+          <button type="button" className="btn-primary" style={{ background: vista === 'VENCIDOS' ? '#7f1d1d' : '#334155' }} onClick={() => setVista('VENCIDOS')}>Vencidos</button>
         </div>
       </div>
 

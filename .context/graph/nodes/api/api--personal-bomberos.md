@@ -7,13 +7,13 @@ dominio: personal
 resumen: Superficie HTTP de bomberos bajo /api/v1/personal/bomberos.
 prefijo: /api/v1/personal/bomberos
 capa: backend
-permisos: [personal:ver, personal:crear, personal:editar, personal:eliminar, personal:eliminar_fisico]
+permisos: [personal:ver, personal:crear, personal:editar, personal:eliminar, personal:eliminar_fisico, personal:gestionar_firma_digital]
 archivos:
   - backend/src/modules/personal/bomberos.controller.ts
 edges:
   - [belongs_to, domain--personal]
   - [exposes, service--personal-bomberos]
-terminos: [bomberos, personal, ver, crear, editar, eliminar, fisico]
+terminos: [bomberos, personal, ver, crear, editar, eliminar, fisico, gestionar, firma, digital]
 ---
 
 # BomberosController
@@ -34,6 +34,8 @@ Superficie HTTP de bomberos bajo /api/v1/personal/bomberos.
 | PATCH | `/personal/bomberos/:id` | `personal:editar` |
 | PATCH | `/personal/bomberos/:id/baja` | `personal:eliminar` |
 | DELETE | `/personal/bomberos/:id` | `personal:eliminar_fisico` |
+| DELETE | `/personal/bomberos/:id/firma-digital` | `personal:gestionar_firma_digital` |
+| PATCH | `/personal/bomberos/:id/autorizacion-firma` | `personal:gestionar_firma_digital` |
 
 ## Archivos
 

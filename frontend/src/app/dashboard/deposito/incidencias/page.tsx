@@ -51,7 +51,7 @@ function FilaResolver({ incidencia, onResuelta }: { incidencia: IncidenciaDeposi
       {error && <p style={{ color: '#f87171', fontSize: 12, gridColumn: '1 / -1' }}>{error}</p>}
       <ComboBuscable opciones={[{ value: 'RESUELTA', label: 'Resuelta' }, { value: 'DESCARTADA', label: 'Descartada' }]} value={estado} onChange={setEstado} ningunaLabel="Resuelta" />
       <input className="input-field" placeholder="Resolucion" value={resolucion} onChange={(e) => setResolucion(e.target.value)} />
-      <button className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} onClick={confirmar} disabled={guardando || !resolucion}>
+      <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} onClick={confirmar} disabled={guardando || !resolucion}>
         {guardando ? 'Guardando...' : 'Confirmar'}
       </button>
     </div>
@@ -155,7 +155,7 @@ export default function IncidenciasDepositoPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Incidencias ({incidencias?.length ?? 0})</h2>
         {puedeCrear && (
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               limpiarForm();
@@ -209,7 +209,7 @@ export default function IncidenciasDepositoPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Gravedad</label>
             <ComboBuscable opciones={GRAVEDADES} value={gravedad} onChange={setGravedad} ningunaLabel="MEDIA" maxWidth={160} />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Registrar incidencia'}
           </button>
         </form>
@@ -245,7 +245,7 @@ export default function IncidenciasDepositoPage() {
                   </td>
                   <td style={{ padding: '6px 4px' }}>
                     {puedeResolver && (i.estado === 'ABIERTA' || i.estado === 'EN_REVISION') && (
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => setExpandidaId(expandidaId === i.id ? null : i.id)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => setExpandidaId(expandidaId === i.id ? null : i.id)}>
                         {expandidaId === i.id ? 'Cerrar' : 'Resolver'}
                       </button>
                     )}

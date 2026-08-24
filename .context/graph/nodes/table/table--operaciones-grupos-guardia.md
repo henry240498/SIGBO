@@ -4,23 +4,24 @@ tipo: TABLE
 nombre: operaciones.grupos_guardia
 nivel: L2
 dominio: asistencia
-resumen: Tabla operaciones.grupos_guardia (13 columnas). Creada en 025_guardias.sql, modificada por 026_guardias_planificacion.sql.
+resumen: Tabla operaciones.grupos_guardia (14 columnas). Creada en 025_guardias.sql, modificada por 026_guardias_planificacion.sql, 034_grupos_guardia_dias_fijos.sql.
 tabla: grupos_guardia
 archivos:
   - database/migrations/025_guardias.sql
   - database/migrations/026_guardias_planificacion.sql
+  - database/migrations/034_grupos_guardia_dias_fijos.sql
 edges:
   - [defined_in, file--025-guardias]
   - [belongs_to, domain--asistencia]
   - [references, table--personal-bomberos]
-terminos: [operaciones, grupos, guardia, nombre, oficial, cargo, estado, observaciones, creado, actualizado, ciclo, rotacion, dias, cantidad, minima, maxima, oficiales, choferes]
+terminos: [operaciones, grupos, guardia, nombre, oficial, cargo, estado, observaciones, creado, actualizado, ciclo, rotacion, dias, cantidad, minima, maxima, oficiales, choferes, semana, csv]
 ---
 
 # operaciones.grupos_guardia
 
-Tabla operaciones.grupos_guardia (13 columnas). Creada en 025_guardias.sql, modificada por 026_guardias_planificacion.sql.
+Tabla operaciones.grupos_guardia (14 columnas). Creada en 025_guardias.sql, modificada por 026_guardias_planificacion.sql, 034_grupos_guardia_dias_fijos.sql.
 
-- **Esquema:** operaciones · **Columnas:** 13
+- **Esquema:** operaciones · **Columnas:** 14
 
 ## Llaves foraneas
 
@@ -43,6 +44,7 @@ Tabla operaciones.grupos_guardia (13 columnas). Creada en 025_guardias.sql, modi
 | cantidad_maxima | INT |
 | cantidad_oficiales | INT |
 | cantidad_choferes | INT |
+| dias_semana_csv | NVARCHAR(27) |
 
 ## Donde se usa
 
@@ -57,6 +59,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 
 - `database/migrations/025_guardias.sql`
 - `database/migrations/026_guardias_planificacion.sql`
+- `database/migrations/034_grupos_guardia_dias_fijos.sql`
 
 ## Relaciones
 

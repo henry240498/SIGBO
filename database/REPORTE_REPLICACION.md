@@ -1,6 +1,12 @@
 # REPORTE DE REPLICACIÓN DE BASE DE DATOS — SIGBO-CBVC
 
 **Fecha del análisis:** 2026-08-07
+> **ARCHIVO HISTÓRICO.** Este reporte describe una reconstrucción realizada el
+> 2026-08-07 a partir de fuentes externas. No representa el estado actual del
+> repositorio, no es una guía de instalación y no debe usarse para elegir
+> versiones, autenticación ni scripts de migración. Consulte
+> [README.md](README.md) y `run-migrations.ps1` para la ruta vigente.
+
 **Alcance:** proyecto `SIGBO` (`C:\Users\PC-HORIZONTE\Documents\GitHub\SIGBO`)
 
 > **Regla fundamental de este reporte:** todo lo escrito aquí distingue explícitamente

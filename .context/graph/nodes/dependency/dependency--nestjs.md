@@ -1,36 +1,37 @@
 ---
 id: dependency--nestjs
 tipo: DEPENDENCY
-nombre: NestJS 10 + TypeORM 0.3
+nombre: NestJS 11 + TypeORM 0.3
 nivel: L1
-resumen: Framework del backend. NestJS 10.4 con TypeORM 0.3.20, mssql 11, Passport JWT, class-validator y Swagger.
+resumen: Framework del backend. NestJS 11 con TypeORM 0.3.20, mssql 11, Passport JWT, class-validator, Swagger y pruebas Jest.
 archivos:
   - backend/package.json
-terminos: [nestjs, typeorm, mssql, passport, jwt, swagger, classvalidator, framework, backend, nest, type, orm, class, validator]
+terminos: [nestjs, typeorm, mssql, passport, jwt, swagger, classvalidator, framework, backend, nest, type, orm, class, validator, pruebas, jest]
 ---
 
-# NestJS 10 + TypeORM 0.3
+# NestJS 11 + TypeORM 0.3
 
-Framework del backend. NestJS 10.4 con TypeORM 0.3.20, mssql 11, Passport JWT, class-validator y Swagger.
+Framework del backend. NestJS 11 con TypeORM 0.3.20, mssql 11, Passport JWT, class-validator, Swagger y pruebas Jest.
 
 ## Version y piezas en uso
 
 | Paquete | Version | Para que |
 |---|---|---|
-| `@nestjs/core`, `common`, `platform-express` | ^10.4.15 | Framework |
-| `@nestjs/typeorm` + `typeorm` | ^10.0.2 / ^0.3.20 | ORM y repositorios |
+| `@nestjs/core`, `common`, `platform-express` | ^11.2.1 | Framework |
+| `@nestjs/typeorm` + `typeorm` | ^11.0.3 / ^0.3.20 | ORM y repositorios |
 | `mssql` | ^11.0.1 | Driver de SQL Server |
-| `@nestjs/jwt`, `passport`, `passport-jwt` | ^10.2 / ^0.7 / ^4.0 | Autenticacion |
+| `@nestjs/jwt`, `passport`, `passport-jwt` | ^11.0.2 / ^0.7 / ^4.0 | Autenticacion |
 | `class-validator`, `class-transformer` | ^0.14 / ^0.5 | Validacion de DTOs |
-| `@nestjs/swagger` | ^7.4.2 | Documentacion en `/api/docs` |
+| `@nestjs/swagger` | ^11.4.7 | Documentacion en `/api/docs` |
 | `bcryptjs` | ^2.4.3 | Hash de contrasenas |
 | `helmet` | ^7.2.0 | Cabeceras de seguridad |
 | `typeorm-naming-strategies` | ^4.1.0 | `SnakeNamingStrategy` |
 
 ## Generacion de documentos y planillas
 
-`pdfkit` ^0.15.2 (PDF de comunicaciones), `docx` ^9.1.0, `exceljs` ^4.4.0 y
-`xlsx` ^0.18.5 (importacion del marcador y exportaciones), `multer` ^1.4.5 (subidas).
+`pdfkit` ^0.15.2 (PDF de comunicaciones), `docx` ^9.1.0 y `exceljs` ^4.4.0
+(importacion del marcador y exportaciones), `multer` 2.2.0 (subidas). No se usa
+`xlsx`.
 
 ## Restricciones que impone
 
@@ -42,14 +43,13 @@ Framework del backend. NestJS 10.4 con TypeORM 0.3.20, mssql 11, Passport JWT, c
   particularidad que mas sorprende al escribir un servicio nuevo.
 - `reflect-metadata` debe importarse **primero** en `main.ts`, antes de cualquier
   decorador.
-- NestJS 10 requiere Node 18+. Ver [[dependency--nodejs]].
+- NestJS 11 se ejecuta con Node 20 o posterior. Ver [[dependency--nodejs]].
 
 ## Lo que NO esta instalado
 
-Sin Redis, sin Kafka, sin Elasticsearch, sin MinIO — ver
-[[decision--monolito-modular]]. Y **sin framework de pruebas configurado**: no hay
-suite de tests en el backend, asi que la verificacion de un cambio es manual o via
-Swagger.
+Sin Redis, sin Kafka, sin Elasticsearch ni MinIO — ver
+[[decision--monolito-modular]]. El backend usa Jest con `ts-jest`; CI ejecuta
+`npm run test:ci` además de compilar y auditar dependencias.
 
 
 ## Archivos

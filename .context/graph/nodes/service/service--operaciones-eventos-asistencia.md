@@ -32,7 +32,7 @@ Logica de negocio de eventos asistencia (modulo operaciones).
 
 ## Metodos
 
-`findAll()` · `findOne()` · `create()` · `update()` · `listarParticipantes()` · `agregarParticipante()` · `actualizarParticipacion()` · `quitarParticipante()` · `calcularSolapamientoMarcaciones()` · `calcularYAplicarParticipacion()`
+`findAll()` · `findOne()` · `create()` · `update()` · `listarParticipantes()` · `agregarParticipante()` · `agregarParticipanteExistente()` · `actualizarParticipacion()` · `quitarParticipante()` · `calcularSolapamientoMarcaciones()` · `calcularYAplicarParticipacion()`
 
 ## Archivos
 
@@ -56,6 +56,7 @@ Logica de negocio de eventos asistencia (modulo operaciones).
 
 ## Referenciado por
 
+- [[service--academia-sesiones-academia|SesionesAcademiaService]] `uses` →
 - [[api--operaciones-eventos-asistencia|EventosAsistenciaController]] `exposes` →
 - [[api--operaciones-marcaciones|MarcacionesController]] `exposes` →
 

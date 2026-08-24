@@ -84,7 +84,7 @@ export default function PermisosPage() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Permisos ({permisos?.length ?? 0})</h2>
-        <button className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
+        <button type="button" className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
           {mostrarForm ? 'Cancelar' : 'Nuevo permiso'}
         </button>
       </div>
@@ -113,7 +113,7 @@ export default function PermisosPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
             <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
-          <button className="btn-primary" style={{ gridColumn: '1 / -1', justifySelf: 'start' }}>
+          <button type="submit" className="btn-primary" style={{ gridColumn: '1 / -1', justifySelf: 'start' }}>
             Crear permiso
           </button>
         </form>
@@ -132,7 +132,7 @@ export default function PermisosPage() {
                     {p.esSistema ? (
                       <span style={{ fontSize: 10, color: '#64748b' }}>sistema</span>
                     ) : (
-                      <button
+                      <button type="button"
                         onClick={() => eliminar(p.id)}
                         style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
                       >

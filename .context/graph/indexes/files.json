@@ -19,8 +19,23 @@
   "rule--frontend-no-autoriza",
   "rule--modulo-visible-por-prefijo"
  ],
+ "backend/src/shared/entities/actividad-academica.entity.ts": [
+  "entity--actividad-academica"
+ ],
  "backend/src/shared/entities/actividad-profesional.entity.ts": [
   "entity--actividad-profesional"
+ ],
+ "backend/src/shared/entities/acuerdo-aporte.entity.ts": [
+  "entity--acuerdo-aporte"
+ ],
+ "backend/src/shared/entities/aplicacion-beneficio.entity.ts": [
+  "entity--aplicacion-beneficio"
+ ],
+ "backend/src/shared/entities/aporte.entity.ts": [
+  "entity--aporte"
+ ],
+ "backend/src/shared/entities/articulo.entity.ts": [
+  "entity--articulo"
  ],
  "backend/src/shared/entities/ascenso.entity.ts": [
   "entity--ascenso"
@@ -37,6 +52,12 @@
  "backend/src/shared/entities/asignacion-rol.entity.ts": [
   "entity--asignacion-rol"
  ],
+ "backend/src/shared/entities/baja-deposito.entity.ts": [
+  "entity--baja-deposito"
+ ],
+ "backend/src/shared/entities/beneficio-socio.entity.ts": [
+  "entity--beneficio-socio"
+ ],
  "backend/src/shared/entities/bombero-especialidad.entity.ts": [
   "entity--bombero-especialidad"
  ],
@@ -46,11 +67,17 @@
  "backend/src/shared/entities/brigada.entity.ts": [
   "entity--brigada"
  ],
+ "backend/src/shared/entities/caja.entity.ts": [
+  "entity--caja"
+ ],
  "backend/src/shared/entities/cambio-guardia.entity.ts": [
   "entity--cambio-guardia"
  ],
  "backend/src/shared/entities/cargo.entity.ts": [
   "entity--cargo"
+ ],
+ "backend/src/shared/entities/categoria-articulo.entity.ts": [
+  "entity--categoria-articulo"
  ],
  "backend/src/shared/entities/categoria-denuncia.entity.ts": [
   "entity--categoria-denuncia"
@@ -98,8 +125,14 @@
  "backend/src/shared/entities/cuartel.entity.ts": [
   "entity--cuartel"
  ],
- "backend/src/shared/entities/curso.entity.ts": [
-  "entity--curso"
+ "backend/src/shared/entities/cuenta-bancaria.entity.ts": [
+  "entity--cuenta-bancaria"
+ ],
+ "backend/src/shared/entities/cuota.entity.ts": [
+  "entity--cuota"
+ ],
+ "backend/src/shared/entities/curso-externo-cache.entity.ts": [
+  "entity--curso-externo-cache"
  ],
  "backend/src/shared/entities/denuncia.entity.ts": [
   "entity--denuncia"
@@ -110,6 +143,24 @@
  "backend/src/shared/entities/designacion.entity.ts": [
   "entity--designacion"
  ],
+ "backend/src/shared/entities/documento-relacion.entity.ts": [
+  "entity--documento-relacion"
+ ],
+ "backend/src/shared/entities/documento-respaldo.entity.ts": [
+  "entity--documento-respaldo"
+ ],
+ "backend/src/shared/entities/documento.entity.ts": [
+  "entity--documento"
+ ],
+ "backend/src/shared/entities/ejercicio-fiscal.entity.ts": [
+  "entity--ejercicio-fiscal"
+ ],
+ "backend/src/shared/entities/entrada-deposito-item.entity.ts": [
+  "entity--entrada-deposito-item"
+ ],
+ "backend/src/shared/entities/entrada-deposito.entity.ts": [
+  "entity--entrada-deposito"
+ ],
  "backend/src/shared/entities/equipo.entity.ts": [
   "entity--equipo"
  ],
@@ -119,14 +170,26 @@
  "backend/src/shared/entities/esquema-horario-guardia.entity.ts": [
   "entity--esquema-horario-guardia"
  ],
+ "backend/src/shared/entities/evaluacion-academica.entity.ts": [
+  "entity--evaluacion-academica"
+ ],
  "backend/src/shared/entities/evento-asistencia.entity.ts": [
   "entity--evento-asistencia"
  ],
  "backend/src/shared/entities/evidencia-denuncia.entity.ts": [
   "entity--evidencia-denuncia"
  ],
+ "backend/src/shared/entities/expediente.entity.ts": [
+  "entity--expediente"
+ ],
+ "backend/src/shared/entities/factura.entity.ts": [
+  "entity--factura"
+ ],
  "backend/src/shared/entities/feriado.entity.ts": [
   "entity--feriado"
+ ],
+ "backend/src/shared/entities/firma-documento.entity.ts": [
+  "entity--firma-documento"
  ],
  "backend/src/shared/entities/foja-servicio.entity.ts": [
   "entity--foja-servicio"
@@ -152,6 +215,27 @@
  "backend/src/shared/entities/historial-institucional.entity.ts": [
   "entity--historial-institucional"
  ],
+ "backend/src/shared/entities/ia-configuracion.entity.ts": [
+  "entity--ia-configuracion"
+ ],
+ "backend/src/shared/entities/ia-conversacion.entity.ts": [
+  "entity--ia-conversacion"
+ ],
+ "backend/src/shared/entities/ia-ejecucion-herramienta.entity.ts": [
+  "entity--ia-ejecucion-herramienta"
+ ],
+ "backend/src/shared/entities/ia-historial-configuracion.entity.ts": [
+  "entity--ia-historial-configuracion"
+ ],
+ "backend/src/shared/entities/ia-mensaje.entity.ts": [
+  "entity--ia-mensaje"
+ ],
+ "backend/src/shared/entities/ia-propuesta-mejora.entity.ts": [
+  "entity--ia-propuesta-mejora"
+ ],
+ "backend/src/shared/entities/identidad-institucional.entity.ts": [
+  "entity--identidad-institucional"
+ ],
  "backend/src/shared/entities/idioma-bombero.entity.ts": [
   "entity--idioma-bombero"
  ],
@@ -161,8 +245,11 @@
  "backend/src/shared/entities/importacion-marcador.entity.ts": [
   "entity--importacion-marcador"
  ],
- "backend/src/shared/entities/inscripcion-curso.entity.ts": [
-  "entity--inscripcion-curso"
+ "backend/src/shared/entities/incidencia-deposito.entity.ts": [
+  "entity--incidencia-deposito"
+ ],
+ "backend/src/shared/entities/inscripcion-actividad-academica.entity.ts": [
+  "entity--inscripcion-actividad-academica"
  ],
  "backend/src/shared/entities/inspeccion-estacion.entity.ts": [
   "entity--inspeccion-estacion"
@@ -170,8 +257,26 @@
  "backend/src/shared/entities/inspeccion-movil.entity.ts": [
   "entity--inspeccion-movil"
  ],
+ "backend/src/shared/entities/instructor-actividad-academica.entity.ts": [
+  "entity--instructor-actividad-academica"
+ ],
+ "backend/src/shared/entities/instructor-externo.entity.ts": [
+  "entity--instructor-externo"
+ ],
+ "backend/src/shared/entities/inventario-fisico-deposito.entity.ts": [
+  "entity--inventario-fisico-deposito"
+ ],
+ "backend/src/shared/entities/inventario-fisico-item-deposito.entity.ts": [
+  "entity--inventario-fisico-item-deposito"
+ ],
  "backend/src/shared/entities/log-auditoria.entity.ts": [
   "entity--log-auditoria"
+ ],
+ "backend/src/shared/entities/lote-articulo.entity.ts": [
+  "entity--lote-articulo"
+ ],
+ "backend/src/shared/entities/mantenimiento-deposito.entity.ts": [
+  "entity--mantenimiento-deposito"
  ],
  "backend/src/shared/entities/mantenimiento-equipo.entity.ts": [
   "entity--mantenimiento-equipo"
@@ -182,11 +287,29 @@
  "backend/src/shared/entities/marcacion-asistencia.entity.ts": [
   "entity--marcacion-asistencia"
  ],
- "backend/src/shared/entities/materia.entity.ts": [
-  "entity--materia"
+ "backend/src/shared/entities/movimiento-bancario.entity.ts": [
+  "entity--movimiento-bancario"
+ ],
+ "backend/src/shared/entities/movimiento-deposito.entity.ts": [
+  "entity--movimiento-deposito"
+ ],
+ "backend/src/shared/entities/movimiento-financiero.entity.ts": [
+  "entity--movimiento-financiero"
+ ],
+ "backend/src/shared/entities/nota-credito.entity.ts": [
+  "entity--nota-credito"
+ ],
+ "backend/src/shared/entities/nota-evaluacion-academica.entity.ts": [
+  "entity--nota-evaluacion-academica"
  ],
  "backend/src/shared/entities/novedad-guardia.entity.ts": [
   "entity--novedad-guardia"
+ ],
+ "backend/src/shared/entities/numeracion-comprobante.entity.ts": [
+  "entity--numeracion-comprobante"
+ ],
+ "backend/src/shared/entities/numeracion-documento.entity.ts": [
+  "entity--numeracion-documento"
  ],
  "backend/src/shared/entities/orden-guardia-configuracion.entity.ts": [
   "entity--orden-guardia-configuracion"
@@ -196,6 +319,9 @@
  ],
  "backend/src/shared/entities/orden-guardia.entity.ts": [
   "entity--orden-guardia"
+ ],
+ "backend/src/shared/entities/orden-pago.entity.ts": [
+  "entity--orden-pago"
  ],
  "backend/src/shared/entities/parametro.entity.ts": [
   "entity--parametro"
@@ -215,8 +341,23 @@
  "backend/src/shared/entities/personal-servicio.entity.ts": [
   "entity--personal-servicio"
  ],
+ "backend/src/shared/entities/plantilla-documento.entity.ts": [
+  "entity--plantilla-documento"
+ ],
+ "backend/src/shared/entities/prestamo-deposito-item.entity.ts": [
+  "entity--prestamo-deposito-item"
+ ],
+ "backend/src/shared/entities/prestamo-deposito.entity.ts": [
+  "entity--prestamo-deposito"
+ ],
  "backend/src/shared/entities/prestamo-equipo.entity.ts": [
   "entity--prestamo-equipo"
+ ],
+ "backend/src/shared/entities/presupuesto.entity.ts": [
+  "entity--presupuesto"
+ ],
+ "backend/src/shared/entities/proveedor-deposito.entity.ts": [
+  "entity--proveedor-deposito"
  ],
  "backend/src/shared/entities/publicacion.entity.ts": [
   "entity--publicacion"
@@ -240,11 +381,20 @@
  "backend/src/shared/entities/sesion.entity.ts": [
   "entity--sesion"
  ],
+ "backend/src/shared/entities/socio-historial-codigo.entity.ts": [
+  "entity--socio-historial-codigo"
+ ],
+ "backend/src/shared/entities/socio-protector.entity.ts": [
+  "entity--socio-protector"
+ ],
  "backend/src/shared/entities/sorteo-guardia.entity.ts": [
   "entity--sorteo-guardia"
  ],
  "backend/src/shared/entities/sorteo-participante.entity.ts": [
   "entity--sorteo-participante"
+ ],
+ "backend/src/shared/entities/tenencia-deposito.entity.ts": [
+  "entity--tenencia-deposito"
  ],
  "backend/src/shared/entities/tipo-bombero.entity.ts": [
   "entity--tipo-bombero"
@@ -260,8 +410,14 @@
   "decision--tolerancias-parametrizables",
   "rule--tolerancia-null-es-la-general"
  ],
+ "backend/src/shared/entities/turno-caja.entity.ts": [
+  "entity--turno-caja"
+ ],
  "backend/src/shared/entities/turno.entity.ts": [
   "entity--turno"
+ ],
+ "backend/src/shared/entities/ubicacion-deposito.entity.ts": [
+  "entity--ubicacion-deposito"
  ],
  "backend/src/shared/entities/unidad.entity.ts": [
   "entity--unidad"
@@ -280,6 +436,9 @@
  ],
  "backend/src/shared/entities/vehiculo.entity.ts": [
   "entity--vehiculo"
+ ],
+ "backend/src/shared/entities/version-archivo-documento.entity.ts": [
+  "entity--version-archivo-documento"
  ],
  "database/migrations/000_create_database.sql": [
   "file--000-create-database"
@@ -310,13 +469,7 @@
  ],
  "database/migrations/004_academia.sql": [
   "file--004-academia",
-  "table--academia-aspirantes",
-  "table--academia-materias",
-  "table--academia-cursos",
-  "table--academia-inscripciones-cursos",
-  "table--academia-examenes",
-  "table--academia-notas-examenes",
-  "table--academia-asistencia-academia"
+  "table--academia-aspirantes"
  ],
  "database/migrations/005_operaciones.sql": [
   "file--005-operaciones",
@@ -366,11 +519,6 @@
   "table--personal-licencias",
   "table--personal-historial-medico",
   "table--personal-historial-disciplinario",
-  "table--academia-cursos",
-  "table--academia-inscripciones-cursos",
-  "table--academia-examenes",
-  "table--academia-notas-examenes",
-  "table--academia-asistencia-academia",
   "table--operaciones-eventos-asistencia",
   "table--operaciones-marcaciones-asistencia",
   "table--operaciones-guardias",
@@ -561,6 +709,216 @@
   "table--denuncias-evidencias-denuncia",
   "workflow--denuncia-rapida"
  ],
+ "database/migrations/031_identidad_institucional.sql": [
+  "file--031-identidad-institucional",
+  "table--organizacion-identidad-institucional"
+ ],
+ "database/migrations/032_personal_autorizacion_firma.sql": [
+  "file--032-personal-autorizacion-firma",
+  "table--personal-bomberos"
+ ],
+ "database/migrations/033_orden_guardia_drop_columnas_redundantes.sql": [
+  "file--033-orden-guardia-drop-columnas-redundantes",
+  "table--operaciones-orden-guardia-configuracion"
+ ],
+ "database/migrations/034_grupos_guardia_dias_fijos.sql": [
+  "file--034-grupos-guardia-dias-fijos",
+  "table--operaciones-grupos-guardia"
+ ],
+ "database/migrations/035_roles_acceso_total.sql": [
+  "file--035-roles-acceso-total",
+  "table--seguridad-roles"
+ ],
+ "database/migrations/036_academia_estructura.sql": [
+  "file--036-academia-estructura",
+  "table--organizacion-parametros",
+  "table--academia-instructores-externos",
+  "table--academia-actividades",
+  "table--academia-instructores-actividad",
+  "table--academia-inscripciones",
+  "table--academia-evaluaciones",
+  "table--academia-notas-evaluacion"
+ ],
+ "database/migrations/037_academia_integracion_asistencia_certificaciones.sql": [
+  "file--037-academia-integracion-asistencia-certificaciones",
+  "table--personal-certificaciones",
+  "table--operaciones-eventos-asistencia"
+ ],
+ "database/migrations/038_academia_limpieza_tablas_legadas.sql": [
+  "file--038-academia-limpieza-tablas-legadas"
+ ],
+ "database/migrations/039_academia_historial_institucional.sql": [
+  "file--039-academia-historial-institucional",
+  "table--personal-historial-institucional"
+ ],
+ "database/migrations/040_academia_cursos_externos_cache.sql": [
+  "file--040-academia-cursos-externos-cache",
+  "table--academia-cursos-externos-cache"
+ ],
+ "database/migrations/041_deposito_estructura.sql": [
+  "file--041-deposito-estructura",
+  "table--organizacion-parametros",
+  "table--deposito-categorias-articulo",
+  "table--deposito-articulos",
+  "table--deposito-lotes-articulo",
+  "table--deposito-ubicaciones",
+  "table--deposito-tenencias",
+  "table--deposito-movimientos"
+ ],
+ "database/migrations/042_deposito_entradas.sql": [
+  "file--042-deposito-entradas",
+  "table--deposito-proveedores",
+  "table--deposito-entradas",
+  "table--deposito-entrada-items"
+ ],
+ "database/migrations/043_deposito_bajas.sql": [
+  "file--043-deposito-bajas",
+  "table--organizacion-parametros",
+  "table--deposito-bajas"
+ ],
+ "database/migrations/044_deposito_prestamos.sql": [
+  "file--044-deposito-prestamos",
+  "table--organizacion-parametros",
+  "table--deposito-prestamos",
+  "table--deposito-prestamo-items"
+ ],
+ "database/migrations/045_deposito_inventario_fisico.sql": [
+  "file--045-deposito-inventario-fisico",
+  "table--deposito-inventarios-fisicos",
+  "table--deposito-inventario-fisico-items",
+  "table--deposito-incidencias"
+ ],
+ "database/migrations/046_deposito_mantenimientos.sql": [
+  "file--046-deposito-mantenimientos",
+  "table--deposito-mantenimientos"
+ ],
+ "database/migrations/047_deposito_permiso_parametros.sql": [
+  "file--047-deposito-permiso-parametros"
+ ],
+ "database/migrations/048_finanzas_estructura.sql": [
+  "file--048-finanzas-estructura",
+  "table--organizacion-parametros",
+  "table--finanzas-ejercicios-fiscales",
+  "table--finanzas-cajas",
+  "table--finanzas-turnos-caja",
+  "table--finanzas-cuentas-bancarias"
+ ],
+ "database/migrations/049_finanzas_movimientos.sql": [
+  "file--049-finanzas-movimientos",
+  "table--finanzas-movimientos-financieros",
+  "table--finanzas-documentos-respaldo",
+  "table--finanzas-cuotas"
+ ],
+ "database/migrations/050_finanzas_bancos_presupuesto.sql": [
+  "file--050-finanzas-bancos-presupuesto",
+  "table--finanzas-movimientos-bancarios",
+  "table--finanzas-presupuestos"
+ ],
+ "database/migrations/051_finanzas_ordenes_pago.sql": [
+  "file--051-finanzas-ordenes-pago",
+  "table--finanzas-movimientos-financieros",
+  "table--finanzas-documentos-respaldo",
+  "table--finanzas-ordenes-pago"
+ ],
+ "database/migrations/052_documentos_estructura.sql": [
+  "file--052-documentos-estructura",
+  "table--organizacion-parametros",
+  "table--documentos-numeraciones",
+  "table--documentos-documentos-institucionales"
+ ],
+ "database/migrations/053_documentos_relaciones_versiones.sql": [
+  "file--053-documentos-relaciones-versiones",
+  "table--documentos-relaciones",
+  "table--documentos-versiones-archivo"
+ ],
+ "database/migrations/054_documentos_expedientes_plantillas.sql": [
+  "file--054-documentos-expedientes-plantillas",
+  "table--documentos-documentos-institucionales",
+  "table--documentos-expedientes",
+  "table--documentos-plantillas"
+ ],
+ "database/migrations/055_documentos_firmas.sql": [
+  "file--055-documentos-firmas",
+  "table--documentos-firmas-documento"
+ ],
+ "database/migrations/056_documentos_permisos.sql": [
+  "file--056-documentos-permisos"
+ ],
+ "database/migrations/057_ia_estructura.sql": [
+  "file--057-ia-estructura",
+  "table--ia-configuraciones",
+  "table--ia-historial-configuracion",
+  "table--ia-conversaciones",
+  "table--ia-mensajes",
+  "table--ia-ejecuciones-herramientas",
+  "table--ia-propuestas-mejora"
+ ],
+ "database/migrations/058_ia_permisos.sql": [
+  "file--058-ia-permisos"
+ ],
+ "database/migrations/059_documentos_disponible_ia.sql": [
+  "file--059-documentos-disponible-ia",
+  "table--documentos-documentos-institucionales"
+ ],
+ "database/migrations/060_ia_motor_local.sql": [
+  "file--060-ia-motor-local",
+  "table--ia-configuraciones",
+  "table--ia-conversaciones",
+  "table--ia-mensajes"
+ ],
+ "database/migrations/061_ia_avatar_predefinido.sql": [
+  "file--061-ia-avatar-predefinido",
+  "table--ia-configuraciones"
+ ],
+ "database/migrations/062_finanzas_socios_protectores.sql": [
+  "file--062-finanzas-socios-protectores",
+  "table--organizacion-parametros",
+  "table--finanzas-socios-protectores",
+  "table--finanzas-socios-historial-codigo"
+ ],
+ "database/migrations/063_finanzas_acuerdos_aportes.sql": [
+  "file--063-finanzas-acuerdos-aportes",
+  "table--finanzas-movimientos-financieros",
+  "table--finanzas-acuerdos-aporte",
+  "table--finanzas-aportes"
+ ],
+ "database/migrations/064_finanzas_beneficios_socios.sql": [
+  "file--064-finanzas-beneficios-socios",
+  "table--academia-actividades",
+  "table--academia-inscripciones",
+  "table--finanzas-beneficios-socios",
+  "table--finanzas-aplicaciones-beneficio"
+ ],
+ "database/migrations/065_finanzas_facturacion.sql": [
+  "file--065-finanzas-facturacion",
+  "table--organizacion-identidad-institucional",
+  "table--finanzas-movimientos-financieros",
+  "table--finanzas-aportes",
+  "table--finanzas-numeraciones-comprobantes",
+  "table--finanzas-facturas",
+  "table--finanzas-notas-credito"
+ ],
+ "database/migrations/066_finanzas_socios_permisos.sql": [
+  "file--066-finanzas-socios-permisos"
+ ],
+ "database/migrations/067_ia_explicar_interpretacion.sql": [
+  "file--067-ia-explicar-interpretacion",
+  "table--ia-configuraciones"
+ ],
+ "database/migrations/068_ia_eliminar_conversaciones.sql": [
+  "file--068-ia-eliminar-conversaciones"
+ ],
+ "database/migrations/069_documentos_numeracion_avanzada.sql": [
+  "file--069-documentos-numeracion-avanzada",
+  "table--documentos-numeraciones"
+ ],
+ "database/migrations/070_identidad_alineacion_titulo.sql": [
+  "file--070-identidad-alineacion-titulo",
+  "table--organizacion-identidad-institucional"
+ ],
+ "backend/src/modules/academia/academia.module.ts": [
+  "component--modulo-academia"
+ ],
  "backend/src/modules/auth/auth.module.ts": [
   "component--modulo-auth"
  ],
@@ -570,11 +928,23 @@
  "backend/src/modules/denuncias/denuncias.module.ts": [
   "component--modulo-denuncias"
  ],
+ "backend/src/modules/deposito/deposito.module.ts": [
+  "component--modulo-deposito"
+ ],
+ "backend/src/modules/documentos/documentos.module.ts": [
+  "component--modulo-documentos"
+ ],
  "backend/src/modules/equipos/equipos.module.ts": [
   "component--modulo-equipos"
  ],
+ "backend/src/modules/finanzas/finanzas.module.ts": [
+  "component--modulo-finanzas"
+ ],
  "backend/src/modules/guardias/guardias.module.ts": [
   "component--modulo-guardias"
+ ],
+ "backend/src/modules/ia/ia.module.ts": [
+  "component--modulo-ia"
  ],
  "backend/src/modules/operaciones/operaciones.module.ts": [
   "component--modulo-operaciones"
@@ -588,6 +958,9 @@
  "backend/src/modules/publicaciones/publicaciones.module.ts": [
   "component--modulo-publicaciones"
  ],
+ "backend/src/modules/salud/salud.module.ts": [
+  "component--modulo-salud"
+ ],
  "backend/src/modules/seguridad/seguridad.module.ts": [
   "component--modulo-seguridad"
  ],
@@ -596,6 +969,33 @@
  ],
  "backend/src/modules/vehiculos/vehiculos.module.ts": [
   "component--modulo-vehiculos"
+ ],
+ "backend/src/modules/academia/actividades-academicas.service.ts": [
+  "service--academia-actividades-academicas"
+ ],
+ "backend/src/modules/academia/certificaciones-academia.service.ts": [
+  "service--academia-certificaciones-academia"
+ ],
+ "backend/src/modules/academia/consultas-academia.service.ts": [
+  "service--academia-consultas-academia"
+ ],
+ "backend/src/modules/academia/cursos-externos.service.ts": [
+  "service--academia-cursos-externos"
+ ],
+ "backend/src/modules/academia/evaluaciones-academia.service.ts": [
+  "service--academia-evaluaciones-academia"
+ ],
+ "backend/src/modules/academia/inscripciones-academia.service.ts": [
+  "service--academia-inscripciones-academia"
+ ],
+ "backend/src/modules/academia/instructores-externos.service.ts": [
+  "service--academia-instructores-externos"
+ ],
+ "backend/src/modules/academia/reportes-academia.service.ts": [
+  "service--academia-reportes-academia"
+ ],
+ "backend/src/modules/academia/sesiones-academia.service.ts": [
+  "service--academia-sesiones-academia"
  ],
  "backend/src/modules/auth/auth.service.ts": [
   "service--auth-auth",
@@ -611,6 +1011,72 @@
   "rule--datos-tecnicos-de-denuncia-restringidos",
   "workflow--denuncia-rapida"
  ],
+ "backend/src/modules/deposito/alertas-deposito.service.ts": [
+  "service--deposito-alertas-deposito"
+ ],
+ "backend/src/modules/deposito/articulos.service.ts": [
+  "service--deposito-articulos"
+ ],
+ "backend/src/modules/deposito/bajas.service.ts": [
+  "service--deposito-bajas"
+ ],
+ "backend/src/modules/deposito/categorias-articulo.service.ts": [
+  "service--deposito-categorias-articulo"
+ ],
+ "backend/src/modules/deposito/consultas-deposito.service.ts": [
+  "service--deposito-consultas-deposito"
+ ],
+ "backend/src/modules/deposito/dashboard-deposito.service.ts": [
+  "service--deposito-dashboard-deposito"
+ ],
+ "backend/src/modules/deposito/entradas.service.ts": [
+  "service--deposito-entradas"
+ ],
+ "backend/src/modules/deposito/incidencias.service.ts": [
+  "service--deposito-incidencias"
+ ],
+ "backend/src/modules/deposito/integracion-deposito.service.ts": [
+  "service--deposito-integracion-deposito"
+ ],
+ "backend/src/modules/deposito/inventarios-fisicos.service.ts": [
+  "service--deposito-inventarios-fisicos"
+ ],
+ "backend/src/modules/deposito/lotes-articulo.service.ts": [
+  "service--deposito-lotes-articulo"
+ ],
+ "backend/src/modules/deposito/mantenimientos.service.ts": [
+  "service--deposito-mantenimientos"
+ ],
+ "backend/src/modules/deposito/movimientos-deposito.service.ts": [
+  "service--deposito-movimientos-deposito"
+ ],
+ "backend/src/modules/deposito/prestamos.service.ts": [
+  "service--deposito-prestamos"
+ ],
+ "backend/src/modules/deposito/proveedores.service.ts": [
+  "service--deposito-proveedores"
+ ],
+ "backend/src/modules/deposito/ubicaciones-deposito.service.ts": [
+  "service--deposito-ubicaciones-deposito"
+ ],
+ "backend/src/modules/documentos/consultas-documentos.service.ts": [
+  "service--documentos-consultas-documentos"
+ ],
+ "backend/src/modules/documentos/dashboard-documentos.service.ts": [
+  "service--documentos-dashboard-documentos"
+ ],
+ "backend/src/modules/documentos/documentos.service.ts": [
+  "service--documentos-documentos"
+ ],
+ "backend/src/modules/documentos/expedientes.service.ts": [
+  "service--documentos-expedientes"
+ ],
+ "backend/src/modules/documentos/firmas-documento.service.ts": [
+  "service--documentos-firmas-documento"
+ ],
+ "backend/src/modules/documentos/plantillas.service.ts": [
+  "service--documentos-plantillas"
+ ],
  "backend/src/modules/equipos/categorias-equipo.service.ts": [
   "service--equipos-categorias-equipo"
  ],
@@ -619,6 +1085,63 @@
  ],
  "backend/src/modules/equipos/equipos.service.ts": [
   "service--equipos-equipos"
+ ],
+ "backend/src/modules/finanzas/acuerdos-aporte.service.ts": [
+  "service--finanzas-acuerdos-aporte"
+ ],
+ "backend/src/modules/finanzas/aportes.service.ts": [
+  "service--finanzas-aportes"
+ ],
+ "backend/src/modules/finanzas/beneficios-socios.service.ts": [
+  "service--finanzas-beneficios-socios"
+ ],
+ "backend/src/modules/finanzas/cajas.service.ts": [
+  "service--finanzas-cajas"
+ ],
+ "backend/src/modules/finanzas/consultas-finanzas.service.ts": [
+  "service--finanzas-consultas-finanzas"
+ ],
+ "backend/src/modules/finanzas/cuentas-bancarias.service.ts": [
+  "service--finanzas-cuentas-bancarias"
+ ],
+ "backend/src/modules/finanzas/cuotas.service.ts": [
+  "service--finanzas-cuotas"
+ ],
+ "backend/src/modules/finanzas/dashboard-finanzas.service.ts": [
+  "service--finanzas-dashboard-finanzas"
+ ],
+ "backend/src/modules/finanzas/ejercicios-fiscales.service.ts": [
+  "service--finanzas-ejercicios-fiscales"
+ ],
+ "backend/src/modules/finanzas/facturas.service.ts": [
+  "service--finanzas-facturas"
+ ],
+ "backend/src/modules/finanzas/integracion-finanzas.service.ts": [
+  "service--finanzas-integracion-finanzas"
+ ],
+ "backend/src/modules/finanzas/movimientos-bancarios.service.ts": [
+  "service--finanzas-movimientos-bancarios"
+ ],
+ "backend/src/modules/finanzas/movimientos-financieros.service.ts": [
+  "service--finanzas-movimientos-financieros"
+ ],
+ "backend/src/modules/finanzas/notas-credito.service.ts": [
+  "service--finanzas-notas-credito"
+ ],
+ "backend/src/modules/finanzas/numeraciones-comprobantes.service.ts": [
+  "service--finanzas-numeraciones-comprobantes"
+ ],
+ "backend/src/modules/finanzas/ordenes-pago.service.ts": [
+  "service--finanzas-ordenes-pago"
+ ],
+ "backend/src/modules/finanzas/presupuestos.service.ts": [
+  "service--finanzas-presupuestos"
+ ],
+ "backend/src/modules/finanzas/reportes-finanzas.service.ts": [
+  "service--finanzas-reportes-finanzas"
+ ],
+ "backend/src/modules/finanzas/socios-protectores.service.ts": [
+  "service--finanzas-socios-protectores"
  ],
  "backend/src/modules/guardias/bitacora.service.ts": [
   "service--guardias-bitacora"
@@ -663,6 +1186,27 @@
  ],
  "backend/src/modules/guardias/sorteos.service.ts": [
   "service--guardias-sorteos"
+ ],
+ "backend/src/modules/ia/ia-chat.service.ts": [
+  "service--ia-ia-chat"
+ ],
+ "backend/src/modules/ia/ia-configuracion.service.ts": [
+  "service--ia-ia-configuracion"
+ ],
+ "backend/src/modules/ia/ia-conversaciones.service.ts": [
+  "service--ia-ia-conversaciones"
+ ],
+ "backend/src/modules/ia/ia-dashboard.service.ts": [
+  "service--ia-ia-dashboard"
+ ],
+ "backend/src/modules/ia/ia-motor.service.ts": [
+  "service--ia-ia-motor"
+ ],
+ "backend/src/modules/ia/ia-propuestas-mejora.service.ts": [
+  "service--ia-ia-propuestas-mejora"
+ ],
+ "backend/src/modules/ia/tools/ia-tools.service.ts": [
+  "service--ia-ia-tools"
  ],
  "backend/src/modules/operaciones/dashboard-asistencia.service.ts": [
   "service--operaciones-dashboard-asistencia"
@@ -716,6 +1260,9 @@
  ],
  "backend/src/modules/organizacion/feriados.service.ts": [
   "service--organizacion-feriados"
+ ],
+ "backend/src/modules/organizacion/identidad-institucional.service.ts": [
+  "service--organizacion-identidad-institucional"
  ],
  "backend/src/modules/organizacion/parametros.service.ts": [
   "service--organizacion-parametros"
@@ -808,6 +1355,33 @@
  "backend/src/modules/vehiculos/vehiculos.service.ts": [
   "service--vehiculos-vehiculos"
  ],
+ "backend/src/modules/academia/actividades-academicas.controller.ts": [
+  "api--academia-actividades-academicas"
+ ],
+ "backend/src/modules/academia/certificaciones-academia.controller.ts": [
+  "api--academia-certificaciones-academia"
+ ],
+ "backend/src/modules/academia/consultas-academia.controller.ts": [
+  "api--academia-consultas-academia"
+ ],
+ "backend/src/modules/academia/cursos-externos.controller.ts": [
+  "api--academia-cursos-externos"
+ ],
+ "backend/src/modules/academia/evaluaciones-academia.controller.ts": [
+  "api--academia-evaluaciones-academia"
+ ],
+ "backend/src/modules/academia/inscripciones-academia.controller.ts": [
+  "api--academia-inscripciones-academia"
+ ],
+ "backend/src/modules/academia/instructores-externos.controller.ts": [
+  "api--academia-instructores-externos"
+ ],
+ "backend/src/modules/academia/reportes-academia.controller.ts": [
+  "api--academia-reportes-academia"
+ ],
+ "backend/src/modules/academia/sesiones-academia.controller.ts": [
+  "api--academia-sesiones-academia"
+ ],
  "backend/src/modules/auth/auth.controller.ts": [
   "api--auth-auth"
  ],
@@ -822,6 +1396,72 @@
   "api--denuncias-denuncias",
   "rule--datos-tecnicos-de-denuncia-restringidos"
  ],
+ "backend/src/modules/deposito/alertas-deposito.controller.ts": [
+  "api--deposito-alertas-deposito"
+ ],
+ "backend/src/modules/deposito/articulos.controller.ts": [
+  "api--deposito-articulos"
+ ],
+ "backend/src/modules/deposito/bajas.controller.ts": [
+  "api--deposito-bajas"
+ ],
+ "backend/src/modules/deposito/categorias-articulo.controller.ts": [
+  "api--deposito-categorias-articulo"
+ ],
+ "backend/src/modules/deposito/consultas-deposito.controller.ts": [
+  "api--deposito-consultas-deposito"
+ ],
+ "backend/src/modules/deposito/dashboard-deposito.controller.ts": [
+  "api--deposito-dashboard-deposito"
+ ],
+ "backend/src/modules/deposito/entradas.controller.ts": [
+  "api--deposito-entradas"
+ ],
+ "backend/src/modules/deposito/incidencias.controller.ts": [
+  "api--deposito-incidencias"
+ ],
+ "backend/src/modules/deposito/integracion-deposito.controller.ts": [
+  "api--deposito-integracion-deposito"
+ ],
+ "backend/src/modules/deposito/inventarios-fisicos.controller.ts": [
+  "api--deposito-inventarios-fisicos"
+ ],
+ "backend/src/modules/deposito/lotes-articulo.controller.ts": [
+  "api--deposito-lotes-articulo"
+ ],
+ "backend/src/modules/deposito/mantenimientos.controller.ts": [
+  "api--deposito-mantenimientos"
+ ],
+ "backend/src/modules/deposito/movimientos-deposito.controller.ts": [
+  "api--deposito-movimientos-deposito"
+ ],
+ "backend/src/modules/deposito/prestamos.controller.ts": [
+  "api--deposito-prestamos"
+ ],
+ "backend/src/modules/deposito/proveedores.controller.ts": [
+  "api--deposito-proveedores"
+ ],
+ "backend/src/modules/deposito/ubicaciones-deposito.controller.ts": [
+  "api--deposito-ubicaciones-deposito"
+ ],
+ "backend/src/modules/documentos/consultas-documentos.controller.ts": [
+  "api--documentos-consultas-documentos"
+ ],
+ "backend/src/modules/documentos/dashboard-documentos.controller.ts": [
+  "api--documentos-dashboard-documentos"
+ ],
+ "backend/src/modules/documentos/documentos.controller.ts": [
+  "api--documentos-documentos"
+ ],
+ "backend/src/modules/documentos/expedientes.controller.ts": [
+  "api--documentos-expedientes"
+ ],
+ "backend/src/modules/documentos/firmas-documento.controller.ts": [
+  "api--documentos-firmas-documento"
+ ],
+ "backend/src/modules/documentos/plantillas.controller.ts": [
+  "api--documentos-plantillas"
+ ],
  "backend/src/modules/equipos/categorias-equipo.controller.ts": [
   "api--equipos-categorias-equipo"
  ],
@@ -830,6 +1470,63 @@
  ],
  "backend/src/modules/equipos/equipos.controller.ts": [
   "api--equipos-equipos"
+ ],
+ "backend/src/modules/finanzas/acuerdos-aporte.controller.ts": [
+  "api--finanzas-acuerdos-aporte"
+ ],
+ "backend/src/modules/finanzas/aportes.controller.ts": [
+  "api--finanzas-aportes"
+ ],
+ "backend/src/modules/finanzas/beneficios-socios.controller.ts": [
+  "api--finanzas-beneficios-socios"
+ ],
+ "backend/src/modules/finanzas/cajas.controller.ts": [
+  "api--finanzas-cajas"
+ ],
+ "backend/src/modules/finanzas/consultas-finanzas.controller.ts": [
+  "api--finanzas-consultas-finanzas"
+ ],
+ "backend/src/modules/finanzas/cuentas-bancarias.controller.ts": [
+  "api--finanzas-cuentas-bancarias"
+ ],
+ "backend/src/modules/finanzas/cuotas.controller.ts": [
+  "api--finanzas-cuotas"
+ ],
+ "backend/src/modules/finanzas/dashboard-finanzas.controller.ts": [
+  "api--finanzas-dashboard-finanzas"
+ ],
+ "backend/src/modules/finanzas/ejercicios-fiscales.controller.ts": [
+  "api--finanzas-ejercicios-fiscales"
+ ],
+ "backend/src/modules/finanzas/facturas.controller.ts": [
+  "api--finanzas-facturas"
+ ],
+ "backend/src/modules/finanzas/integracion-finanzas.controller.ts": [
+  "api--finanzas-integracion-finanzas"
+ ],
+ "backend/src/modules/finanzas/movimientos-bancarios.controller.ts": [
+  "api--finanzas-movimientos-bancarios"
+ ],
+ "backend/src/modules/finanzas/movimientos-financieros.controller.ts": [
+  "api--finanzas-movimientos-financieros"
+ ],
+ "backend/src/modules/finanzas/notas-credito.controller.ts": [
+  "api--finanzas-notas-credito"
+ ],
+ "backend/src/modules/finanzas/numeraciones-comprobantes.controller.ts": [
+  "api--finanzas-numeraciones-comprobantes"
+ ],
+ "backend/src/modules/finanzas/ordenes-pago.controller.ts": [
+  "api--finanzas-ordenes-pago"
+ ],
+ "backend/src/modules/finanzas/presupuestos.controller.ts": [
+  "api--finanzas-presupuestos"
+ ],
+ "backend/src/modules/finanzas/reportes-finanzas.controller.ts": [
+  "api--finanzas-reportes-finanzas"
+ ],
+ "backend/src/modules/finanzas/socios-protectores.controller.ts": [
+  "api--finanzas-socios-protectores"
  ],
  "backend/src/modules/guardias/bitacora.controller.ts": [
   "api--guardias-bitacora"
@@ -864,6 +1561,21 @@
  ],
  "backend/src/modules/guardias/sorteos.controller.ts": [
   "api--guardias-sorteos"
+ ],
+ "backend/src/modules/ia/ia-admin-conversaciones.controller.ts": [
+  "api--ia-ia-admin-conversaciones"
+ ],
+ "backend/src/modules/ia/ia-chat.controller.ts": [
+  "api--ia-ia-chat"
+ ],
+ "backend/src/modules/ia/ia-configuracion.controller.ts": [
+  "api--ia-ia-configuracion"
+ ],
+ "backend/src/modules/ia/ia-dashboard.controller.ts": [
+  "api--ia-ia-dashboard"
+ ],
+ "backend/src/modules/ia/ia-propuestas-mejora.controller.ts": [
+  "api--ia-ia-propuestas-mejora"
  ],
  "backend/src/modules/operaciones/dashboard-asistencia.controller.ts": [
   "api--operaciones-dashboard-asistencia"
@@ -914,6 +1626,9 @@
  "backend/src/modules/organizacion/feriados.controller.ts": [
   "api--organizacion-feriados"
  ],
+ "backend/src/modules/organizacion/identidad-institucional.controller.ts": [
+  "api--organizacion-identidad-institucional"
+ ],
  "backend/src/modules/organizacion/parametros.controller.ts": [
   "api--organizacion-parametros"
  ],
@@ -962,6 +1677,9 @@
  "backend/src/modules/publicaciones/publicaciones.controller.ts": [
   "api--publicaciones-publicaciones"
  ],
+ "backend/src/modules/salud/salud.controller.ts": [
+  "api--salud-salud"
+ ],
  "backend/src/modules/seguridad/apariencia.controller.ts": [
   "api--seguridad-apariencia"
  ],
@@ -1002,6 +1720,18 @@
  "backend/src/modules/vehiculos/vehiculos.controller.ts": [
   "api--vehiculos-vehiculos"
  ],
+ "frontend/src/app/dashboard/academia/cursos-externos/page.tsx": [
+  "screen--dashboard-academia-cursos-externos"
+ ],
+ "frontend/src/app/dashboard/academia/instructores-externos/page.tsx": [
+  "screen--dashboard-academia-instructores-externos"
+ ],
+ "frontend/src/app/dashboard/academia/page.tsx": [
+  "screen--dashboard-academia"
+ ],
+ "frontend/src/app/dashboard/academia/[id]/page.tsx": [
+  "screen--dashboard-academia-id"
+ ],
  "frontend/src/app/dashboard/asistencia/auditoria/page.tsx": [
   "screen--dashboard-asistencia-auditoria"
  ],
@@ -1029,6 +1759,72 @@
  "frontend/src/app/dashboard/denuncias/[id]/page.tsx": [
   "screen--dashboard-denuncias-id"
  ],
+ "frontend/src/app/dashboard/deposito/articulos/page.tsx": [
+  "screen--dashboard-deposito-articulos"
+ ],
+ "frontend/src/app/dashboard/deposito/articulos/[id]/page.tsx": [
+  "screen--dashboard-deposito-articulos-id"
+ ],
+ "frontend/src/app/dashboard/deposito/bajas/page.tsx": [
+  "screen--dashboard-deposito-bajas"
+ ],
+ "frontend/src/app/dashboard/deposito/categorias/page.tsx": [
+  "screen--dashboard-deposito-categorias"
+ ],
+ "frontend/src/app/dashboard/deposito/entradas/page.tsx": [
+  "screen--dashboard-deposito-entradas"
+ ],
+ "frontend/src/app/dashboard/deposito/incidencias/page.tsx": [
+  "screen--dashboard-deposito-incidencias"
+ ],
+ "frontend/src/app/dashboard/deposito/inventarios-fisicos/page.tsx": [
+  "screen--dashboard-deposito-inventarios-fisicos"
+ ],
+ "frontend/src/app/dashboard/deposito/inventarios-fisicos/[id]/page.tsx": [
+  "screen--dashboard-deposito-inventarios-fisicos-id"
+ ],
+ "frontend/src/app/dashboard/deposito/mantenimientos/page.tsx": [
+  "screen--dashboard-deposito-mantenimientos"
+ ],
+ "frontend/src/app/dashboard/deposito/movimientos/page.tsx": [
+  "screen--dashboard-deposito-movimientos"
+ ],
+ "frontend/src/app/dashboard/deposito/page.tsx": [
+  "screen--dashboard-deposito"
+ ],
+ "frontend/src/app/dashboard/deposito/prestamos/page.tsx": [
+  "screen--dashboard-deposito-prestamos"
+ ],
+ "frontend/src/app/dashboard/deposito/proveedores/page.tsx": [
+  "screen--dashboard-deposito-proveedores"
+ ],
+ "frontend/src/app/dashboard/deposito/ubicaciones/page.tsx": [
+  "screen--dashboard-deposito-ubicaciones"
+ ],
+ "frontend/src/app/dashboard/documentos/auditoria/page.tsx": [
+  "screen--dashboard-documentos-auditoria"
+ ],
+ "frontend/src/app/dashboard/documentos/expedientes/page.tsx": [
+  "screen--dashboard-documentos-expedientes"
+ ],
+ "frontend/src/app/dashboard/documentos/expedientes/[id]/page.tsx": [
+  "screen--dashboard-documentos-expedientes-id"
+ ],
+ "frontend/src/app/dashboard/documentos/listado/page.tsx": [
+  "screen--dashboard-documentos-listado"
+ ],
+ "frontend/src/app/dashboard/documentos/page.tsx": [
+  "screen--dashboard-documentos"
+ ],
+ "frontend/src/app/dashboard/documentos/plantillas/page.tsx": [
+  "screen--dashboard-documentos-plantillas"
+ ],
+ "frontend/src/app/dashboard/documentos/vencimientos/page.tsx": [
+  "screen--dashboard-documentos-vencimientos"
+ ],
+ "frontend/src/app/dashboard/documentos/[id]/page.tsx": [
+  "screen--dashboard-documentos-id"
+ ],
  "frontend/src/app/dashboard/equipos/categorias/page.tsx": [
   "screen--dashboard-equipos-categorias"
  ],
@@ -1037,6 +1833,45 @@
  ],
  "frontend/src/app/dashboard/equipos/[id]/page.tsx": [
   "screen--dashboard-equipos-id"
+ ],
+ "frontend/src/app/dashboard/finanzas/beneficios/page.tsx": [
+  "screen--dashboard-finanzas-beneficios"
+ ],
+ "frontend/src/app/dashboard/finanzas/cajas/page.tsx": [
+  "screen--dashboard-finanzas-cajas"
+ ],
+ "frontend/src/app/dashboard/finanzas/cuentas-bancarias/page.tsx": [
+  "screen--dashboard-finanzas-cuentas-bancarias"
+ ],
+ "frontend/src/app/dashboard/finanzas/cuotas/page.tsx": [
+  "screen--dashboard-finanzas-cuotas"
+ ],
+ "frontend/src/app/dashboard/finanzas/ejercicios-fiscales/page.tsx": [
+  "screen--dashboard-finanzas-ejercicios-fiscales"
+ ],
+ "frontend/src/app/dashboard/finanzas/facturacion/page.tsx": [
+  "screen--dashboard-finanzas-facturacion"
+ ],
+ "frontend/src/app/dashboard/finanzas/movimientos/page.tsx": [
+  "screen--dashboard-finanzas-movimientos"
+ ],
+ "frontend/src/app/dashboard/finanzas/movimientos-bancarios/page.tsx": [
+  "screen--dashboard-finanzas-movimientos-bancarios"
+ ],
+ "frontend/src/app/dashboard/finanzas/ordenes-pago/page.tsx": [
+  "screen--dashboard-finanzas-ordenes-pago"
+ ],
+ "frontend/src/app/dashboard/finanzas/page.tsx": [
+  "screen--dashboard-finanzas"
+ ],
+ "frontend/src/app/dashboard/finanzas/presupuesto/page.tsx": [
+  "screen--dashboard-finanzas-presupuesto"
+ ],
+ "frontend/src/app/dashboard/finanzas/socios-protectores/page.tsx": [
+  "screen--dashboard-finanzas-socios-protectores"
+ ],
+ "frontend/src/app/dashboard/finanzas/socios-protectores/[id]/page.tsx": [
+  "screen--dashboard-finanzas-socios-protectores-id"
  ],
  "frontend/src/app/dashboard/guardias/auditoria/page.tsx": [
   "screen--dashboard-guardias-auditoria"
@@ -1083,6 +1918,9 @@
  "frontend/src/app/dashboard/guardias/[id]/page.tsx": [
   "screen--dashboard-guardias-id"
  ],
+ "frontend/src/app/dashboard/inteligencia/page.tsx": [
+  "screen--dashboard-inteligencia"
+ ],
  "frontend/src/app/dashboard/mi-perfil/page.tsx": [
   "screen--dashboard-mi-perfil"
  ],
@@ -1112,6 +1950,9 @@
  ],
  "frontend/src/app/dashboard/organizacion/designaciones/page.tsx": [
   "screen--dashboard-organizacion-designaciones"
+ ],
+ "frontend/src/app/dashboard/organizacion/documentos/page.tsx": [
+  "screen--dashboard-organizacion-documentos"
  ],
  "frontend/src/app/dashboard/organizacion/especialidades/page.tsx": [
   "screen--dashboard-organizacion-especialidades"
@@ -1167,6 +2008,21 @@
  "frontend/src/app/dashboard/seguridad/configuracion/page.tsx": [
   "screen--dashboard-seguridad-configuracion"
  ],
+ "frontend/src/app/dashboard/seguridad/inteligencia-artificial/auditoria/page.tsx": [
+  "screen--dashboard-seguridad-inteligencia-artificial-auditoria"
+ ],
+ "frontend/src/app/dashboard/seguridad/inteligencia-artificial/configuracion/page.tsx": [
+  "screen--dashboard-seguridad-inteligencia-artificial-configuracion"
+ ],
+ "frontend/src/app/dashboard/seguridad/inteligencia-artificial/conversaciones/page.tsx": [
+  "screen--dashboard-seguridad-inteligencia-artificial-conversaciones"
+ ],
+ "frontend/src/app/dashboard/seguridad/inteligencia-artificial/page.tsx": [
+  "screen--dashboard-seguridad-inteligencia-artificial"
+ ],
+ "frontend/src/app/dashboard/seguridad/inteligencia-artificial/propuestas/page.tsx": [
+  "screen--dashboard-seguridad-inteligencia-artificial-propuestas"
+ ],
  "frontend/src/app/dashboard/seguridad/page.tsx": [
   "screen--dashboard-seguridad"
  ],
@@ -1212,6 +2068,9 @@
  "frontend/src/app/page.tsx": [
   "screen--raiz"
  ],
+ "frontend/src/lib/academia.ts": [
+  "component--front-academia"
+ ],
  "frontend/src/lib/api.ts": [
   "component--front-api",
   "rule--api-v1-y-contrato-http",
@@ -1224,14 +2083,32 @@
  "frontend/src/lib/configuracion.ts": [
   "component--front-configuracion"
  ],
+ "frontend/src/lib/deposito.ts": [
+  "component--front-deposito"
+ ],
+ "frontend/src/lib/documentos.ts": [
+  "component--front-documentos"
+ ],
  "frontend/src/lib/equipos.ts": [
   "component--front-equipos"
  ],
  "frontend/src/lib/exportar.ts": [
   "component--front-exportar"
  ],
+ "frontend/src/lib/finanzas.ts": [
+  "component--front-finanzas"
+ ],
  "frontend/src/lib/guardias.ts": [
   "component--front-guardias"
+ ],
+ "frontend/src/lib/ia.ts": [
+  "component--front-ia"
+ ],
+ "frontend/src/lib/json-seguro.ts": [
+  "component--front-json-seguro"
+ ],
+ "frontend/src/lib/organizacion.ts": [
+  "component--front-organizacion"
  ],
  "frontend/src/lib/parametros.ts": [
   "component--front-parametros"
@@ -1241,6 +2118,9 @@
  ],
  "frontend/src/lib/publicaciones.ts": [
   "component--front-publicaciones"
+ ],
+ "frontend/src/lib/socios-protectores.ts": [
+  "component--front-socios-protectores"
  ],
  "frontend/src/lib/texto.ts": [
   "component--front-texto"
@@ -1256,6 +2136,9 @@
  ],
  "frontend/src/app/components/ExperienceGuard.tsx": [
   "component--front-experienceguard"
+ ],
+ "frontend/src/app/components/InputProvider.tsx": [
+  "component--front-inputprovider"
  ],
  "frontend/src/app/components/SystemIcon.tsx": [
   "component--front-systemicon"
@@ -1329,8 +2212,7 @@
   "dependency--nextjs"
  ],
  "start-sigbo.ps1": [
-  "dependency--nodejs",
-  "error--start-script-no-reinicia-servicios"
+  "dependency--nodejs"
  ],
  "database/install_local.ps1": [
   "dependency--nodejs",

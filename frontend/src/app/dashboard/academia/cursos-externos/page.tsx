@@ -54,7 +54,7 @@ export default function CursosExternosPage() {
           </p>
         </div>
         {puedeConfigurar && (
-          <button className="btn-primary" onClick={refrescar} disabled={refrescando}>
+          <button type="button" className="btn-primary" onClick={refrescar} disabled={refrescando}>
             {refrescando ? 'Actualizando...' : 'Actualizar catálogo'}
           </button>
         )}

@@ -88,7 +88,7 @@ export default function PropuestasMejoraIaPage() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Propuestas de mejora ({propuestas?.length ?? 0})</h2>
-        <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>{mostrarForm ? 'Cancelar' : '+ Nueva propuesta'}</button>
+        <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>{mostrarForm ? 'Cancelar' : '+ Nueva propuesta'}</button>
       </div>
 
       <p style={{ fontSize: 12, color: '#94a3b8' }}>
@@ -108,7 +108,7 @@ export default function PropuestasMejoraIaPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Propuesta</label>
             <textarea className="input-field" rows={3} value={propuestaTexto} onChange={(e) => setPropuestaTexto(e.target.value)} required />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>{guardando ? 'Guardando...' : 'Crear propuesta'}</button>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>{guardando ? 'Guardando...' : 'Crear propuesta'}</button>
         </form>
       )}
 
@@ -148,16 +148,16 @@ export default function PropuestasMejoraIaPage() {
 
           <div style={{ display: 'flex', gap: 8 }}>
             {p.estado === 'PROPUESTA' && (
-              <button className="btn-primary" style={{ padding: '5px 10px', fontSize: 12 }} onClick={() => accion(enviarPropuestaARevision, p.id)}>Enviar a revisión</button>
+              <button type="button" className="btn-primary" style={{ padding: '5px 10px', fontSize: 12 }} onClick={() => accion(enviarPropuestaARevision, p.id)}>Enviar a revisión</button>
             )}
             {p.estado === 'REVISION' && (
               <>
-                <button className="btn-primary" style={{ padding: '5px 10px', fontSize: 12 }} onClick={() => accion(aprobarPropuestaMejora, p.id)}>Aprobar</button>
-                <button className="btn-primary" style={{ padding: '5px 10px', fontSize: 12, background: '#7f1d1d' }} onClick={() => accion(rechazarPropuestaMejora, p.id)}>Rechazar</button>
+                <button type="button" className="btn-primary" style={{ padding: '5px 10px', fontSize: 12 }} onClick={() => accion(aprobarPropuestaMejora, p.id)}>Aprobar</button>
+                <button type="button" className="btn-primary" style={{ padding: '5px 10px', fontSize: 12, background: '#7f1d1d' }} onClick={() => accion(rechazarPropuestaMejora, p.id)}>Rechazar</button>
               </>
             )}
             {p.estado === 'APROBADO' && (
-              <button className="btn-primary" style={{ padding: '5px 10px', fontSize: 12 }} onClick={() => accion(publicarPropuestaMejora, p.id)}>Publicar</button>
+              <button type="button" className="btn-primary" style={{ padding: '5px 10px', fontSize: 12 }} onClick={() => accion(publicarPropuestaMejora, p.id)}>Publicar</button>
             )}
           </div>
         </div>

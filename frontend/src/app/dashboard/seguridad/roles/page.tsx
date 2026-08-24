@@ -1,6 +1,7 @@
 'use client';
 
 import { Fragment, useEffect, useState } from 'react';
+import { useEntradaConfirmada } from '@/app/components/InputProvider';
 import { apiFetch } from '@/lib/api';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
 
@@ -23,6 +24,7 @@ interface Permiso {
 }
 
 export default function RolesPage() {
+  const solicitarEntrada = useEntradaConfirmada();
   const confirmar = useConfirmacion();
   const [roles, setRoles] = useState<Rol[] | null>(null);
   const [permisos, setPermisos] = useState<Permiso[]>([]);
@@ -101,7 +103,7 @@ export default function RolesPage() {
   }
 
   async function duplicar(id: string, nombreActual: string) {
-    const nombreNuevo = window.prompt('Nombre del rol duplicado:', `${nombreActual} (copia)`);
+    const nombreNuevo = await solicitarEntrada({ titulo: 'Duplicar rol', mensaje: 'Indique el nombre para el nuevo rol.', etiqueta: 'Nombre', valorInicial: `${nombreActual} (copia)`, confirmar: 'Duplicar', requerida: true });
     if (!nombreNuevo) return;
     setError(null);
     const res = await apiFetch(`/seguridad/roles/${id}/duplicar`, {
@@ -182,7 +184,7 @@ export default function RolesPage() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Roles ({roles?.length ?? 0})</h2>
-        <button className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
+        <button type="button" className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
           {mostrarForm ? 'Cancelar' : 'Nuevo rol'}
         </button>
       </div>
@@ -219,7 +221,7 @@ export default function RolesPage() {
             <input type="checkbox" checked={esAdministrativo} onChange={(e) => setEsAdministrativo(e.target.checked)} />
             Rol administrativo
           </label>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }}>
+          <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }}>
             Crear rol
           </button>
         </form>
@@ -258,13 +260,13 @@ export default function RolesPage() {
                   <td style={{ padding: '6px 4px' }}>{r.prioridad}</td>
                   <td style={{ padding: '6px 4px' }}>{r.activo ? 'Activo' : 'Inactivo'}</td>
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => abrirPermisos(r)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => abrirPermisos(r)}>
                       Permisos
                     </button>
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => duplicar(r.id, r.nombre)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => duplicar(r.id, r.nombre)}>
                       Duplicar
                     </button>
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12 }}
                       onClick={() => activar(r.id, !r.activo)}
@@ -272,7 +274,7 @@ export default function RolesPage() {
                       {r.activo ? 'Desactivar' : 'Activar'}
                     </button>
                     {!r.esSistema && (
-                      <button
+                      <button type="button"
                         className="btn-primary"
                         style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                         onClick={() => eliminar(r.id)}
@@ -305,10 +307,10 @@ export default function RolesPage() {
                             </option>
                           ))}
                         </select>
-                        <button className="btn-primary" style={{ padding: '6px 10px', fontSize: 12 }} onClick={() => copiarPermisosDesde(r.id)}>
+                        <button type="button" className="btn-primary" style={{ padding: '6px 10px', fontSize: 12 }} onClick={() => copiarPermisosDesde(r.id)}>
                           Copiar
                         </button>
-                        <button className="btn-primary" style={{ padding: '6px 10px', fontSize: 12 }} onClick={() => guardarPermisos(r.id)}>
+                        <button type="button" className="btn-primary" style={{ padding: '6px 10px', fontSize: 12 }} onClick={() => guardarPermisos(r.id)}>
                           Guardar permisos
                         </button>
                       </div>

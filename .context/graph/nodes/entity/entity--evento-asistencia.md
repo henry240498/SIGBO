@@ -19,7 +19,7 @@ terminos: [evento, asistencia, eventos, operaciones, estado, programado, curso, 
 Evento al que se puede asistir (guardia, reunion, capacitacion, academia, etc. - el tipo es parametrizable, ver organizacion.parametros tipo TIPO_EVENTO_ASISTENCIA). Distinto de la marcacion fisica de entrada/salida (ver MarcacionAsistencia) y de la participacion de una persona en el evento (ver ParticipanteEvento).
 
 - **Tabla:** [[table--operaciones-eventos-asistencia|operaciones.eventos_asistencia]]
-- **Columnas mapeadas:** 10
+- **Columnas mapeadas:** 11
 
 ## Estados y enumeraciones
 
@@ -27,9 +27,9 @@ Evento al que se puede asistir (guardia, reunion, capacitacion, academia, etc. -
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
-- **Endpoints:** BitacoraController, DashboardAsistenciaController, EventosAsistenciaController, MarcacionesController
-- **Servicios:** BitacoraService, DashboardAsistenciaService, EventosAsistenciaService
+- **Pantallas:** `/dashboard/academia/[id]`, `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
+- **Endpoints:** BitacoraController, DashboardAsistenciaController, EventosAsistenciaController, MarcacionesController, SesionesAcademiaController
+- **Servicios:** BitacoraService, DashboardAsistenciaService, EventosAsistenciaService, SesionesAcademiaService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -45,6 +45,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 
 ## Referenciado por
 
+- [[service--academia-sesiones-academia|SesionesAcademiaService]] `uses` →
 - [[service--guardias-bitacora|BitacoraService]] `uses` →
 - [[service--operaciones-dashboard-asistencia|DashboardAsistenciaService]] `uses` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `uses` →

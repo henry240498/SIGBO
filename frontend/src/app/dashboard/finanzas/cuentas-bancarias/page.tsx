@@ -106,7 +106,7 @@ export default function CuentasBancariasPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Cuentas bancarias ({cuentas?.length ?? 0})</h2>
         {puedeAdministrar && (
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               limpiarForm();
@@ -153,7 +153,7 @@ export default function CuentasBancariasPage() {
               <ComboBuscable opciones={[{ value: 'ACTIVA', label: 'ACTIVA' }, { value: 'INACTIVA', label: 'INACTIVA' }]} value={estado} onChange={setEstado} ningunaLabel="ACTIVA" />
             </div>
           )}
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear cuenta'}
           </button>
         </form>
@@ -184,7 +184,7 @@ export default function CuentasBancariasPage() {
                 </td>
                 <td style={{ padding: '6px 4px' }}>
                   {puedeAdministrar && (
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(c)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(c)}>
                       Editar
                     </button>
                   )}

@@ -21,13 +21,13 @@ edges:
   - [reads, table--servicios-servicios]
   - [uses, entity--personal-servicio]
   - [reads, table--servicios-personal-servicio]
-  - [uses, entity--materia]
-  - [reads, table--academia-materias]
-  - [uses, entity--curso]
-  - [reads, table--academia-cursos]
-  - [uses, entity--inscripcion-curso]
-  - [reads, table--academia-inscripciones-cursos]
-terminos: [consultas, cruzadas, personal, guardia, asignacion, tipo, servicio, materia, curso, inscripcion]
+  - [uses, entity--actividad-academica]
+  - [reads, table--academia-actividades]
+  - [uses, entity--inscripcion-actividad-academica]
+  - [reads, table--academia-inscripciones]
+  - [uses, entity--parametro]
+  - [reads, table--organizacion-parametros]
+terminos: [consultas, cruzadas, personal, guardia, asignacion, tipo, servicio, actividad, academica, inscripcion, parametro]
 ---
 
 # ConsultasCruzadasService
@@ -57,12 +57,12 @@ Logica de negocio de consultas cruzadas (modulo personal).
 - `reads` → [[table--servicios-servicios|servicios.servicios]]
 - `uses` → [[entity--personal-servicio|PersonalServicio]]
 - `reads` → [[table--servicios-personal-servicio|servicios.personal_servicio]]
-- `uses` → [[entity--materia|Materia]]
-- `reads` → [[table--academia-materias|academia.materias]]
-- `uses` → [[entity--curso|Curso]]
-- `reads` → [[table--academia-cursos|academia.cursos]]
-- `uses` → [[entity--inscripcion-curso|InscripcionCurso]]
-- `reads` → [[table--academia-inscripciones-cursos|academia.inscripciones_cursos]]
+- `uses` → [[entity--actividad-academica|ActividadAcademica]]
+- `reads` → [[table--academia-actividades|academia.actividades]]
+- `uses` → [[entity--inscripcion-actividad-academica|InscripcionActividadAcademica]]
+- `reads` → [[table--academia-inscripciones|academia.inscripciones]]
+- `uses` → [[entity--parametro|Parametro]]
+- `reads` → [[table--organizacion-parametros|organizacion.parametros]]
 
 ## Referenciado por
 

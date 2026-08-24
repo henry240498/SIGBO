@@ -87,7 +87,7 @@ export default function ActividadesAcademicasPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Actividades académicas ({actividades?.length ?? 0})</h2>
         {puedeCrear && (
-          <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Nueva actividad'}
           </button>
         )}
@@ -152,7 +152,7 @@ export default function ActividadesAcademicasPage() {
             <input type="checkbox" checked={esExterna} onChange={(e) => setEsExterna(e.target.checked)} />
             Capacitación externa (realizada fuera de la institución)
           </label>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Crear actividad'}
           </button>
         </form>

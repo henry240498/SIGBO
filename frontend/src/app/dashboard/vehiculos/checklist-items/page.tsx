@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { obtenerSesion } from '@/lib/api';
 import {
   ChecklistItemVehiculo,
@@ -13,6 +14,7 @@ import {
 const CATEGORIAS: ChecklistItemVehiculo['categoria'][] = ['MECANICA', 'EQUIPAMIENTO', 'OTRO'];
 
 export default function ChecklistItemsPage() {
+  const confirmar = useConfirmacion();
   const [items, setItems] = useState<ChecklistItemVehiculo[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
@@ -68,7 +70,7 @@ export default function ChecklistItemsPage() {
   }
 
   async function eliminar(id: string) {
-    if (!window.confirm('Eliminar este item de checklist?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Eliminar este item de checklist?', confirmar: 'Continuar', peligro: true })) return;
     try {
       await eliminarChecklistItem(id);
       await cargar();
@@ -82,7 +84,7 @@ export default function ChecklistItemsPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Catalogo de checklist de moviles ({items?.length ?? 0})</h2>
         {puedeEditar && (
-          <button className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
             {mostrarForm ? 'Cancelar' : 'Nuevo item'}
           </button>
         )}
@@ -117,7 +119,7 @@ export default function ChecklistItemsPage() {
               <input className="input-field" type="number" value={orden} onChange={(e) => setOrden(Number(e.target.value))} />
             </div>
           </div>
-          <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
+          <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
             {guardando ? 'Guardando...' : 'Crear item'}
           </button>
         </form>
@@ -149,10 +151,10 @@ export default function ChecklistItemsPage() {
                 </td>
                 {puedeEditar && (
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6 }}>
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => toggleActivo(it)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => toggleActivo(it)}>
                       {it.activo ? 'Desactivar' : 'Activar'}
                     </button>
-                    <button
+                    <button type="button"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d', color: '#fff', border: 'none', borderRadius: 6 }}
                       onClick={() => eliminar(it.id)}
                     >

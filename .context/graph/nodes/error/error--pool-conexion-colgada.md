@@ -54,7 +54,8 @@ modo que una conexion enferma se descarte antes de heredarse. Ver
 
 Si el backend fue **recien reiniciado** y falla igual, no es esto: revisar
 [[error--tcp-sqlexpress-deshabilitado]]. Si el codigo que corre no parece ser el que
-editaste, revisar [[error--start-script-no-reinicia-servicios]].
+editaste, verificar que el iniciador haya terminado sin reportar un proceso ajeno en
+los puertos 3000 o 3001.
 
 
 ## Archivos

@@ -89,7 +89,7 @@ export default function VehiculosPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Moviles ({filtrados.length})</h2>
         {puedeCrear && (
-          <button className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
             {mostrarForm ? 'Cancelar' : 'Nuevo movil'}
           </button>
         )}
@@ -142,7 +142,7 @@ export default function VehiculosPage() {
               <input className="input-field" value={patente} onChange={(e) => setPatente(e.target.value)} />
             </div>
           </div>
-          <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
+          <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
             {guardando ? 'Guardando...' : 'Crear movil'}
           </button>
         </form>

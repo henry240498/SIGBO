@@ -12,7 +12,9 @@ archivos:
   - frontend/src/app/dashboard/guardias/ordenes/[id]/page.tsx
 edges:
   - [belongs_to, domain--guardias]
+  - [uses, component--front-inputprovider]
   - [uses, component--front-api]
+  - [uses, component--front-json-seguro]
   - [uses, component--front-guardias]
 terminos: [guardias, ordenes, editar, aprobar, publicar, anular]
 ---
@@ -31,7 +33,9 @@ Pantalla /dashboard/guardias/ordenes/[id].
 ## Relaciones
 
 - `belongs_to` → [[domain--guardias|Guardias]]
+- `uses` → [[component--front-inputprovider|InputProvider]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-json-seguro|json-seguro]]
 - `uses` → [[component--front-guardias|guardias]]
 
 ---

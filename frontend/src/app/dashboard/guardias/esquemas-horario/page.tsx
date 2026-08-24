@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { obtenerSesion } from '@/lib/api';
 import {
   DIAS_SEMANA_CSV,
@@ -31,6 +32,7 @@ const VACIO = {
 };
 
 export default function EsquemasHorarioPage() {
+  const confirmar = useConfirmacion();
   const [esquemas, setEsquemas] = useState<EsquemaHorarioGuardia[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
@@ -135,7 +137,7 @@ export default function EsquemasHorarioPage() {
   }
 
   async function eliminar(id: string) {
-    if (!window.confirm('Eliminar este esquema de horario?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Eliminar este esquema de horario?', confirmar: 'Continuar', peligro: true })) return;
     setError(null);
     try {
       await eliminarEsquemaHorario(id);
@@ -150,7 +152,7 @@ export default function EsquemasHorarioPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10 }}>
         <h2 style={{ fontSize: 16 }}>Esquemas de horario ({esquemas?.length ?? 0})</h2>
         {puedeGestionar && (
-          <button className="btn-primary" onClick={() => (mostrarForm ? cancelar() : setMostrarForm(true))}>
+          <button type="button" className="btn-primary" onClick={() => (mostrarForm ? cancelar() : setMostrarForm(true))}>
             {mostrarForm ? 'Cancelar' : 'Nuevo esquema'}
           </button>
         )}
@@ -256,7 +258,7 @@ export default function EsquemasHorarioPage() {
           </label>
 
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn-primary" disabled={guardando}>{guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear esquema'}</button>
+            <button type="submit" className="btn-primary" disabled={guardando}>{guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear esquema'}</button>
             <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={cancelar}>Cancelar</button>
           </div>
         </form>
@@ -291,8 +293,8 @@ export default function EsquemasHorarioPage() {
                 <td style={{ padding: '6px 4px' }}><span className="badge" style={{ background: e.activo ? '#166534' : '#7f1d1d' }}>{e.activo ? 'ACTIVO' : 'INACTIVO'}</span></td>
                 {puedeGestionar && (
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6 }}>
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(e)}>Editar</button>
-                    <button style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d', color: '#fff', border: 'none', borderRadius: 6 }} onClick={() => eliminar(e.id)}>Eliminar</button>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(e)}>Editar</button>
+                    <button type="button" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d', color: '#fff', border: 'none', borderRadius: 6 }} onClick={() => eliminar(e.id)}>Eliminar</button>
                   </td>
                 )}
               </tr>

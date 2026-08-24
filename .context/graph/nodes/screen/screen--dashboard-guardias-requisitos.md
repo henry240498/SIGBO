@@ -12,6 +12,7 @@ archivos:
   - frontend/src/app/dashboard/guardias/requisitos/page.tsx
 edges:
   - [belongs_to, domain--guardias]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-personal]
   - [uses, component--front-guardias]
@@ -32,6 +33,7 @@ Pantalla /dashboard/guardias/requisitos.
 ## Relaciones
 
 - `belongs_to` → [[domain--guardias|Guardias]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-guardias|guardias]]

@@ -3,9 +3,32 @@ import { DataSource } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { dataSourceOptions } from '../core/database/data-source-options';
 import { AsignacionPermisoRol, AsignacionRol, Permiso, Rol, Usuario } from '../shared/entities';
+import { contrasenaDentroDelLimiteBcrypt, PASSWORD_REGEX } from '../shared/utils/password-policy';
 import { PERMISOS, ROLES } from './seed-data';
 
+function validarEjecucionSeed(): boolean {
+  const esProduccion = process.env.NODE_ENV === 'production';
+  if (esProduccion && process.env.SIGBO_ALLOW_PRODUCTION_SEED !== 'true') {
+    throw new Error(
+      'El seed está bloqueado en producción. Si una autoridad aprueba una inicialización controlada, establezca SIGBO_ALLOW_PRODUCTION_SEED=true de forma temporal.',
+    );
+  }
+  return esProduccion;
+}
+
+function obtenerPasswordDemostracion(): string {
+  const password = process.env.SIGBO_DEMO_PASSWORD;
+  if (!password || !PASSWORD_REGEX.test(password) || !contrasenaDentroDelLimiteBcrypt(password)) {
+    throw new Error(
+      'SIGBO_DEMO_PASSWORD debe definir una contraseña de demostración válida (mínimo 8 caracteres, mayúscula, minúscula, número y símbolo; máximo 72 bytes).',
+    );
+  }
+  return password;
+}
+
 async function seed() {
+  const esProduccion = validarEjecucionSeed();
+  const passwordDemostracion = esProduccion ? null : obtenerPasswordDemostracion();
   const dataSource = new DataSource(dataSourceOptions);
   await dataSource.initialize();
   console.log('Conectado a la base de datos. Iniciando seed...\n');
@@ -67,7 +90,15 @@ async function seed() {
     console.log(`Rol "${r.nombre}": ${permisosDelRol.length} permisos asignados.`);
   }
 
-  // 3. Usuarios (uno por rol) + asignacion de rol
+  // 3. Usuarios de demostración (sólo en entornos no productivos).
+  // En producción las cuentas deben ser creadas por el flujo administrativo,
+  // con identidad, autoridad y trazabilidad institucional.
+  if (esProduccion) {
+    console.log('\nSeed de producción autorizado: se omitieron usuarios de demostración.');
+    await dataSource.destroy();
+    return;
+  }
+
   console.log('\nCreando usuarios de prueba...');
   for (const r of ROLES) {
     const rol = rolMap.get(r.slug)!;
@@ -75,7 +106,7 @@ async function seed() {
 
     if (!usuario) {
       const salt = await bcrypt.genSalt(10);
-      const passwordHash = await bcrypt.hash(r.password, salt);
+      const passwordHash = await bcrypt.hash(passwordDemostracion!, salt);
       usuario = await usuarioRepo.save(
         usuarioRepo.create({
           username: r.username,

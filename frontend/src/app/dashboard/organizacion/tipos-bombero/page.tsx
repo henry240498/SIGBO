@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
 
@@ -15,6 +16,7 @@ interface TipoBombero {
 }
 
 export default function TiposBomberoPage() {
+  const confirmar = useConfirmacion();
   const [tipos, setTipos] = useState<TipoBombero[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
@@ -127,7 +129,7 @@ export default function TiposBomberoPage() {
 
   async function darBaja(id: string) {
     setError(null);
-    if (!window.confirm('Dar de baja este tipo de bombero?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Dar de baja este tipo de bombero?', confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/personal/tipos-bombero/${id}/baja`, { method: 'PATCH' });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
@@ -153,19 +155,19 @@ export default function TiposBomberoPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Tipos de Bombero ({tipos?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => descargarArchivo('/personal/tipos-bombero/exportar/excel', 'tipos-bombero.xlsx')}
           >
             Exportar a Excel
           </button>
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => descargarArchivo('/personal/tipos-bombero/exportar/pdf', 'tipos-bombero.pdf')}
           >
             Exportar a PDF
           </button>
-          <button className="btn-primary" onClick={mostrarForm ? cancelarForm : abrirNuevo}>
+          <button type="button" className="btn-primary" onClick={mostrarForm ? cancelarForm : abrirNuevo}>
             {mostrarForm ? 'Cancelar' : 'Nuevo tipo de bombero'}
           </button>
         </div>
@@ -251,7 +253,7 @@ export default function TiposBomberoPage() {
             <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
+            <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
               {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear tipo de bombero'}
             </button>
             {editandoId && (
@@ -296,11 +298,11 @@ export default function TiposBomberoPage() {
                   </span>
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(t)}>
+                  <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(t)}>
                     Editar
                   </button>
                   {t.eliminadoEn === null ? (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                       onClick={() => darBaja(t.id)}
@@ -308,7 +310,7 @@ export default function TiposBomberoPage() {
                       Eliminar
                     </button>
                   ) : (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#166534' }}
                       onClick={() => reactivar(t.id)}

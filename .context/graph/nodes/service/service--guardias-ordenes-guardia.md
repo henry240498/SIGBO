@@ -35,9 +35,12 @@ edges:
   - [reads, table--organizacion-designaciones]
   - [uses, entity--orden-guardia-modificacion]
   - [reads, table--operaciones-ordenes-guardia-modificaciones]
+  - [uses, entity--identidad-institucional]
+  - [reads, table--organizacion-identidad-institucional]
   - [uses, service--seguridad-auditoria]
   - [uses, service--guardias-orden-guardia-configuracion]
-terminos: [ordenes, guardia, guardias, orden, asignacion, grupo, miembro, esquema, horario, bombero, rango, vehiculo, autorizado, cargo, designacion, modificacion]
+  - [uses, service--documentos-documentos]
+terminos: [ordenes, guardia, guardias, orden, asignacion, grupo, miembro, esquema, horario, bombero, rango, vehiculo, autorizado, cargo, designacion, modificacion, identidad, institucional]
 ---
 
 # OrdenesGuardiaService
@@ -47,7 +50,7 @@ Documento oficial de Orden de Guardia -- capa de lectura/agregacion sobre la pla
 
 ## Metodos
 
-`findAll()` · `findOne()` · `crear()` · `regenerarPreview()` · `generarDocumentos()` · `revisar()` · `volverABorrador()` · `aprobar()` · `publicar()` · `anular()` · `listarModificaciones()` · `registrarModificacion()`
+`findAll()` · `findOne()` · `crear()` · `regenerarPreview()` · `generarDocumentos()` · `revisar()` · `volverABorrador()` · `aprobar()` · `publicar()` · `anular()` · `listarModificaciones()` · `descargarArchivo()` · `registrarModificacion()`
 
 ## Archivos
 
@@ -81,8 +84,11 @@ Documento oficial de Orden de Guardia -- capa de lectura/agregacion sobre la pla
 - `reads` → [[table--organizacion-designaciones|organizacion.designaciones]]
 - `uses` → [[entity--orden-guardia-modificacion|OrdenGuardiaModificacion]]
 - `reads` → [[table--operaciones-ordenes-guardia-modificaciones|operaciones.ordenes_guardia_modificaciones]]
+- `uses` → [[entity--identidad-institucional|IdentidadInstitucional]]
+- `reads` → [[table--organizacion-identidad-institucional|organizacion.identidad_institucional]]
 - `uses` → [[service--seguridad-auditoria|AuditoriaService]]
 - `uses` → [[service--guardias-orden-guardia-configuracion|OrdenGuardiaConfiguracionService]]
+- `uses` → [[service--documentos-documentos|DocumentosService]]
 
 ## Referenciado por
 

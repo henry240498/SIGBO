@@ -56,7 +56,7 @@ export default function SorteosPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Sorteos de guardia ({sorteos?.length ?? 0})</h2>
         {puedeGenerar && (
-          <button className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
             {mostrarForm ? 'Cancelar' : 'Nuevo sorteo'}
           </button>
         )}
@@ -89,7 +89,7 @@ export default function SorteosPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Esquema de horario especial (opcional, para crear la guardia despues)</label>
             <ComboBuscable opciones={opcionesEsquema} value={esquemaHorarioId} onChange={setEsquemaHorarioId} placeholderBusqueda="Buscar esquema..." ningunaLabel="Decidir mas adelante" />
           </div>
-          <button className="btn-primary" disabled={generando} style={{ alignSelf: 'flex-start' }}>
+          <button type="submit" className="btn-primary" disabled={generando} style={{ alignSelf: 'flex-start' }}>
             {generando ? 'Sorteando...' : 'Generar sorteo'}
           </button>
         </form>

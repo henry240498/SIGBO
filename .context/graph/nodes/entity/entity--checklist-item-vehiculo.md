@@ -27,7 +27,7 @@ Catalogo parametrizable de items de inspeccion de vehiculo (seccion 12 del pedid
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/equipos/[id]`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
+- **Pantallas:** `/dashboard/deposito/articulos/[id]`, `/dashboard/deposito/bajas`, `/dashboard/deposito/incidencias`, `/dashboard/deposito/movimientos`, `/dashboard/equipos/[id]`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
 - **Endpoints:** ChecklistItemsController, InspeccionesMovilController
 - **Servicios:** ChecklistItemsService, InspeccionesMovilService
 

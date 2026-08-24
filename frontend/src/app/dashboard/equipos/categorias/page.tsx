@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { obtenerSesion } from '@/lib/api';
 import { CategoriaEquipo, actualizarCategoria, cargarCategorias, crearCategoria, eliminarCategoria } from '@/lib/equipos';
 
 export default function CategoriasEquipoPage() {
+  const confirmar = useConfirmacion();
   const [categorias, setCategorias] = useState<CategoriaEquipo[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
@@ -69,7 +71,7 @@ export default function CategoriasEquipoPage() {
   }
 
   async function eliminar(id: string) {
-    if (!window.confirm('Eliminar esta categoria?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Eliminar esta categoria?', confirmar: 'Continuar', peligro: true })) return;
     try {
       await eliminarCategoria(id);
       await cargar();
@@ -83,7 +85,7 @@ export default function CategoriasEquipoPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Categorias de equipo ({categorias?.length ?? 0})</h2>
         {puedeCrear && (
-          <button className="btn-primary" onClick={() => (mostrarForm ? setMostrarForm(false) : (limpiarForm(), setMostrarForm(true)))}>
+          <button type="button" className="btn-primary" onClick={() => (mostrarForm ? setMostrarForm(false) : (limpiarForm(), setMostrarForm(true)))}>
             {mostrarForm ? 'Cancelar' : 'Nueva categoria'}
           </button>
         )}
@@ -104,7 +106,7 @@ export default function CategoriasEquipoPage() {
               <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
             </div>
           </div>
-          <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
+          <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
             {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear categoria'}
           </button>
         </form>
@@ -132,12 +134,12 @@ export default function CategoriasEquipoPage() {
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6 }}>
                   {puedeEditar && (
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(c)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(c)}>
                       Editar
                     </button>
                   )}
                   {puedeEliminar && (
-                    <button
+                    <button type="button"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d', color: '#fff', border: 'none', borderRadius: 6 }}
                       onClick={() => eliminar(c.id)}
                     >

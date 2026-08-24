@@ -4,10 +4,11 @@ tipo: TABLE
 nombre: personal.historial_institucional
 nivel: L2
 dominio: personal
-resumen: Tabla personal.historial_institucional (11 columnas). Creada en 016_personal_expansion.sql.
+resumen: Tabla personal.historial_institucional (11 columnas). Creada en 016_personal_expansion.sql, modificada por 039_academia_historial_institucional.sql.
 tabla: historial_institucional
 archivos:
   - database/migrations/016_personal_expansion.sql
+  - database/migrations/039_academia_historial_institucional.sql
 edges:
   - [defined_in, file--016-personal-expansion]
   - [belongs_to, domain--personal]
@@ -17,9 +18,13 @@ terminos: [personal, historial, institucional, bombero, tipo, movimiento, fecha,
 
 # personal.historial_institucional
 
-Tabla personal.historial_institucional (11 columnas). Creada en 016_personal_expansion.sql.
+Tabla personal.historial_institucional (11 columnas). Creada en 016_personal_expansion.sql, modificada por 039_academia_historial_institucional.sql.
 
 - **Esquema:** personal · **Columnas:** 11
+
+## Restricciones CHECK (reglas que la BD impone)
+
+- `tipo_movimiento IN ('INGRESO','ASCENSO','CAMBIO_RANGO','CAMBIO_CARGO','CAMBIO_COMPANIA','CAMBIO_CONDICION', 'CAMBIO_CODIGO','LICENCIA','SUSPENSION','RECONOCIMIENTO','SANCION','RETIRO','FORMACION_ACADEMICA')`
 
 ## Llaves foraneas
 
@@ -44,8 +49,8 @@ Tabla personal.historial_institucional (11 columnas). Creada en 016_personal_exp
 ## Donde se usa
 
 - **Pantallas:** — (sin pantalla que llegue hasta aca)
-- **Endpoints:** BomberosController, CondicionController, FojaServicioController, HistorialInstitucionalController
-- **Servicios:** BomberosService, CondicionService, FojaServicioService, HistorialInstitucionalService
+- **Endpoints:** BomberosController, CondicionController, FojaServicioController, HistorialInstitucionalController, InscripcionesAcademiaController
+- **Servicios:** BomberosService, CondicionService, FojaServicioService, HistorialInstitucionalService, InscripcionesAcademiaService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -53,6 +58,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 ## Archivos
 
 - `database/migrations/016_personal_expansion.sql`
+- `database/migrations/039_academia_historial_institucional.sql`
 
 ## Relaciones
 
@@ -63,6 +69,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 ## Referenciado por
 
 - [[entity--historial-institucional|HistorialInstitucional]] `persisted_in` →
+- [[service--academia-inscripciones-academia|InscripcionesAcademiaService]] `reads` →
 - [[service--personal-bomberos|BomberosService]] `reads` →
 - [[service--personal-condicion|CondicionService]] `reads` →
 - [[service--personal-foja-servicio|FojaServicioService]] `reads` →

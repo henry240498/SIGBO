@@ -100,7 +100,7 @@ export default function RegistroAsistenciaPage() {
 
       <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid #1f2937' }}>
         {SUBTABS.map((t) => (
-          <button
+          <button type="button"
             key={t.id}
             onClick={() => setVista(t.id)}
             style={{
@@ -158,7 +158,7 @@ export default function RegistroAsistenciaPage() {
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo (opcional)</label>
               <input className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
             </div>
-            <button className="btn-primary" disabled={guardando}>
+            <button type="submit" className="btn-primary" disabled={guardando}>
               {guardando ? 'Guardando...' : 'Registrar'}
             </button>
           </div>

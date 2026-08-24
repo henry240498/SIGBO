@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Put,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -19,6 +20,7 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { AuthenticatedUser } from '../auth/types/authenticated-user';
 import { PerfilService } from './perfil.service';
 import { ActualizarPerfilDto } from './dto/actualizar-perfil.dto';
+import { Response } from 'express';
 
 const OPCIONES_ARCHIVO = {
   storage: memoryStorage(),
@@ -45,6 +47,13 @@ export class PerfilController {
     return this.perfilService.obtenerPerfil(user.id, user.permisos);
   }
 
+  @Get('mi-perfil/foto')
+  async obtenerMiFoto(@CurrentUser() user: AuthenticatedUser, @Res() res: Response) {
+    const { buffer, mimeType } = await this.perfilService.obtenerFoto(user.id);
+    res.set({ 'Content-Type': mimeType, 'Content-Length': String(buffer.length), 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff' });
+    res.send(buffer);
+  }
+
   @Put('mi-perfil')
   actualizarMiPerfil(@Body() dto: ActualizarPerfilDto, @CurrentUser() user: AuthenticatedUser) {
     return this.perfilService.actualizarPerfilPropio(user.id, dto, user.permisos);
@@ -66,6 +75,15 @@ export class PerfilController {
   @RequirePermission('seguridad:ver_usuarios')
   obtenerPerfilAdmin(@Param('id') id: string) {
     return this.perfilService.obtenerPerfil(id, ['seguridad:editar_usuario']);
+  }
+
+  @Get('usuarios/:id/perfil/foto')
+  @UseGuards(PermissionsGuard)
+  @RequirePermission('seguridad:ver_usuarios')
+  async obtenerFotoAdmin(@Param('id') id: string, @Res() res: Response) {
+    const { buffer, mimeType } = await this.perfilService.obtenerFoto(id);
+    res.set({ 'Content-Type': mimeType, 'Content-Length': String(buffer.length), 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff' });
+    res.send(buffer);
   }
 
   @Put('usuarios/:id/perfil')

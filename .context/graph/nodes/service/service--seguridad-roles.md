@@ -20,6 +20,7 @@ edges:
   - [uses, entity--permiso]
   - [reads, table--seguridad-permisos]
   - [uses, service--seguridad-auditoria]
+  - [uses, service--seguridad-sesiones]
 terminos: [roles, seguridad, rol, asignacion, permiso]
 ---
 
@@ -49,6 +50,7 @@ Logica de negocio de roles (modulo seguridad).
 - `uses` → [[entity--permiso|Permiso]]
 - `reads` → [[table--seguridad-permisos|seguridad.permisos]]
 - `uses` → [[service--seguridad-auditoria|AuditoriaService]]
+- `uses` → [[service--seguridad-sesiones|SesionesService]]
 
 ## Referenciado por
 

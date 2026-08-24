@@ -71,7 +71,7 @@ pareceria sobreingenieria. Ver [[rule--el-grafo-no-es-la-verdad]].
 
 ## Relaciones
 
-- `originates_from` → [[dependency--nodejs|Node.js 24 y PowerShell como entorno de ejecucion]]
+- `originates_from` → [[dependency--nodejs|Node.js 20+ y PowerShell como entorno de ejecucion]]
 
 ---
 <sub>Nodo **curado** (editable a mano).</sub>

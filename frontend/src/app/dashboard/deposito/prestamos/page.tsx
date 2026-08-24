@@ -119,7 +119,7 @@ function FilaDevolucion({ prestamo, ubicaciones, onDevuelto }: { prestamo: Prest
         </div>
       ))}
       {pendientes.length > 0 && (
-        <button className="btn-primary" style={{ marginTop: 8, padding: '4px 10px', fontSize: 12 }} onClick={confirmar} disabled={guardando}>
+        <button type="button" className="btn-primary" style={{ marginTop: 8, padding: '4px 10px', fontSize: 12 }} onClick={confirmar} disabled={guardando}>
           {guardando ? 'Guardando...' : 'Confirmar devolucion'}
         </button>
       )}
@@ -242,7 +242,7 @@ export default function PrestamosDepositoPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Prestamos ({prestamos?.length ?? 0})</h2>
         {puedePrestar && (
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               limpiarForm();
@@ -336,7 +336,7 @@ export default function PrestamosDepositoPage() {
             </button>
           </div>
 
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Registrar prestamo'}
           </button>
         </form>
@@ -375,7 +375,7 @@ export default function PrestamosDepositoPage() {
                   </td>
                   <td style={{ padding: '6px 4px' }}>
                     {puedePrestar && p.estado !== 'DEVUELTO' && (
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => setExpandidoId(expandidoId === p.id ? null : p.id)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => setExpandidoId(expandidoId === p.id ? null : p.id)}>
                         {expandidoId === p.id ? 'Cerrar' : 'Devolver'}
                       </button>
                     )}

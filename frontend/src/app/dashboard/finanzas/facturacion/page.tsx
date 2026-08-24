@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import { obtenerSesion } from '@/lib/api';
+import { useEntradaConfirmada } from '@/app/components/InputProvider';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { cargarTiposDocumentoFinanzas } from '@/lib/finanzas';
 import {
@@ -71,7 +72,7 @@ function FilaNotaCredito({ factura, motivos, onCreada }: { factura: Factura; mot
         <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Concepto</label>
         <input className="input-field" value={concepto} onChange={(e) => setConcepto(e.target.value)} />
       </div>
-      <button className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} disabled={guardando || !numero || !fecha || !motivoId || !importe} onClick={confirmar}>
+      <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} disabled={guardando || !numero || !fecha || !motivoId || !importe} onClick={confirmar}>
         Emitir
       </button>
     </div>
@@ -79,6 +80,7 @@ function FilaNotaCredito({ factura, motivos, onCreada }: { factura: Factura; mot
 }
 
 export default function FacturacionPage() {
+  const solicitarEntrada = useEntradaConfirmada();
   const [facturas, setFacturas] = useState<Factura[] | null>(null);
   const [socios, setSocios] = useState<SocioProtector[]>([]);
   const [tiposComprobante, setTiposComprobante] = useState<Parametro[]>([]);
@@ -201,7 +203,7 @@ export default function FacturacionPage() {
   }
 
   async function anular(f: Factura) {
-    const motivo = window.prompt('Motivo de la anulacion (la factura no se borra -- queda marcada como anulada):');
+    const motivo = await solicitarEntrada({ titulo: 'Anular factura', mensaje: 'Indique el motivo de la anulación. La factura no se borra; queda marcada como anulada.', etiqueta: 'Motivo', confirmar: 'Anular', requerida: true, peligro: true });
     if (!motivo) return;
     try {
       await anularFactura(f.id, motivo);
@@ -217,7 +219,7 @@ export default function FacturacionPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Facturacion ({facturas?.length ?? 0})</h2>
         {puedeCrear && (
-          <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Registrar factura manual'}
           </button>
         )}
@@ -302,7 +304,7 @@ export default function FacturacionPage() {
               <input className="input-field" type="file" accept="application/pdf,image/jpeg,image/png" onChange={(e) => setArchivo(e.target.files?.[0] ?? null)} />
             </div>
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Registrar factura'}
           </button>
         </form>
@@ -338,12 +340,12 @@ export default function FacturacionPage() {
                   </td>
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                     {puedeEmitirNota && f.estado === 'EMITIDA' && (
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 11, background: '#475569' }} onClick={() => verNotas(f.id)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 11, background: '#475569' }} onClick={() => verNotas(f.id)}>
                         {expandidaId === f.id ? 'Cerrar' : 'Nota de credito'}
                       </button>
                     )}
                     {puedeAnular && f.estado === 'EMITIDA' && (
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 11, background: '#7f1d1d' }} onClick={() => anular(f)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 11, background: '#7f1d1d' }} onClick={() => anular(f)}>
                         Anular
                       </button>
                     )}

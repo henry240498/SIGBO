@@ -20,7 +20,7 @@ import {
 } from '../../shared/entities';
 import { generarFojaServicioPdf } from '../../shared/utils/foja-servicio-pdf';
 import { generarFojaServicioDocx } from '../../shared/utils/foja-servicio-docx';
-import { guardarBuffer } from '../../shared/utils/almacenamiento';
+import { guardarBufferRestringido, leerBufferRestringido } from '../../shared/utils/almacenamiento';
 import { FojaServicioSnapshot } from './types/foja-servicio-snapshot';
 
 const CARPETA_FOJAS = 'fojas-servicio';
@@ -205,8 +205,8 @@ export class FojaServicioService {
       generarFojaServicioDocx(snapshot),
     ]);
 
-    const archivoPdfUrl = await guardarBuffer(pdfBuffer, '.pdf', CARPETA_FOJAS);
-    const archivoDocxUrl = await guardarBuffer(docxBuffer, '.docx', CARPETA_FOJAS);
+    const archivoPdfUrl = await guardarBufferRestringido(pdfBuffer, '.pdf', CARPETA_FOJAS);
+    const archivoDocxUrl = await guardarBufferRestringido(docxBuffer, '.docx', CARPETA_FOJAS);
 
     const foja = this.fojaRepo.create({
       bomberoId,
@@ -234,5 +234,16 @@ export class FojaServicioService {
     const foja = await this.fojaRepo.findOne({ where: { bomberoId, anio }, order: { generadoEn: 'DESC' } });
     if (!foja) throw new NotFoundException(`No hay foja de servicio generada para el ano ${anio}`);
     return foja;
+  }
+
+  async descargarArchivo(bomberoId: string, anio: number, formato: 'pdf' | 'docx'): Promise<Buffer> {
+    const foja = await this.obtenerPorAnio(bomberoId, anio);
+    const ruta = formato === 'pdf' ? foja.archivoPdfUrl : foja.archivoDocxUrl;
+    if (!ruta) throw new NotFoundException(`No hay archivo ${formato.toUpperCase()} para esta foja de servicio`);
+    try {
+      return await leerBufferRestringido(ruta, CARPETA_FOJAS);
+    } catch {
+      throw new NotFoundException('El archivo de la foja de servicio no está disponible');
+    }
   }
 }

@@ -65,7 +65,7 @@ export default function NuevaOrdenGuardiaPage() {
           <input className="input-field" type="date" value={fechaEmision} onChange={(e) => setFechaEmision(e.target.value)} required />
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" disabled={creando}>{creando ? 'Creando...' : 'Crear orden'}</button>
+          <button type="submit" className="btn-primary" disabled={creando}>{creando ? 'Creando...' : 'Crear orden'}</button>
           <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/guardias/ordenes')}>
             Cancelar
           </button>

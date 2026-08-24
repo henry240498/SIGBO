@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { API_ORIGIN, apiFetch, obtenerSesion } from '@/lib/api';
+import { API_ORIGIN, apiFetch } from '@/lib/api';
 
 interface Contacto {
   numero?: string;
@@ -84,14 +84,11 @@ export default function MiPerfilPage() {
     try {
       const formData = new FormData();
       formData.append('archivo', archivo);
-      const sesion = obtenerSesion();
-      const headers: HeadersInit = {};
-      if (sesion) headers['Authorization'] = `Bearer ${sesion.accessToken}`;
-
       const res = await fetch(`${API_ORIGIN}/api/v1/seguridad/mi-perfil/foto`, {
         method: 'PUT',
-        headers,
+        headers: { 'X-SIGBO-Request': '1' },
         body: formData,
+        credentials: 'include',
       });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
@@ -186,7 +183,7 @@ export default function MiPerfilPage() {
           </div>
           {errorPassword && <p style={{ color: '#f87171', fontSize: 13 }}>{errorPassword}</p>}
           {mensajePassword && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensajePassword}</p>}
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }}>
+          <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }}>
             Guardar contrasena
           </button>
         </form>
@@ -198,7 +195,7 @@ export default function MiPerfilPage() {
           {perfil.avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={`${API_ORIGIN}${perfil.avatarUrl}`}
+              src={`${API_ORIGIN}/api/v1/seguridad/mi-perfil/foto`}
               alt="Foto de perfil"
               style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: '50%', border: '1px solid #334155' }}
             />
@@ -362,7 +359,7 @@ export default function MiPerfilPage() {
           />
         </section>
 
-        <button className="btn-primary" disabled={bloqueado || guardando} style={{ alignSelf: 'flex-start' }}>
+        <button type="submit" className="btn-primary" disabled={bloqueado || guardando} style={{ alignSelf: 'flex-start' }}>
           {guardando ? 'Guardando...' : 'Guardar cambios'}
         </button>
       </form>

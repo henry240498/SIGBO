@@ -56,7 +56,7 @@ function FilaAnular({ movimiento, motivos, onAnulado }: { movimiento: Movimiento
       {error && <p style={{ color: '#f87171', fontSize: 12, gridColumn: '1 / -1' }}>{error}</p>}
       <ComboBuscable opciones={opcionesMotivo} value={motivoAnulacionId} onChange={setMotivoAnulacionId} ningunaLabel="-- motivo --" />
       <input className="input-field" placeholder="Detalle (opcional)" value={detalle} onChange={(e) => setDetalle(e.target.value)} />
-      <button className="btn-primary" style={{ padding: '6px 12px', fontSize: 12, background: '#7f1d1d' }} onClick={confirmar} disabled={guardando}>
+      <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12, background: '#7f1d1d' }} onClick={confirmar} disabled={guardando}>
         {guardando ? 'Guardando...' : 'Confirmar anulacion'}
       </button>
     </div>
@@ -215,7 +215,7 @@ export default function MovimientosFinancierosPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Movimientos ({movimientos?.length ?? 0})</h2>
         {puedeCrear && (
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               limpiarForm();
@@ -329,7 +329,7 @@ export default function MovimientosFinancierosPage() {
             </div>
           )}
 
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Registrar movimiento'}
           </button>
         </form>
@@ -368,12 +368,12 @@ export default function MovimientosFinancierosPage() {
                   </td>
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                     {puedeVerReportes && (
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => verComprobante(m.id)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => verComprobante(m.id)}>
                         Comprobante
                       </button>
                     )}
                     {puedeAnular && m.estado === 'REGISTRADO' && (
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }} onClick={() => setExpandidoId(expandidoId === m.id ? null : m.id)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }} onClick={() => setExpandidoId(expandidoId === m.id ? null : m.id)}>
                         {expandidoId === m.id ? 'Cerrar' : 'Anular'}
                       </button>
                     )}

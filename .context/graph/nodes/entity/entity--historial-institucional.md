@@ -11,7 +11,7 @@ archivos:
 edges:
   - [belongs_to, domain--personal]
   - [persisted_in, table--personal-historial-institucional]
-terminos: [historial, institucional, personal, tipo, movimiento, ingreso, ascenso, cambio, rango, cargo, compania, condicion, codigo, licencia, suspension, reconocimiento, sancion, retiro]
+terminos: [historial, institucional, personal, tipo, movimiento, ingreso, ascenso, cambio, rango, cargo, compania, condicion, codigo, licencia, suspension, reconocimiento, sancion, retiro, formacion, academica]
 ---
 
 # HistorialInstitucional
@@ -23,13 +23,13 @@ Entidad HistorialInstitucional, persistida en personal.historial_institucional.
 
 ## Estados y enumeraciones
 
-- `TipoMovimientoInstitucional`: `INGRESO` · `ASCENSO` · `CAMBIO_RANGO` · `CAMBIO_CARGO` · `CAMBIO_COMPANIA` · `CAMBIO_CONDICION` · `CAMBIO_CODIGO` · `LICENCIA` · `SUSPENSION` · `RECONOCIMIENTO` · `SANCION` · `RETIRO`
+- `TipoMovimientoInstitucional`: `INGRESO` · `ASCENSO` · `CAMBIO_RANGO` · `CAMBIO_CARGO` · `CAMBIO_COMPANIA` · `CAMBIO_CONDICION` · `CAMBIO_CODIGO` · `LICENCIA` · `SUSPENSION` · `RECONOCIMIENTO` · `SANCION` · `RETIRO` · `FORMACION_ACADEMICA`
 
 ## Donde se usa
 
 - **Pantallas:** — (sin pantalla que llegue hasta aca)
-- **Endpoints:** BomberosController, CondicionController, FojaServicioController, HistorialInstitucionalController
-- **Servicios:** BomberosService, CondicionService, FojaServicioService, HistorialInstitucionalService
+- **Endpoints:** BomberosController, CondicionController, FojaServicioController, HistorialInstitucionalController, InscripcionesAcademiaController
+- **Servicios:** BomberosService, CondicionService, FojaServicioService, HistorialInstitucionalService, InscripcionesAcademiaService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -45,6 +45,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 
 ## Referenciado por
 
+- [[service--academia-inscripciones-academia|InscripcionesAcademiaService]] `uses` →
 - [[service--personal-bomberos|BomberosService]] `uses` →
 - [[service--personal-condicion|CondicionService]] `uses` →
 - [[service--personal-foja-servicio|FojaServicioService]] `uses` →

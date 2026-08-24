@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import { obtenerSesion } from '@/lib/api';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { cargarBomberos, BomberoResumen } from '@/lib/personal';
 import { Caja, TurnoCaja, abrirCaja, actualizarCaja, cargarCajas, cargarTurnoAbierto, cargarTurnosDeCaja, cerrarCaja, crearCaja } from '@/lib/finanzas';
@@ -78,7 +79,7 @@ function PanelTurno({ caja, onCambio }: { caja: Caja; onCambio: () => void }) {
         <div style={{ fontSize: 13 }}>
           Turno abierto desde {new Date(turnoAbierto.fechaApertura).toLocaleString()} (saldo inicial declarado {formatearGs(turnoAbierto.saldoInicial)}).
           {puedeCerrarCaja && (
-            <button className="btn-primary" style={{ marginLeft: 10, padding: '4px 10px', fontSize: 12, background: '#7f1d1d' }} onClick={() => setMostrarCerrar(!mostrarCerrar)}>
+            <button type="button" className="btn-primary" style={{ marginLeft: 10, padding: '4px 10px', fontSize: 12, background: '#7f1d1d' }} onClick={() => setMostrarCerrar(!mostrarCerrar)}>
               {mostrarCerrar ? 'Cancelar' : 'Cerrar caja'}
             </button>
           )}
@@ -87,7 +88,7 @@ function PanelTurno({ caja, onCambio }: { caja: Caja; onCambio: () => void }) {
         <div style={{ fontSize: 13 }}>
           Sin turno abierto.
           {puedeCerrarCaja && (
-            <button className="btn-primary" style={{ marginLeft: 10, padding: '4px 10px', fontSize: 12 }} onClick={() => setMostrarAbrir(!mostrarAbrir)}>
+            <button type="button" className="btn-primary" style={{ marginLeft: 10, padding: '4px 10px', fontSize: 12 }} onClick={() => setMostrarAbrir(!mostrarAbrir)}>
               {mostrarAbrir ? 'Cancelar' : 'Abrir caja'}
             </button>
           )}
@@ -100,7 +101,7 @@ function PanelTurno({ caja, onCambio }: { caja: Caja; onCambio: () => void }) {
             <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Saldo inicial declarado</label>
             <input className="input-field" type="number" min={0} step="1" value={saldoInicial} onChange={(e) => setSaldoInicial(e.target.value)} required />
           </div>
-          <button className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Confirmar apertura'}
           </button>
         </form>
@@ -116,7 +117,7 @@ function PanelTurno({ caja, onCambio }: { caja: Caja; onCambio: () => void }) {
             <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Observacion</label>
             <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
-          <button className="btn-primary" style={{ padding: '6px 12px', fontSize: 12, background: '#7f1d1d' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12, background: '#7f1d1d' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Confirmar cierre'}
           </button>
         </form>
@@ -153,6 +154,7 @@ function PanelTurno({ caja, onCambio }: { caja: Caja; onCambio: () => void }) {
 }
 
 export default function CajasPage() {
+  const confirmar = useConfirmacion();
   const [cajas, setCajas] = useState<Caja[] | null>(null);
   const [bomberos, setBomberos] = useState<BomberoResumen[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -205,7 +207,7 @@ export default function CajasPage() {
   }
 
   async function inactivar(caja: Caja) {
-    if (!window.confirm(`¿Marcar "${caja.nombre}" como inactiva?`)) return;
+    if (!await confirmar({ titulo: 'Desactivar caja', mensaje: `¿Marcar "${caja.nombre}" como inactiva?`, confirmar: 'Desactivar', peligro: true })) return;
     try {
       await actualizarCaja(caja.id, { estado: caja.estado === 'ACTIVA' ? 'INACTIVA' : 'ACTIVA' });
       await cargar();
@@ -219,7 +221,7 @@ export default function CajasPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Cajas ({cajas?.length ?? 0})</h2>
         {puedeAdministrar && (
-          <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Nueva caja'}
           </button>
         )}
@@ -244,7 +246,7 @@ export default function CajasPage() {
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
             <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Crear caja'}
           </button>
         </form>
@@ -273,11 +275,11 @@ export default function CajasPage() {
                     <span className="badge" style={{ background: c.estado === 'ACTIVA' ? '#166534' : '#7f1d1d', color: c.estado === 'ACTIVA' ? '#4ade80' : '#f87171' }}>{c.estado}</span>
                   </td>
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => setExpandidaId(expandidaId === c.id ? null : c.id)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => setExpandidaId(expandidaId === c.id ? null : c.id)}>
                       {expandidaId === c.id ? 'Ocultar turnos' : 'Ver turnos'}
                     </button>
                     {puedeAdministrar && (
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#475569' }} onClick={() => inactivar(c)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#475569' }} onClick={() => inactivar(c)}>
                         {c.estado === 'ACTIVA' ? 'Inactivar' : 'Reactivar'}
                       </button>
                     )}

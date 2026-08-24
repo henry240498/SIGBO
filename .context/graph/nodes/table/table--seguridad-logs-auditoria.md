@@ -39,8 +39,8 @@ Tabla seguridad.logs_auditoria (11 columnas). Creada en 002_seguridad.sql, modif
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/asistencia/auditoria`, `/dashboard/guardias/auditoria`, `/dashboard/mi-perfil/seguridad`, `/dashboard/personal/[id]`, `/dashboard/seguridad/auditoria`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios/[id]`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`
-- **Endpoints:** AuditoriaController, ServiciosController, SesionesController
+- **Pantallas:** `/dashboard/asistencia/auditoria`, `/dashboard/documentos`, `/dashboard/documentos/[id]`, `/dashboard/documentos/auditoria`, `/dashboard/documentos/expedientes`, `/dashboard/documentos/expedientes/[id]`, `/dashboard/documentos/listado`, `/dashboard/documentos/plantillas`, `/dashboard/documentos/vencimientos`, `/dashboard/guardias/auditoria`, `/dashboard/inteligencia`, `/dashboard/mi-perfil/seguridad`, `/dashboard/organizacion/documentos`, `/dashboard/personal/[id]`, `/dashboard/seguridad/auditoria`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios/[id]`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`
+- **Endpoints:** AuditoriaController, DocumentosController, IaAdminConversacionesController, ServiciosController, SesionesController
 - **Servicios:** AuditoriaService, ServiciosService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.

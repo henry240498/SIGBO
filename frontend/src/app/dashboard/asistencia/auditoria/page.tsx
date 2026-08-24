@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useState } from 'react';
 import { apiFetch } from '@/lib/api';
+import { formatearJsonSeguro } from '@/lib/json-seguro';
 
 interface LogAuditoria {
   id: string;
@@ -64,7 +65,7 @@ export default function AuditoriaAsistenciaPage() {
                     </td>
                     <td style={{ padding: '6px 4px' }}>{log.ip ?? ''}</td>
                     <td style={{ padding: '6px 4px' }}>
-                      <button
+                      <button type="button"
                         className="btn-primary"
                         style={{ padding: '4px 8px', fontSize: 12 }}
                         onClick={() => setExpandido(expandido === log.id ? null : log.id)}
@@ -78,10 +79,10 @@ export default function AuditoriaAsistenciaPage() {
                       <td colSpan={5} style={{ padding: '6px 4px', background: '#0f172a' }}>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, fontSize: 11 }}>
                           <pre style={{ whiteSpace: 'pre-wrap' }}>
-                            Antes: {log.datosAntes ? JSON.stringify(JSON.parse(log.datosAntes), null, 2) : '(nada)'}
+                            Antes: {formatearJsonSeguro(log.datosAntes)}
                           </pre>
                           <pre style={{ whiteSpace: 'pre-wrap' }}>
-                            Despues: {log.datosDespues ? JSON.stringify(JSON.parse(log.datosDespues), null, 2) : '(nada)'}
+                            Despues: {formatearJsonSeguro(log.datosDespues)}
                           </pre>
                         </div>
                       </td>

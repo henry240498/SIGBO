@@ -26,7 +26,6 @@ Superficie HTTP de denuncias publicas bajo /api/v1/denuncias/publicas.
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
 | GET | `/denuncias/publicas/categorias` | — |
-| GET | `/denuncias/publicas/servicios` | — |
 
 ## Archivos
 

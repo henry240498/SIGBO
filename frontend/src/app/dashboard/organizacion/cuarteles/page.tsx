@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
 
@@ -29,6 +30,7 @@ interface Bombero {
 }
 
 export default function CuartelesPage() {
+  const confirmar = useConfirmacion();
   const [cuarteles, setCuarteles] = useState<Cuartel[] | null>(null);
   const [companias, setCompanias] = useState<Compania[]>([]);
   const [bomberos, setBomberos] = useState<Bombero[]>([]);
@@ -138,7 +140,7 @@ export default function CuartelesPage() {
 
   async function darBaja(id: string) {
     setError(null);
-    if (!window.confirm('Dar de baja este cuartel?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Dar de baja este cuartel?', confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/organizacion/cuarteles/${id}/baja`, { method: 'PATCH' });
     if (!res.ok) {
       setError('No se pudo dar de baja el cuartel');
@@ -176,13 +178,13 @@ export default function CuartelesPage() {
       >
         <h2 style={{ fontSize: 16 }}>Cuarteles ({cuarteles?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/cuarteles/exportar/excel', 'cuarteles.xlsx')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/cuarteles/exportar/excel', 'cuarteles.xlsx')}>
             Exportar a Excel
           </button>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/cuarteles/exportar/pdf', 'cuarteles.pdf')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/cuarteles/exportar/pdf', 'cuarteles.pdf')}>
             Exportar a PDF
           </button>
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               if (mostrarForm) limpiarForm();
@@ -292,7 +294,7 @@ export default function CuartelesPage() {
               <option value="INACTIVO">Inactivo</option>
             </select>
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }}>
+          <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }}>
             {editandoId ? 'Guardar cambios' : 'Crear cuartel'}
           </button>
         </form>
@@ -321,11 +323,11 @@ export default function CuartelesPage() {
                   <span className="badge">{c.estado}</span>
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(c)}>
+                  <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(c)}>
                     Editar
                   </button>
                   {c.eliminadoEn === null ? (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                       onClick={() => darBaja(c.id)}
@@ -333,7 +335,7 @@ export default function CuartelesPage() {
                       Eliminar
                     </button>
                   ) : (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12 }}
                       onClick={() => reactivar(c.id)}

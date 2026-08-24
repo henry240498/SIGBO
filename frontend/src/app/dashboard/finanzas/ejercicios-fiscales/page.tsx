@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { obtenerSesion } from '@/lib/api';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { EjercicioFiscal, cargarEjerciciosFiscales, cerrarEjercicioFiscal, crearEjercicioFiscal, reabrirEjercicioFiscal } from '@/lib/finanzas';
 
 export default function EjerciciosFiscalesPage() {
+  const confirmar = useConfirmacion();
   const [ejercicios, setEjercicios] = useState<EjercicioFiscal[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
@@ -51,7 +53,7 @@ export default function EjerciciosFiscalesPage() {
   }
 
   async function alternarEstado(ej: EjercicioFiscal) {
-    if (!window.confirm(`¿${ej.estado === 'ABIERTO' ? 'Cerrar' : 'Reabrir'} el ejercicio ${ej.anio}?`)) return;
+    if (!await confirmar({ titulo: 'Cambiar estado del ejercicio', mensaje: `¿${ej.estado === 'ABIERTO' ? 'Cerrar' : 'Reabrir'} el ejercicio ${ej.anio}?`, confirmar: 'Continuar', peligro: true })) return;
     try {
       if (ej.estado === 'ABIERTO') await cerrarEjercicioFiscal(ej.id);
       else await reabrirEjercicioFiscal(ej.id);
@@ -66,7 +68,7 @@ export default function EjerciciosFiscalesPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Ejercicios fiscales ({ejercicios?.length ?? 0})</h2>
         {puedeAdministrar && (
-          <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Nuevo ejercicio'}
           </button>
         )}
@@ -92,7 +94,7 @@ export default function EjerciciosFiscalesPage() {
               <input className="input-field" type="date" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} required />
             </div>
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Crear ejercicio'}
           </button>
         </form>
@@ -121,7 +123,7 @@ export default function EjerciciosFiscalesPage() {
                 </td>
                 <td style={{ padding: '6px 4px' }}>
                   {puedeAdministrar && (
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: ej.estado === 'ABIERTO' ? '#7f1d1d' : '#475569' }} onClick={() => alternarEstado(ej)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: ej.estado === 'ABIERTO' ? '#7f1d1d' : '#475569' }} onClick={() => alternarEstado(ej)}>
                       {ej.estado === 'ABIERTO' ? 'Cerrar' : 'Reabrir'}
                     </button>
                   )}

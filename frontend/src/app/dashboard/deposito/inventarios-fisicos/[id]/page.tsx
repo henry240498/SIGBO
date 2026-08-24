@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { obtenerSesion } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { cargarEquipos, Equipo } from '@/lib/equipos';
@@ -17,6 +18,7 @@ import {
 } from '@/lib/deposito';
 
 export default function InventarioFisicoDetallePage() {
+  const confirmar = useConfirmacion();
   const params = useParams();
   const router = useRouter();
   const id = params.id as string;
@@ -92,7 +94,7 @@ export default function InventarioFisicoDetallePage() {
   }
 
   async function finalizar() {
-    if (!window.confirm('¿Finalizar este inventario fisico? No se podran agregar mas items despues.')) return;
+    if (!await confirmar({ titulo: 'Finalizar inventario', mensaje: '¿Finalizar este inventario físico? No se podrán agregar más ítems después.', confirmar: 'Finalizar', peligro: true })) return;
     setError(null);
     setFinalizando(true);
     try {
@@ -112,7 +114,7 @@ export default function InventarioFisicoDetallePage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
       <div>
-        <button
+        <button type="button"
           onClick={() => router.push('/dashboard/deposito/inventarios-fisicos')}
           style={{ background: 'none', border: 'none', color: '#60a5fa', cursor: 'pointer', fontSize: 12, padding: 0, marginBottom: 6 }}
         >
@@ -126,7 +128,7 @@ export default function InventarioFisicoDetallePage() {
             </span>
           </h2>
           {puedeCargar && inventario.estado === 'EN_PROCESO' && (
-            <button className="btn-primary" style={{ background: '#7f1d1d' }} onClick={finalizar} disabled={finalizando}>
+            <button type="button" className="btn-primary" style={{ background: '#7f1d1d' }} onClick={finalizar} disabled={finalizando}>
               {finalizando ? 'Finalizando...' : 'Finalizar inventario'}
             </button>
           )}
@@ -148,7 +150,7 @@ export default function InventarioFisicoDetallePage() {
             )}
             <input className="input-field" type="number" min={0} step="0.01" placeholder="Cantidad fisica" value={cantidadFisica} onChange={(e) => setCantidadFisica(e.target.value)} required />
             <input className="input-field" placeholder="Observacion" value={observacionItem} onChange={(e) => setObservacionItem(e.target.value)} />
-            <button className="btn-primary" disabled={guardando}>
+            <button type="button" className="btn-primary" disabled={guardando}>
               {guardando ? 'Guardando...' : 'Agregar'}
             </button>
           </div>

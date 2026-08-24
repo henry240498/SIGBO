@@ -12,6 +12,7 @@ archivos:
   - frontend/src/app/dashboard/equipos/categorias/page.tsx
 edges:
   - [belongs_to, domain--equipos]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-equipos]
 terminos: [equipos, categorias, editar, crear, eliminar]
@@ -31,6 +32,7 @@ Pantalla /dashboard/equipos/categorias.
 ## Relaciones
 
 - `belongs_to` → [[domain--equipos|Equipos]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-equipos|equipos]]
 

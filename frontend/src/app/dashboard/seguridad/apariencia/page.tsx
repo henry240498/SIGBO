@@ -101,14 +101,11 @@ export default function AparienciaPage() {
     try {
       const formData = new FormData();
       formData.append('archivo', archivo);
-      const sesion = obtenerSesion();
-      const headers: HeadersInit = {};
-      if (sesion) headers['Authorization'] = `Bearer ${sesion.accessToken}`;
-
       const res = await fetch(`${API_ORIGIN}/api/v1/seguridad/apariencia/imagen/${campo}`, {
         method: 'PUT',
-        headers,
+        headers: { 'X-SIGBO-Request': '1' },
         body: formData,
+        credentials: 'include',
       });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
@@ -149,7 +146,7 @@ export default function AparienciaPage() {
             esta politica.
           </p>
           <div style={{ display: 'flex', gap: 10 }}>
-            <button
+            <button type="button"
               className="btn-primary"
               disabled={guardandoPolitica}
               style={{ background: config.perfilEdicionLibre ? '#16a34a' : '#334155' }}
@@ -157,7 +154,7 @@ export default function AparienciaPage() {
             >
               Modo Libre {config.perfilEdicionLibre && '✓'}
             </button>
-            <button
+            <button type="button"
               className="btn-primary"
               disabled={guardandoPolitica}
               style={{ background: !config.perfilEdicionLibre ? '#7f1d1d' : '#334155' }}
@@ -218,7 +215,7 @@ export default function AparienciaPage() {
               maxLength={200}
             />
 
-            <button className="btn-primary" disabled={guardando} style={{ marginTop: 16 }}>
+            <button type="submit" className="btn-primary" disabled={guardando} style={{ marginTop: 16 }}>
               {guardando ? 'Guardando...' : 'Guardar Cambios'}
             </button>
           </form>
@@ -316,7 +313,7 @@ function ImagenField({
         )}
         <input
           type="file"
-          accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
+          accept="image/png,image/jpeg,image/webp,image/gif"
           disabled={subiendo}
           onChange={(e) => {
             const archivo = e.target.files?.[0];

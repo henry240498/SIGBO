@@ -70,7 +70,7 @@ export default function AuditoriaPage() {
           <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Accion</label>
           <input className="input-field" value={accion} onChange={(e) => setAccion(e.target.value)} placeholder="LOGIN, CREAR..." />
         </div>
-        <button className="btn-primary">Filtrar</button>
+        <button type="submit" className="btn-primary">Filtrar</button>
       </form>
 
       {error && <p style={{ color: '#f87171' }}>{error}</p>}
@@ -103,13 +103,13 @@ export default function AuditoriaPage() {
           </table>
 
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', fontSize: 13 }}>
-            <button className="btn-primary" disabled={page <= 1} onClick={() => setPage((p) => p - 1)}>
+            <button type="button" className="btn-primary" disabled={page <= 1} onClick={() => setPage((p) => p - 1)}>
               Anterior
             </button>
             <span>
               Pagina {resultado.page} de {totalPaginas}
             </span>
-            <button className="btn-primary" disabled={page >= totalPaginas} onClick={() => setPage((p) => p + 1)}>
+            <button type="button" className="btn-primary" disabled={page >= totalPaginas} onClick={() => setPage((p) => p + 1)}>
               Siguiente
             </button>
           </div>

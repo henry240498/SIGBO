@@ -4,16 +4,24 @@
 > desarrollo/pruebas local (SQL Server Express en esta maquina). Antes de
 > cualquier uso en produccion se debe forzar el cambio de contrasena de todos
 > los usuarios y regenerar los secretos JWT (`backend/.env`).
+>
+> `npm run seed` está bloqueado en producción salvo una habilitación temporal
+> explícita y, aun así, no crea estas cuentas de demostración. Las cuentas reales
+> deben crearse mediante el flujo administrativo autorizado.
+
+Antes de ejecutar el seed local, definir `SIGBO_DEMO_PASSWORD` en
+`backend/.env` con una clave que cumpla la política de contraseñas. Esa clave
+no se versiona ni se publica en este documento.
 
 ## Usuario Administrador (acceso completo)
 
 | Campo | Valor |
 |---|---|
 | Usuario | `admin` |
-| Contrasena | `Admin#2026!` |
+| Contrasena | Valor local de `SIGBO_DEMO_PASSWORD` |
 | Email | admin@sigbo-cbvc.local |
 | Rol | Administrador General |
-| Permisos | Los 78 permisos del sistema (acceso total) |
+| Permisos | Todos los permisos vigentes del catálogo (acceso total) |
 
 ## Usuarios de prueba por rol
 
@@ -31,7 +39,7 @@ tenga un rol y usuario correspondiente.
 | Campo | Valor |
 |---|---|
 | Usuario | `comandante` |
-| Contrasena | `Comandante#2026!` |
+| Contrasena | Valor local de `SIGBO_DEMO_PASSWORD` |
 | Email | comandante@sigbo-cbvc.local |
 | Rol | Comandante |
 | Descripcion | Acceso a todas las operaciones y gestion de personal |
@@ -53,7 +61,7 @@ tenga un rol y usuario correspondiente.
 | Campo | Valor |
 |---|---|
 | Usuario | `jefe_guardia` |
-| Contrasena | `JefeGuardia#2026!` |
+| Contrasena | Valor local de `SIGBO_DEMO_PASSWORD` |
 | Email | jefe_guardia@sigbo-cbvc.local |
 | Rol | Jefe de Guardia |
 | Descripcion | Gestion de la guardia actual y servicios en curso |
@@ -72,7 +80,7 @@ tenga un rol y usuario correspondiente.
 | Campo | Valor |
 |---|---|
 | Usuario | `instructor` |
-| Contrasena | `Instructor#2026!` |
+| Contrasena | Valor local de `SIGBO_DEMO_PASSWORD` |
 | Email | instructor@sigbo-cbvc.local |
 | Rol | Instructor |
 | Descripcion | Gestion de cursos y academia |
@@ -90,7 +98,7 @@ tenga un rol y usuario correspondiente.
 | Campo | Valor |
 |---|---|
 | Usuario | `bombero` |
-| Contrasena | `Bombero#2026!` |
+| Contrasena | Valor local de `SIGBO_DEMO_PASSWORD` |
 | Email | bombero@sigbo-cbvc.local |
 | Rol | Bombero Operativo |
 | Descripcion | Funcionalidades basicas para bomberos activos |
@@ -107,7 +115,7 @@ tenga un rol y usuario correspondiente.
 | Campo | Valor |
 |---|---|
 | Usuario | `tesorero` |
-| Contrasena | `Tesorero#2026!` |
+| Contrasena | Valor local de `SIGBO_DEMO_PASSWORD` |
 | Email | tesorero@sigbo-cbvc.local |
 | Rol | Tesorero |
 | Descripcion | Gestion financiera completa |
@@ -124,7 +132,7 @@ tenga un rol y usuario correspondiente.
 | Campo | Valor |
 |---|---|
 | Usuario | `deposito` |
-| Contrasena | `Deposito#2026!` |
+| Contrasena | Valor local de `SIGBO_DEMO_PASSWORD` |
 | Email | deposito@sigbo-cbvc.local |
 | Rol | Encargado de Deposito |
 | Descripcion | Control de inventario, stock de consumibles y prestamos de equipos |
@@ -145,17 +153,19 @@ los permisos de todos sus roles, mas permisos directos concedidos, menos
 permisos directos denegados explicitamente. Esto permite, por ejemplo, dar a
 un bombero puntual un permiso adicional sin crear un rol nuevo.
 
-El catalogo completo de 78 permisos y la asignacion por rol esta en
+El catálogo completo de permisos y la asignación por rol está en
 `backend/src/database/seed-data.ts` y se carga con `npm run seed`.
 
 ## Endpoints de autenticacion
 
 | Metodo | Ruta | Descripcion |
 |---|---|---|
-| POST | `/api/v1/auth/login` | `{ usernameOrEmail, password }` → tokens + datos de usuario |
-| POST | `/api/v1/auth/refresh` | `{ refreshToken }` → nuevo `accessToken` |
-| POST | `/api/v1/auth/logout` | `{ refreshToken }` → invalida la sesion |
+| POST | `/api/v1/auth/login` | `{ usernameOrEmail, password }` → cookies HttpOnly de sesión + perfil mínimo |
+| POST | `/api/v1/auth/refresh` | Renueva la sesión mediante la cookie de refresh; no recibe ni devuelve tokens en JSON |
+| POST | `/api/v1/auth/logout` | Invalida la sesión asociada a la cookie y la elimina |
 | GET | `/api/v1/seguridad/mis-permisos` | Permisos efectivos del usuario autenticado |
 | GET | `/api/v1/seguridad/mis-roles` | Roles del usuario autenticado |
 
-Documentacion interactiva completa (Swagger): `http://localhost:3001/api/docs`
+La documentación interactiva Swagger está deshabilitada por omisión. Habilitarla
+de forma explícita mediante `SWAGGER_ENABLED=true` sólo en un entorno controlado
+y con acceso de red restringido.

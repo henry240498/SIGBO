@@ -2,7 +2,7 @@ import { BadRequestException, ConflictException, Injectable, NotFoundException }
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { createHash } from 'crypto';
-import * as XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
 import {
   Bombero,
   EstadoFilaImportacion,
@@ -11,7 +11,7 @@ import {
   MarcacionAsistencia,
   TipoMarcacion,
 } from '../../shared/entities';
-import { guardarBuffer } from '../../shared/utils/almacenamiento';
+import { guardarBufferRestringido } from '../../shared/utils/almacenamiento';
 import { AuditoriaService } from '../seguridad/auditoria.service';
 
 const CARPETA_IMPORTACIONES = 'importaciones-marcador';
@@ -33,12 +33,29 @@ interface PunchCrudo {
  * salto de linea). No se descarta ninguna marca, a diferencia del reporte
  * "Attendance Table" del propio dispositivo, que solo conserva la primera y
  * la ultima de cada dia. */
-function extraerPunchesDeLogs(workbook: XLSX.WorkBook): { punches: PunchCrudo[]; anio: number; mes: number } {
-  const sheet = workbook.Sheets['Logs'];
+export async function extraerPunchesDeLogs(archivo: Buffer): Promise<{ punches: PunchCrudo[]; anio: number; mes: number; hojasEncontradas: number }> {
+  const workbook = new ExcelJS.Workbook();
+  try {
+    // ExcelJS y Multer llegan con definiciones de Buffer de distintas ramas
+    // de @types/node; en tiempo de ejecución ambos son Buffer de Node.
+    await workbook.xlsx.load(archivo as unknown as Parameters<typeof workbook.xlsx.load>[0]);
+  } catch {
+    throw new BadRequestException('No se pudo leer el archivo. Verifica que sea un Excel (.xlsx) válido.');
+  }
+
+  const sheet = workbook.getWorksheet('Logs');
   if (!sheet) {
     throw new BadRequestException('El archivo no contiene una hoja "Logs" con el detalle de marcaciones.');
   }
-  const filas: string[][] = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: false, defval: '' }) as string[][];
+  const filas: string[][] = [];
+  for (let numeroFila = 1; numeroFila <= sheet.rowCount; numeroFila++) {
+    const fila = sheet.getRow(numeroFila);
+    const valores: string[] = [];
+    for (let numeroColumna = 1; numeroColumna <= sheet.columnCount; numeroColumna++) {
+      valores.push(fila.getCell(numeroColumna).text ?? '');
+    }
+    filas.push(valores);
+  }
 
   let anio = 0;
   let mes = 0;
@@ -81,7 +98,7 @@ function extraerPunchesDeLogs(workbook: XLSX.WorkBook): { punches: PunchCrudo[];
     }
   }
 
-  return { punches, anio, mes };
+  return { punches, anio, mes, hojasEncontradas: workbook.worksheets.length };
 }
 
 /** Normaliza un codigo bomberil a "PREFIJO:NUMERO" (numero como entero real,
@@ -139,14 +156,7 @@ export class ImportacionesService {
       await this.importacionRepo.delete(existente.id);
     }
 
-    let workbook: XLSX.WorkBook;
-    try {
-      workbook = XLSX.read(file.buffer, { type: 'buffer' });
-    } catch {
-      throw new BadRequestException('No se pudo leer el archivo. Verifica que sea un Excel (.xls o .xlsx) valido.');
-    }
-
-    const { punches, anio, mes } = extraerPunchesDeLogs(workbook);
+    const { punches, anio, mes, hojasEncontradas } = await extraerPunchesDeLogs(file.buffer);
 
     const bomberos = await this.bomberoRepo.find();
     const mapaNormalizado = new Map<string, Bombero>();
@@ -250,7 +260,7 @@ export class ImportacionesService {
       }
     }
 
-    const archivoUrl = await guardarBuffer(file.buffer, file.originalname.endsWith('.xlsx') ? '.xlsx' : '.xls', CARPETA_IMPORTACIONES);
+    const archivoUrl = await guardarBufferRestringido(file.buffer, '.xlsx', CARPETA_IMPORTACIONES);
 
     const importacion = await this.importacionRepo.save(
       this.importacionRepo.create({
@@ -259,7 +269,7 @@ export class ImportacionesService {
         archivoUrl,
         usuarioId: actorId,
         fechaImportacion: new Date(),
-        hojasEncontradas: workbook.SheetNames.length,
+        hojasEncontradas,
         registrosEncontrados: punches.length,
         registrosReconocidos: reconocidos,
         registrosNoIdentificados: noIdentificados,

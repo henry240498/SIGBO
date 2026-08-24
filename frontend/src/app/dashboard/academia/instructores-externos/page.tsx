@@ -136,7 +136,7 @@ export default function InstructoresExternosPage() {
             <input className="input-field" value={form.observaciones} onChange={(e) => setForm({ ...form, observaciones: e.target.value })} />
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
-            <button className="btn-primary" disabled={guardando}>
+            <button type="button" className="btn-primary" disabled={guardando}>
               {guardando ? 'Guardando...' : 'Guardar cambios'}
             </button>
             <button
@@ -183,10 +183,10 @@ export default function InstructoresExternosPage() {
                 </td>
                 {puedeGestionar && (
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6 }}>
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 11 }} onClick={() => iniciarEdicion(i)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 11 }} onClick={() => iniciarEdicion(i)}>
                       Editar
                     </button>
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 11, background: '#475569' }}
                       onClick={() => alternarActivo(i)}

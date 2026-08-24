@@ -11,6 +11,7 @@ archivos:
   - frontend/src/app/dashboard/organizacion/unidades/page.tsx
 edges:
   - [belongs_to, domain--organizacion]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-exportar]
   - [calls, api--organizacion-unidades]
@@ -40,6 +41,7 @@ Pantalla /dashboard/organizacion/unidades, consume 4 endpoint(s).
 ## Relaciones
 
 - `belongs_to` → [[domain--organizacion|Organización Institucional]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-exportar|exportar]]
 - `calls` → [[api--organizacion-unidades|UnidadesController]]

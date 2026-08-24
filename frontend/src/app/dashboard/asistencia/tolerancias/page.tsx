@@ -57,7 +57,7 @@ export default function TolerenciasPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Tolerancias de horario ({tolerancias?.length ?? 0})</h2>
         {puedeEditar && (
-          <button className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Nueva tolerancia'}
           </button>
         )}
@@ -97,7 +97,7 @@ export default function TolerenciasPage() {
               />
             </div>
           </div>
-          <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+          <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Crear'}
           </button>
         </form>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { useEntradaConfirmada } from '@/app/components/InputProvider';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { apiFetch, obtenerSesion } from '@/lib/api';
@@ -22,6 +23,7 @@ import {
 type Columna = 'codigo' | 'nombre' | 'tipo' | 'rango' | 'cargo' | 'estado';
 
 export default function PersonalPage() {
+  const solicitarEntrada = useEntradaConfirmada();
   const router = useRouter();
   const [bomberos, setBomberos] = useState<BomberoResumen[] | null>(null);
   const [tipos, setTipos] = useState<TipoBombero[]>([]);
@@ -141,7 +143,7 @@ export default function PersonalPage() {
   }
 
   async function darBaja(id: string, nombreCompleto: string) {
-    const motivo = window.prompt(`Motivo de la baja de ${nombreCompleto}:`);
+    const motivo = await solicitarEntrada({ titulo: 'Dar de baja personal', mensaje: `La baja de ${nombreCompleto} requiere un motivo.`, etiqueta: 'Motivo', confirmar: 'Continuar', peligro: true, requerida: true });
     if (!motivo) return;
     setError(null);
     setMensaje(null);
@@ -174,13 +176,13 @@ export default function PersonalPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Personal - Bomberos ({bomberosOrdenados?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => descargarArchivo(`/personal/bomberos/exportar/excel${filtroEstado ? `?estado=${filtroEstado}` : ''}`, 'personal.xlsx')}
           >
             Exportar a Excel
           </button>
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => descargarArchivo(`/personal/bomberos/exportar/pdf${filtroEstado ? `?estado=${filtroEstado}` : ''}`, 'personal.pdf')}
           >
@@ -255,7 +257,7 @@ export default function PersonalPage() {
             maxWidth={190}
           />
         </div>
-        <button className="btn-primary" style={{ background: '#475569' }} onClick={limpiarFiltros}>
+        <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={limpiarFiltros}>
           Limpiar filtros
         </button>
       </div>
@@ -299,7 +301,7 @@ export default function PersonalPage() {
                     <span className="badge">{b.estado}</span>
                   </td>
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12 }}
                       onClick={(e) => {
@@ -310,7 +312,7 @@ export default function PersonalPage() {
                       Ver expediente
                     </button>
                     {puedeEliminar && b.estado !== 'RETIRADO' && (
-                      <button
+                      <button type="button"
                         className="btn-primary"
                         style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                         onClick={(e) => {

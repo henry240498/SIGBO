@@ -37,7 +37,11 @@ edges:
   - [reads, table--personal-fojas-servicio]
   - [uses, entity--parametro]
   - [reads, table--organizacion-parametros]
-terminos: [foja, servicio, personal, bombero, rango, cargo, compania, especialidad, certificacion, actividad, profesional, idioma, historial, institucional, designacion, parametro]
+  - [uses, entity--inscripcion-actividad-academica]
+  - [reads, table--academia-inscripciones]
+  - [uses, entity--actividad-academica]
+  - [reads, table--academia-actividades]
+terminos: [foja, servicio, personal, bombero, rango, cargo, compania, especialidad, certificacion, actividad, profesional, idioma, historial, institucional, designacion, parametro, inscripcion, academica]
 ---
 
 # FojaServicioService
@@ -47,7 +51,7 @@ Logica de negocio de foja servicio (modulo personal).
 
 ## Metodos
 
-`generar()` · `listarAnios()` · `obtenerPorAnio()`
+`generar()` · `listarAnios()` · `obtenerPorAnio()` · `descargarArchivo()`
 
 ## Archivos
 
@@ -83,6 +87,10 @@ Logica de negocio de foja servicio (modulo personal).
 - `reads` → [[table--personal-fojas-servicio|personal.fojas_servicio]]
 - `uses` → [[entity--parametro|Parametro]]
 - `reads` → [[table--organizacion-parametros|organizacion.parametros]]
+- `uses` → [[entity--inscripcion-actividad-academica|InscripcionActividadAcademica]]
+- `reads` → [[table--academia-inscripciones|academia.inscripciones]]
+- `uses` → [[entity--actividad-academica|ActividadAcademica]]
+- `reads` → [[table--academia-actividades|academia.actividades]]
 
 ## Referenciado por
 

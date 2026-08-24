@@ -125,17 +125,17 @@ export default function ImportarMarcador() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <p style={{ fontSize: 13, color: '#94a3b8' }}>
-          Sube el Excel exportado directamente del reloj biometrico (.xls o .xlsx). Se analiza la hoja "Logs" completa,
+          Sube el Excel .xlsx exportado directamente del reloj biométrico. Se analiza la hoja "Logs" completa,
           discriminando cada marcacion individual por bombero + fecha/hora exacta, y se compara contra Personal antes
           de guardar nada. No se crea ningun bombero nuevo automaticamente: los codigos que no coincidan quedan como
           PERSONAL NO IDENTIFICADO para revision manual.
         </p>
-        {error && <p style={{ color: '#f87171' }}>{error}</p>}
-        {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+        {error && <p role="alert" style={{ color: '#f87171' }}>{error}</p>}
+        {mensaje && <p role="status" aria-live="polite" style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
         <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
           <input
             type="file"
-            accept=".xls,.xlsx"
+            accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             onChange={(e) => {
               setArchivo(e.target.files?.[0] ?? null);
               setResultado(null);
@@ -143,7 +143,7 @@ export default function ImportarMarcador() {
               setMensaje(null);
             }}
           />
-          <button className="btn-primary" disabled={!archivo || analizando} onClick={analizar}>
+          <button type="button" className="btn-primary" disabled={!archivo || analizando} onClick={analizar}>
             {analizando ? 'Analizando...' : 'Analizar archivo'}
           </button>
         </div>
@@ -177,10 +177,11 @@ export default function ImportarMarcador() {
 
           {resultado.estado === 'ANALIZADO' && (
             <div style={{ display: 'flex', gap: 10 }}>
-              <button className="btn-primary" disabled={procesando} onClick={confirmar}>
+              <button type="button" className="btn-primary" disabled={procesando} onClick={confirmar}>
                 {procesando ? 'Confirmando...' : `Confirmar e importar ${resultado.registrosReconocidos} marcaciones`}
               </button>
               <button
+                type="button"
                 disabled={procesando}
                 onClick={cancelar}
                 style={{ background: 'transparent', border: '1px solid #334155', borderRadius: 6, padding: '8px 14px', color: '#e2e8f0' }}

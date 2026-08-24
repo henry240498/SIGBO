@@ -64,9 +64,9 @@ Tabla vehiculos.vehiculos (35 columnas). Creada en 006_vehiculos_equipos.sql, mo
 
 ## Donde se usa
 
-- **Pantallas:** `/`, `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/equipos`, `/dashboard/equipos/[id]`, `/dashboard/equipos/categorias`, `/dashboard/personal/[id]`, `/dashboard/publicaciones`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
-- **Endpoints:** DenunciasController, DenunciasPublicasController, EquiposController, InspeccionesMovilController, PublicacionesController, ServiciosController, VehiculosAutorizadosController, VehiculosController
-- **Servicios:** DenunciasService, EquiposService, InspeccionesMovilService, PublicacionesService, ServiciosService, VehiculosAutorizadosService, VehiculosService
+- **Pantallas:** `/`, `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/deposito`, `/dashboard/deposito/articulos`, `/dashboard/deposito/articulos/[id]`, `/dashboard/deposito/bajas`, `/dashboard/deposito/categorias`, `/dashboard/deposito/entradas`, `/dashboard/deposito/incidencias`, `/dashboard/deposito/inventarios-fisicos`, `/dashboard/deposito/inventarios-fisicos/[id]`, `/dashboard/deposito/mantenimientos`, `/dashboard/deposito/movimientos`, `/dashboard/deposito/prestamos`, `/dashboard/deposito/proveedores`, `/dashboard/deposito/ubicaciones`, `/dashboard/equipos`, `/dashboard/equipos/[id]`, `/dashboard/equipos/categorias`, `/dashboard/finanzas/movimientos`, `/dashboard/finanzas/ordenes-pago`, `/dashboard/personal/[id]`, `/dashboard/publicaciones`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
+- **Endpoints:** DenunciasController, DenunciasPublicasController, EquiposController, InspeccionesMovilController, IntegracionDepositoController, PublicacionesController, ServiciosController, VehiculosAutorizadosController, VehiculosController
+- **Servicios:** DenunciasService, EquiposService, IaToolsService, InspeccionesMovilService, IntegracionDepositoService, PublicacionesService, ServiciosService, VehiculosAutorizadosService, VehiculosService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -86,10 +86,16 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[table--personal-vehiculos-autorizados|personal.vehiculos_autorizados]] `references` →
 - [[table--operaciones-inspecciones-movil|operaciones.inspecciones_movil]] `references` →
 - [[table--denuncias-denuncias|denuncias.denuncias]] `references` →
+- [[table--deposito-tenencias|deposito.tenencias]] `references` →
+- [[table--deposito-movimientos|deposito.movimientos]] `references` →
+- [[table--deposito-movimientos|deposito.movimientos]] `references` →
+- [[table--deposito-incidencias|deposito.incidencias]] `references` →
 - [[entity--vehiculo|Vehiculo]] `persisted_in` →
 - [[service--denuncias-denuncias|DenunciasService]] `reads` →
+- [[service--deposito-integracion-deposito|IntegracionDepositoService]] `reads` →
 - [[service--equipos-equipos|EquiposService]] `reads` →
 - [[service--guardias-inspecciones-movil|InspeccionesMovilService]] `reads` →
+- [[service--ia-ia-tools|IaToolsService]] `reads` →
 - [[service--publicaciones-publicaciones|PublicacionesService]] `reads` →
 - [[service--servicios-servicios|ServiciosService]] `reads` →
 - [[service--vehiculos-vehiculos-autorizados|VehiculosAutorizadosService]] `reads` →

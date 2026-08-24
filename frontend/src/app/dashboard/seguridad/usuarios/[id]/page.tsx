@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { API_ORIGIN, apiFetch, obtenerSesion } from '@/lib/api';
+import { API_ORIGIN, apiFetch } from '@/lib/api';
 
 interface Rol {
   id: string;
@@ -155,13 +155,11 @@ export default function UsuarioDetallePage() {
     try {
       const formData = new FormData();
       formData.append('archivo', archivo);
-      const sesion = obtenerSesion();
-      const headers: HeadersInit = {};
-      if (sesion) headers['Authorization'] = `Bearer ${sesion.accessToken}`;
       const res = await fetch(`${API_ORIGIN}/api/v1/seguridad/usuarios/${params.id}/perfil/foto`, {
         method: 'PUT',
-        headers,
+        headers: { 'X-SIGBO-Request': '1' },
         body: formData,
+        credentials: 'include',
       });
       if (!res.ok) throw new Error('No se pudo subir la foto');
       setMensaje('Foto actualizada');
@@ -284,7 +282,7 @@ export default function UsuarioDetallePage() {
           {perfilAdmin?.avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={`${API_ORIGIN}${perfilAdmin.avatarUrl}`}
+              src={`${API_ORIGIN}/api/v1/seguridad/usuarios/${params.id}/perfil/foto`}
               alt="Foto"
               style={{ width: 56, height: 56, objectFit: 'cover', borderRadius: '50%', border: '1px solid #334155' }}
             />
@@ -380,7 +378,7 @@ export default function UsuarioDetallePage() {
           </div>
         </div>
 
-        <button className="btn-primary" disabled={guardandoPerfil} onClick={guardarPerfilAdmin}>
+        <button type="button" className="btn-primary" disabled={guardandoPerfil} onClick={guardarPerfilAdmin}>
           {guardandoPerfil ? 'Guardando...' : 'Guardar datos personales'}
         </button>
       </section>
@@ -395,7 +393,7 @@ export default function UsuarioDetallePage() {
             </label>
           ))}
         </div>
-        <button className="btn-primary" onClick={guardarRoles}>
+        <button type="button" className="btn-primary" onClick={guardarRoles}>
           Guardar roles
         </button>
       </section>
@@ -426,10 +424,10 @@ export default function UsuarioDetallePage() {
               </optgroup>
             ))}
           </select>
-          <button className="btn-primary" style={{ background: '#16a34a' }} onClick={() => aplicarPermisoDirecto(true)}>
+          <button type="button" className="btn-primary" style={{ background: '#16a34a' }} onClick={() => aplicarPermisoDirecto(true)}>
             Conceder
           </button>
-          <button className="btn-primary" style={{ background: '#7f1d1d' }} onClick={() => aplicarPermisoDirecto(false)}>
+          <button type="button" className="btn-primary" style={{ background: '#7f1d1d' }} onClick={() => aplicarPermisoDirecto(false)}>
             Denegar
           </button>
         </div>
@@ -443,7 +441,7 @@ export default function UsuarioDetallePage() {
               {pd.concedido ? 'Concedido' : 'Denegado'}
             </span>
             <span>{pd.nombre}</span>
-            <button
+            <button type="button"
               onClick={() => quitarPermisoDirecto(pd.permisoId)}
               style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', textDecoration: 'underline' }}
             >
@@ -461,7 +459,7 @@ export default function UsuarioDetallePage() {
             <span>
               {s.ip} — {new Date(s.fechaUltimaActividad).toLocaleString('es-PY')}
             </span>
-            <button
+            <button type="button"
               onClick={() => cerrarSesion(s.id)}
               style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', textDecoration: 'underline' }}
             >

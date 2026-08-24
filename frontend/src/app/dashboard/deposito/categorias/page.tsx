@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { obtenerSesion } from '@/lib/api';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import {
   CategoriaArticulo,
@@ -12,6 +13,7 @@ import {
 } from '@/lib/deposito';
 
 export default function CategoriasArticuloPage() {
+  const confirmar = useConfirmacion();
   const [categorias, setCategorias] = useState<CategoriaArticulo[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
@@ -101,7 +103,7 @@ export default function CategoriasArticuloPage() {
   }
 
   async function eliminar(c: CategoriaArticulo) {
-    if (!window.confirm(`¿Eliminar la categoria "${c.nombre}"?`)) return;
+    if (!await confirmar({ titulo: 'Eliminar categoría', mensaje: `¿Eliminar la categoría "${c.nombre}"?`, confirmar: 'Eliminar', peligro: true })) return;
     setError(null);
     try {
       await eliminarCategoriaArticulo(c.id);
@@ -117,7 +119,7 @@ export default function CategoriasArticuloPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Categorias de articulo ({categorias?.length ?? 0})</h2>
         {puedeCrear && (
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               limpiarForm();
@@ -164,7 +166,7 @@ export default function CategoriasArticuloPage() {
             Activa
           </label>
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
+            <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
               {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear categoria'}
             </button>
             {editandoId && (
@@ -209,12 +211,12 @@ export default function CategoriasArticuloPage() {
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                   {puedeEditar && (
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(c)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(c)}>
                       Editar
                     </button>
                   )}
                   {puedeEliminar && (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                       onClick={() => eliminar(c)}

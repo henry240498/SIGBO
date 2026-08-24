@@ -4,23 +4,24 @@ tipo: TABLE
 nombre: operaciones.orden_guardia_configuracion
 nivel: L2
 dominio: asistencia
-resumen: Tabla operaciones.orden_guardia_configuracion (16 columnas). Creada en 030_ordenes_guardia.sql.
+resumen: Tabla operaciones.orden_guardia_configuracion (13 columnas). Creada en 030_ordenes_guardia.sql, modificada por 033_orden_guardia_drop_columnas_redundantes.sql.
 tabla: orden_guardia_configuracion
 archivos:
   - database/migrations/030_ordenes_guardia.sql
+  - database/migrations/033_orden_guardia_drop_columnas_redundantes.sql
 edges:
   - [defined_in, file--030-ordenes-guardia]
   - [belongs_to, domain--asistencia]
   - [references, table--organizacion-cargos]
   - [references, table--organizacion-cargos]
-terminos: [operaciones, orden, guardia, configuracion, titulo, documento, texto, header, institucional, logo, izquierda, url, derecha, intro, plantilla, regla, oficial, chofer, exigir, rango, igual, superior, pie, firmante1, cargo, etiqueta, firmante2, actualizado]
+terminos: [operaciones, orden, guardia, configuracion, titulo, documento, texto, intro, plantilla, regla, oficial, chofer, exigir, rango, igual, superior, pie, firmante1, cargo, etiqueta, firmante2, actualizado]
 ---
 
 # operaciones.orden_guardia_configuracion
 
-Tabla operaciones.orden_guardia_configuracion (16 columnas). Creada en 030_ordenes_guardia.sql.
+Tabla operaciones.orden_guardia_configuracion (13 columnas). Creada en 030_ordenes_guardia.sql, modificada por 033_orden_guardia_drop_columnas_redundantes.sql.
 
-- **Esquema:** operaciones · **Columnas:** 16
+- **Esquema:** operaciones · **Columnas:** 13
 
 ## Llaves foraneas
 
@@ -33,9 +34,6 @@ Tabla operaciones.orden_guardia_configuracion (16 columnas). Creada en 030_orden
 |---|---|
 | id | UNIQUEIDENTIFIER |
 | titulo_documento | NVARCHAR(300) |
-| texto_header_institucional | NVARCHAR(MAX) |
-| logo_izquierda_url | NVARCHAR(MAX) |
-| logo_derecha_url | NVARCHAR(MAX) |
 | texto_intro_plantilla | NVARCHAR(MAX) |
 | regla_texto_oficial | NVARCHAR(MAX) |
 | regla_texto_chofer | NVARCHAR(MAX) |
@@ -60,6 +58,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 ## Archivos
 
 - `database/migrations/030_ordenes_guardia.sql`
+- `database/migrations/033_orden_guardia_drop_columnas_redundantes.sql`
 
 ## Relaciones
 

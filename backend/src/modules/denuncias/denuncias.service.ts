@@ -1,5 +1,6 @@
 import { BadRequestException, ConflictException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { createHash } from 'crypto';
+import { promises as fs } from 'fs';
 import { DataSource, EntityManager, In, Repository } from 'typeorm';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { CategoriaDenuncia, Denuncia, EstadoDenuncia, EvidenciaDenuncia, HistorialEstadoDenuncia, Servicio, TipoServicio, Usuario, Vehiculo, ComunicacionServicio } from '../../shared/entities';
@@ -83,7 +84,7 @@ export class DenunciasService {
     const audio = archivos.audio?.[0];
     const evidencias = archivos.evidencias ?? [];
     this.validarSolicitud(dto, audio);
-    this.validarArchivos(audio, evidencias);
+    await this.validarArchivos(audio, evidencias);
     const categoria = await this.categoriaRepo.findOne({ where: { id: dto.categoriaId, activo: true } });
     if (!categoria) throw new BadRequestException('Seleccioná un tipo de denuncia válido');
     if (normalizarTexto(categoria.nombre) === 'otro' && !dto.asuntoOtro) throw new BadRequestException('Contanos brevemente sobre qué es la denuncia');
@@ -166,7 +167,13 @@ export class DenunciasService {
     if (!ESTADOS.includes(destino) || !TRANSICIONES[denuncia.estado].includes(destino)) throw new ConflictException('No se permite ese cambio de estado');
     if (['DESCARTADA', 'DUPLICADA', 'RESUELTA', 'CERRADA'].includes(destino) && !comentario?.trim()) throw new BadRequestException('Indicá brevemente el motivo de esta decisión');
     await this.dataSource.transaction(async (manager) => {
-      await manager.getRepository(Denuncia).update(id, { estado: destino });
+      const actualizacion = await manager.getRepository(Denuncia).update(
+        { id, estado: denuncia.estado },
+        { estado: destino },
+      );
+      if (actualizacion.affected !== 1) {
+        throw new ConflictException('La denuncia fue modificada por otra persona. Recárgala antes de resolver.');
+      }
       await manager.getRepository(HistorialEstadoDenuncia).save(manager.getRepository(HistorialEstadoDenuncia).create({ denunciaId: id, estadoAnterior: denuncia.estado, estadoNuevo: destino, usuarioId: actor.usuarioId, comentario: comentario?.trim() ?? null }));
     });
     await this.auditoria.registrar({ usuarioId: actor.usuarioId, accion: 'CAMBIAR_ESTADO', recurso: 'denuncias.denuncias', recursoId: id, datosAntes: { estado: denuncia.estado }, datosDespues: { estado: destino }, ip: actor.ip, userAgent: actor.userAgent });
@@ -179,7 +186,13 @@ export class DenunciasService {
     if (!usuario || usuario.estado !== 'ACTIVO') throw new BadRequestException('La persona asignada no está disponible');
     const nuevoEstado: EstadoDenuncia = denuncia.estado === 'NUEVA' || denuncia.estado === 'EN_REVISION' ? 'ASIGNADA' : denuncia.estado;
     await this.dataSource.transaction(async (manager) => {
-      await manager.getRepository(Denuncia).update(id, { asignadoA: usuarioId, estado: nuevoEstado });
+      const actualizacion = await manager.getRepository(Denuncia).update(
+        { id, estado: denuncia.estado },
+        { asignadoA: usuarioId, estado: nuevoEstado },
+      );
+      if (actualizacion.affected !== 1) {
+        throw new ConflictException('La denuncia fue modificada por otra persona. Recárgala antes de asignarla.');
+      }
       await manager.getRepository(HistorialEstadoDenuncia).save(manager.getRepository(HistorialEstadoDenuncia).create({ denunciaId: id, estadoAnterior: denuncia.estado === nuevoEstado ? null : denuncia.estado, estadoNuevo: nuevoEstado, usuarioId: actor.usuarioId, comentario: comentario?.trim() ?? `Asignada a ${usuario.username}` }));
     });
     await this.auditoria.registrar({ usuarioId: actor.usuarioId, accion: 'ASIGNAR', recurso: 'denuncias.denuncias', recursoId: id, datosAntes: { asignadoA: denuncia.asignadoA }, datosDespues: { asignadoA: usuarioId, estado: nuevoEstado }, ip: actor.ip, userAgent: actor.userAgent });
@@ -209,24 +222,36 @@ export class DenunciasService {
     if (dto.precisionUbicacion !== undefined && !tieneLatitud) throw new BadRequestException('La precisión requiere una ubicación');
   }
 
-  private validarArchivos(audio: Archivo | undefined, evidencias: Archivo[]) {
-    if (audio) this.validarArchivo(audio, 'AUDIO');
+  private async validarArchivos(audio: Archivo | undefined, evidencias: Archivo[]) {
+    if (audio) await this.validarArchivo(audio, 'AUDIO');
     if (evidencias.length > 3) throw new BadRequestException('Podés adjuntar hasta tres evidencias');
-    evidencias.forEach((archivo) => this.validarArchivo(archivo, 'EVIDENCIA'));
+    for (const archivo of evidencias) await this.validarArchivo(archivo, 'EVIDENCIA');
   }
 
-  private validarArchivo(archivo: Archivo, tipo: 'AUDIO' | 'EVIDENCIA') {
-    if (!archivo?.buffer?.length) throw new BadRequestException('Uno de los archivos está vacío');
+  private async validarArchivo(archivo: Archivo, tipo: 'AUDIO' | 'EVIDENCIA') {
+    const contenido = await this.contenidoArchivo(archivo);
+    if (!contenido.length) throw new BadRequestException('Uno de los archivos está vacío');
     if (archivo.size > (tipo === 'AUDIO' ? MAX_AUDIO_BYTES : MAX_EVIDENCIA_BYTES)) throw new BadRequestException(tipo === 'AUDIO' ? 'El audio supera el límite de 10 MB' : 'Cada evidencia puede pesar hasta 5 MB');
-    const detectado = this.detectarMime(archivo.buffer);
+    const detectado = this.detectarMime(contenido);
     if (!detectado || (tipo === 'AUDIO' ? !detectado.startsWith('audio/') : !['image/jpeg', 'image/png', 'image/webp', 'application/pdf'].includes(detectado))) throw new BadRequestException(tipo === 'AUDIO' ? 'El audio no tiene un formato permitido' : 'La evidencia debe ser una imagen JPG, PNG, WebP o un PDF válido');
   }
 
   private async guardarEvidencia(manager: EntityManager, denunciaId: string, archivo: Archivo, tipo: 'AUDIO' | 'EVIDENCIA', duracionSegundos: number | null) {
-    const mime = this.detectarMime(archivo.buffer)!;
+    const contenido = await this.contenidoArchivo(archivo);
+    const mime = this.detectarMime(contenido)!;
     const extension = this.extensionMime(mime);
-    const nombre = await guardarBufferPrivado(archivo.buffer, extension, 'denuncias');
-    await manager.getRepository(EvidenciaDenuncia).save(manager.getRepository(EvidenciaDenuncia).create({ denunciaId, tipo, nombreOriginal: this.nombreSeguro(archivo.originalname, extension), nombreAlmacenado: nombre, mimeType: mime, tamanoBytes: archivo.size, duracionSegundos, hashSha256: createHash('sha256').update(archivo.buffer).digest('hex') }));
+    const nombre = await guardarBufferPrivado(contenido, extension, 'denuncias');
+    await manager.getRepository(EvidenciaDenuncia).save(manager.getRepository(EvidenciaDenuncia).create({ denunciaId, tipo, nombreOriginal: this.nombreSeguro(archivo.originalname, extension), nombreAlmacenado: nombre, mimeType: mime, tamanoBytes: archivo.size, duracionSegundos, hashSha256: createHash('sha256').update(contenido).digest('hex') }));
+  }
+
+  private async contenidoArchivo(archivo: Archivo): Promise<Buffer> {
+    if (Buffer.isBuffer(archivo.buffer)) return archivo.buffer;
+    if (!archivo.path) throw new BadRequestException('No pudimos recibir uno de los archivos');
+    try {
+      return await fs.readFile(archivo.path);
+    } catch {
+      throw new BadRequestException('No pudimos leer uno de los archivos adjuntos');
+    }
   }
 
   private async siguienteCodigo(manager: EntityManager) { const filas = await manager.query('SELECT NEXT VALUE FOR denuncias.secuencia_codigo AS valor'); return `DEN-${new Date().getFullYear()}-${String(filas[0].valor).padStart(6, '0')}`; }

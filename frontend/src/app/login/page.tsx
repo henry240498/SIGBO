@@ -50,8 +50,8 @@ export default function LoginPage() {
     try {
       await login(usernameOrEmail, password);
       router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message ?? 'Error al iniciar sesion');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Error al iniciar sesion');
     } finally {
       setCargando(false);
     }
@@ -116,10 +116,17 @@ export default function LoginPage() {
           }}
         >
           <IconoUsuario />
+          <label className="sr-only" htmlFor="login-usuario">Usuario o correo electrónico</label>
           <input
+            id="login-usuario"
+            name="username"
+            type="text"
             value={usernameOrEmail}
             onChange={(e) => setUsernameOrEmail(e.target.value)}
             placeholder="Usuario"
+            autoComplete="username"
+            aria-describedby={error ? 'login-error' : undefined}
+            aria-invalid={Boolean(error)}
             autoFocus
             required
             style={{ border: 'none', background: 'transparent', outline: 'none', flex: 1, color: '#e2e8f0', fontSize: 16 }}
@@ -140,19 +147,25 @@ export default function LoginPage() {
           }}
         >
           <IconoCandado />
+          <label className="sr-only" htmlFor="login-contrasena">Contraseña</label>
           <input
+            id="login-contrasena"
+            name="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Contrasena"
+            autoComplete="current-password"
+            aria-describedby={error ? 'login-error' : undefined}
+            aria-invalid={Boolean(error)}
             required
             style={{ border: 'none', background: 'transparent', outline: 'none', flex: 1, color: '#e2e8f0', fontSize: 16 }}
           />
         </div>
 
-        {error && <p style={{ color: '#f87171', fontSize: 13, marginTop: 14 }}>{error}</p>}
+        {error && <p id="login-error" role="alert" style={{ color: '#f87171', fontSize: 13, marginTop: 14 }}>{error}</p>}
 
-        <button className="btn-primary" style={{ width: '100%', marginTop: 20 }} disabled={cargando}>
+        <button type="submit" className="btn-primary" style={{ width: '100%', marginTop: 20 }} disabled={cargando}>
           {cargando ? 'Ingresando...' : 'Iniciar Sesion'}
         </button>
       </form>
