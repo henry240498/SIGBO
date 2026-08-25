@@ -51,7 +51,13 @@ export default function LoginPage() {
       await login(usernameOrEmail, password);
       router.push('/dashboard');
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Error al iniciar sesion');
+      // Un fallo de red ocurre antes de validar las credenciales; no debe
+      // mostrarse al usuario el mensaje técnico del navegador.
+      setError(
+        err instanceof TypeError && err.message === 'Failed to fetch'
+          ? 'No se pudo conectar con el servidor SIGBO. Verificá que el backend esté iniciado e intentá nuevamente.'
+          : err instanceof Error ? err.message : 'Error al iniciar sesion',
+      );
     } finally {
       setCargando(false);
     }
