@@ -23,7 +23,7 @@ Entidad Usuario, persistida en seguridad.usuarios.
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/inteligencia`, `/dashboard/mi-perfil`, `/dashboard/mi-perfil/seguridad`, `/dashboard/organizacion`, `/dashboard/seguridad`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Pantallas:** `/dashboard`, `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/inteligencia`, `/dashboard/mi-perfil`, `/dashboard/mi-perfil/seguridad`, `/dashboard/organizacion`, `/dashboard/seguridad`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
 - **Endpoints:** AuthController, BitacoraController, CertificacionesAcademiaController, DashboardController, DashboardController, DenunciasController, DenunciasPublicasController, IaAdminConversacionesController, IaChatController, MeController, PerfilController, SesionesController, UsuariosController
 - **Servicios:** AuthService, BitacoraService, CertificacionesAcademiaService, DashboardService, DenunciasService, IaConversacionesService, PerfilService, SesionesService, UsuariosService
 

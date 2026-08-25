@@ -36,7 +36,7 @@ Tabla seguridad.asignacion_permisos_directos (7 columnas). Creada en 002_segurid
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/mi-perfil`, `/dashboard/seguridad/permisos`, `/dashboard/seguridad/roles`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Pantallas:** `/dashboard`, `/dashboard/mi-perfil`, `/dashboard/seguridad/permisos`, `/dashboard/seguridad/roles`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
 - **Endpoints:** MeController, PermisosController, UsuariosController
 - **Servicios:** PermisosService, PolicyEngineService, UsuariosService
 

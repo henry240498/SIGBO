@@ -47,6 +47,13 @@ export class PerfilController {
     return this.perfilService.obtenerPerfil(user.id, user.permisos);
   }
 
+  /** Resumen personal: sólo usa el bombero vinculado al usuario autenticado.
+   * No expone guardias ni servicios de terceros. */
+  @Get('mi-inicio')
+  obtenerMiInicio(@CurrentUser() user: AuthenticatedUser) {
+    return this.perfilService.obtenerInicioPropio(user.id);
+  }
+
   @Get('mi-perfil/foto')
   async obtenerMiFoto(@CurrentUser() user: AuthenticatedUser, @Res() res: Response) {
     const { buffer, mimeType } = await this.perfilService.obtenerFoto(user.id);

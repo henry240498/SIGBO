@@ -38,7 +38,7 @@ Tabla seguridad.permisos (10 columnas). Creada en 002_seguridad.sql.
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/mi-perfil`, `/dashboard/organizacion`, `/dashboard/seguridad`, `/dashboard/seguridad/permisos`, `/dashboard/seguridad/roles`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Pantallas:** `/dashboard`, `/dashboard/mi-perfil`, `/dashboard/organizacion`, `/dashboard/seguridad`, `/dashboard/seguridad/permisos`, `/dashboard/seguridad/roles`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
 - **Endpoints:** DashboardController, DashboardController, MeController, PermisosController, RolesController, UsuariosController
 - **Servicios:** DashboardService, PermisosService, PolicyEngineService, RolesService, UsuariosService
 

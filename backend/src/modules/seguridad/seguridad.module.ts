@@ -4,7 +4,9 @@ import {
   AsignacionPermisoDirecto,
   AsignacionPermisoRol,
   AsignacionRol,
+  AsignacionGuardia,
   ConfiguracionSistema,
+  Guardia,
   HistorialContrasena,
   LogAuditoria,
   Permiso,
@@ -13,6 +15,9 @@ import {
   Usuario,
   UsuarioCorreo,
   UsuarioTelefono,
+  PersonalServicio,
+  Servicio,
+  TipoServicio,
 } from '../../shared/entities';
 import { PolicyEngineService } from './policy-engine.service';
 import { RolesService } from './roles.service';
@@ -48,6 +53,11 @@ import { PerfilController } from './perfil.controller';
       ConfiguracionSistema,
       UsuarioTelefono,
       UsuarioCorreo,
+      AsignacionGuardia,
+      Guardia,
+      PersonalServicio,
+      Servicio,
+      TipoServicio,
     ]),
   ],
   controllers: [

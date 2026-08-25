@@ -42,8 +42,8 @@ Tabla servicios.tipos_servicio (13 columnas). Creada en 007_servicios.sql.
 ## Donde se usa
 
 - **Pantallas:** `/`, `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/publicaciones`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`
-- **Endpoints:** ConsultasCruzadasController, DenunciasController, DenunciasPublicasController, PublicacionesController, ServiciosController
-- **Servicios:** ConsultasCruzadasService, DenunciasService, PublicacionesService, ServiciosService
+- **Endpoints:** ConsultasCruzadasController, DenunciasController, DenunciasPublicasController, PerfilController, PublicacionesController, ServiciosController
+- **Servicios:** ConsultasCruzadasService, DenunciasService, PerfilService, PublicacionesService, ServiciosService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -64,6 +64,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[service--denuncias-denuncias|DenunciasService]] `reads` →
 - [[service--personal-consultas-cruzadas|ConsultasCruzadasService]] `reads` →
 - [[service--publicaciones-publicaciones|PublicacionesService]] `reads` →
+- [[service--seguridad-perfil|PerfilService]] `reads` →
 - [[service--servicios-servicios|ServiciosService]] `reads` →
 
 ---

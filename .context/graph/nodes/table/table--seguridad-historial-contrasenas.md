@@ -36,7 +36,7 @@ Tabla seguridad.historial_contrasenas (4 columnas). Creada en 011_seguridad_fase
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/mi-perfil`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Pantallas:** `/dashboard`, `/dashboard/mi-perfil`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
 - **Endpoints:** MeController, UsuariosController
 - **Servicios:** UsuariosService
 

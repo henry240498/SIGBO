@@ -42,6 +42,7 @@ Superficie HTTP de me bajo /api/v1/seguridad.
 
 - [[screen--dashboard-mi-perfil|/dashboard/mi-perfil]] `calls` →
 - [[screen--dashboard-mi-perfil|/dashboard/mi-perfil]] `calls` →
+- [[screen--dashboard|/dashboard]] `calls` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

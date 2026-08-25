@@ -1891,6 +1891,16 @@
 {"from":"service--seguridad-perfil","tipo":"reads","to":"table--seguridad-usuario-telefonos"}
 {"from":"service--seguridad-perfil","tipo":"uses","to":"entity--usuario-correo"}
 {"from":"service--seguridad-perfil","tipo":"reads","to":"table--seguridad-usuario-correos"}
+{"from":"service--seguridad-perfil","tipo":"uses","to":"entity--asignacion-guardia"}
+{"from":"service--seguridad-perfil","tipo":"reads","to":"table--operaciones-asignacion-guardias"}
+{"from":"service--seguridad-perfil","tipo":"uses","to":"entity--guardia"}
+{"from":"service--seguridad-perfil","tipo":"reads","to":"table--operaciones-guardias"}
+{"from":"service--seguridad-perfil","tipo":"uses","to":"entity--personal-servicio"}
+{"from":"service--seguridad-perfil","tipo":"reads","to":"table--servicios-personal-servicio"}
+{"from":"service--seguridad-perfil","tipo":"uses","to":"entity--servicio"}
+{"from":"service--seguridad-perfil","tipo":"reads","to":"table--servicios-servicios"}
+{"from":"service--seguridad-perfil","tipo":"uses","to":"entity--tipo-servicio"}
+{"from":"service--seguridad-perfil","tipo":"reads","to":"table--servicios-tipos-servicio"}
 {"from":"service--seguridad-permisos","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"service--seguridad-permisos","tipo":"uses","to":"component--modulo-seguridad"}
 {"from":"service--seguridad-permisos","tipo":"uses","to":"entity--permiso"}
@@ -2815,6 +2825,7 @@
 {"from":"screen--dashboard-organizacion-turnos","tipo":"calls","to":"api--equipos-equipamiento-bombero"}
 {"from":"screen--dashboard-organizacion-unidades","tipo":"calls","to":"api--organizacion-unidades"}
 {"from":"screen--dashboard-organizacion-unidades","tipo":"calls","to":"api--organizacion-brigadas"}
+{"from":"screen--dashboard","tipo":"calls","to":"api--seguridad-me"}
 {"from":"screen--dashboard-personal-nuevo","tipo":"calls","to":"api--equipos-equipamiento-bombero"}
 {"from":"screen--dashboard-personal","tipo":"calls","to":"api--equipos-equipamiento-bombero"}
 {"from":"screen--dashboard-personal-id","tipo":"calls","to":"api--equipos-equipamiento-bombero"}

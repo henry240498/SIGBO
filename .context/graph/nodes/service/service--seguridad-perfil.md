@@ -17,8 +17,18 @@ edges:
   - [reads, table--seguridad-usuario-telefonos]
   - [uses, entity--usuario-correo]
   - [reads, table--seguridad-usuario-correos]
+  - [uses, entity--asignacion-guardia]
+  - [reads, table--operaciones-asignacion-guardias]
+  - [uses, entity--guardia]
+  - [reads, table--operaciones-guardias]
+  - [uses, entity--personal-servicio]
+  - [reads, table--servicios-personal-servicio]
+  - [uses, entity--servicio]
+  - [reads, table--servicios-servicios]
+  - [uses, entity--tipo-servicio]
+  - [reads, table--servicios-tipos-servicio]
   - [uses, service--seguridad-apariencia]
-terminos: [perfil, seguridad, usuario, telefono, correo]
+terminos: [perfil, seguridad, usuario, telefono, correo, asignacion, guardia, personal, servicio, tipo]
 ---
 
 # PerfilService
@@ -28,7 +38,7 @@ Logica de negocio de perfil (modulo seguridad).
 
 ## Metodos
 
-`puedeEditar()` · `obtenerPerfil()` · `actualizarPerfilPropio()` · `actualizarPerfilComoAdmin()` · `actualizarFotoPropia()` · `actualizarFotoComoAdmin()` · `obtenerFoto()`
+`puedeEditar()` · `obtenerPerfil()` · `obtenerInicioPropio()` · `actualizarPerfilPropio()` · `actualizarPerfilComoAdmin()` · `actualizarFotoPropia()` · `actualizarFotoComoAdmin()` · `obtenerFoto()`
 
 ## Archivos
 
@@ -44,6 +54,16 @@ Logica de negocio de perfil (modulo seguridad).
 - `reads` → [[table--seguridad-usuario-telefonos|seguridad.usuario_telefonos]]
 - `uses` → [[entity--usuario-correo|UsuarioCorreo]]
 - `reads` → [[table--seguridad-usuario-correos|seguridad.usuario_correos]]
+- `uses` → [[entity--asignacion-guardia|AsignacionGuardia]]
+- `reads` → [[table--operaciones-asignacion-guardias|operaciones.asignacion_guardias]]
+- `uses` → [[entity--guardia|Guardia]]
+- `reads` → [[table--operaciones-guardias|operaciones.guardias]]
+- `uses` → [[entity--personal-servicio|PersonalServicio]]
+- `reads` → [[table--servicios-personal-servicio|servicios.personal_servicio]]
+- `uses` → [[entity--servicio|Servicio]]
+- `reads` → [[table--servicios-servicios|servicios.servicios]]
+- `uses` → [[entity--tipo-servicio|TipoServicio]]
+- `reads` → [[table--servicios-tipos-servicio|servicios.tipos_servicio]]
 - `uses` → [[service--seguridad-apariencia|AparienciaService]]
 
 ## Referenciado por

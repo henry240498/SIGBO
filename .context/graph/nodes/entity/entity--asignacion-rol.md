@@ -23,7 +23,7 @@ Entidad AsignacionRol, persistida en seguridad.asignacion_roles.
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/mi-perfil`, `/dashboard/seguridad/roles`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Pantallas:** `/dashboard`, `/dashboard/mi-perfil`, `/dashboard/seguridad/roles`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
 - **Endpoints:** AuthController, MeController, RolesController, UsuariosController
 - **Servicios:** AuthService, PolicyEngineService, RolesService, UsuariosService
 

@@ -36,7 +36,7 @@ Tabla seguridad.asignacion_roles (7 columnas). Creada en 002_seguridad.sql, modi
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/mi-perfil`, `/dashboard/seguridad/roles`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Pantallas:** `/dashboard`, `/dashboard/mi-perfil`, `/dashboard/seguridad/roles`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
 - **Endpoints:** AuthController, MeController, RolesController, UsuariosController
 - **Servicios:** AuthService, PolicyEngineService, RolesService, UsuariosService
 
