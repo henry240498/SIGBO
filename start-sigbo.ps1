@@ -23,7 +23,8 @@ function Test-Puerto {
     try {
         $client = New-Object System.Net.Sockets.TcpClient
         $task = $client.ConnectAsync("localhost", $Puerto)
-        $ok = $task.Wait($TimeoutMs)
+        $termino = $task.Wait($TimeoutMs)
+        $ok = $termino -and $task.Status -eq [System.Threading.Tasks.TaskStatus]::RanToCompletion
         $client.Close()
         return $ok
     } catch { return $false }
@@ -52,6 +53,58 @@ function Pausar {
     $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 }
 
+function Obtener-PuertoBackend {
+    $envFile = Join-Path $backendDir ".env"
+    if (-not (Test-Path -LiteralPath $envFile)) { return 3001 }
+
+    foreach ($linea in Get-Content -LiteralPath $envFile) {
+        if ($linea -match '^\s*PORT\s*=\s*(\d+)\s*(?:#.*)?$') {
+            $puerto = [int]$Matches[1]
+            if ($puerto -ge 1 -and $puerto -le 65535) { return $puerto }
+            throw "El puerto configurado en backend/.env no es valido."
+        }
+    }
+    return 3001
+}
+
+function Obtener-ValorEntornoArchivo {
+    param([string]$Nombre)
+    $envFile = Join-Path $backendDir ".env"
+    if (-not (Test-Path -LiteralPath $envFile)) { return $null }
+
+    foreach ($linea in Get-Content -LiteralPath $envFile) {
+        if ($linea -match "^\s*$([regex]::Escape($Nombre))\s*=\s*(.*?)\s*$") {
+            return $Matches[1]
+        }
+    }
+    return $null
+}
+
+function Preparar-ConexionSqlLocal {
+    # SQL Server Browser puede estar deshabilitado en equipos locales. Cuando
+    # la instancia configurada es SQLEXPRESS local, se obtiene el puerto TCP
+    # exclusivamente del proceso de ese servicio y se hereda al backend, sin
+    # modificar credenciales ni la configuracion persistente de SQL Server.
+    $instancia = Obtener-ValorEntornoArchivo -Nombre 'DB_INSTANCE'
+    $hostSql = Obtener-ValorEntornoArchivo -Nombre 'DB_HOST'
+    if ([string]::IsNullOrWhiteSpace($instancia) -or $hostSql -notin @('localhost', '127.0.0.1', '::1')) { return }
+
+    $servicio = Get-CimInstance Win32_Service -Filter "Name='MSSQL`$$instancia'" -ErrorAction SilentlyContinue
+    if (-not $servicio -or $servicio.State -ne 'Running' -or -not $servicio.ProcessId) { return }
+
+    $puerto = Get-NetTCPConnection -OwningProcess $servicio.ProcessId -State Listen -ErrorAction SilentlyContinue |
+        Select-Object -ExpandProperty LocalPort -Unique | Select-Object -First 1
+    if (-not $puerto) { return }
+
+    $env:DB_INSTANCE = ''
+    $env:DB_PORT = [string]$puerto
+    Write-Host "SQL Express local detectado en TCP $puerto." -ForegroundColor DarkGray
+}
+
+$backendPort = Obtener-PuertoBackend
+$backendProcesoIniciado = $null
+$frontendProcesoIniciado = $null
+
 try {
     Write-Host "=======================================" -ForegroundColor Cyan
     Write-Host "   SIGBO-CBVC - Inicio del sistema" -ForegroundColor Cyan
@@ -62,6 +115,7 @@ try {
     # Compila siempre: evita dejar ejecutandose un dist antiguo despues de cambiar
     # el codigo fuente. Si el puerto pertenece a este proyecto, reinicia ese proceso.
     Write-Host "Compilando Backend (NestJS)..." -ForegroundColor Cyan
+    Preparar-ConexionSqlLocal
     Push-Location $backendDir
     cmd /c "npm run build > `"$logsDir\backend-build.log`" 2>&1"
     $backendBuildExit = $LASTEXITCODE
@@ -70,7 +124,7 @@ try {
         throw "La compilacion del Backend fallo (codigo $backendBuildExit). Revisa logs\backend-build.log"
     }
 
-    $backendPid = (Get-NetTCPConnection -LocalPort 3001 -State Listen -ErrorAction SilentlyContinue |
+    $backendPid = (Get-NetTCPConnection -LocalPort $backendPort -State Listen -ErrorAction SilentlyContinue |
         Select-Object -First 1 -ExpandProperty OwningProcess)
     if ($backendPid) {
         $backendProcess = Get-CimInstance Win32_Process -Filter "ProcessId=$backendPid"
@@ -84,16 +138,16 @@ try {
             Stop-Process -Id $backendPid -Force
             Start-Sleep -Milliseconds 500
         } else {
-            throw "El puerto 3001 esta ocupado por otro proceso ajeno a SIGBO: $($backendProcess.CommandLine)"
+            throw "El puerto $backendPort esta ocupado por otro proceso ajeno a SIGBO: $($backendProcess.CommandLine)"
         }
     }
-    Start-Process -FilePath "node" -ArgumentList "dist/main.js" `
+    $backendProcesoIniciado = Start-Process -FilePath "node" -ArgumentList "dist/main.js" `
         -WorkingDirectory $backendDir `
         -RedirectStandardOutput (Join-Path $logsDir "backend-out.log") `
         -RedirectStandardError (Join-Path $logsDir "backend-err.log") `
-        -WindowStyle Hidden
+        -WindowStyle Hidden -PassThru
 
-    $backendOk = Esperar-Puerto -Puerto 3001 -Nombre "Backend"
+    $backendOk = Esperar-Puerto -Puerto $backendPort -Nombre "Backend"
 
     # --- FRONTEND ---
     Write-Host "Compilando Frontend (Next.js)..." -ForegroundColor Cyan
@@ -121,11 +175,11 @@ try {
             throw "El puerto 3000 esta ocupado por otro proceso ajeno a SIGBO: $($frontendProcess.CommandLine)"
         }
     }
-    Start-Process -FilePath "cmd.exe" -ArgumentList "/c npm start" `
+    $frontendProcesoIniciado = Start-Process -FilePath "cmd.exe" -ArgumentList "/c npm start" `
         -WorkingDirectory $frontendDir `
         -RedirectStandardOutput (Join-Path $logsDir "frontend-out.log") `
         -RedirectStandardError (Join-Path $logsDir "frontend-err.log") `
-        -WindowStyle Hidden
+        -WindowStyle Hidden -PassThru
 
     $frontendOk = Esperar-Puerto -Puerto 3000 -Nombre "Frontend"
 
@@ -134,8 +188,8 @@ try {
         Write-Host "=======================================" -ForegroundColor Green
         Write-Host "   SIGBO-CBVC iniciado correctamente" -ForegroundColor Green
         Write-Host "=======================================" -ForegroundColor Green
-        Write-Host "  Backend  : http://localhost:3001/api/v1"
-        Write-Host "  Swagger  : http://localhost:3001/api/docs"
+        Write-Host "  Backend  : http://localhost:$backendPort/api/v1"
+        Write-Host "  Swagger  : http://localhost:$backendPort/api/docs"
         Write-Host "  Frontend : http://localhost:3000"
         Write-Host ""
         if (-not $NoBrowser) {
@@ -147,6 +201,11 @@ try {
 
     if (-not $NoPause) { Pausar }
 } catch {
+    foreach ($proceso in @($frontendProcesoIniciado, $backendProcesoIniciado)) {
+        if ($proceso -and -not $proceso.HasExited) {
+            Stop-Process -Id $proceso.Id -Force -ErrorAction SilentlyContinue
+        }
+    }
     # Nunca dejar que la ventana se cierre sola sin mostrar el motivo: es la
     # causa mas comun de "compila y se cierra sin abrir nada".
     Write-Host ""
@@ -156,6 +215,6 @@ try {
     Write-Host $_.Exception.Message -ForegroundColor Red
     Write-Host ""
     Write-Host "Revisa la carpeta 'logs' para mas detalle." -ForegroundColor Yellow
-    Pausar
+    if (-not $NoPause) { Pausar }
     exit 1
 }
