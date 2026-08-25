@@ -92,12 +92,18 @@ function Preparar-ConexionSqlLocal {
     $servicio = Get-CimInstance Win32_Service -Filter "Name='MSSQL`$$instancia'" -ErrorAction SilentlyContinue
     if (-not $servicio -or $servicio.State -ne 'Running' -or -not $servicio.ProcessId) { return }
 
-    $puerto = Get-NetTCPConnection -OwningProcess $servicio.ProcessId -State Listen -ErrorAction SilentlyContinue |
+    $escuchas = Get-NetTCPConnection -OwningProcess $servicio.ProcessId -State Listen -ErrorAction SilentlyContinue
+    # La instancia puede exponer un puerto administrativo sólo en loopback.
+    # Para la aplicación se prioriza el listener TCP normal (0.0.0.0 o ::).
+    $puerto = $escuchas |
+        Where-Object { $_.LocalAddress -eq '0.0.0.0' -or $_.LocalAddress -eq '::' } |
         Select-Object -ExpandProperty LocalPort -Unique | Select-Object -First 1
+    if (-not $puerto) {
+        $puerto = $escuchas | Select-Object -ExpandProperty LocalPort -Unique | Select-Object -First 1
+    }
     if (-not $puerto) { return }
 
-    $env:DB_INSTANCE = ''
-    $env:DB_PORT = [string]$puerto
+    $env:DB_DISCOVERED_PORT = [string]$puerto
     Write-Host "SQL Express local detectado en TCP $puerto." -ForegroundColor DarkGray
 }
 

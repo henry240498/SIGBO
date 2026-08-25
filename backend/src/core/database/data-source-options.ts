@@ -41,16 +41,21 @@ export function obtenerSeguridadMssql(
 }
 
 const seguridadMssql = obtenerSeguridadMssql();
+// El iniciador local puede descubrir el puerto TCP dinámico de SQLEXPRESS.
+// Esta variable de proceso tiene prioridad sólo para esa ejecución y evita
+// depender de SQL Server Browser o alterar el archivo .env del operador.
+const puertoMssqlDescubierto = process.env.DB_DISCOVERED_PORT;
+const instanciaMssql = puertoMssqlDescubierto ? undefined : process.env.DB_INSTANCE;
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'mssql',
   host: process.env.DB_HOST ?? 'localhost',
-  ...(process.env.DB_INSTANCE ? {} : { port: Number(process.env.DB_PORT ?? 1433) }),
+  ...(instanciaMssql ? {} : { port: Number(puertoMssqlDescubierto ?? process.env.DB_PORT ?? 1433) }),
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME ?? 'sigbo_cbvc',
   options: {
-    ...(process.env.DB_INSTANCE ? { instanceName: process.env.DB_INSTANCE } : {}),
+    ...(instanciaMssql ? { instanceName: instanciaMssql } : {}),
     ...seguridadMssql,
     connectTimeout: 15000,
   },
