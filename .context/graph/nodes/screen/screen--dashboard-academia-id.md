@@ -12,6 +12,7 @@ archivos:
   - frontend/src/app/dashboard/academia/[id]/page.tsx
 edges:
   - [belongs_to, domain--academia]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-personal]
   - [uses, component--front-parametros]
@@ -35,6 +36,7 @@ Pantalla /dashboard/academia/[id].
 ## Relaciones
 
 - `belongs_to` → [[domain--academia|Academia]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-parametros|parametros]]

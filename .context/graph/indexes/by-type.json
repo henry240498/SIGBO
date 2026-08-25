@@ -762,6 +762,7 @@
   "screen--dashboard-organizacion-especialidades",
   "screen--dashboard-organizacion-feriados",
   "screen--dashboard-organizacion-guardias",
+  "screen--dashboard-organizacion-guardias-planificacion",
   "screen--dashboard-organizacion",
   "screen--dashboard-organizacion-parametros",
   "screen--dashboard-organizacion-rangos",

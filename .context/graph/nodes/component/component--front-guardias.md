@@ -4,7 +4,7 @@ tipo: COMPONENT
 nombre: guardias
 nivel: L2
 dominio: guardias
-resumen: "Helper de frontend \"guardias\" (96 exportaciones, consume 27 endpoint(s))."
+resumen: "Helper de frontend \"guardias\" (98 exportaciones, consume 28 endpoint(s))."
 capa: frontend
 archivos:
   - frontend/src/lib/guardias.ts
@@ -13,6 +13,7 @@ edges:
   - [calls, api--guardias-guardias]
   - [calls, api--guardias-guardias]
   - [calls, api--guardias-guardias]
+  - [calls, api--guardias-guardias]
   - [calls, api--guardias-grupos-guardia]
   - [calls, api--guardias-grupos-guardia]
   - [calls, api--guardias-grupos-guardia]
@@ -36,12 +37,12 @@ edges:
   - [calls, api--guardias-ordenes-guardia]
   - [calls, api--guardias-ordenes-guardia]
   - [calls, api--guardias-ordenes-guardia]
-terminos: [guardias, guardia, tipo, participacion, asignacion, cumplimiento, grupo, rol, miembro, pernocte, inspeccion, estacion, novedad, requisito, cargar, crear, actualizar, anular, resultado, generacion, generar, planificacion, listar, asignaciones, asignar, personal]
+terminos: [guardias, guardia, tipo, participacion, asignacion, cumplimiento, grupo, rol, miembro, pernocte, inspeccion, estacion, novedad, requisito, cargar, item, planificacion, planificar, crear, actualizar, anular, resultado, generacion, generar]
 ---
 
 # guardias
 
-Helper de frontend "guardias" (96 exportaciones, consume 27 endpoint(s)).
+Helper de frontend "guardias" (98 exportaciones, consume 28 endpoint(s)).
 
 
 ## Archivos
@@ -50,6 +51,7 @@ Helper de frontend "guardias" (96 exportaciones, consume 27 endpoint(s)).
 
 ## Relaciones
 
+- `calls` → [[api--guardias-guardias|GuardiasController]]
 - `calls` → [[api--guardias-guardias|GuardiasController]]
 - `calls` → [[api--guardias-guardias|GuardiasController]]
 - `calls` → [[api--guardias-guardias|GuardiasController]]
@@ -95,6 +97,7 @@ Helper de frontend "guardias" (96 exportaciones, consume 27 endpoint(s)).
 - [[screen--dashboard-guardias-sorteos-id|/dashboard/guardias/sorteos/[id]]] `uses` →
 - [[screen--dashboard-guardias-id|/dashboard/guardias/[id]]] `uses` →
 - [[screen--dashboard-organizacion-feriados|/dashboard/organizacion/feriados]] `uses` →
+- [[screen--dashboard-organizacion-guardias-planificacion|/dashboard/organizacion/guardias/planificacion]] `uses` →
 - [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `uses` →
 
 ---

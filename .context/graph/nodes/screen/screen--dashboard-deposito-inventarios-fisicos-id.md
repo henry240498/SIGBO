@@ -12,6 +12,7 @@ archivos:
   - frontend/src/app/dashboard/deposito/inventarios-fisicos/[id]/page.tsx
 edges:
   - [belongs_to, domain--deposito]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-equipos]
   - [uses, component--front-deposito]
@@ -32,6 +33,7 @@ Pantalla /dashboard/deposito/inventarios-fisicos/[id].
 ## Relaciones
 
 - `belongs_to` → [[domain--deposito|Depósito]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-equipos|equipos]]
 - `uses` → [[component--front-deposito|deposito]]

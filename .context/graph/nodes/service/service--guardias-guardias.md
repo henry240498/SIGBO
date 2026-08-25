@@ -17,6 +17,8 @@ edges:
   - [reads, table--operaciones-asignacion-guardias]
   - [uses, entity--grupo-guardia-miembro]
   - [reads, table--operaciones-grupos-guardia-miembros]
+  - [uses, entity--grupo-guardia]
+  - [reads, table--operaciones-grupos-guardia]
   - [uses, entity--bombero]
   - [reads, table--personal-bomberos]
   - [uses, entity--marcacion-asistencia]
@@ -34,7 +36,7 @@ Logica de negocio de guardias (modulo guardias).
 
 ## Metodos
 
-`findAll()` · `findOne()` · `rangoGuardia()` · `create()` · `update()` · `anular()` · `listarAsignaciones()` · `historialPersonal()` · `asignarPersonal()` · `reemplazarAsignacion()` · `quitarAsignacion()` · `registrarHorario()` · `actualizarPresencia()` · `calcularCumplimiento()`
+`findAll()` · `findOne()` · `rangoGuardia()` · `create()` · `update()` · `planificarManual()` · `anular()` · `listarAsignaciones()` · `historialPersonal()` · `asignarPersonal()` · `reemplazarAsignacion()` · `quitarAsignacion()` · `registrarHorario()` · `actualizarPresencia()` · `calcularCumplimiento()`
 
 ## Archivos
 
@@ -50,6 +52,8 @@ Logica de negocio de guardias (modulo guardias).
 - `reads` → [[table--operaciones-asignacion-guardias|operaciones.asignacion_guardias]]
 - `uses` → [[entity--grupo-guardia-miembro|GrupoGuardiaMiembro]]
 - `reads` → [[table--operaciones-grupos-guardia-miembros|operaciones.grupos_guardia_miembros]]
+- `uses` → [[entity--grupo-guardia|GrupoGuardia]]
+- `reads` → [[table--operaciones-grupos-guardia|operaciones.grupos_guardia]]
 - `uses` → [[entity--bombero|Bombero]]
 - `reads` → [[table--personal-bomberos|personal.bomberos]]
 - `uses` → [[entity--marcacion-asistencia|MarcacionAsistencia]]

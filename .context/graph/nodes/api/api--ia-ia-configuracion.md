@@ -48,6 +48,7 @@ Superficie HTTP de ia configuracion bajo /api/v1/ia/admin/config.
 - [[component--front-ia|ia]] `calls` →
 - [[component--front-ia|ia]] `calls` →
 - [[component--front-ia|ia]] `calls` →
+- [[component--front-ia|ia]] `calls` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

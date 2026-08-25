@@ -16,12 +16,15 @@ export default function GruposGuardiaPage() {
 
   const [nombre, setNombre] = useState('');
   const [oficialACargoId, setOficialACargoId] = useState('');
+  const [choferId, setChoferId] = useState('');
   const [observaciones, setObservaciones] = useState('');
   const [cicloRotacionDias, setCicloRotacionDias] = useState('');
   const [cantidadChoferes, setCantidadChoferes] = useState('');
 
   const puedeCrear = !!obtenerSesion()?.usuario.permisos.includes('guardias:crear');
   const opcionesBombero = bomberos.map((b) => ({ value: b.id, label: `${b.numeroBombero} — ${b.nombre} ${b.apellido}` }));
+
+  const opcionesChofer = opcionesBombero.filter((bombero) => bombero.value !== oficialACargoId);
 
   async function cargar() {
     try {
@@ -39,17 +42,23 @@ export default function GruposGuardiaPage() {
   async function crear(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+    if (!oficialACargoId || !choferId) {
+      setError('Indicá el responsable a cargo y un chofer habilitado para crear el grupo.');
+      return;
+    }
     setGuardando(true);
     try {
       await crearGrupoGuardia({
         nombre,
-        oficialACargoId: oficialACargoId || undefined,
+        oficialACargoId,
+        choferId,
         observaciones: observaciones || undefined,
         cicloRotacionDias: cicloRotacionDias ? parseInt(cicloRotacionDias, 10) : undefined,
         cantidadChoferes: cantidadChoferes ? parseInt(cantidadChoferes, 10) : undefined,
       });
       setNombre('');
       setOficialACargoId('');
+      setChoferId('');
       setObservaciones('');
       setCicloRotacionDias('');
       setCantidadChoferes('');
@@ -73,22 +82,26 @@ export default function GruposGuardiaPage() {
         )}
       </div>
       <p style={{ fontSize: 13, color: '#94a3b8' }}>
-        La composicion de cada grupo queda definida de antemano. Al crear una guardia a partir de un grupo, el
-        personal titular se recupera automaticamente sin tener que volver a cargarlo.
+        Cada grupo se crea con un responsable a cargo y un chofer habilitado. Luego se agrega el resto del
+        personal normal; un mismo bombero puede integrar varios grupos.
       </p>
 
       {error && <p style={{ color: '#f87171' }}>{error}</p>}
 
       {mostrarForm && (
         <form className="card" onSubmit={crear} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
               <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required placeholder="Grupo A" />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Oficial a cargo (opcional)</label>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Responsable a cargo *</label>
               <ComboBuscable opciones={opcionesBombero} value={oficialACargoId} onChange={setOficialACargoId} placeholderBusqueda="Buscar por codigo o nombre..." />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Chofer habilitado *</label>
+              <ComboBuscable opciones={opcionesChofer} value={choferId} onChange={setChoferId} placeholderBusqueda="Buscar por codigo o nombre..." />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 2fr', gap: 10 }}>

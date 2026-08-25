@@ -7,10 +7,13 @@ const ESTADOS = ['ACTIVO', 'INACTIVO'];
 export class CreateGrupoGuardiaDto {
   @ApiProperty() @IsString() @MinLength(1) nombre: string;
 
-  @ApiProperty({ required: false, description: 'personal.bomberos.id' })
-  @IsOptional()
+  @ApiProperty({ description: 'personal.bomberos.id: responsable a cargo de la guardia' })
   @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
-  oficialACargoId?: string;
+  oficialACargoId: string;
+
+  @ApiProperty({ description: 'personal.bomberos.id: chofer habilitado que integra el grupo' })
+  @Matches(GUID_REGEX, { message: GUID_REGEX_MENSAJE })
+  choferId: string;
 
   @ApiProperty({ required: false, enum: ESTADOS, default: 'ACTIVO' }) @IsOptional() @IsIn(ESTADOS) estado?: string;
 

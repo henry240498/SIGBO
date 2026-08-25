@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
@@ -143,6 +144,9 @@ export default function TiposGuardiaPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
         <h2 style={{ fontSize: 16 }}>Tipos de Guardia ({tiposGuardia?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 8 }}>
+          <Link href="/dashboard/organizacion/guardias/planificacion" className="btn-primary" style={{ textDecoration: 'none', background: '#1d4ed8' }}>
+            Planificar orden de guardia
+          </Link>
           <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/tipos-guardia/exportar/excel', 'guardias.xlsx')}>
             Exportar a Excel
           </button>

@@ -12,6 +12,7 @@ archivos:
   - frontend/src/app/dashboard/documentos/[id]/page.tsx
 edges:
   - [belongs_to, domain--documentos]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-parametros]
   - [uses, component--front-personal]
@@ -33,6 +34,7 @@ Pantalla /dashboard/documentos/[id].
 ## Relaciones
 
 - `belongs_to` → [[domain--documentos|Documentos]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-personal|personal]]

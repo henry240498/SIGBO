@@ -1,8 +1,8 @@
 {
- "generado": "2026-08-24T20:45:40.399Z",
+ "generado": "2026-08-25T15:01:38.818Z",
  "repo": "SIGBO",
- "nodos": 842,
- "aristas": 3022,
+ "nodos": 843,
+ "aristas": 3039,
  "nodosPorTipo": {
   "DOMAIN": 15,
   "ENTITY": 139,
@@ -11,7 +11,7 @@
   "COMPONENT": 43,
   "SERVICE": 123,
   "API": 120,
-  "SCREEN": 116,
+  "SCREEN": 117,
   "CONFIGURATION": 10,
   "DECISION": 11,
   "DEPENDENCY": 4,
@@ -20,12 +20,12 @@
   "WORKFLOW": 7
  },
  "aristasPorTipo": {
-  "belongs_to": 698,
+  "belongs_to": 699,
   "defined_in": 150,
   "references": 227,
   "persisted_in": 139,
-  "uses": 1004,
-  "reads": 453,
+  "uses": 1019,
+  "reads": 454,
   "exposes": 129,
   "calls": 131,
   "configured_by": 3,

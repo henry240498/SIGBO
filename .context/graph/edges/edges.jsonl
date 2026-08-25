@@ -1431,6 +1431,8 @@
 {"from":"service--guardias-guardias","tipo":"reads","to":"table--operaciones-asignacion-guardias"}
 {"from":"service--guardias-guardias","tipo":"uses","to":"entity--grupo-guardia-miembro"}
 {"from":"service--guardias-guardias","tipo":"reads","to":"table--operaciones-grupos-guardia-miembros"}
+{"from":"service--guardias-guardias","tipo":"uses","to":"entity--grupo-guardia"}
+{"from":"service--guardias-guardias","tipo":"reads","to":"table--operaciones-grupos-guardia"}
 {"from":"service--guardias-guardias","tipo":"uses","to":"entity--bombero"}
 {"from":"service--guardias-guardias","tipo":"reads","to":"table--personal-bomberos"}
 {"from":"service--guardias-guardias","tipo":"uses","to":"entity--marcacion-asistencia"}
@@ -2412,6 +2414,7 @@
 {"from":"screen--dashboard-organizacion-especialidades","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"screen--dashboard-organizacion-feriados","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"screen--dashboard-organizacion-guardias","tipo":"belongs_to","to":"domain--organizacion"}
+{"from":"screen--dashboard-organizacion-guardias-planificacion","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"screen--dashboard-organizacion","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"screen--dashboard-organizacion-parametros","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"screen--dashboard-organizacion-rangos","tipo":"belongs_to","to":"domain--organizacion"}
@@ -2454,6 +2457,7 @@
 {"from":"screen--dashboard-academia","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-academia","tipo":"uses","to":"component--front-parametros"}
 {"from":"screen--dashboard-academia","tipo":"uses","to":"component--front-academia"}
+{"from":"screen--dashboard-academia-id","tipo":"uses","to":"component--front-confirmprovider"}
 {"from":"screen--dashboard-academia-id","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-academia-id","tipo":"uses","to":"component--front-personal"}
 {"from":"screen--dashboard-academia-id","tipo":"uses","to":"component--front-parametros"}
@@ -2489,12 +2493,14 @@
 {"from":"screen--dashboard-deposito-articulos-id","tipo":"uses","to":"component--front-vehiculos"}
 {"from":"screen--dashboard-deposito-articulos-id","tipo":"uses","to":"component--front-deposito"}
 {"from":"screen--dashboard-deposito-bajas","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-deposito-bajas","tipo":"uses","to":"component--front-confirmprovider"}
 {"from":"screen--dashboard-deposito-bajas","tipo":"uses","to":"component--front-parametros"}
 {"from":"screen--dashboard-deposito-bajas","tipo":"uses","to":"component--front-personal"}
 {"from":"screen--dashboard-deposito-bajas","tipo":"uses","to":"component--front-vehiculos"}
 {"from":"screen--dashboard-deposito-bajas","tipo":"uses","to":"component--front-equipos"}
 {"from":"screen--dashboard-deposito-bajas","tipo":"uses","to":"component--front-deposito"}
 {"from":"screen--dashboard-deposito-categorias","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-deposito-categorias","tipo":"uses","to":"component--front-confirmprovider"}
 {"from":"screen--dashboard-deposito-categorias","tipo":"uses","to":"component--front-deposito"}
 {"from":"screen--dashboard-deposito-entradas","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-deposito-entradas","tipo":"uses","to":"component--front-parametros"}
@@ -2507,6 +2513,7 @@
 {"from":"screen--dashboard-deposito-inventarios-fisicos","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-deposito-inventarios-fisicos","tipo":"uses","to":"component--front-personal"}
 {"from":"screen--dashboard-deposito-inventarios-fisicos","tipo":"uses","to":"component--front-deposito"}
+{"from":"screen--dashboard-deposito-inventarios-fisicos-id","tipo":"uses","to":"component--front-confirmprovider"}
 {"from":"screen--dashboard-deposito-inventarios-fisicos-id","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-deposito-inventarios-fisicos-id","tipo":"uses","to":"component--front-equipos"}
 {"from":"screen--dashboard-deposito-inventarios-fisicos-id","tipo":"uses","to":"component--front-deposito"}
@@ -2530,6 +2537,7 @@
 {"from":"screen--dashboard-deposito-proveedores","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-deposito-proveedores","tipo":"uses","to":"component--front-deposito"}
 {"from":"screen--dashboard-deposito-ubicaciones","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-deposito-ubicaciones","tipo":"uses","to":"component--front-confirmprovider"}
 {"from":"screen--dashboard-deposito-ubicaciones","tipo":"uses","to":"component--front-personal"}
 {"from":"screen--dashboard-deposito-ubicaciones","tipo":"uses","to":"component--front-parametros"}
 {"from":"screen--dashboard-deposito-ubicaciones","tipo":"uses","to":"component--front-deposito"}
@@ -2547,6 +2555,7 @@
 {"from":"screen--dashboard-documentos-plantillas","tipo":"uses","to":"component--front-documentos"}
 {"from":"screen--dashboard-documentos-vencimientos","tipo":"uses","to":"component--front-parametros"}
 {"from":"screen--dashboard-documentos-vencimientos","tipo":"uses","to":"component--front-documentos"}
+{"from":"screen--dashboard-documentos-id","tipo":"uses","to":"component--front-confirmprovider"}
 {"from":"screen--dashboard-documentos-id","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-documentos-id","tipo":"uses","to":"component--front-parametros"}
 {"from":"screen--dashboard-documentos-id","tipo":"uses","to":"component--front-personal"}
@@ -2565,6 +2574,7 @@
 {"from":"screen--dashboard-finanzas-beneficios","tipo":"uses","to":"component--front-academia"}
 {"from":"screen--dashboard-finanzas-beneficios","tipo":"uses","to":"component--front-socios-protectores"}
 {"from":"screen--dashboard-finanzas-cajas","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-finanzas-cajas","tipo":"uses","to":"component--front-confirmprovider"}
 {"from":"screen--dashboard-finanzas-cajas","tipo":"uses","to":"component--front-personal"}
 {"from":"screen--dashboard-finanzas-cajas","tipo":"uses","to":"component--front-finanzas"}
 {"from":"screen--dashboard-finanzas-cuentas-bancarias","tipo":"uses","to":"component--front-api"}
@@ -2572,11 +2582,14 @@
 {"from":"screen--dashboard-finanzas-cuentas-bancarias","tipo":"uses","to":"component--front-personal"}
 {"from":"screen--dashboard-finanzas-cuentas-bancarias","tipo":"uses","to":"component--front-finanzas"}
 {"from":"screen--dashboard-finanzas-cuotas","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-finanzas-cuotas","tipo":"uses","to":"component--front-inputprovider"}
 {"from":"screen--dashboard-finanzas-cuotas","tipo":"uses","to":"component--front-personal"}
 {"from":"screen--dashboard-finanzas-cuotas","tipo":"uses","to":"component--front-finanzas"}
 {"from":"screen--dashboard-finanzas-ejercicios-fiscales","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-finanzas-ejercicios-fiscales","tipo":"uses","to":"component--front-confirmprovider"}
 {"from":"screen--dashboard-finanzas-ejercicios-fiscales","tipo":"uses","to":"component--front-finanzas"}
 {"from":"screen--dashboard-finanzas-facturacion","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-finanzas-facturacion","tipo":"uses","to":"component--front-inputprovider"}
 {"from":"screen--dashboard-finanzas-facturacion","tipo":"uses","to":"component--front-finanzas"}
 {"from":"screen--dashboard-finanzas-facturacion","tipo":"uses","to":"component--front-socios-protectores"}
 {"from":"screen--dashboard-finanzas-facturacion","tipo":"uses","to":"component--front-parametros"}
@@ -2600,6 +2613,7 @@
 {"from":"screen--dashboard-finanzas-socios-protectores","tipo":"uses","to":"component--front-personal"}
 {"from":"screen--dashboard-finanzas-socios-protectores","tipo":"uses","to":"component--front-parametros"}
 {"from":"screen--dashboard-finanzas-socios-protectores","tipo":"uses","to":"component--front-socios-protectores"}
+{"from":"screen--dashboard-finanzas-socios-protectores-id","tipo":"uses","to":"component--front-inputprovider"}
 {"from":"screen--dashboard-finanzas-socios-protectores-id","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-finanzas-socios-protectores-id","tipo":"uses","to":"component--front-parametros"}
 {"from":"screen--dashboard-finanzas-socios-protectores-id","tipo":"uses","to":"component--front-finanzas"}
@@ -2688,6 +2702,8 @@
 {"from":"screen--dashboard-organizacion-guardias","tipo":"uses","to":"component--front-confirmprovider"}
 {"from":"screen--dashboard-organizacion-guardias","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-organizacion-guardias","tipo":"uses","to":"component--front-exportar"}
+{"from":"screen--dashboard-organizacion-guardias-planificacion","tipo":"uses","to":"component--front-confirmprovider"}
+{"from":"screen--dashboard-organizacion-guardias-planificacion","tipo":"uses","to":"component--front-guardias"}
 {"from":"screen--dashboard-organizacion","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-organizacion-parametros","tipo":"uses","to":"component--front-confirmprovider"}
 {"from":"screen--dashboard-organizacion-parametros","tipo":"uses","to":"component--front-api"}
@@ -2736,6 +2752,7 @@
 {"from":"screen--dashboard-seguridad-inteligencia-artificial-configuracion","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-seguridad-inteligencia-artificial-configuracion","tipo":"uses","to":"component--front-ia"}
 {"from":"screen--dashboard-seguridad-inteligencia-artificial-conversaciones","tipo":"uses","to":"component--front-api"}
+{"from":"screen--dashboard-seguridad-inteligencia-artificial-conversaciones","tipo":"uses","to":"component--front-confirmprovider"}
 {"from":"screen--dashboard-seguridad-inteligencia-artificial-conversaciones","tipo":"uses","to":"component--front-ia"}
 {"from":"screen--dashboard-seguridad-inteligencia-artificial","tipo":"uses","to":"component--front-ia"}
 {"from":"screen--dashboard-seguridad-inteligencia-artificial-propuestas","tipo":"uses","to":"component--front-ia"}

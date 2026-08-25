@@ -13,6 +13,7 @@ archivos:
 edges:
   - [belongs_to, domain--finanzas]
   - [uses, component--front-api]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-finanzas]
 terminos: [finanzas, ejercicios, fiscales, administrar, presupuesto]
 ---
@@ -32,6 +33,7 @@ Pantalla /dashboard/finanzas/ejercicios-fiscales.
 
 - `belongs_to` → [[domain--finanzas|Finanzas]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-finanzas|finanzas]]
 
 ---

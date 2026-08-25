@@ -3,7 +3,7 @@ id: component--front-socios-protectores
 tipo: COMPONENT
 nombre: socios-protectores
 nivel: L2
-resumen: "Helper de frontend \"socios-protectores\" (47 exportaciones, consume 19 endpoint(s))."
+resumen: "Helper de frontend \"socios-protectores\" (47 exportaciones, consume 21 endpoint(s))."
 capa: frontend
 archivos:
   - frontend/src/lib/socios-protectores.ts
@@ -17,10 +17,12 @@ edges:
   - [calls, api--finanzas-aportes]
   - [calls, api--finanzas-aportes]
   - [calls, api--finanzas-aportes]
+  - [calls, api--finanzas-aportes]
   - [calls, api--finanzas-beneficios-socios]
   - [calls, api--finanzas-beneficios-socios]
   - [calls, api--finanzas-beneficios-socios]
   - [calls, api--finanzas-beneficios-socios]
+  - [calls, api--finanzas-facturas]
   - [calls, api--finanzas-facturas]
   - [calls, api--finanzas-facturas]
   - [calls, api--finanzas-facturas]
@@ -32,7 +34,7 @@ terminos: [socios, protectores, cargar, estados, socio, protector, periodicidade
 
 # socios-protectores
 
-Helper de frontend "socios-protectores" (47 exportaciones, consume 19 endpoint(s)).
+Helper de frontend "socios-protectores" (47 exportaciones, consume 21 endpoint(s)).
 
 
 ## Archivos
@@ -50,10 +52,12 @@ Helper de frontend "socios-protectores" (47 exportaciones, consume 19 endpoint(s
 - `calls` → [[api--finanzas-aportes|AportesController]]
 - `calls` → [[api--finanzas-aportes|AportesController]]
 - `calls` → [[api--finanzas-aportes|AportesController]]
+- `calls` → [[api--finanzas-aportes|AportesController]]
 - `calls` → [[api--finanzas-beneficios-socios|BeneficiosSociosController]]
 - `calls` → [[api--finanzas-beneficios-socios|BeneficiosSociosController]]
 - `calls` → [[api--finanzas-beneficios-socios|BeneficiosSociosController]]
 - `calls` → [[api--finanzas-beneficios-socios|BeneficiosSociosController]]
+- `calls` → [[api--finanzas-facturas|FacturasController]]
 - `calls` → [[api--finanzas-facturas|FacturasController]]
 - `calls` → [[api--finanzas-facturas|FacturasController]]
 - `calls` → [[api--finanzas-facturas|FacturasController]]

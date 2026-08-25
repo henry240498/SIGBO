@@ -1963,6 +1963,9 @@
  "frontend/src/app/dashboard/organizacion/guardias/page.tsx": [
   "screen--dashboard-organizacion-guardias"
  ],
+ "frontend/src/app/dashboard/organizacion/guardias/planificacion/page.tsx": [
+  "screen--dashboard-organizacion-guardias-planificacion"
+ ],
  "frontend/src/app/dashboard/organizacion/page.tsx": [
   "screen--dashboard-organizacion"
  ],

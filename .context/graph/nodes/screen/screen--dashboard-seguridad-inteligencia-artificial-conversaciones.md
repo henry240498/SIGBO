@@ -13,6 +13,7 @@ archivos:
 edges:
   - [belongs_to, domain--seguridad]
   - [uses, component--front-api]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-ia]
 terminos: [seguridad, inteligencia, artificial, conversaciones, eliminar]
 ---
@@ -32,6 +33,7 @@ Pantalla /dashboard/seguridad/inteligencia-artificial/conversaciones.
 
 - `belongs_to` → [[domain--seguridad|Seguridad]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-ia|ia]]
 
 ---

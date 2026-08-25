@@ -45,6 +45,7 @@ Superficie HTTP de facturas bajo /api/v1/finanzas/facturas.
 - [[component--front-socios-protectores|socios-protectores]] `calls` →
 - [[component--front-socios-protectores|socios-protectores]] `calls` →
 - [[component--front-socios-protectores|socios-protectores]] `calls` →
+- [[component--front-socios-protectores|socios-protectores]] `calls` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

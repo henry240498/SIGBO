@@ -12,6 +12,7 @@ archivos:
   - frontend/src/app/dashboard/finanzas/socios-protectores/[id]/page.tsx
 edges:
   - [belongs_to, domain--finanzas]
+  - [uses, component--front-inputprovider]
   - [uses, component--front-api]
   - [uses, component--front-parametros]
   - [uses, component--front-finanzas]
@@ -33,6 +34,7 @@ Pantalla /dashboard/finanzas/socios-protectores/[id].
 ## Relaciones
 
 - `belongs_to` → [[domain--finanzas|Finanzas]]
+- `uses` → [[component--front-inputprovider|InputProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-finanzas|finanzas]]

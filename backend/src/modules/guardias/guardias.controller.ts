@@ -15,6 +15,7 @@ import { RegistrarHorarioDto } from './dto/registrar-horario.dto';
 import { ActualizarPresenciaDto } from './dto/actualizar-presencia.dto';
 import { GenerarPlanificacionDto } from './dto/generar-planificacion.dto';
 import { ReemplazarAsignacionDto } from './dto/reemplazar-asignacion.dto';
+import { PlanificarGuardiasDto } from './dto/planificar-guardias.dto';
 
 /** Los controladores con subrutas literales se registran antes de éste en
  * GuardiasModule. Así Express 5 no necesita expresiones regulares embebidas
@@ -58,6 +59,12 @@ export class GuardiasController {
       user.id,
       req.ip,
     );
+  }
+
+  @Post('planificacion/manual')
+  @RequirePermission('guardias:editar')
+  planificarManual(@Body() dto: PlanificarGuardiasDto, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
+    return this.service.planificarManual(dto, user.id, req.ip);
   }
 
   @Get(':id')

@@ -21,6 +21,9 @@ Helper de frontend "InputProvider" (2 exportaciones).
 
 ## Referenciado por
 
+- [[screen--dashboard-finanzas-cuotas|/dashboard/finanzas/cuotas]] `uses` →
+- [[screen--dashboard-finanzas-facturacion|/dashboard/finanzas/facturacion]] `uses` →
+- [[screen--dashboard-finanzas-socios-protectores-id|/dashboard/finanzas/socios-protectores/[id]]] `uses` →
 - [[screen--dashboard-guardias-ordenes-id|/dashboard/guardias/ordenes/[id]]] `uses` →
 - [[screen--dashboard-guardias-id|/dashboard/guardias/[id]]] `uses` →
 - [[screen--dashboard-personal|/dashboard/personal]] `uses` →

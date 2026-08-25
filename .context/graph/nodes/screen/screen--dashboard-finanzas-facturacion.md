@@ -13,6 +13,7 @@ archivos:
 edges:
   - [belongs_to, domain--finanzas]
   - [uses, component--front-api]
+  - [uses, component--front-inputprovider]
   - [uses, component--front-finanzas]
   - [uses, component--front-socios-protectores]
   - [uses, component--front-parametros]
@@ -34,6 +35,7 @@ Pantalla /dashboard/finanzas/facturacion.
 
 - `belongs_to` → [[domain--finanzas|Finanzas]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-inputprovider|InputProvider]]
 - `uses` → [[component--front-finanzas|finanzas]]
 - `uses` → [[component--front-socios-protectores|socios-protectores]]
 - `uses` → [[component--front-parametros|parametros]]

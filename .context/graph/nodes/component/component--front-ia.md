@@ -3,7 +3,7 @@ id: component--front-ia
 tipo: COMPONENT
 nombre: ia
 nivel: L2
-resumen: "Helper de frontend \"ia\" (42 exportaciones, consume 17 endpoint(s))."
+resumen: "Helper de frontend \"ia\" (42 exportaciones, consume 18 endpoint(s))."
 capa: frontend
 archivos:
   - frontend/src/lib/ia.ts
@@ -12,6 +12,7 @@ edges:
   - [calls, api--ia-ia-chat]
   - [calls, api--ia-ia-chat]
   - [calls, api--ia-ia-chat]
+  - [calls, api--ia-ia-configuracion]
   - [calls, api--ia-ia-configuracion]
   - [calls, api--ia-ia-configuracion]
   - [calls, api--ia-ia-configuracion]
@@ -30,7 +31,7 @@ terminos: [formalidad, estado, configuracion, rol, mensaje, resultado, propuesta
 
 # ia
 
-Helper de frontend "ia" (42 exportaciones, consume 17 endpoint(s)).
+Helper de frontend "ia" (42 exportaciones, consume 18 endpoint(s)).
 
 
 ## Archivos
@@ -43,6 +44,7 @@ Helper de frontend "ia" (42 exportaciones, consume 17 endpoint(s)).
 - `calls` → [[api--ia-ia-chat|IaChatController]]
 - `calls` → [[api--ia-ia-chat|IaChatController]]
 - `calls` → [[api--ia-ia-chat|IaChatController]]
+- `calls` → [[api--ia-ia-configuracion|IaConfiguracionController]]
 - `calls` → [[api--ia-ia-configuracion|IaConfiguracionController]]
 - `calls` → [[api--ia-ia-configuracion|IaConfiguracionController]]
 - `calls` → [[api--ia-ia-configuracion|IaConfiguracionController]]

@@ -13,6 +13,7 @@ archivos:
 edges:
   - [belongs_to, domain--finanzas]
   - [uses, component--front-api]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-personal]
   - [uses, component--front-finanzas]
 terminos: [finanzas, cajas, cerrar, caja, administrar]
@@ -33,6 +34,7 @@ Pantalla /dashboard/finanzas/cajas.
 
 - `belongs_to` → [[domain--finanzas|Finanzas]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-finanzas|finanzas]]
 

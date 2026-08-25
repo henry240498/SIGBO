@@ -17,7 +17,7 @@ Opciones del DataSource: pool, timeouts, naming strategy y synchronize:false.
 
 ## Variables de entorno
 
-`DB_HOST` · `DB_INSTANCE` · `DB_PORT` · `DB_USER` · `DB_PASSWORD` · `DB_NAME` · `NODE_ENV`
+`DB_DISCOVERED_PORT` · `DB_INSTANCE` · `DB_HOST` · `DB_PORT` · `DB_USER` · `DB_PASSWORD` · `DB_NAME` · `NODE_ENV`
 
 ## Archivos
 

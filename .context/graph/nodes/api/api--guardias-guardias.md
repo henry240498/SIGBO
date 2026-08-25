@@ -29,6 +29,7 @@ Los controladores con subrutas literales se registran antes de éste en Guardias
 |---|---|---|
 | GET | `/guardias` | `guardias:ver` |
 | POST | `/guardias/generar` | `guardias:crear` |
+| POST | `/guardias/planificacion/manual` | `guardias:editar` |
 | GET | `/guardias/:id` | `guardias:ver` |
 | POST | `/guardias` | `guardias:crear` |
 | PATCH | `/guardias/:id` | `guardias:editar` |
@@ -53,6 +54,7 @@ Los controladores con subrutas literales se registran antes de éste en Guardias
 
 ## Referenciado por
 
+- [[component--front-guardias|guardias]] `calls` →
 - [[component--front-guardias|guardias]] `calls` →
 - [[component--front-guardias|guardias]] `calls` →
 - [[component--front-guardias|guardias]] `calls` →

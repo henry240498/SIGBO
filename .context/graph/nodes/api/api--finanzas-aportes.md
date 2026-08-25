@@ -44,6 +44,7 @@ Superficie HTTP de aportes bajo /api/v1/finanzas/aportes.
 - [[component--front-socios-protectores|socios-protectores]] `calls` →
 - [[component--front-socios-protectores|socios-protectores]] `calls` →
 - [[component--front-socios-protectores|socios-protectores]] `calls` →
+- [[component--front-socios-protectores|socios-protectores]] `calls` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

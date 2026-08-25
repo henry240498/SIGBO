@@ -13,6 +13,7 @@ archivos:
 edges:
   - [belongs_to, domain--deposito]
   - [uses, component--front-api]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-parametros]
   - [uses, component--front-personal]
   - [uses, component--front-vehiculos]
@@ -36,6 +37,7 @@ Pantalla /dashboard/deposito/bajas.
 
 - `belongs_to` → [[domain--deposito|Depósito]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-vehiculos|vehiculos]]

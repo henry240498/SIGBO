@@ -13,6 +13,7 @@ archivos:
 edges:
   - [belongs_to, domain--finanzas]
   - [uses, component--front-api]
+  - [uses, component--front-inputprovider]
   - [uses, component--front-personal]
   - [uses, component--front-finanzas]
 terminos: [finanzas, cuotas, crear, anular, editar]
@@ -33,6 +34,7 @@ Pantalla /dashboard/finanzas/cuotas.
 
 - `belongs_to` → [[domain--finanzas|Finanzas]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-inputprovider|InputProvider]]
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-finanzas|finanzas]]
 
