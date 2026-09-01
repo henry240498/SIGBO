@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
+import { Aviso } from '@/app/components/Aviso';
 
 interface Cargo {
   id: string;
@@ -194,23 +195,23 @@ export default function CargosPage() {
         </label>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo</label>
-              <input className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} required />
+              <label htmlFor="codigo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo</label>
+              <input id="codigo" className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-              <select className="input-field" value={estado} onChange={(e) => setEstado(e.target.value as 'ACTIVO' | 'INACTIVO')}>
+              <label htmlFor="estado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
+              <select id="estado" className="input-field" value={estado} onChange={(e) => setEstado(e.target.value as 'ACTIVO' | 'INACTIVO')}>
                 <option value="ACTIVO">Activo</option>
                 <option value="INACTIVO">Inactivo</option>
               </select>
@@ -218,22 +219,22 @@ export default function CargosPage() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Area</label>
-              <input className="input-field" value={area} onChange={(e) => setArea(e.target.value)} />
+              <label htmlFor="area" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Area</label>
+              <input id="area" className="input-field" value={area} onChange={(e) => setArea(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nivel</label>
-              <input className="input-field" type="number" value={nivel} onChange={(e) => setNivel(e.target.value)} />
+              <label htmlFor="nivel" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nivel</label>
+              <input id="nivel" className="input-field" type="number" value={nivel} onChange={(e) => setNivel(e.target.value)} />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
-              <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+              <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+              <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Depende de</label>
-              <select className="input-field" value={dependenciaCargoId} onChange={(e) => setDependenciaCargoId(e.target.value)}>
+              <label htmlFor="depende-de" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Depende de</label>
+              <select id="depende-de" className="input-field" value={dependenciaCargoId} onChange={(e) => setDependenciaCargoId(e.target.value)}>
                 <option value="">-- sin dependencia --</option>
                 {cargos
                   ?.filter((c) => c.id !== editandoId)
@@ -254,24 +255,24 @@ export default function CargosPage() {
       {cargos && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Codigo</th>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Area</th>
-              <th style={{ padding: '6px 4px' }}>Nivel</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Codigo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Area</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nivel</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {cargos.map((c) => (
-              <tr key={c.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={c.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{c.codigo}</td>
                 <td style={{ padding: '6px 4px' }}>{c.nombre}</td>
-                <td style={{ padding: '6px 4px', color: '#94a3b8' }}>{c.area ?? '-'}</td>
+                <td style={{ padding: '6px 4px', color: 'var(--muted)' }}>{c.area ?? '-'}</td>
                 <td style={{ padding: '6px 4px' }}>{c.nivel ?? '-'}</td>
                 <td style={{ padding: '6px 4px' }}>
-                  <span className="badge" style={{ background: c.estado === 'ACTIVO' ? '#166534' : '#7f1d1d' }}>
+                  <span className="badge" style={{ background: c.estado === 'ACTIVO' ? 'var(--ok-fill)' : 'var(--bad-fill)' }}>
                     {c.estado}
                   </span>
                 </td>

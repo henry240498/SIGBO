@@ -17,6 +17,7 @@ import {
   cargarUbicacionesDeposito,
   crearEntradaDeposito,
 } from '@/lib/deposito';
+import { Aviso } from '@/app/components/Aviso';
 
 interface ItemForm {
   tipoElemento: 'EQUIPO' | 'ARTICULO';
@@ -160,55 +161,55 @@ export default function EntradasDepositoPage() {
         )}
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={crear} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <p style={{ fontSize: 12, color: '#64748b' }}>
+          <p style={{ fontSize: 12, color: 'var(--muted)' }}>
             Cubre Compra, Donacion, Transferencia, Devolucion y Recuperacion (seleccionar el tipo apropiado). Cada entrada genera
             automaticamente el movimiento correspondiente para todos sus items.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 2fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de entrada</label>
-              <ComboBuscable opciones={opcionesTipoEntrada} value={tipoEntradaId} onChange={setTipoEntradaId} ningunaLabel="-- seleccionar --" />
+              <ComboBuscable ariaLabel="Tipo de entrada" opciones={opcionesTipoEntrada} value={tipoEntradaId} onChange={setTipoEntradaId} ningunaLabel="-- seleccionar --" />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label>
-              <input className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
+              <label htmlFor="fecha" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label>
+              <input id="fecha" className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicacion destino</label>
-              <ComboBuscable opciones={opcionesUbicacion} value={ubicacionDestinoId} onChange={setUbicacionDestinoId} ningunaLabel="-- seleccionar --" />
+              <ComboBuscable ariaLabel="Ubicacion destino" opciones={opcionesUbicacion} value={ubicacionDestinoId} onChange={setUbicacionDestinoId} ningunaLabel="-- seleccionar --" />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Proveedor</label>
-              <ComboBuscable opciones={opcionesProveedor} value={proveedorId} onChange={setProveedorId} ningunaLabel="Sin proveedor" />
+              <ComboBuscable ariaLabel="Proveedor" opciones={opcionesProveedor} value={proveedorId} onChange={setProveedorId} ningunaLabel="Sin proveedor" />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Donante</label>
-              <input className="input-field" value={donanteNombre} onChange={(e) => setDonanteNombre(e.target.value)} />
+              <label htmlFor="donante" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Donante</label>
+              <input id="donante" className="input-field" value={donanteNombre} onChange={(e) => setDonanteNombre(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Documento donante</label>
-              <input className="input-field" value={donanteDocumento} onChange={(e) => setDonanteDocumento(e.target.value)} />
+              <label htmlFor="documento-donante" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Documento donante</label>
+              <input id="documento-donante" className="input-field" value={donanteDocumento} onChange={(e) => setDonanteDocumento(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>N° documento (factura/remito)</label>
-              <input className="input-field" value={numeroDocumento} onChange={(e) => setNumeroDocumento(e.target.value)} />
+              <label htmlFor="n-documento-factura-remito" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>N° documento (factura/remito)</label>
+              <input id="n-documento-factura-remito" className="input-field" value={numeroDocumento} onChange={(e) => setNumeroDocumento(e.target.value)} />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Valor total (opcional)</label>
-              <input className="input-field" type="number" min={0} step="0.01" value={valorTotal} onChange={(e) => setValorTotal(e.target.value)} />
+              <label htmlFor="valor-total-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Valor total (opcional)</label>
+              <input id="valor-total-opcional" className="input-field" type="number" min={0} step="0.01" value={valorTotal} onChange={(e) => setValorTotal(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
-              <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
+              <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+              <input id="observacion" className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
             </div>
           </div>
 
@@ -245,7 +246,7 @@ export default function EntradasDepositoPage() {
                   <button
                     type="button"
                     onClick={() => setItems((prev) => prev.filter((_, i) => i !== idx))}
-                    style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
+                    style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
                   >
                     quitar
                   </button>
@@ -268,22 +269,22 @@ export default function EntradasDepositoPage() {
         </form>
       )}
 
-      {entradas && entradas.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay entradas registradas.</p>}
+      {entradas && entradas.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay entradas registradas.</p>}
       {entradas && entradas.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Fecha</th>
-              <th style={{ padding: '6px 4px' }}>Tipo</th>
-              <th style={{ padding: '6px 4px' }}>Proveedor / Donante</th>
-              <th style={{ padding: '6px 4px' }}>Documento</th>
-              <th style={{ padding: '6px 4px' }}>Destino</th>
-              <th style={{ padding: '6px 4px' }}>Valor total</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Proveedor / Donante</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Documento</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Destino</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Valor total</th>
             </tr>
           </thead>
           <tbody>
             {entradas.map((en) => (
-              <tr key={en.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={en.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{en.fecha}</td>
                 <td style={{ padding: '6px 4px' }}>
                   <span className="badge">{nombresTipo.get(en.tipoEntradaId) ?? '-'}</span>

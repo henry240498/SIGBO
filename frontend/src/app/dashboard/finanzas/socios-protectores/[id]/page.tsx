@@ -19,16 +19,18 @@ import {
   registrarAporte,
   anularAporte,
 } from '@/lib/socios-protectores';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 function formatearGs(valor: number): string {
   return `Gs. ${Math.round(valor).toLocaleString('es-PY')}`;
 }
 
 function colorEstadoAcuerdo(estado: string) {
-  if (estado === 'ACTIVO') return { background: '#166534', color: '#4ade80' };
-  if (estado === 'FINALIZADO') return { background: '#334155', color: '#94a3b8' };
-  if (estado === 'SUSPENDIDO') return { background: '#451a03', color: '#fbbf24' };
-  return { background: '#7f1d1d', color: '#f87171' };
+  if (estado === 'ACTIVO') return { background: 'var(--ok-fill)', color: 'var(--success)' };
+  if (estado === 'FINALIZADO') return { background: 'var(--neutral-fill)', color: 'var(--muted)' };
+  if (estado === 'SUSPENDIDO') return { background: 'var(--warn-fill)', color: 'var(--warning)' };
+  return { background: 'var(--bad-fill)', color: 'var(--danger)' };
 }
 
 export default function SocioProtectorDetallePage() {
@@ -187,7 +189,7 @@ export default function SocioProtectorDetallePage() {
   }
 
   if (!datos) {
-    return error ? <p style={{ color: '#f87171' }}>{error}</p> : <p style={{ color: '#94a3b8' }}>Cargando...</p>;
+    return error ? <p style={{ color: 'var(--danger)' }}>{error}</p> : <Cargando texto="Cargando…" />;
   }
 
   const { socio, acuerdos, aportes, facturas, totales } = datos;
@@ -197,26 +199,26 @@ export default function SocioProtectorDetallePage() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div>
         <h2 style={{ fontSize: 18 }}>{socio.codigo} — {nombreSocio}</h2>
-        <p style={{ color: '#94a3b8', fontSize: 13 }}>
+        <p style={{ color: 'var(--muted)', fontSize: 13 }}>
           {socio.tipoPersona === 'JURIDICA' ? `RUC ${socio.ruc ?? '-'}` : `CI ${socio.ci ?? '-'}`} · Estado {nombres.get(socio.estadoId) ?? '-'}
         </p>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
         <div className="card">
-          <div style={{ fontSize: 11, color: '#94a3b8' }}>Total aportado (periodico)</div>
+          <div style={{ fontSize: 11, color: 'var(--muted)' }}>Total aportado (periodico)</div>
           <div style={{ fontSize: 20, fontWeight: 600 }}>{formatearGs(totales.totalAportado)}</div>
         </div>
         <div className="card">
-          <div style={{ fontSize: 11, color: '#94a3b8' }}>Total extraordinario</div>
+          <div style={{ fontSize: 11, color: 'var(--muted)' }}>Total extraordinario</div>
           <div style={{ fontSize: 20, fontWeight: 600 }}>{formatearGs(totales.totalExtraordinario)}</div>
         </div>
         <div className="card">
-          <div style={{ fontSize: 11, color: '#94a3b8' }}>Total general</div>
-          <div style={{ fontSize: 20, fontWeight: 600, color: '#4ade80' }}>{formatearGs(totales.totalGeneral)}</div>
+          <div style={{ fontSize: 11, color: 'var(--muted)' }}>Total general</div>
+          <div style={{ fontSize: 20, fontWeight: 600, color: 'var(--success)' }}>{formatearGs(totales.totalGeneral)}</div>
         </div>
       </div>
 
@@ -232,41 +234,41 @@ export default function SocioProtectorDetallePage() {
         {mostrarAcuerdo && (
           <form onSubmit={crearAcuerdo} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr auto', gap: 8, alignItems: 'flex-end' }}>
             <div>
-              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Monto acordado</label>
-              <input className="input-field" type="number" min={0.01} step="1" value={acMonto} onChange={(e) => setAcMonto(e.target.value)} required />
+              <label htmlFor="monto-acordado" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Monto acordado</label>
+              <input id="monto-acordado" className="input-field" type="number" min={0.01} step="1" value={acMonto} onChange={(e) => setAcMonto(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Periodicidad</label>
-              <ComboBuscable opciones={opcionesPeriodicidad} value={acPeriodicidadId} onChange={setAcPeriodicidadId} />
+              <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Periodicidad</label>
+              <ComboBuscable ariaLabel="Periodicidad" opciones={opcionesPeriodicidad} value={acPeriodicidadId} onChange={setAcPeriodicidadId} />
             </div>
             <div>
-              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Fecha de inicio</label>
-              <input className="input-field" type="date" value={acFechaInicio} onChange={(e) => setAcFechaInicio(e.target.value)} required />
+              <label htmlFor="fecha-de-inicio" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Fecha de inicio</label>
+              <input id="fecha-de-inicio" className="input-field" type="date" value={acFechaInicio} onChange={(e) => setAcFechaInicio(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Medio de pago preferido</label>
-              <ComboBuscable opciones={opcionesMedioPago} value={acMedioPagoId} onChange={setAcMedioPagoId} ningunaLabel="-- --" />
+              <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Medio de pago preferido</label>
+              <ComboBuscable ariaLabel="Medio de pago preferido" opciones={opcionesMedioPago} value={acMedioPagoId} onChange={setAcMedioPagoId} ningunaLabel="-- --" />
             </div>
             <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} disabled={guardando || !acPeriodicidadId}>
               Guardar
             </button>
           </form>
         )}
-        {acuerdos.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin acuerdos registrados.</p>}
+        {acuerdos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin acuerdos registrados.</p>}
         {acuerdos.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                <th style={{ padding: '6px 4px' }}>Monto acordado</th>
-                <th style={{ padding: '6px 4px' }}>Periodicidad</th>
-                <th style={{ padding: '6px 4px' }}>Desde</th>
-                <th style={{ padding: '6px 4px' }}>Aportado (total)</th>
-                <th style={{ padding: '6px 4px' }}>Estado</th>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                <th scope="col" style={{ padding: '6px 4px' }}>Monto acordado</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Periodicidad</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Desde</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Aportado (total)</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
               </tr>
             </thead>
             <tbody>
               {acuerdos.map(({ acuerdo, aportadoAlAcuerdo }) => (
-                <tr key={acuerdo.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr key={acuerdo.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>{formatearGs(acuerdo.montoAcordado)}</td>
                   <td style={{ padding: '6px 4px' }}>{nombres.get(acuerdo.periodicidadId) ?? '-'}</td>
                   <td style={{ padding: '6px 4px' }}>{acuerdo.fechaInicio}</td>
@@ -299,27 +301,27 @@ export default function SocioProtectorDetallePage() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 8 }}>
               {!apExtraordinario && (
                 <div>
-                  <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Acuerdo</label>
-                  <ComboBuscable opciones={opcionesAcuerdo} value={apAcuerdoId} onChange={setApAcuerdoId} ningunaLabel="-- sin acuerdo --" />
+                  <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Acuerdo</label>
+                  <ComboBuscable ariaLabel="Acuerdo" opciones={opcionesAcuerdo} value={apAcuerdoId} onChange={setApAcuerdoId} ningunaLabel="-- sin acuerdo --" />
                 </div>
               )}
               <div>
-                <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Fecha</label>
-                <input className="input-field" type="date" value={apFecha} onChange={(e) => setApFecha(e.target.value)} required />
+                <label htmlFor="fecha" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Fecha</label>
+                <input id="fecha" className="input-field" type="date" value={apFecha} onChange={(e) => setApFecha(e.target.value)} required />
               </div>
               <div>
-                <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Monto (efectivamente pagado)</label>
-                <input className="input-field" type="number" min={0.01} step="1" value={apMonto} onChange={(e) => setApMonto(e.target.value)} required />
+                <label htmlFor="monto-efectivamente-pagado" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Monto (efectivamente pagado)</label>
+                <input id="monto-efectivamente-pagado" className="input-field" type="number" min={0.01} step="1" value={apMonto} onChange={(e) => setApMonto(e.target.value)} required />
               </div>
               <div>
-                <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Periodo (YYYY-MM)</label>
-                <input className="input-field" placeholder="2026-08" value={apPeriodo} onChange={(e) => setApPeriodo(e.target.value)} />
+                <label htmlFor="periodo-yyyy-mm" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Periodo (YYYY-MM)</label>
+                <input id="periodo-yyyy-mm" className="input-field" placeholder="2026-08" value={apPeriodo} onChange={(e) => setApPeriodo(e.target.value)} />
               </div>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', gap: 8, alignItems: 'flex-end' }}>
               <div>
-                <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Medio de pago</label>
-                <ComboBuscable opciones={opcionesMedioPago} value={apMedioPagoId} onChange={setApMedioPagoId} ningunaLabel="-- --" />
+                <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Medio de pago</label>
+                <ComboBuscable ariaLabel="Medio de pago" opciones={opcionesMedioPago} value={apMedioPagoId} onChange={setApMedioPagoId} ningunaLabel="-- --" />
               </div>
               <ComboBuscable opciones={[{ value: 'CAJA', label: 'Caja' }, { value: 'CUENTA', label: 'Cuenta' }]} value={apOrigen} onChange={(v) => setApOrigen(v as 'CAJA' | 'CUENTA')} />
               {apOrigen === 'CAJA' ? (
@@ -328,8 +330,8 @@ export default function SocioProtectorDetallePage() {
                 <ComboBuscable opciones={opcionesCuenta} value={apCuentaId} onChange={setApCuentaId} ningunaLabel="-- cuenta --" />
               )}
               <div>
-                <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>N° comprobante</label>
-                <input className="input-field" value={apNumeroComprobante} onChange={(e) => setApNumeroComprobante(e.target.value)} />
+                <label htmlFor="n-comprobante" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>N° comprobante</label>
+                <input id="n-comprobante" className="input-field" value={apNumeroComprobante} onChange={(e) => setApNumeroComprobante(e.target.value)} />
               </div>
               <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} disabled={guardando || (!apCajaId && !apCuentaId)}>
                 Registrar
@@ -337,30 +339,30 @@ export default function SocioProtectorDetallePage() {
             </div>
           </form>
         )}
-        {aportes.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin aportes registrados.</p>}
+        {aportes.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin aportes registrados.</p>}
         {aportes.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                <th style={{ padding: '6px 4px' }}>Fecha</th>
-                <th style={{ padding: '6px 4px' }}>Monto</th>
-                <th style={{ padding: '6px 4px' }}>Periodo</th>
-                <th style={{ padding: '6px 4px' }}>Tipo</th>
-                <th style={{ padding: '6px 4px' }}>Medio de pago</th>
-                <th style={{ padding: '6px 4px' }}>Estado</th>
-                <th style={{ padding: '6px 4px' }}></th>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Monto</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Periodo</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Medio de pago</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+                <th scope="col" style={{ padding: '6px 4px' }}></th>
               </tr>
             </thead>
             <tbody>
               {aportes.map((a) => (
-                <tr key={a.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr key={a.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>{a.fecha}</td>
                   <td style={{ padding: '6px 4px' }}>{formatearGs(a.monto)}</td>
                   <td style={{ padding: '6px 4px' }}>{a.periodoCorrespondiente ?? '-'}</td>
                   <td style={{ padding: '6px 4px' }}>{a.esExtraordinario ? 'Extraordinario' : 'Periodico'}</td>
                   <td style={{ padding: '6px 4px' }}>{a.medioPagoId ? nombres.get(a.medioPagoId) ?? '-' : '-'}</td>
                   <td style={{ padding: '6px 4px' }}>
-                    <span className="badge" style={a.estado === 'ANULADO' ? { background: '#7f1d1d', color: '#f87171' } : { background: '#166534', color: '#4ade80' }}>{a.estado}</span>
+                    <span className="badge" style={a.estado === 'ANULADO' ? { background: 'var(--bad-fill)', color: 'var(--danger)' } : { background: 'var(--ok-fill)', color: 'var(--success)' }}>{a.estado}</span>
                   </td>
                   <td style={{ padding: '6px 4px' }}>
                     {puedeEditarAporte && a.estado === 'REGISTRADO' && (
@@ -378,27 +380,27 @@ export default function SocioProtectorDetallePage() {
 
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <h3 style={{ fontSize: 14 }}>Facturas relacionadas</h3>
-        {facturas.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin facturas registradas para este socio.</p>}
+        {facturas.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin facturas registradas para este socio.</p>}
         {facturas.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                <th style={{ padding: '6px 4px' }}>N°</th>
-                <th style={{ padding: '6px 4px' }}>Fecha</th>
-                <th style={{ padding: '6px 4px' }}>Concepto</th>
-                <th style={{ padding: '6px 4px' }}>Total</th>
-                <th style={{ padding: '6px 4px' }}>Estado</th>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                <th scope="col" style={{ padding: '6px 4px' }}>N°</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Concepto</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Total</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
               </tr>
             </thead>
             <tbody>
               {facturas.map((f) => (
-                <tr key={f.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr key={f.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>{f.numero}</td>
                   <td style={{ padding: '6px 4px' }}>{f.fecha}</td>
                   <td style={{ padding: '6px 4px' }}>{f.concepto}</td>
                   <td style={{ padding: '6px 4px' }}>{formatearGs(f.total)}</td>
                   <td style={{ padding: '6px 4px' }}>
-                    <span className="badge" style={f.estado === 'ANULADA' ? { background: '#7f1d1d', color: '#f87171' } : { background: '#166534', color: '#4ade80' }}>{f.estado}</span>
+                    <span className="badge" style={f.estado === 'ANULADA' ? { background: 'var(--bad-fill)', color: 'var(--danger)' } : { background: 'var(--ok-fill)', color: 'var(--success)' }}>{f.estado}</span>
                   </td>
                 </tr>
               ))}
@@ -413,9 +415,9 @@ export default function SocioProtectorDetallePage() {
         </button>
         {mostrarHistorial && (
           <div style={{ marginTop: 10 }}>
-            {historial.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Este socio nunca cambio de codigo.</p>}
+            {historial.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Este socio nunca cambio de codigo.</p>}
             {historial.map((h) => (
-              <p key={h.id} style={{ fontSize: 12, color: '#94a3b8' }}>
+              <p key={h.id} style={{ fontSize: 12, color: 'var(--muted)' }}>
                 {h.codigoAnterior} → {h.codigoNuevo} el {new Date(h.fechaCambio).toLocaleDateString('es-PY')} {h.motivo ? `(${h.motivo})` : ''}
               </p>
             ))}

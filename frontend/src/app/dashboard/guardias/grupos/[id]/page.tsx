@@ -19,6 +19,8 @@ import {
   listarMiembrosGrupo,
   quitarMiembroGrupo,
 } from '@/lib/guardias';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function DetalleGrupoGuardiaPage() {
   const confirmar = useConfirmacion();
@@ -121,8 +123,8 @@ export default function DetalleGrupoGuardiaPage() {
     }
   }
 
-  if (error && !grupo) return <p style={{ color: '#f87171' }}>{error}</p>;
-  if (!grupo) return <p style={{ color: '#94a3b8' }}>Cargando...</p>;
+  if (error && !grupo) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
+  if (!grupo) return <Cargando texto="Cargando…" />;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -138,7 +140,7 @@ export default function DetalleGrupoGuardiaPage() {
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -150,23 +152,23 @@ export default function DetalleGrupoGuardiaPage() {
         {!editandoConfig && (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 16 }}>
             <div>
-              <span style={{ fontSize: 11, color: '#94a3b8', display: 'block' }}>Ciclo de rotacion</span>
+              <span style={{ fontSize: 11, color: 'var(--muted)', display: 'block' }}>Ciclo de rotacion</span>
               {grupo.cicloRotacionDias ? `cada ${grupo.cicloRotacionDias} dias` : '— (no elegible para generacion automatica)'}
             </div>
             <div>
-              <span style={{ fontSize: 11, color: '#94a3b8', display: 'block' }}>Cant. minima</span>
+              <span style={{ fontSize: 11, color: 'var(--muted)', display: 'block' }}>Cant. minima</span>
               {grupo.cantidadMinima ?? '—'}
             </div>
             <div>
-              <span style={{ fontSize: 11, color: '#94a3b8', display: 'block' }}>Cant. maxima</span>
+              <span style={{ fontSize: 11, color: 'var(--muted)', display: 'block' }}>Cant. maxima</span>
               {grupo.cantidadMaxima ?? '—'}
             </div>
             <div>
-              <span style={{ fontSize: 11, color: '#94a3b8', display: 'block' }}>Cant. oficiales</span>
+              <span style={{ fontSize: 11, color: 'var(--muted)', display: 'block' }}>Cant. oficiales</span>
               {grupo.cantidadOficiales ?? '—'}
             </div>
             <div>
-              <span style={{ fontSize: 11, color: '#94a3b8', display: 'block' }}>Cant. choferes</span>
+              <span style={{ fontSize: 11, color: 'var(--muted)', display: 'block' }}>Cant. choferes</span>
               {grupo.cantidadChoferes ?? '—'}
             </div>
           </div>
@@ -175,24 +177,24 @@ export default function DetalleGrupoGuardiaPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 10 }}>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ciclo de rotacion (dias)</label>
-                <input className="input-field" type="number" min={1} value={cicloRotacionDias} onChange={(e) => setCicloRotacionDias(e.target.value)} placeholder="Sin rotacion" />
+                <label htmlFor="ciclo-de-rotacion-dias" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ciclo de rotacion (dias)</label>
+                <input id="ciclo-de-rotacion-dias" className="input-field" type="number" min={1} value={cicloRotacionDias} onChange={(e) => setCicloRotacionDias(e.target.value)} placeholder="Sin rotacion" />
               </div>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cant. minima</label>
-                <input className="input-field" type="number" min={0} value={cantidadMinima} onChange={(e) => setCantidadMinima(e.target.value)} />
+                <label htmlFor="cant-minima" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cant. minima</label>
+                <input id="cant-minima" className="input-field" type="number" min={0} value={cantidadMinima} onChange={(e) => setCantidadMinima(e.target.value)} />
               </div>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cant. maxima</label>
-                <input className="input-field" type="number" min={0} value={cantidadMaxima} onChange={(e) => setCantidadMaxima(e.target.value)} />
+                <label htmlFor="cant-maxima" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cant. maxima</label>
+                <input id="cant-maxima" className="input-field" type="number" min={0} value={cantidadMaxima} onChange={(e) => setCantidadMaxima(e.target.value)} />
               </div>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cant. oficiales</label>
-                <input className="input-field" type="number" min={0} value={cantidadOficiales} onChange={(e) => setCantidadOficiales(e.target.value)} />
+                <label htmlFor="cant-oficiales" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cant. oficiales</label>
+                <input id="cant-oficiales" className="input-field" type="number" min={0} value={cantidadOficiales} onChange={(e) => setCantidadOficiales(e.target.value)} />
               </div>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cant. choferes</label>
-                <input className="input-field" type="number" min={0} value={cantidadChoferes} onChange={(e) => setCantidadChoferes(e.target.value)} />
+                <label htmlFor="cant-choferes" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cant. choferes</label>
+                <input id="cant-choferes" className="input-field" type="number" min={0} value={cantidadChoferes} onChange={(e) => setCantidadChoferes(e.target.value)} />
               </div>
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
@@ -207,11 +209,11 @@ export default function DetalleGrupoGuardiaPage() {
         <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'end', flexWrap: 'wrap' }}>
           <div style={{ minWidth: 280 }}>
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Bombero</label>
-            <ComboBuscable opciones={opcionesBombero} value={bomberoId} onChange={setBomberoId} placeholderBusqueda="Buscar por codigo o nombre..." />
+            <ComboBuscable ariaLabel="Bombero" opciones={opcionesBombero} value={bomberoId} onChange={setBomberoId} placeholderBusqueda="Buscar por codigo o nombre..." />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Rol</label>
-            <select className="input-field" value={rol} onChange={(e) => setRol(e.target.value as RolGrupoGuardia)}>
+            <label htmlFor="rol" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Rol</label>
+            <select id="rol" className="input-field" value={rol} onChange={(e) => setRol(e.target.value as RolGrupoGuardia)}>
               <option value="TITULAR">TITULAR</option>
               <option value="CHOFER">CHOFER</option>
             </select>
@@ -222,19 +224,19 @@ export default function DetalleGrupoGuardiaPage() {
 
       <div className="card">
         <h3 style={{ fontSize: 14, marginBottom: 10 }}>Miembros ({miembros?.length ?? 0})</h3>
-        {miembros && miembros.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin miembros en este grupo.</p>}
+        {miembros && miembros.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin miembros en este grupo.</p>}
         {miembros && miembros.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                <th style={{ padding: '6px 4px' }}>Bombero</th>
-                <th style={{ padding: '6px 4px' }}>Rol</th>
-                {puedeEditar && <th style={{ padding: '6px 4px' }}>Acciones</th>}
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                <th scope="col" style={{ padding: '6px 4px' }}>Bombero</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Rol</th>
+                {puedeEditar && <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>}
               </tr>
             </thead>
             <tbody>
               {miembros.map((m) => (
-                <tr key={m.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr key={m.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>{m.codigoBombero ? `${m.codigoBombero} — ` : ''}{m.nombreCompleto}</td>
                   <td style={{ padding: '6px 4px' }}><span className="badge">{m.rol}</span></td>
                   {puedeEditar && (
@@ -253,22 +255,22 @@ export default function DetalleGrupoGuardiaPage() {
 
       <div className="card">
         <h3 style={{ fontSize: 14, marginBottom: 10 }}>Historial de guardias ({historial?.length ?? 0})</h3>
-        {historial && historial.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin guardias registradas para este grupo.</p>}
+        {historial && historial.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin guardias registradas para este grupo.</p>}
         {historial && historial.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                <th style={{ padding: '6px 4px' }}>Fecha</th>
-                <th style={{ padding: '6px 4px' }}>Turno</th>
-                <th style={{ padding: '6px 4px' }}>Tipo</th>
-                <th style={{ padding: '6px 4px' }}>Estado</th>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Turno</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
               </tr>
             </thead>
             <tbody>
               {historial.map((g) => (
-                <tr key={g.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr key={g.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>
-                    <Link href={`/dashboard/guardias/${g.id}`} style={{ color: '#60a5fa', textDecoration: 'none' }}>
+                    <Link href={`/dashboard/guardias/${g.id}`} style={{ color: 'var(--signal)', textDecoration: 'none' }}>
                       {g.fecha}
                     </Link>
                   </td>

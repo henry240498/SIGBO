@@ -14,6 +14,8 @@ edges:
   - [uses, component--front-api]
   - [uses, component--front-modulos]
   - [uses, component--front-systemicon]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
   - [calls, api--seguridad-me]
 ---
 
@@ -37,6 +39,8 @@ Pantalla /dashboard, consume 1 endpoint(s).
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-modulos|modulos]]
 - `uses` → [[component--front-systemicon|SystemIcon]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 - `calls` → [[api--seguridad-me|MeController]]
 
 ---

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { apiFetch } from '@/lib/api';
+import { Cargando } from '@/app/components/Cargando';
 
 type Detalle = { id: string; codigo: string; estado: string; nombreDenunciante: string; telefono: string; categoria: string; asuntoOtro: string | null; descripcion: string | null; creadoEn: string; servicio: { numero: string; fechaHora: string; direccion: string } | null; vehiculo: { nombre: string } | null; asignado: { username: string } | null; historial: { id: string; estadoAnterior: string | null; estadoNuevo: string; comentario: string | null; fecha: string }[]; evidencias: { id: string; tipo: string; nombre: string; mimeType: string; tamanoBytes: number }[]; tecnico?: { ip: string | null; userAgent: string | null; latitud: number | null; longitud: number | null; precisionUbicacion: number | null } };
 const opciones = ['EN_REVISION', 'ASIGNADA', 'EN_INVESTIGACION', 'RESUELTA', 'CERRADA', 'DESCARTADA', 'DUPLICADA'];
@@ -14,7 +15,7 @@ export default function DetalleDenunciaPage({ params }: { params: { id: string }
   async function cambiarEstado() { if (!estado) return; setError(''); const r = await apiFetch(`/denuncias/${params.id}/estado`, { method: 'PATCH', body: JSON.stringify({ estado, comentario }) }); if (!r.ok) { const b = await r.json().catch(() => ({})); setError(b.message ?? 'No pudimos actualizar la denuncia.'); return; } setEstado(''); setComentario(''); cargar(); }
   async function asignar() { if (!asignadoA) return; setError(''); const r = await apiFetch(`/denuncias/${params.id}/asignar`, { method: 'POST', body: JSON.stringify({ usuarioId: asignadoA, comentario }) }); if (!r.ok) { const b = await r.json().catch(() => ({})); setError(b.message ?? 'No pudimos asignar la denuncia.'); return; } setAsignadoA(''); cargar(); }
   async function cargarAudio(evidencia: Detalle['evidencias'][number]) { const r = await apiFetch(`/denuncias/${params.id}/archivos/${evidencia.id}`); if (!r.ok) { setError('No pudimos abrir la evidencia.'); return; } const url = URL.createObjectURL(await r.blob()); if (!evidencia.mimeType.startsWith('audio/')) { window.open(url, '_blank', 'noopener,noreferrer'); return; } setAudioUrl((actual) => ({ ...actual, [evidencia.id]: url })); }
-  if (cargando) return <p style={{ color: 'var(--muted)' }}>Cargando denuncia…</p>;
+  if (cargando) return <Cargando texto="Cargando denuncia…" />;
   if (!item) return <p className="form-error">{error || 'No encontramos la denuncia.'}</p>;
   return <div className="denuncia-interna">
     <Link className="denuncia-back" href="/dashboard/denuncias">← Volver a denuncias</Link>

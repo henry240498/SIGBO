@@ -12,6 +12,7 @@ archivos:
 edges:
   - [belongs_to, domain--organizacion]
   - [uses, component--front-api]
+  - [uses, component--front-cargando]
   - [calls, api--organizacion-dashboard]
 terminos: [organizacion]
 ---
@@ -34,6 +35,7 @@ Pantalla /dashboard/organizacion, consume 1 endpoint(s).
 
 - `belongs_to` → [[domain--organizacion|Organización Institucional]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-cargando|Cargando]]
 - `calls` → [[api--organizacion-dashboard|DashboardController]]
 
 ---

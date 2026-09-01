@@ -15,6 +15,8 @@ edges:
   - [uses, component--front-api]
   - [uses, component--front-confirmprovider]
   - [uses, component--front-ia]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
 terminos: [seguridad, inteligencia, artificial, conversaciones, eliminar]
 ---
 
@@ -35,6 +37,8 @@ Pantalla /dashboard/seguridad/inteligencia-artificial/conversaciones.
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-ia|ia]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

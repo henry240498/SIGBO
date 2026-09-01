@@ -3,6 +3,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import { apiFetch } from '@/lib/api';
 import { formatearJsonSeguro } from '@/lib/json-seguro';
+import { Cargando } from '@/app/components/Cargando';
 
 interface LogAuditoria {
   id: string;
@@ -38,26 +39,26 @@ export default function AuditoriaAsistenciaPage() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <h2 style={{ fontSize: 16 }}>Auditoria del Modulo Asistencia</h2>
 
-      {error && <p style={{ color: '#94a3b8', fontSize: 13 }}>{error}</p>}
-      {!error && !items && <p style={{ color: '#94a3b8' }}>Cargando...</p>}
-      {!error && items && items.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin registros de auditoria.</p>}
+      {error && <p style={{ color: 'var(--muted)', fontSize: 13 }}>{error}</p>}
+      {!error && !items && <Cargando texto="Cargando…" />}
+      {!error && items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin registros de auditoria.</p>}
 
       {!error && items && items.length > 0 && (
         <div className="card">
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                <th style={{ padding: '6px 4px' }}>Fecha</th>
-                <th style={{ padding: '6px 4px' }}>Recurso</th>
-                <th style={{ padding: '6px 4px' }}>Accion</th>
-                <th style={{ padding: '6px 4px' }}>IP</th>
-                <th style={{ padding: '6px 4px' }}></th>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Recurso</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Accion</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>IP</th>
+                <th scope="col" style={{ padding: '6px 4px' }}></th>
               </tr>
             </thead>
             <tbody>
               {items.map((log) => (
                 <Fragment key={log.id}>
-                  <tr style={{ borderBottom: '1px solid #1f2937' }}>
+                  <tr style={{ borderBottom: '1px solid var(--line-soft)' }}>
                     <td style={{ padding: '6px 4px' }}>{new Date(log.fecha).toLocaleString()}</td>
                     <td style={{ padding: '6px 4px' }}>{log.recurso}</td>
                     <td style={{ padding: '6px 4px' }}>
@@ -76,7 +77,7 @@ export default function AuditoriaAsistenciaPage() {
                   </tr>
                   {expandido === log.id && (
                     <tr>
-                      <td colSpan={5} style={{ padding: '6px 4px', background: '#0f172a' }}>
+                      <td colSpan={5} style={{ padding: '6px 4px', background: 'var(--surface-soft)' }}>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, fontSize: 11 }}>
                           <pre style={{ whiteSpace: 'pre-wrap' }}>
                             Antes: {formatearJsonSeguro(log.datosAntes)}

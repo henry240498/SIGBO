@@ -12,6 +12,8 @@ import {
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { Parametro } from '@/lib/parametros';
 import { NumeracionDocumento, cargarNumeraciones, cargarTiposDocumento, guardarNumeracion } from '@/lib/documentos';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 const TIPOS_LINEA: Array<{ value: LineaDestacada['tipo']; label: string }> = [
   { value: 'SUBTITULO', label: 'Subtitulo institucional' },
@@ -169,26 +171,26 @@ export default function DocumentosInstitucionalesPage() {
 
   if (!puedeVer) {
     return (
-      <p style={{ color: '#94a3b8', fontSize: 13 }}>
+      <p style={{ color: 'var(--muted)', fontSize: 13 }}>
         Solo un usuario con el permiso <code>organizacion:documentos_ver</code> puede acceder a esta seccion.
       </p>
     );
   }
-  if (cargando) return <p style={{ color: '#94a3b8' }}>Cargando...</p>;
+  if (cargando) return <Cargando texto="Cargando…" />;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 900 }}>
       <div>
         <h2 style={{ fontSize: 16 }}>Configuracion de Documentos</h2>
-        <p style={{ fontSize: 13, color: '#94a3b8' }}>
+        <p style={{ fontSize: 13, color: 'var(--muted)' }}>
           Identidad institucional (membrete, datos de contacto, pie de pagina) usada por TODOS los documentos PDF y
           Word que genere SIGBO — Orden de Guardia hoy, y cualquier modulo nuevo que genere documentos mas adelante.
           Un solo lugar, no un membrete distinto por modulo.
         </p>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       <fieldset disabled={!puedeConfigurar} style={{ border: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 16 }}>
         <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -217,7 +219,7 @@ export default function DocumentosInstitucionalesPage() {
 
         <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <h3 style={{ fontSize: 14 }}>Título del documento</h3>
-          <p style={{ fontSize: 12, color: '#94a3b8' }}>
+          <p style={{ fontSize: 12, color: 'var(--muted)' }}>
             Alineación del título, número y fecha en la cabecera de cualquier documento que genere SIGBO.
           </p>
           <div style={{ display: 'flex', gap: 16 }}>
@@ -233,8 +235,8 @@ export default function DocumentosInstitucionalesPage() {
         <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <h3 style={{ fontSize: 14 }}>Datos institucionales</h3>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre de la institucion</label>
-            <input className="input-field" value={nombreInstitucion} onChange={(e) => setNombreInstitucion(e.target.value)} />
+            <label htmlFor="nombre-de-la-institucion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre de la institucion</label>
+            <input id="nombre-de-la-institucion" className="input-field" value={nombreInstitucion} onChange={(e) => setNombreInstitucion(e.target.value)} />
           </div>
           <CampoConToggle label="Direccion" valor={direccion} onValor={setDireccion} mostrar={mostrarDireccion} onMostrar={setMostrarDireccion} />
           <CampoConToggle label="Telefono(s)" valor={telefono} onValor={setTelefono} mostrar={mostrarTelefono} onMostrar={setMostrarTelefono} />
@@ -248,17 +250,17 @@ export default function DocumentosInstitucionalesPage() {
             onMostrar={setMostrarPersoneria}
           />
           <div>
-            <label style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+            <label htmlFor="fecha-de-fundacion-mostrar-en-documentos" style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
               <input type="checkbox" checked={mostrarFechaFundacion} onChange={(e) => setMostrarFechaFundacion(e.target.checked)} />
               Fecha de fundacion (mostrar en documentos)
             </label>
-            <input className="input-field" type="date" value={fechaFundacion} onChange={(e) => setFechaFundacion(e.target.value)} />
+            <input id="fecha-de-fundacion-mostrar-en-documentos" className="input-field" type="date" value={fechaFundacion} onChange={(e) => setFechaFundacion(e.target.value)} />
           </div>
         </section>
 
         <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <h3 style={{ fontSize: 14 }}>Subtitulos y distinciones</h3>
-          <p style={{ fontSize: 12, color: '#94a3b8' }}>
+          <p style={{ fontSize: 12, color: 'var(--muted)' }}>
             Lineas variables que aparecen bajo el nombre institucional (membresias, medallas, reconocimientos). Cada
             una puede ocultarse sin borrarla.
           </p>
@@ -283,7 +285,7 @@ export default function DocumentosInstitucionalesPage() {
 
         <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <h3 style={{ fontSize: 14 }}>Pie de pagina institucional</h3>
-          <p style={{ fontSize: 12, color: '#94a3b8' }}>
+          <p style={{ fontSize: 12, color: 'var(--muted)' }}>
             Distinto del pie de pagina propio de cada documento (ej. la nota de horarios de la Orden de Guardia) —
             este aparece al final de cada pagina de cualquier documento.
           </p>
@@ -429,7 +431,7 @@ function SeccionNumeracion({
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <h3 style={{ fontSize: 14 }}>Numeracion de documentos</h3>
-          <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 2 }}>
+          <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>
             Un numerador independiente por tipo de documento y año (ej. Resolucion 2026/47). El numero se sugiere al
             crear un documento pero solo se consume si el documento se guarda con ese numero.
           </p>
@@ -437,71 +439,71 @@ function SeccionNumeracion({
         <button type="button" className="btn-primary" onClick={nuevo}>+ Nueva numeracion</button>
       </div>
 
-      {error && <p style={{ color: '#f87171', fontSize: 13 }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} fontSize={13} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
-        <form onSubmit={guardar} className="card" style={{ background: '#0f172a', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <form onSubmit={guardar} className="card" style={{ background: 'var(--surface-soft)', display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de documento</label>
-              <ComboBuscable opciones={opcionesTipoDocumento} value={tipoDocumentoId} onChange={setTipoDocumentoId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar tipo..." />
+              <ComboBuscable ariaLabel="Tipo de documento" opciones={opcionesTipoDocumento} value={tipoDocumentoId} onChange={setTipoDocumentoId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar tipo..." />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Año</label>
-              <input className="input-field" type="number" value={anio} onChange={(e) => setAnio(e.target.value)} required />
-            </div>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-            <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero actual (ultimo emitido)</label>
-              <input className="input-field" type="number" min={0} value={ultimoNumero} onChange={(e) => setUltimoNumero(e.target.value)} />
-            </div>
-            <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Mes actual</label>
-              <input className="input-field" type="number" min={1} max={12} value={mesActual} onChange={(e) => setMesActual(e.target.value)} />
-            </div>
-          </div>
-
-          <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 4 }}>Rango declarado (informativo/de control)</p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
-            <div>
-              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Año desde</label>
-              <input className="input-field" type="number" value={anioDesde} onChange={(e) => setAnioDesde(e.target.value)} />
-            </div>
-            <div>
-              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Mes desde</label>
-              <input className="input-field" type="number" min={1} max={12} value={mesDesde} onChange={(e) => setMesDesde(e.target.value)} />
-            </div>
-            <div>
-              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Numero desde</label>
-              <input className="input-field" type="number" value={numeroDesde} onChange={(e) => setNumeroDesde(e.target.value)} />
-            </div>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
-            <div>
-              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Año hasta</label>
-              <input className="input-field" type="number" value={anioHasta} onChange={(e) => setAnioHasta(e.target.value)} />
-            </div>
-            <div>
-              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Mes hasta</label>
-              <input className="input-field" type="number" min={1} max={12} value={mesHasta} onChange={(e) => setMesHasta(e.target.value)} />
-            </div>
-            <div>
-              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Numero hasta</label>
-              <input className="input-field" type="number" value={numeroHasta} onChange={(e) => setNumeroHasta(e.target.value)} />
+              <label htmlFor="ano" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Año</label>
+              <input id="ano" className="input-field" type="number" value={anio} onChange={(e) => setAnio(e.target.value)} required />
             </div>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de vigencia desde</label>
-              <input className="input-field" type="date" value={fechaVigenciaDesde} onChange={(e) => setFechaVigenciaDesde(e.target.value)} />
+              <label htmlFor="numero-actual-ultimo-emitido" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero actual (ultimo emitido)</label>
+              <input id="numero-actual-ultimo-emitido" className="input-field" type="number" min={0} value={ultimoNumero} onChange={(e) => setUltimoNumero(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de vigencia hasta</label>
-              <input className="input-field" type="date" value={fechaVigenciaHasta} onChange={(e) => setFechaVigenciaHasta(e.target.value)} />
+              <label htmlFor="mes-actual" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Mes actual</label>
+              <input id="mes-actual" className="input-field" type="number" min={1} max={12} value={mesActual} onChange={(e) => setMesActual(e.target.value)} />
+            </div>
+          </div>
+
+          <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 4 }}>Rango declarado (informativo/de control)</p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
+            <div>
+              <label htmlFor="ano-desde" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Año desde</label>
+              <input id="ano-desde" className="input-field" type="number" value={anioDesde} onChange={(e) => setAnioDesde(e.target.value)} />
+            </div>
+            <div>
+              <label htmlFor="mes-desde" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Mes desde</label>
+              <input id="mes-desde" className="input-field" type="number" min={1} max={12} value={mesDesde} onChange={(e) => setMesDesde(e.target.value)} />
+            </div>
+            <div>
+              <label htmlFor="numero-desde" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Numero desde</label>
+              <input id="numero-desde" className="input-field" type="number" value={numeroDesde} onChange={(e) => setNumeroDesde(e.target.value)} />
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
+            <div>
+              <label htmlFor="ano-hasta" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Año hasta</label>
+              <input id="ano-hasta" className="input-field" type="number" value={anioHasta} onChange={(e) => setAnioHasta(e.target.value)} />
+            </div>
+            <div>
+              <label htmlFor="mes-hasta" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Mes hasta</label>
+              <input id="mes-hasta" className="input-field" type="number" min={1} max={12} value={mesHasta} onChange={(e) => setMesHasta(e.target.value)} />
+            </div>
+            <div>
+              <label htmlFor="numero-hasta" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Numero hasta</label>
+              <input id="numero-hasta" className="input-field" type="number" value={numeroHasta} onChange={(e) => setNumeroHasta(e.target.value)} />
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <div>
+              <label htmlFor="fecha-de-vigencia-desde" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de vigencia desde</label>
+              <input id="fecha-de-vigencia-desde" className="input-field" type="date" value={fechaVigenciaDesde} onChange={(e) => setFechaVigenciaDesde(e.target.value)} />
+            </div>
+            <div>
+              <label htmlFor="fecha-de-vigencia-hasta" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de vigencia hasta</label>
+              <input id="fecha-de-vigencia-hasta" className="input-field" type="date" value={fechaVigenciaHasta} onChange={(e) => setFechaVigenciaHasta(e.target.value)} />
             </div>
           </div>
 
@@ -512,27 +514,27 @@ function SeccionNumeracion({
         </form>
       )}
 
-      {numeraciones && numeraciones.length === 0 && <p style={{ fontSize: 13, color: '#94a3b8' }}>Sin numeraciones configuradas.</p>}
+      {numeraciones && numeraciones.length === 0 && <p style={{ fontSize: 13, color: 'var(--muted)' }}>Sin numeraciones configuradas.</p>}
       {numeraciones && numeraciones.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Tipo</th>
-              <th style={{ padding: '6px 4px' }}>Año</th>
-              <th style={{ padding: '6px 4px' }}>Numero actual</th>
-              <th style={{ padding: '6px 4px' }}>Proximo</th>
-              <th style={{ padding: '6px 4px' }}>Vigencia</th>
-              <th style={{ padding: '6px 4px' }}></th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Año</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Numero actual</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Proximo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Vigencia</th>
+              <th scope="col" style={{ padding: '6px 4px' }}></th>
             </tr>
           </thead>
           <tbody>
             {numeraciones.map((n) => (
-              <tr key={n.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={n.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{nombreTipoPorId.get(n.tipoDocumentoId) ?? n.tipoDocumentoId}</td>
                 <td style={{ padding: '6px 4px' }}>{n.anio}</td>
                 <td style={{ padding: '6px 4px' }}>{n.ultimoNumero}</td>
-                <td style={{ padding: '6px 4px', color: '#94a3b8' }}>{n.anio}/{String(n.ultimoNumero + 1).padStart(2, '0')}</td>
-                <td style={{ padding: '6px 4px', color: '#94a3b8' }}>
+                <td style={{ padding: '6px 4px', color: 'var(--muted)' }}>{n.anio}/{String(n.ultimoNumero + 1).padStart(2, '0')}</td>
+                <td style={{ padding: '6px 4px', color: 'var(--muted)' }}>
                   {n.fechaVigenciaDesde || n.fechaVigenciaHasta ? `${n.fechaVigenciaDesde ?? '...'} a ${n.fechaVigenciaHasta ?? '...'}` : '-'}
                 </td>
                 <td style={{ padding: '6px 4px' }}>
@@ -562,11 +564,11 @@ function CampoConToggle({
 }) {
   return (
     <div>
-      <label style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+      <label htmlFor="mostrar-en-documentos" style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
         <input type="checkbox" checked={mostrar} onChange={(e) => onMostrar(e.target.checked)} />
         {label} (mostrar en documentos)
       </label>
-      <input className="input-field" value={valor} onChange={(e) => onValor(e.target.value)} />
+      <input id="mostrar-en-documentos" className="input-field" value={valor} onChange={(e) => onValor(e.target.value)} />
     </div>
   );
 }
@@ -597,7 +599,7 @@ function CampoLogo({
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         {url && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={`${API_ORIGIN}${url}`} alt={etiqueta} style={{ width: 55, height: 55, objectFit: 'contain', border: '1px solid #334155', borderRadius: 6, background: '#fff' }} />
+          <img src={`${API_ORIGIN}${url}`} alt={etiqueta} style={{ width: 55, height: 55, objectFit: 'contain', border: '1px solid var(--line)', borderRadius: 6, background: '#fff' }} />
         )}
         <input
           type="file"
@@ -608,11 +610,11 @@ function CampoLogo({
             if (archivo) onArchivo(archivo);
             e.target.value = '';
           }}
-          style={{ fontSize: 12, color: '#94a3b8' }}
+          style={{ fontSize: 12, color: 'var(--muted)' }}
         />
-        {subiendo && <span style={{ fontSize: 11, color: '#94a3b8' }}>Subiendo...</span>}
+        {subiendo && <span style={{ fontSize: 11, color: 'var(--muted)' }}>Subiendo...</span>}
       </div>
-      <p style={{ fontSize: 10, color: '#64748b', marginTop: 4 }}>png, jpg, webp o gif (no svg — se incrusta en el PDF).</p>
+      <p style={{ fontSize: 10, color: 'var(--muted)', marginTop: 4 }}>png, jpg, webp o gif (no svg — se incrusta en el PDF).</p>
     </div>
   );
 }

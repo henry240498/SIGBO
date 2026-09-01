@@ -16,6 +16,8 @@ edges:
   - [uses, component--front-api]
   - [uses, component--front-personal]
   - [uses, component--front-guardias]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
 terminos: [guardias, grupos, editar]
 ---
 
@@ -37,6 +39,8 @@ Pantalla /dashboard/guardias/grupos/[id].
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-guardias|guardias]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

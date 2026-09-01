@@ -60,10 +60,11 @@ responder a medias.
    TRANSFER` más siete `schema:` — barato en código, no gratis en riesgo. Ver
    [[rule--guardias-vive-en-operaciones]].
 
-2. **Tema claro a medio camino.** `configuracion.registry.ts` define
-   `tokens.background: '#f3f7f8'` y `appearance.theme: 'auto'`, pero las ~56 pantallas
-   tienen el oscuro hardcodeado. Hay que elegir un lado antes de tocar apariencia —
-   [[rule--tema-oscuro-fijo]].
+2. **Tokens de tema definidos en dos lados.** El tema claro ya está completo en las
+   pantallas, pero `:root` lo tiene fijo en `globals.css` mientras
+   `configuracion.registry.ts` define los mismos tokens en base de datos y
+   `appearance.theme` sigue ofreciendo `light`/`dark`/`auto` cuando solo hay claro.
+   Nadie lee todavía los de base de datos — [[rule--tema-claro-unico]].
 
 3. **Cuatro mecanismos de parametrización.** `organizacion.parametros`,
    `operaciones.tolerancias_asistencia`, `operaciones.requisitos_rol_guardia` y el

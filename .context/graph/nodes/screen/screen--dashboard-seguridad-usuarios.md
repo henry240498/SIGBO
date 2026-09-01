@@ -11,8 +11,10 @@ archivos:
   - frontend/src/app/dashboard/seguridad/usuarios/page.tsx
 edges:
   - [belongs_to, domain--seguridad]
+  - [uses, component--front-color]
   - [uses, component--front-inputprovider]
   - [uses, component--front-api]
+  - [uses, component--front-aviso]
   - [calls, api--seguridad-usuarios]
   - [calls, api--seguridad-roles]
   - [calls, api--equipos-equipamiento-bombero]
@@ -40,8 +42,10 @@ Pantalla /dashboard/seguridad/usuarios, consume 4 endpoint(s).
 ## Relaciones
 
 - `belongs_to` → [[domain--seguridad|Seguridad]]
+- `uses` → [[component--front-color|color]]
 - `uses` → [[component--front-inputprovider|InputProvider]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-aviso|Aviso]]
 - `calls` → [[api--seguridad-usuarios|UsuariosController]]
 - `calls` → [[api--seguridad-roles|RolesController]]
 - `calls` → [[api--equipos-equipamiento-bombero|EquipamientoBomberoController]]

@@ -12,6 +12,7 @@ archivos:
 edges:
   - [belongs_to, domain--seguridad]
   - [uses, component--front-ia]
+  - [uses, component--front-aviso]
 terminos: [seguridad, inteligencia, artificial, propuestas]
 ---
 
@@ -29,6 +30,7 @@ Pantalla /dashboard/seguridad/inteligencia-artificial/propuestas.
 
 - `belongs_to` → [[domain--seguridad|Seguridad]]
 - `uses` → [[component--front-ia|ia]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

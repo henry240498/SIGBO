@@ -15,6 +15,8 @@ edges:
   - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-vehiculos]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
 terminos: [vehiculos, editar]
 ---
 
@@ -35,6 +37,8 @@ Pantalla /dashboard/vehiculos/[id].
 - `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-vehiculos|vehiculos]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

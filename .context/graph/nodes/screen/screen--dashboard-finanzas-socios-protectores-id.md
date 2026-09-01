@@ -17,6 +17,8 @@ edges:
   - [uses, component--front-parametros]
   - [uses, component--front-finanzas]
   - [uses, component--front-socios-protectores]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
 terminos: [finanzas, socios, protectores, crear, editar, aportes, registrar]
 ---
 
@@ -39,6 +41,8 @@ Pantalla /dashboard/finanzas/socios-protectores/[id].
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-finanzas|finanzas]]
 - `uses` → [[component--front-socios-protectores|socios-protectores]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

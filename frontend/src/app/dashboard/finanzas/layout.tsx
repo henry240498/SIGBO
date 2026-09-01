@@ -4,18 +4,18 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const TABS = [
-  { href: '/dashboard/finanzas', label: 'Dashboard', exact: true },
-  { href: '/dashboard/finanzas/socios-protectores', label: 'Socios Protectores' },
+  { href: '/dashboard/finanzas', label: 'Resumen', exact: true },
+  { href: '/dashboard/finanzas/socios-protectores', label: 'Socios protectores' },
   { href: '/dashboard/finanzas/beneficios', label: 'Beneficios' },
-  { href: '/dashboard/finanzas/facturacion', label: 'Facturacion' },
+  { href: '/dashboard/finanzas/facturacion', label: 'Facturación' },
   { href: '/dashboard/finanzas/movimientos', label: 'Movimientos' },
   { href: '/dashboard/finanzas/cajas', label: 'Cajas' },
-  { href: '/dashboard/finanzas/cuentas-bancarias', label: 'Cuentas Bancarias' },
-  { href: '/dashboard/finanzas/movimientos-bancarios', label: 'Conciliacion' },
+  { href: '/dashboard/finanzas/cuentas-bancarias', label: 'Cuentas bancarias' },
+  { href: '/dashboard/finanzas/movimientos-bancarios', label: 'Conciliación' },
   { href: '/dashboard/finanzas/cuotas', label: 'Cuotas' },
-  { href: '/dashboard/finanzas/ordenes-pago', label: 'Ordenes de Pago' },
+  { href: '/dashboard/finanzas/ordenes-pago', label: 'Órdenes de pago' },
   { href: '/dashboard/finanzas/presupuesto', label: 'Presupuesto' },
-  { href: '/dashboard/finanzas/ejercicios-fiscales', label: 'Ejercicios Fiscales' },
+  { href: '/dashboard/finanzas/ejercicios-fiscales', label: 'Ejercicios fiscales' },
 ];
 
 export default function FinanzasLayout({ children }: { children: React.ReactNode }) {
@@ -28,7 +28,7 @@ export default function FinanzasLayout({ children }: { children: React.ReactNode
           display: 'flex',
           gap: 4,
           flexWrap: 'wrap',
-          borderBottom: '1px solid #334155',
+          borderBottom: '1px solid var(--line)',
           marginBottom: 20,
           paddingBottom: 0,
         }}
@@ -43,7 +43,7 @@ export default function FinanzasLayout({ children }: { children: React.ReactNode
                 padding: '8px 12px',
                 fontSize: 13,
                 textDecoration: 'none',
-                color: activo ? '#e2e8f0' : '#94a3b8',
+                color: activo ? 'var(--ink)' : 'var(--muted)',
                 fontWeight: activo ? 600 : 400,
                 borderBottom: activo ? '2px solid #2563eb' : '2px solid transparent',
               }}

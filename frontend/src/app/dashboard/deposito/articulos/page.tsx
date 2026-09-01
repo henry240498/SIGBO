@@ -6,6 +6,7 @@ import { obtenerSesion } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { Parametro } from '@/lib/parametros';
 import { Articulo, CategoriaArticulo, cargarArticulos, cargarCategoriasArticulo, cargarUnidadesMedidaDeposito, crearArticulo } from '@/lib/deposito';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function ArticulosPage() {
   const router = useRouter();
@@ -118,16 +119,16 @@ export default function ArticulosPage() {
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div style={{ flex: 1, minWidth: 200 }}>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Buscar</label>
-          <input className="input-field" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nombre o codigo..." />
+          <label htmlFor="buscar" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Buscar</label>
+          <input id="buscar" className="input-field" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nombre o codigo..." />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Categoria</label>
-          <ComboBuscable opciones={opcionesCategoria} value={filtroCategoriaId} onChange={setFiltroCategoriaId} maxWidth={220} />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Categoria</label>
+          <ComboBuscable ariaLabel="Categoria" opciones={opcionesCategoria} value={filtroCategoriaId} onChange={setFiltroCategoriaId} maxWidth={220} />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Estado</label>
-          <ComboBuscable opciones={opcionesEstado} value={filtroEstado} onChange={setFiltroEstado} maxWidth={160} />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Estado</label>
+          <ComboBuscable ariaLabel="Estado" opciones={opcionesEstado} value={filtroEstado} onChange={setFiltroEstado} maxWidth={160} />
         </div>
         <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 6, paddingBottom: 10 }}>
           <input type="checkbox" checked={soloStockBajo} onChange={(e) => setSoloStockBajo(e.target.checked)} />
@@ -147,41 +148,41 @@ export default function ArticulosPage() {
         </button>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={crear} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo</label>
-              <input className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} required />
+              <label htmlFor="codigo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo</label>
+              <input id="codigo" className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
-              <ComboBuscable opciones={opcionesCategoria} value={categoriaArticuloId} onChange={setCategoriaArticuloId} ningunaLabel="-- seleccionar --" />
+              <ComboBuscable ariaLabel="Categoria" opciones={opcionesCategoria} value={categoriaArticuloId} onChange={setCategoriaArticuloId} ningunaLabel="-- seleccionar --" />
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
-            <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Unidad de medida</label>
-              <ComboBuscable opciones={opcionesUnidad} value={unidadMedidaId} onChange={setUnidadMedidaId} ningunaLabel="Sin definir" />
+              <ComboBuscable ariaLabel="Unidad de medida" opciones={opcionesUnidad} value={unidadMedidaId} onChange={setUnidadMedidaId} ningunaLabel="Sin definir" />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Stock minimo</label>
-              <input className="input-field" type="number" min={0} step="0.01" value={stockMinimo} onChange={(e) => setStockMinimo(e.target.value)} />
+              <label htmlFor="stock-minimo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Stock minimo</label>
+              <input id="stock-minimo" className="input-field" type="number" min={0} step="0.01" value={stockMinimo} onChange={(e) => setStockMinimo(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Stock maximo</label>
-              <input className="input-field" type="number" min={0} step="0.01" value={stockMaximo} onChange={(e) => setStockMaximo(e.target.value)} />
+              <label htmlFor="stock-maximo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Stock maximo</label>
+              <input id="stock-maximo" className="input-field" type="number" min={0} step="0.01" value={stockMaximo} onChange={(e) => setStockMaximo(e.target.value)} />
             </div>
           </div>
           <div style={{ display: 'flex', gap: 16 }}>
@@ -194,7 +195,7 @@ export default function ArticulosPage() {
               Controla vencimiento
             </label>
           </div>
-          <p style={{ fontSize: 12, color: '#64748b' }}>
+          <p style={{ fontSize: 12, color: 'var(--muted)' }}>
             El stock inicial se carga con un movimiento de tipo Entrada desde la pantalla de Movimientos o Entradas, no desde este formulario.
           </p>
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
@@ -203,17 +204,17 @@ export default function ArticulosPage() {
         </form>
       )}
 
-      {articulos && articulos.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay articulos registrados.</p>}
+      {articulos && articulos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay articulos registrados.</p>}
       {articulos && articulos.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Codigo</th>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Categoria</th>
-              <th style={{ padding: '6px 4px' }}>Stock actual</th>
-              <th style={{ padding: '6px 4px' }}>Stock minimo</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Codigo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Categoria</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Stock actual</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Stock minimo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
             </tr>
           </thead>
           <tbody>
@@ -223,19 +224,19 @@ export default function ArticulosPage() {
                 <tr
                   key={a.id}
                   onClick={() => router.push(`/dashboard/deposito/articulos/${a.id}`)}
-                  style={{ borderBottom: '1px solid #1f2937', cursor: 'pointer' }}
+                  style={{ borderBottom: '1px solid var(--line-soft)', cursor: 'pointer' }}
                 >
                   <td style={{ padding: '6px 4px' }}>{a.codigo}</td>
                   <td style={{ padding: '6px 4px' }}>
                     {a.nombre}
-                    {a.controlaLote && <span className="badge" style={{ marginLeft: 6, background: '#475569' }}>lote</span>}
-                    {a.controlaVencimiento && <span className="badge" style={{ marginLeft: 6, background: '#475569' }}>vencimiento</span>}
+                    {a.controlaLote && <span className="badge" style={{ marginLeft: 6, background: 'var(--neutral-fill)' }}>lote</span>}
+                    {a.controlaVencimiento && <span className="badge" style={{ marginLeft: 6, background: 'var(--neutral-fill)' }}>vencimiento</span>}
                   </td>
                   <td style={{ padding: '6px 4px' }}>{categoriaPorId.get(a.categoriaArticuloId) ?? '-'}</td>
-                  <td style={{ padding: '6px 4px', color: stockBajo ? '#f87171' : undefined, fontWeight: stockBajo ? 600 : undefined }}>{a.stockActual}</td>
+                  <td style={{ padding: '6px 4px', color: stockBajo ? 'var(--danger)' : undefined, fontWeight: stockBajo ? 600 : undefined }}>{a.stockActual}</td>
                   <td style={{ padding: '6px 4px' }}>{a.stockMinimo}</td>
                   <td style={{ padding: '6px 4px' }}>
-                    <span className="badge" style={{ background: a.estado === 'ACTIVO' ? '#166534' : '#7f1d1d', color: a.estado === 'ACTIVO' ? '#4ade80' : '#f87171' }}>
+                    <span className="badge" style={{ background: a.estado === 'ACTIVO' ? 'var(--ok-fill)' : 'var(--bad-fill)', color: a.estado === 'ACTIVO' ? 'var(--success)' : 'var(--danger)' }}>
                       {a.estado}
                     </span>
                   </td>

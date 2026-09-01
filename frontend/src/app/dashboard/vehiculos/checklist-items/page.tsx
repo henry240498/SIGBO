@@ -10,6 +10,7 @@ import {
   crearChecklistItem,
   eliminarChecklistItem,
 } from '@/lib/vehiculos';
+import { Aviso } from '@/app/components/Aviso';
 
 const CATEGORIAS: ChecklistItemVehiculo['categoria'][] = ['MECANICA', 'EQUIPAMIENTO', 'OTRO'];
 
@@ -89,34 +90,34 @@ export default function ChecklistItemsPage() {
           </button>
         )}
       </div>
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         Items que se revisan al inspeccionar un movil durante una guardia. Dejar &quot;tipo de vehiculo&quot; vacio
         para que el item aplique a todos los tipos.
       </p>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form className="card" onSubmit={crear} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
-              <select className="input-field" value={categoria} onChange={(e) => setCategoria(e.target.value as ChecklistItemVehiculo['categoria'])}>
+              <label htmlFor="categoria" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
+              <select id="categoria" className="input-field" value={categoria} onChange={(e) => setCategoria(e.target.value as ChecklistItemVehiculo['categoria'])}>
                 {CATEGORIAS.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de vehiculo (opcional)</label>
-              <input className="input-field" value={tipoVehiculo} onChange={(e) => setTipoVehiculo(e.target.value)} placeholder="Aplica a todos si esta vacio" />
+              <label htmlFor="tipo-de-vehiculo-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de vehiculo (opcional)</label>
+              <input id="tipo-de-vehiculo-opcional" className="input-field" value={tipoVehiculo} onChange={(e) => setTipoVehiculo(e.target.value)} placeholder="Aplica a todos si esta vacio" />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Orden</label>
-              <input className="input-field" type="number" value={orden} onChange={(e) => setOrden(Number(e.target.value))} />
+              <label htmlFor="orden" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Orden</label>
+              <input id="orden" className="input-field" type="number" value={orden} onChange={(e) => setOrden(Number(e.target.value))} />
             </div>
           </div>
           <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
@@ -128,24 +129,24 @@ export default function ChecklistItemsPage() {
       {items && items.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Orden</th>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Categoria</th>
-              <th style={{ padding: '6px 4px' }}>Tipo de vehiculo</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              {puedeEditar && <th style={{ padding: '6px 4px' }}>Acciones</th>}
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Orden</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Categoria</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo de vehiculo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              {puedeEditar && <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>}
             </tr>
           </thead>
           <tbody>
             {items.map((it) => (
-              <tr key={it.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={it.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{it.orden}</td>
                 <td style={{ padding: '6px 4px' }}>{it.nombre}</td>
                 <td style={{ padding: '6px 4px' }}><span className="badge">{it.categoria}</span></td>
                 <td style={{ padding: '6px 4px' }}>{it.tipoVehiculo ?? 'Todos'}</td>
                 <td style={{ padding: '6px 4px' }}>
-                  <span className="badge" style={{ background: it.activo ? '#166534' : '#7f1d1d' }}>
+                  <span className="badge" style={{ background: it.activo ? 'var(--ok-fill)' : 'var(--bad-fill)' }}>
                     {it.activo ? 'ACTIVO' : 'INACTIVO'}
                   </span>
                 </td>

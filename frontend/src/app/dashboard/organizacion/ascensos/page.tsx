@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
+import { Aviso } from '@/app/components/Aviso';
 
 interface Opcion {
   id: string;
@@ -123,13 +124,13 @@ export default function AscensosPage() {
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       {mostrarForm && (
         <form className="card" onSubmit={crear} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Bombero</label>
-            <select className="input-field" value={bomberoId} onChange={(e) => setBomberoId(e.target.value)} required>
+            <label htmlFor="bombero" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Bombero</label>
+            <select id="bombero" className="input-field" value={bomberoId} onChange={(e) => setBomberoId(e.target.value)} required>
               <option value="">-- seleccionar --</option>
               {bomberos.map((b) => (
                 <option key={b.id} value={b.id}>
@@ -138,14 +139,14 @@ export default function AscensosPage() {
               ))}
             </select>
             {bomberoActual && (
-              <p style={{ fontSize: 11, color: '#94a3b8', marginTop: 4 }}>
+              <p style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>
                 Rango actual: {bomberoActual.rango ?? 'sin registrar'}
               </p>
             )}
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nuevo rango</label>
-            <select className="input-field" value={rangoNuevoId} onChange={(e) => setRangoNuevoId(e.target.value)} required>
+            <label htmlFor="nuevo-rango" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nuevo rango</label>
+            <select id="nuevo-rango" className="input-field" value={rangoNuevoId} onChange={(e) => setRangoNuevoId(e.target.value)} required>
               <option value="">-- seleccionar --</option>
               {rangos.map((r) => (
                 <option key={r.id} value={r.id}>
@@ -155,16 +156,16 @@ export default function AscensosPage() {
             </select>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label>
-            <input className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
+            <label htmlFor="fecha" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label>
+            <input id="fecha" className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Resolucion</label>
-            <input className="input-field" value={resolucion} onChange={(e) => setResolucion(e.target.value)} />
+            <label htmlFor="resolucion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Resolucion</label>
+            <input id="resolucion" className="input-field" value={resolucion} onChange={(e) => setResolucion(e.target.value)} />
           </div>
           <div style={{ gridColumn: '1 / -1' }}>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo</label>
-            <input className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
+            <label htmlFor="motivo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo</label>
+            <input id="motivo" className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
           </div>
           <button type="submit" className="btn-primary" style={{ gridColumn: '1 / -1', justifySelf: 'start' }}>
             Registrar ascenso
@@ -175,24 +176,24 @@ export default function AscensosPage() {
       {ascensos && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Bombero</th>
-              <th style={{ padding: '6px 4px' }}>Rango anterior</th>
-              <th style={{ padding: '6px 4px' }}>Rango nuevo</th>
-              <th style={{ padding: '6px 4px' }}>Fecha</th>
-              <th style={{ padding: '6px 4px' }}>Resolucion</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Bombero</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Rango anterior</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Rango nuevo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Resolucion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {ascensos.map((a) => (
-              <tr key={a.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={a.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{a.bomberoNombre}</td>
-                <td style={{ padding: '6px 4px', color: '#94a3b8' }}>{a.rangoAnteriorNombre ?? '—'}</td>
+                <td style={{ padding: '6px 4px', color: 'var(--muted)' }}>{a.rangoAnteriorNombre ?? '—'}</td>
                 <td style={{ padding: '6px 4px' }}>{a.rangoNuevoNombre}</td>
                 <td style={{ padding: '6px 4px' }}>{a.fecha}</td>
-                <td style={{ padding: '6px 4px', color: '#94a3b8' }}>{a.resolucion}</td>
+                <td style={{ padding: '6px 4px', color: 'var(--muted)' }}>{a.resolucion}</td>
                 <td style={{ padding: '6px 4px' }}>
                   <span className="badge">{a.estado}</span>
                 </td>
@@ -200,7 +201,7 @@ export default function AscensosPage() {
                   {a.estado === 'REGISTRADO' && (
                     <button type="button"
                       onClick={() => anular(a.id)}
-                      style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
+                      style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
                     >
                       anular
                     </button>

@@ -6,6 +6,7 @@ import { obtenerSesion } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { Parametro } from '@/lib/parametros';
 import { cargarEventos, cargarTiposEvento, crearEvento, ESTADOS_EVENTO, EventoAsistencia } from '@/lib/asistencia';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function EventosPage() {
   const router = useRouter();
@@ -84,34 +85,34 @@ export default function EventosPage() {
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Tipo de evento</label>
-          <ComboBuscable opciones={opcionesTipo} value={filtroTipoId} onChange={setFiltroTipoId} maxWidth={220} />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Tipo de evento</label>
+          <ComboBuscable ariaLabel="Tipo de evento" opciones={opcionesTipo} value={filtroTipoId} onChange={setFiltroTipoId} maxWidth={220} />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Estado</label>
-          <ComboBuscable opciones={opcionesEstado} value={filtroEstado} onChange={setFiltroEstado} maxWidth={180} />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Estado</label>
+          <ComboBuscable ariaLabel="Estado" opciones={opcionesEstado} value={filtroEstado} onChange={setFiltroEstado} maxWidth={180} />
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={crear} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de evento</label>
-              <ComboBuscable opciones={opcionesTipo} value={tipoEventoId} onChange={setTipoEventoId} />
+              <ComboBuscable ariaLabel="Tipo de evento" opciones={opcionesTipo} value={tipoEventoId} onChange={setTipoEventoId} />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Inicio</label>
-              <input
+              <label htmlFor="inicio" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Inicio</label>
+              <input id="inicio"
                 className="input-field"
                 type="datetime-local"
                 value={fechaInicio}
@@ -120,8 +121,8 @@ export default function EventosPage() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fin</label>
-              <input
+              <label htmlFor="fin" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fin</label>
+              <input id="fin"
                 className="input-field"
                 type="datetime-local"
                 value={fechaFin}
@@ -130,13 +131,13 @@ export default function EventosPage() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicacion</label>
-              <input className="input-field" value={ubicacion} onChange={(e) => setUbicacion(e.target.value)} />
+              <label htmlFor="ubicacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicacion</label>
+              <input id="ubicacion" className="input-field" value={ubicacion} onChange={(e) => setUbicacion(e.target.value)} />
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
-            <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
           <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Crear evento'}
@@ -144,16 +145,16 @@ export default function EventosPage() {
         </form>
       )}
 
-      {eventos && eventos.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay eventos registrados.</p>}
+      {eventos && eventos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay eventos registrados.</p>}
       {eventos && eventos.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Tipo</th>
-              <th style={{ padding: '6px 4px' }}>Inicio</th>
-              <th style={{ padding: '6px 4px' }}>Fin</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Inicio</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Fin</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
             </tr>
           </thead>
           <tbody>
@@ -161,7 +162,7 @@ export default function EventosPage() {
               <tr
                 key={ev.id}
                 onClick={() => router.push(`/dashboard/asistencia/eventos/${ev.id}`)}
-                style={{ borderBottom: '1px solid #1f2937', cursor: 'pointer' }}
+                style={{ borderBottom: '1px solid var(--line-soft)', cursor: 'pointer' }}
               >
                 <td style={{ padding: '6px 4px' }}>{ev.nombre}</td>
                 <td style={{ padding: '6px 4px' }}>{ev.tipoEventoId ? tipoPorId.get(ev.tipoEventoId) ?? '-' : '-'}</td>

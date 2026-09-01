@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { obtenerSesion } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { Expediente, actualizarExpediente, cargarExpedientes, crearExpediente } from '@/lib/documentos';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function ExpedientesPage() {
   const [expedientes, setExpedientes] = useState<Expediente[] | null>(null);
@@ -88,8 +89,8 @@ export default function ExpedientesPage() {
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end' }}>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Estado</label>
-          <ComboBuscable
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Estado</label>
+          <ComboBuscable ariaLabel="Estado"
             opciones={[{ value: 'ABIERTO', label: 'ABIERTO' }, { value: 'CERRADO', label: 'CERRADO' }]}
             value={filtroEstado}
             onChange={setFiltroEstado}
@@ -99,24 +100,24 @@ export default function ExpedientesPage() {
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={crear} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero</label>
-              <input className="input-field" value={numero} onChange={(e) => setNumero(e.target.value)} required />
+              <label htmlFor="numero" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero</label>
+              <input id="numero" className="input-field" value={numero} onChange={(e) => setNumero(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Titulo</label>
-              <input className="input-field" value={titulo} onChange={(e) => setTitulo(e.target.value)} required />
+              <label htmlFor="titulo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Titulo</label>
+              <input id="titulo" className="input-field" value={titulo} onChange={(e) => setTitulo(e.target.value)} required />
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
-            <textarea className="input-field" rows={2} value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <textarea id="descripcion" className="input-field" rows={2} value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Crear expediente'}
@@ -124,26 +125,26 @@ export default function ExpedientesPage() {
         </form>
       )}
 
-      {expedientes && expedientes.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay expedientes con estos filtros.</p>}
+      {expedientes && expedientes.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay expedientes con estos filtros.</p>}
       {expedientes && expedientes.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Numero</th>
-              <th style={{ padding: '6px 4px' }}>Titulo</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Numero</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Titulo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {expedientes.map((e) => (
-              <tr key={e.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={e.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>
-                  <Link href={`/dashboard/documentos/expedientes/${e.id}`} style={{ color: '#60a5fa', textDecoration: 'none' }}>{e.numero}</Link>
+                  <Link href={`/dashboard/documentos/expedientes/${e.id}`} style={{ color: 'var(--signal)', textDecoration: 'none' }}>{e.numero}</Link>
                 </td>
                 <td style={{ padding: '6px 4px' }}>{e.titulo}</td>
                 <td style={{ padding: '6px 4px' }}>
-                  <span className="badge" style={{ background: e.estado === 'ABIERTO' ? '#166534' : '#334155' }}>{e.estado}</span>
+                  <span className="badge" style={{ background: e.estado === 'ABIERTO' ? 'var(--ok-fill)' : 'var(--neutral-fill)' }}>{e.estado}</span>
                 </td>
                 <td style={{ padding: '6px 4px' }}>
                   {puedeEditar && e.estado === 'ABIERTO' && (

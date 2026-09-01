@@ -12,6 +12,7 @@ archivos:
 edges:
   - [belongs_to, domain--asistencia]
   - [uses, component--front-asistencia]
+  - [uses, component--front-cargando]
 terminos: [asistencia]
 ---
 
@@ -29,6 +30,7 @@ Pantalla /dashboard/asistencia.
 
 - `belongs_to` → [[domain--asistencia|Asistencia]]
 - `uses` → [[component--front-asistencia|asistencia]]
+- `uses` → [[component--front-cargando|Cargando]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

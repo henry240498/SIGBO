@@ -18,6 +18,7 @@ import {
   cargarUbicacionesDeposito,
   registrarMovimientoDeposito,
 } from '@/lib/deposito';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function MovimientosDepositoPage() {
   const [movimientos, setMovimientos] = useState<MovimientoDeposito[] | null>(null);
@@ -190,20 +191,20 @@ export default function MovimientosDepositoPage() {
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Tipo de elemento</label>
-          <ComboBuscable opciones={opcionesTipoElemento} value={filtroTipoElemento} onChange={setFiltroTipoElemento} maxWidth={160} />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Tipo de elemento</label>
+          <ComboBuscable ariaLabel="Tipo de elemento" opciones={opcionesTipoElemento} value={filtroTipoElemento} onChange={setFiltroTipoElemento} maxWidth={160} />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Tipo de movimiento</label>
-          <ComboBuscable opciones={opcionesTipoMovimiento} value={filtroTipoMovimientoId} onChange={setFiltroTipoMovimientoId} maxWidth={220} />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Tipo de movimiento</label>
+          <ComboBuscable ariaLabel="Tipo de movimiento" opciones={opcionesTipoMovimiento} value={filtroTipoMovimientoId} onChange={setFiltroTipoMovimientoId} maxWidth={220} />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Desde</label>
-          <input className="input-field" type="date" value={desde} onChange={(e) => setDesde(e.target.value)} />
+          <label htmlFor="desde" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Desde</label>
+          <input id="desde" className="input-field" type="date" value={desde} onChange={(e) => setDesde(e.target.value)} />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Hasta</label>
-          <input className="input-field" type="date" value={hasta} onChange={(e) => setHasta(e.target.value)} />
+          <label htmlFor="hasta" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Hasta</label>
+          <input id="hasta" className="input-field" type="date" value={hasta} onChange={(e) => setHasta(e.target.value)} />
         </div>
         <button type="button"
           className="btn-primary"
@@ -219,38 +220,38 @@ export default function MovimientosDepositoPage() {
         </button>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={registrar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-          <p style={{ fontSize: 12, color: '#64748b' }}>
+          <p style={{ fontSize: 12, color: 'var(--muted)' }}>
             Para Entrada por compra/donacion usar la pantalla Entradas; para Prestamo/Devolucion usar Prestamos; para Baja usar Bajas. Este
             formulario cubre Transferencia, Asignacion, Consumo, Confiscacion, Recuperacion u Otro.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 2fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de elemento</label>
-              <ComboBuscable opciones={opcionesTipoElemento} value={tipoElemento} onChange={setTipoElemento} ningunaLabel="-- seleccionar --" />
+              <ComboBuscable ariaLabel="Tipo de elemento" opciones={opcionesTipoElemento} value={tipoElemento} onChange={setTipoElemento} ningunaLabel="-- seleccionar --" />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de movimiento</label>
-              <ComboBuscable opciones={opcionesTipoMovimiento} value={tipoMovimientoId} onChange={setTipoMovimientoId} ningunaLabel="-- seleccionar --" />
+              <ComboBuscable ariaLabel="Tipo de movimiento" opciones={opcionesTipoMovimiento} value={tipoMovimientoId} onChange={setTipoMovimientoId} ningunaLabel="-- seleccionar --" />
             </div>
             {tipoElemento === 'EQUIPO' ? (
               <div>
                 <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Equipo</label>
-                <ComboBuscable opciones={opcionesEquipo} value={equipoId} onChange={setEquipoId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar equipo..." />
+                <ComboBuscable ariaLabel="Equipo" opciones={opcionesEquipo} value={equipoId} onChange={setEquipoId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar equipo..." />
               </div>
             ) : (
               <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 }}>
                 <div>
                   <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Articulo</label>
-                  <ComboBuscable opciones={opcionesArticulo} value={articuloId} onChange={setArticuloId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar articulo..." />
+                  <ComboBuscable ariaLabel="Articulo" opciones={opcionesArticulo} value={articuloId} onChange={setArticuloId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar articulo..." />
                 </div>
                 <div>
-                  <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cantidad</label>
-                  <input className="input-field" type="number" min={0.01} step="0.01" value={cantidad} onChange={(e) => setCantidad(e.target.value)} required />
+                  <label htmlFor="cantidad" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cantidad</label>
+                  <input id="cantidad" className="input-field" type="number" min={0.01} step="0.01" value={cantidad} onChange={(e) => setCantidad(e.target.value)} required />
                 </div>
               </div>
             )}
@@ -280,16 +281,16 @@ export default function MovimientosDepositoPage() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Responsable (entrega/recibe)</label>
-              <ComboBuscable opciones={opcionesBombero} value={responsableId} onChange={setResponsableId} ningunaLabel="Sin definir" />
+              <ComboBuscable ariaLabel="Responsable (entrega/recibe)" opciones={opcionesBombero} value={responsableId} onChange={setResponsableId} ningunaLabel="Sin definir" />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo</label>
-              <input className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
+              <label htmlFor="motivo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo</label>
+              <input id="motivo" className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
-            <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
+            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+            <input id="observacion" className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
 
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
@@ -298,22 +299,22 @@ export default function MovimientosDepositoPage() {
         </form>
       )}
 
-      {movimientos && movimientos.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay movimientos registrados.</p>}
+      {movimientos && movimientos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay movimientos registrados.</p>}
       {movimientos && movimientos.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Fecha</th>
-              <th style={{ padding: '6px 4px' }}>Tipo</th>
-              <th style={{ padding: '6px 4px' }}>Elemento</th>
-              <th style={{ padding: '6px 4px' }}>Origen</th>
-              <th style={{ padding: '6px 4px' }}>Destino</th>
-              <th style={{ padding: '6px 4px' }}>Motivo</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Elemento</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Origen</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Destino</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Motivo</th>
             </tr>
           </thead>
           <tbody>
             {movimientos.map((m) => (
-              <tr key={m.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={m.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{new Date(m.creadoEn).toLocaleString()}</td>
                 <td style={{ padding: '6px 4px' }}>
                   <span className="badge">{nombresTipoMov.get(m.tipoMovimientoId) ?? '-'}</span>

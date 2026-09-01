@@ -62,7 +62,7 @@ conjunto, en vez de que cada guardado altere el sistema en vivo.
 ## Advertencia
 
 Los `tokens.*` describen un tema **claro** que hoy ninguna pantalla consume. Ver
-[[rule--tema-oscuro-fijo]] antes de tocar apariencia: la configuracion y las pantallas
+[[rule--tema-claro-unico]] antes de tocar apariencia: la configuracion y las pantallas
 no estan integradas.
 
 

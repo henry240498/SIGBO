@@ -6,6 +6,7 @@ import { ComboBuscable } from '@/components/ComboBuscable';
 import { Parametro } from '@/lib/parametros';
 import { cargarBomberos, BomberoResumen } from '@/lib/personal';
 import { CuentaBancaria, actualizarCuentaBancaria, cargarCuentasBancarias, cargarTiposCuentaBancariaFinanzas, crearCuentaBancaria } from '@/lib/finanzas';
+import { Aviso } from '@/app/components/Aviso';
 
 function formatearGs(valor: number): string {
   return `Gs. ${Math.round(valor).toLocaleString('es-PY')}`;
@@ -118,39 +119,39 @@ export default function CuentasBancariasPage() {
         )}
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={guardar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Banco</label>
-              <input className="input-field" value={banco} onChange={(e) => setBanco(e.target.value)} required />
+              <label htmlFor="banco" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Banco</label>
+              <input id="banco" className="input-field" value={banco} onChange={(e) => setBanco(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero de cuenta</label>
-              <input className="input-field" value={numeroCuenta} onChange={(e) => setNumeroCuenta(e.target.value)} required />
+              <label htmlFor="numero-de-cuenta" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero de cuenta</label>
+              <input id="numero-de-cuenta" className="input-field" value={numeroCuenta} onChange={(e) => setNumeroCuenta(e.target.value)} required />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de cuenta</label>
-              <ComboBuscable opciones={opcionesTipo} value={tipoCuentaId} onChange={setTipoCuentaId} ningunaLabel="Sin definir" />
+              <ComboBuscable ariaLabel="Tipo de cuenta" opciones={opcionesTipo} value={tipoCuentaId} onChange={setTipoCuentaId} ningunaLabel="Sin definir" />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Responsable</label>
-              <ComboBuscable opciones={opcionesBombero} value={responsableId} onChange={setResponsableId} ningunaLabel="Sin definir" />
+              <ComboBuscable ariaLabel="Responsable" opciones={opcionesBombero} value={responsableId} onChange={setResponsableId} ningunaLabel="Sin definir" />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
-              <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
+              <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+              <input id="observacion" className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
             </div>
           </div>
           {editandoId && (
             <div style={{ maxWidth: 200 }}>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-              <ComboBuscable opciones={[{ value: 'ACTIVA', label: 'ACTIVA' }, { value: 'INACTIVA', label: 'INACTIVA' }]} value={estado} onChange={setEstado} ningunaLabel="ACTIVA" />
+              <ComboBuscable ariaLabel="Estado" opciones={[{ value: 'ACTIVA', label: 'ACTIVA' }, { value: 'INACTIVA', label: 'INACTIVA' }]} value={estado} onChange={setEstado} ningunaLabel="ACTIVA" />
             </div>
           )}
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
@@ -159,28 +160,28 @@ export default function CuentasBancariasPage() {
         </form>
       )}
 
-      {cuentas && cuentas.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay cuentas bancarias registradas.</p>}
+      {cuentas && cuentas.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay cuentas bancarias registradas.</p>}
       {cuentas && cuentas.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Banco</th>
-              <th style={{ padding: '6px 4px' }}>N° cuenta</th>
-              <th style={{ padding: '6px 4px' }}>Tipo</th>
-              <th style={{ padding: '6px 4px' }}>Saldo actual</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Banco</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>N° cuenta</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Saldo actual</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {cuentas.map((c) => (
-              <tr key={c.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={c.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{c.banco}</td>
                 <td style={{ padding: '6px 4px' }}>{c.numeroCuenta}</td>
                 <td style={{ padding: '6px 4px' }}>{c.tipoCuentaId ? nombreTipo.get(c.tipoCuentaId) ?? '-' : '-'}</td>
                 <td style={{ padding: '6px 4px', fontWeight: 600 }}>{formatearGs(c.saldoActual)}</td>
                 <td style={{ padding: '6px 4px' }}>
-                  <span className="badge" style={{ background: c.estado === 'ACTIVA' ? '#166534' : '#7f1d1d', color: c.estado === 'ACTIVA' ? '#4ade80' : '#f87171' }}>{c.estado}</span>
+                  <span className="badge" style={{ background: c.estado === 'ACTIVA' ? 'var(--ok-fill)' : 'var(--bad-fill)', color: c.estado === 'ACTIVA' ? 'var(--success)' : 'var(--danger)' }}>{c.estado}</span>
                 </td>
                 <td style={{ padding: '6px 4px' }}>
                   {puedeAdministrar && (

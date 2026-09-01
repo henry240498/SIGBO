@@ -16,6 +16,8 @@ edges:
   - [uses, component--front-api]
   - [uses, component--front-json-seguro]
   - [uses, component--front-guardias]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
 terminos: [guardias, ordenes, editar, aprobar, publicar, anular]
 ---
 
@@ -37,6 +39,8 @@ Pantalla /dashboard/guardias/ordenes/[id].
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-json-seguro|json-seguro]]
 - `uses` → [[component--front-guardias|guardias]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

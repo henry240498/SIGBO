@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { Documento, EXTENSIONES_PREVISUALIZABLES, descargarArchivoDocumento, obtenerBlobPrevisualizacion } from '@/lib/documentos';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 /** Visor integrado (seccion 1 del pedido): PDF e imagenes se muestran
  * embebidos sin forzar la descarga primero. Word/Excel/otros formatos no
@@ -88,7 +90,7 @@ export function VisorDocumento({ documento, onCerrar }: { documento: Documento; 
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: '0 4px 14px rgba(0,0,0,0.5)',
+          boxShadow: '0 6px 18px rgba(16,38,63,.28)',
         }}
       >
         ✕
@@ -98,7 +100,7 @@ export function VisorDocumento({ documento, onCerrar }: { documento: Documento; 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <h3 style={{ fontSize: 15 }}>{documento.numeroDocumental ? `${documento.numeroDocumental} — ` : ''}{documento.titulo}</h3>
-            <p style={{ fontSize: 11, color: '#94a3b8' }}>{documento.archivoNombreOriginal}</p>
+            <p style={{ fontSize: 11, color: 'var(--muted)' }}>{documento.archivoNombreOriginal}</p>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
             {documento.archivoUrl && (
@@ -108,12 +110,12 @@ export function VisorDocumento({ documento, onCerrar }: { documento: Documento; 
           </div>
         </div>
 
-        {error && <p style={{ color: '#f87171', fontSize: 13 }}>{error}</p>}
+        {error && <Aviso tipo="error" texto={error} fontSize={13} />}
 
-        <div style={{ flex: 1, minHeight: 0, background: '#0f172a', borderRadius: 8, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          {cargando && <p style={{ color: '#94a3b8', fontSize: 13 }}>Cargando vista previa...</p>}
+        <div style={{ flex: 1, minHeight: 0, background: 'var(--surface-soft)', borderRadius: 8, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {cargando && <Cargando texto="Cargando vista previa…" />}
           {!cargando && !previsualizable && (
-            <p style={{ color: '#94a3b8', fontSize: 13, textAlign: 'center', maxWidth: 400 }}>
+            <p style={{ color: 'var(--muted)', fontSize: 13, textAlign: 'center', maxWidth: 400 }}>
               Este tipo de archivo ({extension || 'desconocido'}) no admite vista previa integrada en este momento.
               Descargalo para verlo con el programa correspondiente.
             </p>

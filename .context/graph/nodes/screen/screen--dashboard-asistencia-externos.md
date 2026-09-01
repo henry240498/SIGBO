@@ -14,6 +14,7 @@ edges:
   - [belongs_to, domain--asistencia]
   - [uses, component--front-api]
   - [uses, component--front-asistencia]
+  - [uses, component--front-aviso]
 terminos: [asistencia, externos, crear, editar]
 ---
 
@@ -33,6 +34,7 @@ Pantalla /dashboard/asistencia/externos.
 - `belongs_to` → [[domain--asistencia|Asistencia]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-asistencia|asistencia]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

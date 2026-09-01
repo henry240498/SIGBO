@@ -14,6 +14,7 @@ import {
 import { listarMarcacionesDelDia, MarcacionAsistencia, registrarMarcacion } from '@/lib/asistencia';
 import ImportarMarcador from './ImportarMarcador';
 import ConsultaMarcaciones from './ConsultaMarcaciones';
+import { Aviso } from '@/app/components/Aviso';
 
 function hoyISO() {
   return new Date().toISOString().slice(0, 10);
@@ -98,7 +99,7 @@ export default function RegistroAsistenciaPage() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <h2 style={{ fontSize: 16 }}>Registro de presencia (entrada / salida)</h2>
 
-      <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid #1f2937' }}>
+      <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid var(--line-soft)' }}>
         {SUBTABS.map((t) => (
           <button type="button"
             key={t.id}
@@ -109,7 +110,7 @@ export default function RegistroAsistenciaPage() {
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
-              color: vista === t.id ? '#e2e8f0' : '#94a3b8',
+              color: vista === t.id ? 'var(--ink)' : 'var(--muted)',
               fontWeight: vista === t.id ? 600 : 400,
               borderBottom: vista === t.id ? '2px solid #2563eb' : '2px solid transparent',
             }}
@@ -124,19 +125,19 @@ export default function RegistroAsistenciaPage() {
 
       {vista === 'marcar' && (
         <>
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         Marcar entrada/salida no es obligatorio. Que una persona no marque no significa automaticamente que este
         ausente.
       </p>
 
       {puedeCrear && (
         <form onSubmit={registrar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {error && <p style={{ color: '#f87171' }}>{error}</p>}
-          {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+          {error && <Aviso tipo="error" texto={error} />}
+          {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 2fr auto', gap: 10, alignItems: 'end' }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Bombero</label>
-              <ComboBuscable
+              <ComboBuscable ariaLabel="Bombero"
                 opciones={opcionesBombero}
                 value={bomberoId}
                 onChange={setBomberoId}
@@ -144,8 +145,8 @@ export default function RegistroAsistenciaPage() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
-              <select
+              <label htmlFor="tipo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
+              <select id="tipo"
                 className="input-field"
                 value={tipoMarcacion}
                 onChange={(e) => setTipoMarcacion(e.target.value as 'ENTRADA' | 'SALIDA')}
@@ -155,8 +156,8 @@ export default function RegistroAsistenciaPage() {
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo (opcional)</label>
-              <input className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
+              <label htmlFor="motivo-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo (opcional)</label>
+              <input id="motivo-opcional" className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
             </div>
             <button type="submit" className="btn-primary" disabled={guardando}>
               {guardando ? 'Guardando...' : 'Registrar'}
@@ -166,33 +167,33 @@ export default function RegistroAsistenciaPage() {
       )}
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <label style={{ fontSize: 13 }}>Fecha:</label>
-        <input className="input-field" style={{ maxWidth: 180 }} type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} />
+        <label htmlFor="fecha" style={{ fontSize: 13 }}>Fecha:</label>
+        <input id="fecha" className="input-field" style={{ maxWidth: 180 }} type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} />
       </div>
 
       {marcaciones && marcaciones.length === 0 && (
-        <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin marcaciones registradas ese dia.</p>
+        <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin marcaciones registradas ese dia.</p>
       )}
       {marcaciones && marcaciones.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Hora</th>
-              <th style={{ padding: '6px 4px' }}>Bombero</th>
-              <th style={{ padding: '6px 4px' }}>Tipo</th>
-              <th style={{ padding: '6px 4px' }}>Fuente</th>
-              <th style={{ padding: '6px 4px' }}>Observaciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Hora</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Bombero</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Fuente</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Observaciones</th>
             </tr>
           </thead>
           <tbody>
             {marcaciones.map((m) => {
               const b = bomberoPorId.get(m.bomberoId);
               return (
-                <tr key={m.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr key={m.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>{new Date(m.timestampMarcacion).toLocaleTimeString()}</td>
                   <td style={{ padding: '6px 4px' }}>{b ? `${b.numeroBombero} — ${b.nombre} ${b.apellido}` : m.bomberoId}</td>
                   <td style={{ padding: '6px 4px' }}>
-                    <span className="badge" style={{ background: m.tipoMarcacion === 'ENTRADA' ? '#166534' : '#7f1d1d' }}>
+                    <span className="badge" style={{ background: m.tipoMarcacion === 'ENTRADA' ? 'var(--ok-fill)' : 'var(--bad-fill)' }}>
                       {m.tipoMarcacion}
                     </span>
                   </td>

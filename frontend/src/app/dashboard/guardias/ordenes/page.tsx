@@ -4,15 +4,16 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { obtenerSesion } from '@/lib/api';
 import { OrdenGuardia, cargarOrdenesGuardia } from '@/lib/guardias';
+import { Aviso } from '@/app/components/Aviso';
 
 const NOMBRES_MES = ['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Setiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
 const COLOR_ESTADO: Record<string, string> = {
-  BORRADOR: '#334155',
-  REVISADA: '#1d4ed8',
-  APROBADA: '#854d0e',
-  PUBLICADA: '#166534',
-  ANULADA: '#7f1d1d',
+  BORRADOR: 'var(--neutral-fill)',
+  REVISADA: 'var(--info-fill)',
+  APROBADA: 'var(--warn-fill)',
+  PUBLICADA: 'var(--ok-fill)',
+  ANULADA: 'var(--bad-fill)',
 };
 
 export default function OrdenesGuardiaPage() {
@@ -54,7 +55,7 @@ export default function OrdenesGuardiaPage() {
         </div>
       </div>
 
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         Documento oficial generado a partir de la planificacion ya aprobada. La planificacion puede cambiar mientras
         esta en borrador; una vez publicada, la Orden representa la planificacion oficial de ese momento y queda
         congelada.
@@ -71,24 +72,24 @@ export default function OrdenesGuardiaPage() {
         </select>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
-      {ordenes && ordenes.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin ordenes registradas.</p>}
+      {ordenes && ordenes.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin ordenes registradas.</p>}
       {ordenes && ordenes.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Numero</th>
-              <th style={{ padding: '6px 4px' }}>Periodo</th>
-              <th style={{ padding: '6px 4px' }}>Fecha de emision</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Numero</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Periodo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Fecha de emision</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
             </tr>
           </thead>
           <tbody>
             {ordenes.map((o) => (
-              <tr key={o.id} style={{ borderBottom: '1px solid #1f2937', cursor: 'pointer' }}>
+              <tr key={o.id} style={{ borderBottom: '1px solid var(--line-soft)', cursor: 'pointer' }}>
                 <td style={{ padding: '6px 4px' }}>
-                  <Link href={`/dashboard/guardias/ordenes/${o.id}`} style={{ color: '#60a5fa', textDecoration: 'none' }}>
+                  <Link href={`/dashboard/guardias/ordenes/${o.id}`} style={{ color: 'var(--signal)', textDecoration: 'none' }}>
                     N° {o.numero}/{o.anio}
                   </Link>
                 </td>

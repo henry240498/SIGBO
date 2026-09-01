@@ -12,6 +12,7 @@ archivos:
 edges:
   - [belongs_to, domain--guardias]
   - [uses, component--front-guardias]
+  - [uses, component--front-aviso]
 terminos: [guardias, ordenes, nueva]
 ---
 
@@ -29,6 +30,7 @@ Pantalla /dashboard/guardias/ordenes/nueva.
 
 - `belongs_to` → [[domain--guardias|Guardias]]
 - `uses` → [[component--front-guardias|guardias]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

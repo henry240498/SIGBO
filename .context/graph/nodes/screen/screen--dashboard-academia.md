@@ -15,6 +15,7 @@ edges:
   - [uses, component--front-api]
   - [uses, component--front-parametros]
   - [uses, component--front-academia]
+  - [uses, component--front-aviso]
 terminos: [academia, crear, curso]
 ---
 
@@ -35,6 +36,7 @@ Pantalla /dashboard/academia.
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-academia|academia]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

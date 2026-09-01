@@ -15,6 +15,7 @@ import {
   crearPlantilla,
   generarDesdePlantilla,
 } from '@/lib/documentos';
+import { Aviso } from '@/app/components/Aviso';
 
 function extraerCampos(contenido: string): string[] {
   const matches = contenido.matchAll(/\{\{\s*([A-Z_0-9]+)\s*\}\}/g);
@@ -57,26 +58,26 @@ function ModalGenerar({ plantilla, categorias, onCerrar, onGenerado }: { plantil
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50 }}>
       <form onSubmit={generar} className="card" style={{ width: 520, maxHeight: '85vh', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 10 }}>
         <h3 style={{ fontSize: 15 }}>Generar documento desde &quot;{plantilla.nombre}&quot;</h3>
-        {error && <p style={{ color: '#f87171', fontSize: 13 }}>{error}</p>}
+        {error && <Aviso tipo="error" texto={error} fontSize={13} />}
         <div>
-          <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Titulo del documento</label>
-          <input className="input-field" value={titulo} onChange={(e) => setTitulo(e.target.value)} required />
+          <label htmlFor="titulo-del-documento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Titulo del documento</label>
+          <input id="titulo-del-documento" className="input-field" value={titulo} onChange={(e) => setTitulo(e.target.value)} required />
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de emision</label>
-            <input className="input-field" type="date" value={fechaEmision} onChange={(e) => setFechaEmision(e.target.value)} required />
+            <label htmlFor="fecha-de-emision" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de emision</label>
+            <input id="fecha-de-emision" className="input-field" type="date" value={fechaEmision} onChange={(e) => setFechaEmision(e.target.value)} required />
           </div>
           <div>
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
-            <ComboBuscable opciones={opcionesCategoria} value={categoriaDocumentoId} onChange={setCategoriaDocumentoId} ningunaLabel="Sin categoria" />
+            <ComboBuscable ariaLabel="Categoria" opciones={opcionesCategoria} value={categoriaDocumentoId} onChange={setCategoriaDocumentoId} ningunaLabel="Sin categoria" />
           </div>
         </div>
-        {campos.length === 0 && <p style={{ fontSize: 12, color: '#94a3b8' }}>Esta plantilla no tiene campos dinamicos.</p>}
+        {campos.length === 0 && <p style={{ fontSize: 12, color: 'var(--muted)' }}>Esta plantilla no tiene campos dinamicos.</p>}
         {campos.map((campo) => (
           <div key={campo}>
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>{campo}</label>
-            <input className="input-field" value={valores[campo] ?? ''} onChange={(e) => setValores({ ...valores, [campo]: e.target.value })} />
+            <input aria-label={campo} className="input-field" value={valores[campo] ?? ''} onChange={(e) => setValores({ ...valores, [campo]: e.target.value })} />
           </div>
         ))}
         <label style={{ fontSize: 12, display: 'flex', gap: 6, alignItems: 'center' }}>
@@ -175,28 +176,28 @@ export default function PlantillasPage() {
         )}
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={crear} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de documento</label>
-              <ComboBuscable opciones={opcionesTipo} value={tipoDocumentoId} onChange={setTipoDocumentoId} ningunaLabel="Sin definir" />
+              <ComboBuscable ariaLabel="Tipo de documento" opciones={opcionesTipo} value={tipoDocumentoId} onChange={setTipoDocumentoId} ningunaLabel="Sin definir" />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cargo firmante</label>
-              <ComboBuscable opciones={opcionesCargo} value={cargoFirmanteId} onChange={setCargoFirmanteId} ningunaLabel="Sin firmante" />
+              <ComboBuscable ariaLabel="Cargo firmante" opciones={opcionesCargo} value={cargoFirmanteId} onChange={setCargoFirmanteId} ningunaLabel="Sin firmante" />
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Contenido (usar {'{{CAMPO}}'} para placeholders)</label>
-            <textarea className="input-field" rows={8} value={contenido} onChange={(e) => setContenido(e.target.value)} required />
+            <label htmlFor="contenido-usar-para-placeholders" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Contenido (usar {'{{CAMPO}}'} para placeholders)</label>
+            <textarea id="contenido-usar-para-placeholders" className="input-field" rows={8} value={contenido} onChange={(e) => setContenido(e.target.value)} required />
           </div>
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Crear plantilla'}
@@ -204,24 +205,24 @@ export default function PlantillasPage() {
         </form>
       )}
 
-      {plantillas && plantillas.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay plantillas cargadas.</p>}
+      {plantillas && plantillas.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay plantillas cargadas.</p>}
       {plantillas && plantillas.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Tipo de documento</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo de documento</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {plantillas.map((p) => (
-              <tr key={p.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={p.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{p.nombre}</td>
                 <td style={{ padding: '6px 4px' }}>{p.tipoDocumentoId ? tipoPorId.get(p.tipoDocumentoId) ?? '-' : '-'}</td>
                 <td style={{ padding: '6px 4px' }}>
-                  <span className="badge" style={{ background: p.activa ? '#166534' : '#334155' }}>{p.activa ? 'ACTIVA' : 'INACTIVA'}</span>
+                  <span className="badge" style={{ background: p.activa ? 'var(--ok-fill)' : 'var(--neutral-fill)' }}>{p.activa ? 'ACTIVA' : 'INACTIVA'}</span>
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6 }}>
                   {puedeCrear && p.activa && (

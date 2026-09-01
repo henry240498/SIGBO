@@ -15,6 +15,7 @@ edges:
   - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-guardias]
+  - [uses, component--front-aviso]
 terminos: [organizacion, feriados, crear, editar, eliminar]
 ---
 
@@ -35,6 +36,7 @@ Pantalla /dashboard/organizacion/feriados.
 - `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-guardias|guardias]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

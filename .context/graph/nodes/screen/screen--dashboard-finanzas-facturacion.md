@@ -17,6 +17,7 @@ edges:
   - [uses, component--front-finanzas]
   - [uses, component--front-socios-protectores]
   - [uses, component--front-parametros]
+  - [uses, component--front-aviso]
 terminos: [finanzas, facturacion, crear, anular, notas, credito]
 ---
 
@@ -39,6 +40,7 @@ Pantalla /dashboard/finanzas/facturacion.
 - `uses` → [[component--front-finanzas|finanzas]]
 - `uses` → [[component--front-socios-protectores|socios-protectores]]
 - `uses` → [[component--front-parametros|parametros]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

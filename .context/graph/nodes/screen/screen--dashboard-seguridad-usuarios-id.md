@@ -12,6 +12,8 @@ archivos:
 edges:
   - [belongs_to, domain--seguridad]
   - [uses, component--front-api]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
   - [calls, api--seguridad-usuarios]
   - [calls, api--seguridad-roles]
   - [calls, api--seguridad-permisos]
@@ -40,6 +42,8 @@ Pantalla /dashboard/seguridad/usuarios/[id], consume 4 endpoint(s).
 
 - `belongs_to` → [[domain--seguridad|Seguridad]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 - `calls` → [[api--seguridad-usuarios|UsuariosController]]
 - `calls` → [[api--seguridad-roles|RolesController]]
 - `calls` → [[api--seguridad-permisos|PermisosController]]

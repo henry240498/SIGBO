@@ -17,6 +17,7 @@ edges:
   - [uses, component--front-exportar]
   - [uses, component--front-texto]
   - [uses, component--front-personal]
+  - [uses, component--front-aviso]
   - [calls, api--equipos-equipamiento-bombero]
 terminos: [personal, crear, eliminar]
 ---
@@ -44,6 +45,7 @@ Pantalla /dashboard/personal, consume 1 endpoint(s).
 - `uses` → [[component--front-exportar|exportar]]
 - `uses` → [[component--front-texto|texto]]
 - `uses` → [[component--front-personal|personal]]
+- `uses` → [[component--front-aviso|Aviso]]
 - `calls` → [[api--equipos-equipamiento-bombero|EquipamientoBomberoController]]
 
 ---

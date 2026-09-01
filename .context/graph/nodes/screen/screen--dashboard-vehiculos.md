@@ -14,6 +14,7 @@ edges:
   - [belongs_to, domain--vehiculos]
   - [uses, component--front-api]
   - [uses, component--front-vehiculos]
+  - [uses, component--front-aviso]
 terminos: [vehiculos, crear]
 ---
 
@@ -33,6 +34,7 @@ Pantalla /dashboard/vehiculos.
 - `belongs_to` → [[domain--vehiculos|Vehículos]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-vehiculos|vehiculos]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

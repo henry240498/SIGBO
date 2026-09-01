@@ -13,6 +13,7 @@ edges:
   - [belongs_to, domain--seguridad]
   - [uses, component--front-api]
   - [uses, component--front-confirmprovider]
+  - [uses, component--front-aviso]
   - [calls, api--seguridad-permisos]
   - [calls, api--seguridad-permisos]
 terminos: [seguridad, permisos]
@@ -38,6 +39,7 @@ Pantalla /dashboard/seguridad/permisos, consume 2 endpoint(s).
 - `belongs_to` → [[domain--seguridad|Seguridad]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-confirmprovider|ConfirmProvider]]
+- `uses` → [[component--front-aviso|Aviso]]
 - `calls` → [[api--seguridad-permisos|PermisosController]]
 - `calls` → [[api--seguridad-permisos|PermisosController]]
 

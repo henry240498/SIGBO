@@ -16,6 +16,7 @@ edges:
   - [uses, component--front-personal]
   - [uses, component--front-parametros]
   - [uses, component--front-documentos]
+  - [uses, component--front-aviso]
 terminos: [documentos, plantillas, administrar, crear]
 ---
 
@@ -37,6 +38,7 @@ Pantalla /dashboard/documentos/plantillas.
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-documentos|documentos]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

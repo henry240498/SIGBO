@@ -15,6 +15,7 @@ edges:
   - [uses, component--front-api]
   - [uses, component--front-parametros]
   - [uses, component--front-finanzas]
+  - [uses, component--front-aviso]
 terminos: [finanzas, presupuesto, administrar, reportes]
 ---
 
@@ -35,6 +36,7 @@ Pantalla /dashboard/finanzas/presupuesto.
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-finanzas|finanzas]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

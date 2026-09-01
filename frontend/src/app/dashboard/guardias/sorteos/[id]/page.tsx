@@ -12,6 +12,8 @@ import {
   cargarEsquemasHorario,
   crearGuardiaDesdeSorteo,
 } from '@/lib/guardias';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function DetalleSorteoPage() {
   const params = useParams();
@@ -54,8 +56,8 @@ export default function DetalleSorteoPage() {
     }
   }
 
-  if (error && !detalle) return <p style={{ color: '#f87171' }}>{error}</p>;
-  if (!detalle) return <p style={{ color: '#94a3b8' }}>Cargando sorteo...</p>;
+  if (error && !detalle) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
+  if (!detalle) return <Cargando texto="Cargando sorteo…" />;
 
   const { sorteo, participantes } = detalle;
   const seleccionados = participantes.filter((p) => p.seleccionado);
@@ -70,11 +72,11 @@ export default function DetalleSorteoPage() {
             <div style={{ display: 'flex', gap: 8, marginTop: 6 }}>
               <span className="badge">{sorteo.fecha}</span>
               <span className="badge">{sorteo.cantidadASeleccionar} a seleccionar</span>
-              <span className="badge" style={{ background: sorteo.guardiaId ? '#166534' : '#334155' }}>
+              <span className="badge" style={{ background: sorteo.guardiaId ? 'var(--ok-fill)' : 'var(--neutral-fill)' }}>
                 {sorteo.guardiaId ? 'Guardia creada' : 'Sin guardia'}
               </span>
             </div>
-            <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 8 }}>
+            <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 8 }}>
               Ejecutado {new Date(sorteo.ejecutadoEn).toLocaleString()}
             </p>
           </div>
@@ -84,7 +86,7 @@ export default function DetalleSorteoPage() {
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       {sorteo.guardiaId ? (
         <div className="card">
@@ -97,7 +99,7 @@ export default function DetalleSorteoPage() {
           <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'end', flexWrap: 'wrap' }}>
             <div style={{ minWidth: 280 }}>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Esquema de horario especial</label>
-              <ComboBuscable
+              <ComboBuscable ariaLabel="Esquema de horario especial"
                 opciones={opcionesEsquema}
                 value={esquemaHorarioId || sorteo.esquemaHorarioId || ''}
                 onChange={setEsquemaHorarioId}
@@ -113,18 +115,18 @@ export default function DetalleSorteoPage() {
 
       <div className="card">
         <h3 style={{ fontSize: 14, marginBottom: 10 }}>Seleccionados ({seleccionados.length})</h3>
-        {seleccionados.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin seleccionados.</p>}
+        {seleccionados.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin seleccionados.</p>}
         {seleccionados.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                <th style={{ padding: '6px 4px' }}>Orden</th>
-                <th style={{ padding: '6px 4px' }}>Bombero</th>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                <th scope="col" style={{ padding: '6px 4px' }}>Orden</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Bombero</th>
               </tr>
             </thead>
             <tbody>
               {seleccionados.map((p) => (
-                <tr key={p.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr key={p.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>{p.orden + 1}</td>
                   <td style={{ padding: '6px 4px' }}>{p.codigoBombero ? `${p.codigoBombero} — ` : ''}{p.nombreCompleto}</td>
                 </tr>
@@ -136,10 +138,10 @@ export default function DetalleSorteoPage() {
 
       <div className="card">
         <h3 style={{ fontSize: 14, marginBottom: 10 }}>No seleccionados ({noSeleccionados.length})</h3>
-        <p style={{ fontSize: 12, color: '#94a3b8', marginBottom: 8 }}>
+        <p style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 8 }}>
           Candidatos elegibles que participaron del sorteo pero no resultaron seleccionados.
         </p>
-        {noSeleccionados.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>—</p>}
+        {noSeleccionados.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>—</p>}
         {noSeleccionados.length > 0 && (
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {noSeleccionados.map((p) => (

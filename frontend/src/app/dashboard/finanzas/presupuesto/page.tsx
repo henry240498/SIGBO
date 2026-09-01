@@ -5,6 +5,7 @@ import { obtenerSesion, API_ORIGIN } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { Parametro } from '@/lib/parametros';
 import { EjercicioFiscal, Presupuesto, actualizarPresupuesto, cargarCategoriasEgresoFinanzas, cargarEjerciciosFiscales, cargarPresupuestos, crearPresupuesto } from '@/lib/finanzas';
+import { Aviso } from '@/app/components/Aviso';
 
 function formatearGs(valor: number): string {
   return `Gs. ${Math.round(valor).toLocaleString('es-PY')}`;
@@ -130,30 +131,30 @@ export default function PresupuestoPage() {
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end' }}>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Ejercicio fiscal</label>
-          <ComboBuscable opciones={opcionesEjercicio} value={ejercicioId} onChange={setEjercicioId} ningunaLabel="-- seleccionar --" maxWidth={220} />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Ejercicio fiscal</label>
+          <ComboBuscable ariaLabel="Ejercicio fiscal" opciones={opcionesEjercicio} value={ejercicioId} onChange={setEjercicioId} ningunaLabel="-- seleccionar --" maxWidth={220} />
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={guardar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Destinado a (categoria de egreso)</label>
-              <ComboBuscable opciones={opcionesCategoria} value={categoriaEgresoId} onChange={setCategoriaEgresoId} ningunaLabel="-- seleccionar --" />
-              {editandoId && <p style={{ fontSize: 11, color: '#64748b', marginTop: 4 }}>Cambiar el destino no mueve lo ya ejecutado -- el ejecutado se recalcula segun la nueva categoria.</p>}
+              <ComboBuscable ariaLabel="Destinado a (categoria de egreso)" opciones={opcionesCategoria} value={categoriaEgresoId} onChange={setCategoriaEgresoId} ningunaLabel="-- seleccionar --" />
+              {editandoId && <p style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>Cambiar el destino no mueve lo ya ejecutado -- el ejecutado se recalcula segun la nueva categoria.</p>}
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Monto presupuestado</label>
-              <input className="input-field" type="number" min={0} step="1" value={montoPresupuestado} onChange={(e) => setMontoPresupuestado(e.target.value)} required />
+              <label htmlFor="monto-presupuestado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Monto presupuestado</label>
+              <input id="monto-presupuestado" className="input-field" type="number" min={0} step="1" value={montoPresupuestado} onChange={(e) => setMontoPresupuestado(e.target.value)} required />
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
-            <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
+            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+            <input id="observacion" className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear partida'}
@@ -161,35 +162,35 @@ export default function PresupuestoPage() {
         </form>
       )}
 
-      {!ejercicioId && <p style={{ color: '#94a3b8', fontSize: 13 }}>Seleccione un ejercicio fiscal.</p>}
-      {presupuestos && presupuestos.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay partidas presupuestadas para este ejercicio.</p>}
+      {!ejercicioId && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Seleccione un ejercicio fiscal.</p>}
+      {presupuestos && presupuestos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay partidas presupuestadas para este ejercicio.</p>}
       {presupuestos && presupuestos.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Destinado a</th>
-              <th style={{ padding: '6px 4px' }}>Presupuestado</th>
-              <th style={{ padding: '6px 4px' }}>Ejecutado</th>
-              <th style={{ padding: '6px 4px' }}>Disponible</th>
-              <th style={{ padding: '6px 4px' }}>% Ejecutado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Destinado a</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Presupuestado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Ejecutado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Disponible</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>% Ejecutado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {presupuestos.map((p) => (
-              <tr key={p.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={p.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{nombreCategoria.get(p.categoriaEgresoId) ?? '-'}</td>
                 <td style={{ padding: '6px 4px' }}>{formatearGs(p.montoPresupuestado)}</td>
                 <td style={{ padding: '6px 4px' }}>{formatearGs(p.ejecutado)}</td>
-                <td style={{ padding: '6px 4px', color: p.disponible < 0 ? '#f87171' : undefined, fontWeight: p.disponible < 0 ? 600 : undefined }}>{formatearGs(p.disponible)}</td>
+                <td style={{ padding: '6px 4px', color: p.disponible < 0 ? 'var(--danger)' : undefined, fontWeight: p.disponible < 0 ? 600 : undefined }}>{formatearGs(p.disponible)}</td>
                 <td style={{ padding: '6px 4px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <div style={{ width: 80, height: 8, background: '#334155', borderRadius: 4, overflow: 'hidden' }}>
+                    <div style={{ width: 80, height: 8, background: 'var(--neutral-fill)', borderRadius: 4, overflow: 'hidden' }}>
                       <div
                         style={{
                           width: `${Math.min(p.porcentajeEjecutado, 100)}%`,
                           height: '100%',
-                          background: p.porcentajeEjecutado > 100 ? '#f87171' : p.porcentajeEjecutado > 80 ? '#fbbf24' : '#4ade80',
+                          background: p.porcentajeEjecutado > 100 ? 'var(--danger)' : p.porcentajeEjecutado > 80 ? 'var(--warning)' : 'var(--success)',
                         }}
                       />
                     </div>

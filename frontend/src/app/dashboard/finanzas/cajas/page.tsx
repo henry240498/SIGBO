@@ -1,17 +1,20 @@
 'use client';
 
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useId, useMemo, useState } from 'react';
 import { obtenerSesion } from '@/lib/api';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { cargarBomberos, BomberoResumen } from '@/lib/personal';
 import { Caja, TurnoCaja, abrirCaja, actualizarCaja, cargarCajas, cargarTurnoAbierto, cargarTurnosDeCaja, cerrarCaja, crearCaja } from '@/lib/finanzas';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 function formatearGs(valor: number): string {
   return `Gs. ${Math.round(valor).toLocaleString('es-PY')}`;
 }
 
 function PanelTurno({ caja, onCambio }: { caja: Caja; onCambio: () => void }) {
+  const idCampo = useId();
   const [turnoAbierto, setTurnoAbierto] = useState<TurnoCaja | null | undefined>(undefined);
   const [turnos, setTurnos] = useState<TurnoCaja[] | null>(null);
   const [mostrarAbrir, setMostrarAbrir] = useState(false);
@@ -70,11 +73,11 @@ function PanelTurno({ caja, onCambio }: { caja: Caja; onCambio: () => void }) {
     }
   }
 
-  if (turnoAbierto === undefined) return <p style={{ color: '#94a3b8', fontSize: 12 }}>Cargando turnos...</p>;
+  if (turnoAbierto === undefined) return <Cargando texto="Cargando turnos…" />;
 
   return (
-    <div style={{ padding: '10px 4px', background: '#0f172a', borderRadius: 6 }}>
-      {error && <p style={{ color: '#f87171', fontSize: 12 }}>{error}</p>}
+    <div style={{ padding: '10px 4px', background: 'var(--surface-soft)', borderRadius: 6 }}>
+      {error && <Aviso tipo="error" texto={error} fontSize={12} />}
       {turnoAbierto ? (
         <div style={{ fontSize: 13 }}>
           Turno abierto desde {new Date(turnoAbierto.fechaApertura).toLocaleString()} (saldo inicial declarado {formatearGs(turnoAbierto.saldoInicial)}).
@@ -98,8 +101,8 @@ function PanelTurno({ caja, onCambio }: { caja: Caja; onCambio: () => void }) {
       {mostrarAbrir && (
         <form onSubmit={abrir} style={{ display: 'flex', gap: 8, marginTop: 8, alignItems: 'flex-end' }}>
           <div>
-            <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Saldo inicial declarado</label>
-            <input className="input-field" type="number" min={0} step="1" value={saldoInicial} onChange={(e) => setSaldoInicial(e.target.value)} required />
+            <label htmlFor={`${idCampo}-saldo-inicial-declarado`} style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Saldo inicial declarado</label>
+            <input id={`${idCampo}-saldo-inicial-declarado`} className="input-field" type="number" min={0} step="1" value={saldoInicial} onChange={(e) => setSaldoInicial(e.target.value)} required />
           </div>
           <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Confirmar apertura'}
@@ -110,12 +113,12 @@ function PanelTurno({ caja, onCambio }: { caja: Caja; onCambio: () => void }) {
       {mostrarCerrar && (
         <form onSubmit={cerrar} style={{ display: 'grid', gridTemplateColumns: '1fr 2fr auto', gap: 8, marginTop: 8, alignItems: 'flex-end' }}>
           <div>
-            <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Saldo fisico contado</label>
-            <input className="input-field" type="number" min={0} step="1" value={saldoFisico} onChange={(e) => setSaldoFisico(e.target.value)} required />
+            <label htmlFor={`${idCampo}-saldo-fisico-contado`} style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Saldo fisico contado</label>
+            <input id={`${idCampo}-saldo-fisico-contado`} className="input-field" type="number" min={0} step="1" value={saldoFisico} onChange={(e) => setSaldoFisico(e.target.value)} required />
           </div>
           <div>
-            <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Observacion</label>
-            <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
+            <label htmlFor={`${idCampo}-observacion`} style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Observacion</label>
+            <input id={`${idCampo}-observacion`} className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
           <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12, background: '#7f1d1d' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Confirmar cierre'}
@@ -126,22 +129,22 @@ function PanelTurno({ caja, onCambio }: { caja: Caja; onCambio: () => void }) {
       {turnos && turnos.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12, marginTop: 10 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '4px' }}>Apertura</th>
-              <th style={{ padding: '4px' }}>Cierre</th>
-              <th style={{ padding: '4px' }}>Saldo teorico</th>
-              <th style={{ padding: '4px' }}>Saldo fisico</th>
-              <th style={{ padding: '4px' }}>Diferencia</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '4px' }}>Apertura</th>
+              <th scope="col" style={{ padding: '4px' }}>Cierre</th>
+              <th scope="col" style={{ padding: '4px' }}>Saldo teorico</th>
+              <th scope="col" style={{ padding: '4px' }}>Saldo fisico</th>
+              <th scope="col" style={{ padding: '4px' }}>Diferencia</th>
             </tr>
           </thead>
           <tbody>
             {turnos.map((t) => (
-              <tr key={t.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={t.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '4px' }}>{new Date(t.fechaApertura).toLocaleString()}</td>
                 <td style={{ padding: '4px' }}>{t.fechaCierre ? new Date(t.fechaCierre).toLocaleString() : '-'}</td>
                 <td style={{ padding: '4px' }}>{t.saldoTeorico != null ? formatearGs(t.saldoTeorico) : '-'}</td>
                 <td style={{ padding: '4px' }}>{t.saldoFisico != null ? formatearGs(t.saldoFisico) : '-'}</td>
-                <td style={{ padding: '4px', color: t.diferencia ? '#f87171' : undefined, fontWeight: t.diferencia ? 600 : undefined }}>
+                <td style={{ padding: '4px', color: t.diferencia ? 'var(--danger)' : undefined, fontWeight: t.diferencia ? 600 : undefined }}>
                   {t.diferencia != null ? (t.diferencia !== 0 ? `⚠️ ${formatearGs(t.diferencia)}` : formatearGs(0)) : '-'}
                 </td>
               </tr>
@@ -154,6 +157,7 @@ function PanelTurno({ caja, onCambio }: { caja: Caja; onCambio: () => void }) {
 }
 
 export default function CajasPage() {
+  const idCampo = useId();
   const confirmar = useConfirmacion();
   const [cajas, setCajas] = useState<Caja[] | null>(null);
   const [bomberos, setBomberos] = useState<BomberoResumen[]>([]);
@@ -227,24 +231,24 @@ export default function CajasPage() {
         )}
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={crear} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor={`${idCampo}-nombre`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id={`${idCampo}-nombre`} className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Responsable</label>
-              <ComboBuscable opciones={opcionesBombero} value={responsableId} onChange={setResponsableId} ningunaLabel="Sin definir" />
+              <ComboBuscable ariaLabel="Responsable" opciones={opcionesBombero} value={responsableId} onChange={setResponsableId} ningunaLabel="Sin definir" />
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
-            <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
+            <label htmlFor={`${idCampo}-observacion-2`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+            <input id={`${idCampo}-observacion-2`} className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Crear caja'}
@@ -252,27 +256,27 @@ export default function CajasPage() {
         </form>
       )}
 
-      {cajas && cajas.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay cajas registradas.</p>}
+      {cajas && cajas.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay cajas registradas.</p>}
       {cajas && cajas.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Responsable</th>
-              <th style={{ padding: '6px 4px' }}>Saldo actual</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Responsable</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Saldo actual</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {cajas.map((c) => (
               <Fragment key={c.id}>
-                <tr style={{ borderBottom: expandidaId === c.id ? 'none' : '1px solid #1f2937' }}>
+                <tr style={{ borderBottom: expandidaId === c.id ? 'none' : '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>{c.nombre}</td>
                   <td style={{ padding: '6px 4px' }}>{c.responsableId ? bomberoPorId.get(c.responsableId) ?? '-' : '-'}</td>
-                  <td style={{ padding: '6px 4px', fontWeight: 600, color: c.saldoActual < 0 ? '#f87171' : undefined }}>{formatearGs(c.saldoActual)}</td>
+                  <td style={{ padding: '6px 4px', fontWeight: 600, color: c.saldoActual < 0 ? 'var(--danger)' : undefined }}>{formatearGs(c.saldoActual)}</td>
                   <td style={{ padding: '6px 4px' }}>
-                    <span className="badge" style={{ background: c.estado === 'ACTIVA' ? '#166534' : '#7f1d1d', color: c.estado === 'ACTIVA' ? '#4ade80' : '#f87171' }}>{c.estado}</span>
+                    <span className="badge" style={{ background: c.estado === 'ACTIVA' ? 'var(--ok-fill)' : 'var(--bad-fill)', color: c.estado === 'ACTIVA' ? 'var(--success)' : 'var(--danger)' }}>{c.estado}</span>
                   </td>
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                     <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => setExpandidaId(expandidaId === c.id ? null : c.id)}>
@@ -286,7 +290,7 @@ export default function CajasPage() {
                   </td>
                 </tr>
                 {expandidaId === c.id && (
-                  <tr style={{ borderBottom: '1px solid #1f2937' }}>
+                  <tr style={{ borderBottom: '1px solid var(--line-soft)' }}>
                     <td colSpan={5} style={{ padding: '4px' }}>
                       <PanelTurno caja={c} onCambio={cargar} />
                     </td>

@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { API_ORIGIN, apiFetch } from '@/lib/api';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 interface Contacto {
   numero?: string;
@@ -137,17 +139,17 @@ export default function MiPerfilPage() {
     }
   }
 
-  if (!perfil) return <p style={{ color: '#94a3b8' }}>Cargando...</p>;
+  if (!perfil) return <Cargando texto="Cargando…" />;
 
   const bloqueado = !perfil.puedeEditar;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 640 }}>
-      {error && <p style={{ color: '#f87171', fontSize: 13 }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} fontSize={13} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {bloqueado && (
-        <section className="card" style={{ borderColor: '#b45309', background: '#451a03' }}>
+        <section className="card" style={{ borderColor: '#b45309', background: 'var(--warn-fill)' }}>
           <p style={{ fontSize: 13 }}>
             ⚠ La edicion de tus datos personales (foto, telefonos, correos y redes sociales) esta
             bloqueada por el Administrador. Solo el cambio de contrasena sigue disponible. Contacte a
@@ -161,8 +163,8 @@ export default function MiPerfilPage() {
         <h2 style={{ fontSize: 16, marginBottom: 12 }}>Cambiar mi contrasena</h2>
         <form onSubmit={cambiarPassword} style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 360 }}>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Contrasena actual</label>
-            <input
+            <label htmlFor="contrasena-actual" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Contrasena actual</label>
+            <input id="contrasena-actual"
               className="input-field"
               type="password"
               value={passwordActual}
@@ -171,8 +173,8 @@ export default function MiPerfilPage() {
             />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Contrasena nueva</label>
-            <input
+            <label htmlFor="contrasena-nueva" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Contrasena nueva</label>
+            <input id="contrasena-nueva"
               className="input-field"
               type="password"
               value={passwordNueva}
@@ -181,8 +183,8 @@ export default function MiPerfilPage() {
               required
             />
           </div>
-          {errorPassword && <p style={{ color: '#f87171', fontSize: 13 }}>{errorPassword}</p>}
-          {mensajePassword && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensajePassword}</p>}
+          {errorPassword && <Aviso tipo="error" texto={errorPassword} fontSize={13} />}
+          {mensajePassword && <Aviso tipo="exito" texto={mensajePassword} fontSize={13} />}
           <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }}>
             Guardar contrasena
           </button>
@@ -197,7 +199,7 @@ export default function MiPerfilPage() {
             <img
               src={`${API_ORIGIN}/api/v1/seguridad/mi-perfil/foto`}
               alt="Foto de perfil"
-              style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: '50%', border: '1px solid #334155' }}
+              style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: '50%', border: '1px solid var(--line)' }}
             />
           ) : (
             <div
@@ -205,7 +207,7 @@ export default function MiPerfilPage() {
                 width: 64,
                 height: 64,
                 borderRadius: '50%',
-                border: '1px solid #334155',
+                border: '1px solid var(--line)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -226,7 +228,7 @@ export default function MiPerfilPage() {
             }}
             style={{ fontSize: 12 }}
           />
-          {subiendoFoto && <span style={{ fontSize: 12, color: '#94a3b8' }}>Subiendo...</span>}
+          {subiendoFoto && <span style={{ fontSize: 12, color: 'var(--muted)' }}>Subiendo...</span>}
         </div>
       </section>
 
@@ -258,7 +260,7 @@ export default function MiPerfilPage() {
                 <button
                   type="button"
                   onClick={() => setTelefonos((prev) => prev.filter((_, idx) => idx !== i))}
-                  style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer' }}
+                  style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer' }}
                 >
                   quitar
                 </button>
@@ -304,7 +306,7 @@ export default function MiPerfilPage() {
                 <button
                   type="button"
                   onClick={() => setCorreos((prev) => prev.filter((_, idx) => idx !== i))}
-                  style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer' }}
+                  style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer' }}
                 >
                   quitar
                 </button>
@@ -384,15 +386,15 @@ function RedSocial({
 }) {
   return (
     <div style={{ marginBottom: 10 }}>
-      <label style={{ fontSize: 12, display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+      <label htmlFor="target-blank-rel-noopener-noreferrer-sty" style={{ fontSize: 12, display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
         <span>{etiqueta}</span>
         {href && (
-          <a href={href} target="_blank" rel="noopener noreferrer" style={{ color: '#60a5fa' }}>
+          <a href={href} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--signal)' }}>
             Abrir enlace ↗
           </a>
         )}
       </label>
-      <input
+      <input id="target-blank-rel-noopener-noreferrer-sty"
         className="input-field"
         placeholder={placeholder}
         value={valor}

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { apiFetch } from '@/lib/api';
 import { cargarParametros, Parametro } from '@/lib/parametros';
+import { Aviso } from '@/app/components/Aviso';
 
 interface Catalogo {
   id: string;
@@ -180,29 +181,29 @@ export default function NuevoBomberoPage() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 900 }}>
       <h2 style={{ fontSize: 16 }}>Agregar Bombero</h2>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       <form onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <h3 style={{ fontSize: 14 }}>Datos personales</h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cedula *</label>
-              <input className="input-field" value={cedula} onChange={(e) => setCedula(e.target.value)} required />
+              <label htmlFor="cedula" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cedula *</label>
+              <input id="cedula" className="input-field" value={cedula} onChange={(e) => setCedula(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre *</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre *</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Apellido *</label>
-              <input className="input-field" value={apellido} onChange={(e) => setApellido(e.target.value)} required />
+              <label htmlFor="apellido" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Apellido *</label>
+              <input id="apellido" className="input-field" value={apellido} onChange={(e) => setApellido(e.target.value)} required />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de nacimiento *</label>
-              <input
+              <label htmlFor="fecha-de-nacimiento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de nacimiento *</label>
+              <input id="fecha-de-nacimiento"
                 className="input-field"
                 type="date"
                 value={fechaNacimiento}
@@ -211,16 +212,16 @@ export default function NuevoBomberoPage() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Sexo</label>
-              <select className="input-field" value={sexo} onChange={(e) => setSexo(e.target.value as 'M' | 'F' | '')}>
+              <label htmlFor="sexo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Sexo</label>
+              <select id="sexo" className="input-field" value={sexo} onChange={(e) => setSexo(e.target.value as 'M' | 'F' | '')}>
                 <option value="">No especificado</option>
                 <option value="M">M</option>
                 <option value="F">F</option>
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Pais</label>
-              <select className="input-field" value={paisId} onChange={(e) => setPaisId(e.target.value)}>
+              <label htmlFor="pais" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Pais</label>
+              <select id="pais" className="input-field" value={paisId} onChange={(e) => setPaisId(e.target.value)}>
                 <option value="">NINGUNA</option>
                 {paises.map((p) => (
                   <option key={p.id} value={p.id}>
@@ -230,8 +231,8 @@ export default function NuevoBomberoPage() {
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Pasaporte</label>
-              <input className="input-field" value={pasaporte} onChange={(e) => setPasaporte(e.target.value)} />
+              <label htmlFor="pasaporte" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Pasaporte</label>
+              <input id="pasaporte" className="input-field" value={pasaporte} onChange={(e) => setPasaporte(e.target.value)} />
             </div>
           </div>
         </section>
@@ -240,8 +241,8 @@ export default function NuevoBomberoPage() {
           <h3 style={{ fontSize: 14 }}>Contacto</h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Telefono principal *</label>
-              <input
+              <label htmlFor="telefono-principal" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Telefono principal *</label>
+              <input id="telefono-principal"
                 className="input-field"
                 value={telefonoPrincipal}
                 onChange={(e) => setTelefonoPrincipal(e.target.value)}
@@ -249,11 +250,11 @@ export default function NuevoBomberoPage() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Email</label>
-              <input className="input-field" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <label htmlFor="email" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Email</label>
+              <input id="email" className="input-field" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
           </div>
-          <p style={{ fontSize: 12, color: '#94a3b8' }}>
+          <p style={{ fontSize: 12, color: 'var(--muted)' }}>
             El detalle de ubicacion (pais, departamento, ciudad, barrio) se completa luego desde la pestana
             &quot;Datos personales&quot; del expediente.
           </p>
@@ -263,8 +264,8 @@ export default function NuevoBomberoPage() {
           <h3 style={{ fontSize: 14 }}>Codigo bomberil</h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de Bombero *</label>
-              <select
+              <label htmlFor="tipo-de-bombero" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de Bombero *</label>
+              <select id="tipo-de-bombero"
                 className="input-field"
                 value={tipoBomberoId}
                 onChange={(e) => setTipoBomberoId(e.target.value)}
@@ -279,10 +280,10 @@ export default function NuevoBomberoPage() {
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>
+              <label htmlFor="numero-manual-sin-el-prefijo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>
                 Numero (manual, sin el prefijo) *
               </label>
-              <input
+              <input id="numero-manual-sin-el-prefijo"
                 className="input-field"
                 value={numeroManual}
                 onChange={(e) => setNumeroManual(e.target.value)}
@@ -291,8 +292,8 @@ export default function NuevoBomberoPage() {
               />
             </div>
           </div>
-          <p style={{ fontSize: 13, color: '#94a3b8' }}>
-            Codigo bomberil resultante: <strong style={{ color: '#e2e8f0' }}>{codigoPreview || '(incompleto)'}</strong>
+          <p style={{ fontSize: 13, color: 'var(--muted)' }}>
+            Codigo bomberil resultante: <strong style={{ color: 'var(--ink)' }}>{codigoPreview || '(incompleto)'}</strong>
           </p>
         </section>
 
@@ -300,22 +301,22 @@ export default function NuevoBomberoPage() {
           <h3 style={{ fontSize: 14 }}>Informacion institucional</h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Rango *</label>
-              <select className="input-field" value={rangoId} onChange={(e) => setRangoId(e.target.value)} required>
+              <label htmlFor="rango" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Rango *</label>
+              <select id="rango" className="input-field" value={rangoId} onChange={(e) => setRangoId(e.target.value)} required>
                 <option value="">Seleccionar...</option>
                 {opciones(rangos)}
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cargo</label>
-              <select className="input-field" value={cargoPrincipalId} onChange={(e) => setCargoPrincipalId(e.target.value)}>
+              <label htmlFor="cargo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cargo</label>
+              <select id="cargo" className="input-field" value={cargoPrincipalId} onChange={(e) => setCargoPrincipalId(e.target.value)}>
                 <option value="">Sin cargo</option>
                 {opciones(cargos)}
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Condicion institucional</label>
-              <select
+              <label htmlFor="condicion-institucional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Condicion institucional</label>
+              <select id="condicion-institucional"
                 className="input-field"
                 value={condicionInstitucional}
                 onChange={(e) => setCondicionInstitucional(e.target.value)}
@@ -331,29 +332,29 @@ export default function NuevoBomberoPage() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Compania</label>
-              <select className="input-field" value={companiaId} onChange={(e) => setCompaniaId(e.target.value)}>
+              <label htmlFor="compania" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Compania</label>
+              <select id="compania" className="input-field" value={companiaId} onChange={(e) => setCompaniaId(e.target.value)}>
                 <option value="">Sin asignar</option>
                 {opciones(companias)}
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cuartel</label>
-              <select className="input-field" value={cuartelId} onChange={(e) => setCuartelId(e.target.value)}>
+              <label htmlFor="cuartel" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cuartel</label>
+              <select id="cuartel" className="input-field" value={cuartelId} onChange={(e) => setCuartelId(e.target.value)}>
                 <option value="">Sin asignar</option>
                 {opciones(cuarteles)}
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Turno</label>
-              <select className="input-field" value={turnoId} onChange={(e) => setTurnoId(e.target.value)}>
+              <label htmlFor="turno" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Turno</label>
+              <select id="turno" className="input-field" value={turnoId} onChange={(e) => setTurnoId(e.target.value)}>
                 <option value="">Sin asignar</option>
                 {opciones(turnos)}
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de guardia</label>
-              <select className="input-field" value={tipoGuardiaId} onChange={(e) => setTipoGuardiaId(e.target.value)}>
+              <label htmlFor="tipo-de-guardia" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de guardia</label>
+              <select id="tipo-de-guardia" className="input-field" value={tipoGuardiaId} onChange={(e) => setTipoGuardiaId(e.target.value)}>
                 <option value="">Sin asignar</option>
                 {opciones(tiposGuardia)}
               </select>
@@ -361,22 +362,22 @@ export default function NuevoBomberoPage() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Brigada</label>
-              <select className="input-field" value={brigadaId} onChange={(e) => setBrigadaId(e.target.value)}>
+              <label htmlFor="brigada" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Brigada</label>
+              <select id="brigada" className="input-field" value={brigadaId} onChange={(e) => setBrigadaId(e.target.value)}>
                 <option value="">Sin asignar</option>
                 {opciones(brigadas)}
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Departamento</label>
-              <select className="input-field" value={departamentoId} onChange={(e) => setDepartamentoId(e.target.value)}>
+              <label htmlFor="departamento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Departamento</label>
+              <select id="departamento" className="input-field" value={departamentoId} onChange={(e) => setDepartamentoId(e.target.value)}>
                 <option value="">Sin asignar</option>
                 {opciones(departamentos)}
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Unidad</label>
-              <select className="input-field" value={unidadId} onChange={(e) => setUnidadId(e.target.value)}>
+              <label htmlFor="unidad" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Unidad</label>
+              <select id="unidad" className="input-field" value={unidadId} onChange={(e) => setUnidadId(e.target.value)}>
                 <option value="">Sin asignar</option>
                 {opciones(unidades)}
               </select>
@@ -384,8 +385,8 @@ export default function NuevoBomberoPage() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de ingreso *</label>
-              <input
+              <label htmlFor="fecha-de-ingreso" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de ingreso *</label>
+              <input id="fecha-de-ingreso"
                 className="input-field"
                 type="date"
                 value={fechaIngreso}
@@ -394,8 +395,8 @@ export default function NuevoBomberoPage() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de incorporacion</label>
-              <input
+              <label htmlFor="fecha-de-incorporacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de incorporacion</label>
+              <input id="fecha-de-incorporacion"
                 className="input-field"
                 type="date"
                 value={fechaIncorporacion}
@@ -403,8 +404,8 @@ export default function NuevoBomberoPage() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de juramento</label>
-              <input
+              <label htmlFor="fecha-de-juramento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de juramento</label>
+              <input id="fecha-de-juramento"
                 className="input-field"
                 type="date"
                 value={fechaJuramento}
@@ -412,8 +413,8 @@ export default function NuevoBomberoPage() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-              <select className="input-field" value={estado} onChange={(e) => setEstado(e.target.value)}>
+              <label htmlFor="estado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
+              <select id="estado" className="input-field" value={estado} onChange={(e) => setEstado(e.target.value)}>
                 {ESTADOS.map((e) => (
                   <option key={e} value={e}>
                     {e}
@@ -426,7 +427,7 @@ export default function NuevoBomberoPage() {
 
         <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <h3 style={{ fontSize: 14 }}>Disponibilidad para Guardias</h3>
-          <p style={{ fontSize: 12, color: '#94a3b8' }}>
+          <p style={{ fontSize: 12, color: 'var(--muted)' }}>
             Distinto de participar en Servicios: un bombero puede participar de servicios aunque no realice guardias.
           </p>
           <div style={{ display: 'flex', gap: 20 }}>
@@ -445,8 +446,8 @@ export default function NuevoBomberoPage() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Frecuencia normal mensual</label>
-              <input
+              <label htmlFor="frecuencia-normal-mensual" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Frecuencia normal mensual</label>
+              <input id="frecuencia-normal-mensual"
                 className="input-field"
                 type="number"
                 min={0}
@@ -456,8 +457,8 @@ export default function NuevoBomberoPage() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Frecuencia especial mensual</label>
-              <input
+              <label htmlFor="frecuencia-especial-mensual" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Frecuencia especial mensual</label>
+              <input id="frecuencia-especial-mensual"
                 className="input-field"
                 type="number"
                 min={0}
@@ -467,8 +468,8 @@ export default function NuevoBomberoPage() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Dia preferente</label>
-              <select className="input-field" value={diaPreferenteGuardia} onChange={(e) => setDiaPreferenteGuardia(e.target.value)}>
+              <label htmlFor="dia-preferente" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Dia preferente</label>
+              <select id="dia-preferente" className="input-field" value={diaPreferenteGuardia} onChange={(e) => setDiaPreferenteGuardia(e.target.value)}>
                 {DIAS_SEMANA_PREFERENCIA.map((d) => (
                   <option key={d} value={d}>{d}</option>
                 ))}

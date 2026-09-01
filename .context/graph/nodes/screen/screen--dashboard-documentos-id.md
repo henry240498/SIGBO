@@ -17,6 +17,7 @@ edges:
   - [uses, component--front-parametros]
   - [uses, component--front-personal]
   - [uses, component--front-documentos]
+  - [uses, component--front-cargando]
 terminos: [documentos, editar, subir, descargar, aprobar, anular, eliminar, administrar, ver, auditoria, firmar]
 ---
 
@@ -39,6 +40,7 @@ Pantalla /dashboard/documentos/[id].
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-documentos|documentos]]
+- `uses` → [[component--front-cargando|Cargando]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const TABS = [
-  { href: '/dashboard/seguridad/inteligencia-artificial', label: 'Dashboard', exact: true },
+  { href: '/dashboard/seguridad/inteligencia-artificial', label: 'Resumen', exact: true },
   { href: '/dashboard/seguridad/inteligencia-artificial/configuracion', label: 'Configuración' },
   { href: '/dashboard/seguridad/inteligencia-artificial/conversaciones', label: 'Conversaciones' },
   { href: '/dashboard/seguridad/inteligencia-artificial/propuestas', label: 'Propuestas de mejora' },
@@ -21,7 +21,7 @@ export default function InteligenciaArtificialLayout({ children }: { children: R
           display: 'flex',
           gap: 4,
           flexWrap: 'wrap',
-          borderBottom: '1px solid #334155',
+          borderBottom: '1px solid var(--line)',
           marginBottom: 20,
           paddingBottom: 0,
         }}
@@ -36,7 +36,7 @@ export default function InteligenciaArtificialLayout({ children }: { children: R
                 padding: '8px 12px',
                 fontSize: 13,
                 textDecoration: 'none',
-                color: activo ? '#e2e8f0' : '#94a3b8',
+                color: activo ? 'var(--ink)' : 'var(--muted)',
                 fontWeight: activo ? 600 : 400,
                 borderBottom: activo ? '2px solid #2563eb' : '2px solid transparent',
               }}

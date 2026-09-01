@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
+import { Aviso } from '@/app/components/Aviso';
 
 interface Turno {
   id: string;
@@ -208,24 +209,24 @@ export default function TurnosPage() {
         </button>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       {mostrarForm && (
         <form className="card" onSubmit={guardarTurno} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo</label>
-              <input className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} required />
+              <label htmlFor="codigo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo</label>
+              <input id="codigo" className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Hora inicio</label>
-              <input
+              <label htmlFor="hora-inicio" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Hora inicio</label>
+              <input id="hora-inicio"
                 className="input-field"
                 type="time"
                 value={horaInicio}
@@ -233,12 +234,12 @@ export default function TurnosPage() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Hora fin</label>
-              <input className="input-field" type="time" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
+              <label htmlFor="hora-fin" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Hora fin</label>
+              <input id="hora-fin" className="input-field" type="time" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-              <select
+              <label htmlFor="estado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
+              <select id="estado"
                 className="input-field"
                 value={estado}
                 onChange={(e) => setEstado(e.target.value as 'ACTIVO' | 'INACTIVO')}
@@ -249,8 +250,8 @@ export default function TurnosPage() {
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Bombero responsable</label>
-            <select
+            <label htmlFor="bombero-responsable" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Bombero responsable</label>
+            <select id="bombero-responsable"
               className="input-field"
               value={responsableBomberoId}
               onChange={(e) => setResponsableBomberoId(e.target.value)}
@@ -277,19 +278,19 @@ export default function TurnosPage() {
       {turnos && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Codigo</th>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Hora inicio</th>
-              <th style={{ padding: '6px 4px' }}>Hora fin</th>
-              <th style={{ padding: '6px 4px' }}>Responsable</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Codigo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Hora inicio</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Hora fin</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Responsable</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {turnos.map((t) => (
-              <tr key={t.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={t.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{t.codigo}</td>
                 <td style={{ padding: '6px 4px' }}>{t.nombre}</td>
                 <td style={{ padding: '6px 4px' }}>{t.horaInicio ?? '-'}</td>

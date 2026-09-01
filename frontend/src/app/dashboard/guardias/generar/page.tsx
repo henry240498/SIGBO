@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { descargarArchivo, obtenerSesion } from '@/lib/api';
 import { OrdenGuardia, ResultadoGeneracion, crearOrdenGuardia, generarDocumentosOrden, generarPlanificacion } from '@/lib/guardias';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function GenerarPlanificacionPage() {
   const [desde, setDesde] = useState('');
@@ -70,13 +71,13 @@ export default function GenerarPlanificacionPage() {
   }
 
   if (!puedeGenerar) {
-    return <p style={{ color: '#94a3b8', fontSize: 13 }}>No tenes permiso para generar la planificacion de guardias.</p>;
+    return <p style={{ color: 'var(--muted)', fontSize: 13 }}>No tenes permiso para generar la planificacion de guardias.</p>;
   }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 900 }}>
       <h2 style={{ fontSize: 16 }}>Generar planificacion de guardias</h2>
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         Este generador es un <strong>asistente de planificacion, no una imposicion absoluta</strong>: propone
         guardias respetando la rotacion de grupos configurada, la frecuencia mensual y el dia preferente de cada
         persona, y las reglas de elegibilidad de oficial/chofer — pero nunca asigna a alguien no habilitado. Cada
@@ -84,17 +85,17 @@ export default function GenerarPlanificacionPage() {
         advertencias antes de darla por definitiva.
       </p>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       <form className="card" onSubmit={generar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Desde</label>
-            <input className="input-field" type="date" value={desde} onChange={(e) => setDesde(e.target.value)} required />
+            <label htmlFor="desde" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Desde</label>
+            <input id="desde" className="input-field" type="date" value={desde} onChange={(e) => setDesde(e.target.value)} required />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Hasta</label>
-            <input className="input-field" type="date" value={hasta} onChange={(e) => setHasta(e.target.value)} required />
+            <label htmlFor="hasta" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Hasta</label>
+            <input id="hasta" className="input-field" type="date" value={hasta} onChange={(e) => setHasta(e.target.value)} required />
           </div>
         </div>
         <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -113,24 +114,24 @@ export default function GenerarPlanificacionPage() {
       {resultado && (
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'flex', gap: 16 }}>
-            <span className="badge" style={{ background: '#166534' }}>{resultado.guardiasCreadas} guardias creadas</span>
+            <span className="badge" style={{ background: 'var(--ok-fill)' }}>{resultado.guardiasCreadas} guardias creadas</span>
             <span className="badge">{resultado.personasAsignadas} personas asignadas</span>
             {resultado.advertencias.length > 0 && (
-              <span className="badge" style={{ background: '#854d0e' }}>{resultado.advertencias.length} advertencias</span>
+              <span className="badge" style={{ background: 'var(--warn-fill)' }}>{resultado.advertencias.length} advertencias</span>
             )}
           </div>
 
           {resultado.advertencias.length > 0 && (
             <div>
               <h3 style={{ fontSize: 14, marginBottom: 6 }}>Advertencias</h3>
-              <p style={{ fontSize: 12, color: '#94a3b8', marginBottom: 8 }}>
+              <p style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 8 }}>
                 Ninguna advertencia bloquea la generacion: indican donde el asistente no pudo resolver algo
                 automaticamente (falta de personal habilitado, grupo aun no disponible, etc.) y que requiere
                 revision manual.
               </p>
               <ul style={{ fontSize: 13, display: 'flex', flexDirection: 'column', gap: 4, paddingLeft: 18 }}>
                 {resultado.advertencias.map((a, i) => (
-                  <li key={i} style={{ color: '#fbbf24' }}>{a}</li>
+                  <li key={i} style={{ color: 'var(--warning)' }}>{a}</li>
                 ))}
               </ul>
             </div>
@@ -150,11 +151,11 @@ export default function GenerarPlanificacionPage() {
           )}
 
           {puedeCrearOrden && puedeGenerarDocumentos && (
-            <div style={{ borderTop: '1px solid #334155', paddingTop: 12 }}>
+            <div style={{ borderTop: '1px solid var(--line)', paddingTop: 12 }}>
               <h3 style={{ fontSize: 14, marginBottom: 6 }}>Orden oficial y PDF</h3>
               {rangoEsDeUnMes ? (
                 <>
-                  <p style={{ fontSize: 12, color: '#94a3b8', marginBottom: 8 }}>
+                  <p style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 8 }}>
                     {resultado.guardiasCreadas > 0
                       ? 'Cree la Orden de Guardia para este periodo y genere el PDF con el membrete institucional configurado.'
                       : 'Las guardias de este periodo ya estaban planificadas. Puede crear la Orden y el PDF con membrete usando esas guardias existentes.'}
@@ -177,7 +178,7 @@ export default function GenerarPlanificacionPage() {
                   )}
                 </>
               ) : (
-                <p style={{ fontSize: 12, color: '#fbbf24' }}>
+                <p style={{ fontSize: 12, color: 'var(--warning)' }}>
                   El rango generado cubre más de un mes. Cree una Orden de Guardia por cada mes desde la sección «Ordenes de Guardia».
                 </p>
               )}

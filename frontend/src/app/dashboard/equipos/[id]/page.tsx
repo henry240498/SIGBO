@@ -23,6 +23,8 @@ import {
   devolverEquipo,
   prestarEquipo,
 } from '@/lib/equipos';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 type Vista = 'datos' | 'prestamo' | 'mantenimientos' | 'historial';
 const SUBTABS: { id: Vista; label: string }[] = [
@@ -59,8 +61,8 @@ export default function EquipoDetallePage() {
 
   const categoria = useMemo(() => categorias.find((c) => c.id === equipo?.categoriaId), [categorias, equipo]);
 
-  if (error) return <p style={{ color: '#f87171' }}>{error}</p>;
-  if (!equipo) return <p style={{ color: '#94a3b8' }}>Cargando...</p>;
+  if (error) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
+  if (!equipo) return <Cargando texto="Cargando…" />;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -70,13 +72,13 @@ export default function EquipoDetallePage() {
         </h2>
         <span
           className="badge"
-          style={{ background: equipo.estado === 'OPERATIVO' ? '#166534' : equipo.estado === 'BAJA' || equipo.estado === 'DANIADO' ? '#7f1d1d' : '#854d0e' }}
+          style={{ background: equipo.estado === 'OPERATIVO' ? 'var(--ok-fill)' : equipo.estado === 'BAJA' || equipo.estado === 'DANIADO' ? 'var(--bad-fill)' : 'var(--warn-fill)' }}
         >
           {equipo.estado}
         </span>
       </div>
 
-      <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid #1f2937' }}>
+      <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid var(--line-soft)' }}>
         {SUBTABS.map((t) => (
           <button type="button"
             key={t.id}
@@ -87,7 +89,7 @@ export default function EquipoDetallePage() {
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
-              color: vista === t.id ? '#e2e8f0' : '#94a3b8',
+              color: vista === t.id ? 'var(--ink)' : 'var(--muted)',
               fontWeight: vista === t.id ? 600 : 400,
               borderBottom: vista === t.id ? '2px solid #2563eb' : '2px solid transparent',
             }}
@@ -185,8 +187,8 @@ function TabDatos({
   if (!editando) {
     return (
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
-        {error && <p style={{ color: '#f87171' }}>{error}</p>}
+        {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
+        {error && <Aviso tipo="error" texto={error} />}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, fontSize: 13 }}>
           <div><b>Marca:</b> {equipo.marca ?? '—'}</div>
           <div><b>Modelo:</b> {equipo.modelo ?? '—'}</div>
@@ -198,8 +200,8 @@ function TabDatos({
 
         {puedeEditar && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <label style={{ fontSize: 12 }}>Movil asignado:</label>
-            <select className="input-field" style={{ maxWidth: 260 }} value={vehiculoSeleccionado} onChange={(e) => cambiarMovil(e.target.value)} disabled={asignando}>
+            <label htmlFor="movil-asignado" style={{ fontSize: 12 }}>Movil asignado:</label>
+            <select id="movil-asignado" className="input-field" style={{ maxWidth: 260 }} value={vehiculoSeleccionado} onChange={(e) => cambiarMovil(e.target.value)} disabled={asignando}>
               <option value="">-- sin asignar --</option>
               {vehiculos.filter((v) => v.estado !== 'BAJA').map((v) => (
                 <option key={v.id} value={v.id}>{v.numeroInterno} — {v.tipo}</option>
@@ -220,25 +222,25 @@ function TabDatos({
 
   return (
     <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
-          <select className="input-field" value={campos.categoriaId} onChange={(e) => setCampos({ ...campos, categoriaId: e.target.value })}>
+        <div><label htmlFor="categoria" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
+          <select id="categoria" className="input-field" value={campos.categoriaId} onChange={(e) => setCampos({ ...campos, categoriaId: e.target.value })}>
             {categorias.map((c) => <option key={c.id} value={c.id}>{c.nombre}</option>)}
           </select>
         </div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label><input className="input-field" value={campo('nombre')} onChange={(e) => setCampos({ ...campos, nombre: e.target.value })} required /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Marca</label><input className="input-field" value={campo('marca')} onChange={(e) => setCampos({ ...campos, marca: e.target.value })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Modelo</label><input className="input-field" value={campo('modelo')} onChange={(e) => setCampos({ ...campos, modelo: e.target.value })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>N. serie</label><input className="input-field" value={campo('numeroSerie')} onChange={(e) => setCampos({ ...campos, numeroSerie: e.target.value })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-          <select className="input-field" value={campos.estado} onChange={(e) => setCampos({ ...campos, estado: e.target.value as Equipo['estado'] })}>
+        <div><label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label><input id="nombre" className="input-field" value={campo('nombre')} onChange={(e) => setCampos({ ...campos, nombre: e.target.value })} required /></div>
+        <div><label htmlFor="marca" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Marca</label><input id="marca" className="input-field" value={campo('marca')} onChange={(e) => setCampos({ ...campos, marca: e.target.value })} /></div>
+        <div><label htmlFor="modelo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Modelo</label><input id="modelo" className="input-field" value={campo('modelo')} onChange={(e) => setCampos({ ...campos, modelo: e.target.value })} /></div>
+        <div><label htmlFor="n-serie" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>N. serie</label><input id="n-serie" className="input-field" value={campo('numeroSerie')} onChange={(e) => setCampos({ ...campos, numeroSerie: e.target.value })} /></div>
+        <div><label htmlFor="estado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
+          <select id="estado" className="input-field" value={campos.estado} onChange={(e) => setCampos({ ...campos, estado: e.target.value as Equipo['estado'] })}>
             {ESTADOS_EQUIPO.map((e) => <option key={e} value={e}>{e}</option>)}
           </select>
         </div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicacion (nota)</label><input className="input-field" value={campo('ubicacion')} onChange={(e) => setCampos({ ...campos, ubicacion: e.target.value })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha compra</label><input className="input-field" type="date" value={campo('fechaCompra')} onChange={(e) => setCampos({ ...campos, fechaCompra: e.target.value })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Vencimiento</label><input className="input-field" type="date" value={campo('fechaVencimiento')} onChange={(e) => setCampos({ ...campos, fechaVencimiento: e.target.value })} /></div>
+        <div><label htmlFor="ubicacion-nota" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicacion (nota)</label><input id="ubicacion-nota" className="input-field" value={campo('ubicacion')} onChange={(e) => setCampos({ ...campos, ubicacion: e.target.value })} /></div>
+        <div><label htmlFor="fecha-compra" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha compra</label><input id="fecha-compra" className="input-field" type="date" value={campo('fechaCompra')} onChange={(e) => setCampos({ ...campos, fechaCompra: e.target.value })} /></div>
+        <div><label htmlFor="vencimiento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Vencimiento</label><input id="vencimiento" className="input-field" type="date" value={campo('fechaVencimiento')} onChange={(e) => setCampos({ ...campos, fechaVencimiento: e.target.value })} /></div>
       </div>
       <div style={{ display: 'flex', gap: 8 }}>
         <button type="submit" className="btn-primary" disabled={guardando}>{guardando ? 'Guardando...' : 'Guardar cambios'}</button>
@@ -317,7 +319,7 @@ function TabPrestamo({ equipo, puedeEditar, onCambio }: { equipo: Equipo; puedeE
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       {prestamoActivo ? (
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -337,15 +339,15 @@ function TabPrestamo({ equipo, puedeEditar, onCambio }: { equipo: Equipo; puedeE
             <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 2fr', gap: 10, alignItems: 'end' }}>
               <div>
                 <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Bombero</label>
-                <ComboBuscable opciones={opcionesBombero} value={bomberoId} onChange={setBomberoId} placeholderBusqueda="Buscar por codigo o nombre..." />
+                <ComboBuscable ariaLabel="Bombero" opciones={opcionesBombero} value={bomberoId} onChange={setBomberoId} placeholderBusqueda="Buscar por codigo o nombre..." />
               </div>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Devolucion comprometida</label>
-                <input className="input-field" type="date" value={fechaCompromiso} onChange={(e) => setFechaCompromiso(e.target.value)} />
+                <label htmlFor="devolucion-comprometida" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Devolucion comprometida</label>
+                <input id="devolucion-comprometida" className="input-field" type="date" value={fechaCompromiso} onChange={(e) => setFechaCompromiso(e.target.value)} />
               </div>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
-                <input className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
+                <label htmlFor="observaciones" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
+                <input id="observaciones" className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
               </div>
             </div>
             <button type="submit" className="btn-primary" disabled={!bomberoId || procesando} style={{ alignSelf: 'flex-start' }}>
@@ -355,7 +357,7 @@ function TabPrestamo({ equipo, puedeEditar, onCambio }: { equipo: Equipo; puedeE
         )
       )}
 
-      {!puedePrestar && !prestamoActivo && <p style={{ color: '#94a3b8', fontSize: 13 }}>Este equipo no esta prestado actualmente.</p>}
+      {!puedePrestar && !prestamoActivo && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Este equipo no esta prestado actualmente.</p>}
     </div>
   );
 }
@@ -398,30 +400,30 @@ function TabMantenimientos({ equipoId, puedeEditar }: { equipoId: string; puedeE
           {mostrarForm ? 'Cancelar' : 'Registrar mantenimiento'}
         </button>
       )}
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
       {mostrarForm && (
         <form className="card" onSubmit={crear} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
-            <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
-              <select className="input-field" value={tipo} onChange={(e) => setTipo(e.target.value as MantenimientoEquipo['tipo'])}>
+            <div><label htmlFor="tipo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
+              <select id="tipo" className="input-field" value={tipo} onChange={(e) => setTipo(e.target.value as MantenimientoEquipo['tipo'])}>
                 {TIPOS_MANTENIMIENTO_EQUIPO.map((t) => <option key={t} value={t}>{t}</option>)}
               </select>
             </div>
-            <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label><input className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required /></div>
-            <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Costo</label><input className="input-field" type="number" value={costo} onChange={(e) => setCosto(e.target.value)} /></div>
+            <div><label htmlFor="fecha" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label><input id="fecha" className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required /></div>
+            <div><label htmlFor="costo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Costo</label><input id="costo" className="input-field" type="number" value={costo} onChange={(e) => setCosto(e.target.value)} /></div>
           </div>
-          <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label><input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required /></div>
+          <div><label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label><input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required /></div>
           <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>{guardando ? 'Guardando...' : 'Guardar'}</button>
         </form>
       )}
-      {items && items.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin mantenimientos registrados.</p>}
+      {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin mantenimientos registrados.</p>}
       {items && items.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-          <thead><tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-            <th style={{ padding: '6px 4px' }}>Fecha</th><th style={{ padding: '6px 4px' }}>Tipo</th><th style={{ padding: '6px 4px' }}>Descripcion</th><th style={{ padding: '6px 4px' }}>Costo</th>
+          <thead><tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+            <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th><th scope="col" style={{ padding: '6px 4px' }}>Tipo</th><th scope="col" style={{ padding: '6px 4px' }}>Descripcion</th><th scope="col" style={{ padding: '6px 4px' }}>Costo</th>
           </tr></thead>
           <tbody>{items.map((m) => (
-            <tr key={m.id} style={{ borderBottom: '1px solid #1f2937' }}>
+            <tr key={m.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
               <td style={{ padding: '6px 4px' }}>{m.fecha}</td>
               <td style={{ padding: '6px 4px' }}><span className="badge">{m.tipo}</span></td>
               <td style={{ padding: '6px 4px' }}>{m.descripcion}</td>
@@ -442,18 +444,18 @@ function TabHistorial({ equipoId }: { equipoId: string }) {
     cargarHistorialEquipo(equipoId).then(setEventos).catch((err) => setError(err.message));
   }, [equipoId]);
 
-  if (error) return <p style={{ color: '#f87171' }}>{error}</p>;
-  if (!eventos) return <p style={{ color: '#94a3b8' }}>Cargando...</p>;
-  if (eventos.length === 0) return <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin eventos registrados todavia.</p>;
+  if (error) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
+  if (!eventos) return <Cargando texto="Cargando…" />;
+  if (eventos.length === 0) return <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin eventos registrados todavia.</p>;
 
-  const colorTipo: Record<string, string> = { MANTENIMIENTO: '#854d0e', PRESTAMO: '#1d4ed8' };
+  const colorTipo: Record<string, string> = { MANTENIMIENTO: 'var(--warn-fill)', PRESTAMO: 'var(--info-fill)' };
 
   return (
     <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
       {eventos.map((ev, i) => (
-        <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'baseline', fontSize: 13, borderBottom: '1px solid #1f2937', paddingBottom: 8 }}>
-          <span style={{ color: '#94a3b8', minWidth: 140 }}>{new Date(ev.fecha).toLocaleDateString()}</span>
-          <span className="badge" style={{ background: colorTipo[ev.tipo] ?? '#334155' }}>{ev.tipo}</span>
+        <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'baseline', fontSize: 13, borderBottom: '1px solid var(--line-soft)', paddingBottom: 8 }}>
+          <span style={{ color: 'var(--muted)', minWidth: 140 }}>{new Date(ev.fecha).toLocaleDateString()}</span>
+          <span className="badge" style={{ background: colorTipo[ev.tipo] ?? 'var(--neutral-fill)' }}>{ev.tipo}</span>
           <span>{ev.detalle}</span>
         </div>
       ))}

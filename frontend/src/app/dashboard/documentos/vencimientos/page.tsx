@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { Parametro } from '@/lib/parametros';
 import { Documento, cargarDocumentos, cargarTiposDocumento } from '@/lib/documentos';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function VencimientosDocumentosPage() {
   const [vista, setVista] = useState<'PROXIMOS' | 'VENCIDOS'>('PROXIMOS');
@@ -34,31 +35,31 @@ export default function VencimientosDocumentosPage() {
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       {documentos && documentos.length === 0 && (
-        <p style={{ color: '#94a3b8', fontSize: 13 }}>{vista === 'PROXIMOS' ? 'Sin documentos proximos a vencer en los proximos 30 dias.' : 'Sin documentos vencidos.'}</p>
+        <p style={{ color: 'var(--muted)', fontSize: 13 }}>{vista === 'PROXIMOS' ? 'Sin documentos proximos a vencer en los proximos 30 dias.' : 'Sin documentos vencidos.'}</p>
       )}
       {documentos && documentos.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Numero</th>
-              <th style={{ padding: '6px 4px' }}>Titulo</th>
-              <th style={{ padding: '6px 4px' }}>Tipo</th>
-              <th style={{ padding: '6px 4px' }}>Vencimiento</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Numero</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Titulo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Vencimiento</th>
             </tr>
           </thead>
           <tbody>
             {documentos.map((d) => (
-              <tr key={d.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={d.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>
-                  <Link href={`/dashboard/documentos/${d.id}`} style={{ color: '#60a5fa', textDecoration: 'none' }}>{d.numeroDocumental ?? '(sin numero)'}</Link>
+                  <Link href={`/dashboard/documentos/${d.id}`} style={{ color: 'var(--signal)', textDecoration: 'none' }}>{d.numeroDocumental ?? '(sin numero)'}</Link>
                 </td>
                 <td style={{ padding: '6px 4px' }}>{d.titulo}</td>
                 <td style={{ padding: '6px 4px' }}>{tipoPorId.get(d.tipoDocumentoId) ?? '-'}</td>
                 <td style={{ padding: '6px 4px' }}>
-                  <span className="badge" style={{ background: vista === 'VENCIDOS' ? '#7f1d1d' : '#451a03' }}>{d.fechaVencimiento}</span>
+                  <span className="badge" style={{ background: vista === 'VENCIDOS' ? 'var(--bad-fill)' : 'var(--warn-fill)' }}>{d.fechaVencimiento}</span>
                 </td>
               </tr>
             ))}

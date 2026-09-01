@@ -19,6 +19,7 @@ import {
   compararBomberosInstitucional,
   construirTipoPorId,
 } from '@/lib/personal';
+import { Aviso } from '@/app/components/Aviso';
 
 type Columna = 'codigo' | 'nombre' | 'tipo' | 'rango' | 'cargo' | 'estado';
 
@@ -162,6 +163,7 @@ export default function PersonalPage() {
 
   const th = (columna: Columna, label: string) => (
     <th
+      scope="col"
       style={{ padding: '6px 4px', cursor: 'pointer', userSelect: 'none' }}
       onClick={() => ordenarPor(columna)}
       title="Ordenar"
@@ -198,8 +200,8 @@ export default function PersonalPage() {
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Codigo</label>
-          <input
+          <label htmlFor="codigo" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Codigo</label>
+          <input id="codigo"
             className="input-field"
             style={{ maxWidth: 160 }}
             placeholder="Ej: BCF, BC-102..."
@@ -208,8 +210,8 @@ export default function PersonalPage() {
           />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Nombre / Apellido</label>
-          <input
+          <label htmlFor="nombre-apellido" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Nombre / Apellido</label>
+          <input id="nombre-apellido"
             className="input-field"
             style={{ maxWidth: 200 }}
             placeholder="Buscar por nombre o apellido"
@@ -218,8 +220,8 @@ export default function PersonalPage() {
           />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Tipo de Bombero</label>
-          <ComboBuscable
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Tipo de Bombero</label>
+          <ComboBuscable ariaLabel="Tipo de Bombero"
             opciones={opcionesTipo}
             value={filtroTipoId}
             onChange={setFiltroTipoId}
@@ -228,8 +230,8 @@ export default function PersonalPage() {
           />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Estado</label>
-          <ComboBuscable
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Estado</label>
+          <ComboBuscable ariaLabel="Estado"
             opciones={opcionesEstado}
             value={filtroEstado}
             onChange={setFiltroEstado}
@@ -238,8 +240,8 @@ export default function PersonalPage() {
           />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Rango</label>
-          <ComboBuscable
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Rango</label>
+          <ComboBuscable ariaLabel="Rango"
             opciones={opcionesRango}
             value={filtroRangoId}
             onChange={setFiltroRangoId}
@@ -248,8 +250,8 @@ export default function PersonalPage() {
           />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Cargo</label>
-          <ComboBuscable
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Cargo</label>
+          <ComboBuscable ariaLabel="Cargo"
             opciones={opcionesCargo}
             value={filtroCargoId}
             onChange={setFiltroCargoId}
@@ -262,24 +264,24 @@ export default function PersonalPage() {
         </button>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {bomberosOrdenados && bomberosOrdenados.length === 0 && (
-        <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay bomberos que coincidan con los filtros.</p>
+        <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay bomberos que coincidan con los filtros.</p>
       )}
 
       {bomberosOrdenados && bomberosOrdenados.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
               {th('codigo', 'Codigo')}
               {th('nombre', 'Nombre')}
               {th('tipo', 'Tipo')}
               {th('rango', 'Rango')}
               {th('cargo', 'Cargo')}
               {th('estado', 'Estado')}
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -290,7 +292,7 @@ export default function PersonalPage() {
                 <tr
                   key={b.id}
                   onClick={() => router.push(`/dashboard/personal/${b.id}`)}
-                  style={{ borderBottom: '1px solid #1f2937', cursor: 'pointer' }}
+                  style={{ borderBottom: '1px solid var(--line-soft)', cursor: 'pointer' }}
                 >
                   <td style={{ padding: '6px 4px' }}>{b.numeroBombero}</td>
                   <td style={{ padding: '6px 4px' }}>{nombreCompleto}</td>

@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useId, useMemo, useState } from 'react';
 import { obtenerSesion, API_ORIGIN } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { Parametro, resolverNombres } from '@/lib/parametros';
@@ -21,6 +21,7 @@ import {
   generarComprobantePdf,
   registrarMovimientoFinanciero,
 } from '@/lib/finanzas';
+import { Aviso } from '@/app/components/Aviso';
 
 function formatearGs(valor: number): string {
   return `Gs. ${Math.round(valor).toLocaleString('es-PY')}`;
@@ -52,8 +53,8 @@ function FilaAnular({ movimiento, motivos, onAnulado }: { movimiento: Movimiento
   }
 
   return (
-    <div style={{ padding: '10px 4px', background: '#0f172a', borderRadius: 6, display: 'grid', gridTemplateColumns: '1fr 2fr auto', gap: 8, alignItems: 'flex-end' }}>
-      {error && <p style={{ color: '#f87171', fontSize: 12, gridColumn: '1 / -1' }}>{error}</p>}
+    <div style={{ padding: '10px 4px', background: 'var(--surface-soft)', borderRadius: 6, display: 'grid', gridTemplateColumns: '1fr 2fr auto', gap: 8, alignItems: 'flex-end' }}>
+      {error && <p style={{ color: 'var(--danger)', fontSize: 12, gridColumn: '1 / -1' }}>{error}</p>}
       <ComboBuscable opciones={opcionesMotivo} value={motivoAnulacionId} onChange={setMotivoAnulacionId} ningunaLabel="-- motivo --" />
       <input className="input-field" placeholder="Detalle (opcional)" value={detalle} onChange={(e) => setDetalle(e.target.value)} />
       <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12, background: '#7f1d1d' }} onClick={confirmar} disabled={guardando}>
@@ -64,6 +65,7 @@ function FilaAnular({ movimiento, motivos, onAnulado }: { movimiento: Movimiento
 }
 
 export default function MovimientosFinancierosPage() {
+  const idCampo = useId();
   const [movimientos, setMovimientos] = useState<MovimientoFinanciero[] | null>(null);
   const [tiposIngreso, setTiposIngreso] = useState<Parametro[]>([]);
   const [categoriasEgreso, setCategoriasEgreso] = useState<Parametro[]>([]);
@@ -229,36 +231,36 @@ export default function MovimientosFinancierosPage() {
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Tipo</label>
-          <ComboBuscable opciones={[{ value: 'INGRESO', label: 'Ingreso' }, { value: 'EGRESO', label: 'Egreso' }]} value={filtroTipo} onChange={setFiltroTipo} maxWidth={160} />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Tipo</label>
+          <ComboBuscable ariaLabel="Tipo" opciones={[{ value: 'INGRESO', label: 'Ingreso' }, { value: 'EGRESO', label: 'Egreso' }]} value={filtroTipo} onChange={setFiltroTipo} maxWidth={160} />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Estado</label>
-          <ComboBuscable opciones={[{ value: 'REGISTRADO', label: 'REGISTRADO' }, { value: 'ANULADO', label: 'ANULADO' }]} value={filtroEstado} onChange={setFiltroEstado} maxWidth={160} />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Estado</label>
+          <ComboBuscable ariaLabel="Estado" opciones={[{ value: 'REGISTRADO', label: 'REGISTRADO' }, { value: 'ANULADO', label: 'ANULADO' }]} value={filtroEstado} onChange={setFiltroEstado} maxWidth={160} />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Desde</label>
-          <input className="input-field" type="date" value={desde} onChange={(e) => setDesde(e.target.value)} />
+          <label htmlFor={`${idCampo}-desde`} style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Desde</label>
+          <input id={`${idCampo}-desde`} className="input-field" type="date" value={desde} onChange={(e) => setDesde(e.target.value)} />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Hasta</label>
-          <input className="input-field" type="date" value={hasta} onChange={(e) => setHasta(e.target.value)} />
+          <label htmlFor={`${idCampo}-hasta`} style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Hasta</label>
+          <input id={`${idCampo}-hasta`} className="input-field" type="date" value={hasta} onChange={(e) => setHasta(e.target.value)} />
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={registrar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 2fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
-              <ComboBuscable opciones={[{ value: 'INGRESO', label: 'Ingreso' }, { value: 'EGRESO', label: 'Egreso' }]} value={tipo} onChange={(v) => setTipo(v as 'INGRESO' | 'EGRESO')} ningunaLabel="-- seleccionar --" />
+              <ComboBuscable ariaLabel="Tipo" opciones={[{ value: 'INGRESO', label: 'Ingreso' }, { value: 'EGRESO', label: 'Egreso' }]} value={tipo} onChange={(v) => setTipo(v as 'INGRESO' | 'EGRESO')} ningunaLabel="-- seleccionar --" />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label>
-              <input className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
+              <label htmlFor={`${idCampo}-fecha`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label>
+              <input id={`${idCampo}-fecha`} className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>{tipo === 'INGRESO' ? 'Tipo de ingreso' : 'Categoria de egreso'}</label>
@@ -271,19 +273,19 @@ export default function MovimientosFinancierosPage() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Concepto</label>
-              <input className="input-field" value={concepto} onChange={(e) => setConcepto(e.target.value)} required />
+              <label htmlFor={`${idCampo}-concepto`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Concepto</label>
+              <input id={`${idCampo}-concepto`} className="input-field" value={concepto} onChange={(e) => setConcepto(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Importe</label>
-              <input className="input-field" type="number" min={0.01} step="1" value={importe} onChange={(e) => setImporte(e.target.value)} required />
+              <label htmlFor={`${idCampo}-importe`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Importe</label>
+              <input id={`${idCampo}-importe`} className="input-field" type="number" min={0.01} step="1" value={importe} onChange={(e) => setImporte(e.target.value)} required />
             </div>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Caja o cuenta bancaria</label>
-              <ComboBuscable opciones={[{ value: 'CAJA', label: 'Caja' }, { value: 'CUENTA', label: 'Cuenta bancaria' }]} value={origen} onChange={(v) => setOrigen(v as 'CAJA' | 'CUENTA')} ningunaLabel="-- seleccionar --" />
+              <ComboBuscable ariaLabel="Caja o cuenta bancaria" opciones={[{ value: 'CAJA', label: 'Caja' }, { value: 'CUENTA', label: 'Cuenta bancaria' }]} value={origen} onChange={(v) => setOrigen(v as 'CAJA' | 'CUENTA')} ningunaLabel="-- seleccionar --" />
             </div>
             {origen === 'CAJA' ? (
               <ComboBuscable opciones={opcionesCaja} value={cajaId} onChange={setCajaId} ningunaLabel="-- seleccionar caja --" />
@@ -295,25 +297,25 @@ export default function MovimientosFinancierosPage() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Proveedor</label>
-              <ComboBuscable opciones={opcionesProveedor} value={proveedorId} onChange={setProveedorId} ningunaLabel="Sin proveedor" />
+              <ComboBuscable ariaLabel="Proveedor" opciones={opcionesProveedor} value={proveedorId} onChange={setProveedorId} ningunaLabel="Sin proveedor" />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Persona (personal)</label>
-              <ComboBuscable opciones={opcionesBombero} value={bomberoId} onChange={setBomberoId} ningunaLabel="No aplica" />
+              <ComboBuscable ariaLabel="Persona (personal)" opciones={opcionesBombero} value={bomberoId} onChange={setBomberoId} ningunaLabel="No aplica" />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Entidad externa</label>
-              <input className="input-field" value={entidadExterna} onChange={(e) => setEntidadExterna(e.target.value)} disabled={!!bomberoId} />
+              <label htmlFor={`${idCampo}-entidad-externa`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Entidad externa</label>
+              <input id={`${idCampo}-entidad-externa`} className="input-field" value={entidadExterna} onChange={(e) => setEntidadExterna(e.target.value)} disabled={!!bomberoId} />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Responsable</label>
-              <ComboBuscable opciones={opcionesBombero} value={responsableId} onChange={setResponsableId} ningunaLabel="Sin definir" />
+              <ComboBuscable ariaLabel="Responsable" opciones={opcionesBombero} value={responsableId} onChange={setResponsableId} ningunaLabel="Sin definir" />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
-              <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
+              <label htmlFor={`${idCampo}-observacion`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+              <input id={`${idCampo}-observacion`} className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
             </div>
           </div>
 
@@ -335,36 +337,36 @@ export default function MovimientosFinancierosPage() {
         </form>
       )}
 
-      {movimientos && movimientos.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay movimientos registrados.</p>}
+      {movimientos && movimientos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay movimientos registrados.</p>}
       {movimientos && movimientos.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Fecha</th>
-              <th style={{ padding: '6px 4px' }}>Tipo</th>
-              <th style={{ padding: '6px 4px' }}>Concepto</th>
-              <th style={{ padding: '6px 4px' }}>Caja/Cuenta</th>
-              <th style={{ padding: '6px 4px' }}>Importe</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Concepto</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Caja/Cuenta</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Importe</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {movimientos.map((m) => (
               <Fragment key={m.id}>
-                <tr style={{ borderBottom: expandidoId === m.id ? 'none' : '1px solid #1f2937' }}>
+                <tr style={{ borderBottom: expandidoId === m.id ? 'none' : '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>{m.fecha}</td>
                   <td style={{ padding: '6px 4px' }}>
-                    <span className="badge" style={{ background: m.tipo === 'INGRESO' ? '#166534' : '#7f1d1d', color: m.tipo === 'INGRESO' ? '#4ade80' : '#f87171' }}>{m.tipo}</span>
+                    <span className="badge" style={{ background: m.tipo === 'INGRESO' ? 'var(--ok-fill)' : 'var(--bad-fill)', color: m.tipo === 'INGRESO' ? 'var(--success)' : 'var(--danger)' }}>{m.tipo}</span>
                   </td>
                   <td style={{ padding: '6px 4px' }}>
                     {m.concepto}
-                    <span style={{ color: '#64748b' }}> ({nombresClasificacion.get(m.tipoIngresoId ?? m.categoriaEgresoId ?? '') ?? '-'})</span>
+                    <span style={{ color: 'var(--muted)' }}> ({nombresClasificacion.get(m.tipoIngresoId ?? m.categoriaEgresoId ?? '') ?? '-'})</span>
                   </td>
                   <td style={{ padding: '6px 4px' }}>{m.cajaId ? nombreCaja.get(m.cajaId) ?? '-' : nombreCuenta.get(m.cuentaBancariaId ?? '') ?? '-'}</td>
                   <td style={{ padding: '6px 4px', fontWeight: 600 }}>{formatearGs(m.importe)}</td>
                   <td style={{ padding: '6px 4px' }}>
-                    <span className="badge" style={{ background: m.estado === 'ANULADO' ? '#7f1d1d' : '#334155', color: m.estado === 'ANULADO' ? '#f87171' : '#e2e8f0' }}>{m.estado}</span>
+                    <span className="badge" style={{ background: m.estado === 'ANULADO' ? 'var(--bad-fill)' : 'var(--neutral-fill)', color: m.estado === 'ANULADO' ? 'var(--danger)' : 'var(--ink)' }}>{m.estado}</span>
                   </td>
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                     {puedeVerReportes && (
@@ -380,7 +382,7 @@ export default function MovimientosFinancierosPage() {
                   </td>
                 </tr>
                 {expandidoId === m.id && (
-                  <tr style={{ borderBottom: '1px solid #1f2937' }}>
+                  <tr style={{ borderBottom: '1px solid var(--line-soft)' }}>
                     <td colSpan={7} style={{ padding: '4px' }}>
                       <FilaAnular
                         movimiento={m}

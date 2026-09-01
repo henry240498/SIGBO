@@ -58,13 +58,38 @@ Las críticas, en corto. El detalle está en `.context/RULES.md`.
    lista de permisos vive en `localStorage`.
 5. **Permiso efectivo** = roles vigentes + directos concedidos − directos denegados. La
    denegación directa gana sobre cualquier rol.
-6. **CSS:** solo existen `.card`, `.btn-primary`, `.input-field`, `.badge`. Lo demás es
-   `style={{}}` inline con los hex **exactos** de `docs/GUIA-DE-ESTILO.md`. Sin Tailwind,
-   sin librería de UI. Tema oscuro. `ACTIVO` verde / cualquier estado malo rojo `#7f1d1d`.
+6. **CSS: tema claro, y el color sale de un token, no de un hex.** Sin Tailwind, sin
+   librería de UI. `globals.css` define ~116 clases (`.card`, `.btn-primary`,
+   `.input-field`, `.badge` y las de cada dominio) más las variables de `:root`. Lo que
+   no cubran va `style={{}}` inline pero **con `var(--…)`**: `--muted`, `--danger`,
+   `--success`, `--warning`, `--signal`, `--ink`, `--line`, `--line-soft`. Un hex crudo
+   de texto en una pantalla es la falla que se corrigió en toda la app: quedaron de la
+   época del tema oscuro y sobre tarjeta blanca daban 2,5:1. `npm run audit:contraste`
+   falla si vuelve alguno.
+   **Chips y botones no se pintan igual.** `.badge` fija `color: var(--ink)`, así que un
+   badge lleva fondo de **tinte claro** (`--ok-fill`, `--bad-fill`, `--warn-fill`,
+   `--info-fill`, `--neutral-fill`); con fondo sólido oscuro queda en 1,5:1. `.btn-primary`
+   fija texto blanco, así que un botón sí lleva fondo **sólido oscuro**. La semántica no
+   cambia: `ACTIVO` verde / cualquier estado malo rojo — `--bad-fill` en chip, `#7f1d1d`
+   en botón.
 7. **Pantallas:** `'use client'`, estado local con `useState`/`useEffect`, y recargar con
    `cargar()` después de cada mutación. No hay store global ni React Query.
 8. **API:** el backend usa `setGlobalPrefix('api/v1')` y `apiFetch()` ya lo agrega — las
    pantallas pasan rutas relativas (`apiFetch('/guardias/grupos')`).
+9. **Piezas compartidas de pantalla, en vez de repetir el patrón suelto:**
+   `<Aviso tipo="error|exito" texto={x} />` para el resultado de una acción (lleva
+   `role`, y el de éxito se retira solo), `<Cargando texto="…" />` para el estado de
+   carga (esqueleto con `role="status"`), y `<ComboBuscable ariaLabel="…">` para un
+   combo que puede crecer.
+10. **Toda etiqueta nombra a su control.** `<label htmlFor>` + `id` en el control; si el
+    control se repite en una lista, `useId()` para el prefijo, o `aria-label` cuando el
+    texto de la etiqueta es dinámico. Un `<label>` suelto no nombra el campo ni permite
+    enfocarlo con un clic. Los `<th>` llevan `scope="col"`.
+    `npm run audit:a11y` falla si vuelve a aparecer alguno sin asociar.
+11. **Pantalla nueva ⇒ `npm run generar:pantallas`.** `src/lib/pantallas.generado.ts`
+    alimenta las migas de pan y el buscador (Ctrl+K); si no se regenera, la pantalla
+    existe pero nadie la encuentra. El nombre legible sale del array `TABS` del
+    `layout.tsx` del módulo, así que conviene agregarla ahí primero.
 
 ## Dos particularidades que sorprenden
 
@@ -111,6 +136,17 @@ SQL Server Express local con TCP/IP deshabilitado de fábrica
 **No hay pruebas automatizadas** en backend ni frontend. Cualquier cambio se verifica a
 mano o vía Swagger (`http://localhost:3001/api/docs`). Tenelo en cuenta al proponer
 refactors: no hay red de seguridad.
+
+Lo único que sí está automatizado son dos auditorías con línea base, que **fallan si la
+deuda crece**. No prueban que algo funcione; sólo impiden que vuelvan defectos que ya se
+corrigieron en masa. Conviene correrlas antes de dar por terminado un cambio de frontend:
+
+```powershell
+cd frontend
+npm run audit:contraste   # paleta del tema oscuro sobre fondo claro
+npm run audit:a11y        # etiquetas sin asociar, th sin scope, confirm/alert nativos
+npx tsc --noEmit          # el build no corre en CI: esto es lo más rápido
+```
 
 ## Documentación
 

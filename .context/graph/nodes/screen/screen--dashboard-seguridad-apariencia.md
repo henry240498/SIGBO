@@ -13,6 +13,8 @@ archivos:
 edges:
   - [belongs_to, domain--seguridad]
   - [uses, component--front-api]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
   - [calls, api--seguridad-apariencia]
   - [calls, api--seguridad-apariencia]
 terminos: [seguridad, apariencia, configurar, politica, perfil]
@@ -38,6 +40,8 @@ Pantalla /dashboard/seguridad/apariencia, consume 2 endpoint(s).
 
 - `belongs_to` → [[domain--seguridad|Seguridad]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 - `calls` → [[api--seguridad-apariencia|AparienciaController]]
 - `calls` → [[api--seguridad-apariencia|AparienciaController]]
 

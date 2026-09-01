@@ -42,9 +42,11 @@ archivo donde vive y qué pasa si se rompe.
 |---|---|
 | [[rule--pantalla-cliente-sin-store]] | `'use client'`, estado local, recargar con `cargar()` tras cada mutación |
 | [[rule--snake-case-en-bd-camel-en-typescript]] | `SnakeNamingStrategy` traduce; `name` explícito solo en timestamps |
-| [[rule--tema-oscuro-fijo]] | Oscuro fijo en pantallas, aunque Configuración prometa temas |
+| [[rule--tema-claro-unico]] | Un solo tema, claro, con `var(--token)`; el login es la única excepción |
 | [[rule--modulo-visible-por-prefijo]] | Un módulo se ve si `disponible: true` **y** hay permisos de su prefijo |
 | [[rule--espanol-y-auditoria]] | Todo en español; auditoría técnica ≠ historial de expediente |
+| [[rule--etiqueta-nombra-su-control]] | `htmlFor` + `id` (o `aria-label`); `<th scope="col">` |
+| [[rule--registro-de-pantallas-generado]] | Pantalla nueva ⇒ `TABS` del módulo + `npm run generar:pantallas` |
 
 ## Las cuatro trampas que más tiempo cuestan
 

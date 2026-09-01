@@ -17,6 +17,8 @@ edges:
   - [uses, component--front-personal]
   - [uses, component--front-asistencia]
   - [uses, component--front-parametros]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
 terminos: [asistencia, eventos, editar]
 ---
 
@@ -39,6 +41,8 @@ Pantalla /dashboard/asistencia/eventos/[id].
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-asistencia|asistencia]]
 - `uses` → [[component--front-parametros|parametros]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

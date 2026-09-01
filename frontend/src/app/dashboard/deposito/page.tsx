@@ -4,12 +4,13 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { resolverNombres } from '@/lib/parametros';
 import { AlertasDeposito, IndicadoresDeposito, cargarAlertasDeposito, cargarIndicadoresDeposito } from '@/lib/deposito';
+import { Cargando } from '@/app/components/Cargando';
 
 function Tarjeta({ titulo, valor, color }: { titulo: string; valor: number | string; color?: string }) {
   return (
     <div className="card" style={{ textAlign: 'center' }}>
-      <div style={{ fontSize: 32, fontWeight: 700, color: color ?? '#e2e8f0' }}>{valor}</div>
-      <div style={{ fontSize: 13, color: '#94a3b8', marginTop: 6 }}>{titulo}</div>
+      <div style={{ fontSize: 32, fontWeight: 700, color: color ?? 'var(--ink)' }}>{valor}</div>
+      <div style={{ fontSize: 13, color: 'var(--muted)', marginTop: 6 }}>{titulo}</div>
     </div>
   );
 }
@@ -62,8 +63,8 @@ export default function DashboardDepositoPage() {
     return 0;
   }, [indicadores, nombresEstado]);
 
-  if (error) return <p style={{ color: '#f87171' }}>{error}</p>;
-  if (!indicadores || !alertas) return <p style={{ color: '#94a3b8' }}>Cargando indicadores...</p>;
+  if (error) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
+  if (!indicadores || !alertas) return <Cargando texto="Cargando indicadores…" />;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -71,24 +72,24 @@ export default function DashboardDepositoPage() {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 16 }}>
         <Tarjeta titulo="Elementos inventariados" valor={indicadores.elementosInventariados} />
-        <Tarjeta titulo="Disponibles" valor={disponibles} color="#4ade80" />
-        <Tarjeta titulo="Asignados" valor={asignados} color="#60a5fa" />
-        <Tarjeta titulo="Prestados" valor={prestados} color="#60a5fa" />
+        <Tarjeta titulo="Disponibles" valor={disponibles} color="var(--success)" />
+        <Tarjeta titulo="Asignados" valor={asignados} color="var(--signal)" />
+        <Tarjeta titulo="Prestados" valor={prestados} color="var(--signal)" />
         <Tarjeta titulo="En mantenimiento" valor={enMantenimiento} />
-        <Tarjeta titulo="Vencidos" valor={indicadores.vencidos} color={indicadores.vencidos > 0 ? '#f87171' : undefined} />
-        <Tarjeta titulo="Con incidencia" valor={indicadores.conIncidencia} color={indicadores.conIncidencia > 0 ? '#f87171' : undefined} />
-        <Tarjeta titulo="Stock bajo" valor={indicadores.stockBajo} color={indicadores.stockBajo > 0 ? '#f87171' : undefined} />
+        <Tarjeta titulo="Vencidos" valor={indicadores.vencidos} color={indicadores.vencidos > 0 ? 'var(--danger)' : undefined} />
+        <Tarjeta titulo="Con incidencia" valor={indicadores.conIncidencia} color={indicadores.conIncidencia > 0 ? 'var(--danger)' : undefined} />
+        <Tarjeta titulo="Stock bajo" valor={indicadores.stockBajo} color={indicadores.stockBajo > 0 ? 'var(--danger)' : undefined} />
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
         <div className="card">
           <h3 style={{ fontSize: 14, marginBottom: 10 }}>
-            ⚠️ Stock bajo ({alertas.totales.stockBajo}) — <Link href="/dashboard/deposito/articulos" style={{ color: '#60a5fa', fontSize: 12 }}>ver articulos</Link>
+            ⚠️ Stock bajo ({alertas.totales.stockBajo}) — <Link href="/dashboard/deposito/articulos" style={{ color: 'var(--signal)', fontSize: 12 }}>ver articulos</Link>
           </h3>
-          {alertas.stockBajo.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin alertas de stock bajo.</p>}
+          {alertas.stockBajo.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin alertas de stock bajo.</p>}
           {alertas.stockBajo.map((a) => (
-            <div key={a.id} style={{ fontSize: 13, padding: '4px 0', borderBottom: '1px solid #1f2937' }}>
-              {a.codigo} — {a.nombre}: <strong style={{ color: '#f87171' }}>{a.stockActual}</strong> / min {a.stockMinimo}
+            <div key={a.id} style={{ fontSize: 13, padding: '4px 0', borderBottom: '1px solid var(--line-soft)' }}>
+              {a.codigo} — {a.nombre}: <strong style={{ color: 'var(--danger)' }}>{a.stockActual}</strong> / min {a.stockMinimo}
             </div>
           ))}
         </div>
@@ -97,9 +98,9 @@ export default function DashboardDepositoPage() {
           <h3 style={{ fontSize: 14, marginBottom: 10 }}>
             📅 Lotes por vencer ({alertas.totales.vencimientos})
           </h3>
-          {alertas.vencimientos.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin lotes proximos a vencer.</p>}
+          {alertas.vencimientos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin lotes proximos a vencer.</p>}
           {alertas.vencimientos.map((l) => (
-            <div key={l.id} style={{ fontSize: 13, padding: '4px 0', borderBottom: '1px solid #1f2937' }}>
+            <div key={l.id} style={{ fontSize: 13, padding: '4px 0', borderBottom: '1px solid var(--line-soft)' }}>
               Lote {l.numeroLote} — vence {l.fechaVencimiento} ({l.cantidad})
             </div>
           ))}
@@ -107,11 +108,11 @@ export default function DashboardDepositoPage() {
 
         <div className="card">
           <h3 style={{ fontSize: 14, marginBottom: 10 }}>
-            ⏰ Prestamos vencidos ({alertas.totales.prestamosVencidos}) — <Link href="/dashboard/deposito/prestamos" style={{ color: '#60a5fa', fontSize: 12 }}>ver prestamos</Link>
+            ⏰ Prestamos vencidos ({alertas.totales.prestamosVencidos}) — <Link href="/dashboard/deposito/prestamos" style={{ color: 'var(--signal)', fontSize: 12 }}>ver prestamos</Link>
           </h3>
-          {alertas.prestamosVencidos.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin prestamos vencidos.</p>}
+          {alertas.prestamosVencidos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin prestamos vencidos.</p>}
           {alertas.prestamosVencidos.map((p) => (
-            <div key={p.id} style={{ fontSize: 13, padding: '4px 0', borderBottom: '1px solid #1f2937' }}>
+            <div key={p.id} style={{ fontSize: 13, padding: '4px 0', borderBottom: '1px solid var(--line-soft)' }}>
               {p.solicitanteExterno ?? 'Personal'} — vencio {p.fechaDevolucionComprometida ? new Date(p.fechaDevolucionComprometida).toLocaleDateString() : '-'}
             </div>
           ))}

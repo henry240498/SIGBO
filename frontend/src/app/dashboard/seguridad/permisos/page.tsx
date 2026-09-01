@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { apiFetch } from '@/lib/api';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
+import { Aviso } from '@/app/components/Aviso';
 
 interface Permiso {
   id: string;
@@ -89,29 +90,29 @@ export default function PermisosPage() {
         </button>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       {mostrarForm && (
         <form className="card" onSubmit={crear} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre (recurso:accion)</label>
-            <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="productos:crear" required />
+            <label htmlFor="nombre-recurso-accion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre (recurso:accion)</label>
+            <input id="nombre-recurso-accion" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="productos:crear" required />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Recurso</label>
-            <input className="input-field" value={recurso} onChange={(e) => setRecurso(e.target.value)} required />
+            <label htmlFor="recurso" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Recurso</label>
+            <input id="recurso" className="input-field" value={recurso} onChange={(e) => setRecurso(e.target.value)} required />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Accion</label>
-            <input className="input-field" value={accion} onChange={(e) => setAccion(e.target.value)} required />
+            <label htmlFor="accion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Accion</label>
+            <input id="accion" className="input-field" value={accion} onChange={(e) => setAccion(e.target.value)} required />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
-            <input className="input-field" value={categoria} onChange={(e) => setCategoria(e.target.value)} />
+            <label htmlFor="categoria" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
+            <input id="categoria" className="input-field" value={categoria} onChange={(e) => setCategoria(e.target.value)} />
           </div>
           <div style={{ gridColumn: '1 / -1' }}>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
-            <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
           <button type="submit" className="btn-primary" style={{ gridColumn: '1 / -1', justifySelf: 'start' }}>
             Crear permiso
@@ -121,20 +122,20 @@ export default function PermisosPage() {
 
       {[...porCategoria.entries()].map(([cat, ps]) => (
         <section key={cat} className="card">
-          <h3 style={{ fontSize: 14, marginBottom: 10, color: '#94a3b8' }}>{cat}</h3>
+          <h3 style={{ fontSize: 14, marginBottom: 10, color: 'var(--muted)' }}>{cat}</h3>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <tbody>
               {ps.map((p) => (
-                <tr key={p.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr key={p.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>{p.nombre}</td>
-                  <td style={{ padding: '6px 4px', color: '#94a3b8' }}>{p.descripcion}</td>
+                  <td style={{ padding: '6px 4px', color: 'var(--muted)' }}>{p.descripcion}</td>
                   <td style={{ padding: '6px 4px', textAlign: 'right' }}>
                     {p.esSistema ? (
-                      <span style={{ fontSize: 10, color: '#64748b' }}>sistema</span>
+                      <span style={{ fontSize: 10, color: 'var(--muted)' }}>sistema</span>
                     ) : (
                       <button type="button"
                         onClick={() => eliminar(p.id)}
-                        style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
+                        style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
                       >
                         eliminar
                       </button>

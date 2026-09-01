@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { obtenerSesion } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { ProveedorDeposito, actualizarProveedorDeposito, cargarProveedoresDeposito, crearProveedorDeposito } from '@/lib/deposito';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function ProveedoresDepositoPage() {
   const [proveedores, setProveedores] = useState<ProveedorDeposito[] | null>(null);
@@ -125,61 +126,61 @@ export default function ProveedoresDepositoPage() {
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end' }}>
         <div style={{ flex: 1 }}>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Buscar</label>
-          <input className="input-field" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Razon social, nombre comercial o RUC..." />
+          <label htmlFor="buscar" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Buscar</label>
+          <input id="buscar" className="input-field" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Razon social, nombre comercial o RUC..." />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Estado</label>
-          <ComboBuscable opciones={opcionesEstado} value={filtroEstado} onChange={setFiltroEstado} maxWidth={160} />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Estado</label>
+          <ComboBuscable ariaLabel="Estado" opciones={opcionesEstado} value={filtroEstado} onChange={setFiltroEstado} maxWidth={160} />
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={guardar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 2fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Razon social</label>
-              <input className="input-field" value={razonSocial} onChange={(e) => setRazonSocial(e.target.value)} required />
+              <label htmlFor="razon-social" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Razon social</label>
+              <input id="razon-social" className="input-field" value={razonSocial} onChange={(e) => setRazonSocial(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre comercial</label>
-              <input className="input-field" value={nombreComercial} onChange={(e) => setNombreComercial(e.target.value)} />
+              <label htmlFor="nombre-comercial" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre comercial</label>
+              <input id="nombre-comercial" className="input-field" value={nombreComercial} onChange={(e) => setNombreComercial(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>RUC</label>
-              <input className="input-field" value={ruc} onChange={(e) => setRuc(e.target.value)} />
+              <label htmlFor="ruc" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>RUC</label>
+              <input id="ruc" className="input-field" value={ruc} onChange={(e) => setRuc(e.target.value)} />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Direccion</label>
-              <input className="input-field" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
+              <label htmlFor="direccion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Direccion</label>
+              <input id="direccion" className="input-field" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Telefono</label>
-              <input className="input-field" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
+              <label htmlFor="telefono" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Telefono</label>
+              <input id="telefono" className="input-field" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Email</label>
-              <input className="input-field" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <label htmlFor="email" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Email</label>
+              <input id="email" className="input-field" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Contacto</label>
-              <input className="input-field" value={contacto} onChange={(e) => setContacto(e.target.value)} />
+              <label htmlFor="contacto" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Contacto</label>
+              <input id="contacto" className="input-field" value={contacto} onChange={(e) => setContacto(e.target.value)} />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '3fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
-              <input className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
+              <label htmlFor="observaciones" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
+              <input id="observaciones" className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
             </div>
             {editandoId && (
               <div>
                 <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-                <ComboBuscable opciones={opcionesEstado} value={estado} onChange={setEstado} ningunaLabel="ACTIVO" />
+                <ComboBuscable ariaLabel="Estado" opciones={opcionesEstado} value={estado} onChange={setEstado} ningunaLabel="ACTIVO" />
               </div>
             )}
           </div>
@@ -204,29 +205,29 @@ export default function ProveedoresDepositoPage() {
         </form>
       )}
 
-      {proveedores && proveedores.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay proveedores registrados.</p>}
+      {proveedores && proveedores.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay proveedores registrados.</p>}
       {proveedores && proveedores.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Razon social</th>
-              <th style={{ padding: '6px 4px' }}>RUC</th>
-              <th style={{ padding: '6px 4px' }}>Telefono</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Razon social</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>RUC</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Telefono</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {proveedores.map((p) => (
-              <tr key={p.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={p.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>
                   {p.razonSocial}
-                  {p.nombreComercial && <span style={{ color: '#64748b' }}> ({p.nombreComercial})</span>}
+                  {p.nombreComercial && <span style={{ color: 'var(--muted)' }}> ({p.nombreComercial})</span>}
                 </td>
                 <td style={{ padding: '6px 4px' }}>{p.ruc ?? '-'}</td>
                 <td style={{ padding: '6px 4px' }}>{p.telefono ?? '-'}</td>
                 <td style={{ padding: '6px 4px' }}>
-                  <span className="badge" style={{ background: p.estado === 'ACTIVO' ? '#166534' : '#7f1d1d', color: p.estado === 'ACTIVO' ? '#4ade80' : '#f87171' }}>
+                  <span className="badge" style={{ background: p.estado === 'ACTIVO' ? 'var(--ok-fill)' : 'var(--bad-fill)', color: p.estado === 'ACTIVO' ? 'var(--success)' : 'var(--danger)' }}>
                     {p.estado}
                   </span>
                 </td>

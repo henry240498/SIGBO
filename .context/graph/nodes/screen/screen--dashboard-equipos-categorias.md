@@ -15,6 +15,7 @@ edges:
   - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-equipos]
+  - [uses, component--front-aviso]
 terminos: [equipos, categorias, editar, crear, eliminar]
 ---
 
@@ -35,6 +36,7 @@ Pantalla /dashboard/equipos/categorias.
 - `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-equipos|equipos]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

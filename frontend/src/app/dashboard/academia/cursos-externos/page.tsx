@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { obtenerSesion } from '@/lib/api';
 import { CursoExterno, cargarCursosExternos, refrescarCursosExternos } from '@/lib/academia';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function CursosExternosPage() {
   const [cursos, setCursos] = useState<CursoExterno[] | null>(null);
@@ -47,7 +48,7 @@ export default function CursosExternosPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <h2 style={{ fontSize: 16 }}>Cursos externos recomendados</h2>
-          <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 4 }}>
+          <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 4 }}>
             Catálogo público de OBA (Academia Virtual de Bomberos, sitio externo a SIGBO). SIGBO solo muestra
             información pública del curso; inscribirse, cursarlo y descargar el certificado es responsabilidad del
             usuario en el sitio de OBA.
@@ -60,8 +61,8 @@ export default function CursosExternosPage() {
         )}
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {urlLogin && (
         <div className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -73,7 +74,7 @@ export default function CursosExternosPage() {
       )}
 
       {cursos && cursos.length === 0 && (
-        <p style={{ color: '#94a3b8', fontSize: 13 }}>
+        <p style={{ color: 'var(--muted)', fontSize: 13 }}>
           Sin cursos en cache todavía. {puedeConfigurar ? 'Usá "Actualizar catálogo" para consultarlos.' : ''}
         </p>
       )}
@@ -94,11 +95,11 @@ export default function CursosExternosPage() {
               )}
               <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                 {c.categoria && <span className="badge">{c.categoria}</span>}
-                <span className="badge" style={{ background: '#475569' }}>externo · OBA</span>
+                <span className="badge" style={{ background: 'var(--neutral-fill)' }}>externo · OBA</span>
               </div>
               <strong style={{ fontSize: 13 }}>{c.titulo}</strong>
-              {c.duracionTexto && <span style={{ fontSize: 12, color: '#94a3b8' }}>{c.duracionTexto}</span>}
-              <span style={{ fontSize: 11, color: '#60a5fa' }}>Ver curso en OBA ↗</span>
+              {c.duracionTexto && <span style={{ fontSize: 12, color: 'var(--muted)' }}>{c.duracionTexto}</span>}
+              <span style={{ fontSize: 11, color: 'var(--signal)' }}>Ver curso en OBA ↗</span>
             </a>
           ))}
         </div>

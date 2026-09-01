@@ -12,6 +12,7 @@ archivos:
 edges:
   - [belongs_to, domain--seguridad]
   - [uses, component--front-ia]
+  - [uses, component--front-cargando]
 terminos: [seguridad, inteligencia, artificial]
 ---
 
@@ -29,6 +30,7 @@ Pantalla /dashboard/seguridad/inteligencia-artificial.
 
 - `belongs_to` → [[domain--seguridad|Seguridad]]
 - `uses` → [[component--front-ia|ia]]
+- `uses` → [[component--front-cargando|Cargando]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { apiFetch } from '@/lib/api';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
+import { Aviso } from '@/app/components/Aviso';
 
 interface SesionActiva {
   id: string;
@@ -63,45 +64,45 @@ export default function SesionesPage() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <h2 style={{ fontSize: 16 }}>Sesiones activas ({sesiones?.length ?? 0})</h2>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
-      {sesiones && sesiones.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay sesiones activas.</p>}
+      {sesiones && sesiones.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay sesiones activas.</p>}
 
       {sesiones && sesiones.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Usuario</th>
-              <th style={{ padding: '6px 4px' }}>IP</th>
-              <th style={{ padding: '6px 4px' }}>Navegador</th>
-              <th style={{ padding: '6px 4px' }}>Ultima actividad</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Usuario</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>IP</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Navegador</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Ultima actividad</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {sesiones.map((s) => (
-              <tr key={s.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={s.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{s.username ?? s.usuarioId}</td>
-                <td style={{ padding: '6px 4px', color: '#94a3b8' }}>{s.ip}</td>
-                <td style={{ padding: '6px 4px', color: '#94a3b8', maxWidth: 260, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                <td style={{ padding: '6px 4px', color: 'var(--muted)' }}>{s.ip}</td>
+                <td style={{ padding: '6px 4px', color: 'var(--muted)', maxWidth: 260, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {s.userAgent}
                 </td>
-                <td style={{ padding: '6px 4px', color: '#94a3b8' }}>
+                <td style={{ padding: '6px 4px', color: 'var(--muted)' }}>
                   {new Date(s.fechaUltimaActividad).toLocaleString('es-PY')}
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 10 }}>
                   <button
                     type="button"
                     onClick={() => cerrar(s.id)}
-                    style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
+                    style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
                   >
                     cerrar
                   </button>
                   <button
                     type="button"
                     onClick={() => cerrarTodasDeUsuario(s.usuarioId, s.username)}
-                    style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
+                    style={{ background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
                   >
                     cerrar todas de este usuario
                   </button>

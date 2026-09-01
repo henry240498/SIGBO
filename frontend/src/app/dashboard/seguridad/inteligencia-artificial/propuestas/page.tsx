@@ -10,6 +10,7 @@ import {
   publicarPropuestaMejora,
   rechazarPropuestaMejora,
 } from '@/lib/ia';
+import { Aviso } from '@/app/components/Aviso';
 
 function formatearFechaHora(iso: string) {
   return new Date(iso).toLocaleString('es-PY');
@@ -19,14 +20,14 @@ function colorEstado(estado: string) {
   switch (estado) {
     case 'PROPUESTA':
     case 'REVISION':
-      return '#451a03';
+      return 'var(--warn-fill)';
     case 'APROBADO':
     case 'PUBLICADO':
-      return '#166534';
+      return 'var(--ok-fill)';
     case 'RECHAZADO':
-      return '#7f1d1d';
+      return 'var(--bad-fill)';
     default:
-      return '#334155';
+      return 'var(--neutral-fill)';
   }
 }
 
@@ -91,48 +92,48 @@ export default function PropuestasMejoraIaPage() {
         <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>{mostrarForm ? 'Cancelar' : '+ Nueva propuesta'}</button>
       </div>
 
-      <p style={{ fontSize: 12, color: '#94a3b8' }}>
+      <p style={{ fontSize: 12, color: 'var(--muted)' }}>
         Flujo: BORRADOR → PROPUESTA → REVISIÓN → APROBADO/RECHAZADO → PUBLICADO. Publicar una propuesta no cambia la configuración automáticamente — un administrador debe trasladar el cambio desde la pestaña Configuración.
       </p>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={crear} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Problema detectado</label>
-            <textarea className="input-field" rows={2} value={problemaDetectado} onChange={(e) => setProblemaDetectado(e.target.value)} required />
+            <label htmlFor="problema-detectado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Problema detectado</label>
+            <textarea id="problema-detectado" className="input-field" rows={2} value={problemaDetectado} onChange={(e) => setProblemaDetectado(e.target.value)} required />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Propuesta</label>
-            <textarea className="input-field" rows={3} value={propuestaTexto} onChange={(e) => setPropuestaTexto(e.target.value)} required />
+            <label htmlFor="propuesta" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Propuesta</label>
+            <textarea id="propuesta" className="input-field" rows={3} value={propuestaTexto} onChange={(e) => setPropuestaTexto(e.target.value)} required />
           </div>
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>{guardando ? 'Guardando...' : 'Crear propuesta'}</button>
         </form>
       )}
 
-      {propuestas && propuestas.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin propuestas registradas.</p>}
+      {propuestas && propuestas.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin propuestas registradas.</p>}
       {propuestas?.map((p) => (
         <div key={p.id} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <div>
               <span className="badge" style={{ background: colorEstado(p.estado), marginRight: 8 }}>{p.estado}</span>
-              <span className="badge" style={{ background: '#334155' }}>{p.origen}</span>
+              <span className="badge" style={{ background: 'var(--neutral-fill)' }}>{p.origen}</span>
             </div>
-            <span style={{ fontSize: 11, color: '#64748b' }}>{formatearFechaHora(p.creadoEn)}</span>
+            <span style={{ fontSize: 11, color: 'var(--muted)' }}>{formatearFechaHora(p.creadoEn)}</span>
           </div>
           <div>
-            <p style={{ fontSize: 12, color: '#94a3b8' }}>Problema detectado</p>
+            <p style={{ fontSize: 12, color: 'var(--muted)' }}>Problema detectado</p>
             <p style={{ fontSize: 13 }}>{p.problemaDetectado}</p>
           </div>
           <div>
-            <p style={{ fontSize: 12, color: '#94a3b8' }}>Propuesta</p>
+            <p style={{ fontSize: 12, color: 'var(--muted)' }}>Propuesta</p>
             <p style={{ fontSize: 13 }}>{p.propuestaTexto}</p>
           </div>
           {p.motivoDecision && (
             <div>
-              <p style={{ fontSize: 12, color: '#94a3b8' }}>Motivo de la decisión</p>
+              <p style={{ fontSize: 12, color: 'var(--muted)' }}>Motivo de la decisión</p>
               <p style={{ fontSize: 13 }}>{p.motivoDecision}</p>
             </div>
           )}

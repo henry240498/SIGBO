@@ -15,6 +15,7 @@ edges:
   - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-vehiculos]
+  - [uses, component--front-aviso]
 terminos: [vehiculos, checklist, items, editar]
 ---
 
@@ -35,6 +36,7 @@ Pantalla /dashboard/vehiculos/checklist-items.
 - `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-vehiculos|vehiculos]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

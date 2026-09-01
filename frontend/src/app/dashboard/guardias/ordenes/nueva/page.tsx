@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { crearOrdenGuardia } from '@/lib/guardias';
+import { Aviso } from '@/app/components/Aviso';
 
 const MESES = [
   { value: 1, label: 'Enero' }, { value: 2, label: 'Febrero' }, { value: 3, label: 'Marzo' },
@@ -37,23 +38,23 @@ export default function NuevaOrdenGuardiaPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 600 }}>
       <h2 style={{ fontSize: 16 }}>Nueva Orden de Guardia</h2>
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         SIGBO recupera automaticamente la planificacion (grupos, esquemas, guardias generadas) del periodo
         seleccionado y arma la vista previa. El numero de orden se asigna automaticamente en forma secuencial por
         año.
       </p>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       <form className="card" onSubmit={crear} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Año</label>
-            <input className="input-field" type="number" value={anio} onChange={(e) => setAnio(parseInt(e.target.value, 10))} required />
+            <label htmlFor="ano" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Año</label>
+            <input id="ano" className="input-field" type="number" value={anio} onChange={(e) => setAnio(parseInt(e.target.value, 10))} required />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Mes</label>
-            <select className="input-field" value={mes} onChange={(e) => setMes(parseInt(e.target.value, 10))}>
+            <label htmlFor="mes" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Mes</label>
+            <select id="mes" className="input-field" value={mes} onChange={(e) => setMes(parseInt(e.target.value, 10))}>
               {MESES.map((m) => (
                 <option key={m.value} value={m.value}>{m.label}</option>
               ))}
@@ -61,8 +62,8 @@ export default function NuevaOrdenGuardiaPage() {
           </div>
         </div>
         <div>
-          <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de emision</label>
-          <input className="input-field" type="date" value={fechaEmision} onChange={(e) => setFechaEmision(e.target.value)} required />
+          <label htmlFor="fecha-de-emision" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de emision</label>
+          <input id="fecha-de-emision" className="input-field" type="date" value={fechaEmision} onChange={(e) => setFechaEmision(e.target.value)} required />
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
           <button type="submit" className="btn-primary" disabled={creando}>{creando ? 'Creando...' : 'Crear orden'}</button>

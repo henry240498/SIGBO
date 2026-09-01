@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { obtenerSesion } from '@/lib/api';
 import { CategoriaEquipo, actualizarCategoria, cargarCategorias, crearCategoria, eliminarCategoria } from '@/lib/equipos';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function CategoriasEquipoPage() {
   const confirmar = useConfirmacion();
@@ -91,19 +92,19 @@ export default function CategoriasEquipoPage() {
         )}
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
-              <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+              <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+              <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
             </div>
           </div>
           <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
@@ -115,20 +116,20 @@ export default function CategoriasEquipoPage() {
       {categorias && categorias.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Descripcion</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Descripcion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {categorias.map((c) => (
-              <tr key={c.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={c.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{c.nombre}</td>
                 <td style={{ padding: '6px 4px' }}>{c.descripcion ?? '—'}</td>
                 <td style={{ padding: '6px 4px' }}>
-                  <span className="badge" style={{ background: c.activo ? '#166534' : '#7f1d1d' }}>
+                  <span className="badge" style={{ background: c.activo ? 'var(--ok-fill)' : 'var(--bad-fill)' }}>
                     {c.activo ? 'ACTIVA' : 'INACTIVA'}
                   </span>
                 </td>

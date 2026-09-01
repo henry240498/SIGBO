@@ -14,6 +14,7 @@ edges:
   - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-exportar]
+  - [uses, component--front-aviso]
   - [calls, api--organizacion-brigadas]
   - [calls, api--organizacion-brigadas]
 terminos: [organizacion, brigadas]
@@ -40,6 +41,7 @@ Pantalla /dashboard/organizacion/brigadas, consume 2 endpoint(s).
 - `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-exportar|exportar]]
+- `uses` → [[component--front-aviso|Aviso]]
 - `calls` → [[api--organizacion-brigadas|BrigadasController]]
 - `calls` → [[api--organizacion-brigadas|BrigadasController]]
 

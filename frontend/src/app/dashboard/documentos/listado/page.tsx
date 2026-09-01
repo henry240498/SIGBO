@@ -16,6 +16,7 @@ import {
   crearDocumento,
   previsualizarSiguienteNumero,
 } from '@/lib/documentos';
+import { Aviso } from '@/app/components/Aviso';
 
 const ORIGENES = [
   { value: 'INTERNO', label: 'Interno' },
@@ -25,11 +26,11 @@ const ORIGENES = [
 function badgeVigencia(documento: Documento): { texto: string; color: string } | null {
   if (!documento.fechaVencimiento) return null;
   const hoy = new Date().toISOString().slice(0, 10);
-  if (documento.fechaVencimiento < hoy) return { texto: 'Vencido', color: '#7f1d1d' };
+  if (documento.fechaVencimiento < hoy) return { texto: 'Vencido', color: 'var(--bad-fill)' };
   const limite = new Date();
   limite.setDate(limite.getDate() + 30);
-  if (documento.fechaVencimiento <= limite.toISOString().slice(0, 10)) return { texto: 'Por vencer', color: '#451a03' };
-  return { texto: 'Vigente', color: '#166534' };
+  if (documento.fechaVencimiento <= limite.toISOString().slice(0, 10)) return { texto: 'Por vencer', color: 'var(--warn-fill)' };
+  return { texto: 'Vigente', color: 'var(--ok-fill)' };
 }
 
 export default function ListadoDocumentosPage() {
@@ -186,20 +187,20 @@ export default function ListadoDocumentosPage() {
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div style={{ flex: 1, minWidth: 200 }}>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Buscar (titulo o numero)</label>
-          <input className="input-field" value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && cargar()} />
+          <label htmlFor="buscar-titulo-o-numero" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Buscar (titulo o numero)</label>
+          <input id="buscar-titulo-o-numero" className="input-field" value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && cargar()} />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Tipo</label>
-          <ComboBuscable opciones={opcionesTipo} value={filtroTipo} onChange={setFiltroTipo} maxWidth={200} ningunaLabel="Todos" />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Tipo</label>
+          <ComboBuscable ariaLabel="Tipo" opciones={opcionesTipo} value={filtroTipo} onChange={setFiltroTipo} maxWidth={200} ningunaLabel="Todos" />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Estado</label>
-          <ComboBuscable opciones={opcionesEstado} value={filtroEstado} onChange={setFiltroEstado} maxWidth={200} ningunaLabel="Todos" />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Estado</label>
+          <ComboBuscable ariaLabel="Estado" opciones={opcionesEstado} value={filtroEstado} onChange={setFiltroEstado} maxWidth={200} ningunaLabel="Todos" />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Vigencia</label>
-          <ComboBuscable
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Vigencia</label>
+          <ComboBuscable ariaLabel="Vigencia"
             opciones={[{ value: 'PROXIMOS', label: 'Proximos a vencer' }, { value: 'VENCIDOS', label: 'Vencidos' }]}
             value={filtroVencimiento}
             onChange={setFiltroVencimiento}
@@ -212,59 +213,59 @@ export default function ListadoDocumentosPage() {
         </button>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={crear} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de documento</label>
-              <ComboBuscable opciones={opcionesTipo} value={tipoDocumentoId} onChange={setTipoDocumentoId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar tipo..." />
+              <ComboBuscable ariaLabel="Tipo de documento" opciones={opcionesTipo} value={tipoDocumentoId} onChange={setTipoDocumentoId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar tipo..." />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
-              <ComboBuscable opciones={opcionesCategoria} value={categoriaDocumentoId} onChange={setCategoriaDocumentoId} ningunaLabel="Sin categoria" placeholderBusqueda="Buscar categoria..." />
+              <ComboBuscable ariaLabel="Categoria" opciones={opcionesCategoria} value={categoriaDocumentoId} onChange={setCategoriaDocumentoId} ningunaLabel="Sin categoria" placeholderBusqueda="Buscar categoria..." />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Origen</label>
-              <ComboBuscable opciones={ORIGENES} value={origen} onChange={setOrigen} ningunaLabel="Interno" />
+              <ComboBuscable ariaLabel="Origen" opciones={ORIGENES} value={origen} onChange={setOrigen} ningunaLabel="Interno" />
             </div>
           </div>
 
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Titulo</label>
-            <input className="input-field" value={titulo} onChange={(e) => setTitulo(e.target.value)} required />
+            <label htmlFor="titulo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Titulo</label>
+            <input id="titulo" className="input-field" value={titulo} onChange={(e) => setTitulo(e.target.value)} required />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
-            <textarea className="input-field" rows={2} value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <textarea id="descripcion" className="input-field" rows={2} value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de emision</label>
-              <input className="input-field" type="date" value={fechaEmision} onChange={(e) => setFechaEmision(e.target.value)} required />
+              <label htmlFor="fecha-de-emision" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de emision</label>
+              <input id="fecha-de-emision" className="input-field" type="date" value={fechaEmision} onChange={(e) => setFechaEmision(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de vencimiento</label>
-              <input className="input-field" type="date" value={fechaVencimiento} onChange={(e) => setFechaVencimiento(e.target.value)} />
+              <label htmlFor="fecha-de-vencimiento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de vencimiento</label>
+              <input id="fecha-de-vencimiento" className="input-field" type="date" value={fechaVencimiento} onChange={(e) => setFechaVencimiento(e.target.value)} />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Confidencialidad</label>
-              <ComboBuscable opciones={opcionesNivel} value={nivelConfidencialidadId} onChange={setNivelConfidencialidadId} ningunaLabel="Publico" />
+              <ComboBuscable ariaLabel="Confidencialidad" opciones={opcionesNivel} value={nivelConfidencialidadId} onChange={setNivelConfidencialidadId} ningunaLabel="Publico" />
             </div>
           </div>
 
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero documental</label>
-            <input
+            <label htmlFor="numero-documental" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero documental</label>
+            <input id="numero-documental"
               className="input-field"
               value={numeroDocumental}
               onChange={(e) => setNumeroDocumental(e.target.value)}
               placeholder={cargandoSugerencia ? 'Calculando sugerencia...' : tipoDocumentoId ? 'Sin numerar' : 'Elegi un tipo de documento primero'}
             />
-            <p style={{ fontSize: 11, color: '#64748b', marginTop: 4 }}>
+            <p style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>
               {numeroSugerido
                 ? numeroDocumental === numeroSugerido
                   ? `Sugerido: ${numeroSugerido} (se asigna recien al guardar). Podes editarlo o borrarlo.`
@@ -281,27 +282,27 @@ export default function ListadoDocumentosPage() {
         </form>
       )}
 
-      {documentos && documentos.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay documentos con estos filtros.</p>}
+      {documentos && documentos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay documentos con estos filtros.</p>}
       {documentos && documentos.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Numero</th>
-              <th style={{ padding: '6px 4px' }}>Titulo</th>
-              <th style={{ padding: '6px 4px' }}>Tipo</th>
-              <th style={{ padding: '6px 4px' }}>Emision</th>
-              <th style={{ padding: '6px 4px' }}>Vigencia</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}></th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Numero</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Titulo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Emision</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Vigencia</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}></th>
             </tr>
           </thead>
           <tbody>
             {documentos.map((d) => {
               const vig = badgeVigencia(d);
               return (
-                <tr key={d.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr key={d.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>
-                    <Link href={`/dashboard/documentos/${d.id}`} style={{ color: '#60a5fa', textDecoration: 'none' }}>
+                    <Link href={`/dashboard/documentos/${d.id}`} style={{ color: 'var(--signal)', textDecoration: 'none' }}>
                       {d.numeroDocumental ?? '(sin numero)'}
                     </Link>
                   </td>
@@ -310,14 +311,14 @@ export default function ListadoDocumentosPage() {
                   <td style={{ padding: '6px 4px' }}>{d.fechaEmision}</td>
                   <td style={{ padding: '6px 4px' }}>{vig && <span className="badge" style={{ background: vig.color }}>{vig.texto}</span>}</td>
                   <td style={{ padding: '6px 4px' }}>
-                    <span className="badge" style={{ background: '#334155' }}>{estadoPorId.get(d.estadoId) ?? '-'}</span>
+                    <span className="badge" style={{ background: 'var(--neutral-fill)' }}>{estadoPorId.get(d.estadoId) ?? '-'}</span>
                   </td>
                   <td style={{ padding: '6px 4px' }}>
                     {d.archivoUrl && (
                       <button
                         type="button"
                         className="btn-primary"
-                        style={{ padding: '3px 8px', fontSize: 11, background: '#334155' }}
+                        style={{ padding: '3px 8px', fontSize: 11, background: '#475569' }}
                         onClick={() => setDocumentoParaVisor(d)}
                       >
                         👁 Ver

@@ -1,11 +1,12 @@
 'use client';
 
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useId, useMemo, useState } from 'react';
 import { obtenerSesion } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { cargarEquipos, Equipo } from '@/lib/equipos';
 import { cargarVehiculos, Vehiculo } from '@/lib/vehiculos';
 import { Articulo, IncidenciaDeposito, cargarArticulos, cargarIncidenciasDeposito, crearIncidenciaDeposito, resolverIncidenciaDeposito } from '@/lib/deposito';
+import { Aviso } from '@/app/components/Aviso';
 
 const ORIGENES = [
   { value: 'INSPECCION_VEHICULO', label: 'Inspeccion de vehiculo' },
@@ -22,9 +23,9 @@ const ESTADOS = [
 ];
 
 function colorGravedad(g: string) {
-  if (g === 'ALTA') return { background: '#7f1d1d', color: '#f87171' };
-  if (g === 'MEDIA') return { background: '#451a03', color: '#fbbf24' };
-  return { background: '#334155', color: '#e2e8f0' };
+  if (g === 'ALTA') return { background: 'var(--bad-fill)', color: 'var(--danger)' };
+  if (g === 'MEDIA') return { background: 'var(--warn-fill)', color: 'var(--warning)' };
+  return { background: 'var(--neutral-fill)', color: 'var(--ink)' };
 }
 
 function FilaResolver({ incidencia, onResuelta }: { incidencia: IncidenciaDeposito; onResuelta: () => void }) {
@@ -47,8 +48,8 @@ function FilaResolver({ incidencia, onResuelta }: { incidencia: IncidenciaDeposi
   }
 
   return (
-    <div style={{ padding: '10px 4px', background: '#0f172a', borderRadius: 6, display: 'grid', gridTemplateColumns: '1fr 2fr auto', gap: 8, alignItems: 'flex-end' }}>
-      {error && <p style={{ color: '#f87171', fontSize: 12, gridColumn: '1 / -1' }}>{error}</p>}
+    <div style={{ padding: '10px 4px', background: 'var(--surface-soft)', borderRadius: 6, display: 'grid', gridTemplateColumns: '1fr 2fr auto', gap: 8, alignItems: 'flex-end' }}>
+      {error && <p style={{ color: 'var(--danger)', fontSize: 12, gridColumn: '1 / -1' }}>{error}</p>}
       <ComboBuscable opciones={[{ value: 'RESUELTA', label: 'Resuelta' }, { value: 'DESCARTADA', label: 'Descartada' }]} value={estado} onChange={setEstado} ningunaLabel="Resuelta" />
       <input className="input-field" placeholder="Resolucion" value={resolucion} onChange={(e) => setResolucion(e.target.value)} />
       <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} onClick={confirmar} disabled={guardando || !resolucion}>
@@ -59,6 +60,7 @@ function FilaResolver({ incidencia, onResuelta }: { incidencia: IncidenciaDeposi
 }
 
 export default function IncidenciasDepositoPage() {
+  const idCampo = useId();
   const [incidencias, setIncidencias] = useState<IncidenciaDeposito[] | null>(null);
   const [articulos, setArticulos] = useState<Articulo[]>([]);
   const [equipos, setEquipos] = useState<Equipo[]>([]);
@@ -169,45 +171,45 @@ export default function IncidenciasDepositoPage() {
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end' }}>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Estado</label>
-          <ComboBuscable opciones={ESTADOS} value={filtroEstado} onChange={setFiltroEstado} maxWidth={200} />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Estado</label>
+          <ComboBuscable ariaLabel="Estado" opciones={ESTADOS} value={filtroEstado} onChange={setFiltroEstado} maxWidth={200} />
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={crear} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de elemento</label>
-              <ComboBuscable opciones={[{ value: 'EQUIPO', label: 'Equipo' }, { value: 'ARTICULO', label: 'Articulo' }]} value={tipoElemento} onChange={setTipoElemento} ningunaLabel="No aplica" />
+              <ComboBuscable ariaLabel="Tipo de elemento" opciones={[{ value: 'EQUIPO', label: 'Equipo' }, { value: 'ARTICULO', label: 'Articulo' }]} value={tipoElemento} onChange={setTipoElemento} ningunaLabel="No aplica" />
             </div>
             {tipoElemento === 'EQUIPO' && (
               <div>
                 <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Equipo</label>
-                <ComboBuscable opciones={opcionesEquipo} value={equipoId} onChange={setEquipoId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar equipo..." />
+                <ComboBuscable ariaLabel="Equipo" opciones={opcionesEquipo} value={equipoId} onChange={setEquipoId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar equipo..." />
               </div>
             )}
             {tipoElemento === 'ARTICULO' && (
               <div>
                 <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Articulo</label>
-                <ComboBuscable opciones={opcionesArticulo} value={articuloId} onChange={setArticuloId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar articulo..." />
+                <ComboBuscable ariaLabel="Articulo" opciones={opcionesArticulo} value={articuloId} onChange={setArticuloId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar articulo..." />
               </div>
             )}
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Vehiculo relacionado (opcional)</label>
-              <ComboBuscable opciones={opcionesVehiculo} value={vehiculoId} onChange={setVehiculoId} ningunaLabel="No aplica" />
+              <ComboBuscable ariaLabel="Vehiculo relacionado (opcional)" opciones={opcionesVehiculo} value={vehiculoId} onChange={setVehiculoId} ningunaLabel="No aplica" />
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
-            <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required />
+            <label htmlFor={`${idCampo}-descripcion`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <input id={`${idCampo}-descripcion`} className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required />
           </div>
           <div>
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Gravedad</label>
-            <ComboBuscable opciones={GRAVEDADES} value={gravedad} onChange={setGravedad} ningunaLabel="MEDIA" maxWidth={160} />
+            <ComboBuscable ariaLabel="Gravedad" opciones={GRAVEDADES} value={gravedad} onChange={setGravedad} ningunaLabel="MEDIA" maxWidth={160} />
           </div>
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Registrar incidencia'}
@@ -215,24 +217,24 @@ export default function IncidenciasDepositoPage() {
         </form>
       )}
 
-      {incidencias && incidencias.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay incidencias registradas.</p>}
+      {incidencias && incidencias.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay incidencias registradas.</p>}
       {incidencias && incidencias.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Apertura</th>
-              <th style={{ padding: '6px 4px' }}>Origen</th>
-              <th style={{ padding: '6px 4px' }}>Elemento</th>
-              <th style={{ padding: '6px 4px' }}>Descripcion</th>
-              <th style={{ padding: '6px 4px' }}>Gravedad</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Apertura</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Origen</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Elemento</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Descripcion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Gravedad</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {incidencias.map((i) => (
               <Fragment key={i.id}>
-                <tr style={{ borderBottom: expandidaId === i.id ? 'none' : '1px solid #1f2937' }}>
+                <tr style={{ borderBottom: expandidaId === i.id ? 'none' : '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>{new Date(i.fechaApertura).toLocaleString()}</td>
                   <td style={{ padding: '6px 4px' }}>{ORIGENES.find((o) => o.value === i.origenTipo)?.label ?? i.origenTipo}</td>
                   <td style={{ padding: '6px 4px' }}>{descripcionElemento(i)}</td>
@@ -241,7 +243,7 @@ export default function IncidenciasDepositoPage() {
                     <span className="badge" style={colorGravedad(i.gravedad)}>{i.gravedad}</span>
                   </td>
                   <td style={{ padding: '6px 4px' }}>
-                    <span className="badge" style={{ background: i.estado === 'RESUELTA' ? '#166534' : i.estado === 'DESCARTADA' ? '#334155' : '#7f1d1d' }}>{i.estado}</span>
+                    <span className="badge" style={{ background: i.estado === 'RESUELTA' ? 'var(--ok-fill)' : i.estado === 'DESCARTADA' ? 'var(--neutral-fill)' : 'var(--bad-fill)' }}>{i.estado}</span>
                   </td>
                   <td style={{ padding: '6px 4px' }}>
                     {puedeResolver && (i.estado === 'ABIERTA' || i.estado === 'EN_REVISION') && (
@@ -252,7 +254,7 @@ export default function IncidenciasDepositoPage() {
                   </td>
                 </tr>
                 {expandidaId === i.id && (
-                  <tr style={{ borderBottom: '1px solid #1f2937' }}>
+                  <tr style={{ borderBottom: '1px solid var(--line-soft)' }}>
                     <td colSpan={7} style={{ padding: '4px' }}>
                       <FilaResolver
                         incidencia={i}

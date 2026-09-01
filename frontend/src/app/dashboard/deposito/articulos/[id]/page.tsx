@@ -22,6 +22,8 @@ import {
   cargarUnidadesMedidaDeposito,
   crearLoteArticulo,
 } from '@/lib/deposito';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function ArticuloDetallePage() {
   const params = useParams();
@@ -174,8 +176,8 @@ export default function ArticuloDetallePage() {
     return '-';
   }
 
-  if (error && !articulo) return <p style={{ color: '#f87171' }}>{error}</p>;
-  if (!articulo) return <p style={{ color: '#94a3b8' }}>Cargando...</p>;
+  if (error && !articulo) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
+  if (!articulo) return <Cargando texto="Cargando…" />;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -183,7 +185,7 @@ export default function ArticuloDetallePage() {
         <div>
           <button type="button"
             onClick={() => router.push('/dashboard/deposito/articulos')}
-            style={{ background: 'none', border: 'none', color: '#60a5fa', cursor: 'pointer', fontSize: 12, padding: 0, marginBottom: 6 }}
+            style={{ background: 'none', border: 'none', color: 'var(--signal)', cursor: 'pointer', fontSize: 12, padding: 0, marginBottom: 6 }}
           >
             ← Volver a articulos
           </button>
@@ -193,28 +195,28 @@ export default function ArticuloDetallePage() {
         </div>
         <div style={{ textAlign: 'right' }}>
           <div style={{ fontSize: 28, fontWeight: 700 }}>{articulo.stockActual}</div>
-          <div style={{ fontSize: 12, color: '#94a3b8' }}>stock actual (solo cambia por movimientos)</div>
+          <div style={{ fontSize: 12, color: 'var(--muted)' }}>stock actual (solo cambia por movimientos)</div>
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       <section className="card">
         <h2 style={{ fontSize: 15, marginBottom: 12 }}>Datos generales</h2>
         <form onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required disabled={!puedeEditar} />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required disabled={!puedeEditar} />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
-              <ComboBuscable opciones={opcionesCategoria} value={categoriaArticuloId} onChange={setCategoriaArticuloId} disabled={!puedeEditar} />
+              <ComboBuscable ariaLabel="Categoria" opciones={opcionesCategoria} value={categoriaArticuloId} onChange={setCategoriaArticuloId} disabled={!puedeEditar} />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-              <ComboBuscable
+              <ComboBuscable ariaLabel="Estado"
                 opciones={[{ value: 'ACTIVO', label: 'ACTIVO' }, { value: 'INACTIVO', label: 'INACTIVO' }]}
                 value={estado}
                 onChange={setEstado}
@@ -224,21 +226,21 @@ export default function ArticuloDetallePage() {
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
-            <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} disabled={!puedeEditar} />
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} disabled={!puedeEditar} />
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Unidad de medida</label>
-              <ComboBuscable opciones={opcionesUnidad} value={unidadMedidaId} onChange={setUnidadMedidaId} ningunaLabel="Sin definir" disabled={!puedeEditar} />
+              <ComboBuscable ariaLabel="Unidad de medida" opciones={opcionesUnidad} value={unidadMedidaId} onChange={setUnidadMedidaId} ningunaLabel="Sin definir" disabled={!puedeEditar} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Stock minimo</label>
-              <input className="input-field" type="number" min={0} step="0.01" value={stockMinimo} onChange={(e) => setStockMinimo(e.target.value)} disabled={!puedeEditar} />
+              <label htmlFor="stock-minimo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Stock minimo</label>
+              <input id="stock-minimo" className="input-field" type="number" min={0} step="0.01" value={stockMinimo} onChange={(e) => setStockMinimo(e.target.value)} disabled={!puedeEditar} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Stock maximo</label>
-              <input className="input-field" type="number" min={0} step="0.01" value={stockMaximo} onChange={(e) => setStockMaximo(e.target.value)} disabled={!puedeEditar} />
+              <label htmlFor="stock-maximo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Stock maximo</label>
+              <input id="stock-maximo" className="input-field" type="number" min={0} step="0.01" value={stockMaximo} onChange={(e) => setStockMaximo(e.target.value)} disabled={!puedeEditar} />
             </div>
           </div>
           <div style={{ display: 'flex', gap: 16 }}>
@@ -261,21 +263,21 @@ export default function ArticuloDetallePage() {
 
       <section className="card">
         <h2 style={{ fontSize: 15, marginBottom: 12 }}>Donde esta el stock ({tenencias?.length ?? 0})</h2>
-        {tenencias && tenencias.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin stock registrado en ninguna tenencia.</p>}
+        {tenencias && tenencias.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin stock registrado en ninguna tenencia.</p>}
         {tenencias && tenencias.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                <th style={{ padding: '6px 4px' }}>Tipo de tenencia</th>
-                <th style={{ padding: '6px 4px' }}>Donde / con quien</th>
-                <th style={{ padding: '6px 4px' }}>Cantidad</th>
-                <th style={{ padding: '6px 4px' }}>Estado</th>
-                <th style={{ padding: '6px 4px' }}>Actualizado</th>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                <th scope="col" style={{ padding: '6px 4px' }}>Tipo de tenencia</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Donde / con quien</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Cantidad</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Actualizado</th>
               </tr>
             </thead>
             <tbody>
               {tenencias.map((t) => (
-                <tr key={t.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr key={t.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>{nombresTipoTenencia.get(t.tipoTenenciaId) ?? '-'}</td>
                   <td style={{ padding: '6px 4px' }}>{nombreTenedor(t)}</td>
                   <td style={{ padding: '6px 4px' }}>{t.cantidad ?? '-'}</td>
@@ -304,20 +306,20 @@ export default function ArticuloDetallePage() {
           {mostrarFormLote && (
             <form onSubmit={crearLote} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr auto', gap: 10, alignItems: 'flex-end', marginBottom: 14 }}>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero de lote</label>
-                <input className="input-field" value={numeroLote} onChange={(e) => setNumeroLote(e.target.value)} required />
+                <label htmlFor="numero-de-lote" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero de lote</label>
+                <input id="numero-de-lote" className="input-field" value={numeroLote} onChange={(e) => setNumeroLote(e.target.value)} required />
               </div>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha fabricacion</label>
-                <input className="input-field" type="date" value={fechaFabricacion} onChange={(e) => setFechaFabricacion(e.target.value)} />
+                <label htmlFor="fecha-fabricacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha fabricacion</label>
+                <input id="fecha-fabricacion" className="input-field" type="date" value={fechaFabricacion} onChange={(e) => setFechaFabricacion(e.target.value)} />
               </div>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha vencimiento</label>
-                <input className="input-field" type="date" value={fechaVencimiento} onChange={(e) => setFechaVencimiento(e.target.value)} />
+                <label htmlFor="fecha-vencimiento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha vencimiento</label>
+                <input id="fecha-vencimiento" className="input-field" type="date" value={fechaVencimiento} onChange={(e) => setFechaVencimiento(e.target.value)} />
               </div>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cantidad</label>
-                <input className="input-field" type="number" min={0} step="0.01" value={cantidadLote} onChange={(e) => setCantidadLote(e.target.value)} required />
+                <label htmlFor="cantidad" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cantidad</label>
+                <input id="cantidad" className="input-field" type="number" min={0} step="0.01" value={cantidadLote} onChange={(e) => setCantidadLote(e.target.value)} required />
               </div>
               <button type="button" className="btn-primary" disabled={guardandoLote}>
                 {guardandoLote ? 'Guardando...' : 'Crear'}
@@ -325,21 +327,21 @@ export default function ArticuloDetallePage() {
             </form>
           )}
 
-          {lotes && lotes.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay lotes registrados.</p>}
+          {lotes && lotes.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay lotes registrados.</p>}
           {lotes && lotes.length > 0 && (
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
-                <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                  <th style={{ padding: '6px 4px' }}>Lote</th>
-                  <th style={{ padding: '6px 4px' }}>Fabricacion</th>
-                  <th style={{ padding: '6px 4px' }}>Vencimiento</th>
-                  <th style={{ padding: '6px 4px' }}>Cantidad</th>
-                  <th style={{ padding: '6px 4px' }}>Estado</th>
+                <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                  <th scope="col" style={{ padding: '6px 4px' }}>Lote</th>
+                  <th scope="col" style={{ padding: '6px 4px' }}>Fabricacion</th>
+                  <th scope="col" style={{ padding: '6px 4px' }}>Vencimiento</th>
+                  <th scope="col" style={{ padding: '6px 4px' }}>Cantidad</th>
+                  <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
                 </tr>
               </thead>
               <tbody>
                 {lotes.map((l) => (
-                  <tr key={l.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                  <tr key={l.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                     <td style={{ padding: '6px 4px' }}>{l.numeroLote}</td>
                     <td style={{ padding: '6px 4px' }}>{l.fechaFabricacion ?? '-'}</td>
                     <td style={{ padding: '6px 4px' }}>{l.fechaVencimiento ?? '-'}</td>
@@ -348,8 +350,8 @@ export default function ArticuloDetallePage() {
                       <span
                         className="badge"
                         style={{
-                          background: l.estado === 'VIGENTE' ? '#166534' : l.estado === 'VENCIDO' ? '#7f1d1d' : '#334155',
-                          color: l.estado === 'VIGENTE' ? '#4ade80' : l.estado === 'VENCIDO' ? '#f87171' : '#e2e8f0',
+                          background: l.estado === 'VIGENTE' ? 'var(--ok-fill)' : l.estado === 'VENCIDO' ? 'var(--bad-fill)' : 'var(--neutral-fill)',
+                          color: l.estado === 'VIGENTE' ? 'var(--success)' : l.estado === 'VENCIDO' ? 'var(--danger)' : 'var(--ink)',
                         }}
                       >
                         {l.estado}

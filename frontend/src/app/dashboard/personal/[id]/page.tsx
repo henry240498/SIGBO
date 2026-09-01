@@ -18,6 +18,8 @@ import {
 } from '@/lib/academia';
 import { EquipamientoDeBomberoItem, cargarEquipamientoDeBombero } from '@/lib/deposito';
 import { DocumentosDeEntidad } from '@/components/DocumentosDeEntidad';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 /* ------------------------------------------------------------------ */
 /* Tipos                                                                */
@@ -119,7 +121,7 @@ async function cargarCatalogo(path: string): Promise<Catalogo[]> {
 function campoTexto(label: string, valor: string | null | undefined) {
   return (
     <div>
-      <span style={{ fontSize: 11, color: '#94a3b8', display: 'block' }}>{label}</span>
+      <span style={{ fontSize: 11, color: 'var(--muted)', display: 'block' }}>{label}</span>
       <span style={{ fontSize: 13 }}>{valor || '-'}</span>
     </div>
   );
@@ -178,11 +180,11 @@ export default function ExpedienteBomberoPage() {
   }
 
   if (error && !bombero) {
-    return <p style={{ color: '#f87171' }}>{error}</p>;
+    return <p style={{ color: 'var(--danger)' }}>{error}</p>;
   }
 
   if (!bombero) {
-    return <p style={{ color: '#94a3b8' }}>Cargando expediente...</p>;
+    return <Cargando texto="Cargando expediente…" />;
   }
 
   return (
@@ -202,7 +204,7 @@ export default function ExpedienteBomberoPage() {
                 width: 64,
                 height: 64,
                 borderRadius: 8,
-                background: '#334155',
+                background: 'var(--neutral-fill)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -219,11 +221,11 @@ export default function ExpedienteBomberoPage() {
             </h2>
             <div style={{ display: 'flex', gap: 8, marginTop: 6, flexWrap: 'wrap' }}>
               <span className="badge">{bombero.numeroBombero}</span>
-              <span className="badge" style={{ background: bombero.estado === 'ACTIVO' ? '#166534' : '#7f1d1d' }}>
+              <span className="badge" style={{ background: bombero.estado === 'ACTIVO' ? 'var(--ok-fill)' : 'var(--bad-fill)' }}>
                 {bombero.estado}
               </span>
               {tipoActual && <span className="badge">{tipoActual.prefijo}</span>}
-              <span className="badge" style={{ background: '#334155' }}>
+              <span className="badge" style={{ background: 'var(--neutral-fill)' }}>
                 {bombero.rango}
               </span>
             </div>
@@ -241,9 +243,9 @@ export default function ExpedienteBomberoPage() {
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
-      <nav style={{ display: 'flex', gap: 4, flexWrap: 'wrap', borderBottom: '1px solid #334155', paddingBottom: 0 }}>
+      <nav style={{ display: 'flex', gap: 4, flexWrap: 'wrap', borderBottom: '1px solid var(--line)', paddingBottom: 0 }}>
         {TABS.map((tab) => (
           <button type="button"
             key={tab.id}
@@ -254,7 +256,7 @@ export default function ExpedienteBomberoPage() {
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
-              color: seccion === tab.id ? '#e2e8f0' : '#94a3b8',
+              color: seccion === tab.id ? 'var(--ink)' : 'var(--muted)',
               fontWeight: seccion === tab.id ? 600 : 400,
               borderBottom: seccion === tab.id ? '2px solid #2563eb' : '2px solid transparent',
             }}
@@ -486,7 +488,7 @@ function TabDatosPersonales({
 
   return (
     <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
         {(
           [
@@ -506,6 +508,7 @@ function TabDatosPersonales({
           <div key={campo}>
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>{label}</label>
             <input
+              aria-label={label}
               className="input-field"
               value={form[campo]}
               onChange={(e) => setForm({ ...form, [campo]: e.target.value })}
@@ -513,8 +516,8 @@ function TabDatosPersonales({
           </div>
         ))}
         <div>
-          <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de nacimiento</label>
-          <input
+          <label htmlFor="fecha-de-nacimiento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de nacimiento</label>
+          <input id="fecha-de-nacimiento"
             className="input-field"
             type="date"
             value={form.fechaNacimiento}
@@ -522,8 +525,8 @@ function TabDatosPersonales({
           />
         </div>
         <div>
-          <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Sexo</label>
-          <select className="input-field" value={form.sexo} onChange={(e) => setForm({ ...form, sexo: e.target.value })}>
+          <label htmlFor="sexo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Sexo</label>
+          <select id="sexo" className="input-field" value={form.sexo} onChange={(e) => setForm({ ...form, sexo: e.target.value })}>
             <option value="">NINGUNA</option>
             <option value="M">Masculino</option>
             <option value="F">Femenino</option>
@@ -531,11 +534,11 @@ function TabDatosPersonales({
         </div>
       </div>
 
-      <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 6 }}>Ubicacion</p>
+      <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 6 }}>Ubicacion</p>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
         <div>
-          <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Pais</label>
-          <select className="input-field" value={form.paisId} onChange={(e) => cambiarPais(e.target.value)}>
+          <label htmlFor="pais" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Pais</label>
+          <select id="pais" className="input-field" value={form.paisId} onChange={(e) => cambiarPais(e.target.value)}>
             <option value="">NINGUNA</option>
             {paises.map((p) => (
               <option key={p.id} value={p.id}>
@@ -545,8 +548,8 @@ function TabDatosPersonales({
           </select>
         </div>
         <div>
-          <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Departamento</label>
-          <select
+          <label htmlFor="departamento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Departamento</label>
+          <select id="departamento"
             className="input-field"
             value={form.departamentoResidenciaId}
             onChange={(e) => cambiarDepartamento(e.target.value)}
@@ -561,8 +564,8 @@ function TabDatosPersonales({
           </select>
         </div>
         <div>
-          <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ciudad</label>
-          <select
+          <label htmlFor="ciudad" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ciudad</label>
+          <select id="ciudad"
             className="input-field"
             value={form.ciudadId}
             onChange={(e) => cambiarCiudad(e.target.value)}
@@ -577,8 +580,8 @@ function TabDatosPersonales({
           </select>
         </div>
         <div>
-          <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Barrio</label>
-          <select
+          <label htmlFor="barrio" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Barrio</label>
+          <select id="barrio"
             className="input-field"
             value={form.barrioId}
             onChange={(e) => setForm({ ...form, barrioId: e.target.value })}
@@ -593,7 +596,7 @@ function TabDatosPersonales({
           </select>
         </div>
       </div>
-      <p style={{ fontSize: 12, color: '#94a3b8' }}>
+      <p style={{ fontSize: 12, color: 'var(--muted)' }}>
         Si falta un pais/departamento/ciudad/barrio en las listas, se puede cargar desde Organizacion
         Institucional → Parámetros.
       </p>
@@ -713,8 +716,8 @@ function TabInstitucional({
           {campoTexto('Estado', bombero.estado)}
         </div>
         <div>
-          <h4 style={{ fontSize: 13, color: '#94a3b8', marginBottom: 10 }}>Disponibilidad para Guardias</h4>
-          <p style={{ fontSize: 11, color: '#64748b', marginBottom: 10 }}>
+          <h4 style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 10 }}>Disponibilidad para Guardias</h4>
+          <p style={{ fontSize: 11, color: 'var(--muted)', marginBottom: 10 }}>
             Distinto de participar en Servicios: un bombero puede participar de servicios aunque no realice guardias.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', gap: 16 }}>
@@ -736,6 +739,7 @@ function TabInstitucional({
       <div>
         <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>{label}</label>
         <select
+          aria-label={label}
           className="input-field"
           value={form[campo]}
           onChange={(e) => setForm({ ...form, [campo]: e.target.value })}
@@ -753,7 +757,7 @@ function TabInstitucional({
 
   return (
     <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
         {selectCatalogo('companias', 'companiaId', 'Compania')}
         {selectCatalogo('cuarteles', 'cuartelId', 'Cuartel')}
@@ -763,8 +767,8 @@ function TabInstitucional({
         {selectCatalogo('departamentos', 'departamentoId', 'Departamento')}
         {selectCatalogo('unidades', 'unidadId', 'Unidad')}
         <div>
-          <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-          <select className="input-field" value={form.estado} onChange={(e) => setForm({ ...form, estado: e.target.value })}>
+          <label htmlFor="estado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
+          <select id="estado" className="input-field" value={form.estado} onChange={(e) => setForm({ ...form, estado: e.target.value })}>
             {ESTADOS.map((e) => (
               <option key={e} value={e}>
                 {e}
@@ -773,8 +777,8 @@ function TabInstitucional({
           </select>
         </div>
         <div>
-          <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de ingreso</label>
-          <input
+          <label htmlFor="fecha-de-ingreso" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de ingreso</label>
+          <input id="fecha-de-ingreso"
             className="input-field"
             type="date"
             value={form.fechaIngreso}
@@ -782,8 +786,8 @@ function TabInstitucional({
           />
         </div>
         <div>
-          <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de incorporacion</label>
-          <input
+          <label htmlFor="fecha-de-incorporacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de incorporacion</label>
+          <input id="fecha-de-incorporacion"
             className="input-field"
             type="date"
             value={form.fechaIncorporacion}
@@ -791,8 +795,8 @@ function TabInstitucional({
           />
         </div>
         <div>
-          <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de juramento</label>
-          <input
+          <label htmlFor="fecha-de-juramento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de juramento</label>
+          <input id="fecha-de-juramento"
             className="input-field"
             type="date"
             value={form.fechaJuramento}
@@ -802,8 +806,8 @@ function TabInstitucional({
       </div>
 
       <div>
-        <h4 style={{ fontSize: 13, color: '#94a3b8', marginBottom: 4 }}>Disponibilidad para Guardias</h4>
-        <p style={{ fontSize: 11, color: '#64748b', marginBottom: 10 }}>
+        <h4 style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 4 }}>Disponibilidad para Guardias</h4>
+        <p style={{ fontSize: 11, color: 'var(--muted)', marginBottom: 10 }}>
           Distinto de participar en Servicios: un bombero puede participar de servicios aunque no realice guardias.
         </p>
         <div style={{ display: 'flex', gap: 20, marginBottom: 10 }}>
@@ -826,8 +830,8 @@ function TabInstitucional({
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Frecuencia normal mensual</label>
-            <input
+            <label htmlFor="frecuencia-normal-mensual" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Frecuencia normal mensual</label>
+            <input id="frecuencia-normal-mensual"
               className="input-field"
               type="number"
               min={0}
@@ -837,8 +841,8 @@ function TabInstitucional({
             />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Frecuencia especial mensual</label>
-            <input
+            <label htmlFor="frecuencia-especial-mensual" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Frecuencia especial mensual</label>
+            <input id="frecuencia-especial-mensual"
               className="input-field"
               type="number"
               min={0}
@@ -848,8 +852,8 @@ function TabInstitucional({
             />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Dia preferente</label>
-            <select
+            <label htmlFor="dia-preferente" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Dia preferente</label>
+            <select id="dia-preferente"
               className="input-field"
               value={form.diaPreferenteGuardia}
               onChange={(e) => setForm({ ...form, diaPreferenteGuardia: e.target.value })}
@@ -954,8 +958,8 @@ function TabTipoBombero({
       {puedeEditar && (
         <>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nuevo tipo de bombero</label>
-            <select className="input-field" value={tipoBomberoId} onChange={(e) => setTipoBomberoId(e.target.value)}>
+            <label htmlFor="nuevo-tipo-de-bombero" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nuevo tipo de bombero</label>
+            <select id="nuevo-tipo-de-bombero" className="input-field" value={tipoBomberoId} onChange={(e) => setTipoBomberoId(e.target.value)}>
               <option value="">Sin asignar</option>
               {tipos.map((t) => (
                 <option key={t.id} value={t.id}>
@@ -964,29 +968,29 @@ function TabTipoBombero({
               ))}
             </select>
           </div>
-          {error && <p style={{ color: '#f87171' }}>{error}</p>}
-          {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+          {error && <Aviso tipo="error" texto={error} />}
+          {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando} onClick={guardar}>
             {guardando ? 'Guardando...' : 'Guardar tipo'}
           </button>
         </>
       )}
 
-      <div style={{ borderTop: '1px solid #334155', paddingTop: 12 }}>
+      <div style={{ borderTop: '1px solid var(--line)', paddingTop: 12 }}>
         {campoTexto('Codigo bomberil actual', bombero.numeroBombero)}
         {puedeEditar && (
           <>
-            <label style={{ fontSize: 12, display: 'block', margin: '8px 0 4px' }}>
+            <label htmlFor="nuevo-codigo-se-puede-tipear-libremente-" style={{ fontSize: 12, display: 'block', margin: '8px 0 4px' }}>
               Nuevo codigo (se puede tipear libremente, no depende del tipo seleccionado)
             </label>
-            <input
+            <input id="nuevo-codigo-se-puede-tipear-libremente-"
               className="input-field"
               value={codigo}
               onChange={(e) => setCodigo(e.target.value)}
               placeholder="BVCF-01"
             />
-            {errorCodigo && <p style={{ color: '#f87171', marginTop: 6 }}>{errorCodigo}</p>}
-            {mensajeCodigo && <p style={{ color: '#4ade80', fontSize: 13, marginTop: 6 }}>{mensajeCodigo}</p>}
+            {errorCodigo && <p style={{ color: 'var(--danger)', marginTop: 6 }}>{errorCodigo}</p>}
+            {mensajeCodigo && <p style={{ color: 'var(--success)', fontSize: 13, marginTop: 6 }}>{mensajeCodigo}</p>}
             <button type="button"
               className="btn-primary"
               style={{ alignSelf: 'flex-start', marginTop: 8 }}
@@ -1013,7 +1017,7 @@ function TabRangoCargo({ bombero }: { bombero: Bombero }) {
         {campoTexto('Rango actual', bombero.rango)}
         {campoTexto('Cargo actual', bombero.cargo)}
       </div>
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         Los ascensos y designaciones formales se gestionan desde los modulos de Organizacion Institucional.
       </p>
       <div style={{ display: 'flex', gap: 8 }}>
@@ -1098,11 +1102,11 @@ function TabHistorial({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
       )}
       {mostrarForm && (
         <form className="card" onSubmit={registrar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {error && <p style={{ color: '#f87171' }}>{error}</p>}
+          {error && <Aviso tipo="error" texto={error} />}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
-              <select
+              <label htmlFor="tipo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
+              <select id="tipo"
                 className="input-field"
                 value={tipoMovimiento}
                 onChange={(e) => setTipoMovimiento(e.target.value as 'RECONOCIMIENTO' | 'SANCION')}
@@ -1112,17 +1116,17 @@ function TabHistorial({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label>
-              <input className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
+              <label htmlFor="fecha" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label>
+              <input id="fecha" className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo</label>
-            <input className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
+            <label htmlFor="motivo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo</label>
+            <input id="motivo" className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
-            <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
+            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+            <input id="observacion" className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
           <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Registrar'}
@@ -1130,20 +1134,20 @@ function TabHistorial({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
         </form>
       )}
 
-      {items && items.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin movimientos registrados.</p>}
+      {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin movimientos registrados.</p>}
       {items && items.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Fecha</th>
-              <th style={{ padding: '6px 4px' }}>Tipo</th>
-              <th style={{ padding: '6px 4px' }}>Motivo</th>
-              <th style={{ padding: '6px 4px' }}>Observacion</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Motivo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Observacion</th>
             </tr>
           </thead>
           <tbody>
             {items.map((m) => (
-              <tr key={m.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={m.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{m.fecha}</td>
                 <td style={{ padding: '6px 4px' }}>
                   <span className="badge">{m.tipoMovimiento}</span>
@@ -1237,12 +1241,12 @@ function TabEspecialidades({ bomberoId, puedeEditar }: { bomberoId: string; pued
   if (editando) {
     return (
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {error && <p style={{ color: '#f87171' }}>{error}</p>}
+        {error && <Aviso tipo="error" texto={error} />}
         {editando.map((esp, idx) => (
           <div key={idx} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr auto', gap: 8, alignItems: 'end' }}>
             <div>
               <label style={{ fontSize: 11, display: 'block' }}>Especialidad</label>
-              <select
+              <select aria-label="Especialidad"
                 className="input-field"
                 value={esp.especialidadId}
                 onChange={(e) => {
@@ -1260,7 +1264,7 @@ function TabEspecialidades({ bomberoId, puedeEditar }: { bomberoId: string; pued
             </div>
             <div>
               <label style={{ fontSize: 11, display: 'block' }}>Fecha obtencion</label>
-              <input
+              <input aria-label="Fecha obtencion"
                 className="input-field"
                 type="date"
                 value={esp.fechaObtencion ?? ''}
@@ -1273,7 +1277,7 @@ function TabEspecialidades({ bomberoId, puedeEditar }: { bomberoId: string; pued
             </div>
             <div>
               <label style={{ fontSize: 11, display: 'block' }}>Nivel</label>
-              <input
+              <input aria-label="Nivel"
                 className="input-field"
                 value={esp.nivel ?? ''}
                 onChange={(e) => {
@@ -1285,7 +1289,7 @@ function TabEspecialidades({ bomberoId, puedeEditar }: { bomberoId: string; pued
             </div>
             <div>
               <label style={{ fontSize: 11, display: 'block' }}>Institucion</label>
-              <input
+              <input aria-label="Institucion"
                 className="input-field"
                 value={esp.institucionCertificadora ?? ''}
                 onChange={(e) => {
@@ -1297,7 +1301,7 @@ function TabEspecialidades({ bomberoId, puedeEditar }: { bomberoId: string; pued
             </div>
             <div>
               <label style={{ fontSize: 11, display: 'block' }}>Vigencia</label>
-              <input
+              <input aria-label="Vigencia"
                 className="input-field"
                 type="date"
                 value={esp.vigencia ?? ''}
@@ -1335,21 +1339,21 @@ function TabEspecialidades({ bomberoId, puedeEditar }: { bomberoId: string; pued
           Editar especialidades
         </button>
       )}
-      {items && items.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin especialidades asignadas.</p>}
+      {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin especialidades asignadas.</p>}
       {items && items.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Especialidad</th>
-              <th style={{ padding: '6px 4px' }}>Nivel</th>
-              <th style={{ padding: '6px 4px' }}>Institucion</th>
-              <th style={{ padding: '6px 4px' }}>Obtencion</th>
-              <th style={{ padding: '6px 4px' }}>Vigencia</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Especialidad</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nivel</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Institucion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Obtencion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Vigencia</th>
             </tr>
           </thead>
           <tbody>
             {items.map((esp) => (
-              <tr key={esp.especialidadId} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={esp.especialidadId} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{esp.nombre}</td>
                 <td style={{ padding: '6px 4px' }}>{esp.nivel ?? ''}</td>
                 <td style={{ padding: '6px 4px' }}>{esp.institucionCertificadora ?? ''}</td>
@@ -1454,10 +1458,10 @@ function TabCondicion({ bomberoId, puedeEditar, onGuardado }: { bomberoId: strin
     const campos = CAMPOS_DETALLE[formCondicion] ?? [];
     return (
       <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {error && <p style={{ color: '#f87171' }}>{error}</p>}
+        {error && <Aviso tipo="error" texto={error} />}
         <div>
-          <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Condicion institucional</label>
-          <select className="input-field" value={formCondicion} onChange={(e) => { setFormCondicion(e.target.value); setFormDetalle({}); }}>
+          <label htmlFor="condicion-institucional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Condicion institucional</label>
+          <select id="condicion-institucional" className="input-field" value={formCondicion} onChange={(e) => { setFormCondicion(e.target.value); setFormDetalle({}); }}>
             {CONDICIONES.map((c) => (
               <option key={c} value={c}>
                 {c}
@@ -1470,6 +1474,7 @@ function TabCondicion({ bomberoId, puedeEditar, onGuardado }: { bomberoId: strin
             <div key={campo}>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>{label}</label>
               <input
+                aria-label={label}
                 className="input-field"
                 type={tipo === 'date' ? 'date' : tipo === 'number' ? 'number' : 'text'}
                 value={formDetalle[campo] ?? ''}
@@ -1497,7 +1502,7 @@ function TabCondicion({ bomberoId, puedeEditar, onGuardado }: { bomberoId: strin
           {condicion ? 'Editar' : 'Definir condicion'}
         </button>
       )}
-      {!condicion && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin condicion institucional definida.</p>}
+      {!condicion && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin condicion institucional definida.</p>}
       {condicion && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           {campoTexto('Condicion', condicion)}
@@ -1608,29 +1613,29 @@ function TabFormacion({ bomberoId }: { bomberoId: string }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div className="card">
         <h3 style={{ fontSize: 14, marginBottom: 10 }}>Actividades académicas ({actividades?.length ?? 0})</h3>
-        <p style={{ fontSize: 12, color: '#94a3b8', marginBottom: 10 }}>
+        <p style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 10 }}>
           Inscripciones a cursos, capacitaciones y otras actividades del módulo Academia.
         </p>
-        {actividades && actividades.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin actividades académicas registradas.</p>}
+        {actividades && actividades.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin actividades académicas registradas.</p>}
         {actividades && actividades.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                <th style={{ padding: '6px 4px' }}>Actividad</th>
-                <th style={{ padding: '6px 4px' }}>Periodo</th>
-                <th style={{ padding: '6px 4px' }}>Estado</th>
-                <th style={{ padding: '6px 4px' }}>Resultado</th>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                <th scope="col" style={{ padding: '6px 4px' }}>Actividad</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Periodo</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Resultado</th>
               </tr>
             </thead>
             <tbody>
               {actividades.map((a) => (
-                <tr key={a.inscripcionId} style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr key={a.inscripcionId} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>
-                    <Link href={`/dashboard/academia/${a.actividadId}`} style={{ color: '#60a5fa' }}>
+                    <Link href={`/dashboard/academia/${a.actividadId}`} style={{ color: 'var(--signal)' }}>
                       {a.nombreActividad ?? '(actividad eliminada)'}
                     </Link>
                   </td>
-                  <td style={{ padding: '6px 4px', color: '#94a3b8' }}>
+                  <td style={{ padding: '6px 4px', color: 'var(--muted)' }}>
                     {a.fechaInicio} - {a.fechaFin}
                   </td>
                   <td style={{ padding: '6px 4px' }}>
@@ -1644,7 +1649,7 @@ function TabFormacion({ bomberoId }: { bomberoId: string }) {
         )}
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       <div className="card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
@@ -1653,17 +1658,17 @@ function TabFormacion({ bomberoId }: { bomberoId: string }) {
             {mostrarForm ? 'Cancelar' : '+ Cargar certificado'}
           </button>
         </div>
-        <p style={{ fontSize: 12, color: '#94a3b8', marginBottom: 10 }}>
+        <p style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 10 }}>
           SIGBO no certifica automáticamente por participar en una actividad: el bombero (o quien tenga el permiso
           correspondiente) es responsable de registrar y adjuntar su certificado.
         </p>
 
         {mostrarForm && (
-          <form onSubmit={agregarCertificacion} style={{ display: 'flex', flexDirection: 'column', gap: 10, borderBottom: '1px solid #334155', paddingBottom: 14, marginBottom: 10 }}>
+          <form onSubmit={agregarCertificacion} style={{ display: 'flex', flexDirection: 'column', gap: 10, borderBottom: '1px solid var(--line)', paddingBottom: 14, marginBottom: 10 }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gap: 10 }}>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
-                <select className="input-field" value={form.tipo} onChange={(e) => setForm({ ...form, tipo: e.target.value as TipoCertificacion })}>
+                <label htmlFor="tipo-2" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
+                <select id="tipo-2" className="input-field" value={form.tipo} onChange={(e) => setForm({ ...form, tipo: e.target.value as TipoCertificacion })}>
                   {TIPOS_CERTIFICACION.map((t) => (
                     <option key={t} value={t}>
                       {t}
@@ -1672,35 +1677,35 @@ function TabFormacion({ bomberoId }: { bomberoId: string }) {
                 </select>
               </div>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-                <input className="input-field" value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} required />
+                <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+                <input id="nombre" className="input-field" value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} required />
               </div>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Institución</label>
-                <input className="input-field" value={form.institucion} onChange={(e) => setForm({ ...form, institucion: e.target.value })} />
+                <label htmlFor="institucion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Institución</label>
+                <input id="institucion" className="input-field" value={form.institucion} onChange={(e) => setForm({ ...form, institucion: e.target.value })} />
               </div>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha obtención</label>
-                <input className="input-field" type="date" value={form.fechaObtencion} onChange={(e) => setForm({ ...form, fechaObtencion: e.target.value })} required />
+                <label htmlFor="fecha-obtencion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha obtención</label>
+                <input id="fecha-obtencion" className="input-field" type="date" value={form.fechaObtencion} onChange={(e) => setForm({ ...form, fechaObtencion: e.target.value })} required />
               </div>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Vencimiento</label>
-                <input className="input-field" type="date" value={form.fechaVencimiento} onChange={(e) => setForm({ ...form, fechaVencimiento: e.target.value })} />
+                <label htmlFor="vencimiento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Vencimiento</label>
+                <input id="vencimiento" className="input-field" type="date" value={form.fechaVencimiento} onChange={(e) => setForm({ ...form, fechaVencimiento: e.target.value })} />
               </div>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>N° certificado</label>
-                <input className="input-field" value={form.numeroCertificado} onChange={(e) => setForm({ ...form, numeroCertificado: e.target.value })} />
+                <label htmlFor="n-certificado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>N° certificado</label>
+                <input id="n-certificado" className="input-field" value={form.numeroCertificado} onChange={(e) => setForm({ ...form, numeroCertificado: e.target.value })} />
               </div>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Carga horaria</label>
-                <input className="input-field" type="number" value={form.duracionHoras} onChange={(e) => setForm({ ...form, duracionHoras: e.target.value })} />
+                <label htmlFor="carga-horaria" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Carga horaria</label>
+                <input id="carga-horaria" className="input-field" type="number" value={form.duracionHoras} onChange={(e) => setForm({ ...form, duracionHoras: e.target.value })} />
               </div>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Archivo del certificado (imagen o PDF)</label>
-              <input
+              <label htmlFor="archivo-del-certificado-imagen-o-pdf" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Archivo del certificado (imagen o PDF)</label>
+              <input id="archivo-del-certificado-imagen-o-pdf"
                 type="file"
                 accept="image/png,image/jpeg,image/webp,image/gif,application/pdf"
                 onChange={(e) => setArchivo(e.target.files?.[0] ?? null)}
@@ -1712,35 +1717,35 @@ function TabFormacion({ bomberoId }: { bomberoId: string }) {
           </form>
         )}
 
-        {certificaciones && certificaciones.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin certificaciones registradas.</p>}
+        {certificaciones && certificaciones.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin certificaciones registradas.</p>}
         {certificaciones && certificaciones.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                <th style={{ padding: '6px 4px' }}>Nombre</th>
-                <th style={{ padding: '6px 4px' }}>Tipo</th>
-                <th style={{ padding: '6px 4px' }}>Institución</th>
-                <th style={{ padding: '6px 4px' }}>Obtención</th>
-                <th style={{ padding: '6px 4px' }}>Estado</th>
-                <th style={{ padding: '6px 4px' }}>Archivo</th>
-                <th style={{ padding: '6px 4px' }}>Acciones</th>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Institución</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Obtención</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Archivo</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
               </tr>
             </thead>
             <tbody>
               {certificaciones.map((c) => (
-                <tr key={c.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr key={c.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>{c.nombre}</td>
                   <td style={{ padding: '6px 4px' }}>{c.tipo}</td>
-                  <td style={{ padding: '6px 4px', color: '#94a3b8' }}>{c.institucion ?? '-'}</td>
-                  <td style={{ padding: '6px 4px', color: '#94a3b8' }}>{c.fechaObtencion}</td>
+                  <td style={{ padding: '6px 4px', color: 'var(--muted)' }}>{c.institucion ?? '-'}</td>
+                  <td style={{ padding: '6px 4px', color: 'var(--muted)' }}>{c.fechaObtencion}</td>
                   <td style={{ padding: '6px 4px' }}>
-                    <span className="badge" style={{ background: c.estado === 'VENCIDO' ? '#7f1d1d' : undefined }}>
+                    <span className="badge" style={{ background: c.estado === 'VENCIDO' ? 'var(--bad-fill)' : undefined }}>
                       {c.estado}
                     </span>
                   </td>
                   <td style={{ padding: '6px 4px' }}>
                     {c.archivoUrl ? (
-                      <a href={`${API_ORIGIN}${c.archivoUrl}`} target="_blank" rel="noreferrer" style={{ color: '#60a5fa' }}>
+                      <a href={`${API_ORIGIN}${c.archivoUrl}`} target="_blank" rel="noreferrer" style={{ color: 'var(--signal)' }}>
                         Ver
                       </a>
                     ) : (
@@ -1840,11 +1845,11 @@ function TabActividadProfesional({ bomberoId, puedeEditar }: { bomberoId: string
   if (editando) {
     return (
       <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {error && <p style={{ color: '#f87171' }}>{error}</p>}
+        {error && <Aviso tipo="error" texto={error} />}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Profesion</label>
-            <select
+            <label htmlFor="profesion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Profesion</label>
+            <select id="profesion"
               className="input-field"
               value={form.profesionId}
               onChange={(e) => setForm({ ...form, profesionId: e.target.value })}
@@ -1856,26 +1861,26 @@ function TabActividadProfesional({ bomberoId, puedeEditar }: { bomberoId: string
                 </option>
               ))}
             </select>
-            <p style={{ fontSize: 11, color: '#94a3b8', marginTop: 4 }}>
+            <p style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>
               Si falta una profesion, se puede cargar desde Organizacion Institucional → Parámetros.
             </p>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Empresa</label>
-            <input className="input-field" value={form.empresa} onChange={(e) => setForm({ ...form, empresa: e.target.value })} />
+            <label htmlFor="empresa" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Empresa</label>
+            <input id="empresa" className="input-field" value={form.empresa} onChange={(e) => setForm({ ...form, empresa: e.target.value })} />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cargo laboral</label>
-            <input className="input-field" value={form.cargoLaboral} onChange={(e) => setForm({ ...form, cargoLaboral: e.target.value })} />
+            <label htmlFor="cargo-laboral" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cargo laboral</label>
+            <input id="cargo-laboral" className="input-field" value={form.cargoLaboral} onChange={(e) => setForm({ ...form, cargoLaboral: e.target.value })} />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Experiencia</label>
-            <input className="input-field" value={form.experiencia} onChange={(e) => setForm({ ...form, experiencia: e.target.value })} />
+            <label htmlFor="experiencia" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Experiencia</label>
+            <input id="experiencia" className="input-field" value={form.experiencia} onChange={(e) => setForm({ ...form, experiencia: e.target.value })} />
           </div>
         </div>
         <div>
-          <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Actividades relacionadas</label>
-          <input
+          <label htmlFor="actividades-relacionadas" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Actividades relacionadas</label>
+          <input id="actividades-relacionadas"
             className="input-field"
             value={form.actividadesRelacionadas}
             onChange={(e) => setForm({ ...form, actividadesRelacionadas: e.target.value })}
@@ -1999,12 +2004,12 @@ function TabIdiomas({ bomberoId, puedeEditar }: { bomberoId: string; puedeEditar
   if (editando) {
     return (
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {error && <p style={{ color: '#f87171' }}>{error}</p>}
+        {error && <Aviso tipo="error" texto={error} />}
         {editando.map((idi, idx) => (
           <div key={idx} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr auto', gap: 8, alignItems: 'end' }}>
             <div>
               <label style={{ fontSize: 11, display: 'block' }}>Idioma</label>
-              <select
+              <select aria-label="Idioma"
                 className="input-field"
                 value={idi.idiomaId}
                 onChange={(e) => {
@@ -2023,7 +2028,7 @@ function TabIdiomas({ bomberoId, puedeEditar }: { bomberoId: string; puedeEditar
             </div>
             <div>
               <label style={{ fontSize: 11, display: 'block' }}>Nivel</label>
-              <select
+              <select aria-label="Nivel"
                 className="input-field"
                 value={idi.nivelIdiomaId}
                 onChange={(e) => {
@@ -2042,7 +2047,7 @@ function TabIdiomas({ bomberoId, puedeEditar }: { bomberoId: string; puedeEditar
             </div>
             <div>
               <label style={{ fontSize: 11, display: 'block' }}>Certificacion</label>
-              <input
+              <input aria-label="Certificacion"
                 className="input-field"
                 value={idi.certificacion}
                 onChange={(e) => {
@@ -2089,19 +2094,19 @@ function TabIdiomas({ bomberoId, puedeEditar }: { bomberoId: string; puedeEditar
           Editar idiomas
         </button>
       )}
-      {items && items.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin idiomas registrados.</p>}
+      {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin idiomas registrados.</p>}
       {items && items.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Idioma</th>
-              <th style={{ padding: '6px 4px' }}>Nivel</th>
-              <th style={{ padding: '6px 4px' }}>Certificacion</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Idioma</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nivel</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Certificacion</th>
             </tr>
           </thead>
           <tbody>
             {items.map((i, idx) => (
-              <tr key={idx} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={idx} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{i.idioma}</td>
                 <td style={{ padding: '6px 4px' }}>{i.nivel ?? ''}</td>
                 <td style={{ padding: '6px 4px' }}>{i.certificacion ?? ''}</td>
@@ -2133,24 +2138,24 @@ function TabServicios({ bomberoId }: { bomberoId: string }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       <div className="card">
         <h3 style={{ fontSize: 14, marginBottom: 8 }}>Guardias ({guardias?.length ?? 0})</h3>
-        {guardias && guardias.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin guardias registradas.</p>}
+        {guardias && guardias.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin guardias registradas.</p>}
         {guardias && guardias.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                <th style={{ padding: '6px 4px' }}>Fecha</th>
-                <th style={{ padding: '6px 4px' }}>Turno</th>
-                <th style={{ padding: '6px 4px' }}>Tipo</th>
-                <th style={{ padding: '6px 4px' }}>Rol</th>
-                <th style={{ padding: '6px 4px' }}>Participacion</th>
-                <th style={{ padding: '6px 4px' }}>Estado</th>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Turno</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Rol</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Participacion</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
               </tr>
             </thead>
             <tbody>
               {guardias.map((g) => (
-                <tr key={g.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr key={g.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>
-                    <Link href={`/dashboard/guardias/${g.guardia.id}`} style={{ color: '#60a5fa', textDecoration: 'none' }}>
+                    <Link href={`/dashboard/guardias/${g.guardia.id}`} style={{ color: 'var(--signal)', textDecoration: 'none' }}>
                       {g.guardia.fecha}
                     </Link>
                   </td>
@@ -2168,7 +2173,7 @@ function TabServicios({ bomberoId }: { bomberoId: string }) {
       <div className="card">
         <h3 style={{ fontSize: 14, marginBottom: 8 }}>Servicios</h3>
         {servicios && servicios.length === 0 && (
-          <p style={{ color: '#94a3b8', fontSize: 13 }}>
+          <p style={{ color: 'var(--muted)', fontSize: 13 }}>
             Sin servicios registrados. El modulo de Servicios todavia no esta implementado.
           </p>
         )}
@@ -2277,12 +2282,12 @@ function TabEquipamiento({ bomberoId, puedeEditar }: { bomberoId: string; puedeE
           {mostrarForm ? 'Cancelar' : 'Registrar prestamo'}
         </button>
       )}
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
       {mostrarForm && (
         <form className="card" onSubmit={prestar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Equipo</label>
-            <select className="input-field" value={equipoId} onChange={(e) => setEquipoId(e.target.value)} required>
+            <label htmlFor="equipo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Equipo</label>
+            <select id="equipo" className="input-field" value={equipoId} onChange={(e) => setEquipoId(e.target.value)} required>
               <option value="">Seleccionar...</option>
               {equipos.map((eq) => (
                 <option key={eq.id} value={eq.id}>
@@ -2292,8 +2297,8 @@ function TabEquipamiento({ bomberoId, puedeEditar }: { bomberoId: string; puedeE
             </select>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Devolucion comprometida</label>
-            <input
+            <label htmlFor="devolucion-comprometida" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Devolucion comprometida</label>
+            <input id="devolucion-comprometida"
               className="input-field"
               type="datetime-local"
               value={fechaDevolucionComprometida}
@@ -2301,8 +2306,8 @@ function TabEquipamiento({ bomberoId, puedeEditar }: { bomberoId: string; puedeE
             />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
-            <input className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
+            <label htmlFor="observaciones" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
+            <input id="observaciones" className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
           </div>
           <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : 'Registrar prestamo'}
@@ -2311,22 +2316,22 @@ function TabEquipamiento({ bomberoId, puedeEditar }: { bomberoId: string; puedeE
       )}
 
       <div className="card">
-        {items && items.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin prestamos de equipos registrados.</p>}
+        {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin prestamos de equipos registrados.</p>}
         {items && items.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                <th style={{ padding: '6px 4px' }}>Equipo</th>
-                <th style={{ padding: '6px 4px' }}>Prestamo</th>
-                <th style={{ padding: '6px 4px' }}>Devolucion comprometida</th>
-                <th style={{ padding: '6px 4px' }}>Devolucion real</th>
-                <th style={{ padding: '6px 4px' }}>Estado</th>
-                <th style={{ padding: '6px 4px' }}>Acciones</th>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                <th scope="col" style={{ padding: '6px 4px' }}>Equipo</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Prestamo</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Devolucion comprometida</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Devolucion real</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
               </tr>
             </thead>
             <tbody>
               {items.map((p) => (
-                <tr key={p.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr key={p.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>{p.equipoCodigoInterno ? `${p.equipoCodigoInterno} - ${p.equipoNombre}` : p.equipoNombre}</td>
                   <td style={{ padding: '6px 4px' }}>{formatearFechaHora(p.fechaPrestamo)}</td>
                   <td style={{ padding: '6px 4px' }}>{formatearFechaHora(p.fechaDevolucionComprometida)}</td>
@@ -2372,25 +2377,25 @@ function TabEquipamientoDeposito({ bomberoId }: { bomberoId: string }) {
   return (
     <div className="card">
       <h2 style={{ fontSize: 14, marginBottom: 10 }}>
-        Deposito — <Link href="/dashboard/deposito/movimientos" style={{ color: '#60a5fa', fontSize: 12 }}>ver movimientos ↗</Link>
+        Deposito — <Link href="/dashboard/deposito/movimientos" style={{ color: 'var(--signal)', fontSize: 12 }}>ver movimientos ↗</Link>
       </h2>
-      {error && <p style={{ color: '#f87171', fontSize: 13 }}>{error}</p>}
-      {items && items.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin elementos del modulo Deposito a su nombre.</p>}
+      {error && <Aviso tipo="error" texto={error} fontSize={13} />}
+      {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin elementos del modulo Deposito a su nombre.</p>}
       {items && items.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Elemento</th>
-              <th style={{ padding: '6px 4px' }}>Cantidad</th>
-              <th style={{ padding: '6px 4px' }}>Actualizado</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Elemento</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Cantidad</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Actualizado</th>
             </tr>
           </thead>
           <tbody>
             {items.map((it, idx) => (
-              <tr key={idx} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={idx} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>
                   {it.codigo ? `${it.codigo} - ${it.nombre}` : it.nombre}
-                  <span className="badge" style={{ marginLeft: 6, background: '#475569' }}>{it.tipoElemento}</span>
+                  <span className="badge" style={{ marginLeft: 6, background: 'var(--neutral-fill)' }}>{it.tipoElemento}</span>
                 </td>
                 <td style={{ padding: '6px 4px' }}>{it.cantidad ?? '-'}</td>
                 <td style={{ padding: '6px 4px' }}>{formatearFechaHora(it.actualizadoEn)}</td>
@@ -2485,12 +2490,12 @@ function TabVehiculos({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
   if (editando) {
     return (
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {error && <p style={{ color: '#f87171' }}>{error}</p>}
+        {error && <Aviso tipo="error" texto={error} />}
         {editando.map((v, idx) => (
           <div key={idx} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr auto', gap: 8, alignItems: 'end' }}>
             <div>
               <label style={{ fontSize: 11, display: 'block' }}>Vehiculo</label>
-              <select
+              <select aria-label="Vehiculo"
                 className="input-field"
                 value={v.vehiculoId}
                 onChange={(e) => {
@@ -2509,7 +2514,7 @@ function TabVehiculos({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
             </div>
             <div>
               <label style={{ fontSize: 11, display: 'block' }}>Categoria</label>
-              <input
+              <input aria-label="Categoria"
                 className="input-field"
                 value={v.categoria}
                 onChange={(e) => {
@@ -2521,7 +2526,7 @@ function TabVehiculos({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
             </div>
             <div>
               <label style={{ fontSize: 11, display: 'block' }}>Fecha autorizacion</label>
-              <input
+              <input aria-label="Fecha autorizacion"
                 className="input-field"
                 type="date"
                 value={v.fechaAutorizacion}
@@ -2534,7 +2539,7 @@ function TabVehiculos({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
             </div>
             <div>
               <label style={{ fontSize: 11, display: 'block' }}>Vigencia</label>
-              <input
+              <input aria-label="Vigencia"
                 className="input-field"
                 type="date"
                 value={v.vigencia}
@@ -2582,20 +2587,20 @@ function TabVehiculos({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
           Editar vehiculos autorizados
         </button>
       )}
-      {items && items.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin vehiculos autorizados.</p>}
+      {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin vehiculos autorizados.</p>}
       {items && items.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Vehiculo</th>
-              <th style={{ padding: '6px 4px' }}>Categoria</th>
-              <th style={{ padding: '6px 4px' }}>Autorizacion</th>
-              <th style={{ padding: '6px 4px' }}>Vigencia</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Vehiculo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Categoria</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Autorizacion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Vigencia</th>
             </tr>
           </thead>
           <tbody>
             {items.map((v) => (
-              <tr key={v.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={v.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{v.numeroInterno ? `${v.numeroInterno} (${v.patente ?? '-'})` : v.vehiculoId}</td>
                 <td style={{ padding: '6px 4px' }}>{v.categoria ?? ''}</td>
                 <td style={{ padding: '6px 4px' }}>{v.fechaAutorizacion ?? ''}</td>
@@ -2718,11 +2723,11 @@ function TabSalud({ bombero, puedeEditar, onGuardado }: { bombero: Bombero; pued
           </div>
 
           {tipoCompleto && compatibles && (
-            <div style={{ borderTop: '1px solid #334155', paddingTop: 12 }}>
+            <div style={{ borderTop: '1px solid var(--line)', paddingTop: 12 }}>
               <p style={{ fontSize: 13, fontWeight: 600, marginBottom: 4 }}>
                 Puede recibir sangre de: <span style={{ fontWeight: 400 }}>{compatibles.join(', ')}</span>
               </p>
-              <p style={{ fontSize: 11, color: '#94a3b8' }}>
+              <p style={{ fontSize: 11, color: 'var(--muted)' }}>
                 Informacion orientativa para transfusion de globulos rojos. No sustituye protocolos medicos ni la
                 verificacion de compatibilidad realizada por personal sanitario.
               </p>
@@ -2731,11 +2736,11 @@ function TabSalud({ bombero, puedeEditar, onGuardado }: { bombero: Bombero; pued
         </div>
       ) : (
         <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {error && <p style={{ color: '#f87171' }}>{error}</p>}
+          {error && <Aviso tipo="error" texto={error} />}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Grupo sanguineo</label>
-              <select
+              <label htmlFor="grupo-sanguineo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Grupo sanguineo</label>
+              <select id="grupo-sanguineo"
                 className="input-field"
                 value={form.grupoSanguineoId}
                 onChange={(e) => setForm({ ...form, grupoSanguineoId: e.target.value })}
@@ -2749,8 +2754,8 @@ function TabSalud({ bombero, puedeEditar, onGuardado }: { bombero: Bombero; pued
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Factor Rh</label>
-              <select
+              <label htmlFor="factor-rh" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Factor Rh</label>
+              <select id="factor-rh"
                 className="input-field"
                 value={form.factorRhId}
                 onChange={(e) => setForm({ ...form, factorRhId: e.target.value })}
@@ -2765,20 +2770,20 @@ function TabSalud({ bombero, puedeEditar, onGuardado }: { bombero: Bombero; pued
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Alergias</label>
-            <input className="input-field" value={form.alergias} onChange={(e) => setForm({ ...form, alergias: e.target.value })} />
+            <label htmlFor="alergias" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Alergias</label>
+            <input id="alergias" className="input-field" value={form.alergias} onChange={(e) => setForm({ ...form, alergias: e.target.value })} />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Condiciones medicas</label>
-            <input
+            <label htmlFor="condiciones-medicas" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Condiciones medicas</label>
+            <input id="condiciones-medicas"
               className="input-field"
               value={form.condicionesMedicas}
               onChange={(e) => setForm({ ...form, condicionesMedicas: e.target.value })}
             />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Medicamentos</label>
-            <input className="input-field" value={form.medicamentos} onChange={(e) => setForm({ ...form, medicamentos: e.target.value })} />
+            <label htmlFor="medicamentos" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Medicamentos</label>
+            <input id="medicamentos" className="input-field" value={form.medicamentos} onChange={(e) => setForm({ ...form, medicamentos: e.target.value })} />
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
             <button type="submit" className="btn-primary" disabled={guardando}>
@@ -2857,7 +2862,7 @@ function TabFirmaDigital({ bombero, onGuardado }: { bombero: Bombero; onGuardado
 
   if (!puedeGestionar) {
     return (
-      <p style={{ color: '#94a3b8', fontSize: 13 }}>
+      <p style={{ color: 'var(--muted)', fontSize: 13 }}>
         Solo un usuario con el permiso <code>personal:gestionar_firma_digital</code> puede cargar, reemplazar,
         eliminar o autorizar el uso de la firma digital de este bombero.
       </p>
@@ -2868,14 +2873,14 @@ function TabFirmaDigital({ bombero, onGuardado }: { bombero: Bombero; onGuardado
     <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 500 }}>
       <div>
         <h3 style={{ fontSize: 14, marginBottom: 4 }}>Firma digital registrada</h3>
-        <p style={{ fontSize: 12, color: '#94a3b8' }}>
+        <p style={{ fontSize: 12, color: 'var(--muted)' }}>
           La imagen de la firma es independiente de la autorizacion de uso. Cargar una firma no la habilita
           automaticamente para insertarse en documentos.
         </p>
       </div>
 
-      {error && <p style={{ color: '#f87171', fontSize: 13 }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} fontSize={13} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {bombero.firmaDigitalUrl ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -2912,11 +2917,11 @@ function TabFirmaDigital({ bombero, onGuardado }: { bombero: Bombero; onGuardado
               onChange={(e) => e.target.files?.[0] && subirArchivo(e.target.files[0])}
             />
           </label>
-          <p style={{ fontSize: 11, color: '#64748b', marginTop: 6 }}>Formatos: png, jpg, webp o gif (no svg).</p>
+          <p style={{ fontSize: 11, color: 'var(--muted)', marginTop: 6 }}>Formatos: png, jpg, webp o gif (no svg).</p>
         </div>
       )}
 
-      <div style={{ borderTop: '1px solid #334155', paddingTop: 14 }}>
+      <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}>
         <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 8 }}>
           <input
             type="checkbox"
@@ -2926,13 +2931,13 @@ function TabFirmaDigital({ bombero, onGuardado }: { bombero: Bombero; onGuardado
           />
           ¿Autorizado para uso de firma digital?
         </label>
-        <p style={{ fontSize: 11, color: '#64748b', marginTop: 4 }}>
+        <p style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>
           Si esta activo Y hay una firma cargada, SIGBO la insertara automaticamente en los documentos que lo
           requieran. Si esta activo pero no hay firma cargada, el documento se genera igual con una advertencia y el
           espacio en blanco para firmar a mano.
         </p>
         {bombero.autorizadoFirmaDigital && !bombero.firmaDigitalUrl && (
-          <p style={{ fontSize: 12, color: '#f59e0b', marginTop: 8 }}>
+          <p style={{ fontSize: 12, color: 'var(--warning)', marginTop: 8 }}>
             ⚠ Autorizado para uso de firma digital, pero todavia no tiene una firma cargada.
           </p>
         )}
@@ -3096,14 +3101,14 @@ function SeccionSeguros({ bomberoId }: { bomberoId: string }) {
         )}
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       {mostrarForm && (
-        <form onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10, borderTop: '1px solid #334155', paddingTop: 10 }}>
+        <form onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10, borderTop: '1px solid var(--line)', paddingTop: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Aseguradora</label>
-              <select className="input-field" value={form.aseguradoraId} onChange={(e) => setForm({ ...form, aseguradoraId: e.target.value })}>
+              <label htmlFor="aseguradora" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Aseguradora</label>
+              <select id="aseguradora" className="input-field" value={form.aseguradoraId} onChange={(e) => setForm({ ...form, aseguradoraId: e.target.value })}>
                 <option value="">NINGUNA</option>
                 {aseguradoras.map((a) => (
                   <option key={a.id} value={a.id}>
@@ -3113,8 +3118,8 @@ function SeccionSeguros({ bomberoId }: { bomberoId: string }) {
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de seguro</label>
-              <select className="input-field" value={form.tipoSeguroId} onChange={(e) => setForm({ ...form, tipoSeguroId: e.target.value })}>
+              <label htmlFor="tipo-de-seguro" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de seguro</label>
+              <select id="tipo-de-seguro" className="input-field" value={form.tipoSeguroId} onChange={(e) => setForm({ ...form, tipoSeguroId: e.target.value })}>
                 <option value="">NINGUNA</option>
                 {tiposSeguro.map((t) => (
                   <option key={t.id} value={t.id}>
@@ -3124,23 +3129,23 @@ function SeccionSeguros({ bomberoId }: { bomberoId: string }) {
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero de poliza</label>
-              <input className="input-field" value={form.numeroPoliza} onChange={(e) => setForm({ ...form, numeroPoliza: e.target.value })} />
+              <label htmlFor="numero-de-poliza" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero de poliza</label>
+              <input id="numero-de-poliza" className="input-field" value={form.numeroPoliza} onChange={(e) => setForm({ ...form, numeroPoliza: e.target.value })} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-              <select className="input-field" value={form.estado} onChange={(e) => setForm({ ...form, estado: e.target.value })}>
+              <label htmlFor="estado-2" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
+              <select id="estado-2" className="input-field" value={form.estado} onChange={(e) => setForm({ ...form, estado: e.target.value })}>
                 <option value="ACTIVO">ACTIVO</option>
                 <option value="INACTIVO">INACTIVO</option>
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de inicio</label>
-              <input className="input-field" type="date" value={form.fechaInicio} onChange={(e) => setForm({ ...form, fechaInicio: e.target.value })} />
+              <label htmlFor="fecha-de-inicio" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de inicio</label>
+              <input id="fecha-de-inicio" className="input-field" type="date" value={form.fechaInicio} onChange={(e) => setForm({ ...form, fechaInicio: e.target.value })} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de vencimiento</label>
-              <input
+              <label htmlFor="fecha-de-vencimiento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de vencimiento</label>
+              <input id="fecha-de-vencimiento"
                 className="input-field"
                 type="date"
                 value={form.fechaVencimiento}
@@ -3149,14 +3154,14 @@ function SeccionSeguros({ bomberoId }: { bomberoId: string }) {
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>
+            <label htmlFor="descripcion-detalle-particular-de-esta-p" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>
               Descripcion (detalle particular de esta poliza)
             </label>
-            <input className="input-field" value={form.descripcion} onChange={(e) => setForm({ ...form, descripcion: e.target.value })} />
+            <input id="descripcion-detalle-particular-de-esta-p" className="input-field" value={form.descripcion} onChange={(e) => setForm({ ...form, descripcion: e.target.value })} />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
-            <input className="input-field" value={form.observaciones} onChange={(e) => setForm({ ...form, observaciones: e.target.value })} />
+            <label htmlFor="observaciones-2" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
+            <input id="observaciones-2" className="input-field" value={form.observaciones} onChange={(e) => setForm({ ...form, observaciones: e.target.value })} />
           </div>
           <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear seguro'}
@@ -3164,22 +3169,22 @@ function SeccionSeguros({ bomberoId }: { bomberoId: string }) {
         </form>
       )}
 
-      {items && items.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin seguros registrados.</p>}
+      {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin seguros registrados.</p>}
       {items && items.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Aseguradora</th>
-              <th style={{ padding: '6px 4px' }}>Tipo</th>
-              <th style={{ padding: '6px 4px' }}>Poliza</th>
-              <th style={{ padding: '6px 4px' }}>Vigencia</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Aseguradora</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Poliza</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Vigencia</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {items.map((s) => (
-              <tr key={s.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={s.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{s.aseguradoraId ? nombres.get(s.aseguradoraId) ?? '...' : '-'}</td>
                 <td style={{ padding: '6px 4px' }}>{s.tipoSeguroId ? nombres.get(s.tipoSeguroId) ?? '...' : '-'}</td>
                 <td style={{ padding: '6px 4px' }}>{s.numeroPoliza ?? ''}</td>
@@ -3187,7 +3192,7 @@ function SeccionSeguros({ bomberoId }: { bomberoId: string }) {
                   {s.fechaInicio ?? '?'} - {s.fechaVencimiento ?? '?'}
                 </td>
                 <td style={{ padding: '6px 4px' }}>
-                  <span className="badge" style={{ background: s.estado === 'ACTIVO' ? '#166534' : '#7f1d1d' }}>
+                  <span className="badge" style={{ background: s.estado === 'ACTIVO' ? 'var(--ok-fill)' : 'var(--bad-fill)' }}>
                     {s.estado}
                   </span>
                 </td>
@@ -3269,16 +3274,16 @@ function TabFoja({ bomberoId, puedeEditar }: { bomberoId: string; puedeEditar: b
           {generando ? 'Generando...' : `Generar foja de servicio ${new Date().getFullYear()}`}
         </button>
       )}
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       <div className="card">
-        {anios && anios.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Todavia no se genero ninguna foja de servicio.</p>}
+        {anios && anios.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Todavia no se genero ninguna foja de servicio.</p>}
         {anios && anios.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                <th style={{ padding: '6px 4px' }}>Ano</th>
-                <th style={{ padding: '6px 4px' }}>Descargas</th>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                <th scope="col" style={{ padding: '6px 4px' }}>Ano</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Descargas</th>
               </tr>
             </thead>
             <tbody>
@@ -3313,12 +3318,12 @@ function FilaFoja({ bomberoId, anio }: { bomberoId: string; anio: number }) {
   }
 
   return (
-    <tr style={{ borderBottom: '1px solid #1f2937' }}>
+    <tr style={{ borderBottom: '1px solid var(--line-soft)' }}>
       <td style={{ padding: '6px 4px' }}>{anio}</td>
       <td style={{ padding: '6px 4px', display: 'flex', gap: 10 }}>
         {foja?.archivoPdfUrl && <button type="button" className="link-button" onClick={() => descargar('pdf')}>PDF</button>}
         {foja?.archivoDocxUrl && <button type="button" className="link-button" onClick={() => descargar('docx')}>Word</button>}
-        {error && <span role="alert" style={{ color: '#f87171' }}>{error}</span>}
+        {error && <span role="alert" style={{ color: 'var(--danger)' }}>{error}</span>}
       </td>
     </tr>
   );
@@ -3337,8 +3342,8 @@ function TabTimeline({ bomberoId }: { bomberoId: string }) {
       .catch(() => setItems([]));
   }, [bomberoId]);
 
-  if (!items) return <p style={{ color: '#94a3b8' }}>Cargando...</p>;
-  if (items.length === 0) return <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin movimientos registrados.</p>;
+  if (!items) return <Cargando texto="Cargando…" />;
+  if (items.length === 0) return <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin movimientos registrados.</p>;
 
   const ordenados = [...items].sort((a, b) => (a.fecha < b.fecha ? 1 : -1));
 
@@ -3348,13 +3353,13 @@ function TabTimeline({ bomberoId }: { bomberoId: string }) {
         <div key={m.id} style={{ display: 'flex', gap: 12 }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#2563eb', marginTop: 4 }} />
-            {idx < ordenados.length - 1 && <div style={{ flex: 1, width: 2, background: '#334155' }} />}
+            {idx < ordenados.length - 1 && <div style={{ flex: 1, width: 2, background: 'var(--neutral-fill)' }} />}
           </div>
           <div style={{ paddingBottom: 16 }}>
-            <div style={{ fontSize: 12, color: '#94a3b8' }}>{m.fecha}</div>
+            <div style={{ fontSize: 12, color: 'var(--muted)' }}>{m.fecha}</div>
             <div style={{ fontSize: 13, fontWeight: 600 }}>{m.tipoMovimiento}</div>
             {m.motivo && <div style={{ fontSize: 13 }}>{m.motivo}</div>}
-            {m.observacion && <div style={{ fontSize: 12, color: '#94a3b8' }}>{m.observacion}</div>}
+            {m.observacion && <div style={{ fontSize: 12, color: 'var(--muted)' }}>{m.observacion}</div>}
           </div>
         </div>
       ))}
@@ -3394,25 +3399,25 @@ function TabAuditoria({ bomberoId }: { bomberoId: string }) {
       .catch(() => setError('No se pudo cargar la auditoria'));
   }, [bomberoId]);
 
-  if (error) return <p style={{ color: '#94a3b8', fontSize: 13 }}>{error}</p>;
-  if (!items) return <p style={{ color: '#94a3b8' }}>Cargando...</p>;
-  if (items.length === 0) return <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin registros de auditoria.</p>;
+  if (error) return <p style={{ color: 'var(--muted)', fontSize: 13 }}>{error}</p>;
+  if (!items) return <Cargando texto="Cargando…" />;
+  if (items.length === 0) return <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin registros de auditoria.</p>;
 
   return (
     <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
         <thead>
-          <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-            <th style={{ padding: '6px 4px' }}>Fecha</th>
-            <th style={{ padding: '6px 4px' }}>Accion</th>
-            <th style={{ padding: '6px 4px' }}>IP</th>
-            <th style={{ padding: '6px 4px' }}></th>
+          <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+            <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
+            <th scope="col" style={{ padding: '6px 4px' }}>Accion</th>
+            <th scope="col" style={{ padding: '6px 4px' }}>IP</th>
+            <th scope="col" style={{ padding: '6px 4px' }}></th>
           </tr>
         </thead>
         <tbody>
           {items.map((log) => (
             <Fragment key={log.id}>
-              <tr style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{new Date(log.fecha).toLocaleString()}</td>
                 <td style={{ padding: '6px 4px' }}>
                   <span className="badge">{log.accion}</span>
@@ -3430,7 +3435,7 @@ function TabAuditoria({ bomberoId }: { bomberoId: string }) {
               </tr>
               {expandido === log.id && (
                 <tr>
-                  <td colSpan={4} style={{ padding: '6px 4px', background: '#0f172a' }}>
+                  <td colSpan={4} style={{ padding: '6px 4px', background: 'var(--surface-soft)' }}>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, fontSize: 11 }}>
                       <pre style={{ whiteSpace: 'pre-wrap' }}>
                         Antes: {formatearJsonSeguro(log.datosAntes)}

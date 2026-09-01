@@ -6,6 +6,7 @@ import { obtenerSesion } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { Parametro } from '@/lib/parametros';
 import { ActividadAcademica, cargarActividades, cargarModalidadesAcademicas, cargarTiposActividadAcademica, crearActividad } from '@/lib/academia';
+import { Aviso } from '@/app/components/Aviso';
 
 const ESTADOS_ACTIVIDAD = ['PLANIFICADA', 'ABIERTA', 'EN_CURSO', 'FINALIZADA', 'CANCELADA'];
 
@@ -95,58 +96,58 @@ export default function ActividadesAcademicasPage() {
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Tipo de actividad</label>
-          <ComboBuscable opciones={opcionesTipo} value={filtroTipoId} onChange={setFiltroTipoId} maxWidth={220} />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Tipo de actividad</label>
+          <ComboBuscable ariaLabel="Tipo de actividad" opciones={opcionesTipo} value={filtroTipoId} onChange={setFiltroTipoId} maxWidth={220} />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Estado</label>
-          <ComboBuscable opciones={opcionesEstado} value={filtroEstado} onChange={setFiltroEstado} maxWidth={180} />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Estado</label>
+          <ComboBuscable ariaLabel="Estado" opciones={opcionesEstado} value={filtroEstado} onChange={setFiltroEstado} maxWidth={180} />
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       {mostrarForm && (
         <form onSubmit={crear} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Código</label>
-              <input className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} />
+              <label htmlFor="codigo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Código</label>
+              <input id="codigo" className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de actividad</label>
-              <ComboBuscable opciones={opcionesTipo} value={tipoActividadId} onChange={setTipoActividadId} />
+              <ComboBuscable ariaLabel="Tipo de actividad" opciones={opcionesTipo} value={tipoActividadId} onChange={setTipoActividadId} />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Inicio</label>
-              <input className="input-field" type="date" value={fechaInicio} onChange={(e) => setFechaInicio(e.target.value)} required />
+              <label htmlFor="inicio" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Inicio</label>
+              <input id="inicio" className="input-field" type="date" value={fechaInicio} onChange={(e) => setFechaInicio(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fin</label>
-              <input className="input-field" type="date" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} required />
+              <label htmlFor="fin" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fin</label>
+              <input id="fin" className="input-field" type="date" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} required />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Modalidad</label>
-              <ComboBuscable opciones={opcionesModalidad} value={modalidadId} onChange={setModalidadId} ningunaLabel="Sin definir" />
+              <ComboBuscable ariaLabel="Modalidad" opciones={opcionesModalidad} value={modalidadId} onChange={setModalidadId} ningunaLabel="Sin definir" />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Lugar</label>
-              <input className="input-field" value={lugar} onChange={(e) => setLugar(e.target.value)} />
+              <label htmlFor="lugar" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Lugar</label>
+              <input id="lugar" className="input-field" value={lugar} onChange={(e) => setLugar(e.target.value)} />
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label>
-            <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label>
+            <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
           <div style={{ maxWidth: 220 }}>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Costo (vacio si no cobra)</label>
-            <input className="input-field" type="number" min={0} step="1" value={costo} onChange={(e) => setCosto(e.target.value)} />
+            <label htmlFor="costo-vacio-si-no-cobra" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Costo (vacio si no cobra)</label>
+            <input id="costo-vacio-si-no-cobra" className="input-field" type="number" min={0} step="1" value={costo} onChange={(e) => setCosto(e.target.value)} />
           </div>
           <label style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
             <input type="checkbox" checked={esExterna} onChange={(e) => setEsExterna(e.target.checked)} />
@@ -158,16 +159,16 @@ export default function ActividadesAcademicasPage() {
         </form>
       )}
 
-      {actividades && actividades.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay actividades registradas.</p>}
+      {actividades && actividades.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay actividades registradas.</p>}
       {actividades && actividades.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Tipo</th>
-              <th style={{ padding: '6px 4px' }}>Inicio</th>
-              <th style={{ padding: '6px 4px' }}>Fin</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Inicio</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Fin</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
             </tr>
           </thead>
           <tbody>
@@ -175,11 +176,11 @@ export default function ActividadesAcademicasPage() {
               <tr
                 key={a.id}
                 onClick={() => router.push(`/dashboard/academia/${a.id}`)}
-                style={{ borderBottom: '1px solid #1f2937', cursor: 'pointer' }}
+                style={{ borderBottom: '1px solid var(--line-soft)', cursor: 'pointer' }}
               >
                 <td style={{ padding: '6px 4px' }}>
                   {a.nombre}
-                  {a.esExterna && <span className="badge" style={{ marginLeft: 6, background: '#475569' }}>externa</span>}
+                  {a.esExterna && <span className="badge" style={{ marginLeft: 6, background: 'var(--neutral-fill)' }}>externa</span>}
                 </td>
                 <td style={{ padding: '6px 4px' }}>{tipoPorId.get(a.tipoActividadId) ?? '-'}</td>
                 <td style={{ padding: '6px 4px' }}>{a.fechaInicio}</td>

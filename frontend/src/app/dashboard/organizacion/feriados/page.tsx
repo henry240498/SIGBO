@@ -13,6 +13,7 @@ import {
   eliminarFeriado,
   moverFeriado,
 } from '@/lib/guardias';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function FeriadosPage() {
   const confirmar = useConfirmacion();
@@ -151,7 +152,7 @@ export default function FeriadosPage() {
         )}
       </div>
 
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         Calendario institucional de feriados usado por la planificacion de guardias. Un feriado MOVIL puede
         trasladarse de fecha sin perder su historico: use &quot;Mover&quot; en vez de editar la fecha directamente.
         Trasladar un feriado nunca reclasifica guardias en forma automatica — revise manualmente las guardias
@@ -163,15 +164,15 @@ export default function FeriadosPage() {
         Mostrar inactivos
       </label>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label>
-              <input
+              <label htmlFor="fecha" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label>
+              <input id="fecha"
                 className="input-field"
                 type="date"
                 value={fecha}
@@ -179,15 +180,15 @@ export default function FeriadosPage() {
                 required
                 disabled={!!editandoId}
               />
-              {editandoId && <p style={{ fontSize: 11, color: '#94a3b8', marginTop: 4 }}>Para cambiar la fecha use &quot;Mover&quot;.</p>}
+              {editandoId && <p style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>Para cambiar la fecha use &quot;Mover&quot;.</p>}
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
-              <select className="input-field" value={tipo} onChange={(e) => setTipo(e.target.value)}>
+              <label htmlFor="tipo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
+              <select id="tipo" className="input-field" value={tipo} onChange={(e) => setTipo(e.target.value)}>
                 {TIPOS_FERIADO.map((t) => <option key={t} value={t}>{t}</option>)}
               </select>
             </div>
@@ -197,8 +198,8 @@ export default function FeriadosPage() {
             Es fecha especial (aplica esquemas de horario especiales / sorteo)
           </label>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
-            <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
+            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+            <input id="observacion" className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
             <button type="submit" className="btn-primary" disabled={guardando}>{guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear feriado'}</button>
@@ -207,33 +208,33 @@ export default function FeriadosPage() {
         </form>
       )}
 
-      {feriados && feriados.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin feriados registrados.</p>}
+      {feriados && feriados.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin feriados registrados.</p>}
       {feriados && feriados.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Fecha</th>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Tipo</th>
-              <th style={{ padding: '6px 4px' }}>Especial</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Especial</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {feriados.map((f) => (
               <Fragment key={f.id}>
-                <tr style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>
                     {f.fecha}
                     {f.tipo === 'TRASLADADO' && f.fechaOriginal && (
-                      <span style={{ fontSize: 11, color: '#94a3b8', display: 'block' }}>(era {f.fechaOriginal})</span>
+                      <span style={{ fontSize: 11, color: 'var(--muted)', display: 'block' }}>(era {f.fechaOriginal})</span>
                     )}
                   </td>
                   <td style={{ padding: '6px 4px' }}>{f.nombre}</td>
                   <td style={{ padding: '6px 4px' }}><span className="badge">{f.tipo}</span></td>
                   <td style={{ padding: '6px 4px' }}>{f.esEspecial ? 'SI' : 'NO'}</td>
-                  <td style={{ padding: '6px 4px' }}><span className="badge" style={{ background: f.activo ? '#166534' : '#7f1d1d' }}>{f.activo ? 'ACTIVO' : 'INACTIVO'}</span></td>
+                  <td style={{ padding: '6px 4px' }}><span className="badge" style={{ background: f.activo ? 'var(--ok-fill)' : 'var(--bad-fill)' }}>{f.activo ? 'ACTIVO' : 'INACTIVO'}</span></td>
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                     {puedeEditar && f.activo && (
                       <>
@@ -248,22 +249,22 @@ export default function FeriadosPage() {
                 </tr>
                 {moviendoId === f.id && (
                   <tr>
-                    <td colSpan={6} style={{ padding: '10px 4px', background: '#0f172a' }}>
+                    <td colSpan={6} style={{ padding: '10px 4px', background: 'var(--surface-soft)' }}>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                         <div style={{ display: 'flex', gap: 10, alignItems: 'end', flexWrap: 'wrap' }}>
                           <div>
                             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nueva fecha</label>
-                            <input className="input-field" type="date" value={nuevaFecha} onChange={(e) => setNuevaFecha(e.target.value)} />
+                            <input aria-label="Nueva fecha" className="input-field" type="date" value={nuevaFecha} onChange={(e) => setNuevaFecha(e.target.value)} />
                           </div>
                           <div style={{ flex: 1, minWidth: 220 }}>
                             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo del traslado</label>
-                            <input className="input-field" value={motivoTraslado} onChange={(e) => setMotivoTraslado(e.target.value)} />
+                            <input aria-label="Motivo del traslado" className="input-field" value={motivoTraslado} onChange={(e) => setMotivoTraslado(e.target.value)} />
                           </div>
                           <button type="button" className="btn-primary" onClick={() => confirmarMover(f.id)}>Confirmar traslado</button>
                           <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => setMoviendoId(null)}>Cerrar</button>
                         </div>
                         {resultadoTraslado && (
-                          <div style={{ fontSize: 12, color: '#e2e8f0' }}>
+                          <div style={{ fontSize: 12, color: 'var(--ink)' }}>
                             <p style={{ marginBottom: 4 }}>
                               Guardias en la fecha original ({resultadoTraslado.guardiasAfectadasFechaOriginal.length}):{' '}
                               {resultadoTraslado.guardiasAfectadasFechaOriginal.length === 0
@@ -276,7 +277,7 @@ export default function FeriadosPage() {
                                 ? 'ninguna'
                                 : resultadoTraslado.guardiasAfectadasFechaNueva.map((g) => `${g.fecha} (${g.estado})`).join(', ')}
                             </p>
-                            <p style={{ color: '#94a3b8', marginTop: 4 }}>
+                            <p style={{ color: 'var(--muted)', marginTop: 4 }}>
                               El sistema no modifico estas guardias automaticamente: revise y ajuste manualmente desde
                               el detalle de cada guardia si corresponde.
                             </p>

@@ -5,6 +5,7 @@ import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { obtenerSesion } from '@/lib/api';
 import { Catalogo, TipoBombero, cargarCatalogo, cargarTiposBombero } from '@/lib/personal';
 import { ROLES_GUARDIA_BASE, RequisitoRolGuardia, cargarRequisitosRol, crearRequisitoRol, eliminarRequisitoRol, toggleActivoRequisito } from '@/lib/guardias';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function RequisitosRolPage() {
   const confirmar = useConfirmacion();
@@ -91,22 +92,22 @@ export default function RequisitosRolPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <h2 style={{ fontSize: 16 }}>Requisitos de rol ({requisitos?.length ?? 0})</h2>
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         Define quien puede desempenarse (o reemplazar a alguien) en un rol de guardia como Oficial a Cargo o Chofer.
         Un bombero califica si cumple TODAS las condiciones no vacias de al menos UNA fila configurada para ese rol.
         Si un rol no tiene ninguna fila configurada, no se restringe por esta via. El rol CHOFER ademas exige
         siempre tener una autorizacion de chofer registrada en Personal.
       </p>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {puedeGestionar && (
         <form className="card" onSubmit={crear} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Rol</label>
-              <select className="input-field" value={rol} onChange={(e) => setRol(e.target.value)}>
+              <label htmlFor="rol" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Rol</label>
+              <select id="rol" className="input-field" value={rol} onChange={(e) => setRol(e.target.value)}>
                 {ROLES_GUARDIA_BASE.map((r) => <option key={r} value={r}>{r}</option>)}
                 <option value="__otro__">Otro (escribir)</option>
               </select>
@@ -115,22 +116,22 @@ export default function RequisitosRolPage() {
               )}
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cargo requerido (opcional)</label>
-              <select className="input-field" value={cargoIdRequerido} onChange={(e) => setCargoIdRequerido(e.target.value)}>
+              <label htmlFor="cargo-requerido-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cargo requerido (opcional)</label>
+              <select id="cargo-requerido-opcional" className="input-field" value={cargoIdRequerido} onChange={(e) => setCargoIdRequerido(e.target.value)}>
                 <option value="">-- ninguno --</option>
                 {cargos.map((c) => <option key={c.id} value={c.id}>{c.nombre}</option>)}
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Rango requerido (opcional)</label>
-              <select className="input-field" value={rangoIdRequerido} onChange={(e) => setRangoIdRequerido(e.target.value)}>
+              <label htmlFor="rango-requerido-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Rango requerido (opcional)</label>
+              <select id="rango-requerido-opcional" className="input-field" value={rangoIdRequerido} onChange={(e) => setRangoIdRequerido(e.target.value)}>
                 <option value="">-- ninguno --</option>
                 {rangos.map((r) => <option key={r.id} value={r.id}>{r.nombre}</option>)}
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de bombero requerido (opcional)</label>
-              <select className="input-field" value={tipoBomberoIdRequerido} onChange={(e) => setTipoBomberoIdRequerido(e.target.value)}>
+              <label htmlFor="tipo-de-bombero-requerido-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de bombero requerido (opcional)</label>
+              <select id="tipo-de-bombero-requerido-opcional" className="input-field" value={tipoBomberoIdRequerido} onChange={(e) => setTipoBomberoIdRequerido(e.target.value)}>
                 <option value="">-- ninguno --</option>
                 {tipos.map((t) => <option key={t.id} value={t.id}>{t.nombre}</option>)}
               </select>
@@ -140,28 +141,28 @@ export default function RequisitosRolPage() {
         </form>
       )}
 
-      {requisitos && requisitos.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin requisitos configurados: por ahora ningun rol esta restringido por esta via.</p>}
+      {requisitos && requisitos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin requisitos configurados: por ahora ningun rol esta restringido por esta via.</p>}
       {requisitos && requisitos.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Rol</th>
-              <th style={{ padding: '6px 4px' }}>Cargo</th>
-              <th style={{ padding: '6px 4px' }}>Rango</th>
-              <th style={{ padding: '6px 4px' }}>Tipo de bombero</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              {puedeGestionar && <th style={{ padding: '6px 4px' }}>Acciones</th>}
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Rol</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Cargo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Rango</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo de bombero</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              {puedeGestionar && <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>}
             </tr>
           </thead>
           <tbody>
             {requisitos.map((r) => (
-              <tr key={r.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={r.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}><span className="badge">{r.rol}</span></td>
                 <td style={{ padding: '6px 4px' }}>{nombreCargo(r.cargoIdRequerido) ?? '—'}</td>
                 <td style={{ padding: '6px 4px' }}>{nombreRango(r.rangoIdRequerido) ?? '—'}</td>
                 <td style={{ padding: '6px 4px' }}>{nombreTipo(r.tipoBomberoIdRequerido) ?? '—'}</td>
                 <td style={{ padding: '6px 4px' }}>
-                  <span className="badge" style={{ background: r.activo ? '#166534' : '#7f1d1d' }}>{r.activo ? 'ACTIVO' : 'INACTIVO'}</span>
+                  <span className="badge" style={{ background: r.activo ? 'var(--ok-fill)' : 'var(--bad-fill)' }}>{r.activo ? 'ACTIVO' : 'INACTIVO'}</span>
                 </td>
                 {puedeGestionar && (
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6 }}>

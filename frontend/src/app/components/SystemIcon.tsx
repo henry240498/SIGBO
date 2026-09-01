@@ -1,6 +1,7 @@
 import { IconoModulo } from '@/lib/modulos';
 
-const paths: Record<IconoModulo | 'home' | 'user' | 'flame', React.ReactNode> = {
+const paths: Record<IconoModulo | 'home' | 'user' | 'flame' | 'buscar', React.ReactNode> = {
+  buscar: <><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></>,
   home: <><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10M9 20v-6h6v6"/></>,
   user: <><circle cx="12" cy="8" r="4"/><path d="M4.5 21c.5-4.5 3.2-7 7.5-7s7 2.5 7.5 7"/></>,
   flame: <path d="M13.8 2.5c.4 3-1.2 4.3-2.6 6.1-1.1-1.3-1.4-2.4-1.1-4.1C6.5 7 4.5 10 5.2 14.2A7 7 0 0 0 19 13c0-3.6-2-6.9-5.2-10.5Z"/>,

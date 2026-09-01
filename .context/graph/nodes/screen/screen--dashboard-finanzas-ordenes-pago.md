@@ -16,6 +16,7 @@ edges:
   - [uses, component--front-parametros]
   - [uses, component--front-deposito]
   - [uses, component--front-finanzas]
+  - [uses, component--front-aviso]
 terminos: [finanzas, ordenes, pago, crear, autorizar, anular]
 ---
 
@@ -37,6 +38,7 @@ Pantalla /dashboard/finanzas/ordenes-pago.
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-deposito|deposito]]
 - `uses` → [[component--front-finanzas|finanzas]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

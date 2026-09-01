@@ -12,6 +12,7 @@ archivos:
 edges:
   - [belongs_to, domain--documentos]
   - [uses, component--front-documentos]
+  - [uses, component--front-cargando]
 terminos: [documentos]
 ---
 
@@ -29,6 +30,7 @@ Pantalla /dashboard/documentos.
 
 - `belongs_to` → [[domain--documentos|Documentos]]
 - `uses` → [[component--front-documentos|documentos]]
+- `uses` → [[component--front-cargando|Cargando]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

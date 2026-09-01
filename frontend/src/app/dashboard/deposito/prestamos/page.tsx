@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useId, useMemo, useState } from 'react';
 import { obtenerSesion } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { Parametro, resolverNombres } from '@/lib/parametros';
@@ -20,6 +20,8 @@ import {
   crearPrestamoDeposito,
   devolverPrestamoDeposito,
 } from '@/lib/deposito';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 interface ItemForm {
   tipoElemento: 'EQUIPO' | 'ARTICULO';
@@ -77,12 +79,12 @@ function FilaDevolucion({ prestamo, ubicaciones, onDevuelto }: { prestamo: Prest
     }
   }
 
-  if (!items) return <p style={{ color: '#94a3b8', fontSize: 12 }}>Cargando items...</p>;
+  if (!items) return <Cargando texto="Cargando items…" />;
   const pendientes = items.filter((it) => it.estadoItem === 'PENDIENTE');
 
   return (
-    <div style={{ padding: '10px 4px', background: '#0f172a', borderRadius: 6 }}>
-      {error && <p style={{ color: '#f87171', fontSize: 12 }}>{error}</p>}
+    <div style={{ padding: '10px 4px', background: 'var(--surface-soft)', borderRadius: 6 }}>
+      {error && <Aviso tipo="error" texto={error} fontSize={12} />}
       {items.map((it) => (
         <div key={it.id} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 8, alignItems: 'center', padding: '4px 0', fontSize: 12 }}>
           <span>
@@ -114,7 +116,7 @@ function FilaDevolucion({ prestamo, ubicaciones, onDevuelto }: { prestamo: Prest
               />
             </>
           ) : (
-            <span style={{ gridColumn: '2 / -1', color: '#94a3b8' }}>Ya procesado</span>
+            <span style={{ gridColumn: '2 / -1', color: 'var(--muted)' }}>Ya procesado</span>
           )}
         </div>
       ))}
@@ -128,6 +130,7 @@ function FilaDevolucion({ prestamo, ubicaciones, onDevuelto }: { prestamo: Prest
 }
 
 export default function PrestamosDepositoPage() {
+  const idCampo = useId();
   const [prestamos, setPrestamos] = useState<PrestamoDeposito[] | null>(null);
   const [tipos, setTipos] = useState<Parametro[]>([]);
   const [articulos, setArticulos] = useState<Articulo[]>([]);
@@ -256,8 +259,8 @@ export default function PrestamosDepositoPage() {
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end' }}>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Estado</label>
-          <ComboBuscable opciones={ESTADOS_PRESTAMO} value={filtroEstado} onChange={setFiltroEstado} maxWidth={200} disabled={soloVencidos} />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Estado</label>
+          <ComboBuscable ariaLabel="Estado" opciones={ESTADOS_PRESTAMO} value={filtroEstado} onChange={setFiltroEstado} maxWidth={200} disabled={soloVencidos} />
         </div>
         <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 6, paddingBottom: 10 }}>
           <input type="checkbox" checked={soloVencidos} onChange={(e) => setSoloVencidos(e.target.checked)} />
@@ -265,43 +268,43 @@ export default function PrestamosDepositoPage() {
         </label>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={crear} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de prestamo</label>
-              <ComboBuscable opciones={opcionesTipo} value={tipoPrestamoId} onChange={setTipoPrestamoId} ningunaLabel="-- seleccionar --" />
+              <ComboBuscable ariaLabel="Tipo de prestamo" opciones={opcionesTipo} value={tipoPrestamoId} onChange={setTipoPrestamoId} ningunaLabel="-- seleccionar --" />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Solicitante (personal)</label>
-              <ComboBuscable opciones={opcionesBombero} value={solicitanteBomberoId} onChange={setSolicitanteBomberoId} ningunaLabel="No es personal propio" />
+              <ComboBuscable ariaLabel="Solicitante (personal)" opciones={opcionesBombero} value={solicitanteBomberoId} onChange={setSolicitanteBomberoId} ningunaLabel="No es personal propio" />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Entrega</label>
-              <input className="input-field" type="datetime-local" value={fechaEntrega} onChange={(e) => setFechaEntrega(e.target.value)} required />
+              <label htmlFor={`${idCampo}-entrega`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Entrega</label>
+              <input id={`${idCampo}-entrega`} className="input-field" type="datetime-local" value={fechaEntrega} onChange={(e) => setFechaEntrega(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Devolucion comprometida</label>
-              <input className="input-field" type="datetime-local" value={fechaDevolucionComprometida} onChange={(e) => setFechaDevolucionComprometida(e.target.value)} />
+              <label htmlFor={`${idCampo}-devolucion-comprometida`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Devolucion comprometida</label>
+              <input id={`${idCampo}-devolucion-comprometida`} className="input-field" type="datetime-local" value={fechaDevolucionComprometida} onChange={(e) => setFechaDevolucionComprometida(e.target.value)} />
             </div>
           </div>
           {!solicitanteBomberoId && (
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Solicitante externo (otra institucion, capacitacion, etc.)</label>
-              <input className="input-field" value={solicitanteExterno} onChange={(e) => setSolicitanteExterno(e.target.value)} />
+              <label htmlFor={`${idCampo}-solicitante-externo-otra-institucion-cap`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Solicitante externo (otra institucion, capacitacion, etc.)</label>
+              <input id={`${idCampo}-solicitante-externo-otra-institucion-cap`} className="input-field" value={solicitanteExterno} onChange={(e) => setSolicitanteExterno(e.target.value)} />
             </div>
           )}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Autorizado por</label>
-              <ComboBuscable opciones={opcionesBombero} value={autorizadoPor} onChange={setAutorizadoPor} ningunaLabel="Sin definir" />
+              <ComboBuscable ariaLabel="Autorizado por" opciones={opcionesBombero} value={autorizadoPor} onChange={setAutorizadoPor} ningunaLabel="Sin definir" />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
-              <input className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
+              <label htmlFor={`${idCampo}-observaciones`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
+              <input id={`${idCampo}-observaciones`} className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
             </div>
           </div>
 
@@ -324,7 +327,7 @@ export default function PrestamosDepositoPage() {
                   <button
                     type="button"
                     onClick={() => setItems((prev) => prev.filter((_, i) => i !== idx))}
-                    style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
+                    style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
                   >
                     quitar
                   </button>
@@ -342,34 +345,34 @@ export default function PrestamosDepositoPage() {
         </form>
       )}
 
-      {prestamos && prestamos.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay prestamos registrados.</p>}
+      {prestamos && prestamos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay prestamos registrados.</p>}
       {prestamos && prestamos.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Entrega</th>
-              <th style={{ padding: '6px 4px' }}>Tipo</th>
-              <th style={{ padding: '6px 4px' }}>Solicitante</th>
-              <th style={{ padding: '6px 4px' }}>Devolucion comprometida</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Entrega</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Solicitante</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Devolucion comprometida</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {prestamos.map((p) => (
               <Fragment key={p.id}>
-                <tr style={{ borderBottom: expandidoId === p.id ? 'none' : '1px solid #1f2937' }}>
+                <tr style={{ borderBottom: expandidoId === p.id ? 'none' : '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>{new Date(p.fechaEntrega).toLocaleString()}</td>
                   <td style={{ padding: '6px 4px' }}>
                     <span className="badge">{nombresTipo.get(p.tipoPrestamoId) ?? '-'}</span>
                   </td>
                   <td style={{ padding: '6px 4px' }}>{p.solicitanteBomberoId ? bomberoPorId.get(p.solicitanteBomberoId) ?? '-' : p.solicitanteExterno ?? '-'}</td>
-                  <td style={{ padding: '6px 4px', color: estaVencido(p) ? '#f87171' : undefined, fontWeight: estaVencido(p) ? 600 : undefined }}>
+                  <td style={{ padding: '6px 4px', color: estaVencido(p) ? 'var(--danger)' : undefined, fontWeight: estaVencido(p) ? 600 : undefined }}>
                     {p.fechaDevolucionComprometida ? new Date(p.fechaDevolucionComprometida).toLocaleString() : '-'}
                     {estaVencido(p) && ' — VENCIDO'}
                   </td>
                   <td style={{ padding: '6px 4px' }}>
-                    <span className="badge" style={{ background: p.estado === 'DEVUELTO' ? '#166534' : p.estado === 'EXTRAVIADO' ? '#7f1d1d' : '#334155' }}>
+                    <span className="badge" style={{ background: p.estado === 'DEVUELTO' ? 'var(--ok-fill)' : p.estado === 'EXTRAVIADO' ? 'var(--bad-fill)' : 'var(--neutral-fill)' }}>
                       {p.estado}
                     </span>
                   </td>
@@ -382,7 +385,7 @@ export default function PrestamosDepositoPage() {
                   </td>
                 </tr>
                 {expandidoId === p.id && (
-                  <tr style={{ borderBottom: '1px solid #1f2937' }}>
+                  <tr style={{ borderBottom: '1px solid var(--line-soft)' }}>
                     <td colSpan={6} style={{ padding: '4px' }}>
                       <FilaDevolucion
                         prestamo={p}

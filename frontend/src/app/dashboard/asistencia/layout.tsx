@@ -4,12 +4,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const TABS = [
-  { href: '/dashboard/asistencia', label: 'Dashboard', exact: true },
+  { href: '/dashboard/asistencia', label: 'Resumen', exact: true },
   { href: '/dashboard/asistencia/registro', label: 'Registro' },
   { href: '/dashboard/asistencia/eventos', label: 'Eventos' },
-  { href: '/dashboard/asistencia/externos', label: 'Personas Externas' },
+  { href: '/dashboard/asistencia/externos', label: 'Personas externas' },
   { href: '/dashboard/asistencia/tolerancias', label: 'Tolerancias' },
-  { href: '/dashboard/asistencia/auditoria', label: 'Auditoria' },
+  { href: '/dashboard/asistencia/auditoria', label: 'Auditoría' },
 ];
 
 export default function AsistenciaLayout({ children }: { children: React.ReactNode }) {
@@ -22,7 +22,7 @@ export default function AsistenciaLayout({ children }: { children: React.ReactNo
           display: 'flex',
           gap: 4,
           flexWrap: 'wrap',
-          borderBottom: '1px solid #334155',
+          borderBottom: '1px solid var(--line)',
           marginBottom: 20,
           paddingBottom: 0,
         }}
@@ -37,7 +37,7 @@ export default function AsistenciaLayout({ children }: { children: React.ReactNo
                 padding: '8px 12px',
                 fontSize: 13,
                 textDecoration: 'none',
-                color: activo ? '#e2e8f0' : '#94a3b8',
+                color: activo ? 'var(--ink)' : 'var(--muted)',
                 fontWeight: activo ? 600 : 400,
                 borderBottom: activo ? '2px solid #2563eb' : '2px solid transparent',
               }}

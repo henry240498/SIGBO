@@ -13,6 +13,7 @@ edges:
   - [belongs_to, domain--finanzas]
   - [uses, component--front-parametros]
   - [uses, component--front-finanzas]
+  - [uses, component--front-cargando]
 terminos: [finanzas]
 ---
 
@@ -31,6 +32,7 @@ Pantalla /dashboard/finanzas.
 - `belongs_to` → [[domain--finanzas|Finanzas]]
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-finanzas|finanzas]]
+- `uses` → [[component--front-cargando|Cargando]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

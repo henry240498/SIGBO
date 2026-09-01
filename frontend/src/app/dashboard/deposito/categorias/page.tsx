@@ -11,6 +11,7 @@ import {
   crearCategoriaArticulo,
   eliminarCategoriaArticulo,
 } from '@/lib/deposito';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function CategoriasArticuloPage() {
   const confirmar = useConfirmacion();
@@ -133,33 +134,33 @@ export default function CategoriasArticuloPage() {
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end' }}>
         <div style={{ flex: 1 }}>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Buscar</label>
-          <input className="input-field" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nombre o codigo..." />
+          <label htmlFor="buscar" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Buscar</label>
+          <input id="buscar" className="input-field" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nombre o codigo..." />
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={guardar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo</label>
-              <input className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} />
+              <label htmlFor="codigo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo</label>
+              <input id="codigo" className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria padre</label>
-              <ComboBuscable opciones={opcionesPadre} value={padreId} onChange={setPadreId} ningunaLabel="Sin categoria padre" />
+              <ComboBuscable ariaLabel="Categoria padre" opciones={opcionesPadre} value={padreId} onChange={setPadreId} ningunaLabel="Sin categoria padre" />
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
-            <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
           <label style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
             <input type="checkbox" checked={activo} onChange={(e) => setActivo(e.target.checked)} />
@@ -186,26 +187,26 @@ export default function CategoriasArticuloPage() {
         </form>
       )}
 
-      {categorias && categorias.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay categorias registradas.</p>}
+      {categorias && categorias.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay categorias registradas.</p>}
       {categorias && categorias.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Codigo</th>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Categoria padre</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Codigo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Categoria padre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {categorias.map((c) => (
-              <tr key={c.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={c.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{c.codigo ?? '-'}</td>
                 <td style={{ padding: '6px 4px' }}>{c.nombre}</td>
                 <td style={{ padding: '6px 4px' }}>{c.padreId ? nombrePorId.get(c.padreId) ?? '-' : '-'}</td>
                 <td style={{ padding: '6px 4px' }}>
-                  <span className="badge" style={{ background: c.activo ? '#166534' : '#7f1d1d', color: c.activo ? '#4ade80' : '#f87171' }}>
+                  <span className="badge" style={{ background: c.activo ? 'var(--ok-fill)' : 'var(--bad-fill)', color: c.activo ? 'var(--success)' : 'var(--danger)' }}>
                     {c.activo ? 'ACTIVA' : 'INACTIVA'}
                   </span>
                 </td>

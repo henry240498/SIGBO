@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { apiFetch } from '@/lib/api';
+import { Cargando } from '@/app/components/Cargando';
 
 interface DashboardData {
   rangos: number;
@@ -21,7 +22,7 @@ interface DashboardData {
 function Tarjeta({ titulo, valor }: { titulo: string; valor: number }) {
   return (
     <div className="card">
-      <div style={{ fontSize: 12, color: '#94a3b8', marginBottom: 6 }}>{titulo}</div>
+      <div style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 6 }}>{titulo}</div>
       <div style={{ fontSize: 26, fontWeight: 700 }}>{valor}</div>
     </div>
   );
@@ -40,8 +41,8 @@ export default function OrganizacionDashboardPage() {
       .catch((err) => setError(err.message));
   }, []);
 
-  if (error) return <p style={{ color: '#f87171' }}>{error}</p>;
-  if (!data) return <p style={{ color: '#94a3b8' }}>Cargando...</p>;
+  if (error) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
+  if (!data) return <Cargando texto="Cargando…" />;
 
   return (
     <div

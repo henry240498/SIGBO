@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { BomberoResumen, TipoBombero, compararBomberosInstitucional, construirTipoPorId } from '@/lib/personal';
 import { FUENTES_ASISTENCIA, MarcacionAsistencia, ResultadoMarcaciones, buscarMarcaciones } from '@/lib/asistencia';
+import { Aviso } from '@/app/components/Aviso';
 
 const PAGE_SIZE = 50;
 
@@ -74,8 +75,8 @@ export default function ConsultaMarcaciones({ bomberos, tipos }: Props) {
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', gap: 10, alignItems: 'end' }}>
           <div>
-            <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Bombero</label>
-            <ComboBuscable
+            <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Bombero</label>
+            <ComboBuscable ariaLabel="Bombero"
               opciones={opcionesBombero}
               value={bomberoId}
               onChange={setBomberoId}
@@ -84,16 +85,16 @@ export default function ConsultaMarcaciones({ bomberos, tipos }: Props) {
             />
           </div>
           <div>
-            <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Desde</label>
-            <input className="input-field" type="date" value={desde} onChange={(e) => setDesde(e.target.value)} />
+            <label htmlFor="desde" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Desde</label>
+            <input id="desde" className="input-field" type="date" value={desde} onChange={(e) => setDesde(e.target.value)} />
           </div>
           <div>
-            <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Hasta</label>
-            <input className="input-field" type="date" value={hasta} onChange={(e) => setHasta(e.target.value)} />
+            <label htmlFor="hasta" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Hasta</label>
+            <input id="hasta" className="input-field" type="date" value={hasta} onChange={(e) => setHasta(e.target.value)} />
           </div>
           <div>
-            <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Fuente</label>
-            <select className="input-field" value={fuente} onChange={(e) => setFuente(e.target.value)}>
+            <label htmlFor="fuente" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Fuente</label>
+            <select id="fuente" className="input-field" value={fuente} onChange={(e) => setFuente(e.target.value)}>
               <option value="">Todas</option>
               {FUENTES_ASISTENCIA.map((f) => (
                 <option key={f} value={f}>{f}</option>
@@ -101,8 +102,8 @@ export default function ConsultaMarcaciones({ bomberos, tipos }: Props) {
             </select>
           </div>
           <div>
-            <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Tipo</label>
-            <select className="input-field" value={tipoMarcacion} onChange={(e) => setTipoMarcacion(e.target.value)}>
+            <label htmlFor="tipo" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Tipo</label>
+            <select id="tipo" className="input-field" value={tipoMarcacion} onChange={(e) => setTipoMarcacion(e.target.value)}>
               <option value="">Todos</option>
               <option value="ENTRADA">ENTRADA</option>
               <option value="SALIDA">SALIDA</option>
@@ -115,53 +116,53 @@ export default function ConsultaMarcaciones({ bomberos, tipos }: Props) {
           </button>
           <button type="button"
             onClick={limpiarFiltros}
-            style={{ background: 'transparent', border: '1px solid #334155', borderRadius: 6, padding: '8px 14px', color: '#e2e8f0' }}
+            style={{ background: 'transparent', border: '1px solid var(--line)', borderRadius: 6, padding: '8px 14px', color: 'var(--ink)' }}
           >
             Limpiar filtros
           </button>
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       {resultado && (
         <>
-          <p style={{ fontSize: 13, color: '#94a3b8' }}>
+          <p style={{ fontSize: 13, color: 'var(--muted)' }}>
             Mostrando {resultado.items.length} de {resultado.total} marcaciones (pagina {resultado.page} de {totalPaginas})
           </p>
 
           {resultado.items.length === 0 ? (
-            <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin marcaciones para los filtros seleccionados.</p>
+            <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin marcaciones para los filtros seleccionados.</p>
           ) : (
             <div className="card" style={{ padding: 0 }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
                 <thead>
-                  <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                    <th style={{ padding: '6px 8px' }}>Fecha/Hora</th>
-                    <th style={{ padding: '6px 8px' }}>Bombero</th>
-                    <th style={{ padding: '6px 8px' }}>Tipo</th>
-                    <th style={{ padding: '6px 8px' }}>Metodo</th>
-                    <th style={{ padding: '6px 8px' }}>Fuente</th>
-                    <th style={{ padding: '6px 8px' }}>Evento</th>
-                    <th style={{ padding: '6px 8px' }}>Observaciones</th>
+                  <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                    <th scope="col" style={{ padding: '6px 8px' }}>Fecha/Hora</th>
+                    <th scope="col" style={{ padding: '6px 8px' }}>Bombero</th>
+                    <th scope="col" style={{ padding: '6px 8px' }}>Tipo</th>
+                    <th scope="col" style={{ padding: '6px 8px' }}>Metodo</th>
+                    <th scope="col" style={{ padding: '6px 8px' }}>Fuente</th>
+                    <th scope="col" style={{ padding: '6px 8px' }}>Evento</th>
+                    <th scope="col" style={{ padding: '6px 8px' }}>Observaciones</th>
                   </tr>
                 </thead>
                 <tbody>
                   {resultado.items.map((m: MarcacionAsistencia) => {
                     const b = bomberoPorId.get(m.bomberoId);
                     return (
-                      <tr key={m.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                      <tr key={m.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                         <td style={{ padding: '6px 8px' }}>{new Date(m.timestampMarcacion).toLocaleString()}</td>
                         <td style={{ padding: '6px 8px' }}>{b ? `${b.numeroBombero} — ${b.nombre} ${b.apellido}` : m.bomberoId}</td>
                         <td style={{ padding: '6px 8px' }}>
-                          <span className="badge" style={{ background: m.tipoMarcacion === 'ENTRADA' ? '#166534' : '#7f1d1d' }}>
+                          <span className="badge" style={{ background: m.tipoMarcacion === 'ENTRADA' ? 'var(--ok-fill)' : 'var(--bad-fill)' }}>
                             {m.tipoMarcacion}
                           </span>
                         </td>
                         <td style={{ padding: '6px 8px' }}>{m.metodo}</td>
                         <td style={{ padding: '6px 8px' }}>{m.fuente}</td>
                         <td style={{ padding: '6px 8px' }}>{m.eventoId ? 'Si' : '—'}</td>
-                        <td style={{ padding: '6px 8px', color: '#94a3b8' }}>{m.observaciones ?? m.motivo ?? ''}</td>
+                        <td style={{ padding: '6px 8px', color: 'var(--muted)' }}>{m.observaciones ?? m.motivo ?? ''}</td>
                       </tr>
                     );
                   })}
@@ -175,15 +176,15 @@ export default function ConsultaMarcaciones({ bomberos, tipos }: Props) {
               <button type="button"
                 disabled={cargando || page <= 1}
                 onClick={() => buscar(page - 1)}
-                style={{ background: 'transparent', border: '1px solid #334155', borderRadius: 6, padding: '6px 12px', color: '#e2e8f0' }}
+                style={{ background: 'transparent', border: '1px solid var(--line)', borderRadius: 6, padding: '6px 12px', color: 'var(--ink)' }}
               >
                 Anterior
               </button>
-              <span style={{ fontSize: 13, color: '#94a3b8' }}>Pagina {page} de {totalPaginas}</span>
+              <span style={{ fontSize: 13, color: 'var(--muted)' }}>Pagina {page} de {totalPaginas}</span>
               <button type="button"
                 disabled={cargando || page >= totalPaginas}
                 onClick={() => buscar(page + 1)}
-                style={{ background: 'transparent', border: '1px solid #334155', borderRadius: 6, padding: '6px 12px', color: '#e2e8f0' }}
+                style={{ background: 'transparent', border: '1px solid var(--line)', borderRadius: 6, padding: '6px 12px', color: 'var(--ink)' }}
               >
                 Siguiente
               </button>

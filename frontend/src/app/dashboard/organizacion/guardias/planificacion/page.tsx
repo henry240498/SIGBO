@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { Guardia, GrupoGuardia, cargarGruposGuardia, cargarGuardias, planificarGuardias } from '@/lib/guardias';
+import { Aviso } from '@/app/components/Aviso';
 
 type Celda = { guardiaId?: string; grupoGuardiaId: string; horaInicio: string; horaFin: string; turno: string };
 const hoy = new Date();
@@ -81,19 +82,19 @@ export default function PlanificacionOrdenGuardiaPage() {
 
   return <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
     <div className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', gap: 12, flexWrap: 'wrap' }}>
-      <div><p style={{ color: '#60a5fa', fontSize: 12, marginBottom: 4 }}>Organización institucional</p><h2 style={{ fontSize: 18 }}>Planificación de Orden de Guardia</h2><p style={{ color: '#94a3b8', fontSize: 13, marginTop: 5 }}>Asigná un grupo y su horario por día. El color identifica la composición reutilizable del grupo.</p></div>
+      <div><p style={{ color: 'var(--signal)', fontSize: 12, marginBottom: 4 }}>Organización institucional</p><h2 style={{ fontSize: 18 }}>Planificación de Orden de Guardia</h2><p style={{ color: 'var(--muted)', fontSize: 13, marginTop: 5 }}>Asigná un grupo y su horario por día. El color identifica la composición reutilizable del grupo.</p></div>
       <label style={{ fontSize: 13 }}>Período<input className="input-field" type="month" value={periodo} onChange={(e) => setPeriodo(e.target.value)} style={{ marginTop: 4 }} /></label>
     </div>
     <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
-      <span style={{ fontSize: 13, color: '#94a3b8' }}>Atajos:</span>
+      <span style={{ fontSize: 13, color: 'var(--muted)' }}>Atajos:</span>
       <button type="button" className="btn-primary" style={{ background: '#475569' }} disabled={!origen} onClick={() => origen && copiarEnResto(origen, true)}>Pegar en todo el período</button>
-      <span style={{ fontSize: 12, color: '#94a3b8' }}>{origen ? `Origen: ${etiquetaFecha(origen)}` : 'Usá “Copiar” en una fecha para seleccionar el origen.'}</span>
+      <span style={{ fontSize: 12, color: 'var(--muted)' }}>{origen ? `Origen: ${etiquetaFecha(origen)}` : 'Usá “Copiar” en una fecha para seleccionar el origen.'}</span>
     </div>
-    {error && <p style={{ color: '#f87171' }}>{error}</p>}{mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+    {error && <Aviso tipo="error" texto={error} />}{mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(245px, 1fr))', gap: 10 }}>
       {dias.map((fecha) => {
         const celda = celdas[fecha] ?? { grupoGuardiaId: '', horaInicio: '20:00', horaFin: '06:00', turno: 'NOCTURNO' };
-        const color = celda.grupoGuardiaId ? colorGrupo(celda.grupoGuardiaId) : '#475569';
+        const color = celda.grupoGuardiaId ? colorGrupo(celda.grupoGuardiaId) : 'var(--neutral-fill)';
         return <article key={fecha} className="card" style={{ borderLeft: `5px solid ${color}`, display: 'flex', flexDirection: 'column', gap: 8 }}>
           <strong style={{ textTransform: 'capitalize' }}>{etiquetaFecha(fecha)}</strong>
           <select className="input-field" value={celda.grupoGuardiaId} onChange={(e) => cambiar(fecha, { grupoGuardiaId: e.target.value })} aria-label={`Grupo de guardia del ${fecha}`}>

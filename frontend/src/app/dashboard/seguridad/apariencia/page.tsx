@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { API_ORIGIN, apiFetch, obtenerSesion } from '@/lib/api';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 interface Apariencia {
   logoLogin: string | null;
@@ -122,7 +124,7 @@ export default function AparienciaPage() {
 
   if (!tienePermiso && !tienePermisoPolitica) {
     return (
-      <p style={{ color: '#94a3b8', fontSize: 13 }}>
+      <p style={{ color: 'var(--muted)', fontSize: 13 }}>
         Solo un usuario con el permiso <code>seguridad:configurar_apariencia</code> o{' '}
         <code>seguridad:configurar_politica_perfil</code> (rol Administrador General) puede acceder
         a esta seccion.
@@ -130,17 +132,17 @@ export default function AparienciaPage() {
     );
   }
 
-  if (!config) return <p style={{ color: '#94a3b8' }}>Cargando...</p>;
+  if (!config) return <Cargando texto="Cargando…" />;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      {error && <p style={{ color: '#f87171', fontSize: 13 }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} fontSize={13} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {tienePermisoPolitica && (
         <section className="card">
           <h2 style={{ fontSize: 16, marginBottom: 6 }}>Politica de edicion de datos personales</h2>
-          <p style={{ fontSize: 12, color: '#94a3b8', marginBottom: 12 }}>
+          <p style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 12 }}>
             Controla si los usuarios pueden editar su propia foto, telefonos, correos y redes
             sociales desde &quot;Mi Perfil&quot;. El cambio de contrasena nunca se ve afectado por
             esta politica.
@@ -149,7 +151,7 @@ export default function AparienciaPage() {
             <button type="button"
               className="btn-primary"
               disabled={guardandoPolitica}
-              style={{ background: config.perfilEdicionLibre ? '#16a34a' : '#334155' }}
+              style={{ background: config.perfilEdicionLibre ? '#16a34a' : '#475569' }}
               onClick={() => cambiarPolitica(true)}
             >
               Modo Libre {config.perfilEdicionLibre && '✓'}
@@ -157,7 +159,7 @@ export default function AparienciaPage() {
             <button type="button"
               className="btn-primary"
               disabled={guardandoPolitica}
-              style={{ background: !config.perfilEdicionLibre ? '#7f1d1d' : '#334155' }}
+              style={{ background: !config.perfilEdicionLibre ? '#7f1d1d' : '#475569' }}
               onClick={() => cambiarPolitica(false)}
             >
               Modo Fijo (bloqueado) {!config.perfilEdicionLibre && '✓'}
@@ -185,10 +187,10 @@ export default function AparienciaPage() {
           />
 
           <form onSubmit={guardar} style={{ marginTop: 14 }}>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>
-              Nombre del sistema <span style={{ color: '#64748b' }}>(titulo en el login y en el menu)</span>
+            <label htmlFor="nombre-del-sistema-titulo-en-el-login-y-" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>
+              Nombre del sistema <span style={{ color: 'var(--muted)' }}>(titulo en el login y en el menu)</span>
             </label>
-            <input
+            <input id="nombre-del-sistema-titulo-en-el-login-y-"
               className="input-field"
               value={nombreSistemaMenu}
               onChange={(e) => setNombreSistemaMenu(e.target.value)}
@@ -196,8 +198,8 @@ export default function AparienciaPage() {
               maxLength={100}
             />
             <div style={{ height: 10 }} />
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Texto debajo del logo (login)</label>
-            <input
+            <label htmlFor="texto-debajo-del-logo-login" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Texto debajo del logo (login)</label>
+            <input id="texto-debajo-del-logo-login"
               className="input-field"
               value={textoBajoLogo}
               onChange={(e) => setTextoBajoLogo(e.target.value)}
@@ -206,8 +208,8 @@ export default function AparienciaPage() {
             />
 
             <h2 style={{ fontSize: 16, margin: '20px 0 14px' }}>Menu principal</h2>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Subtitulo del sistema</label>
-            <input
+            <label htmlFor="subtitulo-del-sistema" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Subtitulo del sistema</label>
+            <input id="subtitulo-del-sistema"
               className="input-field"
               value={subtituloMenu}
               onChange={(e) => setSubtituloMenu(e.target.value)}
@@ -251,7 +253,7 @@ export default function AparienciaPage() {
             <div
               style={{
                 background: 'rgba(15, 23, 42, 0.85)',
-                border: '1px solid #334155',
+                border: '1px solid var(--line)',
                 borderRadius: 10,
                 padding: '20px 24px',
                 width: 200,
@@ -265,7 +267,7 @@ export default function AparienciaPage() {
                 <div style={{ fontSize: 34 }}>🚒</div>
               )}
               <p style={{ fontSize: 14, fontWeight: 700, marginTop: 6 }}>{nombreSistemaMenu || 'SIGBO-CBVC'}</p>
-              {textoBajoLogo && <p style={{ fontSize: 10, color: '#cbd5e1', marginTop: 4 }}>{textoBajoLogo}</p>}
+              {textoBajoLogo && <p style={{ fontSize: 10, color: 'var(--muted)', marginTop: 4 }}>{textoBajoLogo}</p>}
               <div style={{ marginTop: 12, height: 22, border: '1px solid #475569', borderRadius: 6 }} />
               <div style={{ marginTop: 6, height: 22, border: '1px solid #475569', borderRadius: 6 }} />
               <div style={{ marginTop: 8, height: 22, background: '#2563eb', borderRadius: 6 }} />
@@ -273,7 +275,7 @@ export default function AparienciaPage() {
           </div>
 
           <h2 style={{ fontSize: 16, marginBottom: 12 }}>Vista previa - Menu</h2>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: 10, border: '1px solid #334155', borderRadius: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: 10, border: '1px solid var(--line)', borderRadius: 8 }}>
             {config.logoMenu ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={urlImagen(config.logoMenu)!} alt="Logo menu" style={{ width: 28, height: 28, objectFit: 'contain' }} />
@@ -282,7 +284,7 @@ export default function AparienciaPage() {
             )}
             <div>
               <div style={{ fontSize: 13, fontWeight: 700 }}>{nombreSistemaMenu || 'SIGBO-CBVC'}</div>
-              <div style={{ fontSize: 10, color: '#94a3b8' }}>{subtituloMenu || 'Panel principal'}</div>
+              <div style={{ fontSize: 10, color: 'var(--muted)' }}>{subtituloMenu || 'Panel principal'}</div>
             </div>
           </div>
         </section>
@@ -309,7 +311,7 @@ function ImagenField({
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         {valor && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={valor} alt={etiqueta} style={{ width: 36, height: 36, objectFit: 'contain', border: '1px solid #334155', borderRadius: 6 }} />
+          <img src={valor} alt={etiqueta} style={{ width: 36, height: 36, objectFit: 'contain', border: '1px solid var(--line)', borderRadius: 6 }} />
         )}
         <input
           type="file"
@@ -320,9 +322,9 @@ function ImagenField({
             if (archivo) onArchivo(archivo);
             e.target.value = '';
           }}
-          style={{ fontSize: 12, color: '#94a3b8' }}
+          style={{ fontSize: 12, color: 'var(--muted)' }}
         />
-        {subiendo && <span style={{ fontSize: 11, color: '#94a3b8' }}>Subiendo...</span>}
+        {subiendo && <span style={{ fontSize: 11, color: 'var(--muted)' }}>Subiendo...</span>}
       </div>
     </div>
   );

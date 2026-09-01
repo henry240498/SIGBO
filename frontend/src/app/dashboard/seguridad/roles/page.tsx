@@ -1,9 +1,11 @@
 'use client';
 
+import { estiloBadgeColor } from '@/lib/color';
 import { Fragment, useEffect, useState } from 'react';
 import { useEntradaConfirmada } from '@/app/components/InputProvider';
 import { apiFetch } from '@/lib/api';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
+import { Aviso } from '@/app/components/Aviso';
 
 interface Rol {
   id: string;
@@ -189,23 +191,23 @@ export default function RolesPage() {
         </button>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form className="card" onSubmit={crearRol} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Color</label>
-              <input className="input-field" type="color" value={color} onChange={(e) => setColor(e.target.value)} />
+              <label htmlFor="color" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Color</label>
+              <input id="color" className="input-field" type="color" value={color} onChange={(e) => setColor(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Prioridad</label>
-              <input
+              <label htmlFor="prioridad" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Prioridad</label>
+              <input id="prioridad"
                 className="input-field"
                 type="number"
                 value={prioridad}
@@ -214,8 +216,8 @@ export default function RolesPage() {
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
-            <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
           <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 6 }}>
             <input type="checkbox" checked={esAdministrativo} onChange={(e) => setEsAdministrativo(e.target.checked)} />
@@ -230,33 +232,33 @@ export default function RolesPage() {
       {roles && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Rol</th>
-              <th style={{ padding: '6px 4px' }}>Descripcion</th>
-              <th style={{ padding: '6px 4px' }}>Prioridad</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Rol</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Descripcion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Prioridad</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {roles.map((r) => (
               <Fragment key={r.id}>
-                <tr style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>
-                    <span className="badge" style={{ background: r.color }}>
+                    <span className="badge" style={estiloBadgeColor(r.color)}>
                       {r.nombre}
                     </span>
-                    {r.esSistema && <span style={{ fontSize: 10, color: '#64748b', marginLeft: 6 }}>sistema</span>}
+                    {r.esSistema && <span style={{ fontSize: 10, color: 'var(--muted)', marginLeft: 6 }}>sistema</span>}
                     {r.accesoTotal && (
                       <span
-                        style={{ fontSize: 10, color: '#166534', marginLeft: 6 }}
+                        style={{ fontSize: 10, color: 'var(--ok-fill)', marginLeft: 6 }}
                         title="Este rol tiene todos los permisos del sistema, incluidos los que se agreguen a futuro."
                       >
                         acceso total
                       </span>
                     )}
                   </td>
-                  <td style={{ padding: '6px 4px', color: '#94a3b8' }}>{r.descripcion}</td>
+                  <td style={{ padding: '6px 4px', color: 'var(--muted)' }}>{r.descripcion}</td>
                   <td style={{ padding: '6px 4px' }}>{r.prioridad}</td>
                   <td style={{ padding: '6px 4px' }}>{r.activo ? 'Activo' : 'Inactivo'}</td>
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
@@ -286,9 +288,9 @@ export default function RolesPage() {
                 </tr>
                 {expandidoId === r.id && (
                   <tr>
-                    <td colSpan={5} style={{ padding: '10px 4px', background: '#0f172a' }}>
+                    <td colSpan={5} style={{ padding: '10px 4px', background: 'var(--surface-soft)' }}>
                       {r.accesoTotal && (
-                        <p style={{ fontSize: 12, color: '#166534', marginBottom: 10 }}>
+                        <p style={{ fontSize: 12, color: 'var(--ok-fill)', marginBottom: 10 }}>
                           Este rol tiene acceso total: ya cuenta con todos los permisos existentes y con los que se
                           agreguen a futuro, sin importar lo que esté marcado abajo.
                         </p>
@@ -317,7 +319,7 @@ export default function RolesPage() {
                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 10 }}>
                         {[...permisosPorCategoria.entries()].map(([cat, ps]) => (
                           <div key={cat}>
-                            <div style={{ fontSize: 12, color: '#94a3b8', marginBottom: 4 }}>{cat}</div>
+                            <div style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 4 }}>{cat}</div>
                             {ps.map((p) => (
                               <label key={p.id} style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 4 }}>
                                 <input

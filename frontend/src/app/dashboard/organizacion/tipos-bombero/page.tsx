@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
+import { Aviso } from '@/app/components/Aviso';
 
 interface TipoBombero {
   id: string;
@@ -173,7 +174,7 @@ export default function TiposBomberoPage() {
         </div>
       </div>
 
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         El prefijo gobierna el codigo bomberil de los nuevos ingresos (ej: prefijo "BC" + numero manual "045" =
         codigo "BC045"). Cambiar un prefijo aqui no modifica codigos ya asignados.
       </p>
@@ -206,15 +207,15 @@ export default function TiposBomberoPage() {
         </label>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Prefijo</label>
-              <input
+              <label htmlFor="prefijo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Prefijo</label>
+              <input id="prefijo"
                 className="input-field"
                 value={prefijo}
                 onChange={(e) => setPrefijo(e.target.value)}
@@ -224,12 +225,12 @@ export default function TiposBomberoPage() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Orden</label>
-              <input
+              <label htmlFor="orden" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Orden</label>
+              <input id="orden"
                 className="input-field"
                 type="number"
                 value={orden}
@@ -237,8 +238,8 @@ export default function TiposBomberoPage() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-              <select
+              <label htmlFor="estado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
+              <select id="estado"
                 className="input-field"
                 value={estado}
                 onChange={(e) => setEstado(e.target.value as 'ACTIVO' | 'INACTIVO')}
@@ -249,8 +250,8 @@ export default function TiposBomberoPage() {
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
-            <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
             <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
@@ -273,18 +274,18 @@ export default function TiposBomberoPage() {
       {tipos && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Prefijo</th>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Descripcion</th>
-              <th style={{ padding: '6px 4px' }}>Orden</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Prefijo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Descripcion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Orden</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {tipos.map((t) => (
-              <tr key={t.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={t.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px', fontWeight: 600 }}>{t.prefijo}</td>
                 <td style={{ padding: '6px 4px' }}>{t.nombre}</td>
                 <td style={{ padding: '6px 4px' }}>{t.descripcion ?? ''}</td>
@@ -292,7 +293,7 @@ export default function TiposBomberoPage() {
                 <td style={{ padding: '6px 4px' }}>
                   <span
                     className="badge"
-                    style={{ background: t.estado === 'ACTIVO' ? '#166534' : '#7f1d1d' }}
+                    style={{ background: t.estado === 'ACTIVO' ? 'var(--ok-fill)' : 'var(--bad-fill)' }}
                   >
                     {t.estado}
                   </span>

@@ -12,6 +12,7 @@ archivos:
 edges:
   - [belongs_to, domain--seguridad]
   - [uses, component--front-api]
+  - [uses, component--front-cargando]
   - [calls, api--seguridad-dashboard]
 terminos: [seguridad]
 ---
@@ -34,6 +35,7 @@ Pantalla /dashboard/seguridad, consume 1 endpoint(s).
 
 - `belongs_to` → [[domain--seguridad|Seguridad]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-cargando|Cargando]]
 - `calls` → [[api--seguridad-dashboard|DashboardController]]
 
 ---

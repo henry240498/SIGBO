@@ -41,6 +41,7 @@ import {
   reabrirDocumento,
   subirArchivoDocumento,
 } from '@/lib/documentos';
+import { Cargando } from '@/app/components/Cargando';
 
 function formatearFechaHora(iso: string | null) {
   if (!iso) return '-';
@@ -50,11 +51,11 @@ function formatearFechaHora(iso: string | null) {
 function badgeVigencia(documento: Documento): { texto: string; color: string } | null {
   if (!documento.fechaVencimiento) return null;
   const hoy = new Date().toISOString().slice(0, 10);
-  if (documento.fechaVencimiento < hoy) return { texto: 'Vencido', color: '#7f1d1d' };
+  if (documento.fechaVencimiento < hoy) return { texto: 'Vencido', color: 'var(--bad-fill)' };
   const limite = new Date();
   limite.setDate(limite.getDate() + 30);
-  if (documento.fechaVencimiento <= limite.toISOString().slice(0, 10)) return { texto: 'Por vencer', color: '#451a03' };
-  return { texto: 'Vigente', color: '#166534' };
+  if (documento.fechaVencimiento <= limite.toISOString().slice(0, 10)) return { texto: 'Por vencer', color: 'var(--warn-fill)' };
+  return { texto: 'Vigente', color: 'var(--ok-fill)' };
 }
 
 export default function FichaDocumentoPage() {
@@ -366,8 +367,8 @@ export default function FichaDocumentoPage() {
     }
   }
 
-  if (error && !documento) return <p style={{ color: '#f87171' }}>{error}</p>;
-  if (!documento) return <p style={{ color: '#94a3b8' }}>Cargando documento...</p>;
+  if (error && !documento) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
+  if (!documento) return <Cargando texto="Cargando documento…" />;
 
   const vig = badgeVigencia(documento);
   const estadoActual = estadoPorId.get(documento.estadoId) ?? '';
@@ -379,18 +380,18 @@ export default function FichaDocumentoPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}>
           <div>
             <h2 style={{ fontSize: 18 }}>{documento.numeroDocumental ? `${documento.numeroDocumental} — ` : ''}{documento.titulo}</h2>
-            <p style={{ color: '#94a3b8', fontSize: 13, marginTop: 4 }}>
+            <p style={{ color: 'var(--muted)', fontSize: 13, marginTop: 4 }}>
               {nombresTipo.get(documento.tipoDocumentoId) ?? ''} · {documento.origen === 'INTERNO' ? 'Interno' : 'Externo'} · Emitido {documento.fechaEmision} · v{documento.version}
             </p>
           </div>
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-            <span className="badge" style={{ background: '#334155' }}>{estadoActual}</span>
+            <span className="badge" style={{ background: 'var(--neutral-fill)' }}>{estadoActual}</span>
             {vig && <span className="badge" style={{ background: vig.color }}>{vig.texto}</span>}
           </div>
         </div>
 
-        {error && <p style={{ color: '#f87171', fontSize: 13, marginTop: 10 }}>{error}</p>}
-        {mensaje && <p style={{ color: '#4ade80', fontSize: 13, marginTop: 10 }}>{mensaje}</p>}
+        {error && <p style={{ color: 'var(--danger)', fontSize: 13, marginTop: 10 }}>{error}</p>}
+        {mensaje && <p style={{ color: 'var(--success)', fontSize: 13, marginTop: 10 }}>{mensaje}</p>}
 
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 14 }}>
           {puedeAprobar && estadoActual === 'Pendiente' && (
@@ -422,14 +423,14 @@ export default function FichaDocumentoPage() {
         </div>
 
         {mostrarAnular && (
-          <form onSubmit={anular} className="card" style={{ marginTop: 12, background: '#0f172a', display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <form onSubmit={anular} className="card" style={{ marginTop: 12, background: 'var(--surface-soft)', display: 'flex', flexDirection: 'column', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo de anulacion</label>
-              <ComboBuscable opciones={opcionesMotivoAnulacion} value={motivoAnulacionId} onChange={setMotivoAnulacionId} ningunaLabel="-- seleccionar --" />
+              <ComboBuscable ariaLabel="Motivo de anulacion" opciones={opcionesMotivoAnulacion} value={motivoAnulacionId} onChange={setMotivoAnulacionId} ningunaLabel="-- seleccionar --" />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Detalle</label>
-              <input className="input-field" value={detalleAnulacion} onChange={(e) => setDetalleAnulacion(e.target.value)} />
+              <label htmlFor="detalle" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Detalle</label>
+              <input id="detalle" className="input-field" value={detalleAnulacion} onChange={(e) => setDetalleAnulacion(e.target.value)} />
             </div>
             <button type="button" className="btn-primary" style={{ background: '#7f1d1d', alignSelf: 'flex-start' }} disabled={guardando || !motivoAnulacionId}>
               Confirmar anulacion
@@ -442,34 +443,34 @@ export default function FichaDocumentoPage() {
         <form onSubmit={guardarDatos} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <h3 style={{ fontSize: 14 }}>Datos generales</h3>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Titulo</label>
-            <input className="input-field" value={titulo} onChange={(e) => setTitulo(e.target.value)} disabled={!puedeEditar || esTerminal} required />
+            <label htmlFor="titulo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Titulo</label>
+            <input id="titulo" className="input-field" value={titulo} onChange={(e) => setTitulo(e.target.value)} disabled={!puedeEditar || esTerminal} required />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
-            <textarea className="input-field" rows={2} value={descripcion} onChange={(e) => setDescripcion(e.target.value)} disabled={!puedeEditar || esTerminal} />
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <textarea id="descripcion" className="input-field" rows={2} value={descripcion} onChange={(e) => setDescripcion(e.target.value)} disabled={!puedeEditar || esTerminal} />
           </div>
           <div>
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
-            <ComboBuscable opciones={opcionesCategoria} value={categoriaDocumentoId} onChange={setCategoriaDocumentoId} ningunaLabel="Sin categoria" disabled={!puedeEditar || esTerminal} />
+            <ComboBuscable ariaLabel="Categoria" opciones={opcionesCategoria} value={categoriaDocumentoId} onChange={setCategoriaDocumentoId} ningunaLabel="Sin categoria" disabled={!puedeEditar || esTerminal} />
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Inicio de vigencia</label>
-              <input className="input-field" type="date" value={fechaInicioVigencia} onChange={(e) => setFechaInicioVigencia(e.target.value)} disabled={!puedeEditar || esTerminal} />
+              <label htmlFor="inicio-de-vigencia" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Inicio de vigencia</label>
+              <input id="inicio-de-vigencia" className="input-field" type="date" value={fechaInicioVigencia} onChange={(e) => setFechaInicioVigencia(e.target.value)} disabled={!puedeEditar || esTerminal} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Vencimiento</label>
-              <input className="input-field" type="date" value={fechaVencimiento} onChange={(e) => setFechaVencimiento(e.target.value)} disabled={!puedeEditar || esTerminal} />
+              <label htmlFor="vencimiento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Vencimiento</label>
+              <input id="vencimiento" className="input-field" type="date" value={fechaVencimiento} onChange={(e) => setFechaVencimiento(e.target.value)} disabled={!puedeEditar || esTerminal} />
             </div>
           </div>
           <div>
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Confidencialidad</label>
-            <ComboBuscable opciones={opcionesNivel} value={nivelConfidencialidadId} onChange={setNivelConfidencialidadId} ningunaLabel="Publico" disabled={!puedeEditar || esTerminal} />
+            <ComboBuscable ariaLabel="Confidencialidad" opciones={opcionesNivel} value={nivelConfidencialidadId} onChange={setNivelConfidencialidadId} ningunaLabel="Publico" disabled={!puedeEditar || esTerminal} />
           </div>
           <div>
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Expediente</label>
-            <ComboBuscable opciones={opcionesExpediente} value={expedienteId} onChange={setExpedienteId} ningunaLabel="Sin expediente" disabled={!puedeEditar || esTerminal} />
+            <ComboBuscable ariaLabel="Expediente" opciones={opcionesExpediente} value={expedienteId} onChange={setExpedienteId} ningunaLabel="Sin expediente" disabled={!puedeEditar || esTerminal} />
           </div>
           <label style={{ fontSize: 12, display: 'flex', gap: 6, alignItems: 'center' }}>
             <input type="checkbox" checked={disponibleParaIa} onChange={(e) => setDisponibleParaIa(e.target.checked)} disabled={!puedeEditar || esTerminal} />
@@ -481,7 +482,7 @@ export default function FichaDocumentoPage() {
             </button>
           )}
 
-          <div style={{ borderTop: '1px solid #334155', marginTop: 6, paddingTop: 10 }}>
+          <div style={{ borderTop: '1px solid var(--line)', marginTop: 6, paddingTop: 10 }}>
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cambiar estado manualmente</label>
             <div style={{ display: 'flex', gap: 8 }}>
               <ComboBuscable opciones={opcionesEstado.filter((o) => !['Anulado', 'Archivado'].includes(estadoPorId.get(o.value) ?? ''))} value={estadoDestinoId} onChange={setEstadoDestinoId} maxWidth={220} />
@@ -496,11 +497,11 @@ export default function FichaDocumentoPage() {
           <div className="card">
             <h3 style={{ fontSize: 14, marginBottom: 10 }}>Archivo digital</h3>
             {documento.archivoUrl ? (
-              <p style={{ fontSize: 13, color: '#94a3b8' }}>
+              <p style={{ fontSize: 13, color: 'var(--muted)' }}>
                 {documento.archivoNombreOriginal} ({documento.archivoTamanoBytes ? `${Math.round(documento.archivoTamanoBytes / 1024)} KB` : '-'}) — version {documento.version}
               </p>
             ) : (
-              <p style={{ fontSize: 13, color: '#94a3b8' }}>Este documento no tiene un archivo digital cargado (puede ser fisico).</p>
+              <p style={{ fontSize: 13, color: 'var(--muted)' }}>Este documento no tiene un archivo digital cargado (puede ser fisico).</p>
             )}
             {puedeSubir && !esTerminal && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 10 }}>
@@ -515,9 +516,9 @@ export default function FichaDocumentoPage() {
             )}
             {versiones && versiones.length > 0 && (
               <div style={{ marginTop: 12 }}>
-                <p style={{ fontSize: 12, color: '#94a3b8', marginBottom: 6 }}>Versiones anteriores</p>
+                <p style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 6 }}>Versiones anteriores</p>
                 {versiones.map((v) => (
-                  <div key={v.id} style={{ fontSize: 12, padding: '4px 0', borderBottom: '1px solid #1f2937' }}>
+                  <div key={v.id} style={{ fontSize: 12, padding: '4px 0', borderBottom: '1px solid var(--line-soft)' }}>
                     v{v.numeroVersion} — {v.archivoNombreOriginal} — {formatearFechaHora(v.creadoEn)} {v.motivo ? `(${v.motivo})` : ''}
                   </div>
                 ))}
@@ -527,28 +528,28 @@ export default function FichaDocumentoPage() {
 
           <div className="card">
             <h3 style={{ fontSize: 14, marginBottom: 10 }}>Firmas</h3>
-            {firmas && firmas.length === 0 && <p style={{ fontSize: 13, color: '#94a3b8' }}>Este documento no requiere firmas.</p>}
+            {firmas && firmas.length === 0 && <p style={{ fontSize: 13, color: 'var(--muted)' }}>Este documento no requiere firmas.</p>}
             {firmas && firmas.map((f) => (
-              <div key={f.id} style={{ fontSize: 13, padding: '6px 0', borderBottom: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div key={f.id} style={{ fontSize: 13, padding: '6px 0', borderBottom: '1px solid var(--line-soft)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span>
                   {f.cargoFirmanteId ? cargoPorId.get(f.cargoFirmanteId) ?? f.cargoFirmanteId : f.bomberoFirmanteId ? bomberoPorId.get(f.bomberoFirmanteId) ?? f.bomberoFirmanteId : '-'}
                   {f.etiquetaRol ? ` (${f.etiquetaRol})` : ''}
                 </span>
                 {f.firmado ? (
-                  <span className="badge" style={{ background: '#166534' }}>Firmado</span>
+                  <span className="badge" style={{ background: 'var(--ok-fill)' }}>Firmado</span>
                 ) : puedeFirmar && !esTerminal ? (
                   <span style={{ display: 'flex', gap: 6 }}>
                     <button type="button" className="btn-primary" style={{ padding: '3px 8px', fontSize: 11 }} onClick={() => firmar(f.id)}>Firmar digital</button>
                     <button type="button" className="btn-primary" style={{ padding: '3px 8px', fontSize: 11, background: '#475569' }} onClick={() => firmarManual(f.id)}>Confirmar manuscrita</button>
                   </span>
                 ) : (
-                  <span className="badge" style={{ background: '#334155' }}>Pendiente</span>
+                  <span className="badge" style={{ background: 'var(--neutral-fill)' }}>Pendiente</span>
                 )}
               </div>
             ))}
             {puedeAdministrar && !esTerminal && (
-              <form onSubmit={agregarFirmante} style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 10, borderTop: '1px solid #334155', paddingTop: 10 }}>
-                <p style={{ fontSize: 12, color: '#94a3b8' }}>Agregar firmante requerido</p>
+              <form onSubmit={agregarFirmante} style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 10, borderTop: '1px solid var(--line)', paddingTop: 10 }}>
+                <p style={{ fontSize: 12, color: 'var(--muted)' }}>Agregar firmante requerido</p>
                 <ComboBuscable opciones={opcionesCargo} value={firmanteCargoId} onChange={(v) => { setFirmanteCargoId(v); if (v) setFirmanteBomberoId(''); }} ningunaLabel="Por cargo: ninguno" />
                 <ComboBuscable opciones={opcionesBombero} value={firmanteBomberoId} onChange={(v) => { setFirmanteBomberoId(v); if (v) setFirmanteCargoId(''); }} ningunaLabel="Por persona: ninguno" placeholderBusqueda="Buscar bombero..." />
                 <input className="input-field" placeholder="Etiqueta del rol (opcional)" value={firmanteEtiqueta} onChange={(e) => setFirmanteEtiqueta(e.target.value)} />
@@ -563,11 +564,11 @@ export default function FichaDocumentoPage() {
 
       <div className="card">
         <h3 style={{ fontSize: 14, marginBottom: 10 }}>Documentos relacionados</h3>
-        {relaciones && relaciones.length === 0 && <p style={{ fontSize: 13, color: '#94a3b8' }}>Sin relaciones con otros registros del sistema.</p>}
+        {relaciones && relaciones.length === 0 && <p style={{ fontSize: 13, color: 'var(--muted)' }}>Sin relaciones con otros registros del sistema.</p>}
         {relaciones && relaciones.map((r) => (
-          <div key={r.id} style={{ fontSize: 13, padding: '6px 0', borderBottom: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div key={r.id} style={{ fontSize: 13, padding: '6px 0', borderBottom: '1px solid var(--line-soft)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span>
-              <span className="badge" style={{ background: '#475569', marginRight: 6 }}>{r.modulo}/{r.entidad}</span>
+              <span className="badge" style={{ background: 'var(--neutral-fill)', marginRight: 6 }}>{r.modulo}/{r.entidad}</span>
               {r.etiqueta ?? r.registroId}
             </span>
             {puedeEditar && !esTerminal && (
@@ -576,22 +577,22 @@ export default function FichaDocumentoPage() {
           </div>
         ))}
         {puedeEditar && !esTerminal && (
-          <form onSubmit={agregarRelacion} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr auto', gap: 8, marginTop: 10, borderTop: '1px solid #334155', paddingTop: 10, alignItems: 'flex-end' }}>
+          <form onSubmit={agregarRelacion} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr auto', gap: 8, marginTop: 10, borderTop: '1px solid var(--line)', paddingTop: 10, alignItems: 'flex-end' }}>
             <div>
-              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Modulo</label>
-              <input className="input-field" placeholder="ej. personal" value={nuevaRelModulo} onChange={(e) => setNuevaRelModulo(e.target.value)} required />
+              <label htmlFor="modulo" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Modulo</label>
+              <input id="modulo" className="input-field" placeholder="ej. personal" value={nuevaRelModulo} onChange={(e) => setNuevaRelModulo(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Entidad</label>
-              <input className="input-field" placeholder="ej. bombero" value={nuevaRelEntidad} onChange={(e) => setNuevaRelEntidad(e.target.value)} required />
+              <label htmlFor="entidad" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Entidad</label>
+              <input id="entidad" className="input-field" placeholder="ej. bombero" value={nuevaRelEntidad} onChange={(e) => setNuevaRelEntidad(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>ID de registro</label>
-              <input className="input-field" value={nuevaRelRegistroId} onChange={(e) => setNuevaRelRegistroId(e.target.value)} required />
+              <label htmlFor="id-de-registro" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>ID de registro</label>
+              <input id="id-de-registro" className="input-field" value={nuevaRelRegistroId} onChange={(e) => setNuevaRelRegistroId(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Etiqueta</label>
-              <input className="input-field" value={nuevaRelEtiqueta} onChange={(e) => setNuevaRelEtiqueta(e.target.value)} />
+              <label htmlFor="etiqueta" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Etiqueta</label>
+              <input id="etiqueta" className="input-field" value={nuevaRelEtiqueta} onChange={(e) => setNuevaRelEtiqueta(e.target.value)} />
             </div>
             <button type="button" className="btn-primary" style={{ padding: '8px 12px' }} disabled={guardando}>Relacionar</button>
           </form>
@@ -601,11 +602,11 @@ export default function FichaDocumentoPage() {
       {puedeVerAuditoria && (
         <div className="card">
           <h3 style={{ fontSize: 14, marginBottom: 10 }}>Historial / auditoria</h3>
-          {!auditoria && <p style={{ fontSize: 13, color: '#94a3b8' }}>Cargando historial...</p>}
-          {auditoria && auditoria.length === 0 && <p style={{ fontSize: 13, color: '#94a3b8' }}>Sin eventos registrados.</p>}
+          {!auditoria && <p style={{ fontSize: 13, color: 'var(--muted)' }}>Cargando historial...</p>}
+          {auditoria && auditoria.length === 0 && <p style={{ fontSize: 13, color: 'var(--muted)' }}>Sin eventos registrados.</p>}
           {auditoria && auditoria.map((a) => (
-            <div key={a.id} style={{ fontSize: 12, padding: '5px 0', borderBottom: '1px solid #1f2937', color: '#94a3b8' }}>
-              <span className="badge" style={{ background: '#334155', marginRight: 6 }}>{a.accion}</span>
+            <div key={a.id} style={{ fontSize: 12, padding: '5px 0', borderBottom: '1px solid var(--line-soft)', color: 'var(--muted)' }}>
+              <span className="badge" style={{ background: 'var(--neutral-fill)', marginRight: 6 }}>{a.accion}</span>
               {formatearFechaHora(a.fecha)} {a.ip ? `— ${a.ip}` : ''}
             </div>
           ))}

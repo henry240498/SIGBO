@@ -12,6 +12,7 @@ archivos:
 edges:
   - [belongs_to, domain--documentos]
   - [uses, component--front-documentos]
+  - [uses, component--front-aviso]
 terminos: [documentos, auditoria]
 ---
 
@@ -29,6 +30,7 @@ Pantalla /dashboard/documentos/auditoria.
 
 - `belongs_to` → [[domain--documentos|Documentos]]
 - `uses` → [[component--front-documentos|documentos]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

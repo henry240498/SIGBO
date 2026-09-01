@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { obtenerSesion } from '@/lib/api';
 import { CategoriaEquipo, ESTADOS_EQUIPO, Equipo, cargarCategorias, cargarEquipos, crearEquipo } from '@/lib/equipos';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function EquiposPage() {
   const [equipos, setEquipos] = useState<Equipo[] | null>(null);
@@ -108,15 +109,15 @@ export default function EquiposPage() {
         </select>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form className="card" onSubmit={crear} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 2fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
-              <select className="input-field" value={categoriaId} onChange={(e) => setCategoriaId(e.target.value)} required>
+              <label htmlFor="categoria" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
+              <select id="categoria" className="input-field" value={categoriaId} onChange={(e) => setCategoriaId(e.target.value)} required>
                 <option value="">-- seleccionar --</option>
                 {categorias.map((c) => (
                   <option key={c.id} value={c.id}>{c.nombre}</option>
@@ -124,20 +125,20 @@ export default function EquiposPage() {
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo interno</label>
-              <input className="input-field" value={codigoInterno} onChange={(e) => setCodigoInterno(e.target.value)} required />
+              <label htmlFor="codigo-interno" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo interno</label>
+              <input id="codigo-interno" className="input-field" value={codigoInterno} onChange={(e) => setCodigoInterno(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Marca</label>
-              <input className="input-field" value={marca} onChange={(e) => setMarca(e.target.value)} />
+              <label htmlFor="marca" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Marca</label>
+              <input id="marca" className="input-field" value={marca} onChange={(e) => setMarca(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Modelo</label>
-              <input className="input-field" value={modelo} onChange={(e) => setModelo(e.target.value)} />
+              <label htmlFor="modelo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Modelo</label>
+              <input id="modelo" className="input-field" value={modelo} onChange={(e) => setModelo(e.target.value)} />
             </div>
           </div>
           <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
@@ -146,24 +147,24 @@ export default function EquiposPage() {
         </form>
       )}
 
-      {equipos && equipos.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin equipos registrados.</p>}
+      {equipos && equipos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin equipos registrados.</p>}
 
       {equipos && equipos.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Codigo</th>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Categoria</th>
-              <th style={{ padding: '6px 4px' }}>Ubicacion</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Codigo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Categoria</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Ubicacion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
             </tr>
           </thead>
           <tbody>
             {equipos.map((eq) => (
-              <tr key={eq.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={eq.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>
-                  <Link href={`/dashboard/equipos/${eq.id}`} style={{ color: '#60a5fa', textDecoration: 'none' }}>
+                  <Link href={`/dashboard/equipos/${eq.id}`} style={{ color: 'var(--signal)', textDecoration: 'none' }}>
                     {eq.codigoInterno}
                   </Link>
                 </td>
@@ -173,7 +174,7 @@ export default function EquiposPage() {
                 <td style={{ padding: '6px 4px' }}>
                   <span
                     className="badge"
-                    style={{ background: eq.estado === 'OPERATIVO' ? '#166534' : eq.estado === 'BAJA' || eq.estado === 'DANIADO' ? '#7f1d1d' : '#854d0e' }}
+                    style={{ background: eq.estado === 'OPERATIVO' ? 'var(--ok-fill)' : eq.estado === 'BAJA' || eq.estado === 'DANIADO' ? 'var(--bad-fill)' : 'var(--warn-fill)' }}
                   >
                     {eq.estado}
                   </span>

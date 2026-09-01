@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const TABS = [
-  { href: '/dashboard/seguridad', label: 'Dashboard', exact: true },
+  { href: '/dashboard/seguridad', label: 'Resumen', exact: true },
   { href: '/dashboard/seguridad/usuarios', label: 'Usuarios' },
   { href: '/dashboard/seguridad/roles', label: 'Roles' },
   { href: '/dashboard/seguridad/permisos', label: 'Permisos' },

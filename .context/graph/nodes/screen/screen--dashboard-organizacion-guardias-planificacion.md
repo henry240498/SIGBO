@@ -13,6 +13,7 @@ edges:
   - [belongs_to, domain--organizacion]
   - [uses, component--front-confirmprovider]
   - [uses, component--front-guardias]
+  - [uses, component--front-aviso]
 terminos: [organizacion, guardias, planificacion]
 ---
 
@@ -31,6 +32,7 @@ Pantalla /dashboard/organizacion/guardias/planificacion.
 - `belongs_to` → [[domain--organizacion|Organización Institucional]]
 - `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-guardias|guardias]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

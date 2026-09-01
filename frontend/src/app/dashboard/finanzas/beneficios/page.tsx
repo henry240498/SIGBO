@@ -12,6 +12,7 @@ import {
   crearBeneficioSocio,
   actualizarBeneficioSocio,
 } from '@/lib/socios-protectores';
+import { Aviso } from '@/app/components/Aviso';
 
 const AMBITOS = [
   { value: 'ACADEMIA', label: 'Academia' },
@@ -156,56 +157,56 @@ export default function BeneficiosPage() {
         )}
       </div>
 
-      <p style={{ color: '#94a3b8', fontSize: 12 }}>
+      <p style={{ color: 'var(--muted)', fontSize: 12 }}>
         Un beneficio activo aplica automaticamente a cualquier Socio Protector con estado activo dentro de su ambito -- no hace falta asignarlo socio por socio.
       </p>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={guardar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} required />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
-              <ComboBuscable opciones={opcionesTipo} value={form.tipoId} onChange={(v) => setForm({ ...form, tipoId: v })} />
+              <ComboBuscable ariaLabel="Tipo" opciones={opcionesTipo} value={form.tipoId} onChange={(v) => setForm({ ...form, tipoId: v })} />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ambito</label>
-              <ComboBuscable opciones={AMBITOS} value={form.ambito} onChange={(v) => setForm({ ...form, ambito: v, actividadAcademicaId: '' })} />
+              <ComboBuscable ariaLabel="Ambito" opciones={AMBITOS} value={form.ambito} onChange={(v) => setForm({ ...form, ambito: v, actividadAcademicaId: '' })} />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>% de descuento</label>
-              <input className="input-field" type="number" min={0.01} max={100} step="0.01" value={form.porcentajeDescuento} onChange={(e) => setForm({ ...form, porcentajeDescuento: e.target.value })} />
+              <label htmlFor="de-descuento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>% de descuento</label>
+              <input id="de-descuento" className="input-field" type="number" min={0.01} max={100} step="0.01" value={form.porcentajeDescuento} onChange={(e) => setForm({ ...form, porcentajeDescuento: e.target.value })} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Monto fijo (alternativo)</label>
-              <input className="input-field" type="number" min={0.01} step="1" value={form.montoFijoDescuento} onChange={(e) => setForm({ ...form, montoFijoDescuento: e.target.value })} />
+              <label htmlFor="monto-fijo-alternativo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Monto fijo (alternativo)</label>
+              <input id="monto-fijo-alternativo" className="input-field" type="number" min={0.01} step="1" value={form.montoFijoDescuento} onChange={(e) => setForm({ ...form, montoFijoDescuento: e.target.value })} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha inicio</label>
-              <input className="input-field" type="date" value={form.fechaInicio} onChange={(e) => setForm({ ...form, fechaInicio: e.target.value })} required />
+              <label htmlFor="fecha-inicio" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha inicio</label>
+              <input id="fecha-inicio" className="input-field" type="date" value={form.fechaInicio} onChange={(e) => setForm({ ...form, fechaInicio: e.target.value })} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha fin (opcional)</label>
-              <input className="input-field" type="date" value={form.fechaFin} onChange={(e) => setForm({ ...form, fechaFin: e.target.value })} />
+              <label htmlFor="fecha-fin-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha fin (opcional)</label>
+              <input id="fecha-fin-opcional" className="input-field" type="date" value={form.fechaFin} onChange={(e) => setForm({ ...form, fechaFin: e.target.value })} />
             </div>
           </div>
           {form.ambito === 'ACADEMIA' && (
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Actividad especifica (vacio = cualquier actividad con costo)</label>
-              <ComboBuscable opciones={opcionesActividad} value={form.actividadAcademicaId} onChange={(v) => setForm({ ...form, actividadAcademicaId: v })} ningunaLabel="-- cualquiera --" />
+              <ComboBuscable ariaLabel="Actividad especifica (vacio = cualquier actividad con costo)" opciones={opcionesActividad} value={form.actividadAcademicaId} onChange={(v) => setForm({ ...form, actividadAcademicaId: v })} ningunaLabel="-- cualquiera --" />
             </div>
           )}
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Condiciones</label>
-            <input className="input-field" value={form.condiciones} onChange={(e) => setForm({ ...form, condiciones: e.target.value })} />
+            <label htmlFor="condiciones" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Condiciones</label>
+            <input id="condiciones" className="input-field" value={form.condiciones} onChange={(e) => setForm({ ...form, condiciones: e.target.value })} />
           </div>
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
             {guardando ? 'Guardando...' : form.id ? 'Guardar cambios' : 'Crear beneficio'}
@@ -213,30 +214,30 @@ export default function BeneficiosPage() {
         </form>
       )}
 
-      {beneficios && beneficios.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay beneficios registrados.</p>}
+      {beneficios && beneficios.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay beneficios registrados.</p>}
       {beneficios && beneficios.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Tipo</th>
-              <th style={{ padding: '6px 4px' }}>Ambito</th>
-              <th style={{ padding: '6px 4px' }}>Descuento</th>
-              <th style={{ padding: '6px 4px' }}>Vigencia</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Ambito</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Descuento</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Vigencia</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {beneficios.map((b) => (
-              <tr key={b.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={b.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{b.nombre}</td>
                 <td style={{ padding: '6px 4px' }}>{tipoPorId.get(b.tipoId) ?? '-'}</td>
                 <td style={{ padding: '6px 4px' }}>{b.ambito}{b.actividadAcademicaId ? ` (${actividadPorId.get(b.actividadAcademicaId) ?? '-'})` : ''}</td>
                 <td style={{ padding: '6px 4px' }}>{b.porcentajeDescuento ? `${b.porcentajeDescuento}%` : b.montoFijoDescuento ? `Gs. ${b.montoFijoDescuento.toLocaleString('es-PY')}` : '-'}</td>
                 <td style={{ padding: '6px 4px' }}>{b.fechaInicio} {b.fechaFin ? `→ ${b.fechaFin}` : '(sin fin)'}</td>
                 <td style={{ padding: '6px 4px' }}>
-                  <span className="badge" style={b.estado === 'ACTIVO' ? { background: '#166534', color: '#4ade80' } : { background: '#334155', color: '#94a3b8' }}>{b.estado}</span>
+                  <span className="badge" style={b.estado === 'ACTIVO' ? { background: 'var(--ok-fill)', color: 'var(--success)' } : { background: 'var(--neutral-fill)', color: 'var(--muted)' }}>{b.estado}</span>
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6 }}>
                   {puedeAdministrar && (

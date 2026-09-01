@@ -20,7 +20,7 @@ const REPORTES = [
 export default function ReportesPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         Exportacion disponible en Excel (.xlsx) y PDF para los 12 catalogos de este modulo.
       </p>
 

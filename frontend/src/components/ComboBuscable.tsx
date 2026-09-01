@@ -146,7 +146,7 @@ export function ComboBuscable({
         }}
       >
         <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{etiquetaActual}</span>
-        <span style={{ color: '#94a3b8', marginLeft: 6 }}>{abierto ? '▲' : '▼'}</span>
+        <span style={{ color: 'var(--muted)', marginLeft: 6 }}>{abierto ? '▲' : '▼'}</span>
       </button>
 
       {abierto && (
@@ -158,17 +158,17 @@ export function ComboBuscable({
             right: 0,
             zIndex: 20,
             marginTop: 4,
-            background: '#1e293b',
-            border: '1px solid #334155',
+            background: 'var(--surface)',
+            border: '1px solid var(--line)',
             borderRadius: 8,
-            boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
+            boxShadow: '0 12px 32px rgba(16,38,63,.14)',
             overflow: 'hidden',
           }}
         >
           <input
             ref={inputRef}
             className="input-field"
-            style={{ border: 'none', borderBottom: '1px solid #334155', borderRadius: 0 }}
+            style={{ border: 'none', borderBottom: '1px solid var(--line)', borderRadius: 0 }}
             placeholder={placeholderBusqueda}
             aria-label={`Buscar en ${ariaLabel}`}
             aria-controls={listaId}
@@ -178,7 +178,7 @@ export function ComboBuscable({
           />
           <div id={listaId} role="listbox" aria-label={`Opciones de ${ariaLabel}`} style={{ maxHeight: 240, overflowY: 'auto' }}>
             {opcionesFiltradas.length === 0 && (
-              <div role="status" style={{ padding: '10px 12px', fontSize: 13, color: '#94a3b8' }}>Sin resultados</div>
+              <div role="status" style={{ padding: '10px 12px', fontSize: 13, color: 'var(--muted)' }}>Sin resultados</div>
             )}
             {opcionesFiltradas.map((o, indice) => (
               <button
@@ -198,10 +198,10 @@ export function ComboBuscable({
                   textAlign: 'left',
                   cursor: 'pointer',
                   background: o.value === value ? '#2563eb' : 'transparent',
-                  color: o.value === value ? '#fff' : '#e2e8f0',
+                  color: o.value === value ? '#fff' : 'var(--ink)',
                 }}
                 onMouseEnter={(e) => {
-                  if (o.value !== value) e.currentTarget.style.background = '#334155';
+                  if (o.value !== value) e.currentTarget.style.background = 'var(--neutral-fill)';
                 }}
                 onMouseLeave={(e) => {
                   if (o.value !== value) e.currentTarget.style.background = 'transparent';

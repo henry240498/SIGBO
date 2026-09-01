@@ -3,16 +3,16 @@ id: component--front-modulos
 tipo: COMPONENT
 nombre: modulos
 nivel: L2
-resumen: "Helper de frontend \"modulos\" (4 exportaciones)."
+resumen: "Helper de frontend \"modulos\" (7 exportaciones)."
 capa: frontend
 archivos:
   - frontend/src/lib/modulos.ts
-terminos: [modulos, icono, modulo, config, visible]
+terminos: [modulos, icono, modulo, grupo, config, grupos, visible, agrupar]
 ---
 
 # modulos
 
-Helper de frontend "modulos" (4 exportaciones).
+Helper de frontend "modulos" (7 exportaciones).
 
 
 ## Archivos
@@ -23,9 +23,11 @@ Helper de frontend "modulos" (4 exportaciones).
 
 - [[screen--dashboard|/dashboard]] `uses` →
 - [[screen--dashboard-modulo|/dashboard/[modulo]]] `uses` →
+- [[rule--etiqueta-nombra-su-control|Toda etiqueta nombra a su control, y todo th declara su scope]] `affects` →
 - [[rule--frontend-no-autoriza|El frontend oculta, el backend autoriza]] `affects` →
 - [[rule--modulo-visible-por-prefijo|Un modulo aparece en el menu si el usuario tiene algun permiso con su prefijo]] `affects` →
-- [[rule--sin-clases-css-nuevas|No inventar clases CSS ni colores parecidos]] `affects` →
+- [[rule--registro-de-pantallas-generado|Pantalla nueva significa regenerar el registro de pantallas]] `affects` →
+- [[rule--sin-clases-css-nuevas|No traer librerias de UI, y el color sale de un token y no de un hex]] `affects` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

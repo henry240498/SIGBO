@@ -5,6 +5,7 @@ import { obtenerSesion } from '@/lib/api';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { cargarParametros, Parametro } from '@/lib/parametros';
 import { cargarTolerancias, crearTolerancia, ToleranciaAsistencia } from '@/lib/asistencia';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function TolerenciasPage() {
   const [tolerancias, setTolerancias] = useState<ToleranciaAsistencia[] | null>(null);
@@ -62,23 +63,23 @@ export default function TolerenciasPage() {
           </button>
         )}
       </div>
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         Reglas de tolerancia parametrizables por tipo de evento (o generales, dejando &quot;Tipo de evento&quot; en
         NINGUNA). No estan codificadas rigidamente en el sistema.
       </p>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       {mostrarForm && (
         <form onSubmit={crear} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de evento (vacio = regla general)</label>
-              <ComboBuscable opciones={opcionesTipo} value={tipoEventoId} onChange={setTipoEventoId} />
+              <ComboBuscable ariaLabel="Tipo de evento (vacio = regla general)" opciones={opcionesTipo} value={tipoEventoId} onChange={setTipoEventoId} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tolerancia entrada (min)</label>
-              <input
+              <label htmlFor="tolerancia-entrada-min" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tolerancia entrada (min)</label>
+              <input id="tolerancia-entrada-min"
                 className="input-field"
                 type="number"
                 min={0}
@@ -87,8 +88,8 @@ export default function TolerenciasPage() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tolerancia salida (min)</label>
-              <input
+              <label htmlFor="tolerancia-salida-min" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tolerancia salida (min)</label>
+              <input id="tolerancia-salida-min"
                 className="input-field"
                 type="number"
                 min={0}
@@ -103,19 +104,19 @@ export default function TolerenciasPage() {
         </form>
       )}
 
-      {tolerancias && tolerancias.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin tolerancias configuradas.</p>}
+      {tolerancias && tolerancias.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin tolerancias configuradas.</p>}
       {tolerancias && tolerancias.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Tipo de evento</th>
-              <th style={{ padding: '6px 4px' }}>Tolerancia entrada</th>
-              <th style={{ padding: '6px 4px' }}>Tolerancia salida</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo de evento</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tolerancia entrada</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tolerancia salida</th>
             </tr>
           </thead>
           <tbody>
             {tolerancias.map((t) => (
-              <tr key={t.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={t.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{t.tipoEventoId ? tipoPorId.get(t.tipoEventoId) ?? '-' : 'General'}</td>
                 <td style={{ padding: '6px 4px' }}>{t.minutosToleranciaEntrada} min</td>
                 <td style={{ padding: '6px 4px' }}>{t.minutosToleranciaSalida} min</td>

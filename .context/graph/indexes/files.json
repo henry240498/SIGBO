@@ -1,18 +1,18 @@
 {
  "frontend/src/lib/modulos.ts": [
-  "domain--organizacion",
-  "domain--personal",
-  "domain--asistencia",
-  "domain--guardias",
   "domain--servicios",
+  "domain--denuncias",
+  "domain--guardias",
+  "domain--asistencia",
+  "domain--personal",
+  "domain--academia",
   "domain--vehiculos",
   "domain--equipos",
-  "domain--academia",
-  "domain--finanzas",
   "domain--deposito",
+  "domain--organizacion",
+  "domain--finanzas",
   "domain--documentos",
   "domain--publicaciones",
-  "domain--denuncias",
   "domain--seguridad",
   "domain--inteligencia",
   "component--front-modulos",
@@ -2066,7 +2066,8 @@
   "screen--denuncias"
  ],
  "frontend/src/app/login/page.tsx": [
-  "screen--login"
+  "screen--login",
+  "rule--tema-claro-unico"
  ],
  "frontend/src/app/page.tsx": [
   "screen--raiz"
@@ -2082,6 +2083,9 @@
  ],
  "frontend/src/lib/asistencia.ts": [
   "component--front-asistencia"
+ ],
+ "frontend/src/lib/color.ts": [
+  "component--front-color"
  ],
  "frontend/src/lib/configuracion.ts": [
   "component--front-configuracion"
@@ -2110,8 +2114,16 @@
  "frontend/src/lib/json-seguro.ts": [
   "component--front-json-seguro"
  ],
+ "frontend/src/lib/navegacion.ts": [
+  "component--front-navegacion",
+  "rule--registro-de-pantallas-generado"
+ ],
  "frontend/src/lib/organizacion.ts": [
   "component--front-organizacion"
+ ],
+ "frontend/src/lib/pantallas.generado.ts": [
+  "component--front-pantallas-generado",
+  "rule--registro-de-pantallas-generado"
  ],
  "frontend/src/lib/parametros.ts": [
   "component--front-parametros"
@@ -2130,6 +2142,16 @@
  ],
  "frontend/src/lib/vehiculos.ts": [
   "component--front-vehiculos"
+ ],
+ "frontend/src/app/components/Aviso.tsx": [
+  "component--front-aviso"
+ ],
+ "frontend/src/app/components/BuscadorPantallas.tsx": [
+  "component--front-buscadorpantallas",
+  "rule--registro-de-pantallas-generado"
+ ],
+ "frontend/src/app/components/Cargando.tsx": [
+  "component--front-cargando"
  ],
  "frontend/src/app/components/ConfigBootstrap.tsx": [
   "component--front-configbootstrap"
@@ -2156,7 +2178,7 @@
   "configuration--navegacion",
   "configuration--seguridad-global",
   "configuration--mantenimiento",
-  "rule--tema-oscuro-fijo",
+  "rule--tema-claro-unico",
   "workflow--configuracion-versionada"
  ],
  "backend/src/core/database/data-source-options.ts": [
@@ -2200,13 +2222,14 @@
  "frontend/src/app/globals.css": [
   "decision--sin-libreria-ui",
   "rule--sin-clases-css-nuevas",
-  "rule--tema-oscuro-fijo"
+  "rule--tema-claro-unico"
  ],
  "docs/GUIA-DE-ESTILO.md": [
   "decision--sin-libreria-ui",
+  "rule--etiqueta-nombra-su-control",
   "rule--pantalla-cliente-sin-store",
   "rule--sin-clases-css-nuevas",
-  "rule--tema-oscuro-fijo"
+  "rule--tema-claro-unico"
  ],
  "backend/package.json": [
   "dependency--nestjs"
@@ -2236,8 +2259,21 @@
   "rule--identidad-y-tiempo-en-sql-server",
   "rule--migracion-nunca-se-edita"
  ],
+ "frontend/scripts/audit-accessibility.mjs": [
+  "rule--etiqueta-nombra-su-control"
+ ],
+ "frontend/src/components/ComboBuscable.tsx": [
+  "rule--etiqueta-nombra-su-control"
+ ],
  "backend/src/modules/guardias": [
   "rule--guardias-vive-en-operaciones"
+ ],
+ "frontend/scripts/generar-pantallas.mjs": [
+  "rule--registro-de-pantallas-generado"
+ ],
+ "frontend/scripts/audit-contraste.mjs": [
+  "rule--sin-clases-css-nuevas",
+  "rule--tema-claro-unico"
  ],
  "backend/src/modules/seguridad/decorators/require-permission.decorator.ts": [
   "rule--todo-endpoint-mutante-con-permiso"

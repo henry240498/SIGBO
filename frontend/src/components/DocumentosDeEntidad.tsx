@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Documento, cargarDocumentosDeEntidad } from '@/lib/documentos';
+import { Aviso } from '@/app/components/Aviso';
 
 /**
  * Lista los documentos relacionados con un registro de CUALQUIER modulo
@@ -24,24 +25,24 @@ export function DocumentosDeEntidad({ modulo, entidad, registroId, titulo = 'Doc
   return (
     <div className="card">
       <h2 style={{ fontSize: 14, marginBottom: 10 }}>
-        {titulo} — <Link href="/dashboard/documentos/listado" style={{ color: '#60a5fa', fontSize: 12 }}>ver todos ↗</Link>
+        {titulo} — <Link href="/dashboard/documentos/listado" style={{ color: 'var(--signal)', fontSize: 12 }}>ver todos ↗</Link>
       </h2>
-      {error && <p style={{ color: '#f87171', fontSize: 13 }}>{error}</p>}
-      {documentos && documentos.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin documentos relacionados con este registro.</p>}
+      {error && <Aviso tipo="error" texto={error} fontSize={13} />}
+      {documentos && documentos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin documentos relacionados con este registro.</p>}
       {documentos && documentos.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Numero</th>
-              <th style={{ padding: '6px 4px' }}>Titulo</th>
-              <th style={{ padding: '6px 4px' }}>Emision</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Numero</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Titulo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Emision</th>
             </tr>
           </thead>
           <tbody>
             {documentos.map((d) => (
-              <tr key={d.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={d.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>
-                  <Link href={`/dashboard/documentos/${d.id}`} style={{ color: '#60a5fa', textDecoration: 'none' }}>{d.numeroDocumental ?? '(sin numero)'}</Link>
+                  <Link href={`/dashboard/documentos/${d.id}`} style={{ color: 'var(--signal)', textDecoration: 'none' }}>{d.numeroDocumental ?? '(sin numero)'}</Link>
                 </td>
                 <td style={{ padding: '6px 4px' }}>{d.titulo}</td>
                 <td style={{ padding: '6px 4px' }}>{d.fechaEmision}</td>

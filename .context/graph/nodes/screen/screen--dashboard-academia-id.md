@@ -19,6 +19,8 @@ edges:
   - [uses, component--front-academia]
   - [uses, component--front-api]
   - [uses, component--front-asistencia]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
 terminos: [academia, editar, curso, gestionar, instructores, inscribir, calificar, registrar, asistencia]
 ---
 
@@ -43,6 +45,8 @@ Pantalla /dashboard/academia/[id].
 - `uses` → [[component--front-academia|academia]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-asistencia|asistencia]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

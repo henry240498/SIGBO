@@ -16,6 +16,8 @@ edges:
   - [uses, component--front-organizacion]
   - [uses, component--front-parametros]
   - [uses, component--front-documentos]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
 terminos: [organizacion, documentos, ver, configurar]
 ---
 
@@ -37,6 +39,8 @@ Pantalla /dashboard/organizacion/documentos.
 - `uses` → [[component--front-organizacion|organizacion]]
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-documentos|documentos]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

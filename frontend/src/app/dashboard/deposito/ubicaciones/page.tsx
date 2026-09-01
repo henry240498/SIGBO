@@ -14,6 +14,7 @@ import {
   crearUbicacionDeposito,
   eliminarUbicacionDeposito,
 } from '@/lib/deposito';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function UbicacionesDepositoPage() {
   const confirmar = useConfirmacion();
@@ -154,50 +155,50 @@ export default function UbicacionesDepositoPage() {
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div style={{ flex: 1 }}>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Buscar</label>
-          <input className="input-field" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nombre o codigo..." />
+          <label htmlFor="buscar" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Buscar</label>
+          <input id="buscar" className="input-field" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nombre o codigo..." />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Tipo</label>
-          <ComboBuscable opciones={opcionesTipo} value={filtroTipoId} onChange={setFiltroTipoId} maxWidth={200} />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Tipo</label>
+          <ComboBuscable ariaLabel="Tipo" opciones={opcionesTipo} value={filtroTipoId} onChange={setFiltroTipoId} maxWidth={200} />
         </div>
         <div>
-          <label style={{ fontSize: 11, color: '#94a3b8', display: 'block', marginBottom: 4 }}>Estado</label>
-          <ComboBuscable opciones={opcionesEstado} value={filtroEstado} onChange={setFiltroEstado} maxWidth={160} />
+          <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Estado</label>
+          <ComboBuscable ariaLabel="Estado" opciones={opcionesEstado} value={filtroEstado} onChange={setFiltroEstado} maxWidth={160} />
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={guardar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo</label>
-              <input className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} />
+              <label htmlFor="codigo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo</label>
+              <input id="codigo" className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de ubicacion</label>
-              <ComboBuscable opciones={opcionesTipo} value={tipoUbicacionId} onChange={setTipoUbicacionId} ningunaLabel="-- seleccionar --" />
+              <ComboBuscable ariaLabel="Tipo de ubicacion" opciones={opcionesTipo} value={tipoUbicacionId} onChange={setTipoUbicacionId} ningunaLabel="-- seleccionar --" />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicacion padre</label>
-              <ComboBuscable opciones={opcionesPadre} value={padreId} onChange={setPadreId} ningunaLabel="Sin padre (raiz)" />
+              <ComboBuscable ariaLabel="Ubicacion padre" opciones={opcionesPadre} value={padreId} onChange={setPadreId} ningunaLabel="Sin padre (raiz)" />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cuartel</label>
-              <ComboBuscable opciones={opcionesCuartel} value={cuartelId} onChange={setCuartelId} ningunaLabel="Sin definir" />
+              <ComboBuscable ariaLabel="Cuartel" opciones={opcionesCuartel} value={cuartelId} onChange={setCuartelId} ningunaLabel="Sin definir" />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-              <ComboBuscable opciones={opcionesEstado} value={estado} onChange={setEstado} ningunaLabel="ACTIVA" />
+              <ComboBuscable ariaLabel="Estado" opciones={opcionesEstado} value={estado} onChange={setEstado} ningunaLabel="ACTIVA" />
             </div>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
@@ -221,30 +222,30 @@ export default function UbicacionesDepositoPage() {
         </form>
       )}
 
-      {ubicaciones && ubicaciones.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay ubicaciones registradas.</p>}
+      {ubicaciones && ubicaciones.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay ubicaciones registradas.</p>}
       {ubicaciones && ubicaciones.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Codigo</th>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Tipo</th>
-              <th style={{ padding: '6px 4px' }}>Padre</th>
-              <th style={{ padding: '6px 4px' }}>Cuartel</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Codigo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Padre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Cuartel</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {ubicaciones.map((u) => (
-              <tr key={u.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={u.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{u.codigo ?? '-'}</td>
                 <td style={{ padding: '6px 4px' }}>{u.nombre}</td>
                 <td style={{ padding: '6px 4px' }}>{tipoPorId.get(u.tipoUbicacionId) ?? '-'}</td>
                 <td style={{ padding: '6px 4px' }}>{u.padreId ? nombrePorId.get(u.padreId) ?? '-' : '-'}</td>
                 <td style={{ padding: '6px 4px' }}>{u.cuartelId ? cuartelPorId.get(u.cuartelId) ?? '-' : '-'}</td>
                 <td style={{ padding: '6px 4px' }}>
-                  <span className="badge" style={{ background: u.estado === 'ACTIVA' ? '#166534' : '#7f1d1d', color: u.estado === 'ACTIVA' ? '#4ade80' : '#f87171' }}>
+                  <span className="badge" style={{ background: u.estado === 'ACTIVA' ? 'var(--ok-fill)' : 'var(--bad-fill)', color: u.estado === 'ACTIVA' ? 'var(--success)' : 'var(--danger)' }}>
                     {u.estado}
                   </span>
                 </td>

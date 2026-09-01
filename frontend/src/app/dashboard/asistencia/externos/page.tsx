@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { obtenerSesion } from '@/lib/api';
 import { actualizarExterno, cargarExternos, crearExterno, ParticipanteExterno } from '@/lib/asistencia';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function ExternosPage() {
   const [externos, setExternos] = useState<ParticipanteExterno[] | null>(null);
@@ -101,7 +102,7 @@ export default function ExternosPage() {
         )}
       </div>
 
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         Personas que participan de eventos sin pertenecer al cuerpo de bomberos (civiles, invitados, estudiantes,
         personal de otras instituciones). Nunca se convierten en un registro de Personal.
       </p>
@@ -116,39 +117,39 @@ export default function ExternosPage() {
         />
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form onSubmit={guardar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cedula</label>
-              <input className="input-field" value={form.cedula} onChange={(e) => setForm({ ...form, cedula: e.target.value })} />
+              <label htmlFor="cedula" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cedula</label>
+              <input id="cedula" className="input-field" value={form.cedula} onChange={(e) => setForm({ ...form, cedula: e.target.value })} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Apellido</label>
-              <input className="input-field" value={form.apellido} onChange={(e) => setForm({ ...form, apellido: e.target.value })} />
+              <label htmlFor="apellido" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Apellido</label>
+              <input id="apellido" className="input-field" value={form.apellido} onChange={(e) => setForm({ ...form, apellido: e.target.value })} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Celular</label>
-              <input className="input-field" value={form.celular} onChange={(e) => setForm({ ...form, celular: e.target.value })} />
+              <label htmlFor="celular" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Celular</label>
+              <input id="celular" className="input-field" value={form.celular} onChange={(e) => setForm({ ...form, celular: e.target.value })} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Institucion de procedencia</label>
-              <input
+              <label htmlFor="institucion-de-procedencia" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Institucion de procedencia</label>
+              <input id="institucion-de-procedencia"
                 className="input-field"
                 value={form.institucionProcedencia}
                 onChange={(e) => setForm({ ...form, institucionProcedencia: e.target.value })}
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
-              <input className="input-field" value={form.observacion} onChange={(e) => setForm({ ...form, observacion: e.target.value })} />
+              <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+              <input id="observacion" className="input-field" value={form.observacion} onChange={(e) => setForm({ ...form, observacion: e.target.value })} />
             </div>
           </div>
           <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
@@ -157,21 +158,21 @@ export default function ExternosPage() {
         </form>
       )}
 
-      {externos && externos.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin personas externas registradas.</p>}
+      {externos && externos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin personas externas registradas.</p>}
       {externos && externos.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Cedula</th>
-              <th style={{ padding: '6px 4px' }}>Celular</th>
-              <th style={{ padding: '6px 4px' }}>Institucion</th>
-              {puedeEditar && <th style={{ padding: '6px 4px' }}>Acciones</th>}
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Cedula</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Celular</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Institucion</th>
+              {puedeEditar && <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>}
             </tr>
           </thead>
           <tbody>
             {externos.map((x) => (
-              <tr key={x.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={x.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>
                   {x.nombre} {x.apellido ?? ''}
                 </td>

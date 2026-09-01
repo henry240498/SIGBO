@@ -69,8 +69,9 @@ evitar terminarlo accidentalmente.
 3. **Guardias vive en el esquema `operaciones`** aunque sea un módulo propio, y hay
    superposición con Asistencia (pantallas de guardias en los dos lados) —
    ver [[rule--guardias-vive-en-operaciones]].
-4. **Tema claro a medio camino.** El registro de configuración define tokens de tema
-   claro que ninguna pantalla consume — ver [[rule--tema-oscuro-fijo]].
+4. **Los tokens de tema de Configuración no están cableados.** El tema claro ya está
+   completo en las pantallas, pero sale de `:root` en `globals.css`, no de
+   `configuracion_valores` — ver [[rule--tema-claro-unico]].
 5. **Numeración de migraciones colisionada:** dos archivos con prefijo `017`.
 6. **Secretos de desarrollo en el repositorio:** `JWT_SECRET` y contraseñas semilla hay
    que rotar antes de cualquier uso real.

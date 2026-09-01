@@ -37,7 +37,7 @@ terminos: [apariencia, appearance, theme, tema, accent, color, acento, font, siz
 
 ## Referenciado por
 
-- [[rule--tema-oscuro-fijo|El tema oscuro esta fijo en las pantallas, aunque Configuracion prometa temas]] `affects` →
+- [[rule--tema-claro-unico|Hay un solo tema y es claro; el login es la unica excepcion]] `affects` →
 - [[workflow--configuracion-versionada|Configuracion del sistema en tres niveles, con borrador y version publicada]] `affects` →
 
 ---

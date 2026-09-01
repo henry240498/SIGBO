@@ -13,6 +13,7 @@ edges:
   - [belongs_to, domain--personal]
   - [uses, component--front-api]
   - [uses, component--front-parametros]
+  - [uses, component--front-aviso]
   - [calls, api--equipos-equipamiento-bombero]
 terminos: [personal, nuevo]
 ---
@@ -36,6 +37,7 @@ Pantalla /dashboard/personal/nuevo, consume 1 endpoint(s).
 - `belongs_to` → [[domain--personal|Personal]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-parametros|parametros]]
+- `uses` → [[component--front-aviso|Aviso]]
 - `calls` → [[api--equipos-equipamiento-bombero|EquipamientoBomberoController]]
 
 ---

@@ -95,43 +95,43 @@ export default function ChatInteligenciaPage() {
     <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr', gap: 16, height: 'calc(100vh - 160px)', minHeight: 480 }}>
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10, overflowY: 'auto' }}>
         <button type="button" className="btn-primary" onClick={nuevaConversacion}>+ Nueva conversación</button>
-        <div style={{ fontSize: 11, color: '#94a3b8', marginTop: 4 }}>Historial</div>
-        {historial.length === 0 && <p style={{ fontSize: 12, color: '#64748b' }}>Sin conversaciones todavía.</p>}
+        <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>Historial</div>
+        {historial.length === 0 && <p style={{ fontSize: 12, color: 'var(--muted)' }}>Sin conversaciones todavía.</p>}
         {historial.map((c) => (
           <button type="button"
             key={c.id}
             onClick={() => abrirConversacion(c.id)}
             style={{
               textAlign: 'left',
-              background: conversacionId === c.id ? '#1e293b' : 'transparent',
-              border: '1px solid #334155',
+              background: conversacionId === c.id ? 'var(--surface)' : 'transparent',
+              border: '1px solid var(--line)',
               borderRadius: 8,
               padding: '8px 10px',
-              color: '#e2e8f0',
+              color: 'var(--ink)',
               fontSize: 12,
               cursor: 'pointer',
             }}
           >
             {c.titulo ?? 'Conversación'}
-            <div style={{ color: '#64748b', fontSize: 10, marginTop: 2 }}>{formatearFechaHora(c.ultimaActividadEn)}</div>
+            <div style={{ color: 'var(--muted)', fontSize: 10, marginTop: 2 }}>{formatearFechaHora(c.ultimaActividadEn)}</div>
           </button>
         ))}
       </div>
 
       <div className="card" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: 0, overflow: 'hidden' }}>
-        <div style={{ padding: '14px 18px', borderBottom: '1px solid #334155', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ padding: '14px 18px', borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
           <AvatarIa avatarUrl={perfil?.avatarUrl} avatarEmoji={perfil?.avatarEmoji} avatarColorFondo={perfil?.avatarColorFondo} nombre={perfil?.nombre ?? 'Asistente'} size={40} />
           <div>
             <div style={{ fontWeight: 600, fontSize: 14 }}>{perfil?.nombre ?? 'Asistente'}</div>
-            <div style={{ fontSize: 11, color: '#94a3b8' }}>{perfil?.descripcion ?? 'Asistente institucional'}</div>
+            <div style={{ fontSize: 11, color: 'var(--muted)' }}>{perfil?.descripcion ?? 'Asistente institucional'}</div>
           </div>
-          {inactivo && <span className="badge" style={{ background: '#7f1d1d', marginLeft: 'auto' }}>Desactivado</span>}
-          {enMantenimiento && <span className="badge" style={{ background: '#451a03', marginLeft: 'auto' }}>Mantenimiento</span>}
+          {inactivo && <span className="badge" style={{ background: 'var(--bad-fill)', marginLeft: 'auto' }}>Desactivado</span>}
+          {enMantenimiento && <span className="badge" style={{ background: 'var(--warn-fill)', marginLeft: 'auto' }}>Mantenimiento</span>}
         </div>
 
         <div style={{ flex: 1, overflowY: 'auto', padding: 18, display: 'flex', flexDirection: 'column', gap: 14 }}>
           {mensajes.length === 0 && (
-            <div style={{ color: '#94a3b8', fontSize: 13 }}>
+            <div style={{ color: 'var(--muted)', fontSize: 13 }}>
               {perfil?.saludo ?? `Hola${usuario ? ` ${usuario.username}` : ''}, ¿en qué puedo ayudarte?`}
             </div>
           )}
@@ -145,9 +145,9 @@ export default function ChatInteligenciaPage() {
                   fontSize: 13,
                   lineHeight: 1.5,
                   whiteSpace: 'pre-wrap',
-                  background: m.rol === 'USUARIO' ? '#2563eb' : m.esError ? '#451a03' : '#1e293b',
-                  color: '#e2e8f0',
-                  border: m.rol === 'IA' ? '1px solid #334155' : 'none',
+                  background: m.rol === 'USUARIO' ? 'var(--info-fill)' : m.esError ? 'var(--warn-fill)' : 'var(--surface)',
+                  color: 'var(--ink)',
+                  border: m.rol === 'IA' ? '1px solid var(--line)' : 'none',
                 }}
               >
                 {m.contenido}
@@ -155,7 +155,7 @@ export default function ChatInteligenciaPage() {
               {m.fuentes && m.fuentes.length > 0 && (
                 <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
                   {m.fuentes.map((f) => (
-                    <Link key={f.documentoId} href={f.enlace} style={{ fontSize: 11, color: '#60a5fa', textDecoration: 'none' }}>
+                    <Link key={f.documentoId} href={f.enlace} style={{ fontSize: 11, color: 'var(--signal)', textDecoration: 'none' }}>
                       📄 Fuente: {f.numeroDocumental ? `${f.numeroDocumental} — ` : ''}{f.titulo}
                     </Link>
                   ))}
@@ -163,13 +163,13 @@ export default function ChatInteligenciaPage() {
               )}
             </div>
           ))}
-          {enviando && <div style={{ color: '#64748b', fontSize: 12 }}>{perfil?.nombre ?? 'El asistente'} está escribiendo...</div>}
+          {enviando && <div style={{ color: 'var(--muted)', fontSize: 12 }}>{perfil?.nombre ?? 'El asistente'} está escribiendo...</div>}
           <div ref={finRef} />
         </div>
 
-        {error && <p style={{ color: '#f87171', fontSize: 12, padding: '0 18px' }}>{error}</p>}
+        {error && <p style={{ color: 'var(--danger)', fontSize: 12, padding: '0 18px' }}>{error}</p>}
 
-        <form onSubmit={enviar} style={{ display: 'flex', gap: 8, padding: 14, borderTop: '1px solid #334155' }}>
+        <form onSubmit={enviar} style={{ display: 'flex', gap: 8, padding: 14, borderTop: '1px solid var(--line)' }}>
           <input
             className="input-field"
             placeholder={inactivo ? 'El asistente está desactivado' : 'Escribí tu consulta...'}

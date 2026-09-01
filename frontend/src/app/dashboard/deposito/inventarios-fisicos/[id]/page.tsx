@@ -16,6 +16,8 @@ import {
   cargarItemsInventarioFisico,
   finalizarInventarioFisico,
 } from '@/lib/deposito';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function InventarioFisicoDetallePage() {
   const confirmar = useConfirmacion();
@@ -108,22 +110,22 @@ export default function InventarioFisicoDetallePage() {
     }
   }
 
-  if (error && !inventario) return <p style={{ color: '#f87171' }}>{error}</p>;
-  if (!inventario) return <p style={{ color: '#94a3b8' }}>Cargando...</p>;
+  if (error && !inventario) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
+  if (!inventario) return <Cargando texto="Cargando…" />;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
       <div>
         <button type="button"
           onClick={() => router.push('/dashboard/deposito/inventarios-fisicos')}
-          style={{ background: 'none', border: 'none', color: '#60a5fa', cursor: 'pointer', fontSize: 12, padding: 0, marginBottom: 6 }}
+          style={{ background: 'none', border: 'none', color: 'var(--signal)', cursor: 'pointer', fontSize: 12, padding: 0, marginBottom: 6 }}
         >
           ← Volver a inventarios fisicos
         </button>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h2 style={{ fontSize: 16 }}>
             Inventario fisico — {inventario.fecha}{' '}
-            <span className="badge" style={{ marginLeft: 8, background: inventario.estado === 'FINALIZADO' ? '#166534' : '#334155' }}>
+            <span className="badge" style={{ marginLeft: 8, background: inventario.estado === 'FINALIZADO' ? 'var(--ok-fill)' : 'var(--neutral-fill)' }}>
               {inventario.estado}
             </span>
           </h2>
@@ -135,8 +137,8 @@ export default function InventarioFisicoDetallePage() {
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {puedeCargar && inventario.estado === 'EN_PROCESO' && (
         <form onSubmit={agregarItem} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -159,31 +161,31 @@ export default function InventarioFisicoDetallePage() {
 
       <section className="card">
         <h2 style={{ fontSize: 15, marginBottom: 12 }}>Items contados ({items?.length ?? 0})</h2>
-        {items && items.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Todavia no se cargo ningun item.</p>}
+        {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Todavia no se cargo ningun item.</p>}
         {items && items.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                <th style={{ padding: '6px 4px' }}>Elemento</th>
-                <th style={{ padding: '6px 4px' }}>Sistema</th>
-                <th style={{ padding: '6px 4px' }}>Fisico</th>
-                <th style={{ padding: '6px 4px' }}>Diferencia</th>
-                <th style={{ padding: '6px 4px' }}>Incidencia</th>
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                <th scope="col" style={{ padding: '6px 4px' }}>Elemento</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Sistema</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Fisico</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Diferencia</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Incidencia</th>
               </tr>
             </thead>
             <tbody>
               {items.map((it) => (
-                <tr key={it.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr key={it.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>
                     {it.tipoElemento === 'EQUIPO' ? (it.equipoId ? equipoPorId.get(it.equipoId) ?? it.equipoId : '-') : it.articuloId ? articuloPorId.get(it.articuloId) ?? it.articuloId : '-'}
                   </td>
                   <td style={{ padding: '6px 4px' }}>{it.cantidadSistema}</td>
                   <td style={{ padding: '6px 4px' }}>{it.cantidadFisica}</td>
-                  <td style={{ padding: '6px 4px', color: it.diferencia !== 0 ? '#f87171' : '#4ade80', fontWeight: it.diferencia !== 0 ? 600 : undefined }}>
+                  <td style={{ padding: '6px 4px', color: it.diferencia !== 0 ? 'var(--danger)' : 'var(--success)', fontWeight: it.diferencia !== 0 ? 600 : undefined }}>
                     {it.diferencia > 0 ? `+${it.diferencia}` : it.diferencia}
                   </td>
                   <td style={{ padding: '6px 4px' }}>
-                    {it.generaIncidencia ? <span className="badge" style={{ background: '#7f1d1d', color: '#f87171' }}>SI</span> : '-'}
+                    {it.generaIncidencia ? <span className="badge" style={{ background: 'var(--bad-fill)', color: 'var(--danger)' }}>SI</span> : '-'}
                   </td>
                 </tr>
               ))}

@@ -1,16 +1,16 @@
 ---
 id: decision--sin-libreria-ui
 tipo: DECISION
-nombre: Sin libreria de UI ni Tailwind, 4 clases utilitarias y estilos inline
+nombre: Sin libreria de UI ni Tailwind, clases propias en globals.css y estilos inline con tokens
 nivel: L1
-resumen: Todo el sistema visual se resuelve con 4 clases en globals.css mas estilos inline con hex literales. Sin Tailwind, sin shadcn, sin CSS Modules.
+resumen: Todo el sistema visual se resuelve con las ~116 clases de globals.css y las variables de :root, mas estilos inline que usan var(--token). Sin Tailwind, sin shadcn, sin CSS Modules.
 estado: VIGENTE
 fuente: docs/GUIA-DE-ESTILO.md
 archivos: [frontend/src/app/globals.css, docs/GUIA-DE-ESTILO.md]
 terminos: [css, tailwind, shadcn, estilos, inline, globals, card, badge, boton, paleta]
 edges:
   - [constrains, rule--sin-clases-css-nuevas]
-  - [constrains, rule--tema-oscuro-fijo]
+  - [constrains, rule--tema-claro-unico]
 ---
 
 ## Decision
@@ -35,12 +35,15 @@ en el codigo**, no una propuesta a futuro.
   badges) que una libreria daria hechos. Con ~56 pantallas, el patron ya esta
   establecido: copiar de una vecina es mas rapido y mas seguro que inventar.
 
-## Tension no resuelta (importante al tocar apariencia)
+## Lo que costo, y lo que quedo pendiente
 
-El modulo de Configuracion define tokens de diseno **en base de datos**
-(`tokens.primary` = `#0f3b70`, `tokens.background` = `#f3f7f8`, tema por defecto
-`auto`) mientras la guia de estilo describe un **tema oscuro fijo** con
-`#0f172a`/`#1e293b` hardcodeados en cada pantalla.
+El costo de no tener libreria se cobro al cambiar el tema: como el color vivia como hex
+literal en cada pantalla, pasar `globals.css` a claro dejo 1.563 valores oscuros
+desincronizados en 121 archivos, con el texto secundario en 2,5:1 y los errores en
+2,9:1. Se corrigio pasando todo a `var(--token)`, que es lo que hoy sostiene la
+decision: sin libreria, pero con una capa de tokens en `:root`.
 
-Las dos cosas coexisten hoy. Antes de cambiar cualquiera de las dos hay que
-decidir cual manda — ver [[rule--tema-oscuro-fijo]].
+Sigue pendiente el cableado con Configuracion: el modulo define tokens de diseno **en
+base de datos** (`tokens.primary` = `#0f3b70`, `tokens.background` = `#f3f7f8`, tema por
+defecto `auto`) y ninguna pantalla los lee todavia -- `:root` los tiene fijos en el
+archivo. Ver [[rule--tema-claro-unico]].

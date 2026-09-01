@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { ComboBuscable } from '@/components/ComboBuscable';
 import { Catalogo, cargarCatalogo } from '@/lib/personal';
 import { actualizarConfiguracionOrdenes, cargarConfiguracionOrdenes } from '@/lib/guardias';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 export default function ConfiguracionOrdenesPage() {
   const router = useRouter();
@@ -72,7 +74,7 @@ export default function ConfiguracionOrdenesPage() {
     }
   }
 
-  if (cargando) return <p style={{ color: '#94a3b8' }}>Cargando configuracion...</p>;
+  if (cargando) return <Cargando texto="Cargando configuracion…" />;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 900 }}>
@@ -82,26 +84,26 @@ export default function ConfiguracionOrdenesPage() {
           Volver
         </button>
       </div>
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         Estos textos y reglas se usan al generar cada Orden — pueden modificarse cuando cambie la normativa o la
         forma de comunicacion institucional, sin tocar codigo.
       </p>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       <form onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <h3 style={{ fontSize: 14 }}>Titulo</h3>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>
+            <label htmlFor="titulo-del-documento-placeholders-y" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>
               Titulo del documento (placeholders: {'{{numero}}'} y {'{{anio}}'})
             </label>
-            <input className="input-field" value={tituloDocumento} onChange={(e) => setTituloDocumento(e.target.value)} />
+            <input id="titulo-del-documento-placeholders-y" className="input-field" value={tituloDocumento} onChange={(e) => setTituloDocumento(e.target.value)} />
           </div>
-          <p style={{ fontSize: 12, color: '#94a3b8' }}>
+          <p style={{ fontSize: 12, color: 'var(--muted)' }}>
             El membrete (nombre, logos, direccion, contacto) ahora se configura en un solo lugar para todo SIGBO —{' '}
-            <a href="/dashboard/organizacion/documentos" style={{ color: '#60a5fa' }}>
+            <a href="/dashboard/organizacion/documentos" style={{ color: 'var(--signal)' }}>
               Organizacion → Configuracion de Documentos
             </a>
             .
@@ -111,18 +113,18 @@ export default function ConfiguracionOrdenesPage() {
         <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <h3 style={{ fontSize: 14 }}>Texto introductorio y reglas de reemplazo</h3>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>
+            <label htmlFor="texto-introductorio-placeholders-y" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>
               Texto introductorio (placeholders: {'{{mes}}'} y {'{{anio}}'})
             </label>
-            <textarea className="input-field" rows={4} value={textoIntroPlantilla} onChange={(e) => setTextoIntroPlantilla(e.target.value)} />
+            <textarea id="texto-introductorio-placeholders-y" className="input-field" rows={4} value={textoIntroPlantilla} onChange={(e) => setTextoIntroPlantilla(e.target.value)} />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Regla de reemplazo — Oficial a cargo</label>
-            <textarea className="input-field" rows={2} value={reglaTextoOficial} onChange={(e) => setReglaTextoOficial(e.target.value)} />
+            <label htmlFor="regla-de-reemplazo-oficial-a-cargo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Regla de reemplazo — Oficial a cargo</label>
+            <textarea id="regla-de-reemplazo-oficial-a-cargo" className="input-field" rows={2} value={reglaTextoOficial} onChange={(e) => setReglaTextoOficial(e.target.value)} />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Regla de reemplazo — Chofer</label>
-            <textarea className="input-field" rows={2} value={reglaTextoChofer} onChange={(e) => setReglaTextoChofer(e.target.value)} />
+            <label htmlFor="regla-de-reemplazo-chofer" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Regla de reemplazo — Chofer</label>
+            <textarea id="regla-de-reemplazo-chofer" className="input-field" rows={2} value={reglaTextoChofer} onChange={(e) => setReglaTextoChofer(e.target.value)} />
           </div>
           <label style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 6 }}>
             <input type="checkbox" checked={exigirRangoIgualOSuperiorOficial} onChange={(e) => setExigirRangoIgualOSuperiorOficial(e.target.checked)} />
@@ -130,35 +132,35 @@ export default function ConfiguracionOrdenesPage() {
             no solo como texto)
           </label>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Pie de pagina (nota de horarios)</label>
-            <textarea className="input-field" rows={2} value={textoPie} onChange={(e) => setTextoPie(e.target.value)} />
+            <label htmlFor="pie-de-pagina-nota-de-horarios" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Pie de pagina (nota de horarios)</label>
+            <textarea id="pie-de-pagina-nota-de-horarios" className="input-field" rows={2} value={textoPie} onChange={(e) => setTextoPie(e.target.value)} />
           </div>
         </section>
 
         <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <h3 style={{ fontSize: 14 }}>Firmantes</h3>
-          <p style={{ fontSize: 12, color: '#94a3b8' }}>
+          <p style={{ fontSize: 12, color: 'var(--muted)' }}>
             Se resuelve automaticamente a quien ocupa hoy el cargo indicado (organizacion.designaciones) — nunca un
             nombre fijo.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Firmante 1 — Cargo</label>
-              <ComboBuscable opciones={opcionesCargo} value={firmante1CargoId} onChange={setFirmante1CargoId} placeholderBusqueda="Buscar cargo..." ningunaLabel="Sin firmante" />
+              <ComboBuscable ariaLabel="Firmante 1 — Cargo" opciones={opcionesCargo} value={firmante1CargoId} onChange={setFirmante1CargoId} placeholderBusqueda="Buscar cargo..." ningunaLabel="Sin firmante" />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Firmante 1 — Etiqueta impresa</label>
-              <input className="input-field" value={firmante1Etiqueta} onChange={(e) => setFirmante1Etiqueta(e.target.value)} placeholder="DPTO. DE PERSONAL" />
+              <label htmlFor="firmante-1-etiqueta-impresa" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Firmante 1 — Etiqueta impresa</label>
+              <input id="firmante-1-etiqueta-impresa" className="input-field" value={firmante1Etiqueta} onChange={(e) => setFirmante1Etiqueta(e.target.value)} placeholder="DPTO. DE PERSONAL" />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Firmante 2 — Cargo</label>
-              <ComboBuscable opciones={opcionesCargo} value={firmante2CargoId} onChange={setFirmante2CargoId} placeholderBusqueda="Buscar cargo..." ningunaLabel="Sin firmante" />
+              <ComboBuscable ariaLabel="Firmante 2 — Cargo" opciones={opcionesCargo} value={firmante2CargoId} onChange={setFirmante2CargoId} placeholderBusqueda="Buscar cargo..." ningunaLabel="Sin firmante" />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Firmante 2 — Etiqueta impresa</label>
-              <input className="input-field" value={firmante2Etiqueta} onChange={(e) => setFirmante2Etiqueta(e.target.value)} placeholder="COMANDANTE" />
+              <label htmlFor="firmante-2-etiqueta-impresa" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Firmante 2 — Etiqueta impresa</label>
+              <input id="firmante-2-etiqueta-impresa" className="input-field" value={firmante2Etiqueta} onChange={(e) => setFirmante2Etiqueta(e.target.value)} placeholder="COMANDANTE" />
             </div>
           </div>
         </section>

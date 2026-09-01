@@ -50,6 +50,8 @@ import {
   registrarHorarioAsignacion,
   reemplazarAsignacionGuardia,
 } from '@/lib/guardias';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 type Vista = 'personal' | 'pernoctes' | 'estacion' | 'moviles' | 'novedades' | 'bitacora';
 const SUBTABS: { id: Vista; label: string }[] = [
@@ -83,14 +85,14 @@ export default function DetalleGuardiaPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [guardiaId]);
 
-  if (error && !guardia) return <p style={{ color: '#f87171' }}>{error}</p>;
-  if (!guardia) return <p style={{ color: '#94a3b8' }}>Cargando guardia...</p>;
+  if (error && !guardia) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
+  if (!guardia) return <Cargando texto="Cargando guardia…" />;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <CabeceraGuardia guardia={guardia} onCambiada={cargar} onVolver={() => router.push('/dashboard/guardias')} />
 
-      <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid #1f2937' }}>
+      <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid var(--line-soft)' }}>
         {SUBTABS.map((t) => (
           <button type="button"
             key={t.id}
@@ -101,7 +103,7 @@ export default function DetalleGuardiaPage() {
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
-              color: vista === t.id ? '#e2e8f0' : '#94a3b8',
+              color: vista === t.id ? 'var(--ink)' : 'var(--muted)',
               fontWeight: vista === t.id ? 600 : 400,
               borderBottom: vista === t.id ? '2px solid #2563eb' : '2px solid transparent',
             }}
@@ -218,42 +220,42 @@ function CabeceraGuardia({
   if (editando) {
     return (
       <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {error && <p style={{ color: '#f87171' }}>{error}</p>}
+        {error && <Aviso tipo="error" texto={error} />}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', gap: 10 }}>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label>
-            <input className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
+            <label htmlFor="fecha" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label>
+            <input id="fecha" className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Turno</label>
-            <select className="input-field" value={turno} onChange={(e) => setTurno(e.target.value)}>
+            <label htmlFor="turno" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Turno</label>
+            <select id="turno" className="input-field" value={turno} onChange={(e) => setTurno(e.target.value)}>
               {TURNOS_GUARDIA.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
-            <select className="input-field" value={tipo} onChange={(e) => setTipo(e.target.value)}>
+            <label htmlFor="tipo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
+            <select id="tipo" className="input-field" value={tipo} onChange={(e) => setTipo(e.target.value)}>
               {TIPOS_GUARDIA_REGISTRO.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Hora inicio</label>
-            <input className="input-field" type="time" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} required />
+            <label htmlFor="hora-inicio" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Hora inicio</label>
+            <input id="hora-inicio" className="input-field" type="time" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} required />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Hora fin</label>
-            <input className="input-field" type="time" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} required />
+            <label htmlFor="hora-fin" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Hora fin</label>
+            <input id="hora-fin" className="input-field" type="time" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} required />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-            <select className="input-field" value={estado} onChange={(e) => setEstado(e.target.value)}>
+            <label htmlFor="estado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
+            <select id="estado" className="input-field" value={estado} onChange={(e) => setEstado(e.target.value)}>
               {ESTADOS_GUARDIA.map((e) => <option key={e} value={e}>{e}</option>)}
             </select>
           </div>
         </div>
         <div>
-          <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
-          <input className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
+          <label htmlFor="observaciones" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
+          <input id="observaciones" className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
           <button type="submit" className="btn-primary" disabled={guardando}>{guardando ? 'Guardando...' : 'Guardar cambios'}</button>
@@ -267,20 +269,20 @@ function CabeceraGuardia({
 
   return (
     <div className="card">
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}>
         <div>
           <h2 style={{ fontSize: 18 }}>Guardia {guardia.fecha} — {guardia.turno}</h2>
           <div style={{ display: 'flex', gap: 8, marginTop: 6, flexWrap: 'wrap' }}>
             <span className="badge">{guardia.horaInicio} - {guardia.horaFin}</span>
             <span className="badge">{guardia.tipo}</span>
-            <span className="badge" style={{ background: guardia.estado === 'ANULADA' || guardia.estado === 'CANCELADA' ? '#7f1d1d' : guardia.estado === 'FINALIZADA' ? '#166534' : '#334155' }}>
+            <span className="badge" style={{ background: guardia.estado === 'ANULADA' || guardia.estado === 'CANCELADA' ? 'var(--bad-fill)' : guardia.estado === 'FINALIZADA' ? 'var(--ok-fill)' : 'var(--neutral-fill)' }}>
               {guardia.estado}
             </span>
           </div>
-          {guardia.observaciones && <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 8, whiteSpace: 'pre-wrap' }}>{guardia.observaciones}</p>}
+          {guardia.observaciones && <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 8, whiteSpace: 'pre-wrap' }}>{guardia.observaciones}</p>}
           {guardia.estado === 'FINALIZADA' && guardia.cerradaEn && (
-            <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 8 }}>
+            <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 8 }}>
               Cerrada el {new Date(guardia.cerradaEn).toLocaleString()}
               {guardia.cierreObservacion ? ` — ${guardia.cierreObservacion}` : ''}
             </p>
@@ -308,7 +310,7 @@ function CabeceraGuardia({
   );
 }
 
-const COLOR_TIPO_PARTICIPACION: Record<string, string> = { TITULAR: '#334155', REFUERZO: '#1d4ed8', REEMPLAZO: '#854d0e' };
+const COLOR_TIPO_PARTICIPACION: Record<string, string> = { TITULAR: 'var(--neutral-fill)', REFUERZO: 'var(--info-fill)', REEMPLAZO: 'var(--warn-fill)' };
 
 function TabPersonal({ guardiaId }: { guardiaId: string }) {
   const confirmar = useConfirmacion();
@@ -463,38 +465,38 @@ function TabPersonal({ guardiaId }: { guardiaId: string }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {puedeAsignar && (
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'flex', gap: 10, alignItems: 'end', flexWrap: 'wrap' }}>
             <div style={{ minWidth: 280 }}>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Bombero</label>
-              <ComboBuscable opciones={opcionesBombero} value={bomberoSeleccionado} onChange={setBomberoSeleccionado} placeholderBusqueda="Buscar por codigo o nombre..." />
+              <ComboBuscable ariaLabel="Bombero" opciones={opcionesBombero} value={bomberoSeleccionado} onChange={setBomberoSeleccionado} placeholderBusqueda="Buscar por codigo o nombre..." />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
-              <select className="input-field" value={tipoParticipacion} onChange={(e) => setTipoParticipacion(e.target.value as any)}>
+              <label htmlFor="tipo-2" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
+              <select id="tipo-2" className="input-field" value={tipoParticipacion} onChange={(e) => setTipoParticipacion(e.target.value as any)}>
                 <option value="TITULAR">TITULAR</option>
                 <option value="REFUERZO">REFUERZO</option>
                 <option value="REEMPLAZO">REEMPLAZO</option>
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Rol (opcional)</label>
-              <input className="input-field" value={rol} onChange={(e) => setRol(e.target.value)} placeholder="OFICIAL_A_CARGO, CHOFER..." />
+              <label htmlFor="rol-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Rol (opcional)</label>
+              <input id="rol-opcional" className="input-field" value={rol} onChange={(e) => setRol(e.target.value)} placeholder="OFICIAL_A_CARGO, CHOFER..." />
             </div>
             {tipoParticipacion === 'REEMPLAZO' && (
               <div style={{ minWidth: 260 }}>
                 <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>A quien reemplaza</label>
-                <ComboBuscable opciones={opcionesReemplazo} value={reemplazaAsignacionId} onChange={setReemplazaAsignacionId} placeholderBusqueda="Buscar..." />
+                <ComboBuscable ariaLabel="A quien reemplaza" opciones={opcionesReemplazo} value={reemplazaAsignacionId} onChange={setReemplazaAsignacionId} placeholderBusqueda="Buscar..." />
               </div>
             )}
             {tipoParticipacion !== 'TITULAR' && (
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo</label>
-                <input className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
+                <label htmlFor="motivo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo</label>
+                <input id="motivo" className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
               </div>
             )}
             <button type="button" className="btn-primary" onClick={asignar} disabled={!bomberoSeleccionado}>
@@ -506,24 +508,24 @@ function TabPersonal({ guardiaId }: { guardiaId: string }) {
 
       <div className="card">
         <h3 style={{ fontSize: 14, marginBottom: 10 }}>Personal ({asignaciones?.length ?? 0})</h3>
-        {asignaciones && asignaciones.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin personal asignado.</p>}
+        {asignaciones && asignaciones.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin personal asignado.</p>}
         {asignaciones && asignaciones.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                <th style={{ padding: '6px 4px' }}>Bombero</th>
-                <th style={{ padding: '6px 4px' }}>Rol</th>
-                <th style={{ padding: '6px 4px' }}>Tipo</th>
-                <th style={{ padding: '6px 4px' }}>Estado</th>
-                <th style={{ padding: '6px 4px' }}>Presencia</th>
-                <th style={{ padding: '6px 4px' }}>Horario real</th>
-                {puedeEditar && <th style={{ padding: '6px 4px' }}>Acciones</th>}
+              <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                <th scope="col" style={{ padding: '6px 4px' }}>Bombero</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Rol</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Presencia</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Horario real</th>
+                {puedeEditar && <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>}
               </tr>
             </thead>
             <tbody>
               {asignaciones.map((a) => (
                 <Fragment key={a.id}>
-                  <tr style={{ borderBottom: '1px solid #1f2937' }}>
+                  <tr style={{ borderBottom: '1px solid var(--line-soft)' }}>
                     <td style={{ padding: '6px 4px' }}>{a.codigoBombero ? `${a.codigoBombero} — ` : ''}{a.nombreCompleto}</td>
                     <td style={{ padding: '6px 4px' }}>{a.rol ?? ''}</td>
                     <td style={{ padding: '6px 4px' }}>
@@ -552,11 +554,11 @@ function TabPersonal({ guardiaId }: { guardiaId: string }) {
                   </tr>
                   {reemplazandoId === a.id && (
                     <tr>
-                      <td colSpan={7} style={{ padding: '10px 4px', background: '#0f172a' }}>
+                      <td colSpan={7} style={{ padding: '10px 4px', background: 'var(--surface-soft)' }}>
                         <div style={{ display: 'flex', gap: 10, alignItems: 'end', flexWrap: 'wrap' }}>
                           <div style={{ minWidth: 260 }}>
                             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Reemplazar con</label>
-                            <ComboBuscable
+                            <ComboBuscable ariaLabel="Reemplazar con"
                               opciones={opcionesBombero}
                               value={bomberoReemplazoId}
                               onChange={setBomberoReemplazoId}
@@ -565,13 +567,13 @@ function TabPersonal({ guardiaId }: { guardiaId: string }) {
                           </div>
                           <div>
                             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo (opcional)</label>
-                            <input className="input-field" value={motivoReemplazo} onChange={(e) => setMotivoReemplazo(e.target.value)} />
+                            <input aria-label="Motivo (opcional)" className="input-field" value={motivoReemplazo} onChange={(e) => setMotivoReemplazo(e.target.value)} />
                           </div>
                           <button type="button" className="btn-primary" onClick={() => confirmarReemplazo(a.id)} disabled={!bomberoReemplazoId}>Confirmar reemplazo</button>
                           <button type="button" style={{ background: '#475569', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 14px' }} onClick={() => setReemplazandoId(null)}>Cancelar</button>
                         </div>
                         {a.rol && (
-                          <p style={{ fontSize: 11, color: '#94a3b8', marginTop: 6 }}>
+                          <p style={{ fontSize: 11, color: 'var(--muted)', marginTop: 6 }}>
                             {a.rol === 'OFICIAL_A_CARGO' ? 'Solo se permite otro Oficial a Cargo de rango igual o mayor (si esta regla esta activa en la configuracion de Ordenes de Guardia).' : a.rol === 'CHOFER' ? 'Solo se permite otro personal con autorizacion de chofer.' : ''}
                           </p>
                         )}
@@ -580,26 +582,26 @@ function TabPersonal({ guardiaId }: { guardiaId: string }) {
                   )}
                   {editandoHorario === a.id && (
                     <tr>
-                      <td colSpan={7} style={{ padding: '10px 4px', background: '#0f172a' }}>
+                      <td colSpan={7} style={{ padding: '10px 4px', background: 'var(--surface-soft)' }}>
                         <div style={{ display: 'flex', gap: 10, alignItems: 'end', flexWrap: 'wrap' }}>
                           <div>
                             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Hora entrada real</label>
-                            <input className="input-field" type="datetime-local" value={horaEntrada} onChange={(e) => setHoraEntrada(e.target.value)} />
+                            <input aria-label="Hora entrada real" className="input-field" type="datetime-local" value={horaEntrada} onChange={(e) => setHoraEntrada(e.target.value)} />
                           </div>
                           <div>
                             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Hora salida real</label>
-                            <input className="input-field" type="datetime-local" value={horaSalida} onChange={(e) => setHoraSalida(e.target.value)} />
+                            <input aria-label="Hora salida real" className="input-field" type="datetime-local" value={horaSalida} onChange={(e) => setHoraSalida(e.target.value)} />
                           </div>
                           <div>
                             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado de presencia</label>
-                            <select className="input-field" value={estadoPresencia} onChange={(e) => setEstadoPresencia(e.target.value)}>
+                            <select aria-label="Estado de presencia" className="input-field" value={estadoPresencia} onChange={(e) => setEstadoPresencia(e.target.value)}>
                               <option value="">-- sin cambio --</option>
                               {estadosPresencia.map((p) => <option key={p.id} value={p.nombre}>{p.nombre}</option>)}
                             </select>
                           </div>
                           <div>
                             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo</label>
-                            <input className="input-field" value={motivoPresencia} onChange={(e) => setMotivoPresencia(e.target.value)} />
+                            <input aria-label="Motivo" className="input-field" value={motivoPresencia} onChange={(e) => setMotivoPresencia(e.target.value)} />
                           </div>
                           <button type="button" className="btn-primary" onClick={() => guardarHorario(a.id)}>Guardar</button>
                           <button type="button" style={{ background: '#475569', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 14px' }} onClick={() => setEditandoHorario(null)}>Cancelar</button>
@@ -656,32 +658,32 @@ function TabPernoctes({ guardiaId, fecha }: { guardiaId: string; fecha: string }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         Pernoctar no es lo mismo que estar de guardia: estas personas se quedan a dormir en el cuartel sin formar
         parte del personal asignado a esta guardia.
       </p>
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
       {puedeEditar && (
         <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'end', flexWrap: 'wrap' }}>
           <div style={{ minWidth: 280 }}>
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Bombero</label>
-            <ComboBuscable opciones={opcionesBombero} value={bomberoId} onChange={setBomberoId} placeholderBusqueda="Buscar por codigo o nombre..." />
+            <ComboBuscable ariaLabel="Bombero" opciones={opcionesBombero} value={bomberoId} onChange={setBomberoId} placeholderBusqueda="Buscar por codigo o nombre..." />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo (opcional)</label>
-            <input className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
+            <label htmlFor="motivo-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo (opcional)</label>
+            <input id="motivo-opcional" className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
           </div>
           <button type="button" className="btn-primary" onClick={agregar} disabled={!bomberoId}>Registrar pernocte</button>
         </div>
       )}
-      {pernoctes && pernoctes.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin pernoctantes registrados.</p>}
+      {pernoctes && pernoctes.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin pernoctantes registrados.</p>}
       {pernoctes && pernoctes.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-          <thead><tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-            <th style={{ padding: '6px 4px' }}>Bombero</th><th style={{ padding: '6px 4px' }}>Motivo</th><th style={{ padding: '6px 4px' }}>Observacion</th>
+          <thead><tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+            <th scope="col" style={{ padding: '6px 4px' }}>Bombero</th><th scope="col" style={{ padding: '6px 4px' }}>Motivo</th><th scope="col" style={{ padding: '6px 4px' }}>Observacion</th>
           </tr></thead>
           <tbody>{pernoctes.map((p) => (
-            <tr key={p.id} style={{ borderBottom: '1px solid #1f2937' }}>
+            <tr key={p.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
               <td style={{ padding: '6px 4px' }}>{p.codigoBombero ? `${p.codigoBombero} — ` : ''}{p.nombreCompleto}</td>
               <td style={{ padding: '6px 4px' }}>{p.motivo ?? '—'}</td>
               <td style={{ padding: '6px 4px' }}>{p.observacion ?? '—'}</td>
@@ -732,40 +734,40 @@ function TabEstacion({ guardiaId }: { guardiaId: string }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
       {puedeEditar && (
         <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'end', flexWrap: 'wrap' }}>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Sector</label>
-            <select className="input-field" value={sector} onChange={(e) => setSector(e.target.value)}>
+            <label htmlFor="sector" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Sector</label>
+            <select id="sector" className="input-field" value={sector} onChange={(e) => setSector(e.target.value)}>
               <option value="">-- seleccionar --</option>
               {sectores.map((s) => <option key={s.id} value={s.id}>{s.nombre}</option>)}
             </select>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-            <select className="input-field" value={estado} onChange={(e) => setEstado(e.target.value as 'OK' | 'NO_OK')}>
+            <label htmlFor="estado-2" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
+            <select id="estado-2" className="input-field" value={estado} onChange={(e) => setEstado(e.target.value as 'OK' | 'NO_OK')}>
               <option value="OK">OK</option>
               <option value="NO_OK">NO OK</option>
             </select>
           </div>
           <div style={{ flex: 1, minWidth: 200 }}>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
-            <input className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
+            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+            <input id="observacion" className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
           <button type="button" className="btn-primary" onClick={agregar} disabled={!sector}>Registrar</button>
         </div>
       )}
-      {inspecciones && inspecciones.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin inspecciones registradas.</p>}
+      {inspecciones && inspecciones.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin inspecciones registradas.</p>}
       {inspecciones && inspecciones.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-          <thead><tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-            <th style={{ padding: '6px 4px' }}>Sector</th><th style={{ padding: '6px 4px' }}>Estado</th><th style={{ padding: '6px 4px' }}>Observacion</th>
+          <thead><tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+            <th scope="col" style={{ padding: '6px 4px' }}>Sector</th><th scope="col" style={{ padding: '6px 4px' }}>Estado</th><th scope="col" style={{ padding: '6px 4px' }}>Observacion</th>
           </tr></thead>
           <tbody>{inspecciones.map((i) => (
-            <tr key={i.id} style={{ borderBottom: '1px solid #1f2937' }}>
+            <tr key={i.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
               <td style={{ padding: '6px 4px' }}>{i.sectorNombre}</td>
-              <td style={{ padding: '6px 4px' }}><span className="badge" style={{ background: i.estado === 'OK' ? '#166534' : '#7f1d1d' }}>{i.estado}</span></td>
+              <td style={{ padding: '6px 4px' }}><span className="badge" style={{ background: i.estado === 'OK' ? 'var(--ok-fill)' : 'var(--bad-fill)' }}>{i.estado}</span></td>
               <td style={{ padding: '6px 4px' }}>{i.observacion ?? '—'}</td>
             </tr>
           ))}</tbody>
@@ -809,19 +811,19 @@ function TabNovedades({ guardiaId }: { guardiaId: string }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
       {puedeEditar && (
         <div className="card" style={{ display: 'flex', gap: 10 }}>
           <input className="input-field" style={{ flex: 1 }} value={texto} onChange={(e) => setTexto(e.target.value)} placeholder="Nueva novedad..." />
           <button type="button" className="btn-primary" onClick={agregar} disabled={!texto.trim()}>Agregar</button>
         </div>
       )}
-      {novedades && novedades.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin novedades registradas.</p>}
+      {novedades && novedades.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin novedades registradas.</p>}
       {novedades && novedades.length > 0 && (
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {novedades.map((n) => (
-            <div key={n.id} style={{ display: 'flex', gap: 10, fontSize: 13, borderBottom: '1px solid #1f2937', paddingBottom: 8 }}>
-              <span style={{ color: '#94a3b8', minWidth: 140 }}>{new Date(n.fechaHora).toLocaleString()}</span>
+            <div key={n.id} style={{ display: 'flex', gap: 10, fontSize: 13, borderBottom: '1px solid var(--line-soft)', paddingBottom: 8 }}>
+              <span style={{ color: 'var(--muted)', minWidth: 140 }}>{new Date(n.fechaHora).toLocaleString()}</span>
               <span>{n.texto}{n.autorNombre ? ` — ${n.autorNombre}` : ''}</span>
             </div>
           ))}
@@ -880,14 +882,14 @@ function TabMoviles({ guardiaId }: { guardiaId: string }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         Vehiculos y checklist recuperados automaticamente desde el modulo de Vehiculos/Equipos — Guardias solo
         consulta esa informacion, la administracion vive en sus propios modulos.
       </p>
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
-      {moviles && moviles.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay vehiculos activos registrados en el modulo de Vehiculos.</p>}
+      {moviles && moviles.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay vehiculos activos registrados en el modulo de Vehiculos.</p>}
 
       {moviles && moviles.map(({ vehiculo, checklistItems, equipos }) => (
         <div key={vehiculo.id} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -896,17 +898,17 @@ function TabMoviles({ guardiaId }: { guardiaId: string }) {
             <span className="badge">{vehiculo.estado}</span>
           </div>
           {equipos.length > 0 && (
-            <p style={{ fontSize: 12, color: '#94a3b8' }}>Equipamiento asignado: {equipos.map((e) => e.nombre).join(', ')}</p>
+            <p style={{ fontSize: 12, color: 'var(--muted)' }}>Equipamiento asignado: {equipos.map((e) => e.nombre).join(', ')}</p>
           )}
-          {checklistItems.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin items de checklist configurados para este tipo de vehiculo.</p>}
+          {checklistItems.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin items de checklist configurados para este tipo de vehiculo.</p>}
           {checklistItems.length > 0 && (
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
-                <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                  <th style={{ padding: '6px 4px' }}>Item</th>
-                  <th style={{ padding: '6px 4px' }}>Categoria</th>
-                  <th style={{ padding: '6px 4px' }}>Estado</th>
-                  {puedeEditar && <th style={{ padding: '6px 4px' }}>Registrar</th>}
+                <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                  <th scope="col" style={{ padding: '6px 4px' }}>Item</th>
+                  <th scope="col" style={{ padding: '6px 4px' }}>Categoria</th>
+                  <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+                  {puedeEditar && <th scope="col" style={{ padding: '6px 4px' }}>Registrar</th>}
                 </tr>
               </thead>
               <tbody>
@@ -914,16 +916,16 @@ function TabMoviles({ guardiaId }: { guardiaId: string }) {
                   const ya = inspeccionDe(vehiculo.id, item.id);
                   const clave = `${vehiculo.id}:${item.id}`;
                   return (
-                    <tr key={item.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                    <tr key={item.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                       <td style={{ padding: '6px 4px' }}>{item.nombre}</td>
                       <td style={{ padding: '6px 4px' }}>{item.categoria}</td>
                       <td style={{ padding: '6px 4px' }}>
                         {ya ? (
-                          <span className="badge" style={{ background: ya.estado === 'OK' ? '#166534' : '#7f1d1d' }}>
+                          <span className="badge" style={{ background: ya.estado === 'OK' ? 'var(--ok-fill)' : 'var(--bad-fill)' }}>
                             {ya.estado}{ya.observacion ? ` — ${ya.observacion}` : ''}
                           </span>
                         ) : (
-                          <span style={{ color: '#94a3b8' }}>Sin verificar</span>
+                          <span style={{ color: 'var(--muted)' }}>Sin verificar</span>
                         )}
                       </td>
                       {puedeEditar && (
@@ -971,21 +973,21 @@ function TabBitacora({ guardiaId }: { guardiaId: string }) {
     cargarBitacora(guardiaId).then(setBitacora).catch((err) => setError(err.message));
   }, [guardiaId]);
 
-  if (error) return <p style={{ color: '#f87171' }}>{error}</p>;
-  if (!bitacora) return <p style={{ color: '#94a3b8' }}>Cargando bitacora...</p>;
+  if (error) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
+  if (!bitacora) return <Cargando texto="Cargando bitacora…" />;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         SIGBO como concentrador: esta bitacora combina, sin duplicar, lo ya registrado en Asistencia, Servicios,
         Equipos y Eventos dentro del horario real de esta guardia, mas lo propio de Guardias.
       </p>
 
       <BitacoraSeccion titulo={`Marcaciones de asistencia (${bitacora.marcacionesAsistencia.length})`}>
-        {bitacora.marcacionesAsistencia.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin marcaciones en el horario de la guardia.</p>}
+        {bitacora.marcacionesAsistencia.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin marcaciones en el horario de la guardia.</p>}
         {bitacora.marcacionesAsistencia.map((m: any) => (
-          <div key={m.id} style={{ fontSize: 13, display: 'flex', gap: 10, borderBottom: '1px solid #1f2937', padding: '4px 0' }}>
-            <span style={{ color: '#94a3b8', minWidth: 160 }}>{new Date(m.timestampMarcacion).toLocaleString()}</span>
+          <div key={m.id} style={{ fontSize: 13, display: 'flex', gap: 10, borderBottom: '1px solid var(--line-soft)', padding: '4px 0' }}>
+            <span style={{ color: 'var(--muted)', minWidth: 160 }}>{new Date(m.timestampMarcacion).toLocaleString()}</span>
             <span className="badge">{m.tipoMarcacion}</span>
             <span>{m.nombreCompleto}</span>
           </div>
@@ -993,10 +995,10 @@ function TabBitacora({ guardiaId }: { guardiaId: string }) {
       </BitacoraSeccion>
 
       <BitacoraSeccion titulo={`Servicios (${bitacora.servicios.length})`}>
-        {bitacora.servicios.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin servicios en el horario de la guardia.</p>}
+        {bitacora.servicios.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin servicios en el horario de la guardia.</p>}
         {bitacora.servicios.map((s: any) => (
-          <div key={s.id} style={{ fontSize: 13, display: 'flex', gap: 10, borderBottom: '1px solid #1f2937', padding: '4px 0' }}>
-            <span style={{ color: '#94a3b8', minWidth: 160 }}>{new Date(s.fechaHoraAviso).toLocaleString()}</span>
+          <div key={s.id} style={{ fontSize: 13, display: 'flex', gap: 10, borderBottom: '1px solid var(--line-soft)', padding: '4px 0' }}>
+            <span style={{ color: 'var(--muted)', minWidth: 160 }}>{new Date(s.fechaHoraAviso).toLocaleString()}</span>
             <span>{s.numeroServicio}</span>
             <span className="badge">{s.estado}</span>
           </div>
@@ -1004,20 +1006,20 @@ function TabBitacora({ guardiaId }: { guardiaId: string }) {
       </BitacoraSeccion>
 
       <BitacoraSeccion titulo={`Eventos (${bitacora.eventos.length})`}>
-        {bitacora.eventos.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin eventos en el horario de la guardia.</p>}
+        {bitacora.eventos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin eventos en el horario de la guardia.</p>}
         {bitacora.eventos.map((e: any) => (
-          <div key={e.id} style={{ fontSize: 13, display: 'flex', gap: 10, borderBottom: '1px solid #1f2937', padding: '4px 0' }}>
-            <span style={{ color: '#94a3b8', minWidth: 160 }}>{new Date(e.fechaInicio).toLocaleString()}</span>
+          <div key={e.id} style={{ fontSize: 13, display: 'flex', gap: 10, borderBottom: '1px solid var(--line-soft)', padding: '4px 0' }}>
+            <span style={{ color: 'var(--muted)', minWidth: 160 }}>{new Date(e.fechaInicio).toLocaleString()}</span>
             <span>{e.nombre}</span>
           </div>
         ))}
       </BitacoraSeccion>
 
       <BitacoraSeccion titulo={`Prestamos de equipo (${bitacora.prestamosEquipo.length})`}>
-        {bitacora.prestamosEquipo.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin prestamos en el horario de la guardia.</p>}
+        {bitacora.prestamosEquipo.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin prestamos en el horario de la guardia.</p>}
         {bitacora.prestamosEquipo.map((p: any) => (
-          <div key={p.id} style={{ fontSize: 13, display: 'flex', gap: 10, borderBottom: '1px solid #1f2937', padding: '4px 0' }}>
-            <span style={{ color: '#94a3b8', minWidth: 160 }}>{new Date(p.fechaPrestamo).toLocaleString()}</span>
+          <div key={p.id} style={{ fontSize: 13, display: 'flex', gap: 10, borderBottom: '1px solid var(--line-soft)', padding: '4px 0' }}>
+            <span style={{ color: 'var(--muted)', minWidth: 160 }}>{new Date(p.fechaPrestamo).toLocaleString()}</span>
             <span>{p.nombreCompleto ?? '—'}</span>
             <span className="badge">{p.estado}</span>
           </div>
@@ -1025,19 +1027,19 @@ function TabBitacora({ guardiaId }: { guardiaId: string }) {
       </BitacoraSeccion>
 
       <BitacoraSeccion titulo={`Pernoctantes (${bitacora.pernoctes.length})`}>
-        {bitacora.pernoctes.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin pernoctantes.</p>}
+        {bitacora.pernoctes.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin pernoctantes.</p>}
         {bitacora.pernoctes.map((p) => (
-          <div key={p.id} style={{ fontSize: 13, borderBottom: '1px solid #1f2937', padding: '4px 0' }}>
+          <div key={p.id} style={{ fontSize: 13, borderBottom: '1px solid var(--line-soft)', padding: '4px 0' }}>
             {p.nombreCompleto}{p.motivo ? ` — ${p.motivo}` : ''}
           </div>
         ))}
       </BitacoraSeccion>
 
       <BitacoraSeccion titulo={`Novedades (${bitacora.novedades.length})`}>
-        {bitacora.novedades.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin novedades.</p>}
+        {bitacora.novedades.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin novedades.</p>}
         {bitacora.novedades.map((n) => (
-          <div key={n.id} style={{ fontSize: 13, borderBottom: '1px solid #1f2937', padding: '4px 0' }}>
-            <span style={{ color: '#94a3b8' }}>{new Date(n.fechaHora).toLocaleString()}</span> — {n.texto}
+          <div key={n.id} style={{ fontSize: 13, borderBottom: '1px solid var(--line-soft)', padding: '4px 0' }}>
+            <span style={{ color: 'var(--muted)' }}>{new Date(n.fechaHora).toLocaleString()}</span> — {n.texto}
           </div>
         ))}
       </BitacoraSeccion>
@@ -1045,7 +1047,7 @@ function TabBitacora({ guardiaId }: { guardiaId: string }) {
       {bitacora.guardia.cierreResumen && (
         <div className="card">
           <h3 style={{ fontSize: 14, marginBottom: 10 }}>Resumen de cierre</h3>
-          <pre style={{ fontSize: 12, whiteSpace: 'pre-wrap', color: '#94a3b8' }}>
+          <pre style={{ fontSize: 12, whiteSpace: 'pre-wrap', color: 'var(--muted)' }}>
             {formatearJsonSeguro(bitacora.guardia.cierreResumen)}
           </pre>
         </div>

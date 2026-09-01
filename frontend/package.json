@@ -6,7 +6,9 @@
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start -p 3000",
-    "audit:a11y": "node scripts/audit-accessibility.mjs"
+    "audit:a11y": "node scripts/audit-accessibility.mjs",
+    "audit:contraste": "node scripts/audit-contraste.mjs",
+    "generar:pantallas": "node scripts/generar-pantallas.mjs"
   },
   "dependencies": {
     "next": "^16.3.2",

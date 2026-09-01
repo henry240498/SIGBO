@@ -23,10 +23,6 @@ Tabla seguridad.configuracion_versiones (10 columnas). Creada en 021_configuraci
 - **Esquema:** seguridad · **Columnas:** 10
 - **UNIQUE:** `numero`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN ('BORRADOR','PUBLICADO','ARCHIVADO')`
-
 ## Llaves foraneas
 
 - `creado_por` → [[table--seguridad-usuarios|seguridad.usuarios]]

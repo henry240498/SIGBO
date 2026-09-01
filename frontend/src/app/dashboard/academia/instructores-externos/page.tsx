@@ -8,6 +8,7 @@ import {
   actualizarInstructorExterno,
   cargarInstructoresExternos,
 } from '@/lib/academia';
+import { Aviso } from '@/app/components/Aviso';
 
 const VACIO: InstructorExternoInput = {
   nombre: '',
@@ -92,48 +93,48 @@ export default function InstructoresExternosPage() {
       </div>
 
       <div className="card">
-        <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Buscar</label>
-        <input className="input-field" placeholder="Nombre, apellido o documento..." value={q} onChange={(e) => setQ(e.target.value)} style={{ maxWidth: 320 }} />
+        <label htmlFor="buscar" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Buscar</label>
+        <input id="buscar" className="input-field" placeholder="Nombre, apellido o documento..." value={q} onChange={(e) => setQ(e.target.value)} style={{ maxWidth: 320 }} />
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       {editandoId && (
         <form onSubmit={guardar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <h3 style={{ fontSize: 14 }}>Editar instructor externo</h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Apellido</label>
-              <input className="input-field" value={form.apellido} onChange={(e) => setForm({ ...form, apellido: e.target.value })} />
+              <label htmlFor="apellido" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Apellido</label>
+              <input id="apellido" className="input-field" value={form.apellido} onChange={(e) => setForm({ ...form, apellido: e.target.value })} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Documento</label>
-              <input className="input-field" value={form.documento} onChange={(e) => setForm({ ...form, documento: e.target.value })} />
+              <label htmlFor="documento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Documento</label>
+              <input id="documento" className="input-field" value={form.documento} onChange={(e) => setForm({ ...form, documento: e.target.value })} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Institución</label>
-              <input className="input-field" value={form.institucion} onChange={(e) => setForm({ ...form, institucion: e.target.value })} />
+              <label htmlFor="institucion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Institución</label>
+              <input id="institucion" className="input-field" value={form.institucion} onChange={(e) => setForm({ ...form, institucion: e.target.value })} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Especialidad</label>
-              <input className="input-field" value={form.especialidad} onChange={(e) => setForm({ ...form, especialidad: e.target.value })} />
+              <label htmlFor="especialidad" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Especialidad</label>
+              <input id="especialidad" className="input-field" value={form.especialidad} onChange={(e) => setForm({ ...form, especialidad: e.target.value })} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Teléfono</label>
-              <input className="input-field" value={form.telefono} onChange={(e) => setForm({ ...form, telefono: e.target.value })} />
+              <label htmlFor="telefono" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Teléfono</label>
+              <input id="telefono" className="input-field" value={form.telefono} onChange={(e) => setForm({ ...form, telefono: e.target.value })} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Email</label>
-              <input className="input-field" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+              <label htmlFor="email" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Email</label>
+              <input id="email" className="input-field" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
-            <input className="input-field" value={form.observaciones} onChange={(e) => setForm({ ...form, observaciones: e.target.value })} />
+            <label htmlFor="observaciones" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
+            <input id="observaciones" className="input-field" value={form.observaciones} onChange={(e) => setForm({ ...form, observaciones: e.target.value })} />
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
             <button type="button" className="btn-primary" disabled={guardando}>
@@ -154,30 +155,30 @@ export default function InstructoresExternosPage() {
         </form>
       )}
 
-      {instructores && instructores.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>No hay instructores externos registrados.</p>}
+      {instructores && instructores.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay instructores externos registrados.</p>}
       {instructores && instructores.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Institución</th>
-              <th style={{ padding: '6px 4px' }}>Especialidad</th>
-              <th style={{ padding: '6px 4px' }}>Contacto</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              {puedeGestionar && <th style={{ padding: '6px 4px' }}>Acciones</th>}
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Institución</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Especialidad</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Contacto</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              {puedeGestionar && <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>}
             </tr>
           </thead>
           <tbody>
             {instructores.map((i) => (
-              <tr key={i.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={i.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>
                   {i.nombre} {i.apellido ?? ''}
                 </td>
                 <td style={{ padding: '6px 4px' }}>{i.institucion ?? '-'}</td>
                 <td style={{ padding: '6px 4px' }}>{i.especialidad ?? '-'}</td>
-                <td style={{ padding: '6px 4px', color: '#94a3b8' }}>{[i.telefono, i.email].filter(Boolean).join(' / ') || '-'}</td>
+                <td style={{ padding: '6px 4px', color: 'var(--muted)' }}>{[i.telefono, i.email].filter(Boolean).join(' / ') || '-'}</td>
                 <td style={{ padding: '6px 4px' }}>
-                  <span className="badge" style={{ background: i.activo ? undefined : '#475569' }}>
+                  <span className="badge" style={{ background: i.activo ? undefined : 'var(--neutral-fill)' }}>
                     {i.activo ? 'activo' : 'inactivo'}
                   </span>
                 </td>

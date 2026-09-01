@@ -22,12 +22,6 @@ Tabla servicios.comunicaciones_servicio (12 columnas). Creada en 017_comunicacio
 - **Esquema:** servicios · **Columnas:** 12
 - **UNIQUE:** `servicio_id`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `tipo IN ('OTRAS_OCURRENCIAS', 'INCENDIO')`
-- `estado IN ('BORRADOR', 'PENDIENTE_REVISION', 'OBSERVADO', 'FINALIZADA', 'ANULADO')`
-- `ISJSON(datos) = 1`
-
 ## Llaves foraneas
 
 - `servicio_id` → [[table--servicios-servicios|servicios.servicios]]
