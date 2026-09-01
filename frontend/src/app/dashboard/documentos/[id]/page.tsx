@@ -425,7 +425,7 @@ export default function FichaDocumentoPage() {
         {mostrarAnular && (
           <form onSubmit={anular} className="card" style={{ marginTop: 12, background: 'var(--surface-soft)', display: 'flex', flexDirection: 'column', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo de anulacion</label>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo de anulación</label>
               <ComboBuscable ariaLabel="Motivo de anulacion" opciones={opcionesMotivoAnulacion} value={motivoAnulacionId} onChange={setMotivoAnulacionId} ningunaLabel="-- seleccionar --" />
             </div>
             <div>
@@ -447,11 +447,11 @@ export default function FichaDocumentoPage() {
             <input id="titulo" className="input-field" value={titulo} onChange={(e) => setTitulo(e.target.value)} disabled={!puedeEditar || esTerminal} required />
           </div>
           <div>
-            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label>
             <textarea id="descripcion" className="input-field" rows={2} value={descripcion} onChange={(e) => setDescripcion(e.target.value)} disabled={!puedeEditar || esTerminal} />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
+            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría</label>
             <ComboBuscable ariaLabel="Categoria" opciones={opcionesCategoria} value={categoriaDocumentoId} onChange={setCategoriaDocumentoId} ningunaLabel="Sin categoria" disabled={!puedeEditar || esTerminal} />
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
@@ -501,7 +501,7 @@ export default function FichaDocumentoPage() {
                 {documento.archivoNombreOriginal} ({documento.archivoTamanoBytes ? `${Math.round(documento.archivoTamanoBytes / 1024)} KB` : '-'}) — version {documento.version}
               </p>
             ) : (
-              <p style={{ fontSize: 13, color: 'var(--muted)' }}>Este documento no tiene un archivo digital cargado (puede ser fisico).</p>
+              <p style={{ fontSize: 13, color: 'var(--muted)' }}>Este documento no tiene un archivo digital cargado (puede ser físico).</p>
             )}
             {puedeSubir && !esTerminal && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 10 }}>
@@ -579,7 +579,7 @@ export default function FichaDocumentoPage() {
         {puedeEditar && !esTerminal && (
           <form onSubmit={agregarRelacion} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr auto', gap: 8, marginTop: 10, borderTop: '1px solid var(--line)', paddingTop: 10, alignItems: 'flex-end' }}>
             <div>
-              <label htmlFor="modulo" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Modulo</label>
+              <label htmlFor="modulo" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Módulo</label>
               <input id="modulo" className="input-field" placeholder="ej. personal" value={nuevaRelModulo} onChange={(e) => setNuevaRelModulo(e.target.value)} required />
             </div>
             <div>
@@ -601,7 +601,7 @@ export default function FichaDocumentoPage() {
 
       {puedeVerAuditoria && (
         <div className="card">
-          <h3 style={{ fontSize: 14, marginBottom: 10 }}>Historial / auditoria</h3>
+          <h3 style={{ fontSize: 14, marginBottom: 10 }}>Historial / auditoría</h3>
           {!auditoria && <p style={{ fontSize: 13, color: 'var(--muted)' }}>Cargando historial...</p>}
           {auditoria && auditoria.length === 0 && <p style={{ fontSize: 13, color: 'var(--muted)' }}>Sin eventos registrados.</p>}
           {auditoria && auditoria.map((a) => (

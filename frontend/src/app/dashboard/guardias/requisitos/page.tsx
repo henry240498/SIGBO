@@ -141,7 +141,7 @@ export default function RequisitosRolPage() {
         </form>
       )}
 
-      {requisitos && requisitos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin requisitos configurados: por ahora ningun rol esta restringido por esta via.</p>}
+      {requisitos && requisitos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin requisitos configurados: por ahora ningún rol esta restringido por esta via.</p>}
       {requisitos && requisitos.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>

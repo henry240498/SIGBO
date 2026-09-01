@@ -172,7 +172,7 @@ export default function DocumentosInstitucionalesPage() {
   if (!puedeVer) {
     return (
       <p style={{ color: 'var(--muted)', fontSize: 13 }}>
-        Solo un usuario con el permiso <code>organizacion:documentos_ver</code> puede acceder a esta seccion.
+        Solo un usuario con el permiso <code>organización:documentos_ver</code> puede acceder a esta seccion.
       </p>
     );
   }
@@ -181,7 +181,7 @@ export default function DocumentosInstitucionalesPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 900 }}>
       <div>
-        <h2 style={{ fontSize: 16 }}>Configuracion de Documentos</h2>
+        <h2 style={{ fontSize: 16 }}>Configuración de Documentos</h2>
         <p style={{ fontSize: 13, color: 'var(--muted)' }}>
           Identidad institucional (membrete, datos de contacto, pie de pagina) usada por TODOS los documentos PDF y
           Word que genere SIGBO — Orden de Guardia hoy, y cualquier modulo nuevo que genere documentos mas adelante.
@@ -235,7 +235,7 @@ export default function DocumentosInstitucionalesPage() {
         <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <h3 style={{ fontSize: 14 }}>Datos institucionales</h3>
           <div>
-            <label htmlFor="nombre-de-la-institucion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre de la institucion</label>
+            <label htmlFor="nombre-de-la-institucion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre de la institución</label>
             <input id="nombre-de-la-institucion" className="input-field" value={nombreInstitucion} onChange={(e) => setNombreInstitucion(e.target.value)} />
           </div>
           <CampoConToggle label="Direccion" valor={direccion} onValor={setDireccion} mostrar={mostrarDireccion} onMostrar={setMostrarDireccion} />
@@ -430,13 +430,13 @@ function SeccionNumeracion({
     <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h3 style={{ fontSize: 14 }}>Numeracion de documentos</h3>
+          <h3 style={{ fontSize: 14 }}>Numeración de documentos</h3>
           <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>
             Un numerador independiente por tipo de documento y año (ej. Resolucion 2026/47). El numero se sugiere al
             crear un documento pero solo se consume si el documento se guarda con ese numero.
           </p>
         </div>
-        <button type="button" className="btn-primary" onClick={nuevo}>+ Nueva numeracion</button>
+        <button type="button" className="btn-primary" onClick={nuevo}>+ Nueva numeración</button>
       </div>
 
       {error && <Aviso tipo="error" texto={error} fontSize={13} />}
@@ -457,7 +457,7 @@ function SeccionNumeracion({
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
-              <label htmlFor="numero-actual-ultimo-emitido" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero actual (ultimo emitido)</label>
+              <label htmlFor="numero-actual-ultimo-emitido" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Número actual (último emitido)</label>
               <input id="numero-actual-ultimo-emitido" className="input-field" type="number" min={0} value={ultimoNumero} onChange={(e) => setUltimoNumero(e.target.value)} />
             </div>
             <div>
@@ -477,7 +477,7 @@ function SeccionNumeracion({
               <input id="mes-desde" className="input-field" type="number" min={1} max={12} value={mesDesde} onChange={(e) => setMesDesde(e.target.value)} />
             </div>
             <div>
-              <label htmlFor="numero-desde" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Numero desde</label>
+              <label htmlFor="numero-desde" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Número desde</label>
               <input id="numero-desde" className="input-field" type="number" value={numeroDesde} onChange={(e) => setNumeroDesde(e.target.value)} />
             </div>
           </div>
@@ -491,7 +491,7 @@ function SeccionNumeracion({
               <input id="mes-hasta" className="input-field" type="number" min={1} max={12} value={mesHasta} onChange={(e) => setMesHasta(e.target.value)} />
             </div>
             <div>
-              <label htmlFor="numero-hasta" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Numero hasta</label>
+              <label htmlFor="numero-hasta" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Número hasta</label>
               <input id="numero-hasta" className="input-field" type="number" value={numeroHasta} onChange={(e) => setNumeroHasta(e.target.value)} />
             </div>
           </div>
@@ -521,8 +521,8 @@ function SeccionNumeracion({
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
               <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Año</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Numero actual</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Proximo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Número actual</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Próximo</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Vigencia</th>
               <th scope="col" style={{ padding: '6px 4px' }}></th>
             </tr>

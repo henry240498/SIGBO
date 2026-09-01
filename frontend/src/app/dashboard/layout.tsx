@@ -55,6 +55,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   useEffect(() => { setPlegados(leerPlegados()); }, []);
 
+  // En telefono la barra inferior es una fila de 16 iconos con scroll horizontal, y en
+  // escritorio el menu puede pasar del alto de la pantalla: en los dos casos el modulo
+  // abierto puede quedar fuera de vista. 'nearest' mueve solo ese contenedor.
+  useEffect(() => {
+    document
+      .querySelector<HTMLElement>('.side-nav .nav-link.active')
+      ?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }, [pathname]);
+
   useEffect(() => {
     function alTeclado(evento: KeyboardEvent) {
       if ((evento.ctrlKey || evento.metaKey) && evento.key.toLowerCase() === 'k') {

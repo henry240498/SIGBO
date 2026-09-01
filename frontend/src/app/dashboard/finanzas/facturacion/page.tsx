@@ -55,7 +55,7 @@ function FilaNotaCredito({ factura, motivos, onCreada }: { factura: Factura; mot
     <div style={{ padding: '10px 4px', background: 'var(--surface-soft)', borderRadius: 6, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr auto', gap: 8, alignItems: 'flex-end' }}>
       {error && <p style={{ color: 'var(--danger)', fontSize: 12, gridColumn: '1 / -1' }}>{error}</p>}
       <div>
-        <label htmlFor={`${idCampo}-n-nota-de-credito`} style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>N° nota de credito</label>
+        <label htmlFor={`${idCampo}-n-nota-de-credito`} style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>N° nota de crédito</label>
         <input id={`${idCampo}-n-nota-de-credito`} className="input-field" value={numero} onChange={(e) => setNumero(e.target.value)} />
       </div>
       <div>
@@ -240,7 +240,7 @@ export default function FacturacionPage() {
 
       {mostrarForm && (
         <form onSubmit={crear} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <p style={{ color: 'var(--muted)', fontSize: 12 }}>Registra una factura fisica ya emitida por el cuartel -- SIGBO no la genera, solo la deja registrada y trazable.</p>
+          <p style={{ color: 'var(--muted)', fontSize: 12 }}>Registra una factura física ya emitida por el cuartel -- SIGBO no la genera, solo la deja registrada y trazable.</p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de comprobante</label>

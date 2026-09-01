@@ -246,7 +246,7 @@ export default function MovimientosDepositoPage() {
             ) : (
               <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 }}>
                 <div>
-                  <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Articulo</label>
+                  <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Artículo</label>
                   <ComboBuscable ariaLabel="Articulo" opciones={opcionesArticulo} value={articuloId} onChange={setArticuloId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar articulo..." />
                 </div>
                 <div>
@@ -289,7 +289,7 @@ export default function MovimientosDepositoPage() {
             </div>
           </div>
           <div>
-            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observación</label>
             <input id="observacion" className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
 

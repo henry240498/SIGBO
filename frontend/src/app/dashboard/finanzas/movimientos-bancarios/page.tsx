@@ -154,7 +154,7 @@ export default function MovimientosBancariosPage() {
             </div>
           </div>
           <div>
-            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label>
             <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required />
           </div>
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
@@ -171,9 +171,9 @@ export default function MovimientosBancariosPage() {
               <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Cuenta</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Descripcion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Descripción</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Importe</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Conciliacion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Conciliación</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>

@@ -67,7 +67,7 @@ export default function SeguridadDashboardPage() {
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
         <section className="card">
-          <h2 style={{ fontSize: 15, marginBottom: 12 }}>Ultimos accesos</h2>
+          <h2 style={{ fontSize: 15, marginBottom: 12 }}>Últimos accesos</h2>
           {data.ultimosAccesos.length === 0 && (
             <p style={{ fontSize: 13, color: 'var(--muted)' }}>Sin accesos registrados.</p>
           )}
@@ -110,11 +110,11 @@ export default function SeguridadDashboardPage() {
       </div>
 
       <section className="card">
-        <h2 style={{ fontSize: 15, marginBottom: 12 }}>Auditoria reciente</h2>
+        <h2 style={{ fontSize: 15, marginBottom: 12 }}>Auditoría reciente</h2>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-              <th scope="col" style={{ padding: '6px 4px' }}>Accion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acción</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Recurso</th>
               <th scope="col" style={{ padding: '6px 4px' }}>IP</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>

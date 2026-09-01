@@ -53,7 +53,7 @@ export default function DashboardFinanzasPage() {
       </div>
 
       <div>
-        <h2 style={{ fontSize: 15, marginBottom: 10 }}>Socios Protectores y Facturacion</h2>
+        <h2 style={{ fontSize: 15, marginBottom: 10 }}>Socios Protectores y Facturación</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
           <Tarjeta titulo="Socios activos" valor={String(indicadores.sociosProtectores.activos)} color="var(--signal)" />
           <Tarjeta titulo="Socios sin aporte este mes" valor={String(indicadores.sociosProtectores.sinAporteEsteMes)} color={indicadores.sociosProtectores.sinAporteEsteMes > 0 ? 'var(--warning)' : undefined} />

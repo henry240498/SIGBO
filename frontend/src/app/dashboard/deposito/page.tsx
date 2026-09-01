@@ -68,7 +68,7 @@ export default function DashboardDepositoPage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <h2 style={{ fontSize: 16 }}>Dashboard de Deposito</h2>
+      <h2 style={{ fontSize: 16 }}>Dashboard de Depósito</h2>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 16 }}>
         <Tarjeta titulo="Elementos inventariados" valor={indicadores.elementosInventariados} />
@@ -84,7 +84,7 @@ export default function DashboardDepositoPage() {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
         <div className="card">
           <h3 style={{ fontSize: 14, marginBottom: 10 }}>
-            ⚠️ Stock bajo ({alertas.totales.stockBajo}) — <Link href="/dashboard/deposito/articulos" style={{ color: 'var(--signal)', fontSize: 12 }}>ver articulos</Link>
+            ⚠️ Stock bajo ({alertas.totales.stockBajo}) — <Link href="/dashboard/deposito/articulos" style={{ color: 'var(--signal)', fontSize: 12 }}>ver artículos</Link>
           </h3>
           {alertas.stockBajo.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin alertas de stock bajo.</p>}
           {alertas.stockBajo.map((a) => (
@@ -98,7 +98,7 @@ export default function DashboardDepositoPage() {
           <h3 style={{ fontSize: 14, marginBottom: 10 }}>
             📅 Lotes por vencer ({alertas.totales.vencimientos})
           </h3>
-          {alertas.vencimientos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin lotes proximos a vencer.</p>}
+          {alertas.vencimientos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin lotes próximos a vencer.</p>}
           {alertas.vencimientos.map((l) => (
             <div key={l.id} style={{ fontSize: 13, padding: '4px 0', borderBottom: '1px solid var(--line-soft)' }}>
               Lote {l.numeroLote} — vence {l.fechaVencimiento} ({l.cantidad})
@@ -108,9 +108,9 @@ export default function DashboardDepositoPage() {
 
         <div className="card">
           <h3 style={{ fontSize: 14, marginBottom: 10 }}>
-            ⏰ Prestamos vencidos ({alertas.totales.prestamosVencidos}) — <Link href="/dashboard/deposito/prestamos" style={{ color: 'var(--signal)', fontSize: 12 }}>ver prestamos</Link>
+            ⏰ Prestamos vencidos ({alertas.totales.prestamosVencidos}) — <Link href="/dashboard/deposito/prestamos" style={{ color: 'var(--signal)', fontSize: 12 }}>ver préstamos</Link>
           </h3>
-          {alertas.prestamosVencidos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin prestamos vencidos.</p>}
+          {alertas.prestamosVencidos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin préstamos vencidos.</p>}
           {alertas.prestamosVencidos.map((p) => (
             <div key={p.id} style={{ fontSize: 13, padding: '4px 0', borderBottom: '1px solid var(--line-soft)' }}>
               {p.solicitanteExterno ?? 'Personal'} — vencio {p.fechaDevolucionComprometida ? new Date(p.fechaDevolucionComprometida).toLocaleDateString() : '-'}

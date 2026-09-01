@@ -176,7 +176,7 @@ export default function DesignacionesPage() {
             </select>
           </div>
           <div>
-            <label htmlFor="compania-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Compania (opcional)</label>
+            <label htmlFor="compania-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Compañía (opcional)</label>
             <select id="compania-opcional" className="input-field" value={companiaId} onChange={(e) => setCompaniaId(e.target.value)}>
               <option value="">-- ninguna --</option>
               {companias.map((c) => (
@@ -227,7 +227,7 @@ export default function DesignacionesPage() {
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
               <th scope="col" style={{ padding: '6px 4px' }}>Bombero</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Cargo</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Compania / Cuartel</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Compañía / Cuartel</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Desde</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Hasta</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>

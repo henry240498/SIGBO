@@ -119,7 +119,7 @@ export default function VehiculosPage() {
         <form className="card" onSubmit={crear} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label htmlFor="codigo-interno" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo interno</label>
+              <label htmlFor="codigo-interno" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Código interno</label>
               <input id="codigo-interno" className="input-field" value={numeroInterno} onChange={(e) => setNumeroInterno(e.target.value)} required />
             </div>
             <div>
@@ -155,7 +155,7 @@ export default function VehiculosPage() {
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-              <th scope="col" style={{ padding: '6px 4px' }}>Codigo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Código</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Marca/Modelo</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Patente</th>

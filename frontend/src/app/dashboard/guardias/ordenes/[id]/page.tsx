@@ -265,7 +265,7 @@ function VistaPreviaOrden({ snapshot }: { snapshot: OrdenGuardiaSnapshot }) {
           {snapshot.firmantes.map((f, i) => (
             <div key={i} style={{ textAlign: 'center', fontSize: 12, flex: 1 }}>
               {f.firmaDigitalUrl ? (
-                <div style={{ fontSize: 10, color: 'var(--success)', marginBottom: 4 }}>✓ Firma digital se insertara automaticamente</div>
+                <div style={{ fontSize: 10, color: 'var(--success)', marginBottom: 4 }}>✓ Firma digital se insertara automáticamente</div>
               ) : (
                 <div style={{ fontSize: 10, color: 'var(--muted)', marginBottom: 4 }}>Espacio para firma manuscrita</div>
               )}
@@ -361,12 +361,12 @@ function PanelModificaciones({
               <select id="campo" className="input-field" value={campo} onChange={(e) => setCampo(e.target.value)}>
                 <option value="general">General</option>
                 <option value="feriado">Feriado</option>
-                <option value="asignacion">Asignacion</option>
+                <option value="asignacion">Asignación</option>
                 <option value="grupo">Grupo</option>
               </select>
             </div>
             <div>
-              <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+              <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label>
               <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required />
             </div>
           </div>
@@ -397,8 +397,8 @@ function PanelModificaciones({
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
               <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Campo</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Descripcion</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Antes → Despues</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Descripción</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Antes → Después</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Motivo</th>
             </tr>
           </thead>

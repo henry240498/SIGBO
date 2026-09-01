@@ -534,7 +534,7 @@ function TabDatosPersonales({
         </div>
       </div>
 
-      <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 6 }}>Ubicacion</p>
+      <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 6 }}>Ubicación</p>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
         <div>
           <label htmlFor="pais" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Pais</label>
@@ -852,7 +852,7 @@ function TabInstitucional({
             />
           </div>
           <div>
-            <label htmlFor="dia-preferente" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Dia preferente</label>
+            <label htmlFor="dia-preferente" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Día preferente</label>
             <select id="dia-preferente"
               className="input-field"
               value={form.diaPreferenteGuardia}
@@ -1125,7 +1125,7 @@ function TabHistorial({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
             <input id="motivo" className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
           </div>
           <div>
-            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observación</label>
             <input id="observacion" className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
           <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
@@ -1142,7 +1142,7 @@ function TabHistorial({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
               <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Motivo</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Observacion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Observación</th>
             </tr>
           </thead>
           <tbody>
@@ -1288,7 +1288,7 @@ function TabEspecialidades({ bomberoId, puedeEditar }: { bomberoId: string; pued
               />
             </div>
             <div>
-              <label style={{ fontSize: 11, display: 'block' }}>Institucion</label>
+              <label style={{ fontSize: 11, display: 'block' }}>Institución</label>
               <input aria-label="Institucion"
                 className="input-field"
                 value={esp.institucionCertificadora ?? ''}
@@ -1346,7 +1346,7 @@ function TabEspecialidades({ bomberoId, puedeEditar }: { bomberoId: string; pued
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
               <th scope="col" style={{ padding: '6px 4px' }}>Especialidad</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Nivel</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Institucion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Institución</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Obtencion</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Vigencia</th>
             </tr>
@@ -1460,7 +1460,7 @@ function TabCondicion({ bomberoId, puedeEditar, onGuardado }: { bomberoId: strin
       <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {error && <Aviso tipo="error" texto={error} />}
         <div>
-          <label htmlFor="condicion-institucional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Condicion institucional</label>
+          <label htmlFor="condicion-institucional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Condición institucional</label>
           <select id="condicion-institucional" className="input-field" value={formCondicion} onChange={(e) => { setFormCondicion(e.target.value); setFormDetalle({}); }}>
             {CONDICIONES.map((c) => (
               <option key={c} value={c}>
@@ -1502,7 +1502,7 @@ function TabCondicion({ bomberoId, puedeEditar, onGuardado }: { bomberoId: strin
           {condicion ? 'Editar' : 'Definir condicion'}
         </button>
       )}
-      {!condicion && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin condicion institucional definida.</p>}
+      {!condicion && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin condición institucional definida.</p>}
       {condicion && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           {campoTexto('Condicion', condicion)}
@@ -1622,7 +1622,7 @@ function TabFormacion({ bomberoId }: { bomberoId: string }) {
             <thead>
               <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
                 <th scope="col" style={{ padding: '6px 4px' }}>Actividad</th>
-                <th scope="col" style={{ padding: '6px 4px' }}>Periodo</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Período</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Resultado</th>
               </tr>
@@ -2046,7 +2046,7 @@ function TabIdiomas({ bomberoId, puedeEditar }: { bomberoId: string; puedeEditar
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 11, display: 'block' }}>Certificacion</label>
+              <label style={{ fontSize: 11, display: 'block' }}>Certificación</label>
               <input aria-label="Certificacion"
                 className="input-field"
                 value={idi.certificacion}
@@ -2101,7 +2101,7 @@ function TabIdiomas({ bomberoId, puedeEditar }: { bomberoId: string; puedeEditar
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
               <th scope="col" style={{ padding: '6px 4px' }}>Idioma</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Nivel</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Certificacion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Certificación</th>
             </tr>
           </thead>
           <tbody>
@@ -2147,7 +2147,7 @@ function TabServicios({ bomberoId }: { bomberoId: string }) {
                 <th scope="col" style={{ padding: '6px 4px' }}>Turno</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Rol</th>
-                <th scope="col" style={{ padding: '6px 4px' }}>Participacion</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Participación</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
               </tr>
             </thead>
@@ -2297,7 +2297,7 @@ function TabEquipamiento({ bomberoId, puedeEditar }: { bomberoId: string; puedeE
             </select>
           </div>
           <div>
-            <label htmlFor="devolucion-comprometida" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Devolucion comprometida</label>
+            <label htmlFor="devolucion-comprometida" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Devolución comprometida</label>
             <input id="devolucion-comprometida"
               className="input-field"
               type="datetime-local"
@@ -2316,15 +2316,15 @@ function TabEquipamiento({ bomberoId, puedeEditar }: { bomberoId: string; puedeE
       )}
 
       <div className="card">
-        {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin prestamos de equipos registrados.</p>}
+        {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin préstamos de equipos registrados.</p>}
         {items && items.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
                 <th scope="col" style={{ padding: '6px 4px' }}>Equipo</th>
-                <th scope="col" style={{ padding: '6px 4px' }}>Prestamo</th>
-                <th scope="col" style={{ padding: '6px 4px' }}>Devolucion comprometida</th>
-                <th scope="col" style={{ padding: '6px 4px' }}>Devolucion real</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Préstamo</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Devolución comprometida</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Devolución real</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
               </tr>
@@ -2380,7 +2380,7 @@ function TabEquipamientoDeposito({ bomberoId }: { bomberoId: string }) {
         Deposito — <Link href="/dashboard/deposito/movimientos" style={{ color: 'var(--signal)', fontSize: 12 }}>ver movimientos ↗</Link>
       </h2>
       {error && <Aviso tipo="error" texto={error} fontSize={13} />}
-      {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin elementos del modulo Deposito a su nombre.</p>}
+      {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin elementos del módulo Depósito a su nombre.</p>}
       {items && items.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
@@ -2494,7 +2494,7 @@ function TabVehiculos({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
         {editando.map((v, idx) => (
           <div key={idx} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr auto', gap: 8, alignItems: 'end' }}>
             <div>
-              <label style={{ fontSize: 11, display: 'block' }}>Vehiculo</label>
+              <label style={{ fontSize: 11, display: 'block' }}>Vehículo</label>
               <select aria-label="Vehiculo"
                 className="input-field"
                 value={v.vehiculoId}
@@ -2513,7 +2513,7 @@ function TabVehiculos({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 11, display: 'block' }}>Categoria</label>
+              <label style={{ fontSize: 11, display: 'block' }}>Categoría</label>
               <input aria-label="Categoria"
                 className="input-field"
                 value={v.categoria}
@@ -2525,7 +2525,7 @@ function TabVehiculos({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
               />
             </div>
             <div>
-              <label style={{ fontSize: 11, display: 'block' }}>Fecha autorizacion</label>
+              <label style={{ fontSize: 11, display: 'block' }}>Fecha autorización</label>
               <input aria-label="Fecha autorizacion"
                 className="input-field"
                 type="date"
@@ -2587,14 +2587,14 @@ function TabVehiculos({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
           Editar vehiculos autorizados
         </button>
       )}
-      {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin vehiculos autorizados.</p>}
+      {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin vehículos autorizados.</p>}
       {items && items.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-              <th scope="col" style={{ padding: '6px 4px' }}>Vehiculo</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Categoria</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Autorizacion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Vehículo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Categoría</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Autorización</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Vigencia</th>
             </tr>
           </thead>
@@ -3129,7 +3129,7 @@ function SeccionSeguros({ bomberoId }: { bomberoId: string }) {
               </select>
             </div>
             <div>
-              <label htmlFor="numero-de-poliza" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero de poliza</label>
+              <label htmlFor="numero-de-poliza" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Número de poliza</label>
               <input id="numero-de-poliza" className="input-field" value={form.numeroPoliza} onChange={(e) => setForm({ ...form, numeroPoliza: e.target.value })} />
             </div>
             <div>
@@ -3277,7 +3277,7 @@ function TabFoja({ bomberoId, puedeEditar }: { bomberoId: string; puedeEditar: b
       {error && <Aviso tipo="error" texto={error} />}
 
       <div className="card">
-        {anios && anios.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Todavia no se genero ninguna foja de servicio.</p>}
+        {anios && anios.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Todavía no se genero ninguna foja de servicio.</p>}
         {anios && anios.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
@@ -3401,7 +3401,7 @@ function TabAuditoria({ bomberoId }: { bomberoId: string }) {
 
   if (error) return <p style={{ color: 'var(--muted)', fontSize: 13 }}>{error}</p>;
   if (!items) return <Cargando texto="Cargando…" />;
-  if (items.length === 0) return <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin registros de auditoria.</p>;
+  if (items.length === 0) return <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin registros de auditoría.</p>;
 
   return (
     <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
@@ -3409,7 +3409,7 @@ function TabAuditoria({ bomberoId }: { bomberoId: string }) {
         <thead>
           <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
             <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
-            <th scope="col" style={{ padding: '6px 4px' }}>Accion</th>
+            <th scope="col" style={{ padding: '6px 4px' }}>Acción</th>
             <th scope="col" style={{ padding: '6px 4px' }}>IP</th>
             <th scope="col" style={{ padding: '6px 4px' }}></th>
           </tr>

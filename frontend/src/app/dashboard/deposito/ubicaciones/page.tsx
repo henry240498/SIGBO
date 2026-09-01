@@ -175,7 +175,7 @@ export default function UbicacionesDepositoPage() {
         <form onSubmit={guardar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gap: 10 }}>
             <div>
-              <label htmlFor="codigo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo</label>
+              <label htmlFor="codigo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Código</label>
               <input id="codigo" className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} />
             </div>
             <div>
@@ -183,13 +183,13 @@ export default function UbicacionesDepositoPage() {
               <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de ubicacion</label>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de ubicación</label>
               <ComboBuscable ariaLabel="Tipo de ubicacion" opciones={opcionesTipo} value={tipoUbicacionId} onChange={setTipoUbicacionId} ningunaLabel="-- seleccionar --" />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicacion padre</label>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicación padre</label>
               <ComboBuscable ariaLabel="Ubicacion padre" opciones={opcionesPadre} value={padreId} onChange={setPadreId} ningunaLabel="Sin padre (raiz)" />
             </div>
             <div>
@@ -227,7 +227,7 @@ export default function UbicacionesDepositoPage() {
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-              <th scope="col" style={{ padding: '6px 4px' }}>Codigo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Código</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Padre</th>

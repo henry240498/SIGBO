@@ -130,7 +130,7 @@ export default function CuentasBancariasPage() {
               <input id="banco" className="input-field" value={banco} onChange={(e) => setBanco(e.target.value)} required />
             </div>
             <div>
-              <label htmlFor="numero-de-cuenta" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero de cuenta</label>
+              <label htmlFor="numero-de-cuenta" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Número de cuenta</label>
               <input id="numero-de-cuenta" className="input-field" value={numeroCuenta} onChange={(e) => setNumeroCuenta(e.target.value)} required />
             </div>
             <div>
@@ -144,7 +144,7 @@ export default function CuentasBancariasPage() {
               <ComboBuscable ariaLabel="Responsable" opciones={opcionesBombero} value={responsableId} onChange={setResponsableId} ningunaLabel="Sin definir" />
             </div>
             <div>
-              <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+              <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observación</label>
               <input id="observacion" className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
             </div>
           </div>

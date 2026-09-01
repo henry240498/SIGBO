@@ -160,7 +160,7 @@ export default function AscensosPage() {
             <input id="fecha" className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
           </div>
           <div>
-            <label htmlFor="resolucion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Resolucion</label>
+            <label htmlFor="resolucion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Resolución</label>
             <input id="resolucion" className="input-field" value={resolucion} onChange={(e) => setResolucion(e.target.value)} />
           </div>
           <div style={{ gridColumn: '1 / -1' }}>
@@ -181,7 +181,7 @@ export default function AscensosPage() {
               <th scope="col" style={{ padding: '6px 4px' }}>Rango anterior</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Rango nuevo</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Resolucion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Resolución</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>

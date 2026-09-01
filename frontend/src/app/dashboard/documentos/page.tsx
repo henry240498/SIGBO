@@ -44,7 +44,7 @@ export default function DashboardDocumentosPage() {
           <h3 style={{ fontSize: 14, marginBottom: 10 }}>
             📅 Proximos a vencer — <Link href="/dashboard/documentos/vencimientos" style={{ color: 'var(--signal)', fontSize: 12 }}>ver todos</Link>
           </h3>
-          {indicadores.proximosAVencerDetalle.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin documentos proximos a vencer.</p>}
+          {indicadores.proximosAVencerDetalle.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin documentos próximos a vencer.</p>}
           {indicadores.proximosAVencerDetalle.map((d) => (
             <Link key={d.id} href={`/dashboard/documentos/${d.id}`} style={{ display: 'block', fontSize: 13, padding: '4px 0', borderBottom: '1px solid var(--line-soft)', color: 'var(--ink)', textDecoration: 'none' }}>
               {d.numeroDocumental ? `${d.numeroDocumental} — ` : ''}{d.titulo}: <strong style={{ color: 'var(--warning)' }}>vence {d.fechaVencimiento}</strong>
@@ -56,7 +56,7 @@ export default function DashboardDocumentosPage() {
           <h3 style={{ fontSize: 14, marginBottom: 10 }}>
             🕓 Recientes — <Link href="/dashboard/documentos/listado" style={{ color: 'var(--signal)', fontSize: 12 }}>ver listado</Link>
           </h3>
-          {indicadores.recientes.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin documentos cargados todavia.</p>}
+          {indicadores.recientes.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin documentos cargados todavía.</p>}
           {indicadores.recientes.map((d) => (
             <Link key={d.id} href={`/dashboard/documentos/${d.id}`} style={{ display: 'block', fontSize: 13, padding: '4px 0', borderBottom: '1px solid var(--line-soft)', color: 'var(--ink)', textDecoration: 'none' }}>
               {d.numeroDocumental ? `${d.numeroDocumental} — ` : ''}{d.titulo}

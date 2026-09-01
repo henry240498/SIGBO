@@ -216,7 +216,7 @@ export default function CuotasPage() {
               <ComboBuscable ariaLabel="Personal" opciones={opcionesBombero} value={bomberoId} onChange={setBomberoId} placeholderBusqueda="Buscar..." ningunaLabel="-- seleccionar --" />
             </div>
             <div>
-              <label htmlFor={`${idCampo}-periodo-yyyy-mm`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Periodo (YYYY-MM)</label>
+              <label htmlFor={`${idCampo}-periodo-yyyy-mm`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Período (YYYY-MM)</label>
               <input id={`${idCampo}-periodo-yyyy-mm`} className="input-field" placeholder="2026-08" value={periodo} onChange={(e) => setPeriodo(e.target.value)} required />
             </div>
             <div>
@@ -229,7 +229,7 @@ export default function CuotasPage() {
             </div>
           </div>
           <div>
-            <label htmlFor={`${idCampo}-observacion`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+            <label htmlFor={`${idCampo}-observacion`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observación</label>
             <input id={`${idCampo}-observacion`} className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
@@ -244,7 +244,7 @@ export default function CuotasPage() {
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
               <th scope="col" style={{ padding: '6px 4px' }}>Personal</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Periodo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Período</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Importe</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Pagado</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>

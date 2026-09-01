@@ -314,7 +314,7 @@ export default function MovimientosFinancierosPage() {
               <ComboBuscable ariaLabel="Responsable" opciones={opcionesBombero} value={responsableId} onChange={setResponsableId} ningunaLabel="Sin definir" />
             </div>
             <div>
-              <label htmlFor={`${idCampo}-observacion`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+              <label htmlFor={`${idCampo}-observacion`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observación</label>
               <input id={`${idCampo}-observacion`} className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
             </div>
           </div>

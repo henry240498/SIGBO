@@ -680,7 +680,7 @@ function TabPernoctes({ guardiaId, fecha }: { guardiaId: string; fecha: string }
       {pernoctes && pernoctes.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead><tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-            <th scope="col" style={{ padding: '6px 4px' }}>Bombero</th><th scope="col" style={{ padding: '6px 4px' }}>Motivo</th><th scope="col" style={{ padding: '6px 4px' }}>Observacion</th>
+            <th scope="col" style={{ padding: '6px 4px' }}>Bombero</th><th scope="col" style={{ padding: '6px 4px' }}>Motivo</th><th scope="col" style={{ padding: '6px 4px' }}>Observación</th>
           </tr></thead>
           <tbody>{pernoctes.map((p) => (
             <tr key={p.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
@@ -752,7 +752,7 @@ function TabEstacion({ guardiaId }: { guardiaId: string }) {
             </select>
           </div>
           <div style={{ flex: 1, minWidth: 200 }}>
-            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observación</label>
             <input id="observacion" className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
           <button type="button" className="btn-primary" onClick={agregar} disabled={!sector}>Registrar</button>
@@ -762,7 +762,7 @@ function TabEstacion({ guardiaId }: { guardiaId: string }) {
       {inspecciones && inspecciones.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead><tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-            <th scope="col" style={{ padding: '6px 4px' }}>Sector</th><th scope="col" style={{ padding: '6px 4px' }}>Estado</th><th scope="col" style={{ padding: '6px 4px' }}>Observacion</th>
+            <th scope="col" style={{ padding: '6px 4px' }}>Sector</th><th scope="col" style={{ padding: '6px 4px' }}>Estado</th><th scope="col" style={{ padding: '6px 4px' }}>Observación</th>
           </tr></thead>
           <tbody>{inspecciones.map((i) => (
             <tr key={i.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
@@ -889,7 +889,7 @@ function TabMoviles({ guardiaId }: { guardiaId: string }) {
       {error && <Aviso tipo="error" texto={error} />}
       {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
-      {moviles && moviles.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay vehiculos activos registrados en el modulo de Vehiculos.</p>}
+      {moviles && moviles.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay vehículos activos registrados en el módulo de Vehículos.</p>}
 
       {moviles && moviles.map(({ vehiculo, checklistItems, equipos }) => (
         <div key={vehiculo.id} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -900,13 +900,13 @@ function TabMoviles({ guardiaId }: { guardiaId: string }) {
           {equipos.length > 0 && (
             <p style={{ fontSize: 12, color: 'var(--muted)' }}>Equipamiento asignado: {equipos.map((e) => e.nombre).join(', ')}</p>
           )}
-          {checklistItems.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin items de checklist configurados para este tipo de vehiculo.</p>}
+          {checklistItems.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin items de checklist configurados para este tipo de vehículo.</p>}
           {checklistItems.length > 0 && (
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
                 <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
                   <th scope="col" style={{ padding: '6px 4px' }}>Item</th>
-                  <th scope="col" style={{ padding: '6px 4px' }}>Categoria</th>
+                  <th scope="col" style={{ padding: '6px 4px' }}>Categoría</th>
                   <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
                   {puedeEditar && <th scope="col" style={{ padding: '6px 4px' }}>Registrar</th>}
                 </tr>
@@ -1016,7 +1016,7 @@ function TabBitacora({ guardiaId }: { guardiaId: string }) {
       </BitacoraSeccion>
 
       <BitacoraSeccion titulo={`Prestamos de equipo (${bitacora.prestamosEquipo.length})`}>
-        {bitacora.prestamosEquipo.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin prestamos en el horario de la guardia.</p>}
+        {bitacora.prestamosEquipo.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin préstamos en el horario de la guardia.</p>}
         {bitacora.prestamosEquipo.map((p: any) => (
           <div key={p.id} style={{ fontSize: 13, display: 'flex', gap: 10, borderBottom: '1px solid var(--line-soft)', padding: '4px 0' }}>
             <span style={{ color: 'var(--muted)', minWidth: 160 }}>{new Date(p.fechaPrestamo).toLocaleString()}</span>

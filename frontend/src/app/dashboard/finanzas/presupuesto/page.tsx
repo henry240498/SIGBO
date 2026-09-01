@@ -143,9 +143,9 @@ export default function PresupuestoPage() {
         <form onSubmit={guardar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Destinado a (categoria de egreso)</label>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Destinado a (categoría de egreso)</label>
               <ComboBuscable ariaLabel="Destinado a (categoria de egreso)" opciones={opcionesCategoria} value={categoriaEgresoId} onChange={setCategoriaEgresoId} ningunaLabel="-- seleccionar --" />
-              {editandoId && <p style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>Cambiar el destino no mueve lo ya ejecutado -- el ejecutado se recalcula segun la nueva categoria.</p>}
+              {editandoId && <p style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>Cambiar el destino no mueve lo ya ejecutado -- el ejecutado se recalcula según la nueva categoría.</p>}
             </div>
             <div>
               <label htmlFor="monto-presupuestado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Monto presupuestado</label>
@@ -153,7 +153,7 @@ export default function PresupuestoPage() {
             </div>
           </div>
           <div>
-            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observación</label>
             <input id="observacion" className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>

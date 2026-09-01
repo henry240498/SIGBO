@@ -77,7 +77,7 @@ export default function EjerciciosFiscalesPage() {
 
       {error && <Aviso tipo="error" texto={error} />}
       {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
-      <p style={{ fontSize: 12, color: 'var(--muted)' }}>Los movimientos financieros nunca se mezclan entre ejercicios -- cada uno se resuelve segun su fecha.</p>
+      <p style={{ fontSize: 12, color: 'var(--muted)' }}>Los movimientos financieros nunca se mezclan entre ejercicios -- cada uno se resuelve según su fecha.</p>
 
       {mostrarForm && (
         <form onSubmit={crear} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>

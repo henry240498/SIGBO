@@ -156,11 +156,11 @@ export default function ProveedoresDepositoPage() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label htmlFor="direccion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Direccion</label>
+              <label htmlFor="direccion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Dirección</label>
               <input id="direccion" className="input-field" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
             </div>
             <div>
-              <label htmlFor="telefono" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Telefono</label>
+              <label htmlFor="telefono" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Teléfono</label>
               <input id="telefono" className="input-field" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
             </div>
             <div>
@@ -212,7 +212,7 @@ export default function ProveedoresDepositoPage() {
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
               <th scope="col" style={{ padding: '6px 4px' }}>Razon social</th>
               <th scope="col" style={{ padding: '6px 4px' }}>RUC</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Telefono</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Teléfono</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>

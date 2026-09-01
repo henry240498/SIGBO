@@ -228,7 +228,7 @@ export default function EsquemasHorarioPage() {
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label htmlFor="dias-de-duracion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Dias de duracion</label>
+              <label htmlFor="dias-de-duracion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Días de duración</label>
               <input id="dias-de-duracion" className="input-field" type="number" min={1} value={form.diasDuracion} onChange={(e) => setForm({ ...form, diasDuracion: parseInt(e.target.value, 10) || 1 })} />
             </div>
             <div>
@@ -271,7 +271,7 @@ export default function EsquemasHorarioPage() {
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
               <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Dias</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Días</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Horario</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Especial</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Personal</th>

@@ -275,7 +275,7 @@ export default function PrestamosDepositoPage() {
         <form onSubmit={crear} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de prestamo</label>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de préstamo</label>
               <ComboBuscable ariaLabel="Tipo de prestamo" opciones={opcionesTipo} value={tipoPrestamoId} onChange={setTipoPrestamoId} ningunaLabel="-- seleccionar --" />
             </div>
             <div>
@@ -287,13 +287,13 @@ export default function PrestamosDepositoPage() {
               <input id={`${idCampo}-entrega`} className="input-field" type="datetime-local" value={fechaEntrega} onChange={(e) => setFechaEntrega(e.target.value)} required />
             </div>
             <div>
-              <label htmlFor={`${idCampo}-devolucion-comprometida`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Devolucion comprometida</label>
+              <label htmlFor={`${idCampo}-devolucion-comprometida`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Devolución comprometida</label>
               <input id={`${idCampo}-devolucion-comprometida`} className="input-field" type="datetime-local" value={fechaDevolucionComprometida} onChange={(e) => setFechaDevolucionComprometida(e.target.value)} />
             </div>
           </div>
           {!solicitanteBomberoId && (
             <div>
-              <label htmlFor={`${idCampo}-solicitante-externo-otra-institucion-cap`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Solicitante externo (otra institucion, capacitacion, etc.)</label>
+              <label htmlFor={`${idCampo}-solicitante-externo-otra-institucion-cap`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Solicitante externo (otra institución, capacitación, etc.)</label>
               <input id={`${idCampo}-solicitante-externo-otra-institucion-cap`} className="input-field" value={solicitanteExterno} onChange={(e) => setSolicitanteExterno(e.target.value)} />
             </div>
           )}
@@ -345,7 +345,7 @@ export default function PrestamosDepositoPage() {
         </form>
       )}
 
-      {prestamos && prestamos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay prestamos registrados.</p>}
+      {prestamos && prestamos.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay préstamos registrados.</p>}
       {prestamos && prestamos.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
@@ -353,7 +353,7 @@ export default function PrestamosDepositoPage() {
               <th scope="col" style={{ padding: '6px 4px' }}>Entrega</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Solicitante</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Devolucion comprometida</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Devolución comprometida</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>

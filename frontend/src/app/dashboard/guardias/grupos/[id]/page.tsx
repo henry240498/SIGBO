@@ -144,7 +144,7 @@ export default function DetalleGrupoGuardiaPage() {
 
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h3 style={{ fontSize: 14 }}>Configuracion de rotacion / capacidad</h3>
+          <h3 style={{ fontSize: 14 }}>Configuración de rotación / capacidad</h3>
           {puedeEditar && !editandoConfig && (
             <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={abrirConfig}>Editar</button>
           )}
@@ -152,7 +152,7 @@ export default function DetalleGrupoGuardiaPage() {
         {!editandoConfig && (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 16 }}>
             <div>
-              <span style={{ fontSize: 11, color: 'var(--muted)', display: 'block' }}>Ciclo de rotacion</span>
+              <span style={{ fontSize: 11, color: 'var(--muted)', display: 'block' }}>Ciclo de rotación</span>
               {grupo.cicloRotacionDias ? `cada ${grupo.cicloRotacionDias} dias` : '— (no elegible para generacion automatica)'}
             </div>
             <div>
@@ -177,7 +177,7 @@ export default function DetalleGrupoGuardiaPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 10 }}>
               <div>
-                <label htmlFor="ciclo-de-rotacion-dias" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ciclo de rotacion (dias)</label>
+                <label htmlFor="ciclo-de-rotacion-dias" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ciclo de rotación (días)</label>
                 <input id="ciclo-de-rotacion-dias" className="input-field" type="number" min={1} value={cicloRotacionDias} onChange={(e) => setCicloRotacionDias(e.target.value)} placeholder="Sin rotacion" />
               </div>
               <div>

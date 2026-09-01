@@ -211,7 +211,7 @@ export default function ArticuloDetallePage() {
               <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required disabled={!puedeEditar} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría</label>
               <ComboBuscable ariaLabel="Categoria" opciones={opcionesCategoria} value={categoriaArticuloId} onChange={setCategoriaArticuloId} disabled={!puedeEditar} />
             </div>
             <div>
@@ -226,7 +226,7 @@ export default function ArticuloDetallePage() {
             </div>
           </div>
           <div>
-            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label>
             <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} disabled={!puedeEditar} />
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
@@ -235,11 +235,11 @@ export default function ArticuloDetallePage() {
               <ComboBuscable ariaLabel="Unidad de medida" opciones={opcionesUnidad} value={unidadMedidaId} onChange={setUnidadMedidaId} ningunaLabel="Sin definir" disabled={!puedeEditar} />
             </div>
             <div>
-              <label htmlFor="stock-minimo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Stock minimo</label>
+              <label htmlFor="stock-minimo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Stock mínimo</label>
               <input id="stock-minimo" className="input-field" type="number" min={0} step="0.01" value={stockMinimo} onChange={(e) => setStockMinimo(e.target.value)} disabled={!puedeEditar} />
             </div>
             <div>
-              <label htmlFor="stock-maximo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Stock maximo</label>
+              <label htmlFor="stock-maximo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Stock máximo</label>
               <input id="stock-maximo" className="input-field" type="number" min={0} step="0.01" value={stockMaximo} onChange={(e) => setStockMaximo(e.target.value)} disabled={!puedeEditar} />
             </div>
           </div>
@@ -306,7 +306,7 @@ export default function ArticuloDetallePage() {
           {mostrarFormLote && (
             <form onSubmit={crearLote} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr auto', gap: 10, alignItems: 'flex-end', marginBottom: 14 }}>
               <div>
-                <label htmlFor="numero-de-lote" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero de lote</label>
+                <label htmlFor="numero-de-lote" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Número de lote</label>
                 <input id="numero-de-lote" className="input-field" value={numeroLote} onChange={(e) => setNumeroLote(e.target.value)} required />
               </div>
               <div>

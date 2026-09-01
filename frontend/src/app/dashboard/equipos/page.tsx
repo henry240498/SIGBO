@@ -96,7 +96,7 @@ export default function EquiposPage() {
           onChange={(e) => setQ(e.target.value)}
         />
         <select className="input-field" style={{ maxWidth: 220 }} value={filtroCategoria} onChange={(e) => setFiltroCategoria(e.target.value)}>
-          <option value="">Todas las categorias</option>
+          <option value="">Todas las categorías</option>
           {categorias.map((c) => (
             <option key={c.id} value={c.id}>{c.nombre}</option>
           ))}
@@ -116,7 +116,7 @@ export default function EquiposPage() {
         <form className="card" onSubmit={crear} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 2fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label htmlFor="categoria" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
+              <label htmlFor="categoria" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría</label>
               <select id="categoria" className="input-field" value={categoriaId} onChange={(e) => setCategoriaId(e.target.value)} required>
                 <option value="">-- seleccionar --</option>
                 {categorias.map((c) => (
@@ -125,7 +125,7 @@ export default function EquiposPage() {
               </select>
             </div>
             <div>
-              <label htmlFor="codigo-interno" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo interno</label>
+              <label htmlFor="codigo-interno" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Código interno</label>
               <input id="codigo-interno" className="input-field" value={codigoInterno} onChange={(e) => setCodigoInterno(e.target.value)} required />
             </div>
             <div>
@@ -153,10 +153,10 @@ export default function EquiposPage() {
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-              <th scope="col" style={{ padding: '6px 4px' }}>Codigo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Código</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Categoria</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Ubicacion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Categoría</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Ubicación</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
             </tr>
           </thead>

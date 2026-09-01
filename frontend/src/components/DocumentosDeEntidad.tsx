@@ -33,9 +33,9 @@ export function DocumentosDeEntidad({ modulo, entidad, registroId, titulo = 'Doc
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-              <th scope="col" style={{ padding: '6px 4px' }}>Numero</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Número</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Titulo</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Emision</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Emisión</th>
             </tr>
           </thead>
           <tbody>

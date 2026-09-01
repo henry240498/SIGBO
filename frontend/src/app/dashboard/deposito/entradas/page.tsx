@@ -180,7 +180,7 @@ export default function EntradasDepositoPage() {
               <input id="fecha" className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicacion destino</label>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicación destino</label>
               <ComboBuscable ariaLabel="Ubicacion destino" opciones={opcionesUbicacion} value={ubicacionDestinoId} onChange={setUbicacionDestinoId} ningunaLabel="-- seleccionar --" />
             </div>
           </div>
@@ -208,7 +208,7 @@ export default function EntradasDepositoPage() {
               <input id="valor-total-opcional" className="input-field" type="number" min={0} step="0.01" value={valorTotal} onChange={(e) => setValorTotal(e.target.value)} />
             </div>
             <div>
-              <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+              <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observación</label>
               <input id="observacion" className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
             </div>
           </div>

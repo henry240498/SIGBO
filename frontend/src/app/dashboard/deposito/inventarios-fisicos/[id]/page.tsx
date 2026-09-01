@@ -161,14 +161,14 @@ export default function InventarioFisicoDetallePage() {
 
       <section className="card">
         <h2 style={{ fontSize: 15, marginBottom: 12 }}>Items contados ({items?.length ?? 0})</h2>
-        {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Todavia no se cargo ningun item.</p>}
+        {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Todavía no se cargo ningún item.</p>}
         {items && items.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
                 <th scope="col" style={{ padding: '6px 4px' }}>Elemento</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Sistema</th>
-                <th scope="col" style={{ padding: '6px 4px' }}>Fisico</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Físico</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Diferencia</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Incidencia</th>
               </tr>

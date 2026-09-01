@@ -200,7 +200,7 @@ export default function PersonalPage() {
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div>
-          <label htmlFor="codigo" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Codigo</label>
+          <label htmlFor="codigo" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Código</label>
           <input id="codigo"
             className="input-field"
             style={{ maxWidth: 160 }}

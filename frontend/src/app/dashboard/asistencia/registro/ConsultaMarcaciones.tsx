@@ -141,7 +141,7 @@ export default function ConsultaMarcaciones({ bomberos, tipos }: Props) {
                     <th scope="col" style={{ padding: '6px 8px' }}>Fecha/Hora</th>
                     <th scope="col" style={{ padding: '6px 8px' }}>Bombero</th>
                     <th scope="col" style={{ padding: '6px 8px' }}>Tipo</th>
-                    <th scope="col" style={{ padding: '6px 8px' }}>Metodo</th>
+                    <th scope="col" style={{ padding: '6px 8px' }}>Método</th>
                     <th scope="col" style={{ padding: '6px 8px' }}>Fuente</th>
                     <th scope="col" style={{ padding: '6px 8px' }}>Evento</th>
                     <th scope="col" style={{ padding: '6px 8px' }}>Observaciones</th>

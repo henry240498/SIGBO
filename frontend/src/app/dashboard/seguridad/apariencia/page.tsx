@@ -141,7 +141,7 @@ export default function AparienciaPage() {
 
       {tienePermisoPolitica && (
         <section className="card">
-          <h2 style={{ fontSize: 16, marginBottom: 6 }}>Politica de edicion de datos personales</h2>
+          <h2 style={{ fontSize: 16, marginBottom: 6 }}>Politica de edición de datos personales</h2>
           <p style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 12 }}>
             Controla si los usuarios pueden editar su propia foto, telefonos, correos y redes
             sociales desde &quot;Mi Perfil&quot;. El cambio de contrasena nunca se ve afectado por

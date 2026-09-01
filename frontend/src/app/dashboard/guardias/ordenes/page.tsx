@@ -79,9 +79,9 @@ export default function OrdenesGuardiaPage() {
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-              <th scope="col" style={{ padding: '6px 4px' }}>Numero</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Periodo</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Fecha de emision</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Número</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Período</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Fecha de emisión</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
             </tr>
           </thead>

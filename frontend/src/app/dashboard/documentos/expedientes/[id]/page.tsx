@@ -38,7 +38,7 @@ export default function ExpedienteDetallePage() {
 
       <div className="card">
         <h3 style={{ fontSize: 14, marginBottom: 10 }}>Documentos del expediente ({documentos?.length ?? 0})</h3>
-        {documentos && documentos.length === 0 && <p style={{ fontSize: 13, color: 'var(--muted)' }}>Este expediente todavia no tiene documentos.</p>}
+        {documentos && documentos.length === 0 && <p style={{ fontSize: 13, color: 'var(--muted)' }}>Este expediente todavía no tiene documentos.</p>}
         {documentos && documentos.map((d) => (
           <Link key={d.id} href={`/dashboard/documentos/${d.id}`} style={{ display: 'block', fontSize: 13, padding: '6px 0', borderBottom: '1px solid var(--line-soft)', color: 'var(--ink)', textDecoration: 'none' }}>
             {d.numeroDocumental ? `${d.numeroDocumental} — ` : ''}{d.titulo} <span style={{ color: 'var(--muted)' }}>({d.fechaEmision})</span>

@@ -175,7 +175,7 @@ function TabDatos({ vehiculo, puedeEditar, onCambio }: { vehiculo: Vehiculo; pue
           <div><b>Capacidad carga:</b> {vehiculo.capacidadCarga ?? '—'}</div>
           <div><b>Capacidad pasajeros:</b> {vehiculo.capacidadPasajeros ?? '—'}</div>
           <div><b>Km actual:</b> {vehiculo.kilometrajeActual.toLocaleString()}</div>
-          <div><b>Ubicacion actual:</b> {vehiculo.ubicacionActual ?? '—'}</div>
+          <div><b>Ubicación actual:</b> {vehiculo.ubicacionActual ?? '—'}</div>
           <div><b>ITV vencimiento:</b> {vehiculo.itvVencimiento ?? '—'}</div>
           <div><b>Seguro empresa:</b> {vehiculo.seguroEmpresa ?? '—'}</div>
           <div><b>Seguro poliza:</b> {vehiculo.seguroPoliza ?? '—'}</div>
@@ -228,7 +228,7 @@ function TabDatos({ vehiculo, puedeEditar, onCambio }: { vehiculo: Vehiculo; pue
             {ESTADOS_VEHICULO.map((e) => <option key={e} value={e}>{e}</option>)}
           </select>
         </div>
-        <div><label htmlFor="ubicacion-actual" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicacion actual</label><input id="ubicacion-actual" className="input-field" value={campo('ubicacionActual')} onChange={(e) => setCampos({ ...campos, ubicacionActual: e.target.value })} /></div>
+        <div><label htmlFor="ubicacion-actual" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicación actual</label><input id="ubicacion-actual" className="input-field" value={campo('ubicacionActual')} onChange={(e) => setCampos({ ...campos, ubicacionActual: e.target.value })} /></div>
         <div><label htmlFor="itv-vencimiento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>ITV vencimiento</label><input id="itv-vencimiento" className="input-field" type="date" value={campo('itvVencimiento')} onChange={(e) => setCampos({ ...campos, itvVencimiento: e.target.value })} /></div>
         <div><label htmlFor="seguro-empresa" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Seguro empresa</label><input id="seguro-empresa" className="input-field" value={campo('seguroEmpresa')} onChange={(e) => setCampos({ ...campos, seguroEmpresa: e.target.value })} /></div>
         <div><label htmlFor="seguro-poliza" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Seguro poliza</label><input id="seguro-poliza" className="input-field" value={campo('seguroPoliza')} onChange={(e) => setCampos({ ...campos, seguroPoliza: e.target.value })} /></div>
@@ -300,7 +300,7 @@ function TabMantenimientos({ vehiculoId, puedeEditar }: { vehiculoId: string; pu
             <div><label htmlFor="costo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Costo</label><input id="costo" className="input-field" type="number" value={costo} onChange={(e) => setCosto(e.target.value)} /></div>
             <div><label htmlFor="kilometraje" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Kilometraje</label><input id="kilometraje" className="input-field" type="number" value={kilometraje} onChange={(e) => setKilometraje(e.target.value)} /></div>
           </div>
-          <div><label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label><input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required /></div>
+          <div><label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label><input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required /></div>
           <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>{guardando ? 'Guardando...' : 'Guardar'}</button>
         </form>
       )}
@@ -308,7 +308,7 @@ function TabMantenimientos({ vehiculoId, puedeEditar }: { vehiculoId: string; pu
       {items && items.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead><tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-            <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th><th scope="col" style={{ padding: '6px 4px' }}>Tipo</th><th scope="col" style={{ padding: '6px 4px' }}>Descripcion</th><th scope="col" style={{ padding: '6px 4px' }}>Costo</th><th scope="col" style={{ padding: '6px 4px' }}>Km</th>
+            <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th><th scope="col" style={{ padding: '6px 4px' }}>Tipo</th><th scope="col" style={{ padding: '6px 4px' }}>Descripción</th><th scope="col" style={{ padding: '6px 4px' }}>Costo</th><th scope="col" style={{ padding: '6px 4px' }}>Km</th>
           </tr></thead>
           <tbody>{items.map((m) => (
             <tr key={m.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
@@ -411,7 +411,7 @@ function TabHistorial({ vehiculoId }: { vehiculoId: string }) {
 
   if (error) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
   if (!eventos) return <Cargando texto="Cargando…" />;
-  if (eventos.length === 0) return <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin eventos registrados todavia.</p>;
+  if (eventos.length === 0) return <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin eventos registrados todavía.</p>;
 
   const colorTipo: Record<string, string> = { MANTENIMIENTO: 'var(--warn-fill)', COMBUSTIBLE: 'var(--info-fill)', SERVICIO: 'var(--ok-fill)' };
 

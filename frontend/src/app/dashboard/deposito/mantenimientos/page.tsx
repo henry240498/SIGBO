@@ -57,7 +57,7 @@ function FilaFinalizar({ mantenimiento, ubicaciones, onFinalizado }: { mantenimi
     <div style={{ padding: '10px 4px', background: 'var(--surface-soft)', borderRadius: 6, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 2fr auto', gap: 8, alignItems: 'flex-end' }}>
       {error && <p style={{ color: 'var(--danger)', fontSize: 12, gridColumn: '1 / -1' }}>{error}</p>}
       <div>
-        <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Ubicacion destino</label>
+        <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Ubicación destino</label>
         <ComboBuscable ariaLabel="Ubicacion destino" opciones={opcionesUbicacion} value={ubicacionDestinoId} onChange={setUbicacionDestinoId} />
       </div>
       <div>
@@ -69,7 +69,7 @@ function FilaFinalizar({ mantenimiento, ubicaciones, onFinalizado }: { mantenimi
         <input id={`${idCampo}-costo`} className="input-field" type="number" min={0} step="0.01" value={costo} onChange={(e) => setCosto(e.target.value)} />
       </div>
       <div>
-        <label htmlFor={`${idCampo}-observacion`} style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Observacion</label>
+        <label htmlFor={`${idCampo}-observacion`} style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Observación</label>
         <input id={`${idCampo}-observacion`} className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
       </div>
       <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12 }} onClick={confirmar} disabled={guardando}>
@@ -222,7 +222,7 @@ export default function MantenimientosDepositoPage() {
             ) : (
               <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 }}>
                 <div>
-                  <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Articulo</label>
+                  <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Artículo</label>
                   <ComboBuscable ariaLabel="Articulo" opciones={opcionesArticulo} value={articuloId} onChange={setArticuloId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar articulo..." />
                 </div>
                 <div>
@@ -239,7 +239,7 @@ export default function MantenimientosDepositoPage() {
 
           {tipoElemento === 'ARTICULO' && (
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Origen del articulo</label>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Origen del artículo</label>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                 <ComboBuscable opciones={opcionesUbicacion} value={origenUbicacionId} onChange={setOrigenUbicacionId} ningunaLabel="Sin ubicacion" />
                 <ComboBuscable opciones={opcionesBombero} value={origenBomberoId} onChange={setOrigenBomberoId} ningunaLabel="Sin personal" />

@@ -37,11 +37,11 @@ export default function AuditoriaAsistenciaPage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <h2 style={{ fontSize: 16 }}>Auditoria del Modulo Asistencia</h2>
+      <h2 style={{ fontSize: 16 }}>Auditoría del Módulo Asistencia</h2>
 
       {error && <p style={{ color: 'var(--muted)', fontSize: 13 }}>{error}</p>}
       {!error && !items && <Cargando texto="Cargando…" />}
-      {!error && items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin registros de auditoria.</p>}
+      {!error && items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin registros de auditoría.</p>}
 
       {!error && items && items.length > 0 && (
         <div className="card">
@@ -50,7 +50,7 @@ export default function AuditoriaAsistenciaPage() {
               <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
                 <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Recurso</th>
-                <th scope="col" style={{ padding: '6px 4px' }}>Accion</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Acción</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>IP</th>
                 <th scope="col" style={{ padding: '6px 4px' }}></th>
               </tr>

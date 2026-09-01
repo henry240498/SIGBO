@@ -95,7 +95,7 @@ export default function PermisosPage() {
       {mostrarForm && (
         <form className="card" onSubmit={crear} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
           <div>
-            <label htmlFor="nombre-recurso-accion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre (recurso:accion)</label>
+            <label htmlFor="nombre-recurso-accion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre (recurso:acción)</label>
             <input id="nombre-recurso-accion" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="productos:crear" required />
           </div>
           <div>
@@ -103,15 +103,15 @@ export default function PermisosPage() {
             <input id="recurso" className="input-field" value={recurso} onChange={(e) => setRecurso(e.target.value)} required />
           </div>
           <div>
-            <label htmlFor="accion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Accion</label>
+            <label htmlFor="accion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Acción</label>
             <input id="accion" className="input-field" value={accion} onChange={(e) => setAccion(e.target.value)} required />
           </div>
           <div>
-            <label htmlFor="categoria" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
+            <label htmlFor="categoria" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría</label>
             <input id="categoria" className="input-field" value={categoria} onChange={(e) => setCategoria(e.target.value)} />
           </div>
           <div style={{ gridColumn: '1 / -1' }}>
-            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label>
             <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
           <button type="submit" className="btn-primary" style={{ gridColumn: '1 / -1', justifySelf: 'start' }}>

@@ -107,7 +107,7 @@ export default function ExpedientesPage() {
         <form onSubmit={crear} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 10 }}>
             <div>
-              <label htmlFor="numero" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero</label>
+              <label htmlFor="numero" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Número</label>
               <input id="numero" className="input-field" value={numero} onChange={(e) => setNumero(e.target.value)} required />
             </div>
             <div>
@@ -116,7 +116,7 @@ export default function ExpedientesPage() {
             </div>
           </div>
           <div>
-            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label>
             <textarea id="descripcion" className="input-field" rows={2} value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
@@ -130,7 +130,7 @@ export default function ExpedientesPage() {
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-              <th scope="col" style={{ padding: '6px 4px' }}>Numero</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Número</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Titulo</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>

@@ -193,7 +193,7 @@ function TabDatos({
           <div><b>Marca:</b> {equipo.marca ?? '—'}</div>
           <div><b>Modelo:</b> {equipo.modelo ?? '—'}</div>
           <div><b>N. serie:</b> {equipo.numeroSerie ?? '—'}</div>
-          <div><b>Ubicacion (nota):</b> {equipo.ubicacion ?? '—'}</div>
+          <div><b>Ubicación (nota):</b> {equipo.ubicacion ?? '—'}</div>
           <div><b>Fecha compra:</b> {equipo.fechaCompra ?? '—'}</div>
           <div><b>Vencimiento:</b> {equipo.fechaVencimiento ?? '—'}</div>
         </div>
@@ -224,7 +224,7 @@ function TabDatos({
     <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       {error && <Aviso tipo="error" texto={error} />}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
-        <div><label htmlFor="categoria" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
+        <div><label htmlFor="categoria" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría</label>
           <select id="categoria" className="input-field" value={campos.categoriaId} onChange={(e) => setCampos({ ...campos, categoriaId: e.target.value })}>
             {categorias.map((c) => <option key={c.id} value={c.id}>{c.nombre}</option>)}
           </select>
@@ -238,7 +238,7 @@ function TabDatos({
             {ESTADOS_EQUIPO.map((e) => <option key={e} value={e}>{e}</option>)}
           </select>
         </div>
-        <div><label htmlFor="ubicacion-nota" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicacion (nota)</label><input id="ubicacion-nota" className="input-field" value={campo('ubicacion')} onChange={(e) => setCampos({ ...campos, ubicacion: e.target.value })} /></div>
+        <div><label htmlFor="ubicacion-nota" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicación (nota)</label><input id="ubicacion-nota" className="input-field" value={campo('ubicacion')} onChange={(e) => setCampos({ ...campos, ubicacion: e.target.value })} /></div>
         <div><label htmlFor="fecha-compra" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha compra</label><input id="fecha-compra" className="input-field" type="date" value={campo('fechaCompra')} onChange={(e) => setCampos({ ...campos, fechaCompra: e.target.value })} /></div>
         <div><label htmlFor="vencimiento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Vencimiento</label><input id="vencimiento" className="input-field" type="date" value={campo('fechaVencimiento')} onChange={(e) => setCampos({ ...campos, fechaVencimiento: e.target.value })} /></div>
       </div>
@@ -342,7 +342,7 @@ function TabPrestamo({ equipo, puedeEditar, onCambio }: { equipo: Equipo; puedeE
                 <ComboBuscable ariaLabel="Bombero" opciones={opcionesBombero} value={bomberoId} onChange={setBomberoId} placeholderBusqueda="Buscar por codigo o nombre..." />
               </div>
               <div>
-                <label htmlFor="devolucion-comprometida" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Devolucion comprometida</label>
+                <label htmlFor="devolucion-comprometida" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Devolución comprometida</label>
                 <input id="devolucion-comprometida" className="input-field" type="date" value={fechaCompromiso} onChange={(e) => setFechaCompromiso(e.target.value)} />
               </div>
               <div>
@@ -412,7 +412,7 @@ function TabMantenimientos({ equipoId, puedeEditar }: { equipoId: string; puedeE
             <div><label htmlFor="fecha" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label><input id="fecha" className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required /></div>
             <div><label htmlFor="costo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Costo</label><input id="costo" className="input-field" type="number" value={costo} onChange={(e) => setCosto(e.target.value)} /></div>
           </div>
-          <div><label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label><input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required /></div>
+          <div><label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label><input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required /></div>
           <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>{guardando ? 'Guardando...' : 'Guardar'}</button>
         </form>
       )}
@@ -420,7 +420,7 @@ function TabMantenimientos({ equipoId, puedeEditar }: { equipoId: string; puedeE
       {items && items.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead><tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-            <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th><th scope="col" style={{ padding: '6px 4px' }}>Tipo</th><th scope="col" style={{ padding: '6px 4px' }}>Descripcion</th><th scope="col" style={{ padding: '6px 4px' }}>Costo</th>
+            <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th><th scope="col" style={{ padding: '6px 4px' }}>Tipo</th><th scope="col" style={{ padding: '6px 4px' }}>Descripción</th><th scope="col" style={{ padding: '6px 4px' }}>Costo</th>
           </tr></thead>
           <tbody>{items.map((m) => (
             <tr key={m.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
@@ -446,7 +446,7 @@ function TabHistorial({ equipoId }: { equipoId: string }) {
 
   if (error) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
   if (!eventos) return <Cargando texto="Cargando…" />;
-  if (eventos.length === 0) return <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin eventos registrados todavia.</p>;
+  if (eventos.length === 0) return <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin eventos registrados todavía.</p>;
 
   const colorTipo: Record<string, string> = { MANTENIMIENTO: 'var(--warn-fill)', PRESTAMO: 'var(--info-fill)' };
 

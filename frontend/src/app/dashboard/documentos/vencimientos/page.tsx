@@ -30,7 +30,7 @@ export default function VencimientosDocumentosPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Vencimientos ({documentos?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 6 }}>
-          <button type="button" className="btn-primary" style={{ background: vista === 'PROXIMOS' ? undefined : '#334155' }} onClick={() => setVista('PROXIMOS')}>Proximos a vencer</button>
+          <button type="button" className="btn-primary" style={{ background: vista === 'PROXIMOS' ? undefined : '#334155' }} onClick={() => setVista('PROXIMOS')}>Próximos a vencer</button>
           <button type="button" className="btn-primary" style={{ background: vista === 'VENCIDOS' ? '#7f1d1d' : '#334155' }} onClick={() => setVista('VENCIDOS')}>Vencidos</button>
         </div>
       </div>
@@ -44,7 +44,7 @@ export default function VencimientosDocumentosPage() {
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-              <th scope="col" style={{ padding: '6px 4px' }}>Numero</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Número</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Titulo</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Vencimiento</th>

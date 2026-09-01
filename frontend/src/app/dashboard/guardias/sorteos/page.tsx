@@ -87,7 +87,7 @@ export default function SorteosPage() {
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Esquema de horario especial (opcional, para crear la guardia despues)</label>
+            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Esquema de horario especial (opcional, para crear la guardia después)</label>
             <ComboBuscable ariaLabel="Esquema de horario especial (opcional, para crear la guardia despues)" opciones={opcionesEsquema} value={esquemaHorarioId} onChange={setEsquemaHorarioId} placeholderBusqueda="Buscar esquema..." ningunaLabel="Decidir mas adelante" />
           </div>
           <button type="submit" className="btn-primary" disabled={generando} style={{ alignSelf: 'flex-start' }}>

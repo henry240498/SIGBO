@@ -62,7 +62,7 @@ export default function NuevaOrdenGuardiaPage() {
           </div>
         </div>
         <div>
-          <label htmlFor="fecha-de-emision" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de emision</label>
+          <label htmlFor="fecha-de-emision" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de emisión</label>
           <input id="fecha-de-emision" className="input-field" type="date" value={fechaEmision} onChange={(e) => setFechaEmision(e.target.value)} required />
         </div>
         <div style={{ display: 'flex', gap: 8 }}>

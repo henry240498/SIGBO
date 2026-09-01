@@ -172,7 +172,7 @@ export default function RegistroAsistenciaPage() {
       </div>
 
       {marcaciones && marcaciones.length === 0 && (
-        <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin marcaciones registradas ese dia.</p>
+        <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin marcaciones registradas ese día.</p>
       )}
       {marcaciones && marcaciones.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>

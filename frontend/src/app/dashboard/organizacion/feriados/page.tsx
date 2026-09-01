@@ -198,7 +198,7 @@ export default function FeriadosPage() {
             Es fecha especial (aplica esquemas de horario especiales / sorteo)
           </label>
           <div>
-            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observación</label>
             <input id="observacion" className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
           <div style={{ display: 'flex', gap: 8 }}>

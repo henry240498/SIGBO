@@ -241,7 +241,7 @@ export default function NuevoBomberoPage() {
           <h3 style={{ fontSize: 14 }}>Contacto</h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label htmlFor="telefono-principal" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Telefono principal *</label>
+              <label htmlFor="telefono-principal" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Teléfono principal *</label>
               <input id="telefono-principal"
                 className="input-field"
                 value={telefonoPrincipal}
@@ -261,7 +261,7 @@ export default function NuevoBomberoPage() {
         </section>
 
         <section className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <h3 style={{ fontSize: 14 }}>Codigo bomberil</h3>
+          <h3 style={{ fontSize: 14 }}>Código bomberil</h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
               <label htmlFor="tipo-de-bombero" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de Bombero *</label>
@@ -315,7 +315,7 @@ export default function NuevoBomberoPage() {
               </select>
             </div>
             <div>
-              <label htmlFor="condicion-institucional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Condicion institucional</label>
+              <label htmlFor="condicion-institucional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Condición institucional</label>
               <select id="condicion-institucional"
                 className="input-field"
                 value={condicionInstitucional}
@@ -332,7 +332,7 @@ export default function NuevoBomberoPage() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label htmlFor="compania" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Compania</label>
+              <label htmlFor="compania" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Compañía</label>
               <select id="compania" className="input-field" value={companiaId} onChange={(e) => setCompaniaId(e.target.value)}>
                 <option value="">Sin asignar</option>
                 {opciones(companias)}
@@ -468,7 +468,7 @@ export default function NuevoBomberoPage() {
               />
             </div>
             <div>
-              <label htmlFor="dia-preferente" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Dia preferente</label>
+              <label htmlFor="dia-preferente" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Día preferente</label>
               <select id="dia-preferente" className="input-field" value={diaPreferenteGuardia} onChange={(e) => setDiaPreferenteGuardia(e.target.value)}>
                 {DIAS_SEMANA_PREFERENCIA.map((d) => (
                   <option key={d} value={d}>{d}</option>

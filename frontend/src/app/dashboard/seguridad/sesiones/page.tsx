@@ -76,7 +76,7 @@ export default function SesionesPage() {
               <th scope="col" style={{ padding: '6px 4px' }}>Usuario</th>
               <th scope="col" style={{ padding: '6px 4px' }}>IP</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Navegador</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Ultima actividad</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Última actividad</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>

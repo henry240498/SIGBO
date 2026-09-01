@@ -106,13 +106,13 @@ export default function ChecklistItemsPage() {
               <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
-              <label htmlFor="categoria" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
+              <label htmlFor="categoria" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría</label>
               <select id="categoria" className="input-field" value={categoria} onChange={(e) => setCategoria(e.target.value as ChecklistItemVehiculo['categoria'])}>
                 {CATEGORIAS.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
             <div>
-              <label htmlFor="tipo-de-vehiculo-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de vehiculo (opcional)</label>
+              <label htmlFor="tipo-de-vehiculo-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de vehículo (opcional)</label>
               <input id="tipo-de-vehiculo-opcional" className="input-field" value={tipoVehiculo} onChange={(e) => setTipoVehiculo(e.target.value)} placeholder="Aplica a todos si esta vacio" />
             </div>
             <div>
@@ -132,8 +132,8 @@ export default function ChecklistItemsPage() {
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
               <th scope="col" style={{ padding: '6px 4px' }}>Orden</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Categoria</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Tipo de vehiculo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Categoría</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Tipo de vehículo</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
               {puedeEditar && <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>}
             </tr>

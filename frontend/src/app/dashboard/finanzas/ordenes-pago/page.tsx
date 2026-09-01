@@ -302,7 +302,7 @@ export default function OrdenesPagoPage() {
               <input id={`${idCampo}-importe`} className="input-field" type="number" min={0.01} step="1" value={importe} onChange={(e) => setImporte(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria de egreso</label>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría de egreso</label>
               <ComboBuscable ariaLabel="Categoria de egreso" opciones={opcionesCategoria} value={categoriaEgresoId} onChange={setCategoriaEgresoId} ningunaLabel="-- seleccionar --" />
             </div>
           </div>
@@ -312,7 +312,7 @@ export default function OrdenesPagoPage() {
               <ComboBuscable ariaLabel="Proveedor" opciones={opcionesProveedor} value={proveedorId} onChange={setProveedorId} ningunaLabel="Sin proveedor" />
             </div>
             <div>
-              <label htmlFor={`${idCampo}-observacion`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+              <label htmlFor={`${idCampo}-observacion`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observación</label>
               <input id={`${idCampo}-observacion`} className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
             </div>
           </div>
@@ -328,7 +328,7 @@ export default function OrdenesPagoPage() {
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
               <th scope="col" style={{ padding: '6px 4px' }}>Concepto</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Categoria</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Categoría</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Importe</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>

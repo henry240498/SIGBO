@@ -30,7 +30,7 @@ export default function AuditoriaDocumentosPage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <h2 style={{ fontSize: 16 }}>Auditoria del modulo Documentos</h2>
+      <h2 style={{ fontSize: 16 }}>Auditoría del módulo Documentos</h2>
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end' }}>
         <div>
@@ -45,13 +45,13 @@ export default function AuditoriaDocumentosPage() {
       </div>
 
       {error && <Aviso tipo="error" texto={error} />}
-      {registros && registros.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin eventos registrados en este periodo.</p>}
+      {registros && registros.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin eventos registrados en este período.</p>}
       {registros && registros.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
               <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Accion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acción</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Recurso</th>
               <th scope="col" style={{ padding: '6px 4px' }}>IP</th>
             </tr>

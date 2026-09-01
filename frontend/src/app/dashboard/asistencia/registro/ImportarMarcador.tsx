@@ -207,7 +207,7 @@ export default function ImportarMarcador() {
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
               <thead style={{ position: 'sticky', top: 0, background: 'var(--surface-soft)' }}>
                 <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-                  <th scope="col" style={{ padding: '6px 8px' }}>Codigo detectado</th>
+                  <th scope="col" style={{ padding: '6px 8px' }}>Código detectado</th>
                   <th scope="col" style={{ padding: '6px 8px' }}>Bombero</th>
                   <th scope="col" style={{ padding: '6px 8px' }}>Tipo</th>
                   <th scope="col" style={{ padding: '6px 8px' }}>Fecha/Hora</th>
@@ -240,7 +240,7 @@ export default function ImportarMarcador() {
 
       <div>
         <h3 style={{ fontSize: 14, marginBottom: 8 }}>Historial de importaciones</h3>
-        {historial.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Todavia no se importo ningun archivo del marcador.</p>}
+        {historial.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Todavía no se importo ningún archivo del marcador.</p>}
         {historial.length > 0 && (
           <div className="card" style={{ padding: 0 }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>

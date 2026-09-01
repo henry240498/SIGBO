@@ -314,7 +314,7 @@ export default function SocioProtectorDetallePage() {
                 <input id="monto-efectivamente-pagado" className="input-field" type="number" min={0.01} step="1" value={apMonto} onChange={(e) => setApMonto(e.target.value)} required />
               </div>
               <div>
-                <label htmlFor="periodo-yyyy-mm" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Periodo (YYYY-MM)</label>
+                <label htmlFor="periodo-yyyy-mm" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Período (YYYY-MM)</label>
                 <input id="periodo-yyyy-mm" className="input-field" placeholder="2026-08" value={apPeriodo} onChange={(e) => setApPeriodo(e.target.value)} />
               </div>
             </div>
@@ -346,7 +346,7 @@ export default function SocioProtectorDetallePage() {
               <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
                 <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Monto</th>
-                <th scope="col" style={{ padding: '6px 4px' }}>Periodo</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Período</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Medio de pago</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
@@ -415,7 +415,7 @@ export default function SocioProtectorDetallePage() {
         </button>
         {mostrarHistorial && (
           <div style={{ marginTop: 10 }}>
-            {historial.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Este socio nunca cambio de codigo.</p>}
+            {historial.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Este socio nunca cambio de código.</p>}
             {historial.map((h) => (
               <p key={h.id} style={{ fontSize: 12, color: 'var(--muted)' }}>
                 {h.codigoAnterior} → {h.codigoNuevo} el {new Date(h.fechaCambio).toLocaleDateString('es-PY')} {h.motivo ? `(${h.motivo})` : ''}

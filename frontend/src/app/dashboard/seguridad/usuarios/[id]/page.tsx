@@ -258,7 +258,7 @@ export default function UsuarioDetallePage() {
           <strong>Estado:</strong> <span className="badge">{usuario.estado}</span>
         </p>
         <p style={{ marginBottom: 4 }}>
-          <strong>Ultimo acceso:</strong>{' '}
+          <strong>Último acceso:</strong>{' '}
           {usuario.ultimoAcceso ? new Date(usuario.ultimoAcceso).toLocaleString('es-PY') : '—'} (
           {usuario.ipUltimoAcceso ?? '—'})
         </p>
@@ -277,7 +277,7 @@ export default function UsuarioDetallePage() {
 
       <section className="card">
         <h2 style={{ fontSize: 15, marginBottom: 12 }}>
-          Datos personales <span style={{ fontSize: 11, color: 'var(--muted)', fontWeight: 400 }}>(edicion de administrador, no pasa por la politica Libre/Fijo)</span>
+          Datos personales <span style={{ fontSize: 11, color: 'var(--muted)', fontWeight: 400 }}>(edición de administrador, no pasa por la politica Libre/Fijo)</span>
         </h2>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
@@ -472,7 +472,7 @@ export default function UsuarioDetallePage() {
       </section>
 
       <section className="card">
-        <h2 style={{ fontSize: 15, marginBottom: 12 }}>Historial de auditoria</h2>
+        <h2 style={{ fontSize: 15, marginBottom: 12 }}>Historial de auditoría</h2>
         {detalle.auditoria.length === 0 && <p style={{ fontSize: 13, color: 'var(--muted)' }}>Sin actividad registrada.</p>}
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <tbody>

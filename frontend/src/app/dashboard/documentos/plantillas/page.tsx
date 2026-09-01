@@ -65,11 +65,11 @@ function ModalGenerar({ plantilla, categorias, onCerrar, onGenerado }: { plantil
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           <div>
-            <label htmlFor="fecha-de-emision" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de emision</label>
+            <label htmlFor="fecha-de-emision" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de emisión</label>
             <input id="fecha-de-emision" className="input-field" type="date" value={fechaEmision} onChange={(e) => setFechaEmision(e.target.value)} required />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
+            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría</label>
             <ComboBuscable ariaLabel="Categoria" opciones={opcionesCategoria} value={categoriaDocumentoId} onChange={setCategoriaDocumentoId} ningunaLabel="Sin categoria" />
           </div>
         </div>

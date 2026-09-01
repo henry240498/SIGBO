@@ -279,7 +279,7 @@ export default function SociosProtectoresPage() {
 
           {form.id && form.codigo && (
             <div>
-              <label htmlFor="motivo-del-cambio-de-codigo-si-lo-modifi" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo del cambio de codigo (si lo modifico arriba)</label>
+              <label htmlFor="motivo-del-cambio-de-codigo-si-lo-modifi" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo del cambio de código (si lo modifico arriba)</label>
               <input id="motivo-del-cambio-de-codigo-si-lo-modifi" className="input-field" value={form.motivoCambioCodigo} onChange={(e) => setForm({ ...form, motivoCambioCodigo: e.target.value })} />
             </div>
           )}
@@ -338,7 +338,7 @@ export default function SociosProtectoresPage() {
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label htmlFor="telefono" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Telefono</label>
+              <label htmlFor="telefono" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Teléfono</label>
               <input id="telefono" className="input-field" value={form.telefono} onChange={(e) => setForm({ ...form, telefono: e.target.value })} />
             </div>
             <div>
@@ -350,7 +350,7 @@ export default function SociosProtectoresPage() {
               <input id="email" className="input-field" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
             </div>
             <div>
-              <label htmlFor="direccion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Direccion</label>
+              <label htmlFor="direccion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Dirección</label>
               <input id="direccion" className="input-field" value={form.direccion} onChange={(e) => setForm({ ...form, direccion: e.target.value })} />
             </div>
           </div>
@@ -390,7 +390,7 @@ export default function SociosProtectoresPage() {
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-              <th scope="col" style={{ padding: '6px 4px' }}>Codigo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Código</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Nombre / Razon social</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Contacto</th>

@@ -99,7 +99,7 @@ export default function InventariosFisicosPage() {
               <input id="fecha" className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicacion (opcional -- limita el conteo a esta ubicacion)</label>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicación (opcional -- limita el conteo a esta ubicación)</label>
               <ComboBuscable ariaLabel="Ubicacion (opcional -- limita el conteo a esta ubicacion)" opciones={opcionesUbicacion} value={ubicacionId} onChange={setUbicacionId} ningunaLabel="Todo el deposito" />
             </div>
             <div>
@@ -108,7 +108,7 @@ export default function InventariosFisicosPage() {
             </div>
           </div>
           <div>
-            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observación</label>
             <input id="observacion" className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>
@@ -117,13 +117,13 @@ export default function InventariosFisicosPage() {
         </form>
       )}
 
-      {inventarios && inventarios.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay inventarios fisicos registrados.</p>}
+      {inventarios && inventarios.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay inventarios físicos registrados.</p>}
       {inventarios && inventarios.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
               <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Ubicacion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Ubicación</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
             </tr>
           </thead>

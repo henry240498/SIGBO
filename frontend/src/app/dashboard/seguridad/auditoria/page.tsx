@@ -68,7 +68,7 @@ export default function AuditoriaPage() {
           <input id="recurso" className="input-field" value={recurso} onChange={(e) => setRecurso(e.target.value)} placeholder="usuario, rol, auth..." />
         </div>
         <div>
-          <label htmlFor="accion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Accion</label>
+          <label htmlFor="accion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Acción</label>
           <input id="accion" className="input-field" value={accion} onChange={(e) => setAccion(e.target.value)} placeholder="LOGIN, CREAR..." />
         </div>
         <button type="submit" className="btn-primary">Filtrar</button>
@@ -81,7 +81,7 @@ export default function AuditoriaPage() {
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
               <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-                <th scope="col" style={{ padding: '6px 4px' }}>Accion</th>
+                <th scope="col" style={{ padding: '6px 4px' }}>Acción</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Recurso</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>Recurso ID</th>
                 <th scope="col" style={{ padding: '6px 4px' }}>IP</th>

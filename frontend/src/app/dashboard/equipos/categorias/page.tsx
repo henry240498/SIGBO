@@ -103,7 +103,7 @@ export default function CategoriasEquipoPage() {
               <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
-              <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+              <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label>
               <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
             </div>
           </div>
@@ -118,7 +118,7 @@ export default function CategoriasEquipoPage() {
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
               <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Descripcion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Descripción</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>

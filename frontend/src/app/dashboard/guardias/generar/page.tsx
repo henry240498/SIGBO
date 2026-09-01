@@ -71,14 +71,14 @@ export default function GenerarPlanificacionPage() {
   }
 
   if (!puedeGenerar) {
-    return <p style={{ color: 'var(--muted)', fontSize: 13 }}>No tenes permiso para generar la planificacion de guardias.</p>;
+    return <p style={{ color: 'var(--muted)', fontSize: 13 }}>No tenes permiso para generar la planificación de guardias.</p>;
   }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 900 }}>
-      <h2 style={{ fontSize: 16 }}>Generar planificacion de guardias</h2>
+      <h2 style={{ fontSize: 16 }}>Generar planificación de guardias</h2>
       <p style={{ fontSize: 13, color: 'var(--muted)' }}>
-        Este generador es un <strong>asistente de planificacion, no una imposicion absoluta</strong>: propone
+        Este generador es un <strong>asistente de planificación, no una imposicion absoluta</strong>: propone
         guardias respetando la rotacion de grupos configurada, la frecuencia mensual y el dia preferente de cada
         persona, y las reglas de elegibilidad de oficial/chofer — pero nunca asigna a alguien no habilitado. Cada
         guardia generada queda inmediatamente visible y editable/anulable como cualquier otra; revise las

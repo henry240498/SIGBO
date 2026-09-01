@@ -194,17 +194,17 @@ export default function IncidenciasDepositoPage() {
             )}
             {tipoElemento === 'ARTICULO' && (
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Articulo</label>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Artículo</label>
                 <ComboBuscable ariaLabel="Articulo" opciones={opcionesArticulo} value={articuloId} onChange={setArticuloId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar articulo..." />
               </div>
             )}
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Vehiculo relacionado (opcional)</label>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Vehículo relacionado (opcional)</label>
               <ComboBuscable ariaLabel="Vehiculo relacionado (opcional)" opciones={opcionesVehiculo} value={vehiculoId} onChange={setVehiculoId} ningunaLabel="No aplica" />
             </div>
           </div>
           <div>
-            <label htmlFor={`${idCampo}-descripcion`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <label htmlFor={`${idCampo}-descripcion`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label>
             <input id={`${idCampo}-descripcion`} className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required />
           </div>
           <div>
@@ -225,7 +225,7 @@ export default function IncidenciasDepositoPage() {
               <th scope="col" style={{ padding: '6px 4px' }}>Apertura</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Origen</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Elemento</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Descripcion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Descripción</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Gravedad</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>

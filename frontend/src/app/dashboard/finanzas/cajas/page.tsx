@@ -113,11 +113,11 @@ function PanelTurno({ caja, onCambio }: { caja: Caja; onCambio: () => void }) {
       {mostrarCerrar && (
         <form onSubmit={cerrar} style={{ display: 'grid', gridTemplateColumns: '1fr 2fr auto', gap: 8, marginTop: 8, alignItems: 'flex-end' }}>
           <div>
-            <label htmlFor={`${idCampo}-saldo-fisico-contado`} style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Saldo fisico contado</label>
+            <label htmlFor={`${idCampo}-saldo-fisico-contado`} style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Saldo físico contado</label>
             <input id={`${idCampo}-saldo-fisico-contado`} className="input-field" type="number" min={0} step="1" value={saldoFisico} onChange={(e) => setSaldoFisico(e.target.value)} required />
           </div>
           <div>
-            <label htmlFor={`${idCampo}-observacion`} style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Observacion</label>
+            <label htmlFor={`${idCampo}-observacion`} style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Observación</label>
             <input id={`${idCampo}-observacion`} className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
           <button type="button" className="btn-primary" style={{ padding: '6px 12px', fontSize: 12, background: '#7f1d1d' }} disabled={guardando}>
@@ -133,7 +133,7 @@ function PanelTurno({ caja, onCambio }: { caja: Caja; onCambio: () => void }) {
               <th scope="col" style={{ padding: '4px' }}>Apertura</th>
               <th scope="col" style={{ padding: '4px' }}>Cierre</th>
               <th scope="col" style={{ padding: '4px' }}>Saldo teorico</th>
-              <th scope="col" style={{ padding: '4px' }}>Saldo fisico</th>
+              <th scope="col" style={{ padding: '4px' }}>Saldo físico</th>
               <th scope="col" style={{ padding: '4px' }}>Diferencia</th>
             </tr>
           </thead>
@@ -247,7 +247,7 @@ export default function CajasPage() {
             </div>
           </div>
           <div>
-            <label htmlFor={`${idCampo}-observacion-2`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+            <label htmlFor={`${idCampo}-observacion-2`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observación</label>
             <input id={`${idCampo}-observacion-2`} className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
           <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>

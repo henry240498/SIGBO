@@ -146,7 +146,7 @@ export default function CategoriasArticuloPage() {
         <form onSubmit={guardar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gap: 10 }}>
             <div>
-              <label htmlFor="codigo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo</label>
+              <label htmlFor="codigo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Código</label>
               <input id="codigo" className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} />
             </div>
             <div>
@@ -154,12 +154,12 @@ export default function CategoriasArticuloPage() {
               <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria padre</label>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría padre</label>
               <ComboBuscable ariaLabel="Categoria padre" opciones={opcionesPadre} value={padreId} onChange={setPadreId} ningunaLabel="Sin categoria padre" />
             </div>
           </div>
           <div>
-            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label>
             <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
           <label style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -187,14 +187,14 @@ export default function CategoriasArticuloPage() {
         </form>
       )}
 
-      {categorias && categorias.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay categorias registradas.</p>}
+      {categorias && categorias.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>No hay categorías registradas.</p>}
       {categorias && categorias.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-              <th scope="col" style={{ padding: '6px 4px' }}>Codigo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Código</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Categoria padre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Categoría padre</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>

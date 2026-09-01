@@ -402,11 +402,17 @@ html.config-reduced-motion *,html.config-reduced-motion *::before,html.config-re
 }
 @media (max-width: 680px) {
   .app-shell { display: block; }
-  .app-sidebar { position: fixed; z-index: 20; inset: auto 0 0; width: 100%; height: 70px; padding: 8px 12px; border: 0; border-top: 1px solid rgba(255,255,255,.12); }
-  .brand, .side-label, .side-group-header, .sidebar-footer { display: none; }
+  /* La barra pasa a fila para que el pie entre al costado: estaba en display:none y
+     dejaba Mi perfil y Cerrar sesion sin forma de alcanzarse desde un telefono. */
+  .app-sidebar { position: fixed; z-index: 20; inset: auto 0 0; flex-direction: row; align-items: center; gap: 8px; width: 100%; height: 70px; padding: 8px 12px; border: 0; border-top: 1px solid rgba(255,255,255,.12); }
+  .brand, .side-label, .side-group-header { display: none; }
   .side-group, .side-group-items { display: contents; }
   .side-group-items[hidden] { display: contents !important; }
   .side-nav { flex-direction: row; align-items: center; overflow-x: auto; }
+  .sidebar-footer { display: flex; align-items: center; gap: 2px; flex: 0 0 auto; margin-left: auto; padding: 0 0 0 8px; border-top: 0; border-left: 1px solid rgba(255,255,255,.12); }
+  .sidebar-footer .nav-link { min-width: 46px; }
+  .logout-button { width: auto; min-width: 46px; height: 52px; margin-top: 0; padding: 5px 7px; font-size: 0; text-align: center; }
+  .logout-button::after { content: 'Salir'; font-size: 9px; }
   .nav-link { min-width: 54px; height: 52px; flex-direction: column; gap: 2px; font-size: 9px; padding: 5px 7px; }
   .nav-link > span:not(.nav-icon) { display: block; max-width: 62px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .nav-link.active::before { display: none; }

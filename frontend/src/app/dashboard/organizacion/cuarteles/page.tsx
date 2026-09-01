@@ -232,7 +232,7 @@ export default function CuartelesPage() {
         <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 10 }}>
             <div>
-              <label htmlFor="codigo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo</label>
+              <label htmlFor="codigo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Código</label>
               <input id="codigo" className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} required />
             </div>
             <div>
@@ -242,7 +242,7 @@ export default function CuartelesPage() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
-              <label htmlFor="compania" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Compania</label>
+              <label htmlFor="compania" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Compañía</label>
               <select id="compania"
                 className="input-field"
                 value={companiaId}
@@ -275,11 +275,11 @@ export default function CuartelesPage() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
-              <label htmlFor="direccion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Direccion</label>
+              <label htmlFor="direccion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Dirección</label>
               <input id="direccion" className="input-field" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
             </div>
             <div>
-              <label htmlFor="telefono" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Telefono</label>
+              <label htmlFor="telefono" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Teléfono</label>
               <input id="telefono" className="input-field" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
             </div>
           </div>
@@ -305,10 +305,10 @@ export default function CuartelesPage() {
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-              <th scope="col" style={{ padding: '6px 4px' }}>Codigo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Código</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Compania</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Telefono</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Compañía</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Teléfono</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>

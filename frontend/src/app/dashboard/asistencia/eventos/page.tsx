@@ -131,12 +131,12 @@ export default function EventosPage() {
               />
             </div>
             <div>
-              <label htmlFor="ubicacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicacion</label>
+              <label htmlFor="ubicacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicación</label>
               <input id="ubicacion" className="input-field" value={ubicacion} onChange={(e) => setUbicacion(e.target.value)} />
             </div>
           </div>
           <div>
-            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label>
             <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
           <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }} disabled={guardando}>

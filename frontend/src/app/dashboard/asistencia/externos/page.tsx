@@ -140,7 +140,7 @@ export default function ExternosPage() {
               <input id="celular" className="input-field" value={form.celular} onChange={(e) => setForm({ ...form, celular: e.target.value })} />
             </div>
             <div>
-              <label htmlFor="institucion-de-procedencia" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Institucion de procedencia</label>
+              <label htmlFor="institucion-de-procedencia" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Institución de procedencia</label>
               <input id="institucion-de-procedencia"
                 className="input-field"
                 value={form.institucionProcedencia}
@@ -148,7 +148,7 @@ export default function ExternosPage() {
               />
             </div>
             <div>
-              <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+              <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observación</label>
               <input id="observacion" className="input-field" value={form.observacion} onChange={(e) => setForm({ ...form, observacion: e.target.value })} />
             </div>
           </div>
@@ -166,7 +166,7 @@ export default function ExternosPage() {
               <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Cedula</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Celular</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Institucion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Institución</th>
               {puedeEditar && <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>}
             </tr>
           </thead>

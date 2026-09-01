@@ -187,7 +187,7 @@ export default function ListadoDocumentosPage() {
 
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div style={{ flex: 1, minWidth: 200 }}>
-          <label htmlFor="buscar-titulo-o-numero" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Buscar (titulo o numero)</label>
+          <label htmlFor="buscar-titulo-o-numero" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Buscar (titulo o número)</label>
           <input id="buscar-titulo-o-numero" className="input-field" value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && cargar()} />
         </div>
         <div>
@@ -224,7 +224,7 @@ export default function ListadoDocumentosPage() {
               <ComboBuscable ariaLabel="Tipo de documento" opciones={opcionesTipo} value={tipoDocumentoId} onChange={setTipoDocumentoId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar tipo..." />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoria</label>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría</label>
               <ComboBuscable ariaLabel="Categoria" opciones={opcionesCategoria} value={categoriaDocumentoId} onChange={setCategoriaDocumentoId} ningunaLabel="Sin categoria" placeholderBusqueda="Buscar categoria..." />
             </div>
             <div>
@@ -238,13 +238,13 @@ export default function ListadoDocumentosPage() {
             <input id="titulo" className="input-field" value={titulo} onChange={(e) => setTitulo(e.target.value)} required />
           </div>
           <div>
-            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label>
+            <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label>
             <textarea id="descripcion" className="input-field" rows={2} value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label htmlFor="fecha-de-emision" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de emision</label>
+              <label htmlFor="fecha-de-emision" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de emisión</label>
               <input id="fecha-de-emision" className="input-field" type="date" value={fechaEmision} onChange={(e) => setFechaEmision(e.target.value)} required />
             </div>
             <div>
@@ -258,7 +258,7 @@ export default function ListadoDocumentosPage() {
           </div>
 
           <div>
-            <label htmlFor="numero-documental" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Numero documental</label>
+            <label htmlFor="numero-documental" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Número documental</label>
             <input id="numero-documental"
               className="input-field"
               value={numeroDocumental}
@@ -287,10 +287,10 @@ export default function ListadoDocumentosPage() {
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
-              <th scope="col" style={{ padding: '6px 4px' }}>Numero</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Número</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Titulo</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Tipo</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Emision</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Emisión</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Vigencia</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
               <th scope="col" style={{ padding: '6px 4px' }}></th>

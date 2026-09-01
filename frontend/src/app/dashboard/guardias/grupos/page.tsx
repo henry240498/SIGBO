@@ -107,7 +107,7 @@ export default function GruposGuardiaPage() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 2fr', gap: 10 }}>
             <div>
-              <label htmlFor="ciclo-de-rotacion-dias" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ciclo de rotacion (dias)</label>
+              <label htmlFor="ciclo-de-rotacion-dias" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ciclo de rotación (días)</label>
               <input id="ciclo-de-rotacion-dias" className="input-field" type="number" min={1} value={cicloRotacionDias} onChange={(e) => setCicloRotacionDias(e.target.value)} placeholder="Sin rotacion automatica" />
             </div>
             <div>
@@ -135,7 +135,7 @@ export default function GruposGuardiaPage() {
           <thead>
             <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
               <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Ciclo de rotacion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Ciclo de rotación</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
             </tr>
           </thead>

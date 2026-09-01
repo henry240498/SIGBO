@@ -182,7 +182,7 @@ export default function DetalleEventoPage() {
             <span style={{ fontSize: 13 }}>{new Date(evento.fechaFin).toLocaleString()}</span>
           </div>
           <div>
-            <span style={{ fontSize: 11, color: 'var(--muted)', display: 'block' }}>Ubicacion</span>
+            <span style={{ fontSize: 11, color: 'var(--muted)', display: 'block' }}>Ubicación</span>
             <span style={{ fontSize: 13 }}>{evento.ubicacion ?? '-'}</span>
           </div>
         </div>
@@ -237,7 +237,7 @@ export default function DetalleEventoPage() {
                   <input id="celular" className="input-field" value={externo.celular} onChange={(e) => setExterno({ ...externo, celular: e.target.value })} />
                 </div>
                 <div>
-                  <label htmlFor="institucion-de-procedencia" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Institucion de procedencia</label>
+                  <label htmlFor="institucion-de-procedencia" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Institución de procedencia</label>
                   <input id="institucion-de-procedencia"
                     className="input-field"
                     value={externo.institucionProcedencia}
@@ -245,7 +245,7 @@ export default function DetalleEventoPage() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+                  <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observación</label>
                   <input id="observacion" className="input-field" value={externo.observacion} onChange={(e) => setExterno({ ...externo, observacion: e.target.value })} />
                 </div>
               </div>

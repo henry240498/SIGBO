@@ -170,7 +170,7 @@ export default function BajasDepositoPage() {
             ) : (
               <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 }}>
                 <div>
-                  <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Articulo</label>
+                  <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Artículo</label>
                   <ComboBuscable ariaLabel="Articulo" opciones={opcionesArticulo} value={articuloId} onChange={setArticuloId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar articulo..." />
                 </div>
                 <div>
@@ -187,7 +187,7 @@ export default function BajasDepositoPage() {
 
           {tipoElemento === 'ARTICULO' && (
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Origen del articulo</label>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Origen del artículo</label>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
                 <ComboBuscable opciones={opcionesUbicacion} value={origenUbicacionId} onChange={setOrigenUbicacionId} ningunaLabel="Sin ubicacion" />
                 <ComboBuscable opciones={opcionesVehiculo} value={origenVehiculoId} onChange={setOrigenVehiculoId} ningunaLabel="Sin vehiculo" />
@@ -211,7 +211,7 @@ export default function BajasDepositoPage() {
             </div>
           </div>
           <div>
-            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observacion</label>
+            <label htmlFor="observacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observación</label>
             <input id="observacion" className="input-field" value={observacion} onChange={(e) => setObservacion(e.target.value)} />
           </div>
 
@@ -229,7 +229,7 @@ export default function BajasDepositoPage() {
               <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Elemento</th>
               <th scope="col" style={{ padding: '6px 4px' }}>Motivo</th>
-              <th scope="col" style={{ padding: '6px 4px' }}>Observacion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Observación</th>
             </tr>
           </thead>
           <tbody>
