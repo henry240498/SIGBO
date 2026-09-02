@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useState } from 'react';
 import { apiFetch } from '@/lib/api';
+import { Aviso } from '@/app/components/Aviso';
 import { formatearJsonSeguro } from '@/lib/json-seguro';
 import { Cargando } from '@/app/components/Cargando';
 
@@ -11,20 +12,27 @@ export function TabAuditoria({ bomberoId }: { bomberoId: string }) {
   const [expandido, setExpandido] = useState<string | null>(null);
 
   useEffect(() => {
+    setError(null);
     apiFetch(`/seguridad/auditoria?recurso=personal.bomberos&recursoId=${bomberoId}&pageSize=100`)
       .then(async (res) => {
+        // Antes cualquier fallo se anunciaba como falta de permiso, asi que un 500
+        // mandaba a pedirle un permiso al administrador que ya tenia.
+        if (res.status === 401 || res.status === 403) {
+          setError('No tenés permiso para ver la auditoría de este registro.');
+          return;
+        }
         if (!res.ok) {
-          setError('No tienes permiso para ver la auditoria de este registro.');
+          setError('No se pudo cargar la auditoría de este registro.');
           return;
         }
         const body = await res.json();
         setItems(body.items);
       })
-      .catch(() => setError('No se pudo cargar la auditoria'));
+      .catch(() => setError('No se pudo cargar la auditoría de este registro.'));
   }, [bomberoId]);
 
-  if (error) return <p style={{ color: 'var(--muted)', fontSize: 13 }}>{error}</p>;
-  if (!items) return <Cargando texto="Cargando…" />;
+  if (error) return <Aviso tipo="error" texto={error} />;
+  if (!items) return <Cargando texto="Cargando la auditoría…" />;
   if (items.length === 0) return <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin registros de auditoría.</p>;
 
   return (

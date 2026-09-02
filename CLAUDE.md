@@ -111,7 +111,9 @@ Las críticas, en corto. El detalle está en `.context/RULES.md`.
 | Esquema SQL | `operaciones` | **`operaciones`** ← el mismo |
 
 **No existe el prefijo `operaciones:` ni el esquema `guardias`.** Los dos dominios
-comparten el esquema `operaciones`, y quedaron pantallas de guardias en ambos lados.
+comparten el esquema `operaciones`. Las **pantallas** ya no están repartidas: cada una
+vive en el módulo cuyo permiso gobierna sus endpoints — ver
+`.context/graph/curated/decision/decision--pantalla-vive-donde-su-permiso.md`.
 
 ## Cómo correrlo
 
@@ -134,28 +136,42 @@ SQL Server Express local con TCP/IP deshabilitado de fábrica
 
 ## Verificación
 
-**No hay pruebas automatizadas** en backend ni frontend. Cualquier cambio se verifica a
-mano o vía Swagger (`http://localhost:3001/api/docs`). Tenelo en cuenta al proponer
-refactors: no hay red de seguridad.
+**El backend sí tiene pruebas: 17 suites, 70 casos** (`cd backend; npm test`, ~2 min).
+Cubren auth, cookies, CSRF, política de contraseñas, rate limit, roles, geolocalización
+y el armado del `DataSource` — no tocan la base, así que corren **sin SQL Server**.
+Al cambiar algo de esas áreas, correlas.
 
-Lo único que sí está automatizado son dos auditorías con línea base, que **fallan si la
-deuda crece**. No prueban que algo funcione; sólo impiden que vuelvan defectos que ya se
-corrigieron en masa. Conviene correrlas antes de dar por terminado un cambio de frontend:
+**El frontend casi no tiene.** Solo `npm test` sobre la resolución de `?seccion=`
+(9 casos, runner nativo de Node, sin dependencias). Todo lo demás se verifica a mano o
+vía Swagger (`http://localhost:3001/api/docs`). Tenelo en cuenta al proponer refactors
+de frontend: ahí la red de seguridad es fina.
+
+Lo que suple parte de esa falta son cuatro comprobaciones estáticas. Las dos auditorías
+tienen línea base y **fallan si la deuda crece**; las otras dos encuentran defectos que
+`tsc` no ve, porque una ruta mal escrita es una cadena:
 
 ```powershell
 cd frontend
 npm run audit:contraste   # paleta del tema oscuro sobre fondo claro
 npm run audit:a11y        # etiquetas sin asociar, th sin scope, confirm/alert nativos
+npm test                  # resolución de ?seccion= del expediente
 npx tsc --noEmit          # el build no corre en CI: esto es lo más rápido
+
+cd ..
+node scripts/verificar-endpoints.mjs            # llamadas del front sin ruta en el back
+node scripts/auditar-secciones-expediente.mjs   # carga/vacío/error por sección
 ```
+
+Y con el backend levantado, `node scripts/smoke-expediente.mjs --usuario <u> --password <p>`
+recorre las rutas de las 20 secciones del expediente y reporta el código de cada una.
 
 ## Documentación
 
 | Dónde | Qué |
 |---|---|
 | `.context/INDEX.md` | Índice semántico, protocolo de consulta y niveles |
-| `.context/RULES.md` | Los 21 invariantes, con severidad |
-| `.context/DECISIONS.md` | Las 10 decisiones de arquitectura y su costo |
+| `.context/RULES.md` | Los 23 invariantes, con severidad |
+| `.context/DECISIONS.md` | Las 11 decisiones de arquitectura y su costo |
 | `.context/DATABASE.md` | 12 esquemas, 88 tablas, convenciones |
 | `.context/WORKFLOWS.md` | Máquinas de estado del dominio |
 | `docs/GUIA-DE-ESTILO.md` | Paleta, medidas y patrones de pantalla (verificado contra el código) |

@@ -2853,6 +2853,7 @@
 {"from":"screen--dashboard-personal-id","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-personal-id","tipo":"uses","to":"component--front-cargando"}
 {"from":"screen--dashboard-personal-id","tipo":"uses","to":"component--front-aviso"}
+{"from":"screen--dashboard-personal-id","tipo":"uses","to":"component--front-seccion-url"}
 {"from":"screen--dashboard-publicaciones","tipo":"uses","to":"component--front-publicaciones"}
 {"from":"screen--dashboard-publicaciones","tipo":"uses","to":"component--front-confirmprovider"}
 {"from":"screen--dashboard-seguridad-apariencia","tipo":"uses","to":"component--front-api"}

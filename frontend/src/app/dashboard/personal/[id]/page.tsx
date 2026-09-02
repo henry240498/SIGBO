@@ -6,6 +6,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { apiFetch, API_ORIGIN, obtenerSesion } from '@/lib/api';
 import { Cargando } from '@/app/components/Cargando';
 import { Aviso } from '@/app/components/Aviso';
+import { seccionPedida, urlConSeccion } from '@/lib/seccion-url';
 import { Bombero, Catalogo, cargarCatalogo } from './expediente';
 import { TabResumen } from './secciones/TabResumen';
 import { TabDatosPersonales } from './secciones/TabDatosPersonales';
@@ -41,19 +42,17 @@ export default function ExpedienteBomberoPage() {
 
   // La seccion viaja en la URL. Sin esto, recargar el expediente o compartir el enlace
   // de una pestana volvia siempre a Resumen, y con 20 pestanas eso obliga a rehacer el
-  // camino a mano. Se valida contra TABS: un valor inventado cae en Resumen.
+  // camino a mano. La resolucion vive en lib/seccion-url.ts, con pruebas propias.
   useEffect(() => {
-    const pedida = new URLSearchParams(window.location.search).get('seccion');
-    if (pedida && TABS.some((tab) => tab.id === pedida)) setSeccion(pedida);
+    const pedida = seccionPedida(window.location.search, TABS.map((tab) => tab.id));
+    if (pedida) setSeccion(pedida);
   }, []);
 
   // replaceState y no push: una entrada de historial por clic de pestana convierte el
   // boton Atras en algo inutilizable.
   function irASeccion(idSeccion: string) {
     setSeccion(idSeccion);
-    const url = new URL(window.location.href);
-    url.searchParams.set('seccion', idSeccion);
-    window.history.replaceState(null, '', url);
+    window.history.replaceState(null, '', urlConSeccion(window.location.href, idSeccion));
   }
 
   const puedeEditar = !!obtenerSesion()?.usuario.permisos.includes('personal:editar');

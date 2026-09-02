@@ -2,19 +2,31 @@
 
 import { useEffect, useState } from 'react';
 import { apiFetch } from '@/lib/api';
+import { Aviso } from '@/app/components/Aviso';
 import { Cargando } from '@/app/components/Cargando';
 import { MovimientoHistorial } from '../expediente';
 
 export function TabTimeline({ bomberoId }: { bomberoId: string }) {
   const [items, setItems] = useState<MovimientoHistorial[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    setError(null);
     apiFetch(`/personal/bomberos/${bomberoId}/historial`)
-      .then(async (res) => (res.ok ? setItems(await res.json()) : setItems([])))
-      .catch(() => setItems([]));
+      .then(async (res) => {
+        // Un fallo no puede terminar en setItems([]): "sin movimientos" es una
+        // afirmacion sobre el bombero, y un 500 o un 403 no autorizan a hacerla.
+        if (!res.ok) {
+          setError('No se pudo cargar la línea de tiempo.');
+          return;
+        }
+        setItems(await res.json());
+      })
+      .catch(() => setError('No se pudo cargar la línea de tiempo.'));
   }, [bomberoId]);
 
-  if (!items) return <Cargando texto="Cargando…" />;
+  if (error) return <Aviso tipo="error" texto={error} />;
+  if (!items) return <Cargando texto="Cargando la línea de tiempo…" />;
   if (items.length === 0) return <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin movimientos registrados.</p>;
 
   const ordenados = [...items].sort((a, b) => (a.fecha < b.fecha ? 1 : -1));

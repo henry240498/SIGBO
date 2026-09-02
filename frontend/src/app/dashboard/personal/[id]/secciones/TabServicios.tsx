@@ -3,23 +3,40 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { apiFetch } from '@/lib/api';
+import { Aviso } from '@/app/components/Aviso';
+import { Cargando } from '@/app/components/Cargando';
 import { HistorialAsignacion, cargarHistorialGuardiasPersonal } from '@/lib/guardias';
 
 export function TabServicios({ bomberoId }: { bomberoId: string }) {
   const [guardias, setGuardias] = useState<HistorialAsignacion[] | null>(null);
   const [servicios, setServicios] = useState<any[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    cargarHistorialGuardiasPersonal(bomberoId).then(setGuardias).catch(() => setGuardias([]));
+    setError(null);
+    // Las dos consultas son independientes: si una falla, la otra igual se muestra.
+    // Lo que no puede pasar es que un fallo termine en una lista vacia -- "sin
+    // guardias" es una afirmacion sobre el bombero, y un 500 no autoriza a hacerla.
+    cargarHistorialGuardiasPersonal(bomberoId)
+      .then(setGuardias)
+      .catch(() => setError('No se pudo cargar el historial de guardias.'));
     apiFetch(`/personal/bomberos/${bomberoId}/servicios`)
-      .then(async (res) => (res.ok ? setServicios(await res.json()) : setServicios([])))
-      .catch(() => setServicios([]));
+      .then(async (res) => {
+        if (!res.ok) {
+          setError('No se pudo cargar el historial de servicios.');
+          return;
+        }
+        setServicios(await res.json());
+      })
+      .catch(() => setError('No se pudo cargar el historial de servicios.'));
   }, [bomberoId]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {error && <Aviso tipo="error" texto={error} />}
       <div className="card">
         <h3 style={{ fontSize: 14, marginBottom: 8 }}>Guardias ({guardias?.length ?? 0})</h3>
+        {!guardias && !error && <Cargando texto="Cargando guardias…" filas={2} />}
         {guardias && guardias.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin guardias registradas.</p>}
         {guardias && guardias.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>

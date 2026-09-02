@@ -2137,6 +2137,9 @@
  "frontend/src/lib/publicaciones.ts": [
   "component--front-publicaciones"
  ],
+ "frontend/src/lib/seccion-url.ts": [
+  "component--front-seccion-url"
+ ],
  "frontend/src/lib/socios-protectores.ts": [
   "component--front-socios-protectores"
  ],
