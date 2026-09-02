@@ -39,6 +39,23 @@ export default function ExpedienteBomberoPage() {
   const [error, setError] = useState<string | null>(null);
   const [seccion, setSeccion] = useState('resumen');
 
+  // La seccion viaja en la URL. Sin esto, recargar el expediente o compartir el enlace
+  // de una pestana volvia siempre a Resumen, y con 20 pestanas eso obliga a rehacer el
+  // camino a mano. Se valida contra TABS: un valor inventado cae en Resumen.
+  useEffect(() => {
+    const pedida = new URLSearchParams(window.location.search).get('seccion');
+    if (pedida && TABS.some((tab) => tab.id === pedida)) setSeccion(pedida);
+  }, []);
+
+  // replaceState y no push: una entrada de historial por clic de pestana convierte el
+  // boton Atras en algo inutilizable.
+  function irASeccion(idSeccion: string) {
+    setSeccion(idSeccion);
+    const url = new URL(window.location.href);
+    url.searchParams.set('seccion', idSeccion);
+    window.history.replaceState(null, '', url);
+  }
+
   const puedeEditar = !!obtenerSesion()?.usuario.permisos.includes('personal:editar');
   const puedeEliminarFisico = !!obtenerSesion()?.usuario.permisos.includes('personal:eliminar_fisico');
 
@@ -146,7 +163,7 @@ export default function ExpedienteBomberoPage() {
         {TABS.map((tab) => (
           <button type="button"
             key={tab.id}
-            onClick={() => setSeccion(tab.id)}
+            onClick={() => irASeccion(tab.id)}
             style={{
               padding: '8px 12px',
               fontSize: 13,
