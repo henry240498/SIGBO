@@ -3138,6 +3138,8 @@
 {"from":"rule--tolerancia-null-es-la-general","tipo":"affects","to":"entity--tolerancia-asistencia"}
 {"from":"rule--tolerancia-null-es-la-general","tipo":"affects","to":"table--operaciones-tolerancias-asistencia"}
 {"from":"rule--tolerancia-null-es-la-general","tipo":"belongs_to","to":"domain--asistencia"}
+{"from":"rule--un-fallo-no-se-anuncia-como-vacio","tipo":"affects","to":"component--front-modulos"}
+{"from":"rule--un-fallo-no-se-anuncia-como-vacio","tipo":"belongs_to","to":"domain--personal"}
 {"from":"rule--una-comunicacion-por-servicio","tipo":"affects","to":"table--servicios-comunicaciones-servicio"}
 {"from":"rule--una-comunicacion-por-servicio","tipo":"affects","to":"entity--comunicacion-servicio"}
 {"from":"rule--una-comunicacion-por-servicio","tipo":"belongs_to","to":"domain--servicios"}

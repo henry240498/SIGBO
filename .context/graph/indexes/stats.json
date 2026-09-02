@@ -1,8 +1,8 @@
 {
- "generado": "2026-09-02T17:56:40.611Z",
+ "generado": "2026-09-02T18:10:24.434Z",
  "repo": "SIGBO",
- "nodos": 855,
- "aristas": 3181,
+ "nodos": 856,
+ "aristas": 3183,
  "nodosPorTipo": {
   "DOMAIN": 15,
   "ENTITY": 139,
@@ -16,11 +16,11 @@
   "DECISION": 12,
   "DEPENDENCY": 4,
   "ERROR": 5,
-  "RULE": 25,
+  "RULE": 26,
   "WORKFLOW": 7
  },
  "aristasPorTipo": {
-  "belongs_to": 700,
+  "belongs_to": 701,
   "defined_in": 150,
   "references": 227,
   "persisted_in": 139,
@@ -30,13 +30,13 @@
   "calls": 129,
   "configured_by": 3,
   "constrains": 12,
-  "affects": 61,
+  "affects": 62,
   "depends_on": 3,
   "originates_from": 7,
   "contains": 10
  },
  "permisos": 196,
- "terminosIndexados": 1701,
+ "terminosIndexados": 1715,
  "huecos": {
   "tablasSinEntidad": [
    "seguridad.restricciones",

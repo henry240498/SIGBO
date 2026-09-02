@@ -5,7 +5,7 @@ nivel: L0
 
 # Reglas e invariantes
 
-23 reglas verificadas contra el código. Cada una tiene su nodo curado con el detalle, el
+24 reglas verificadas contra el código. Cada una tiene su nodo curado con el detalle, el
 archivo donde vive y qué pasa si se rompe.
 
 > Si vas a modificar código de SIGBO, las **CRÍTICAS** son lectura obligatoria.
@@ -27,6 +27,7 @@ archivo donde vive y qué pasa si se rompe.
 | Regla | En una línea |
 |---|---|
 | [[rule--guardias-vive-en-operaciones]] | No existe el esquema `guardias`: sus tablas están en `operaciones` |
+| [[rule--un-fallo-no-se-anuncia-como-vacio]] | Carga, vacío y error son **tres** estados; un 500 no dice "sin datos" |
 | [[rule--elegibilidad-de-rol-guardia]] | OR entre filas, AND entre columnas; sin requisitos configurados, no se restringe |
 | [[rule--sin-clases-css-nuevas]] | El color sale de `var(--token)`, no de un hex. ACTIVO verde / malo rojo |
 | [[rule--api-v1-y-contrato-http]] | `/api/v1` lo agrega `apiFetch`; las pantallas pasan rutas relativas |

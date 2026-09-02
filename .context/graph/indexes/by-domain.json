@@ -226,7 +226,8 @@
   "screen--dashboard-personal-id",
   "component--front-personal",
   "rule--cedula-y-numero-bombero-unicos",
-  "rule--expediente-una-seccion-un-archivo"
+  "rule--expediente-una-seccion-un-archivo",
+  "rule--un-fallo-no-se-anuncia-como-vacio"
  ],
  "academia": [
   "domain--academia",

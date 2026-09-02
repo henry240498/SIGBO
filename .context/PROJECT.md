@@ -61,8 +61,13 @@ evitar terminarlo accidentalmente.
 
 ## Deuda técnica conocida, priorizada
 
-1. **Sin pruebas automatizadas.** No hay suite en backend ni frontend. Toda verificación
-   es manual o vía Swagger. Es la deuda más costosa: cada cambio se valida a mano.
+1. **Pruebas: el backend tiene, el frontend casi no.** El backend corre **17 suites y 70
+   casos** (`cd backend; npm test`), sin tocar la base de datos, así que andan sin SQL
+   Server; cubren auth, cookies, CSRF, contraseñas, rate limit, roles y geolocalización.
+   El frontend tiene 9 casos, solo sobre la resolución de `?seccion=`. Ahí la deuda sigue
+   siendo la más costosa: cada pantalla se valida a mano o vía Swagger. Lo que la
+   amortigua son cuatro comprobaciones estáticas — ver la sección Verificación de
+   `CLAUDE.md`.
 2. **Documentación desactualizada.** `docs/README.md` dice "42 tablas, 10 esquemas"; la
    realidad son **88 tablas en 12 esquemas**. Es la prueba viva de por qué este grafo se
    regenera en vez de escribirse.

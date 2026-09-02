@@ -85,9 +85,12 @@ responder a medias.
    la fila. La solución estructural es subirlo a `/uploads` y guardar la referencia; la
    infraestructura ya existe (`multer`) — [[error--413-croquis-grande]].
 
-7. **Sin pruebas automatizadas.** No es una decisión documentada, es una ausencia. Con 55
-   controladores y 88 tablas, toda verificación es manual. Es la deuda que hace más
-   riesgoso cada uno de los cambios de esta lista.
+7. **Cobertura de pruebas despareja.** El backend tiene 17 suites y 70 casos que corren
+   sin base de datos; el frontend, 9 casos sobre un solo helper. Con 55 controladores y
+   ~97 pantallas, casi toda la verificación de interfaz sigue siendo manual, y eso es lo
+   que hace más riesgoso cada uno de los cambios de esta lista. Lo amortiguan cuatro
+   comprobaciones estáticas: `audit:a11y`, `audit:contraste`, `verificar-endpoints.mjs`
+   y `auditar-secciones-expediente.mjs`.
 
 ## Al tomar una decisión nueva
 

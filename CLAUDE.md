@@ -170,7 +170,7 @@ recorre las rutas de las 20 secciones del expediente y reporta el código de cad
 | Dónde | Qué |
 |---|---|
 | `.context/INDEX.md` | Índice semántico, protocolo de consulta y niveles |
-| `.context/RULES.md` | Los 23 invariantes, con severidad |
+| `.context/RULES.md` | Los 24 invariantes, con severidad |
 | `.context/DECISIONS.md` | Las 11 decisiones de arquitectura y su costo |
 | `.context/DATABASE.md` | 12 esquemas, 88 tablas, convenciones |
 | `.context/WORKFLOWS.md` | Máquinas de estado del dominio |

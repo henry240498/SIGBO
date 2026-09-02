@@ -871,6 +871,7 @@
   "rule--tema-claro-unico",
   "rule--todo-endpoint-mutante-con-permiso",
   "rule--tolerancia-null-es-la-general",
+  "rule--un-fallo-no-se-anuncia-como-vacio",
   "rule--una-comunicacion-por-servicio"
  ],
  "WORKFLOW": [

@@ -2150,7 +2150,8 @@
   "component--front-vehiculos"
  ],
  "frontend/src/app/components/Aviso.tsx": [
-  "component--front-aviso"
+  "component--front-aviso",
+  "rule--un-fallo-no-se-anuncia-como-vacio"
  ],
  "frontend/src/app/components/BuscadorPantallas.tsx": [
   "component--front-buscadorpantallas",
@@ -2281,7 +2282,8 @@
   "rule--expediente-una-seccion-un-archivo"
  ],
  "frontend/src/app/dashboard/personal/[id]/secciones": [
-  "rule--expediente-una-seccion-un-archivo"
+  "rule--expediente-una-seccion-un-archivo",
+  "rule--un-fallo-no-se-anuncia-como-vacio"
  ],
  "backend/src/modules/guardias": [
   "rule--guardias-vive-en-operaciones"
@@ -2295,5 +2297,8 @@
  ],
  "backend/src/modules/seguridad/decorators/require-permission.decorator.ts": [
   "rule--todo-endpoint-mutante-con-permiso"
+ ],
+ "scripts/auditar-secciones-expediente.mjs": [
+  "rule--un-fallo-no-se-anuncia-como-vacio"
  ]
 }

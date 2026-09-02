@@ -30,6 +30,7 @@ Helper de frontend "modulos" (7 exportaciones).
 - [[rule--modulo-visible-por-prefijo|Un modulo aparece en el menu si el usuario tiene algun permiso con su prefijo]] `affects` →
 - [[rule--registro-de-pantallas-generado|Pantalla nueva significa regenerar el registro de pantallas]] `affects` →
 - [[rule--sin-clases-css-nuevas|No traer librerias de UI, y el color sale de un token y no de un hex]] `affects` →
+- [[rule--un-fallo-no-se-anuncia-como-vacio|Un fallo de consulta nunca se muestra como lista vacia]] `affects` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>
