@@ -40,7 +40,6 @@ const NOMBRES_POR_RUTA = new Map(Object.entries({
   '/dashboard/servicios/nuevo': 'Nuevo servicio',
   '/dashboard/guardias/ordenes/nueva': 'Nueva orden de guardia',
   '/dashboard/guardias/ordenes/configuracion': 'Configuración de órdenes',
-  '/dashboard/organizacion/guardias/planificacion': 'Planificación de guardias',
   '/dashboard/seguridad/inteligencia-artificial': 'Inteligencia artificial',
   '/dashboard/seguridad/inteligencia-artificial/auditoria': 'Auditoría de IA',
   '/dashboard/seguridad/inteligencia-artificial/configuracion': 'Configuración de IA',

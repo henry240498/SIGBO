@@ -5,7 +5,7 @@ nivel: L0
 
 # Reglas e invariantes
 
-21 reglas verificadas contra el código. Cada una tiene su nodo curado con el detalle, el
+23 reglas verificadas contra el código. Cada una tiene su nodo curado con el detalle, el
 archivo donde vive y qué pasa si se rompe.
 
 > Si vas a modificar código de SIGBO, las **CRÍTICAS** son lectura obligatoria.
@@ -28,7 +28,7 @@ archivo donde vive y qué pasa si se rompe.
 |---|---|
 | [[rule--guardias-vive-en-operaciones]] | No existe el esquema `guardias`: sus tablas están en `operaciones` |
 | [[rule--elegibilidad-de-rol-guardia]] | OR entre filas, AND entre columnas; sin requisitos configurados, no se restringe |
-| [[rule--sin-clases-css-nuevas]] | Solo 4 clases; hex exactos, nunca parecidos. ACTIVO verde / malo rojo |
+| [[rule--sin-clases-css-nuevas]] | El color sale de `var(--token)`, no de un hex. ACTIVO verde / malo rojo |
 | [[rule--api-v1-y-contrato-http]] | `/api/v1` lo agrega `apiFetch`; las pantallas pasan rutas relativas |
 | [[rule--identidad-y-tiempo-en-sql-server]] | PK `UNIQUEIDENTIFIER` + `NEWSEQUENTIALID()`, tiempos `DATETIMEOFFSET(3)` |
 | [[rule--cedula-y-numero-bombero-unicos]] | Únicos en toda la institución, incluso para quien está de baja |
@@ -47,6 +47,7 @@ archivo donde vive y qué pasa si se rompe.
 | [[rule--espanol-y-auditoria]] | Todo en español; auditoría técnica ≠ historial de expediente |
 | [[rule--etiqueta-nombra-su-control]] | `htmlFor` + `id` (o `aria-label`); `<th scope="col">` |
 | [[rule--registro-de-pantallas-generado]] | Pantalla nueva ⇒ `TABS` del módulo + `npm run generar:pantallas` |
+| [[rule--expediente-una-seccion-un-archivo]] | `personal/[id]`: una pestaña por archivo en `secciones/` |
 
 ## Las cuatro trampas que más tiempo cuestan
 

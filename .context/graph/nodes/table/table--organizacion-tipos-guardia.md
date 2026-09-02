@@ -39,7 +39,7 @@ Tabla organizacion.tipos_guardia (11 columnas). Creada en 012_organizacion.sql, 
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/organizacion/guardias`
+- **Pantallas:** `/dashboard/organizacion/tipos-guardia`
 - **Endpoints:** TiposGuardiaController
 - **Servicios:** DashboardService, TiposGuardiaService
 

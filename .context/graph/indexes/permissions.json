@@ -409,8 +409,7 @@
   "modulo": "equipos",
   "exigidoPor": [
    "api--equipos-equipamiento-bombero",
-   "screen--dashboard-equipos-id",
-   "screen--dashboard-personal-id"
+   "screen--dashboard-equipos-id"
   ]
  },
  "equipos:ver": {
@@ -1178,43 +1177,37 @@
  "personal:generar_foja": {
   "modulo": "personal",
   "exigidoPor": [
-   "api--personal-foja-servicio",
-   "screen--dashboard-personal-id"
+   "api--personal-foja-servicio"
   ]
  },
  "personal:gestionar_firma_digital": {
   "modulo": "personal",
   "exigidoPor": [
-   "api--personal-bomberos",
-   "screen--dashboard-personal-id"
+   "api--personal-bomberos"
   ]
  },
  "personal:seguros_crear": {
   "modulo": "personal",
   "exigidoPor": [
-   "api--personal-seguros-bombero",
-   "screen--dashboard-personal-id"
+   "api--personal-seguros-bombero"
   ]
  },
  "personal:seguros_editar": {
   "modulo": "personal",
   "exigidoPor": [
-   "api--personal-seguros-bombero",
-   "screen--dashboard-personal-id"
+   "api--personal-seguros-bombero"
   ]
  },
  "personal:seguros_eliminar": {
   "modulo": "personal",
   "exigidoPor": [
-   "api--personal-seguros-bombero",
-   "screen--dashboard-personal-id"
+   "api--personal-seguros-bombero"
   ]
  },
  "personal:seguros_ver": {
   "modulo": "personal",
   "exigidoPor": [
-   "api--personal-seguros-bombero",
-   "screen--dashboard-personal-id"
+   "api--personal-seguros-bombero"
   ]
  },
  "personal:tipos_bombero_crear": {

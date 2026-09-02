@@ -272,6 +272,11 @@ export const PANTALLAS: PantallaRegistrada[] = [
     "modulo": "guardias"
   },
   {
+    "ruta": "/dashboard/guardias/planificacion",
+    "nombre": "Planificación",
+    "modulo": "guardias"
+  },
+  {
     "ruta": "/dashboard/guardias/requisitos",
     "nombre": "Requisitos de rol",
     "modulo": "guardias"
@@ -357,16 +362,6 @@ export const PANTALLAS: PantallaRegistrada[] = [
     "modulo": "organizacion"
   },
   {
-    "ruta": "/dashboard/organizacion/guardias",
-    "nombre": "Guardias",
-    "modulo": "organizacion"
-  },
-  {
-    "ruta": "/dashboard/organizacion/guardias/planificacion",
-    "nombre": "Planificación de guardias",
-    "modulo": "organizacion"
-  },
-  {
     "ruta": "/dashboard/organizacion/parametros",
     "nombre": "Parámetros",
     "modulo": "organizacion"
@@ -384,6 +379,11 @@ export const PANTALLAS: PantallaRegistrada[] = [
   {
     "ruta": "/dashboard/organizacion/tipos-bombero",
     "nombre": "Tipos de bombero",
+    "modulo": "organizacion"
+  },
+  {
+    "ruta": "/dashboard/organizacion/tipos-guardia",
+    "nombre": "Tipos de guardia",
     "modulo": "organizacion"
   },
   {

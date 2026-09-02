@@ -92,13 +92,12 @@ Helper de frontend "guardias" (98 exportaciones, consume 28 endpoint(s)).
 - [[screen--dashboard-guardias-ordenes-id|/dashboard/guardias/ordenes/[id]]] `uses` →
 - [[screen--dashboard-guardias|/dashboard/guardias]] `uses` →
 - [[screen--dashboard-guardias-pernoctes|/dashboard/guardias/pernoctes]] `uses` →
+- [[screen--dashboard-guardias-planificacion|/dashboard/guardias/planificacion]] `uses` →
 - [[screen--dashboard-guardias-requisitos|/dashboard/guardias/requisitos]] `uses` →
 - [[screen--dashboard-guardias-sorteos|/dashboard/guardias/sorteos]] `uses` →
 - [[screen--dashboard-guardias-sorteos-id|/dashboard/guardias/sorteos/[id]]] `uses` →
 - [[screen--dashboard-guardias-id|/dashboard/guardias/[id]]] `uses` →
 - [[screen--dashboard-organizacion-feriados|/dashboard/organizacion/feriados]] `uses` →
-- [[screen--dashboard-organizacion-guardias-planificacion|/dashboard/organizacion/guardias/planificacion]] `uses` →
-- [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

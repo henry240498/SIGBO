@@ -29,11 +29,11 @@ Helper de frontend "exportar" (1 exportaciones).
 - [[screen--dashboard-organizacion-departamentos|/dashboard/organizacion/departamentos]] `uses` →
 - [[screen--dashboard-organizacion-designaciones|/dashboard/organizacion/designaciones]] `uses` →
 - [[screen--dashboard-organizacion-especialidades|/dashboard/organizacion/especialidades]] `uses` →
-- [[screen--dashboard-organizacion-guardias|/dashboard/organizacion/guardias]] `uses` →
 - [[screen--dashboard-organizacion-parametros|/dashboard/organizacion/parametros]] `uses` →
 - [[screen--dashboard-organizacion-rangos|/dashboard/organizacion/rangos]] `uses` →
 - [[screen--dashboard-organizacion-reportes|/dashboard/organizacion/reportes]] `uses` →
 - [[screen--dashboard-organizacion-tipos-bombero|/dashboard/organizacion/tipos-bombero]] `uses` →
+- [[screen--dashboard-organizacion-tipos-guardia|/dashboard/organizacion/tipos-guardia]] `uses` →
 - [[screen--dashboard-organizacion-turnos|/dashboard/organizacion/turnos]] `uses` →
 - [[screen--dashboard-organizacion-unidades|/dashboard/organizacion/unidades]] `uses` →
 - [[screen--dashboard-personal|/dashboard/personal]] `uses` →

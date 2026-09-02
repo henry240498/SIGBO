@@ -23,7 +23,7 @@ Resultado de UN participante (via su inscripcion) en UNA evaluacion. Independien
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/finanzas/beneficios`, `/dashboard/personal/[id]`
+- **Pantallas:** `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/finanzas/beneficios`
 - **Endpoints:** EvaluacionesAcademiaController
 - **Servicios:** EvaluacionesAcademiaService
 

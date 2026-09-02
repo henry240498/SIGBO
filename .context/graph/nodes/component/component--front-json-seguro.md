@@ -25,7 +25,6 @@ Helper de frontend "json-seguro" (2 exportaciones).
 - [[screen--dashboard-guardias-auditoria|/dashboard/guardias/auditoria]] `uses` →
 - [[screen--dashboard-guardias-ordenes-id|/dashboard/guardias/ordenes/[id]]] `uses` →
 - [[screen--dashboard-guardias-id|/dashboard/guardias/[id]]] `uses` →
-- [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

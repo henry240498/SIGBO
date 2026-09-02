@@ -23,7 +23,7 @@ Catalogo de tipos de guardia (24hs, 12hs, Nocturna...). No confundir con operaci
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/organizacion/guardias`
+- **Pantallas:** `/dashboard/organizacion/tipos-guardia`
 - **Endpoints:** TiposGuardiaController
 - **Servicios:** DashboardService, TiposGuardiaService
 

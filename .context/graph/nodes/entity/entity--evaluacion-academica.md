@@ -23,7 +23,7 @@ Una instancia de evaluacion dentro de una actividad academica (ej. "Examen teori
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/finanzas/beneficios`, `/dashboard/personal/[id]`
+- **Pantallas:** `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/finanzas/beneficios`
 - **Endpoints:** EvaluacionesAcademiaController
 - **Servicios:** EvaluacionesAcademiaService
 

@@ -57,7 +57,6 @@ Helper de frontend "personal" (13 exportaciones, consume 3 endpoint(s)).
 - [[screen--dashboard-guardias-requisitos|/dashboard/guardias/requisitos]] `uses` →
 - [[screen--dashboard-guardias-id|/dashboard/guardias/[id]]] `uses` →
 - [[screen--dashboard-personal|/dashboard/personal]] `uses` →
-- [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

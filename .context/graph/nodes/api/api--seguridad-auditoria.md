@@ -34,7 +34,6 @@ Superficie HTTP de auditoria bajo /api/v1/seguridad/auditoria.
 
 - [[screen--dashboard-asistencia-auditoria|/dashboard/asistencia/auditoria]] `calls` →
 - [[screen--dashboard-guardias-auditoria|/dashboard/guardias/auditoria]] `calls` →
-- [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `calls` →
 - [[screen--dashboard-seguridad-auditoria|/dashboard/seguridad/auditoria]] `calls` →
 
 ---

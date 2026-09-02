@@ -27,7 +27,7 @@ Inscripcion de un participante (bombero O participante externo, nunca ambos) a u
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/finanzas/beneficios`, `/dashboard/personal/[id]`
+- **Pantallas:** `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/finanzas/beneficios`
 - **Endpoints:** ConsultasAcademiaController, ConsultasCruzadasController, EvaluacionesAcademiaController, FojaServicioController, InscripcionesAcademiaController, SesionesAcademiaController
 - **Servicios:** ConsultasAcademiaService, ConsultasCruzadasService, EvaluacionesAcademiaService, FojaServicioService, IaToolsService, InscripcionesAcademiaService, SesionesAcademiaService
 

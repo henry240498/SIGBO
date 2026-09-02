@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 
 const TABS = [
   { href: '/dashboard/guardias', label: 'Guardias', exact: true },
+  { href: '/dashboard/guardias/planificacion', label: 'Planificación' },
   { href: '/dashboard/guardias/generar', label: 'Generar' },
   { href: '/dashboard/guardias/ordenes', label: 'Órdenes de guardia' },
   { href: '/dashboard/guardias/grupos', label: 'Grupos' },

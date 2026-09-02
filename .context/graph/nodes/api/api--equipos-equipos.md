@@ -47,7 +47,6 @@ Superficie HTTP de equipos bajo /api/v1/equipos/equipos.
 
 ## Referenciado por
 
-- [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `calls` →
 - [[component--front-equipos|equipos]] `calls` →
 - [[component--front-equipos|equipos]] `calls` →
 - [[component--front-equipos|equipos]] `calls` →

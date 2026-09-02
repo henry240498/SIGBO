@@ -81,6 +81,7 @@
   "screen--dashboard-guardias-ordenes-id",
   "screen--dashboard-guardias",
   "screen--dashboard-guardias-pernoctes",
+  "screen--dashboard-guardias-planificacion",
   "screen--dashboard-guardias-requisitos",
   "screen--dashboard-guardias-sorteos",
   "screen--dashboard-guardias-sorteos-id",
@@ -224,7 +225,8 @@
   "screen--dashboard-personal",
   "screen--dashboard-personal-id",
   "component--front-personal",
-  "rule--cedula-y-numero-bombero-unicos"
+  "rule--cedula-y-numero-bombero-unicos",
+  "rule--expediente-una-seccion-un-archivo"
  ],
  "academia": [
   "domain--academia",
@@ -472,13 +474,12 @@
   "screen--dashboard-organizacion-documentos",
   "screen--dashboard-organizacion-especialidades",
   "screen--dashboard-organizacion-feriados",
-  "screen--dashboard-organizacion-guardias",
-  "screen--dashboard-organizacion-guardias-planificacion",
   "screen--dashboard-organizacion",
   "screen--dashboard-organizacion-parametros",
   "screen--dashboard-organizacion-rangos",
   "screen--dashboard-organizacion-reportes",
   "screen--dashboard-organizacion-tipos-bombero",
+  "screen--dashboard-organizacion-tipos-guardia",
   "screen--dashboard-organizacion-turnos",
   "screen--dashboard-organizacion-unidades",
   "component--front-organizacion"

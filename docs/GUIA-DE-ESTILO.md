@@ -289,6 +289,20 @@ produce `npm run generar:pantallas` recorriendo el árbol de rutas y tomando el 
 legible del array `TABS` del `layout.tsx` de cada módulo. Al agregar una pantalla:
 declararla en el `TABS` de su módulo y regenerar. Si no se regenera, la pantalla existe
 pero el buscador no la encuentra y las migas la muestran con el slug crudo.
+
+#### En qué módulo va una pantalla
+
+Decide el **prefijo de permiso de los endpoints que consume**, no el parecido temático del
+nombre. Es lo que resolvió que "Guardias" apareciera dos veces en el menú:
+`organizacion/guardias` consumía `/organizacion/tipos-guardia` y era en realidad el
+catálogo de tipos (hoy `organizacion/tipos-guardia`), mientras que su subpantalla de
+planificación consumía `/guardias/planificacion/manual` con permiso `guardias:editar` y
+pasó a `guardias/planificacion`.
+
+No es cosmético: quien tenía `guardias:editar` sin ningún permiso `organizacion:` no veía
+el módulo Organización en el menú, así que **no tenía forma de llegar a una pantalla que
+sí estaba autorizado a usar**. Al mover una pantalla, dejá la dirección vieja redirigida
+en `next.config.js` — hay enlaces guardados y favoritos.
 - Antes de renderizar, verifica sesión (`obtenerSesion()`); si no hay, redirige a
   `/login` (`router.replace`).
 

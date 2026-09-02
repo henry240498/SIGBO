@@ -51,7 +51,6 @@ Helper de frontend "academia" (48 exportaciones, consume 10 endpoint(s)).
 - [[screen--dashboard-academia|/dashboard/academia]] `uses` →
 - [[screen--dashboard-academia-id|/dashboard/academia/[id]]] `uses` →
 - [[screen--dashboard-finanzas-beneficios|/dashboard/finanzas/beneficios]] `uses` →
-- [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

@@ -80,6 +80,7 @@ Modulo funcional "Personal". Habilitado en la navegacion.
 - [[screen--dashboard-personal|/dashboard/personal]] `belongs_to` →
 - [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `belongs_to` →
 - [[rule--cedula-y-numero-bombero-unicos|Cedula y numero de bombero son unicos en toda la institucion]] `belongs_to` →
+- [[rule--expediente-una-seccion-un-archivo|El expediente del bombero es una seccion por archivo]] `belongs_to` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

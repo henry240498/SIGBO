@@ -23,7 +23,9 @@ Helper de frontend "modulos" (7 exportaciones).
 
 - [[screen--dashboard|/dashboard]] `uses` →
 - [[screen--dashboard-modulo|/dashboard/[modulo]]] `uses` →
+- [[decision--pantalla-vive-donde-su-permiso|Una pantalla vive en el modulo cuyo permiso gobierna sus endpoints]] `affects` →
 - [[rule--etiqueta-nombra-su-control|Toda etiqueta nombra a su control, y todo th declara su scope]] `affects` →
+- [[rule--expediente-una-seccion-un-archivo|El expediente del bombero es una seccion por archivo]] `affects` →
 - [[rule--frontend-no-autoriza|El frontend oculta, el backend autoriza]] `affects` →
 - [[rule--modulo-visible-por-prefijo|Un modulo aparece en el menu si el usuario tiene algun permiso con su prefijo]] `affects` →
 - [[rule--registro-de-pantallas-generado|Pantalla nueva significa regenerar el registro de pantallas]] `affects` →

@@ -48,7 +48,7 @@ Tabla academia.evaluaciones (10 columnas). Creada en 036_academia_estructura.sql
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/finanzas/beneficios`, `/dashboard/personal/[id]`
+- **Pantallas:** `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/finanzas/beneficios`
 - **Endpoints:** EvaluacionesAcademiaController
 - **Servicios:** EvaluacionesAcademiaService
 

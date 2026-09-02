@@ -63,7 +63,7 @@ Tabla academia.actividades (26 columnas). Creada en 036_academia_estructura.sql,
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/finanzas/beneficios`, `/dashboard/personal/[id]`
+- **Pantallas:** `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/finanzas/beneficios`
 - **Endpoints:** ActividadesAcademicasController, ConsultasAcademiaController, ConsultasCruzadasController, EvaluacionesAcademiaController, FojaServicioController, InscripcionesAcademiaController, ReportesAcademiaController, SesionesAcademiaController
 - **Servicios:** ActividadesAcademicasService, ConsultasAcademiaService, ConsultasCruzadasService, EvaluacionesAcademiaService, FojaServicioService, IaToolsService, InscripcionesAcademiaService, ReportesAcademiaService, SesionesAcademiaService
 

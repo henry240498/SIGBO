@@ -1,14 +1,14 @@
 ---
-id: screen--dashboard-organizacion-guardias
+id: screen--dashboard-organizacion-tipos-guardia
 tipo: SCREEN
-nombre: /dashboard/organizacion/guardias
+nombre: /dashboard/organizacion/tipos-guardia
 nivel: L1
 dominio: organizacion
-resumen: Pantalla /dashboard/organizacion/guardias, consume 3 endpoint(s).
-ruta: /dashboard/organizacion/guardias
+resumen: Pantalla /dashboard/organizacion/tipos-guardia, consume 3 endpoint(s).
+ruta: /dashboard/organizacion/tipos-guardia
 capa: frontend
 archivos:
-  - frontend/src/app/dashboard/organizacion/guardias/page.tsx
+  - frontend/src/app/dashboard/organizacion/tipos-guardia/page.tsx
 edges:
   - [belongs_to, domain--organizacion]
   - [uses, component--front-confirmprovider]
@@ -18,14 +18,14 @@ edges:
   - [calls, api--organizacion-tipos-guardia]
   - [calls, api--organizacion-tipos-guardia]
   - [calls, api--organizacion-tipos-guardia]
-terminos: [organizacion, guardias]
+terminos: [organizacion, tipos, guardia]
 ---
 
-# /dashboard/organizacion/guardias
+# /dashboard/organizacion/tipos-guardia
 
-Pantalla /dashboard/organizacion/guardias, consume 3 endpoint(s).
+Pantalla /dashboard/organizacion/tipos-guardia, consume 3 endpoint(s).
 
-- **Ruta:** `/dashboard/organizacion/guardias`
+- **Ruta:** `/dashboard/organizacion/tipos-guardia`
 
 ## Endpoints que consume
 
@@ -35,7 +35,7 @@ Pantalla /dashboard/organizacion/guardias, consume 3 endpoint(s).
 
 ## Archivos
 
-- `frontend/src/app/dashboard/organizacion/guardias/page.tsx`
+- `frontend/src/app/dashboard/organizacion/tipos-guardia/page.tsx`
 
 ## Relaciones
 

@@ -5,7 +5,7 @@ nivel: L1
 
 # Decisiones de arquitectura
 
-10 decisiones vigentes, cada una con su nodo curado. Todas tienen un **costo aceptado**:
+11 decisiones vigentes, cada una con su nodo curado. Todas tienen un **costo aceptado**:
 esa sección es la más importante, porque explica qué no vas a poder hacer fácil y por qué
 el sistema no está "mal hecho" cuando te choques con el límite.
 
@@ -13,7 +13,7 @@ el sistema no está "mal hecho" cuando te choques con el límite.
 |---|---|---|
 | 1 | [[decision--monolito-modular]] — monolito NestJS, no microservicios | Sin event sourcing ni búsqueda full-text; los límites modulares no los fuerza nada |
 | 2 | [[decision--sqlserver-en-vez-de-postgres]] — SQL Server Express | Sin `JSONB`; límite de 10 GB; sin Agent ni TimescaleDB |
-| 3 | [[decision--sin-libreria-ui]] — 4 clases CSS y estilos inline | Sin variables CSS: cambiar la paleta es find-and-replace |
+| 3 | [[decision--sin-libreria-ui]] — sin librería de UI, clases propias y estilos inline | Se pagó al cambiar de tema; hoy el color sale de `var(--token)` |
 | 4 | [[decision--logica-en-typescript]] — cero procedimientos almacenados | Invariantes duplicados entre BD y servicios |
 | 5 | [[decision--permisos-dinamicos]] — permisos como datos, no roles fijos | Varias consultas por request, sin caché |
 | 6 | [[decision--migraciones-a-mano]] — `synchronize: false` | Toda entidad exige su migración |
@@ -21,6 +21,7 @@ el sistema no está "mal hecho" cuando te choques con el límite.
 | 8 | [[decision--tolerancias-parametrizables]] — reglas de negocio como datos | Cuatro mecanismos de parametrización coexisten |
 | 9 | [[decision--pool-idle-timeout]] — pool que recicla conexiones seguido | Reconexión más frecuente |
 | 10 | [[decision--body-parser-8mb]] — body de 8 MB y CORS permisivo | `/uploads` se sirve sin guard de permisos |
+| 11 | [[decision--pantalla-vive-donde-su-permiso]] — una pantalla vive donde manda su permiso | Mover una pantalla obliga a redirigir la ruta vieja y regenerar el registro |
 
 ## Las tres que más condicionan el trabajo diario
 

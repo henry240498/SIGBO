@@ -59,6 +59,7 @@ Modulo funcional "Guardias". Habilitado en la navegacion.
 - [[screen--dashboard-guardias-ordenes-id|/dashboard/guardias/ordenes/[id]]] `belongs_to` →
 - [[screen--dashboard-guardias|/dashboard/guardias]] `belongs_to` →
 - [[screen--dashboard-guardias-pernoctes|/dashboard/guardias/pernoctes]] `belongs_to` →
+- [[screen--dashboard-guardias-planificacion|/dashboard/guardias/planificacion]] `belongs_to` →
 - [[screen--dashboard-guardias-requisitos|/dashboard/guardias/requisitos]] `belongs_to` →
 - [[screen--dashboard-guardias-sorteos|/dashboard/guardias/sorteos]] `belongs_to` →
 - [[screen--dashboard-guardias-sorteos-id|/dashboard/guardias/sorteos/[id]]] `belongs_to` →

@@ -15,7 +15,7 @@ const TABS = [
   { href: '/dashboard/organizacion/departamentos', label: 'Departamentos' },
   { href: '/dashboard/organizacion/unidades', label: 'Unidades' },
   { href: '/dashboard/organizacion/turnos', label: 'Turnos' },
-  { href: '/dashboard/organizacion/guardias', label: 'Guardias' },
+  { href: '/dashboard/organizacion/tipos-guardia', label: 'Tipos de guardia' },
   { href: '/dashboard/organizacion/feriados', label: 'Feriados' },
   { href: '/dashboard/organizacion/designaciones', label: 'Designaciones' },
   { href: '/dashboard/organizacion/ascensos', label: 'Ascensos' },

@@ -73,6 +73,7 @@ Helper de frontend "Aviso" (1 exportaciones).
 - [[screen--dashboard-guardias-ordenes-id|/dashboard/guardias/ordenes/[id]]] `uses` →
 - [[screen--dashboard-guardias|/dashboard/guardias]] `uses` →
 - [[screen--dashboard-guardias-pernoctes|/dashboard/guardias/pernoctes]] `uses` →
+- [[screen--dashboard-guardias-planificacion|/dashboard/guardias/planificacion]] `uses` →
 - [[screen--dashboard-guardias-requisitos|/dashboard/guardias/requisitos]] `uses` →
 - [[screen--dashboard-guardias-sorteos|/dashboard/guardias/sorteos]] `uses` →
 - [[screen--dashboard-guardias-sorteos-id|/dashboard/guardias/sorteos/[id]]] `uses` →
@@ -80,7 +81,6 @@ Helper de frontend "Aviso" (1 exportaciones).
 - [[screen--dashboard-mi-perfil|/dashboard/mi-perfil]] `uses` →
 - [[screen--dashboard-organizacion-ascensos|/dashboard/organizacion/ascensos]] `uses` →
 - [[screen--dashboard-organizacion-brigadas|/dashboard/organizacion/brigadas]] `uses` →
-- [[screen--dashboard-organizacion-cargos|/dashboard/organizacion/cargos]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

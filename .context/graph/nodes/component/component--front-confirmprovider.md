@@ -33,6 +33,7 @@ Helper de frontend "ConfirmProvider" (2 exportaciones).
 - [[screen--dashboard-finanzas-ejercicios-fiscales|/dashboard/finanzas/ejercicios-fiscales]] `uses` →
 - [[screen--dashboard-guardias-esquemas-horario|/dashboard/guardias/esquemas-horario]] `uses` →
 - [[screen--dashboard-guardias-grupos-id|/dashboard/guardias/grupos/[id]]] `uses` →
+- [[screen--dashboard-guardias-planificacion|/dashboard/guardias/planificacion]] `uses` →
 - [[screen--dashboard-guardias-requisitos|/dashboard/guardias/requisitos]] `uses` →
 - [[screen--dashboard-guardias-id|/dashboard/guardias/[id]]] `uses` →
 - [[screen--dashboard-mi-perfil-seguridad|/dashboard/mi-perfil/seguridad]] `uses` →
@@ -45,11 +46,10 @@ Helper de frontend "ConfirmProvider" (2 exportaciones).
 - [[screen--dashboard-organizacion-designaciones|/dashboard/organizacion/designaciones]] `uses` →
 - [[screen--dashboard-organizacion-especialidades|/dashboard/organizacion/especialidades]] `uses` →
 - [[screen--dashboard-organizacion-feriados|/dashboard/organizacion/feriados]] `uses` →
-- [[screen--dashboard-organizacion-guardias|/dashboard/organizacion/guardias]] `uses` →
-- [[screen--dashboard-organizacion-guardias-planificacion|/dashboard/organizacion/guardias/planificacion]] `uses` →
 - [[screen--dashboard-organizacion-parametros|/dashboard/organizacion/parametros]] `uses` →
 - [[screen--dashboard-organizacion-rangos|/dashboard/organizacion/rangos]] `uses` →
 - [[screen--dashboard-organizacion-tipos-bombero|/dashboard/organizacion/tipos-bombero]] `uses` →
+- [[screen--dashboard-organizacion-tipos-guardia|/dashboard/organizacion/tipos-guardia]] `uses` →
 - [[screen--dashboard-organizacion-turnos|/dashboard/organizacion/turnos]] `uses` →
 - [[screen--dashboard-organizacion-unidades|/dashboard/organizacion/unidades]] `uses` →
 - [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `uses` →
