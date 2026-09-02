@@ -58,7 +58,7 @@ function FilaFinalizar({ mantenimiento, ubicaciones, onFinalizado }: { mantenimi
       {error && <p style={{ color: 'var(--danger)', fontSize: 12, gridColumn: '1 / -1' }}>{error}</p>}
       <div>
         <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Ubicación destino</label>
-        <ComboBuscable ariaLabel="Ubicacion destino" opciones={opcionesUbicacion} value={ubicacionDestinoId} onChange={setUbicacionDestinoId} />
+        <ComboBuscable ariaLabel="Ubicación destino" opciones={opcionesUbicacion} value={ubicacionDestinoId} onChange={setUbicacionDestinoId} />
       </div>
       <div>
         <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Resultado</label>
@@ -223,7 +223,7 @@ export default function MantenimientosDepositoPage() {
               <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 }}>
                 <div>
                   <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Artículo</label>
-                  <ComboBuscable ariaLabel="Articulo" opciones={opcionesArticulo} value={articuloId} onChange={setArticuloId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar articulo..." />
+                  <ComboBuscable ariaLabel="Artículo" opciones={opcionesArticulo} value={articuloId} onChange={setArticuloId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar articulo..." />
                 </div>
                 <div>
                   <label htmlFor={`${idCampo}-cantidad`} style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cantidad</label>

@@ -8,6 +8,7 @@ import { apiFetch, obtenerSesion } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
 import { coincideBusqueda } from '@/lib/texto';
 import { ComboBuscable } from '@/components/ComboBuscable';
+import { Paginador, usePaginacion } from '@/app/components/Paginador';
 import {
   BomberoResumen,
   Catalogo,
@@ -117,6 +118,10 @@ export default function PersonalPage() {
     });
     return copia;
   }, [bomberosFiltrados, sortColumn, sortDirection, tipoPorId]);
+
+  // El listado trae el cuadro completo en una consulta: se muestra de a paginas para no
+  // dibujar cientos de filas de una vez.
+  const paginado = usePaginacion(bomberosOrdenados ?? []);
 
   function ordenarPor(columna: Columna) {
     if (sortColumn === columna) {
@@ -285,7 +290,7 @@ export default function PersonalPage() {
             </tr>
           </thead>
           <tbody>
-            {bomberosOrdenados.map((b) => {
+            {paginado.visibles.map((b) => {
               const nombreCompleto = `${b.nombre} ${b.apellido}`;
               const tipo = b.tipoBomberoId ? tipoPorId.get(b.tipoBomberoId) : undefined;
               return (
@@ -331,6 +336,9 @@ export default function PersonalPage() {
             })}
           </tbody>
         </table>
+      )}
+      {bomberosOrdenados && bomberosOrdenados.length > 0 && (
+        <Paginador {...paginado} mostrados={paginado.visibles.length} etiqueta="bomberos" />
       )}
     </div>
   );

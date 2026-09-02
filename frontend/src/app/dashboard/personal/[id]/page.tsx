@@ -1289,7 +1289,7 @@ function TabEspecialidades({ bomberoId, puedeEditar }: { bomberoId: string; pued
             </div>
             <div>
               <label style={{ fontSize: 11, display: 'block' }}>Institución</label>
-              <input aria-label="Institucion"
+              <input aria-label="Institución"
                 className="input-field"
                 value={esp.institucionCertificadora ?? ''}
                 onChange={(e) => {
@@ -2495,7 +2495,7 @@ function TabVehiculos({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
           <div key={idx} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr auto', gap: 8, alignItems: 'end' }}>
             <div>
               <label style={{ fontSize: 11, display: 'block' }}>Vehículo</label>
-              <select aria-label="Vehiculo"
+              <select aria-label="Vehículo"
                 className="input-field"
                 value={v.vehiculoId}
                 onChange={(e) => {
@@ -2514,7 +2514,7 @@ function TabVehiculos({ bomberoId, puedeEditar }: { bomberoId: string; puedeEdit
             </div>
             <div>
               <label style={{ fontSize: 11, display: 'block' }}>Categoría</label>
-              <input aria-label="Categoria"
+              <input aria-label="Categoría"
                 className="input-field"
                 value={v.categoria}
                 onChange={(e) => {

@@ -151,7 +151,7 @@ export default function InventarioFisicoDetallePage() {
               <ComboBuscable opciones={opcionesArticulo} value={articuloId} onChange={setArticuloId} ningunaLabel="-- seleccionar articulo --" placeholderBusqueda="Buscar articulo..." />
             )}
             <input className="input-field" type="number" min={0} step="0.01" placeholder="Cantidad fisica" value={cantidadFisica} onChange={(e) => setCantidadFisica(e.target.value)} required />
-            <input className="input-field" placeholder="Observacion" value={observacionItem} onChange={(e) => setObservacionItem(e.target.value)} />
+            <input className="input-field" placeholder="Observación" value={observacionItem} onChange={(e) => setObservacionItem(e.target.value)} />
             <button type="button" className="btn-primary" disabled={guardando}>
               {guardando ? 'Guardando...' : 'Agregar'}
             </button>

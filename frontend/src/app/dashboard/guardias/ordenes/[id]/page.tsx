@@ -122,7 +122,7 @@ export default function DetalleOrdenGuardiaPage() {
               <span className="badge" style={{ background: COLOR_ESTADO[orden.estado] }}>{orden.estado}</span>
             </div>
             {orden.estado === 'ANULADA' && orden.anuladaMotivo && (
-              <p style={{ fontSize: 12, color: 'var(--danger)', marginTop: 8 }}>Motivo de anulacion: {orden.anuladaMotivo}</p>
+              <p style={{ fontSize: 12, color: 'var(--danger)', marginTop: 8 }}>Motivo de anulación: {orden.anuladaMotivo}</p>
             )}
           </div>
           <button type="button" className="btn-primary" style={{ background: '#475569' }} onClick={() => router.push('/dashboard/guardias/ordenes')}>

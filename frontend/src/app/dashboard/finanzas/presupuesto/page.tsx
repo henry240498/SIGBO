@@ -144,7 +144,7 @@ export default function PresupuestoPage() {
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Destinado a (categoría de egreso)</label>
-              <ComboBuscable ariaLabel="Destinado a (categoria de egreso)" opciones={opcionesCategoria} value={categoriaEgresoId} onChange={setCategoriaEgresoId} ningunaLabel="-- seleccionar --" />
+              <ComboBuscable ariaLabel="Destinado a (categoría de egreso)" opciones={opcionesCategoria} value={categoriaEgresoId} onChange={setCategoriaEgresoId} ningunaLabel="-- seleccionar --" />
               {editandoId && <p style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>Cambiar el destino no mueve lo ya ejecutado -- el ejecutado se recalcula según la nueva categoría.</p>}
             </div>
             <div>

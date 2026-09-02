@@ -7,6 +7,7 @@ import { ComboBuscable } from '@/components/ComboBuscable';
 import { Parametro } from '@/lib/parametros';
 import { Articulo, CategoriaArticulo, cargarArticulos, cargarCategoriasArticulo, cargarUnidadesMedidaDeposito, crearArticulo } from '@/lib/deposito';
 import { Aviso } from '@/app/components/Aviso';
+import { Paginador, usePaginacion } from '@/app/components/Paginador';
 
 export default function ArticulosPage() {
   const router = useRouter();
@@ -40,6 +41,9 @@ export default function ArticulosPage() {
   const opcionesCategoria = useMemo(() => categorias.map((c) => ({ value: c.id, label: c.nombre })), [categorias]);
   const opcionesUnidad = useMemo(() => unidades.map((u) => ({ value: u.id, label: u.nombre })), [unidades]);
   const opcionesEstado = useMemo(() => [{ value: 'ACTIVO', label: 'ACTIVO' }, { value: 'INACTIVO', label: 'INACTIVO' }], []);
+
+  // El listado trae el conjunto completo: se muestra de a paginas.
+  const paginado = usePaginacion(articulos ?? []);
 
   async function cargar() {
     try {
@@ -109,7 +113,7 @@ export default function ArticulosPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ fontSize: 16 }}>Articulos ({articulos?.length ?? 0})</h2>
+        <h2 style={{ fontSize: 16 }}>Artículos ({articulos?.length ?? 0})</h2>
         {puedeCrear && (
           <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Nuevo articulo'}
@@ -120,11 +124,11 @@ export default function ArticulosPage() {
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div style={{ flex: 1, minWidth: 200 }}>
           <label htmlFor="buscar" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Buscar</label>
-          <input id="buscar" className="input-field" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nombre o codigo..." />
+          <input id="buscar" className="input-field" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nombre o código..." />
         </div>
         <div>
           <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Categoría</label>
-          <ComboBuscable ariaLabel="Categoria" opciones={opcionesCategoria} value={filtroCategoriaId} onChange={setFiltroCategoriaId} maxWidth={220} />
+          <ComboBuscable ariaLabel="Categoría" opciones={opcionesCategoria} value={filtroCategoriaId} onChange={setFiltroCategoriaId} maxWidth={220} />
         </div>
         <div>
           <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Estado</label>
@@ -164,7 +168,7 @@ export default function ArticulosPage() {
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría</label>
-              <ComboBuscable ariaLabel="Categoria" opciones={opcionesCategoria} value={categoriaArticuloId} onChange={setCategoriaArticuloId} ningunaLabel="-- seleccionar --" />
+              <ComboBuscable ariaLabel="Categoría" opciones={opcionesCategoria} value={categoriaArticuloId} onChange={setCategoriaArticuloId} ningunaLabel="-- seleccionar --" />
             </div>
           </div>
           <div>
@@ -218,7 +222,7 @@ export default function ArticulosPage() {
             </tr>
           </thead>
           <tbody>
-            {articulos.map((a) => {
+            {paginado.visibles.map((a) => {
               const stockBajo = a.stockActual < a.stockMinimo;
               return (
                 <tr
@@ -245,6 +249,9 @@ export default function ArticulosPage() {
             })}
           </tbody>
         </table>
+      )}
+      {articulos && articulos.length > 0 && (
+        <Paginador {...paginado} mostrados={paginado.visibles.length} etiqueta="artículos" />
       )}
     </div>
   );

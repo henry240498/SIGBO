@@ -239,7 +239,7 @@ export default function MiPerfilPage() {
             <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
               <input
                 className="input-field"
-                placeholder="Numero"
+                placeholder="Número"
                 value={t.numero ?? ''}
                 disabled={bloqueado}
                 onChange={(e) =>

@@ -142,7 +142,7 @@ export default function CompaniasPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ fontSize: 16 }}>Companias ({companias?.length ?? 0})</h2>
+        <h2 style={{ fontSize: 16 }}>Compañías ({companias?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 8 }}>
           <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/companias/exportar/excel', 'companias.xlsx')}>
             Exportar a Excel
@@ -168,7 +168,7 @@ export default function CompaniasPage() {
         <input
           className="input-field"
           style={{ maxWidth: 260 }}
-          placeholder="Buscar por codigo o nombre..."
+          placeholder="Buscar por código o nombre..."
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />

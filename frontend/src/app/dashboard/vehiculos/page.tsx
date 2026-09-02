@@ -100,7 +100,7 @@ export default function VehiculosPage() {
         <input
           className="input-field"
           style={{ maxWidth: 260 }}
-          placeholder="Buscar por codigo, tipo, marca o patente..."
+          placeholder="Buscar por código, tipo, marca o patente..."
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />

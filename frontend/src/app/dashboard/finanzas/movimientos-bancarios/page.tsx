@@ -102,7 +102,7 @@ export default function MovimientosBancariosPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ fontSize: 16 }}>Conciliacion bancaria ({movimientos?.length ?? 0})</h2>
+        <h2 style={{ fontSize: 16 }}>Conciliación bancaria ({movimientos?.length ?? 0})</h2>
         {puedeCrear && (
           <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Cargar movimiento de extracto'}

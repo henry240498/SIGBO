@@ -201,7 +201,7 @@ export default function CuartelesPage() {
         <input
           className="input-field"
           style={{ maxWidth: 240 }}
-          placeholder="Buscar por codigo o nombre..."
+          placeholder="Buscar por código o nombre..."
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />

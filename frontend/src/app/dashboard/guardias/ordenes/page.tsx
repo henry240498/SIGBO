@@ -40,7 +40,7 @@ export default function OrdenesGuardiaPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10 }}>
-        <h2 style={{ fontSize: 16 }}>Ordenes de Guardia ({ordenes?.length ?? 0})</h2>
+        <h2 style={{ fontSize: 16 }}>Órdenes de Guardia ({ordenes?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 8 }}>
           {puedeConfigurar && (
             <Link href="/dashboard/guardias/ordenes/configuracion" className="btn-primary" style={{ background: '#475569', textDecoration: 'none' }}>

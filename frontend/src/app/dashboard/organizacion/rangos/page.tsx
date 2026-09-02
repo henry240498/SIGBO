@@ -192,7 +192,7 @@ export default function RangosPage() {
         <input
           className="input-field"
           style={{ maxWidth: 260 }}
-          placeholder="Buscar por codigo o nombre..."
+          placeholder="Buscar por código o nombre..."
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />

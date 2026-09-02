@@ -195,12 +195,12 @@ export default function IncidenciasDepositoPage() {
             {tipoElemento === 'ARTICULO' && (
               <div>
                 <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Artículo</label>
-                <ComboBuscable ariaLabel="Articulo" opciones={opcionesArticulo} value={articuloId} onChange={setArticuloId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar articulo..." />
+                <ComboBuscable ariaLabel="Artículo" opciones={opcionesArticulo} value={articuloId} onChange={setArticuloId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar articulo..." />
               </div>
             )}
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Vehículo relacionado (opcional)</label>
-              <ComboBuscable ariaLabel="Vehiculo relacionado (opcional)" opciones={opcionesVehiculo} value={vehiculoId} onChange={setVehiculoId} ningunaLabel="No aplica" />
+              <ComboBuscable ariaLabel="Vehículo relacionado (opcional)" opciones={opcionesVehiculo} value={vehiculoId} onChange={setVehiculoId} ningunaLabel="No aplica" />
             </div>
           </div>
           <div>

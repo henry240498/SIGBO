@@ -247,7 +247,7 @@ export default function MovimientosDepositoPage() {
               <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 }}>
                 <div>
                   <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Artículo</label>
-                  <ComboBuscable ariaLabel="Articulo" opciones={opcionesArticulo} value={articuloId} onChange={setArticuloId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar articulo..." />
+                  <ComboBuscable ariaLabel="Artículo" opciones={opcionesArticulo} value={articuloId} onChange={setArticuloId} ningunaLabel="-- seleccionar --" placeholderBusqueda="Buscar articulo..." />
                 </div>
                 <div>
                   <label htmlFor="cantidad" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cantidad</label>

@@ -79,8 +79,9 @@ Las críticas, en corto. El detalle está en `.context/RULES.md`.
 9. **Piezas compartidas de pantalla, en vez de repetir el patrón suelto:**
    `<Aviso tipo="error|exito" texto={x} />` para el resultado de una acción (lleva
    `role`, y el de éxito se retira solo), `<Cargando texto="…" />` para el estado de
-   carga (esqueleto con `role="status"`), y `<ComboBuscable ariaLabel="…">` para un
-   combo que puede crecer.
+   carga (esqueleto con `role="status"`), `<ComboBuscable ariaLabel="…">` para un
+   combo que puede crecer, y `usePaginacion` + `<Paginador>` para un listado que trae
+   todo el conjunto en una sola consulta.
 10. **Toda etiqueta nombra a su control.** `<label htmlFor>` + `id` en el control; si el
     control se repite en una lista, `useId()` para el prefijo, o `aria-label` cuando el
     texto de la etiqueta es dinámico. Un `<label>` suelto no nombra el campo ni permite

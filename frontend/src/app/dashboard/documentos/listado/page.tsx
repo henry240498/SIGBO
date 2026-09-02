@@ -225,7 +225,7 @@ export default function ListadoDocumentosPage() {
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría</label>
-              <ComboBuscable ariaLabel="Categoria" opciones={opcionesCategoria} value={categoriaDocumentoId} onChange={setCategoriaDocumentoId} ningunaLabel="Sin categoria" placeholderBusqueda="Buscar categoria..." />
+              <ComboBuscable ariaLabel="Categoría" opciones={opcionesCategoria} value={categoriaDocumentoId} onChange={setCategoriaDocumentoId} ningunaLabel="Sin categoria" placeholderBusqueda="Buscar categoria..." />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Origen</label>

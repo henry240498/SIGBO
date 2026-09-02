@@ -2513,6 +2513,7 @@
 {"from":"screen--dashboard-deposito-articulos","tipo":"uses","to":"component--front-parametros"}
 {"from":"screen--dashboard-deposito-articulos","tipo":"uses","to":"component--front-deposito"}
 {"from":"screen--dashboard-deposito-articulos","tipo":"uses","to":"component--front-aviso"}
+{"from":"screen--dashboard-deposito-articulos","tipo":"uses","to":"component--front-paginador"}
 {"from":"screen--dashboard-deposito-articulos-id","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-deposito-articulos-id","tipo":"uses","to":"component--front-parametros"}
 {"from":"screen--dashboard-deposito-articulos-id","tipo":"uses","to":"component--front-personal"}
@@ -2660,6 +2661,7 @@
 {"from":"screen--dashboard-finanzas-movimientos","tipo":"uses","to":"component--front-deposito"}
 {"from":"screen--dashboard-finanzas-movimientos","tipo":"uses","to":"component--front-finanzas"}
 {"from":"screen--dashboard-finanzas-movimientos","tipo":"uses","to":"component--front-aviso"}
+{"from":"screen--dashboard-finanzas-movimientos","tipo":"uses","to":"component--front-paginador"}
 {"from":"screen--dashboard-finanzas-movimientos-bancarios","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-finanzas-movimientos-bancarios","tipo":"uses","to":"component--front-finanzas"}
 {"from":"screen--dashboard-finanzas-movimientos-bancarios","tipo":"uses","to":"component--front-aviso"}
@@ -2844,6 +2846,7 @@
 {"from":"screen--dashboard-personal","tipo":"uses","to":"component--front-api"}
 {"from":"screen--dashboard-personal","tipo":"uses","to":"component--front-exportar"}
 {"from":"screen--dashboard-personal","tipo":"uses","to":"component--front-texto"}
+{"from":"screen--dashboard-personal","tipo":"uses","to":"component--front-paginador"}
 {"from":"screen--dashboard-personal","tipo":"uses","to":"component--front-personal"}
 {"from":"screen--dashboard-personal","tipo":"uses","to":"component--front-aviso"}
 {"from":"screen--dashboard-personal-id","tipo":"uses","to":"component--front-confirmprovider"}
@@ -2918,6 +2921,7 @@
 {"from":"screen--dashboard-vehiculos-id","tipo":"uses","to":"component--front-cargando"}
 {"from":"screen--dashboard-vehiculos-id","tipo":"uses","to":"component--front-aviso"}
 {"from":"screen--dashboard-modulo","tipo":"uses","to":"component--front-modulos"}
+{"from":"screen--dashboard-modulo","tipo":"uses","to":"component--front-systemicon"}
 {"from":"screen--denuncias","tipo":"uses","to":"component--front-api"}
 {"from":"screen--login","tipo":"uses","to":"component--front-api"}
 {"from":"screen--raiz","tipo":"uses","to":"component--front-api"}

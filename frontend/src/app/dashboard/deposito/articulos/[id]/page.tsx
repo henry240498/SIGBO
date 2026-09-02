@@ -212,7 +212,7 @@ export default function ArticuloDetallePage() {
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría</label>
-              <ComboBuscable ariaLabel="Categoria" opciones={opcionesCategoria} value={categoriaArticuloId} onChange={setCategoriaArticuloId} disabled={!puedeEditar} />
+              <ComboBuscable ariaLabel="Categoría" opciones={opcionesCategoria} value={categoriaArticuloId} onChange={setCategoriaArticuloId} disabled={!puedeEditar} />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>

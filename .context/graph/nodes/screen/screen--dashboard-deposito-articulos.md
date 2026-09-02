@@ -16,6 +16,7 @@ edges:
   - [uses, component--front-parametros]
   - [uses, component--front-deposito]
   - [uses, component--front-aviso]
+  - [uses, component--front-paginador]
 terminos: [deposito, articulos, crear]
 ---
 
@@ -37,6 +38,7 @@ Pantalla /dashboard/deposito/articulos.
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-deposito|deposito]]
 - `uses` → [[component--front-aviso|Aviso]]
+- `uses` → [[component--front-paginador|Paginador]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

@@ -174,7 +174,7 @@ export default function TiposGuardiaPage() {
         <input
           className="input-field"
           style={{ maxWidth: 260 }}
-          placeholder="Buscar por nombre o codigo..."
+          placeholder="Buscar por nombre o código..."
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />

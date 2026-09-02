@@ -181,7 +181,7 @@ export default function EntradasDepositoPage() {
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicación destino</label>
-              <ComboBuscable ariaLabel="Ubicacion destino" opciones={opcionesUbicacion} value={ubicacionDestinoId} onChange={setUbicacionDestinoId} ningunaLabel="-- seleccionar --" />
+              <ComboBuscable ariaLabel="Ubicación destino" opciones={opcionesUbicacion} value={ubicacionDestinoId} onChange={setUbicacionDestinoId} ningunaLabel="-- seleccionar --" />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>

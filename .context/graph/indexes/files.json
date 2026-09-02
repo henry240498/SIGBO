@@ -2165,6 +2165,9 @@
  "frontend/src/app/components/InputProvider.tsx": [
   "component--front-inputprovider"
  ],
+ "frontend/src/app/components/Paginador.tsx": [
+  "component--front-paginador"
+ ],
  "frontend/src/app/components/SystemIcon.tsx": [
   "component--front-systemicon"
  ],

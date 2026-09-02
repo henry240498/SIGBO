@@ -236,7 +236,7 @@ export default function SociosProtectoresPage() {
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div style={{ minWidth: 220 }}>
           <label htmlFor="buscar" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Buscar</label>
-          <input id="buscar" className="input-field" placeholder="Codigo, nombre, CI, RUC..." value={q} onChange={(e) => setQ(e.target.value)} />
+          <input id="buscar" className="input-field" placeholder="Código, nombre, CI, RUC..." value={q} onChange={(e) => setQ(e.target.value)} />
         </div>
         <div>
           <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Estado</label>
@@ -260,7 +260,7 @@ export default function SociosProtectoresPage() {
         <form onSubmit={guardar} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label htmlFor="codigo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo {form.id ? '(cambiarlo queda auditado)' : '(vacio = autogenerado)'}</label>
+              <label htmlFor="codigo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Código {form.id ? '(cambiarlo queda auditado)' : '(vacio = autogenerado)'}</label>
               <input id="codigo" className="input-field" value={form.codigo} onChange={(e) => setForm({ ...form, codigo: e.target.value })} placeholder="SC001" />
             </div>
             <div>

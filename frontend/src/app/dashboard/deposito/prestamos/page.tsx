@@ -110,7 +110,7 @@ function FilaDevolucion({ prestamo, ubicaciones, onDevuelto }: { prestamo: Prest
               )}
               <input
                 className="input-field"
-                placeholder="Observacion"
+                placeholder="Observación"
                 value={observaciones[it.id] ?? ''}
                 onChange={(e) => setObservaciones((s) => ({ ...s, [it.id]: e.target.value }))}
               />
@@ -243,7 +243,7 @@ export default function PrestamosDepositoPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ fontSize: 16 }}>Prestamos ({prestamos?.length ?? 0})</h2>
+        <h2 style={{ fontSize: 16 }}>Préstamos ({prestamos?.length ?? 0})</h2>
         {puedePrestar && (
           <button type="button"
             className="btn-primary"
@@ -276,7 +276,7 @@ export default function PrestamosDepositoPage() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de préstamo</label>
-              <ComboBuscable ariaLabel="Tipo de prestamo" opciones={opcionesTipo} value={tipoPrestamoId} onChange={setTipoPrestamoId} ningunaLabel="-- seleccionar --" />
+              <ComboBuscable ariaLabel="Tipo de préstamo" opciones={opcionesTipo} value={tipoPrestamoId} onChange={setTipoPrestamoId} ningunaLabel="-- seleccionar --" />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Solicitante (personal)</label>

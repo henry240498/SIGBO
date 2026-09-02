@@ -47,6 +47,15 @@
 .aviso-error::before { content: "!"; font-weight: 800; }
 .aviso-exito { color: #0f6350; background: var(--ok-fill); border: 1px solid #bfe3d5; }
 .aviso-exito::before { content: "✓"; font-weight: 800; }
+/* Paginador de listados grandes. El conteo va siempre, aunque haya una sola pagina:
+   saber cuantos registros hay es la mitad de la informacion. */
+.paginador { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+.paginador-conteo { color: var(--muted); font: 700 10px "Space Mono", monospace; text-transform: uppercase; letter-spacing: .08em; }
+.paginador-controles { display: flex; align-items: center; gap: 10px; }
+.paginador-controles button { min-height: 34px; padding: 7px 12px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 700; }
+.paginador-controles button:hover:not(:disabled) { border-color: var(--cyan); }
+.paginador-controles button:disabled { opacity: .45; cursor: not-allowed; }
+.paginador-pagina { color: var(--muted); font-size: 12px; font-weight: 600; }
 .cargando { display: flex; flex-direction: column; gap: 10px; padding: 6px 0; }
 .esqueleto { height: 13px; border-radius: 6px; background: linear-gradient(90deg, var(--surface-soft) 25%, #f2f7f8 50%, var(--surface-soft) 75%); background-size: 200% 100%; animation: esqueleto-brillo 1.3s ease-in-out infinite; }
 .esqueleto:nth-child(2) { width: 82%; }

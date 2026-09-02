@@ -91,7 +91,7 @@ export default function EquiposPage() {
         <input
           className="input-field"
           style={{ maxWidth: 260 }}
-          placeholder="Buscar por nombre, codigo o N. serie..."
+          placeholder="Buscar por nombre, código o N. serie..."
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />

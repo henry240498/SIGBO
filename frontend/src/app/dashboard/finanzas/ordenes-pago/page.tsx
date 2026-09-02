@@ -268,7 +268,7 @@ export default function OrdenesPagoPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ fontSize: 16 }}>Ordenes de pago ({ordenes?.length ?? 0})</h2>
+        <h2 style={{ fontSize: 16 }}>Órdenes de pago ({ordenes?.length ?? 0})</h2>
         {puedeCrear && (
           <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Nueva orden'}
@@ -303,7 +303,7 @@ export default function OrdenesPagoPage() {
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría de egreso</label>
-              <ComboBuscable ariaLabel="Categoria de egreso" opciones={opcionesCategoria} value={categoriaEgresoId} onChange={setCategoriaEgresoId} ningunaLabel="-- seleccionar --" />
+              <ComboBuscable ariaLabel="Categoría de egreso" opciones={opcionesCategoria} value={categoriaEgresoId} onChange={setCategoriaEgresoId} ningunaLabel="-- seleccionar --" />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 10 }}>

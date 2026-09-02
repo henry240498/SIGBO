@@ -22,6 +22,7 @@ import {
   registrarMovimientoFinanciero,
 } from '@/lib/finanzas';
 import { Aviso } from '@/app/components/Aviso';
+import { Paginador, usePaginacion } from '@/app/components/Paginador';
 
 function formatearGs(valor: number): string {
   return `Gs. ${Math.round(valor).toLocaleString('es-PY')}`;
@@ -122,6 +123,9 @@ export default function MovimientosFinancierosPage() {
 
   const nombreCaja = useMemo(() => new Map(cajas.map((c) => [c.id, c.nombre])), [cajas]);
   const nombreCuenta = useMemo(() => new Map(cuentas.map((c) => [c.id, `${c.banco} - ${c.numeroCuenta}`])), [cuentas]);
+
+  // El listado trae el conjunto completo: se muestra de a paginas.
+  const paginado = usePaginacion(movimientos ?? []);
 
   async function cargar() {
     try {
@@ -326,7 +330,7 @@ export default function MovimientosFinancierosPage() {
           {conDocumento && (
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
               <ComboBuscable opciones={opcionesDocTipo} value={docTipoId} onChange={setDocTipoId} ningunaLabel="-- tipo de documento --" />
-              <input className="input-field" placeholder="Numero" value={docNumero} onChange={(e) => setDocNumero(e.target.value)} />
+              <input className="input-field" placeholder="Número" value={docNumero} onChange={(e) => setDocNumero(e.target.value)} />
               <input className="input-field" placeholder="Timbrado" value={docTimbrado} onChange={(e) => setDocTimbrado(e.target.value)} />
             </div>
           )}
@@ -352,7 +356,7 @@ export default function MovimientosFinancierosPage() {
             </tr>
           </thead>
           <tbody>
-            {movimientos.map((m) => (
+            {paginado.visibles.map((m) => (
               <Fragment key={m.id}>
                 <tr style={{ borderBottom: expandidoId === m.id ? 'none' : '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>{m.fecha}</td>
@@ -400,6 +404,9 @@ export default function MovimientosFinancierosPage() {
             ))}
           </tbody>
         </table>
+      )}
+      {movimientos && movimientos.length > 0 && (
+        <Paginador {...paginado} mostrados={paginado.visibles.length} etiqueta="movimientos" />
       )}
     </div>
   );

@@ -452,7 +452,7 @@ export default function FichaDocumentoPage() {
           </div>
           <div>
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría</label>
-            <ComboBuscable ariaLabel="Categoria" opciones={opcionesCategoria} value={categoriaDocumentoId} onChange={setCategoriaDocumentoId} ningunaLabel="Sin categoria" disabled={!puedeEditar || esTerminal} />
+            <ComboBuscable ariaLabel="Categoría" opciones={opcionesCategoria} value={categoriaDocumentoId} onChange={setCategoriaDocumentoId} ningunaLabel="Sin categoria" disabled={!puedeEditar || esTerminal} />
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>

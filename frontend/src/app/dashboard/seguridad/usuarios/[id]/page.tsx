@@ -313,7 +313,7 @@ export default function UsuarioDetallePage() {
             <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 6 }}>
               <input
                 className="input-field"
-                placeholder="Numero"
+                placeholder="Número"
                 value={t.numero}
                 onChange={(e) => setTelefonosAdmin((prev) => prev.map((x, idx) => (idx === i ? { ...x, numero: e.target.value } : x)))}
               />

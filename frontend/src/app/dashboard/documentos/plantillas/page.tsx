@@ -70,7 +70,7 @@ function ModalGenerar({ plantilla, categorias, onCerrar, onGenerado }: { plantil
           </div>
           <div>
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría</label>
-            <ComboBuscable ariaLabel="Categoria" opciones={opcionesCategoria} value={categoriaDocumentoId} onChange={setCategoriaDocumentoId} ningunaLabel="Sin categoria" />
+            <ComboBuscable ariaLabel="Categoría" opciones={opcionesCategoria} value={categoriaDocumentoId} onChange={setCategoriaDocumentoId} ningunaLabel="Sin categoria" />
           </div>
         </div>
         {campos.length === 0 && <p style={{ fontSize: 12, color: 'var(--muted)' }}>Esta plantilla no tiene campos dinamicos.</p>}

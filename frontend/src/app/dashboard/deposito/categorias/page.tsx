@@ -118,7 +118,7 @@ export default function CategoriasArticuloPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ fontSize: 16 }}>Categorias de articulo ({categorias?.length ?? 0})</h2>
+        <h2 style={{ fontSize: 16 }}>Categorías de artículo ({categorias?.length ?? 0})</h2>
         {puedeCrear && (
           <button type="button"
             className="btn-primary"
@@ -135,7 +135,7 @@ export default function CategoriasArticuloPage() {
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end' }}>
         <div style={{ flex: 1 }}>
           <label htmlFor="buscar" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Buscar</label>
-          <input id="buscar" className="input-field" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nombre o codigo..." />
+          <input id="buscar" className="input-field" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nombre o código..." />
         </div>
       </div>
 
@@ -155,7 +155,7 @@ export default function CategoriasArticuloPage() {
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Categoría padre</label>
-              <ComboBuscable ariaLabel="Categoria padre" opciones={opcionesPadre} value={padreId} onChange={setPadreId} ningunaLabel="Sin categoria padre" />
+              <ComboBuscable ariaLabel="Categoría padre" opciones={opcionesPadre} value={padreId} onChange={setPadreId} ningunaLabel="Sin categoria padre" />
             </div>
           </div>
           <div>

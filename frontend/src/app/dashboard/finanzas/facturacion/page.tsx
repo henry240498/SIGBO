@@ -220,7 +220,7 @@ export default function FacturacionPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ fontSize: 16 }}>Facturacion ({facturas?.length ?? 0})</h2>
+        <h2 style={{ fontSize: 16 }}>Facturación ({facturas?.length ?? 0})</h2>
         {puedeCrear && (
           <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Registrar factura manual'}

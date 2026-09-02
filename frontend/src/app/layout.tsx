@@ -7,7 +7,7 @@ import { ExperienceGuard } from './components/ExperienceGuard';
 
 export const metadata: Metadata = {
   title: 'SIGBO-CBVC',
-  description: 'Sistema Integral de Gestion para Bomberos Voluntarios',
+  description: 'Sistema Integral de Gestión para Bomberos Voluntarios',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

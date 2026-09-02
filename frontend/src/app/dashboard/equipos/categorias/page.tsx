@@ -84,7 +84,7 @@ export default function CategoriasEquipoPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ fontSize: 16 }}>Categorias de equipo ({categorias?.length ?? 0})</h2>
+        <h2 style={{ fontSize: 16 }}>Categorías de equipo ({categorias?.length ?? 0})</h2>
         {puedeCrear && (
           <button type="button" className="btn-primary" onClick={() => (mostrarForm ? setMostrarForm(false) : (limpiarForm(), setMostrarForm(true)))}>
             {mostrarForm ? 'Cancelar' : 'Nueva categoria'}

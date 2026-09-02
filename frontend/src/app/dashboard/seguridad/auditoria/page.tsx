@@ -60,7 +60,7 @@ export default function AuditoriaPage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <h2 style={{ fontSize: 16 }}>Auditoria ({resultado?.total ?? 0})</h2>
+      <h2 style={{ fontSize: 16 }}>Auditoría ({resultado?.total ?? 0})</h2>
 
       <form onSubmit={filtrar} className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end' }}>
         <div>

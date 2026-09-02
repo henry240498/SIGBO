@@ -1,14 +1,14 @@
 {
- "generado": "2026-09-01T18:15:16.509Z",
+ "generado": "2026-09-02T02:09:32.515Z",
  "repo": "SIGBO",
- "nodos": 851,
- "aristas": 3181,
+ "nodos": 852,
+ "aristas": 3185,
  "nodosPorTipo": {
   "DOMAIN": 15,
   "ENTITY": 139,
   "FILE": 77,
   "TABLE": 150,
-  "COMPONENT": 49,
+  "COMPONENT": 50,
   "SERVICE": 123,
   "API": 120,
   "SCREEN": 117,
@@ -24,7 +24,7 @@
   "defined_in": 150,
   "references": 227,
   "persisted_in": 139,
-  "uses": 1153,
+  "uses": 1157,
   "reads": 459,
   "exposes": 129,
   "calls": 132,
@@ -36,7 +36,7 @@
   "contains": 10
  },
  "permisos": 196,
- "terminosIndexados": 1683,
+ "terminosIndexados": 1685,
  "huecos": {
   "tablasSinEntidad": [
    "seguridad.restricciones",

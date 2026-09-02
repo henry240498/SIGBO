@@ -104,6 +104,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   // En la portada de un modulo se explica el modulo; mas adentro, la ruta ya ubica.
   const descripcion = pathname === `/dashboard/${slugActual}` ? moduloActual?.descripcion : undefined;
 
+  // La pestana decia "SIGBO-CBVC" en las 97 pantallas: con varias abiertas no habia
+  // forma de distinguirlas, y el historial y los favoritos quedaban todos iguales.
+  useEffect(() => { document.title = `${titulo} · SIGBO`; }, [titulo]);
+
   if (!sesion) return null;
   const iniciales = sesion.usuario.username.slice(0, 2).toUpperCase();
 

@@ -196,6 +196,22 @@ if (!datos) return <Cargando texto="Cargando guardias…" />;   {/* esqueleto + 
 - **`ComboBuscable`** (`components/ComboBuscable.tsx`) para cualquier combo que pueda
   crecer. **Siempre con `ariaLabel`**, porque su disparador es un `<button>` y sin eso
   se anuncia sin nombre.
+- **`Paginador` + `usePaginacion`** (`app/components/Paginador.tsx`) para los listados
+  que traen todo el conjunto en una consulta. Se aplica sobre el array ya filtrado y
+  ordenado, al final del pipeline:
+
+  ```tsx
+  const paginado = usePaginacion(bomberosOrdenados ?? []);
+  …
+  {paginado.visibles.map((b) => …)}
+  <Paginador {...paginado} mostrados={paginado.visibles.length} etiqueta="bomberos" />
+  ```
+
+  El hook **recorta** la página al rango válido en cada render en vez de reiniciarla con
+  un efecto: al filtrar y achicar la lista uno queda en la última página con datos, nunca
+  en una vacía, y no hay que acordarse de reiniciar en cada cambio de filtro. El conteo
+  (`1–25 de 348`) se muestra aunque haya una sola página, para que nada parezca oculto.
+  Los listados que ya paginan contra el servidor (`seguridad/auditoria`) no lo usan.
 
 ### Etiquetas: toda etiqueta nombra a su control
 

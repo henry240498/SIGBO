@@ -156,7 +156,7 @@ export default function UbicacionesDepositoPage() {
       <div className="card" style={{ display: 'flex', gap: 10, alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div style={{ flex: 1 }}>
           <label htmlFor="buscar" style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Buscar</label>
-          <input id="buscar" className="input-field" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nombre o codigo..." />
+          <input id="buscar" className="input-field" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nombre o código..." />
         </div>
         <div>
           <label style={{ fontSize: 11, color: 'var(--muted)', display: 'block', marginBottom: 4 }}>Tipo</label>
@@ -184,13 +184,13 @@ export default function UbicacionesDepositoPage() {
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo de ubicación</label>
-              <ComboBuscable ariaLabel="Tipo de ubicacion" opciones={opcionesTipo} value={tipoUbicacionId} onChange={setTipoUbicacionId} ningunaLabel="-- seleccionar --" />
+              <ComboBuscable ariaLabel="Tipo de ubicación" opciones={opcionesTipo} value={tipoUbicacionId} onChange={setTipoUbicacionId} ningunaLabel="-- seleccionar --" />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicación padre</label>
-              <ComboBuscable ariaLabel="Ubicacion padre" opciones={opcionesPadre} value={padreId} onChange={setPadreId} ningunaLabel="Sin padre (raiz)" />
+              <ComboBuscable ariaLabel="Ubicación padre" opciones={opcionesPadre} value={padreId} onChange={setPadreId} ningunaLabel="Sin padre (raiz)" />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cuartel</label>

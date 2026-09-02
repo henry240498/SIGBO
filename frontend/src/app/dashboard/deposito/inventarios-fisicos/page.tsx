@@ -73,7 +73,7 @@ export default function InventariosFisicosPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ fontSize: 16 }}>Inventarios fisicos ({inventarios?.length ?? 0})</h2>
+        <h2 style={{ fontSize: 16 }}>Inventarios físicos ({inventarios?.length ?? 0})</h2>
         {puedeCrear && (
           <button type="button" className="btn-primary" onClick={() => setMostrarForm(!mostrarForm)}>
             {mostrarForm ? 'Cancelar' : '+ Nuevo inventario fisico'}
@@ -100,7 +100,7 @@ export default function InventariosFisicosPage() {
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicación (opcional -- limita el conteo a esta ubicación)</label>
-              <ComboBuscable ariaLabel="Ubicacion (opcional -- limita el conteo a esta ubicacion)" opciones={opcionesUbicacion} value={ubicacionId} onChange={setUbicacionId} ningunaLabel="Todo el deposito" />
+              <ComboBuscable ariaLabel="Ubicación (opcional -- limita el conteo a esta ubicación)" opciones={opcionesUbicacion} value={ubicacionId} onChange={setUbicacionId} ningunaLabel="Todo el deposito" />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Responsable</label>
