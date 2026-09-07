@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import 'leaflet/dist/leaflet.css';
 import { ConfigBootstrap } from './components/ConfigBootstrap';
 import { ConfirmProvider } from './components/ConfirmProvider';
 import { ExperienceGuard } from './components/ExperienceGuard';

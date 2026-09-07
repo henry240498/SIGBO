@@ -21,10 +21,6 @@ Tabla denuncias.evidencias_denuncia (10 columnas). Creada en 031_denuncias_rapid
 
 - **Esquema:** denuncias · **Columnas:** 10
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `tipo IN (N'AUDIO', N'EVIDENCIA')`
-
 ## Llaves foraneas
 
 - `denuncia_id` → [[table--denuncias-denuncias|denuncias.denuncias]]

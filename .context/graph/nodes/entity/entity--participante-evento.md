@@ -27,7 +27,7 @@ Asistencia de una persona (bombero o externo) A un evento -- distinta de la marc
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
+- **Pantallas:** `/dashboard/academia/[id]`, `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
 - **Endpoints:** BitacoraController, DashboardAsistenciaController, EventosAsistenciaController, MarcacionesController
 - **Servicios:** BitacoraService, DashboardAsistenciaService, EventosAsistenciaService
 

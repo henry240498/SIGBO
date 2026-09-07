@@ -22,6 +22,10 @@ Tabla operaciones.importaciones_marcador_filas (12 columnas). Creada en 020_asis
 
 - **Esquema:** operaciones · **Columnas:** 12
 
+## Restricciones CHECK (reglas que la BD impone)
+
+- `estado_fila IN ('RECONOCIDO','NO_IDENTIFICADO','DUPLICADO','YA_IMPORTADO','INCONSISTENTE')`
+
 ## Llaves foraneas
 
 - `importacion_id` → [[table--operaciones-importaciones-marcador|operaciones.importaciones_marcador]]
@@ -46,7 +50,7 @@ Tabla operaciones.importaciones_marcador_filas (12 columnas). Creada en 020_asis
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
+- **Pantallas:** `/dashboard/academia/[id]`, `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
 - **Endpoints:** ImportacionesController
 - **Servicios:** ImportacionesService
 

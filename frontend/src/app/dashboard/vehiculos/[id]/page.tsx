@@ -118,6 +118,7 @@ function TabDatos({ vehiculo, puedeEditar, onCambio }: { vehiculo: Vehiculo; pue
     try {
       await actualizarVehiculo(vehiculo.id, {
         tipo: campos.tipo,
+        alias: campos.alias || undefined,
         marca: campos.marca || undefined,
         modelo: campos.modelo || undefined,
         anio: campos.anio || undefined,
@@ -161,6 +162,7 @@ function TabDatos({ vehiculo, puedeEditar, onCambio }: { vehiculo: Vehiculo; pue
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, fontSize: 13 }}>
+          <div><b>Alias:</b> {vehiculo.alias ?? '—'}</div>
           <div><b>Marca:</b> {vehiculo.marca ?? '—'}</div>
           <div><b>Modelo:</b> {vehiculo.modelo ?? '—'}</div>
           <div><b>Anio:</b> {vehiculo.anio ?? '—'}</div>
@@ -210,6 +212,7 @@ function TabDatos({ vehiculo, puedeEditar, onCambio }: { vehiculo: Vehiculo; pue
       {error && <p style={{ color: '#f87171' }}>{error}</p>}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
         <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label><input className="input-field" value={campo('tipo')} onChange={(e) => setCampos({ ...campos, tipo: e.target.value })} required /></div>
+        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Alias</label><input className="input-field" value={campo('alias')} onChange={(e) => setCampos({ ...campos, alias: e.target.value })} /></div>
         <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Marca</label><input className="input-field" value={campo('marca')} onChange={(e) => setCampos({ ...campos, marca: e.target.value })} /></div>
         <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Modelo</label><input className="input-field" value={campo('modelo')} onChange={(e) => setCampos({ ...campos, modelo: e.target.value })} /></div>
         <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Anio</label><input className="input-field" type="number" value={campo('anio')} onChange={(e) => setCampos({ ...campos, anio: e.target.value ? Number(e.target.value) : null })} /></div>

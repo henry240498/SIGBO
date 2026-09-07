@@ -22,6 +22,10 @@ Tabla organizacion.unidades (11 columnas). Creada en 012_organizacion.sql, modif
 - **Esquema:** organizacion · **Columnas:** 11
 - **UNIQUE:** `codigo`
 
+## Restricciones CHECK (reglas que la BD impone)
+
+- `estado IN ('ACTIVO','INACTIVO')`
+
 ## Llaves foraneas
 
 - `brigada_id` → [[table--organizacion-brigadas|organizacion.brigadas]]

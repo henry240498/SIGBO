@@ -90,6 +90,7 @@ export class IaChatService {
         duracionMs,
         fuentesJson: resultado.fuentes?.length ? JSON.stringify(resultado.fuentes) : null,
         resultado: resultadoMensaje,
+        modeloUtilizado: resultado.modeloUtilizado,
       }),
     );
 
@@ -108,9 +109,19 @@ export class IaChatService {
   }
 
   private async marcarActividad(conversacion: ConversacionIa, primerMensaje: string, nuevoContexto: ContextoConversacionIa | null) {
+    // IaMotorService.procesar() SIEMPRE devuelve un nuevoContexto explicito
+    // -- el contexto previo sin tocar, uno fresco de un tool recien
+    // ejecutado, o null a proposito (identidad/edad/confusion/no-entendido:
+    // el hilo se corto). Antes, un `null` caia al `: conversacion.
+    // ultimoContextoJson` de este ternario y el contexto viejo NUNCA se
+    // borraba en la base -- por eso el "clear" agregado en ia-motor.service
+    // no tenia ningun efecto real (bug real detectado en vivo: un contexto
+    // de "cuantos vehiculos" de varios turnos atras seguia respondiendo
+    // preguntas de seguimiento sin ninguna relacion). null ahora se escribe
+    // tal cual, sin fallback.
     await this.conversacionRepo.update(conversacion.id, {
       ultimaActividadEn: new Date(),
-      ultimoContextoJson: nuevoContexto ? JSON.stringify(nuevoContexto) : conversacion.ultimoContextoJson,
+      ultimoContextoJson: nuevoContexto ? JSON.stringify(nuevoContexto) : null,
       ...(conversacion.titulo ? {} : { titulo: primerMensaje.slice(0, 80) }),
     });
   }

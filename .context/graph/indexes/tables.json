@@ -18,7 +18,7 @@
    "clase": "Rol"
   },
   "migracion": "database/migrations/002_seguridad.sql",
-  "columnas": 16,
+  "columnas": 17,
   "fks": []
  },
  "seguridad.permisos": {
@@ -103,7 +103,7 @@
    "clase": "Bombero"
   },
   "migracion": "database/migrations/003_personal.sql",
-  "columnas": 70,
+  "columnas": 71,
   "fks": []
  },
  "personal.certificaciones": {
@@ -114,7 +114,7 @@
    "clase": "Certificacion"
   },
   "migracion": "database/migrations/003_personal.sql",
-  "columnas": 14,
+  "columnas": 15,
   "fks": []
  },
  "personal.licencias": {
@@ -149,63 +149,6 @@
   "columnas": 15,
   "fks": []
  },
- "academia.materias": {
-  "id": "table--academia-materias",
-  "dominio": "academia",
-  "entidad": {
-   "id": "entity--materia",
-   "clase": "Materia"
-  },
-  "migracion": "database/migrations/004_academia.sql",
-  "columnas": 12,
-  "fks": []
- },
- "academia.cursos": {
-  "id": "table--academia-cursos",
-  "dominio": "academia",
-  "entidad": {
-   "id": "entity--curso",
-   "clase": "Curso"
-  },
-  "migracion": "database/migrations/004_academia.sql",
-  "columnas": 14,
-  "fks": []
- },
- "academia.inscripciones_cursos": {
-  "id": "table--academia-inscripciones-cursos",
-  "dominio": "academia",
-  "entidad": {
-   "id": "entity--inscripcion-curso",
-   "clase": "InscripcionCurso"
-  },
-  "migracion": "database/migrations/004_academia.sql",
-  "columnas": 12,
-  "fks": []
- },
- "academia.examenes": {
-  "id": "table--academia-examenes",
-  "dominio": "academia",
-  "entidad": null,
-  "migracion": "database/migrations/004_academia.sql",
-  "columnas": 12,
-  "fks": []
- },
- "academia.notas_examenes": {
-  "id": "table--academia-notas-examenes",
-  "dominio": "academia",
-  "entidad": null,
-  "migracion": "database/migrations/004_academia.sql",
-  "columnas": 8,
-  "fks": []
- },
- "academia.asistencia_academia": {
-  "id": "table--academia-asistencia-academia",
-  "dominio": "academia",
-  "entidad": null,
-  "migracion": "database/migrations/004_academia.sql",
-  "columnas": 9,
-  "fks": []
- },
  "operaciones.eventos_asistencia": {
   "id": "table--operaciones-eventos-asistencia",
   "dominio": "asistencia",
@@ -214,7 +157,7 @@
    "clase": "EventoAsistencia"
   },
   "migracion": "database/migrations/005_operaciones.sql",
-  "columnas": 13,
+  "columnas": 14,
   "fks": []
  },
  "operaciones.marcaciones_asistencia": {
@@ -935,7 +878,7 @@
    "clase": "GrupoGuardia"
   },
   "migracion": "database/migrations/025_guardias.sql",
-  "columnas": 13,
+  "columnas": 14,
   "fks": [
    "personal.bomberos"
   ]
@@ -1085,7 +1028,7 @@
    "clase": "OrdenGuardiaConfiguracion"
   },
   "migracion": "database/migrations/030_ordenes_guardia.sql",
-  "columnas": 16,
+  "columnas": 13,
   "fks": [
    "organizacion.cargos",
    "organizacion.cargos"
@@ -1168,6 +1111,877 @@
   "columnas": 10,
   "fks": [
    "denuncias.denuncias"
+  ]
+ },
+ "organizacion.identidad_institucional": {
+  "id": "table--organizacion-identidad-institucional",
+  "dominio": "organizacion",
+  "entidad": {
+   "id": "entity--identidad-institucional",
+   "clase": "IdentidadInstitucional"
+  },
+  "migracion": "database/migrations/031_identidad_institucional.sql",
+  "columnas": 26,
+  "fks": []
+ },
+ "academia.instructores_externos": {
+  "id": "table--academia-instructores-externos",
+  "dominio": "academia",
+  "entidad": {
+   "id": "entity--instructor-externo",
+   "clase": "InstructorExterno"
+  },
+  "migracion": "database/migrations/036_academia_estructura.sql",
+  "columnas": 12,
+  "fks": []
+ },
+ "academia.actividades": {
+  "id": "table--academia-actividades",
+  "dominio": "academia",
+  "entidad": {
+   "id": "entity--actividad-academica",
+   "clase": "ActividadAcademica"
+  },
+  "migracion": "database/migrations/036_academia_estructura.sql",
+  "columnas": 26,
+  "fks": [
+   "organizacion.parametros",
+   "organizacion.parametros",
+   "personal.bomberos"
+  ]
+ },
+ "academia.instructores_actividad": {
+  "id": "table--academia-instructores-actividad",
+  "dominio": "academia",
+  "entidad": {
+   "id": "entity--instructor-actividad-academica",
+   "clase": "InstructorActividadAcademica"
+  },
+  "migracion": "database/migrations/036_academia_estructura.sql",
+  "columnas": 6,
+  "fks": [
+   "academia.actividades",
+   "personal.bomberos",
+   "academia.instructores_externos"
+  ]
+ },
+ "academia.inscripciones": {
+  "id": "table--academia-inscripciones",
+  "dominio": "academia",
+  "entidad": {
+   "id": "entity--inscripcion-actividad-academica",
+   "clase": "InscripcionActividadAcademica"
+  },
+  "migracion": "database/migrations/036_academia_estructura.sql",
+  "columnas": 17,
+  "fks": [
+   "academia.actividades",
+   "personal.bomberos",
+   "operaciones.participantes_externos",
+   "organizacion.parametros"
+  ]
+ },
+ "academia.evaluaciones": {
+  "id": "table--academia-evaluaciones",
+  "dominio": "academia",
+  "entidad": {
+   "id": "entity--evaluacion-academica",
+   "clase": "EvaluacionAcademica"
+  },
+  "migracion": "database/migrations/036_academia_estructura.sql",
+  "columnas": 10,
+  "fks": [
+   "academia.actividades",
+   "organizacion.parametros",
+   "personal.bomberos",
+   "academia.instructores_externos"
+  ]
+ },
+ "academia.notas_evaluacion": {
+  "id": "table--academia-notas-evaluacion",
+  "dominio": "academia",
+  "entidad": {
+   "id": "entity--nota-evaluacion-academica",
+   "clase": "NotaEvaluacionAcademica"
+  },
+  "migracion": "database/migrations/036_academia_estructura.sql",
+  "columnas": 8,
+  "fks": [
+   "academia.evaluaciones",
+   "academia.inscripciones",
+   "organizacion.parametros"
+  ]
+ },
+ "academia.cursos_externos_cache": {
+  "id": "table--academia-cursos-externos-cache",
+  "dominio": "academia",
+  "entidad": {
+   "id": "entity--curso-externo-cache",
+   "clase": "CursoExternoCache"
+  },
+  "migracion": "database/migrations/040_academia_cursos_externos_cache.sql",
+  "columnas": 8,
+  "fks": []
+ },
+ "deposito.categorias_articulo": {
+  "id": "table--deposito-categorias-articulo",
+  "dominio": "deposito",
+  "entidad": {
+   "id": "entity--categoria-articulo",
+   "clase": "CategoriaArticulo"
+  },
+  "migracion": "database/migrations/041_deposito_estructura.sql",
+  "columnas": 7,
+  "fks": [
+   "deposito.categorias_articulo"
+  ]
+ },
+ "deposito.articulos": {
+  "id": "table--deposito-articulos",
+  "dominio": "deposito",
+  "entidad": {
+   "id": "entity--articulo",
+   "clase": "Articulo"
+  },
+  "migracion": "database/migrations/041_deposito_estructura.sql",
+  "columnas": 17,
+  "fks": [
+   "deposito.categorias_articulo",
+   "organizacion.parametros"
+  ]
+ },
+ "deposito.lotes_articulo": {
+  "id": "table--deposito-lotes-articulo",
+  "dominio": "deposito",
+  "entidad": {
+   "id": "entity--lote-articulo",
+   "clase": "LoteArticulo"
+  },
+  "migracion": "database/migrations/041_deposito_estructura.sql",
+  "columnas": 9,
+  "fks": [
+   "deposito.articulos"
+  ]
+ },
+ "deposito.ubicaciones": {
+  "id": "table--deposito-ubicaciones",
+  "dominio": "deposito",
+  "entidad": {
+   "id": "entity--ubicacion-deposito",
+   "clase": "UbicacionDeposito"
+  },
+  "migracion": "database/migrations/041_deposito_estructura.sql",
+  "columnas": 12,
+  "fks": [
+   "organizacion.parametros",
+   "deposito.ubicaciones",
+   "organizacion.cuarteles"
+  ]
+ },
+ "deposito.tenencias": {
+  "id": "table--deposito-tenencias",
+  "dominio": "deposito",
+  "entidad": {
+   "id": "entity--tenencia-deposito",
+   "clase": "TenenciaDeposito"
+  },
+  "migracion": "database/migrations/041_deposito_estructura.sql",
+  "columnas": 16,
+  "fks": [
+   "equipos.equipos",
+   "deposito.articulos",
+   "deposito.lotes_articulo",
+   "organizacion.parametros",
+   "deposito.ubicaciones",
+   "vehiculos.vehiculos",
+   "personal.bomberos",
+   "servicios.servicios",
+   "organizacion.parametros"
+  ]
+ },
+ "deposito.movimientos": {
+  "id": "table--deposito-movimientos",
+  "dominio": "deposito",
+  "entidad": {
+   "id": "entity--movimiento-deposito",
+   "clase": "MovimientoDeposito"
+  },
+  "migracion": "database/migrations/041_deposito_estructura.sql",
+  "columnas": 22,
+  "fks": [
+   "organizacion.parametros",
+   "equipos.equipos",
+   "deposito.articulos",
+   "deposito.lotes_articulo",
+   "deposito.ubicaciones",
+   "deposito.ubicaciones",
+   "vehiculos.vehiculos",
+   "vehiculos.vehiculos",
+   "personal.bomberos",
+   "personal.bomberos",
+   "servicios.servicios",
+   "servicios.servicios",
+   "personal.bomberos",
+   "seguridad.usuarios"
+  ]
+ },
+ "deposito.proveedores": {
+  "id": "table--deposito-proveedores",
+  "dominio": "deposito",
+  "entidad": {
+   "id": "entity--proveedor-deposito",
+   "clase": "ProveedorDeposito"
+  },
+  "migracion": "database/migrations/042_deposito_entradas.sql",
+  "columnas": 15,
+  "fks": []
+ },
+ "deposito.entradas": {
+  "id": "table--deposito-entradas",
+  "dominio": "deposito",
+  "entidad": {
+   "id": "entity--entrada-deposito",
+   "clase": "EntradaDeposito"
+  },
+  "migracion": "database/migrations/042_deposito_entradas.sql",
+  "columnas": 13,
+  "fks": [
+   "organizacion.parametros",
+   "deposito.proveedores",
+   "deposito.ubicaciones",
+   "seguridad.usuarios"
+  ]
+ },
+ "deposito.entrada_items": {
+  "id": "table--deposito-entrada-items",
+  "dominio": "deposito",
+  "entidad": {
+   "id": "entity--entrada-deposito-item",
+   "clase": "EntradaDepositoItem"
+  },
+  "migracion": "database/migrations/042_deposito_entradas.sql",
+  "columnas": 9,
+  "fks": [
+   "deposito.entradas",
+   "deposito.articulos",
+   "equipos.equipos",
+   "deposito.movimientos"
+  ]
+ },
+ "deposito.bajas": {
+  "id": "table--deposito-bajas",
+  "dominio": "deposito",
+  "entidad": {
+   "id": "entity--baja-deposito",
+   "clase": "BajaDeposito"
+  },
+  "migracion": "database/migrations/043_deposito_bajas.sql",
+  "columnas": 15,
+  "fks": [
+   "deposito.articulos",
+   "equipos.equipos",
+   "organizacion.parametros",
+   "personal.bomberos",
+   "personal.bomberos",
+   "deposito.movimientos"
+  ]
+ },
+ "deposito.prestamos": {
+  "id": "table--deposito-prestamos",
+  "dominio": "deposito",
+  "entidad": {
+   "id": "entity--prestamo-deposito",
+   "clase": "PrestamoDeposito"
+  },
+  "migracion": "database/migrations/044_deposito_prestamos.sql",
+  "columnas": 14,
+  "fks": [
+   "organizacion.parametros",
+   "personal.bomberos",
+   "servicios.servicios",
+   "personal.bomberos"
+  ]
+ },
+ "deposito.prestamo_items": {
+  "id": "table--deposito-prestamo-items",
+  "dominio": "deposito",
+  "entidad": {
+   "id": "entity--prestamo-deposito-item",
+   "clase": "PrestamoDepositoItem"
+  },
+  "migracion": "database/migrations/044_deposito_prestamos.sql",
+  "columnas": 10,
+  "fks": [
+   "deposito.prestamos",
+   "deposito.articulos",
+   "equipos.equipos",
+   "deposito.movimientos",
+   "deposito.movimientos"
+  ]
+ },
+ "deposito.inventarios_fisicos": {
+  "id": "table--deposito-inventarios-fisicos",
+  "dominio": "deposito",
+  "entidad": {
+   "id": "entity--inventario-fisico-deposito",
+   "clase": "InventarioFisicoDeposito"
+  },
+  "migracion": "database/migrations/045_deposito_inventario_fisico.sql",
+  "columnas": 9,
+  "fks": [
+   "deposito.ubicaciones",
+   "personal.bomberos"
+  ]
+ },
+ "deposito.inventario_fisico_items": {
+  "id": "table--deposito-inventario-fisico-items",
+  "dominio": "deposito",
+  "entidad": {
+   "id": "entity--inventario-fisico-item-deposito",
+   "clase": "InventarioFisicoItemDeposito"
+  },
+  "migracion": "database/migrations/045_deposito_inventario_fisico.sql",
+  "columnas": 11,
+  "fks": [
+   "deposito.inventarios_fisicos",
+   "deposito.articulos",
+   "equipos.equipos"
+  ]
+ },
+ "deposito.incidencias": {
+  "id": "table--deposito-incidencias",
+  "dominio": "deposito",
+  "entidad": {
+   "id": "entity--incidencia-deposito",
+   "clase": "IncidenciaDeposito"
+  },
+  "migracion": "database/migrations/045_deposito_inventario_fisico.sql",
+  "columnas": 17,
+  "fks": [
+   "deposito.articulos",
+   "equipos.equipos",
+   "vehiculos.vehiculos",
+   "operaciones.inspecciones_movil",
+   "deposito.inventario_fisico_items"
+  ]
+ },
+ "deposito.mantenimientos": {
+  "id": "table--deposito-mantenimientos",
+  "dominio": "deposito",
+  "entidad": {
+   "id": "entity--mantenimiento-deposito",
+   "clase": "MantenimientoDeposito"
+  },
+  "migracion": "database/migrations/046_deposito_mantenimientos.sql",
+  "columnas": 20,
+  "fks": [
+   "deposito.articulos",
+   "equipos.equipos",
+   "personal.bomberos",
+   "deposito.ubicaciones",
+   "deposito.movimientos",
+   "deposito.movimientos",
+   "seguridad.usuarios"
+  ]
+ },
+ "finanzas.ejercicios_fiscales": {
+  "id": "table--finanzas-ejercicios-fiscales",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--ejercicio-fiscal",
+   "clase": "EjercicioFiscal"
+  },
+  "migracion": "database/migrations/048_finanzas_estructura.sql",
+  "columnas": 8,
+  "fks": [
+   "seguridad.usuarios"
+  ]
+ },
+ "finanzas.cajas": {
+  "id": "table--finanzas-cajas",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--caja",
+   "clase": "Caja"
+  },
+  "migracion": "database/migrations/048_finanzas_estructura.sql",
+  "columnas": 12,
+  "fks": [
+   "personal.bomberos"
+  ]
+ },
+ "finanzas.turnos_caja": {
+  "id": "table--finanzas-turnos-caja",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--turno-caja",
+   "clase": "TurnoCaja"
+  },
+  "migracion": "database/migrations/048_finanzas_estructura.sql",
+  "columnas": 13,
+  "fks": [
+   "finanzas.cajas",
+   "seguridad.usuarios",
+   "seguridad.usuarios"
+  ]
+ },
+ "finanzas.cuentas_bancarias": {
+  "id": "table--finanzas-cuentas-bancarias",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--cuenta-bancaria",
+   "clase": "CuentaBancaria"
+  },
+  "migracion": "database/migrations/048_finanzas_estructura.sql",
+  "columnas": 14,
+  "fks": [
+   "organizacion.parametros",
+   "personal.bomberos"
+  ]
+ },
+ "finanzas.movimientos_financieros": {
+  "id": "table--finanzas-movimientos-financieros",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--movimiento-financiero",
+   "clase": "MovimientoFinanciero"
+  },
+  "migracion": "database/migrations/049_finanzas_movimientos.sql",
+  "columnas": 31,
+  "fks": [
+   "organizacion.parametros",
+   "organizacion.parametros",
+   "finanzas.cajas",
+   "finanzas.cuentas_bancarias",
+   "finanzas.turnos_caja",
+   "deposito.proveedores",
+   "personal.bomberos",
+   "personal.bomberos",
+   "deposito.entradas",
+   "finanzas.ejercicios_fiscales",
+   "organizacion.parametros",
+   "seguridad.usuarios",
+   "seguridad.usuarios"
+  ]
+ },
+ "finanzas.documentos_respaldo": {
+  "id": "table--finanzas-documentos-respaldo",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--documento-respaldo",
+   "clase": "DocumentoRespaldo"
+  },
+  "migracion": "database/migrations/049_finanzas_movimientos.sql",
+  "columnas": 13,
+  "fks": [
+   "finanzas.movimientos_financieros",
+   "organizacion.parametros",
+   "deposito.proveedores",
+   "seguridad.usuarios"
+  ]
+ },
+ "finanzas.cuotas": {
+  "id": "table--finanzas-cuotas",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--cuota",
+   "clase": "Cuota"
+  },
+  "migracion": "database/migrations/049_finanzas_movimientos.sql",
+  "columnas": 12,
+  "fks": [
+   "personal.bomberos",
+   "finanzas.movimientos_financieros"
+  ]
+ },
+ "finanzas.movimientos_bancarios": {
+  "id": "table--finanzas-movimientos-bancarios",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--movimiento-bancario",
+   "clase": "MovimientoBancario"
+  },
+  "migracion": "database/migrations/050_finanzas_bancos_presupuesto.sql",
+  "columnas": 13,
+  "fks": [
+   "finanzas.cuentas_bancarias",
+   "finanzas.movimientos_financieros",
+   "seguridad.usuarios",
+   "seguridad.usuarios"
+  ]
+ },
+ "finanzas.presupuestos": {
+  "id": "table--finanzas-presupuestos",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--presupuesto",
+   "clase": "Presupuesto"
+  },
+  "migracion": "database/migrations/050_finanzas_bancos_presupuesto.sql",
+  "columnas": 9,
+  "fks": [
+   "finanzas.ejercicios_fiscales",
+   "organizacion.parametros"
+  ]
+ },
+ "finanzas.ordenes_pago": {
+  "id": "table--finanzas-ordenes-pago",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--orden-pago",
+   "clase": "OrdenPago"
+  },
+  "migracion": "database/migrations/051_finanzas_ordenes_pago.sql",
+  "columnas": 26,
+  "fks": [
+   "organizacion.parametros",
+   "deposito.proveedores",
+   "finanzas.cajas",
+   "finanzas.cuentas_bancarias",
+   "finanzas.ejercicios_fiscales",
+   "finanzas.movimientos_financieros",
+   "seguridad.usuarios",
+   "seguridad.usuarios",
+   "seguridad.usuarios",
+   "seguridad.usuarios",
+   "seguridad.usuarios"
+  ]
+ },
+ "documentos.numeraciones": {
+  "id": "table--documentos-numeraciones",
+  "dominio": "documentos",
+  "entidad": {
+   "id": "entity--numeracion-documento",
+   "clase": "NumeracionDocumento"
+  },
+  "migracion": "database/migrations/052_documentos_estructura.sql",
+  "columnas": 18,
+  "fks": [
+   "organizacion.parametros"
+  ]
+ },
+ "documentos.documentos_institucionales": {
+  "id": "table--documentos-documentos-institucionales",
+  "dominio": "documentos",
+  "entidad": {
+   "id": "entity--documento",
+   "clase": "Documento"
+  },
+  "migracion": "database/migrations/052_documentos_estructura.sql",
+  "columnas": 35,
+  "fks": [
+   "organizacion.parametros",
+   "organizacion.parametros",
+   "organizacion.parametros",
+   "organizacion.parametros",
+   "organizacion.parametros",
+   "organizacion.parametros",
+   "seguridad.usuarios",
+   "seguridad.usuarios",
+   "seguridad.usuarios"
+  ]
+ },
+ "documentos.relaciones": {
+  "id": "table--documentos-relaciones",
+  "dominio": "documentos",
+  "entidad": {
+   "id": "entity--documento-relacion",
+   "clase": "DocumentoRelacion"
+  },
+  "migracion": "database/migrations/053_documentos_relaciones_versiones.sql",
+  "columnas": 8,
+  "fks": [
+   "documentos.documentos_institucionales",
+   "seguridad.usuarios"
+  ]
+ },
+ "documentos.versiones_archivo": {
+  "id": "table--documentos-versiones-archivo",
+  "dominio": "documentos",
+  "entidad": {
+   "id": "entity--version-archivo-documento",
+   "clase": "VersionArchivoDocumento"
+  },
+  "migracion": "database/migrations/053_documentos_relaciones_versiones.sql",
+  "columnas": 10,
+  "fks": [
+   "documentos.documentos_institucionales",
+   "seguridad.usuarios"
+  ]
+ },
+ "documentos.expedientes": {
+  "id": "table--documentos-expedientes",
+  "dominio": "documentos",
+  "entidad": {
+   "id": "entity--expediente",
+   "clase": "Expediente"
+  },
+  "migracion": "database/migrations/054_documentos_expedientes_plantillas.sql",
+  "columnas": 8,
+  "fks": [
+   "seguridad.usuarios"
+  ]
+ },
+ "documentos.plantillas": {
+  "id": "table--documentos-plantillas",
+  "dominio": "documentos",
+  "entidad": {
+   "id": "entity--plantilla-documento",
+   "clase": "PlantillaDocumento"
+  },
+  "migracion": "database/migrations/054_documentos_expedientes_plantillas.sql",
+  "columnas": 10,
+  "fks": [
+   "organizacion.parametros",
+   "organizacion.cargos"
+  ]
+ },
+ "documentos.firmas_documento": {
+  "id": "table--documentos-firmas-documento",
+  "dominio": "documentos",
+  "entidad": {
+   "id": "entity--firma-documento",
+   "clase": "FirmaDocumento"
+  },
+  "migracion": "database/migrations/055_documentos_firmas.sql",
+  "columnas": 12,
+  "fks": [
+   "documentos.documentos_institucionales",
+   "organizacion.cargos",
+   "personal.bomberos",
+   "seguridad.usuarios"
+  ]
+ },
+ "ia.configuraciones": {
+  "id": "table--ia-configuraciones",
+  "dominio": "inteligencia",
+  "entidad": {
+   "id": "entity--ia-configuracion",
+   "clase": "ConfiguracionIa"
+  },
+  "migracion": "database/migrations/057_ia_estructura.sql",
+  "columnas": 24,
+  "fks": [
+   "seguridad.usuarios"
+  ]
+ },
+ "ia.historial_configuracion": {
+  "id": "table--ia-historial-configuracion",
+  "dominio": "inteligencia",
+  "entidad": {
+   "id": "entity--ia-historial-configuracion",
+   "clase": "HistorialConfiguracionIa"
+  },
+  "migracion": "database/migrations/057_ia_estructura.sql",
+  "columnas": 8,
+  "fks": [
+   "ia.configuraciones",
+   "seguridad.usuarios"
+  ]
+ },
+ "ia.conversaciones": {
+  "id": "table--ia-conversaciones",
+  "dominio": "inteligencia",
+  "entidad": {
+   "id": "entity--ia-conversacion",
+   "clase": "ConversacionIa"
+  },
+  "migracion": "database/migrations/057_ia_estructura.sql",
+  "columnas": 10,
+  "fks": [
+   "seguridad.usuarios"
+  ]
+ },
+ "ia.mensajes": {
+  "id": "table--ia-mensajes",
+  "dominio": "inteligencia",
+  "entidad": {
+   "id": "entity--ia-mensaje",
+   "clase": "MensajeIa"
+  },
+  "migracion": "database/migrations/057_ia_estructura.sql",
+  "columnas": 9,
+  "fks": [
+   "ia.conversaciones"
+  ]
+ },
+ "ia.ejecuciones_herramientas": {
+  "id": "table--ia-ejecuciones-herramientas",
+  "dominio": "inteligencia",
+  "entidad": {
+   "id": "entity--ia-ejecucion-herramienta",
+   "clase": "EjecucionHerramientaIa"
+  },
+  "migracion": "database/migrations/057_ia_estructura.sql",
+  "columnas": 12,
+  "fks": [
+   "ia.mensajes",
+   "ia.conversaciones",
+   "seguridad.usuarios"
+  ]
+ },
+ "ia.propuestas_mejora": {
+  "id": "table--ia-propuestas-mejora",
+  "dominio": "inteligencia",
+  "entidad": {
+   "id": "entity--ia-propuesta-mejora",
+   "clase": "PropuestaMejoraIa"
+  },
+  "migracion": "database/migrations/057_ia_estructura.sql",
+  "columnas": 12,
+  "fks": [
+   "seguridad.usuarios",
+   "seguridad.usuarios"
+  ]
+ },
+ "finanzas.socios_protectores": {
+  "id": "table--finanzas-socios-protectores",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--socio-protector",
+   "clase": "SocioProtector"
+  },
+  "migracion": "database/migrations/062_finanzas_socios_protectores.sql",
+  "columnas": 28,
+  "fks": [
+   "personal.bomberos",
+   "organizacion.parametros",
+   "organizacion.parametros",
+   "organizacion.parametros",
+   "organizacion.parametros",
+   "organizacion.parametros",
+   "seguridad.usuarios",
+   "seguridad.usuarios"
+  ]
+ },
+ "finanzas.socios_historial_codigo": {
+  "id": "table--finanzas-socios-historial-codigo",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--socio-historial-codigo",
+   "clase": "SocioHistorialCodigo"
+  },
+  "migracion": "database/migrations/062_finanzas_socios_protectores.sql",
+  "columnas": 7,
+  "fks": [
+   "finanzas.socios_protectores",
+   "seguridad.usuarios"
+  ]
+ },
+ "finanzas.acuerdos_aporte": {
+  "id": "table--finanzas-acuerdos-aporte",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--acuerdo-aporte",
+   "clase": "AcuerdoAporte"
+  },
+  "migracion": "database/migrations/063_finanzas_acuerdos_aportes.sql",
+  "columnas": 15,
+  "fks": [
+   "finanzas.socios_protectores",
+   "organizacion.parametros",
+   "organizacion.parametros",
+   "seguridad.usuarios"
+  ]
+ },
+ "finanzas.aportes": {
+  "id": "table--finanzas-aportes",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--aporte",
+   "clase": "Aporte"
+  },
+  "migracion": "database/migrations/063_finanzas_acuerdos_aportes.sql",
+  "columnas": 25,
+  "fks": [
+   "finanzas.socios_protectores",
+   "finanzas.acuerdos_aporte",
+   "organizacion.parametros",
+   "finanzas.cajas",
+   "finanzas.cuentas_bancarias",
+   "finanzas.movimientos_financieros",
+   "seguridad.usuarios",
+   "seguridad.usuarios"
+  ]
+ },
+ "finanzas.beneficios_socios": {
+  "id": "table--finanzas-beneficios-socios",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--beneficio-socio",
+   "clase": "BeneficioSocio"
+  },
+  "migracion": "database/migrations/064_finanzas_beneficios_socios.sql",
+  "columnas": 18,
+  "fks": [
+   "organizacion.parametros",
+   "academia.actividades",
+   "servicios.tipos_servicio",
+   "seguridad.usuarios"
+  ]
+ },
+ "finanzas.aplicaciones_beneficio": {
+  "id": "table--finanzas-aplicaciones-beneficio",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--aplicacion-beneficio",
+   "clase": "AplicacionBeneficio"
+  },
+  "migracion": "database/migrations/064_finanzas_beneficios_socios.sql",
+  "columnas": 10,
+  "fks": [
+   "finanzas.beneficios_socios",
+   "finanzas.socios_protectores",
+   "seguridad.usuarios"
+  ]
+ },
+ "finanzas.numeraciones_comprobantes": {
+  "id": "table--finanzas-numeraciones-comprobantes",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--numeracion-comprobante",
+   "clase": "NumeracionComprobante"
+  },
+  "migracion": "database/migrations/065_finanzas_facturacion.sql",
+  "columnas": 15,
+  "fks": [
+   "organizacion.parametros",
+   "seguridad.usuarios"
+  ]
+ },
+ "finanzas.facturas": {
+  "id": "table--finanzas-facturas",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--factura",
+   "clase": "Factura"
+  },
+  "migracion": "database/migrations/065_finanzas_facturacion.sql",
+  "columnas": 34,
+  "fks": [
+   "organizacion.parametros",
+   "finanzas.socios_protectores",
+   "organizacion.parametros",
+   "finanzas.aportes",
+   "academia.inscripciones",
+   "finanzas.movimientos_financieros",
+   "seguridad.usuarios",
+   "seguridad.usuarios"
+  ]
+ },
+ "finanzas.notas_credito": {
+  "id": "table--finanzas-notas-credito",
+  "dominio": "finanzas",
+  "entidad": {
+   "id": "entity--nota-credito",
+   "clase": "NotaCredito"
+  },
+  "migracion": "database/migrations/065_finanzas_facturacion.sql",
+  "columnas": 12,
+  "fks": [
+   "finanzas.facturas",
+   "organizacion.parametros",
+   "seguridad.usuarios"
   ]
  }
 }

@@ -13,6 +13,12 @@ export class Vehiculo {
   @Column({ type: 'nvarchar', length: 50 })
   tipo: string;
 
+  /** Apodo/alias informal del vehiculo (ej. "Murita") -- migracion 075,
+   * fase de cierre de Snoopy. No reemplaza numeroInterno/patente/chasis,
+   * es solo una forma adicional de encontrar el vehiculo. */
+  @Column({ type: 'nvarchar', length: 50, nullable: true })
+  alias: string | null;
+
   @Column({ type: 'nvarchar', length: 50, nullable: true })
   marca: string | null;
 

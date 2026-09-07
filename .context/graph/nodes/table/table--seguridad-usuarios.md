@@ -57,9 +57,9 @@ Tabla seguridad.usuarios (26 columnas). Creada en 002_seguridad.sql, modificada 
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/mi-perfil`, `/dashboard/mi-perfil/seguridad`, `/dashboard/organizacion`, `/dashboard/seguridad`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
-- **Endpoints:** AuthController, BitacoraController, DashboardController, DashboardController, DenunciasController, DenunciasPublicasController, MeController, PerfilController, SesionesController, UsuariosController
-- **Servicios:** AuthService, BitacoraService, DashboardService, DenunciasService, PerfilService, SesionesService, UsuariosService
+- **Pantallas:** `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/inteligencia`, `/dashboard/mi-perfil`, `/dashboard/mi-perfil/seguridad`, `/dashboard/organizacion`, `/dashboard/seguridad`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Endpoints:** AuthController, BitacoraController, CertificacionesAcademiaController, DashboardController, DashboardController, DenunciasController, DenunciasPublicasController, IaAdminConversacionesController, IaChatController, MeController, PerfilController, SesionesController, UsuariosController
+- **Servicios:** AuthService, BitacoraService, CertificacionesAcademiaService, DashboardService, DenunciasService, IaConversacionesService, PerfilService, SesionesService, UsuariosService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -88,14 +88,56 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[table--denuncias-denuncias|denuncias.denuncias]] `references` →
 - [[table--denuncias-denuncias|denuncias.denuncias]] `references` →
 - [[table--denuncias-historial-estados-denuncia|denuncias.historial_estados_denuncia]] `references` →
+- [[table--deposito-movimientos|deposito.movimientos]] `references` →
+- [[table--deposito-entradas|deposito.entradas]] `references` →
+- [[table--deposito-mantenimientos|deposito.mantenimientos]] `references` →
+- [[table--finanzas-ejercicios-fiscales|finanzas.ejercicios_fiscales]] `references` →
+- [[table--finanzas-turnos-caja|finanzas.turnos_caja]] `references` →
+- [[table--finanzas-turnos-caja|finanzas.turnos_caja]] `references` →
+- [[table--finanzas-movimientos-financieros|finanzas.movimientos_financieros]] `references` →
+- [[table--finanzas-movimientos-financieros|finanzas.movimientos_financieros]] `references` →
+- [[table--finanzas-documentos-respaldo|finanzas.documentos_respaldo]] `references` →
+- [[table--finanzas-movimientos-bancarios|finanzas.movimientos_bancarios]] `references` →
+- [[table--finanzas-movimientos-bancarios|finanzas.movimientos_bancarios]] `references` →
+- [[table--finanzas-ordenes-pago|finanzas.ordenes_pago]] `references` →
+- [[table--finanzas-ordenes-pago|finanzas.ordenes_pago]] `references` →
+- [[table--finanzas-ordenes-pago|finanzas.ordenes_pago]] `references` →
+- [[table--finanzas-ordenes-pago|finanzas.ordenes_pago]] `references` →
+- [[table--finanzas-ordenes-pago|finanzas.ordenes_pago]] `references` →
+- [[table--documentos-documentos-institucionales|documentos.documentos_institucionales]] `references` →
+- [[table--documentos-documentos-institucionales|documentos.documentos_institucionales]] `references` →
+- [[table--documentos-documentos-institucionales|documentos.documentos_institucionales]] `references` →
+- [[table--documentos-relaciones|documentos.relaciones]] `references` →
+- [[table--documentos-versiones-archivo|documentos.versiones_archivo]] `references` →
+- [[table--documentos-expedientes|documentos.expedientes]] `references` →
+- [[table--documentos-firmas-documento|documentos.firmas_documento]] `references` →
+- [[table--ia-configuraciones|ia.configuraciones]] `references` →
+- [[table--ia-historial-configuracion|ia.historial_configuracion]] `references` →
+- [[table--ia-conversaciones|ia.conversaciones]] `references` →
+- [[table--ia-ejecuciones-herramientas|ia.ejecuciones_herramientas]] `references` →
+- [[table--ia-propuestas-mejora|ia.propuestas_mejora]] `references` →
+- [[table--ia-propuestas-mejora|ia.propuestas_mejora]] `references` →
+- [[table--finanzas-socios-protectores|finanzas.socios_protectores]] `references` →
+- [[table--finanzas-socios-protectores|finanzas.socios_protectores]] `references` →
+- [[table--finanzas-socios-historial-codigo|finanzas.socios_historial_codigo]] `references` →
+- [[table--finanzas-acuerdos-aporte|finanzas.acuerdos_aporte]] `references` →
+- [[table--finanzas-aportes|finanzas.aportes]] `references` →
+- [[table--finanzas-aportes|finanzas.aportes]] `references` →
+- [[table--finanzas-beneficios-socios|finanzas.beneficios_socios]] `references` →
+- [[table--finanzas-aplicaciones-beneficio|finanzas.aplicaciones_beneficio]] `references` →
+- [[table--finanzas-numeraciones-comprobantes|finanzas.numeraciones_comprobantes]] `references` →
+- [[table--finanzas-facturas|finanzas.facturas]] `references` →
+- [[table--finanzas-facturas|finanzas.facturas]] `references` →
+- [[table--finanzas-notas-credito|finanzas.notas_credito]] `references` →
 - [[entity--usuario|Usuario]] `persisted_in` →
+- [[service--academia-certificaciones-academia|CertificacionesAcademiaService]] `reads` →
 - [[service--auth-auth|AuthService]] `reads` →
 - [[service--denuncias-denuncias|DenunciasService]] `reads` →
 - [[service--guardias-bitacora|BitacoraService]] `reads` →
+- [[service--ia-ia-conversaciones|IaConversacionesService]] `reads` →
 - [[service--seguridad-dashboard|DashboardService]] `reads` →
 - [[service--seguridad-perfil|PerfilService]] `reads` →
 - [[service--seguridad-sesiones|SesionesService]] `reads` →
-- [[service--seguridad-usuarios|UsuariosService]] `reads` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

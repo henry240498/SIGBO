@@ -19,6 +19,8 @@ edges:
   - [reads, table--seguridad-asignacion-permisos-directos]
   - [uses, entity--permiso]
   - [reads, table--seguridad-permisos]
+  - [uses, entity--rol]
+  - [reads, table--seguridad-roles]
 terminos: [policy, engine, seguridad, asignacion, rol, permiso, directo]
 ---
 
@@ -47,6 +49,8 @@ Logica de negocio de policy engine (modulo seguridad).
 - `reads` → [[table--seguridad-asignacion-permisos-directos|seguridad.asignacion_permisos_directos]]
 - `uses` → [[entity--permiso|Permiso]]
 - `reads` → [[table--seguridad-permisos|seguridad.permisos]]
+- `uses` → [[entity--rol|Rol]]
+- `reads` → [[table--seguridad-roles|seguridad.roles]]
 
 ## Referenciado por
 

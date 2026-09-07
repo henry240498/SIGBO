@@ -26,6 +26,15 @@ export class Cuartel {
   @Column({ type: 'nvarchar', length: 20, default: 'ACTIVO' })
   estado: 'ACTIVO' | 'INACTIVO';
 
+  /** Referencia geografica del cuartel -- marcador "Cuartel" y punto de
+   * origen para la distancia de las pruebas de comunicacion (Servicios
+   * > Seguimiento Geografico). Nulo hasta que alguien la cargue. */
+  @Column({ type: 'decimal', precision: 10, scale: 8, nullable: true })
+  latitud: number | null;
+
+  @Column({ type: 'decimal', precision: 11, scale: 8, nullable: true })
+  longitud: number | null;
+
   @CreateDateColumn({ name: 'creado_en', type: 'datetimeoffset', precision: 3 })
   creadoEn: Date;
 

@@ -20,6 +20,12 @@ export interface PerfilIa {
   saludo: string | null;
   estado: EstadoConfiguracionIa;
   mensajeMantenimiento: string | null;
+  vozHabilitada: boolean;
+  entradaVozHabilitada: boolean;
+  respuestaVozHabilitada: boolean;
+  vozVolumen: number;
+  vozVelocidad: number;
+  vozIdioma: string;
 }
 
 export interface ConfiguracionIa extends PerfilIa {
@@ -35,6 +41,25 @@ export interface ConfiguracionIa extends PerfilIa {
   limiteConsultasHora: number;
   modulosHabilitadosJson: string;
   explicarInterpretacion: boolean;
+  ollamaHabilitado: boolean;
+  ollamaUrl: string;
+  ollamaPuerto: number;
+  ollamaModelo: string | null;
+  ollamaTimeoutMs: number;
+  ollamaTemperatura: number;
+  vozHabilitada: boolean;
+  entradaVozHabilitada: boolean;
+  respuestaVozHabilitada: boolean;
+  vozVolumen: number;
+  vozVelocidad: number;
+  vozSeleccionada: string | null;
+  vozIdioma: string;
+  whisperUrl: string;
+  whisperPuerto: number;
+  whisperTimeoutMs: number;
+  piperRutaBinario: string | null;
+  piperRutaVoz: string | null;
+  piperTimeoutMs: number;
   creadoEn: string;
   actualizadoEn: string;
   actualizadoPor: string | null;
@@ -179,6 +204,31 @@ export async function enviarMensajeIa(mensaje: string, conversacionId?: string) 
   return res.json() as Promise<RespuestaChatIa>;
 }
 
+/** Sube un audio grabado por el navegador (MediaRecorder produce webm/ogg
+ * segun el navegador -- nunca WAV) y devuelve el texto transcrito por
+ * whisper.cpp LOCAL. No usa apiFetch: FormData necesita que el navegador
+ * arme su propio boundary de multipart, forzar 'Content-Type: application/
+ * json' lo rompe (mismo motivo por el que subirAvatarIa tampoco lo usa). */
+export async function transcribirVoz(audio: Blob): Promise<{ texto: string }> {
+  const formData = new FormData();
+  formData.append('audio', audio, 'audio.webm');
+  const sesion = obtenerSesion();
+  const headers: HeadersInit = {};
+  if (sesion) headers['Authorization'] = `Bearer ${sesion.accessToken}`;
+  const res = await fetch(`${API_ORIGIN}/api/v1/ia/voz/transcribir`, { method: 'POST', headers, body: formData });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo transcribir el audio'));
+  return res.json();
+}
+
+/** Sintetiza en voz (Piper LOCAL) un mensaje que Snoopy YA dijo -- nunca
+ * texto libre (ver comentario en HablarVozDto/IaVozService). Devuelve el
+ * audio WAV como Blob, listo para reproducir. */
+export async function hablarVoz(mensajeId: string): Promise<Blob> {
+  const res = await apiFetch('/ia/voz/hablar', { method: 'POST', body: JSON.stringify({ mensajeId }) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo generar el audio'));
+  return res.blob();
+}
+
 export async function cargarMisConversaciones() {
   const res = await apiFetch('/ia/conversaciones');
   if (!res.ok) throw new Error('No se pudo cargar el historial de conversaciones');
@@ -205,6 +255,86 @@ export async function actualizarConfiguracionIa(payload: Record<string, unknown>
   const res = await apiFetch('/ia/admin/config', { method: 'PATCH', body: JSON.stringify(payload) });
   if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo actualizar la configuración'));
   return res.json() as Promise<ConfiguracionIa>;
+}
+
+export interface ModeloOllama {
+  nombre: string;
+  tamanoBytes: number;
+}
+
+export interface EstadoOllama {
+  conectado: boolean;
+  url: string;
+  modelosInstalados: ModeloOllama[];
+  modeloConfigurado: string | null;
+  modeloDisponible: boolean;
+  error: string | null;
+}
+
+export async function cargarEstadoOllama() {
+  const res = await apiFetch('/ia/admin/config/ollama/estado');
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo consultar el estado de Ollama'));
+  return res.json() as Promise<EstadoOllama>;
+}
+
+export async function probarConexionOllama() {
+  const res = await apiFetch('/ia/admin/config/ollama/probar-conexion', { method: 'POST' });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo probar la conexión'));
+  return res.json() as Promise<{ conectado: boolean; version: string | null; error: string | null }>;
+}
+
+export async function probarGeneracionOllama(prompt?: string) {
+  const res = await apiFetch('/ia/admin/config/ollama/probar-generacion', { method: 'POST', body: JSON.stringify({ prompt }) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo probar la generación'));
+  return res.json() as Promise<{ ok: boolean; respuesta: string | null; duracionMs: number | null; error: string | null }>;
+}
+
+export interface EstadoWhisper {
+  conectado: boolean;
+  url: string;
+  error: string | null;
+}
+
+export async function cargarEstadoWhisper() {
+  const res = await apiFetch('/ia/admin/config/whisper/estado');
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo consultar el estado de whisper.cpp'));
+  return res.json() as Promise<EstadoWhisper>;
+}
+
+export interface EstadoPiper {
+  disponible: boolean;
+  rutaBinario: string | null;
+  rutaVoz: string | null;
+  error: string | null;
+}
+
+export async function cargarEstadoPiper() {
+  const res = await apiFetch('/ia/admin/config/piper/estado');
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo consultar el estado de Piper'));
+  return res.json() as Promise<EstadoPiper>;
+}
+
+export interface VozPiperDisponible {
+  archivo: string;
+  ruta: string;
+  etiqueta: string;
+}
+
+/** Voces de Piper realmente instaladas en disco (Cierre de Snoopy) --
+ * alimenta el combo de seleccion en vez de una ruta de archivo a mano. */
+export async function cargarVocesPiper() {
+  const res = await apiFetch('/ia/admin/config/piper/voces');
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo consultar las voces instaladas'));
+  return res.json() as Promise<VozPiperDisponible[]>;
+}
+
+/** Prueba de sintesis real (seccion 9, mismo patron que probarGeneracionOllama):
+ * devuelve el audio generado, no solo un booleano -- el admin lo escucha
+ * directamente en el panel. */
+export async function probarPiper(texto?: string): Promise<Blob> {
+  const res = await apiFetch('/ia/admin/config/piper/probar', { method: 'POST', body: JSON.stringify({ texto }) });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo generar el audio de prueba'));
+  return res.blob();
 }
 
 export async function cargarHistorialConfiguracionIa() {

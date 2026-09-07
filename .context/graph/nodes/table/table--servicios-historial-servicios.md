@@ -21,6 +21,10 @@ Tabla servicios.historial_servicios (10 columnas). Creada en 007_servicios.sql, 
 
 - **Esquema:** servicios · **Columnas:** 10
 
+## Restricciones CHECK (reglas que la BD impone)
+
+- `tipo_evento IN ('SALIDA','LLEGADA','GPS','COMBUSTIBLE','INCIDENTE','FIN')`
+
 ## Columnas
 
 | Columna | Tipo |

@@ -59,6 +59,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 
 ## Referenciado por
 
+- [[table--finanzas-beneficios-socios|finanzas.beneficios_socios]] `references` →
 - [[entity--tipo-servicio|TipoServicio]] `persisted_in` →
 - [[service--denuncias-denuncias|DenunciasService]] `reads` →
 - [[service--personal-consultas-cruzadas|ConsultasCruzadasService]] `reads` →

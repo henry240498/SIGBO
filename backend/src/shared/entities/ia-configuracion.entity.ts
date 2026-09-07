@@ -15,12 +15,22 @@ export type EstadoConfiguracionIa = 'ACTIVA' | 'INACTIVA' | 'MANTENIMIENTO';
  * con el permiso `inteligencia:usar` ya asignado por rol -- evita dos
  * fuentes de verdad para lo mismo.
  *
- * Sin `proveedor`/`modelo`: el motor de razonamiento es local (IaMotorService),
- * no un cliente de un LLM externo -- no hay proveedor que configurar
- * (pivote de arquitectura, ver migracion 060). `limiteActivo` en false es
- * "sin limites" tal cual lo pidio la institucion: el limitador de
- * ia-rate-limit.guard.ts es una proteccion tecnica anti-abuso opcional,
- * nunca un presupuesto de costo. */
+ * Sin `proveedor` de LLM externo: el motor de razonamiento sigue siendo
+ * local y deterministico (IaMotorService), nunca un cliente de un
+ * proveedor por internet (pivote de arquitectura, ver migracion 060).
+ * `limiteActivo` en false es "sin limites" tal cual lo pidio la
+ * institucion: el limitador de ia-rate-limit.guard.ts es una proteccion
+ * tecnica anti-abuso opcional, nunca un presupuesto de costo.
+ *
+ * Los campos `ollama*` (migracion 072) son la EXCEPCION deliberada y
+ * acotada: Ollama corre en la misma red local (tipicamente la misma
+ * maquina), nunca sale a internet, y solo se usa para (a) sugerir una
+ * herramienta cuando el reconocimiento por patrones no encuentra
+ * ninguna y (b) redactar en lenguaje mas natural un resultado que
+ * SIGBO ya calculo y ya autorizo -- nunca decide que datos se
+ * entregan. `ollamaHabilitado` nace en false: no cambia el
+ * comportamiento de una instalacion existente sin que un administrador
+ * lo prenda a proposito. */
 @Entity({ name: 'configuraciones', schema: 'ia' })
 export class ConfiguracionIa {
   @PrimaryGeneratedColumn('uuid')
@@ -97,6 +107,81 @@ export class ConfiguracionIa {
    * apagada por defecto. */
   @Column({ type: 'bit', default: false })
   explicarInterpretacion: boolean;
+
+  @Column({ type: 'bit', default: false })
+  ollamaHabilitado: boolean;
+
+  @Column({ type: 'nvarchar', length: 200, default: 'http://localhost' })
+  ollamaUrl: string;
+
+  @Column({ type: 'int', default: 11434 })
+  ollamaPuerto: number;
+
+  /** Nombre exacto del modelo tal como lo devuelve `ollama list` (ej.
+   * "llama3.2:3b"). Null hasta que un administrador lo elija entre los
+   * modelos instalados -- nunca se asume uno por defecto sin que lo
+   * confirmen (seccion 10 del pedido de integracion). */
+  @Column({ type: 'nvarchar', length: 100, nullable: true })
+  ollamaModelo: string | null;
+
+  @Column({ type: 'int', default: 8000 })
+  ollamaTimeoutMs: number;
+
+  @Column({ type: 'decimal', precision: 3, scale: 2, default: 0.3 })
+  ollamaTemperatura: number;
+
+  /** Campos `voz*`/`whisper*`/`piper*` (migracion 073, Etapa 2 "voz local"):
+   * misma excepcion acotada que Ollama -- whisper.cpp/Piper corren en la
+   * misma maquina/red local, nunca salen a internet. `vozHabilitada` nace
+   * en false: instalar la migracion no cambia el comportamiento de una
+   * instalacion existente. `entradaVoz`/`respuestaVoz` solo importan si
+   * `vozHabilitada` esta prendido -- permiten, por ejemplo, dejar que el
+   * usuario hable pero que Snoopy conteste siempre en texto. Volumen y
+   * velocidad se aplican en el navegador sobre el audio ya generado, no
+   * le piden a Piper que vuelva a sintetizar. */
+  @Column({ type: 'bit', default: false })
+  vozHabilitada: boolean;
+
+  @Column({ type: 'bit', default: true })
+  entradaVozHabilitada: boolean;
+
+  @Column({ type: 'bit', default: true })
+  respuestaVozHabilitada: boolean;
+
+  @Column({ type: 'decimal', precision: 3, scale: 2, default: 1.0 })
+  vozVolumen: number;
+
+  @Column({ type: 'decimal', precision: 3, scale: 2, default: 1.0 })
+  vozVelocidad: number;
+
+  /** Nombre del archivo de voz de Piper (ej. "es_AR-daniela-high"), no la
+   * ruta completa -- mismo patron que ollamaModelo (nombre, no ruta). */
+  @Column({ type: 'nvarchar', length: 150, nullable: true })
+  vozSeleccionada: string | null;
+
+  @Column({ type: 'nvarchar', length: 10, default: 'es' })
+  vozIdioma: string;
+
+  @Column({ type: 'nvarchar', length: 200, default: 'http://localhost' })
+  whisperUrl: string;
+
+  @Column({ type: 'int', default: 8090 })
+  whisperPuerto: number;
+
+  @Column({ type: 'int', default: 15000 })
+  whisperTimeoutMs: number;
+
+  /** Rutas de archivo, no nombre+catalogo: whisper-server carga UN modelo
+   * por linea de comando al arrancar (no tiene API de inventario como
+   * `ollama list`), y Piper es un binario CLI, no un servicio persistente. */
+  @Column({ type: 'nvarchar', length: 400, nullable: true })
+  piperRutaBinario: string | null;
+
+  @Column({ type: 'nvarchar', length: 400, nullable: true })
+  piperRutaVoz: string | null;
+
+  @Column({ type: 'int', default: 15000 })
+  piperTimeoutMs: number;
 
   @CreateDateColumn({ name: 'creado_en', type: 'datetimeoffset', precision: 3 })
   creadoEn: Date;

@@ -42,6 +42,13 @@ Helper de frontend "equipos" (24 exportaciones, consume 8 endpoint(s)).
 
 ## Referenciado por
 
+- [[screen--dashboard-deposito-bajas|/dashboard/deposito/bajas]] `uses` →
+- [[screen--dashboard-deposito-entradas|/dashboard/deposito/entradas]] `uses` →
+- [[screen--dashboard-deposito-incidencias|/dashboard/deposito/incidencias]] `uses` →
+- [[screen--dashboard-deposito-inventarios-fisicos-id|/dashboard/deposito/inventarios-fisicos/[id]]] `uses` →
+- [[screen--dashboard-deposito-mantenimientos|/dashboard/deposito/mantenimientos]] `uses` →
+- [[screen--dashboard-deposito-movimientos|/dashboard/deposito/movimientos]] `uses` →
+- [[screen--dashboard-deposito-prestamos|/dashboard/deposito/prestamos]] `uses` →
 - [[screen--dashboard-equipos-categorias|/dashboard/equipos/categorias]] `uses` →
 - [[screen--dashboard-equipos|/dashboard/equipos]] `uses` →
 - [[screen--dashboard-equipos-id|/dashboard/equipos/[id]]] `uses` →

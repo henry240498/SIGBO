@@ -7,6 +7,7 @@ export interface Vehiculo {
   id: string;
   numeroInterno: string;
   tipo: string;
+  alias: string | null;
   marca: string | null;
   modelo: string | null;
   anio: number | null;

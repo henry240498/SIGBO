@@ -5,7 +5,7 @@ nivel: L1
 
 # Decisiones de arquitectura
 
-10 decisiones vigentes, cada una con su nodo curado. Todas tienen un **costo aceptado**:
+11 decisiones vigentes, cada una con su nodo curado. Todas tienen un **costo aceptado**:
 esa sección es la más importante, porque explica qué no vas a poder hacer fácil y por qué
 el sistema no está "mal hecho" cuando te choques con el límite.
 
@@ -21,6 +21,7 @@ el sistema no está "mal hecho" cuando te choques con el límite.
 | 8 | [[decision--tolerancias-parametrizables]] — reglas de negocio como datos | Cuatro mecanismos de parametrización coexisten |
 | 9 | [[decision--pool-idle-timeout]] — pool que recicla conexiones seguido | Reconexión más frecuente |
 | 10 | [[decision--body-parser-8mb]] — body de 8 MB y CORS permisivo | `/uploads` se sirve sin guard de permisos |
+| 11 | [[decision--rate-limit-propio]] — rate limiting propio en memoria, no `@nestjs/throttler` | El contador es por proceso: no sobrevive a un reinicio ni escala a varias instancias |
 
 ## Las tres que más condicionan el trabajo diario
 
@@ -83,9 +84,10 @@ responder a medias.
    la fila. La solución estructural es subirlo a `/uploads` y guardar la referencia; la
    infraestructura ya existe (`multer`) — [[error--413-croquis-grande]].
 
-7. **Sin pruebas automatizadas.** No es una decisión documentada, es una ausencia. Con 55
-   controladores y 88 tablas, toda verificación es manual. Es la deuda que hace más
-   riesgoso cada uno de los cambios de esta lista.
+7. **Sin pruebas automatizadas.** No es una decisión documentada, es una ausencia. Con
+   decenas de controladores y 150 tablas (`node .context/graph/validar.mjs` para el
+   número actual — crece con cada módulo), toda verificación es manual. Es la deuda que
+   hace más riesgoso cada uno de los cambios de esta lista.
 
 ## Al tomar una decisión nueva
 

@@ -26,11 +26,6 @@ Tabla denuncias.denuncias (22 columnas). Creada en 031_denuncias_rapidas.sql.
 - **Esquema:** denuncias · **Columnas:** 22
 - **UNIQUE:** `codigo`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN (N'NUEVA',N'EN_REVISION',N'ASIGNADA',N'EN_INVESTIGACION',N'RESUELTA',N'CERRADA',N'DESCARTADA',N'DUPLICADA')`
-- `(latitud IS NULL AND longitud IS NULL) OR (latitud BETWEEN -90 AND 90 AND longitud BETWEEN -180 AND 180)`
-
 ## Llaves foraneas
 
 - `categoria_id` → [[table--denuncias-categorias-denuncia|denuncias.categorias_denuncia]]

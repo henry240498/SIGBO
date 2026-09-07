@@ -51,6 +51,8 @@ export class CuartelsService {
       telefono: dto.telefono ?? null,
       responsableBomberoId: dto.responsableBomberoId ?? null,
       estado: (dto.estado as 'ACTIVO' | 'INACTIVO') ?? 'ACTIVO',
+      latitud: dto.latitud ?? null,
+      longitud: dto.longitud ?? null,
       creadoPor: actorId,
     });
 
@@ -70,6 +72,8 @@ export class CuartelsService {
         ? { responsableBomberoId: dto.responsableBomberoId }
         : {}),
       ...(dto.estado !== undefined ? { estado: dto.estado as 'ACTIVO' | 'INACTIVO' } : {}),
+      ...(dto.latitud !== undefined ? { latitud: dto.latitud } : {}),
+      ...(dto.longitud !== undefined ? { longitud: dto.longitud } : {}),
       actualizadoPor: actorId,
     });
 

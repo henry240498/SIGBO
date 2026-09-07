@@ -20,7 +20,7 @@ Modulo NestJS que cablea controladores, servicios y repositorios de personal.
 
 ## Entidades registradas (forFeature)
 
-Bombero, BomberoEspecialidad, Especialidad, HistorialCodigo, HistorialInstitucional, CondicionIncorporado, CondicionCombatiente, CondicionApoyoEconomico, CondicionHonorario, ActividadProfesional, IdiomaBombero, VehiculoAutorizado, FojaServicio, Certificacion, Rango, Cargo, Compania, Designacion, Guardia, AsignacionGuardia, TipoServicio, Servicio, PersonalServicio, Materia, Curso, InscripcionCurso, TipoBombero, Parametro, SeguroBombero
+Bombero, BomberoEspecialidad, Especialidad, HistorialCodigo, HistorialInstitucional, CondicionIncorporado, CondicionCombatiente, CondicionApoyoEconomico, CondicionHonorario, ActividadProfesional, IdiomaBombero, VehiculoAutorizado, FojaServicio, Certificacion, Rango, Cargo, Compania, Designacion, Guardia, AsignacionGuardia, TipoServicio, Servicio, PersonalServicio, ActividadAcademica, InscripcionActividadAcademica, TipoBombero, Parametro, SeguroBombero
 
 ## Archivos
 

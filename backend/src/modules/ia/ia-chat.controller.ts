@@ -39,6 +39,12 @@ export class IaChatController {
       saludo: config.saludo,
       estado: config.estado,
       mensajeMantenimiento: config.mensajeMantenimiento,
+      vozHabilitada: config.vozHabilitada,
+      entradaVozHabilitada: config.entradaVozHabilitada,
+      respuestaVozHabilitada: config.respuestaVozHabilitada,
+      vozVolumen: config.vozVolumen,
+      vozVelocidad: config.vozVelocidad,
+      vozIdioma: config.vozIdioma,
     };
   }
 

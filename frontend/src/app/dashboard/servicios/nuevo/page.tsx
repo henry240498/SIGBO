@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { apiFetch } from '@/lib/api';
 import { cargarVehiculos } from '@/lib/vehiculos';
+import { SeguimientoGeografico } from '@/components/SeguimientoGeografico';
 
 type TipoComunicacion = 'OTRAS_OCURRENCIAS' | 'INCENDIO';
 type Valores = Record<string, any>;
@@ -19,7 +20,7 @@ interface ComunicacionApi {
   tipo: TipoComunicacion;
   estado: EstadoComunicacion;
   formulario: Valores;
-  servicio?: { numeroServicio?: string };
+  servicio?: { id?: string; numeroServicio?: string };
 }
 
 const STORAGE_KEY = 'sigbo-servicio-borrador-v3';
@@ -366,6 +367,7 @@ export default function NuevoServicioPage() {
   const [datos, setDatos] = useState<Valores>(() => nuevoFormulario());
   const [paso, setPaso] = useState(1);
   const [id, setId] = useState<string | null>(null);
+  const [servicioId, setServicioId] = useState<string | null>(null);
   const [numero, setNumero] = useState('');
   const [estado, setEstado] = useState<EstadoComunicacion>(null);
   const [hidratado, setHidratado] = useState(false);
@@ -407,6 +409,7 @@ export default function NuevoServicioPage() {
             setTipo(comunicacion.tipo);
             setDatos(normalizarFormulario(comunicacion.formulario));
             setId(comunicacion.id);
+            setServicioId(comunicacion.servicio?.id ?? null);
             setNumero(comunicacion.servicio?.numeroServicio ?? '');
             setEstado(comunicacion.estado);
             setAviso(comunicacion.estado === 'FINALIZADA' || comunicacion.estado === 'ANULADO' ? 'Registro de solo lectura.' : 'Comunicación cargada desde el sistema.');
@@ -498,6 +501,7 @@ export default function NuevoServicioPage() {
       const nuevoId = texto(cuerpo.id) || id;
       if (!nuevoId) throw new Error('El servidor no devolvió el identificador de la comunicación.');
       setId(nuevoId);
+      setServicioId(texto(cuerpo.servicio?.id) || servicioId);
       setNumero(texto(cuerpo.servicio?.numeroServicio) || numero);
       setEstado(cuerpo.estado ?? 'BORRADOR');
       guardarLocal(nuevoId);
@@ -654,6 +658,9 @@ export default function NuevoServicioPage() {
       <div className="service-review"><strong>Resumen para validar</strong><span>{tipo === 'INCENDIO' ? arreglo<string>(datos.incendioTipo).join(', ') || 'Sin tipo seleccionado' : arreglo<string>(datos.categorias).join(', ') || 'Sin categoría seleccionada'}</span><span>{arreglo<Valores>(datos.movilesDespachados).filter((movil) => movil.seleccionado).length} móvil(es) despachado(s)</span><span>{formatoDuracion(minutos) ? `Tiempo total: ${formatoDuracion(minutos)}` : 'Tiempo total pendiente'}</span></div>
       {!imprimirTodo && !soloLectura && <div className="service-actions"><button type="button" className="btn-primary" disabled={guardando} onClick={() => void guardar()}>{guardando ? 'Guardando…' : 'Guardar borrador'}</button><button type="button" className="btn-primary service-final" disabled={guardando} onClick={() => void guardar(true)}>Validar y finalizar</button></div>}
     </section>}
+
+    {!imprimirTodo && servicioId && <SeguimientoGeografico servicioId={servicioId} />}
+    {!imprimirTodo && !servicioId && <p className="service-hint" style={{ marginTop: 8 }}>Guarde la comunicación para habilitar el seguimiento geográfico.</p>}
   </div>;
 }
 

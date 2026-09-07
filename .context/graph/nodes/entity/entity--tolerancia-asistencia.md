@@ -23,7 +23,7 @@ Reglas de tolerancia de horario parametrizables por tipo de evento (NULL = regla
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
+- **Pantallas:** `/dashboard/academia/[id]`, `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
 - **Endpoints:** ToleranciasController
 - **Servicios:** ToleranciasService
 

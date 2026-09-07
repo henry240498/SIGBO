@@ -1,4 +1,69 @@
 {
+ "academia:calificar": {
+  "modulo": "academia",
+  "exigidoPor": [
+   "api--academia-evaluaciones-academia",
+   "api--academia-inscripciones-academia",
+   "screen--dashboard-academia-id"
+  ]
+ },
+ "academia:configurar": {
+  "modulo": "academia",
+  "exigidoPor": [
+   "api--academia-cursos-externos",
+   "screen--dashboard-academia-cursos-externos"
+  ]
+ },
+ "academia:crear_curso": {
+  "modulo": "academia",
+  "exigidoPor": [
+   "api--academia-actividades-academicas",
+   "screen--dashboard-academia"
+  ]
+ },
+ "academia:editar_curso": {
+  "modulo": "academia",
+  "exigidoPor": [
+   "api--academia-actividades-academicas",
+   "screen--dashboard-academia-id"
+  ]
+ },
+ "academia:gestionar_instructores": {
+  "modulo": "academia",
+  "exigidoPor": [
+   "api--academia-actividades-academicas",
+   "api--academia-instructores-externos",
+   "screen--dashboard-academia-instructores-externos",
+   "screen--dashboard-academia-id"
+  ]
+ },
+ "academia:inscribir": {
+  "modulo": "academia",
+  "exigidoPor": [
+   "api--academia-inscripciones-academia",
+   "screen--dashboard-academia-id"
+  ]
+ },
+ "academia:registrar_asistencia": {
+  "modulo": "academia",
+  "exigidoPor": [
+   "api--academia-sesiones-academia",
+   "screen--dashboard-academia-id"
+  ]
+ },
+ "academia:ver": {
+  "modulo": "academia",
+  "exigidoPor": [
+   "api--academia-actividades-academicas",
+   "api--academia-consultas-academia",
+   "api--academia-cursos-externos",
+   "api--academia-evaluaciones-academia",
+   "api--academia-inscripciones-academia",
+   "api--academia-instructores-externos",
+   "api--academia-reportes-academia",
+   "api--academia-sesiones-academia"
+  ]
+ },
  "asistencia:asistencia_crear": {
   "modulo": "asistencia",
   "exigidoPor": [
@@ -120,6 +185,194 @@
    "api--denuncias-denuncias"
   ]
  },
+ "deposito:baja": {
+  "modulo": "deposito",
+  "exigidoPor": [
+   "api--deposito-bajas",
+   "screen--dashboard-deposito-bajas"
+  ]
+ },
+ "deposito:crear": {
+  "modulo": "deposito",
+  "exigidoPor": [
+   "api--deposito-articulos",
+   "api--deposito-categorias-articulo",
+   "api--deposito-entradas",
+   "api--deposito-incidencias",
+   "api--deposito-lotes-articulo",
+   "api--deposito-proveedores",
+   "api--deposito-ubicaciones-deposito",
+   "screen--dashboard-deposito-articulos",
+   "screen--dashboard-deposito-articulos-id",
+   "screen--dashboard-deposito-categorias",
+   "screen--dashboard-deposito-entradas",
+   "screen--dashboard-deposito-incidencias",
+   "screen--dashboard-deposito-proveedores",
+   "screen--dashboard-deposito-ubicaciones"
+  ]
+ },
+ "deposito:editar": {
+  "modulo": "deposito",
+  "exigidoPor": [
+   "api--deposito-articulos",
+   "api--deposito-categorias-articulo",
+   "api--deposito-incidencias",
+   "api--deposito-proveedores",
+   "api--deposito-ubicaciones-deposito",
+   "screen--dashboard-deposito-articulos-id",
+   "screen--dashboard-deposito-categorias",
+   "screen--dashboard-deposito-incidencias",
+   "screen--dashboard-deposito-proveedores",
+   "screen--dashboard-deposito-ubicaciones"
+  ]
+ },
+ "deposito:eliminar": {
+  "modulo": "deposito",
+  "exigidoPor": [
+   "api--deposito-categorias-articulo",
+   "api--deposito-ubicaciones-deposito",
+   "screen--dashboard-deposito-categorias",
+   "screen--dashboard-deposito-ubicaciones"
+  ]
+ },
+ "deposito:inventario_fisico": {
+  "modulo": "deposito",
+  "exigidoPor": [
+   "api--deposito-inventarios-fisicos",
+   "screen--dashboard-deposito-inventarios-fisicos",
+   "screen--dashboard-deposito-inventarios-fisicos-id"
+  ]
+ },
+ "deposito:mantenimiento": {
+  "modulo": "deposito",
+  "exigidoPor": [
+   "api--deposito-mantenimientos",
+   "screen--dashboard-deposito-mantenimientos"
+  ]
+ },
+ "deposito:movimiento": {
+  "modulo": "deposito",
+  "exigidoPor": [
+   "api--deposito-movimientos-deposito",
+   "screen--dashboard-deposito-movimientos"
+  ]
+ },
+ "deposito:prestar": {
+  "modulo": "deposito",
+  "exigidoPor": [
+   "api--deposito-prestamos",
+   "screen--dashboard-deposito-prestamos"
+  ]
+ },
+ "deposito:ver": {
+  "modulo": "deposito",
+  "exigidoPor": [
+   "api--deposito-alertas-deposito",
+   "api--deposito-articulos",
+   "api--deposito-bajas",
+   "api--deposito-categorias-articulo",
+   "api--deposito-consultas-deposito",
+   "api--deposito-dashboard-deposito",
+   "api--deposito-entradas",
+   "api--deposito-incidencias",
+   "api--deposito-integracion-deposito",
+   "api--deposito-inventarios-fisicos",
+   "api--deposito-lotes-articulo",
+   "api--deposito-mantenimientos",
+   "api--deposito-movimientos-deposito",
+   "api--deposito-prestamos",
+   "api--deposito-proveedores",
+   "api--deposito-ubicaciones-deposito"
+  ]
+ },
+ "documentos:administrar": {
+  "modulo": "documentos",
+  "exigidoPor": [
+   "api--documentos-documentos",
+   "api--documentos-firmas-documento",
+   "api--documentos-plantillas",
+   "screen--dashboard-documentos-plantillas",
+   "screen--dashboard-documentos-id"
+  ]
+ },
+ "documentos:anular": {
+  "modulo": "documentos",
+  "exigidoPor": [
+   "api--documentos-documentos",
+   "screen--dashboard-documentos-id"
+  ]
+ },
+ "documentos:aprobar": {
+  "modulo": "documentos",
+  "exigidoPor": [
+   "api--documentos-documentos",
+   "screen--dashboard-documentos-id"
+  ]
+ },
+ "documentos:crear": {
+  "modulo": "documentos",
+  "exigidoPor": [
+   "api--documentos-documentos",
+   "api--documentos-expedientes",
+   "api--documentos-plantillas",
+   "screen--dashboard-documentos-expedientes",
+   "screen--dashboard-documentos-listado",
+   "screen--dashboard-documentos-plantillas"
+  ]
+ },
+ "documentos:descargar": {
+  "modulo": "documentos",
+  "exigidoPor": [
+   "screen--dashboard-documentos-id"
+  ]
+ },
+ "documentos:editar": {
+  "modulo": "documentos",
+  "exigidoPor": [
+   "api--documentos-documentos",
+   "api--documentos-expedientes",
+   "screen--dashboard-documentos-expedientes",
+   "screen--dashboard-documentos-id"
+  ]
+ },
+ "documentos:eliminar": {
+  "modulo": "documentos",
+  "exigidoPor": [
+   "api--documentos-documentos",
+   "screen--dashboard-documentos-id"
+  ]
+ },
+ "documentos:firmar": {
+  "modulo": "documentos",
+  "exigidoPor": [
+   "api--documentos-firmas-documento",
+   "screen--dashboard-documentos-id"
+  ]
+ },
+ "documentos:subir": {
+  "modulo": "documentos",
+  "exigidoPor": [
+   "screen--dashboard-documentos-id"
+  ]
+ },
+ "documentos:ver": {
+  "modulo": "documentos",
+  "exigidoPor": [
+   "api--documentos-consultas-documentos",
+   "api--documentos-dashboard-documentos",
+   "api--documentos-documentos",
+   "api--documentos-expedientes",
+   "api--documentos-firmas-documento",
+   "api--documentos-plantillas"
+  ]
+ },
+ "documentos:ver_auditoria": {
+  "modulo": "documentos",
+  "exigidoPor": [
+   "api--documentos-documentos",
+   "screen--dashboard-documentos-id"
+  ]
+ },
  "equipos:crear": {
   "modulo": "equipos",
   "exigidoPor": [
@@ -165,6 +418,179 @@
   "exigidoPor": [
    "api--equipos-categorias-equipo",
    "api--equipos-equipos"
+  ]
+ },
+ "finanzas:administrar_cajas": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-cajas",
+   "api--finanzas-cuentas-bancarias",
+   "screen--dashboard-finanzas-cajas",
+   "screen--dashboard-finanzas-cuentas-bancarias"
+  ]
+ },
+ "finanzas:administrar_presupuesto": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-ejercicios-fiscales",
+   "api--finanzas-presupuestos",
+   "screen--dashboard-finanzas-ejercicios-fiscales",
+   "screen--dashboard-finanzas-presupuesto"
+  ]
+ },
+ "finanzas:anular": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-cuotas",
+   "api--finanzas-movimientos-financieros",
+   "api--finanzas-ordenes-pago",
+   "screen--dashboard-finanzas-cuotas",
+   "screen--dashboard-finanzas-movimientos",
+   "screen--dashboard-finanzas-ordenes-pago"
+  ]
+ },
+ "finanzas:aportes_editar": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-aportes",
+   "screen--dashboard-finanzas-socios-protectores-id"
+  ]
+ },
+ "finanzas:aportes_registrar": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-aportes",
+   "screen--dashboard-finanzas-socios-protectores-id"
+  ]
+ },
+ "finanzas:autorizar": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-ordenes-pago",
+   "screen--dashboard-finanzas-ordenes-pago"
+  ]
+ },
+ "finanzas:beneficios_administrar": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-beneficios-socios",
+   "screen--dashboard-finanzas-beneficios"
+  ]
+ },
+ "finanzas:cerrar_caja": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-cajas",
+   "screen--dashboard-finanzas-cajas"
+  ]
+ },
+ "finanzas:conciliar": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-movimientos-bancarios",
+   "screen--dashboard-finanzas-movimientos-bancarios"
+  ]
+ },
+ "finanzas:crear": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-cuotas",
+   "api--finanzas-integracion-finanzas",
+   "api--finanzas-movimientos-bancarios",
+   "api--finanzas-movimientos-financieros",
+   "api--finanzas-ordenes-pago",
+   "screen--dashboard-finanzas-cuotas",
+   "screen--dashboard-finanzas-movimientos",
+   "screen--dashboard-finanzas-movimientos-bancarios",
+   "screen--dashboard-finanzas-ordenes-pago"
+  ]
+ },
+ "finanzas:editar": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-cuotas",
+   "screen--dashboard-finanzas-cuotas"
+  ]
+ },
+ "finanzas:facturacion_anular": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-facturas",
+   "screen--dashboard-finanzas-facturacion"
+  ]
+ },
+ "finanzas:facturacion_crear": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-facturas",
+   "api--finanzas-numeraciones-comprobantes",
+   "screen--dashboard-finanzas-facturacion"
+  ]
+ },
+ "finanzas:facturacion_ver": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-facturas",
+   "api--finanzas-notas-credito",
+   "api--finanzas-numeraciones-comprobantes"
+  ]
+ },
+ "finanzas:notas_credito_crear": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-notas-credito",
+   "screen--dashboard-finanzas-facturacion"
+  ]
+ },
+ "finanzas:reportes": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-reportes-finanzas",
+   "screen--dashboard-finanzas-movimientos",
+   "screen--dashboard-finanzas-presupuesto"
+  ]
+ },
+ "finanzas:socios_crear": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-acuerdos-aporte",
+   "api--finanzas-socios-protectores",
+   "screen--dashboard-finanzas-socios-protectores",
+   "screen--dashboard-finanzas-socios-protectores-id"
+  ]
+ },
+ "finanzas:socios_editar": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-acuerdos-aporte",
+   "api--finanzas-socios-protectores",
+   "screen--dashboard-finanzas-socios-protectores",
+   "screen--dashboard-finanzas-socios-protectores-id"
+  ]
+ },
+ "finanzas:socios_ver": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-acuerdos-aporte",
+   "api--finanzas-aportes",
+   "api--finanzas-beneficios-socios",
+   "api--finanzas-socios-protectores"
+  ]
+ },
+ "finanzas:ver": {
+  "modulo": "finanzas",
+  "exigidoPor": [
+   "api--finanzas-cajas",
+   "api--finanzas-consultas-finanzas",
+   "api--finanzas-cuentas-bancarias",
+   "api--finanzas-cuotas",
+   "api--finanzas-dashboard-finanzas",
+   "api--finanzas-ejercicios-fiscales",
+   "api--finanzas-integracion-finanzas",
+   "api--finanzas-movimientos-bancarios",
+   "api--finanzas-movimientos-financieros",
+   "api--finanzas-ordenes-pago",
+   "api--finanzas-presupuestos"
   ]
  },
  "guardias:asignar": {
@@ -233,6 +659,7 @@
   "modulo": "guardias",
   "exigidoPor": [
    "api--guardias-ordenes-guardia",
+   "screen--dashboard-guardias-generar",
    "screen--dashboard-guardias-ordenes"
   ]
  },
@@ -240,6 +667,7 @@
   "modulo": "guardias",
   "exigidoPor": [
    "api--guardias-ordenes-guardia",
+   "screen--dashboard-guardias-generar",
    "screen--dashboard-guardias-ordenes-id"
   ]
  },
@@ -259,6 +687,7 @@
  "guardias:reemplazar": {
   "modulo": "guardias",
   "exigidoPor": [
+   "api--guardias-guardias",
    "screen--dashboard-guardias-id"
   ]
  },
@@ -289,6 +718,67 @@
    "api--guardias-inspecciones-movil",
    "api--guardias-novedades",
    "api--guardias-pernoctes"
+  ]
+ },
+ "inteligencia:configurar": {
+  "modulo": "inteligencia",
+  "exigidoPor": [
+   "api--ia-ia-configuracion"
+  ]
+ },
+ "inteligencia:desactivar": {
+  "modulo": "inteligencia",
+  "exigidoPor": [
+   "api--ia-ia-configuracion",
+   "screen--dashboard-seguridad-inteligencia-artificial-configuracion"
+  ]
+ },
+ "inteligencia:eliminar": {
+  "modulo": "inteligencia",
+  "exigidoPor": [
+   "screen--dashboard-seguridad-inteligencia-artificial-configuracion"
+  ]
+ },
+ "inteligencia:eliminar_conversaciones": {
+  "modulo": "inteligencia",
+  "exigidoPor": [
+   "screen--dashboard-seguridad-inteligencia-artificial-conversaciones"
+  ]
+ },
+ "inteligencia:exportar_reportes": {
+  "modulo": "inteligencia",
+  "exigidoPor": [
+   "api--ia-ia-dashboard"
+  ]
+ },
+ "inteligencia:gestionar_mejoras": {
+  "modulo": "inteligencia",
+  "exigidoPor": [
+   "api--ia-ia-propuestas-mejora"
+  ]
+ },
+ "inteligencia:usar": {
+  "modulo": "inteligencia",
+  "exigidoPor": [
+   "api--ia-ia-chat"
+  ]
+ },
+ "inteligencia:ver_auditoria": {
+  "modulo": "inteligencia",
+  "exigidoPor": [
+   "api--ia-ia-admin-conversaciones"
+  ]
+ },
+ "inteligencia:ver_conversaciones": {
+  "modulo": "inteligencia",
+  "exigidoPor": [
+   "api--ia-ia-admin-conversaciones"
+  ]
+ },
+ "inteligencia:ver_dashboard": {
+  "modulo": "inteligencia",
+  "exigidoPor": [
+   "api--ia-ia-dashboard"
   ]
  },
  "organizacion:ascensos_anular": {
@@ -457,6 +947,21 @@
   "modulo": "organizacion",
   "exigidoPor": [
    "api--organizacion-designaciones"
+  ]
+ },
+ "organizacion:documentos_configurar": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--documentos-documentos",
+   "api--organizacion-identidad-institucional",
+   "screen--dashboard-organizacion-documentos"
+  ]
+ },
+ "organizacion:documentos_ver": {
+  "modulo": "organizacion",
+  "exigidoPor": [
+   "api--organizacion-identidad-institucional",
+   "screen--dashboard-organizacion-documentos"
   ]
  },
  "organizacion:especialidades_crear": {
@@ -677,6 +1182,13 @@
    "screen--dashboard-personal-id"
   ]
  },
+ "personal:gestionar_firma_digital": {
+  "modulo": "personal",
+  "exigidoPor": [
+   "api--personal-bomberos",
+   "screen--dashboard-personal-id"
+  ]
+ },
  "personal:seguros_crear": {
   "modulo": "personal",
   "exigidoPor": [
@@ -732,6 +1244,7 @@
  "personal:ver": {
   "modulo": "personal",
   "exigidoPor": [
+   "api--academia-certificaciones-academia",
    "api--equipos-equipamiento-bombero",
    "api--personal-actividad-profesional",
    "api--personal-bomberos",

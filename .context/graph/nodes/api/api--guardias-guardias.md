@@ -7,14 +7,14 @@ dominio: guardias
 resumen: Superficie HTTP de guardias bajo /api/v1/guardias.
 prefijo: /api/v1/guardias
 capa: backend
-permisos: [guardias:ver, guardias:crear, guardias:editar, guardias:eliminar, guardias:asignar]
+permisos: [guardias:ver, guardias:crear, guardias:editar, guardias:eliminar, guardias:asignar, guardias:reemplazar]
 archivos:
   - backend/src/modules/guardias/guardias.controller.ts
 edges:
   - [belongs_to, domain--guardias]
   - [exposes, service--guardias-guardias]
   - [exposes, service--guardias-generacion]
-terminos: [guardias, ver, crear, editar, eliminar, asignar]
+terminos: [guardias, ver, crear, editar, eliminar, asignar, reemplazar]
 ---
 
 # GuardiasController
@@ -35,7 +35,9 @@ Superficie HTTP de guardias bajo /api/v1/guardias.
 | POST | `/guardias/`:id(${GUID_PATH}` | `guardias:eliminar` |
 | GET | `/guardias/`:id(${GUID_PATH}` | `guardias:ver` |
 | POST | `/guardias/`:id(${GUID_PATH}` | `guardias:asignar` |
+| POST | `/guardias/`:id(${GUID_PATH}` | `guardias:reemplazar` |
 | DELETE | `/guardias/`:id(${GUID_PATH}` | `guardias:editar` |
+| POST | `/guardias/`:id(${GUID_PATH}` | `guardias:editar` |
 | POST | `/guardias/`:id(${GUID_PATH}` | `guardias:editar` |
 | GET | `/guardias/`:id(${GUID_PATH}` | `guardias:ver` |
 

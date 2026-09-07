@@ -19,7 +19,7 @@ terminos: [grupo, guardia, grupos, operaciones, estado, activo, inactivo]
 Composicion predefinida de un grupo de guardia (seccion 3 del pedido): al crear una guardia real a partir de un grupo, el sistema recupera automaticamente su personal titular sin tener que volver a cargarlo.
 
 - **Tabla:** [[table--operaciones-grupos-guardia|operaciones.grupos_guardia]]
-- **Columnas mapeadas:** 10
+- **Columnas mapeadas:** 11
 
 ## Estados y enumeraciones
 

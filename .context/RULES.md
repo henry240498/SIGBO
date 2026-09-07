@@ -5,7 +5,7 @@ nivel: L0
 
 # Reglas e invariantes
 
-21 reglas verificadas contra el código. Cada una tiene su nodo curado con el detalle, el
+22 reglas verificadas contra el código. Cada una tiene su nodo curado con el detalle, el
 archivo donde vive y qué pasa si se rompe.
 
 > Si vas a modificar código de SIGBO, las **CRÍTICAS** son lectura obligatoria.
@@ -35,6 +35,7 @@ archivo donde vive y qué pasa si se rompe.
 | [[rule--una-comunicacion-por-servicio]] | 1:1, y `ON DELETE CASCADE` borra el formulario en silencio |
 | [[rule--tolerancia-null-es-la-general]] | `tipoEventoId NULL` = regla general. Nunca minutos fijos en el código |
 | [[rule--bloqueo-tras-cinco-intentos]] | 5 fallidos → 15 min. El contador solo se reinicia con un login exitoso |
+| [[rule--datos-tecnicos-de-denuncia-restringidos]] | IP/GPS/user agent de una denuncia exigen `denuncias:ver_datos_tecnicos`, no alcanza con `denuncias:ver` |
 
 ## Medias
 

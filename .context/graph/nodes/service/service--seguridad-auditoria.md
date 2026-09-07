@@ -38,9 +38,45 @@ Logica de negocio de auditoria (modulo seguridad).
 
 ## Referenciado por
 
+- [[service--academia-actividades-academicas|ActividadesAcademicasService]] `uses` →
+- [[service--academia-certificaciones-academia|CertificacionesAcademiaService]] `uses` →
+- [[service--academia-evaluaciones-academia|EvaluacionesAcademiaService]] `uses` →
+- [[service--academia-inscripciones-academia|InscripcionesAcademiaService]] `uses` →
+- [[service--academia-sesiones-academia|SesionesAcademiaService]] `uses` →
 - [[service--auth-auth|AuthService]] `uses` →
 - [[service--configuracion-configuracion|ConfiguracionService]] `uses` →
 - [[service--denuncias-denuncias|DenunciasService]] `uses` →
+- [[service--deposito-articulos|ArticulosService]] `uses` →
+- [[service--deposito-bajas|BajasService]] `uses` →
+- [[service--deposito-categorias-articulo|CategoriasArticuloService]] `uses` →
+- [[service--deposito-entradas|EntradasService]] `uses` →
+- [[service--deposito-incidencias|IncidenciasService]] `uses` →
+- [[service--deposito-inventarios-fisicos|InventariosFisicosService]] `uses` →
+- [[service--deposito-lotes-articulo|LotesArticuloService]] `uses` →
+- [[service--deposito-mantenimientos|MantenimientosService]] `uses` →
+- [[service--deposito-movimientos-deposito|MovimientosDepositoService]] `uses` →
+- [[service--deposito-prestamos|PrestamosService]] `uses` →
+- [[service--deposito-proveedores|ProveedoresService]] `uses` →
+- [[service--deposito-ubicaciones-deposito|UbicacionesDepositoService]] `uses` →
+- [[service--documentos-documentos|DocumentosService]] `uses` →
+- [[service--documentos-expedientes|ExpedientesService]] `uses` →
+- [[service--documentos-firmas-documento|FirmasDocumentoService]] `uses` →
+- [[service--documentos-plantillas|PlantillasService]] `uses` →
+- [[service--finanzas-acuerdos-aporte|AcuerdosAporteService]] `uses` →
+- [[service--finanzas-aportes|AportesService]] `uses` →
+- [[service--finanzas-beneficios-socios|BeneficiosSociosService]] `uses` →
+- [[service--finanzas-cajas|CajasService]] `uses` →
+- [[service--finanzas-cuentas-bancarias|CuentasBancariasService]] `uses` →
+- [[service--finanzas-cuotas|CuotasService]] `uses` →
+- [[service--finanzas-ejercicios-fiscales|EjerciciosFiscalesService]] `uses` →
+- [[service--finanzas-facturas|FacturasService]] `uses` →
+- [[service--finanzas-movimientos-bancarios|MovimientosBancariosService]] `uses` →
+- [[service--finanzas-movimientos-financieros|MovimientosFinancierosService]] `uses` →
+- [[service--finanzas-notas-credito|NotasCreditoService]] `uses` →
+- [[service--finanzas-numeraciones-comprobantes|NumeracionesComprobantesService]] `uses` →
+- [[service--finanzas-ordenes-pago|OrdenesPagoService]] `uses` →
+- [[service--finanzas-presupuestos|PresupuestosService]] `uses` →
+- [[service--finanzas-socios-protectores|SociosProtectoresService]] `uses` →
 - [[service--guardias-bitacora|BitacoraService]] `uses` →
 - [[service--guardias-generacion|GeneracionService]] `uses` →
 - [[service--guardias-grupos-guardia|GruposGuardiaService]] `uses` →
@@ -52,6 +88,9 @@ Logica de negocio de auditoria (modulo seguridad).
 - [[service--guardias-pernoctes|PernoctesService]] `uses` →
 - [[service--guardias-requisitos-rol|RequisitosRolService]] `uses` →
 - [[service--guardias-sorteos|SorteosService]] `uses` →
+- [[service--ia-ia-configuracion|IaConfiguracionService]] `uses` →
+- [[service--ia-ia-conversaciones|IaConversacionesService]] `uses` →
+- [[service--ia-ia-propuestas-mejora|IaPropuestasMejoraService]] `uses` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `uses` →
 - [[service--operaciones-importaciones|ImportacionesService]] `uses` →
 - [[service--operaciones-marcaciones|MarcacionesService]] `uses` →
@@ -59,10 +98,6 @@ Logica de negocio de auditoria (modulo seguridad).
 - [[service--personal-bomberos|BomberosService]] `uses` →
 - [[service--seguridad-dashboard|DashboardService]] `uses` →
 - [[service--seguridad-permisos|PermisosService]] `uses` →
-- [[service--seguridad-roles|RolesService]] `uses` →
-- [[service--seguridad-usuarios|UsuariosService]] `uses` →
-- [[api--seguridad-auditoria|AuditoriaController]] `exposes` →
-- [[api--seguridad-sesiones|SesionesController]] `exposes` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

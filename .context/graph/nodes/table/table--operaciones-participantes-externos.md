@@ -37,9 +37,9 @@ Tabla operaciones.participantes_externos (10 columnas). Creada en 020_asistencia
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
-- **Endpoints:** EventosAsistenciaController, MarcacionesController, ParticipantesExternosController
-- **Servicios:** EventosAsistenciaService, ParticipantesExternosService
+- **Pantallas:** `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`, `/dashboard/finanzas/beneficios`, `/dashboard/personal/[id]`
+- **Endpoints:** EvaluacionesAcademiaController, EventosAsistenciaController, InscripcionesAcademiaController, MarcacionesController, ParticipantesExternosController
+- **Servicios:** EvaluacionesAcademiaService, EventosAsistenciaService, InscripcionesAcademiaService, ParticipantesExternosService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -56,7 +56,10 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 ## Referenciado por
 
 - [[table--operaciones-participantes-evento|operaciones.participantes_evento]] `references` →
+- [[table--academia-inscripciones|academia.inscripciones]] `references` →
 - [[entity--participante-externo|ParticipanteExterno]] `persisted_in` →
+- [[service--academia-evaluaciones-academia|EvaluacionesAcademiaService]] `reads` →
+- [[service--academia-inscripciones-academia|InscripcionesAcademiaService]] `reads` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `reads` →
 - [[service--operaciones-participantes-externos|ParticipantesExternosService]] `reads` →
 

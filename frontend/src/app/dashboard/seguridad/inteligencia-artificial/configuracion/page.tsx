@@ -8,12 +8,23 @@ import {
   AVATARES_PREDEFINIDOS,
   ConfiguracionIa,
   EstadoConfiguracionIa,
+  EstadoOllama,
+  EstadoPiper,
+  EstadoWhisper,
   HistorialConfiguracionIa,
+  VozPiperDisponible,
   actualizarConfiguracionIa,
   cambiarEstadoIa,
   cargarConfiguracionIa,
+  cargarEstadoOllama,
+  cargarEstadoPiper,
+  cargarEstadoWhisper,
+  cargarVocesPiper,
   cargarHistorialConfiguracionIa,
   eliminarIaDefinitivamente,
+  probarConexionOllama,
+  probarGeneracionOllama,
+  probarPiper,
   seleccionarAvatarPredefinidoIa,
   subirAvatarIa,
 } from '@/lib/ia';
@@ -157,6 +168,202 @@ function SelectorAvatarIa({ config, onCambiado }: { config: ConfiguracionIa; onC
   );
 }
 
+function formatearBytes(bytes: number) {
+  const gb = bytes / 1e9;
+  return gb >= 1 ? `${gb.toFixed(2)} GB` : `${(bytes / 1e6).toFixed(0)} MB`;
+}
+
+/** Panel técnico de Ollama (Configuración → Inteligencia Artificial →
+ * Snoopy → Motor local): estado de conexión, inventario de modelos
+ * instalados y pruebas a demanda. Separado del resto del formulario
+ * porque su estado se refresca contra Ollama en vivo, no contra
+ * ConfiguracionIa. */
+function PanelOllama({ modeloSeleccionado, onSeleccionarModelo }: { modeloSeleccionado: string; onSeleccionarModelo: (modelo: string) => void }) {
+  const [estado, setEstado] = useState<EstadoOllama | null>(null);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [probando, setProbando] = useState<'conexion' | 'generacion' | null>(null);
+  const [resultadoPrueba, setResultadoPrueba] = useState<string | null>(null);
+
+  async function refrescar() {
+    setCargando(true);
+    setError(null);
+    try {
+      setEstado(await cargarEstadoOllama());
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setCargando(false);
+    }
+  }
+
+  useEffect(() => {
+    void refrescar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function conexion() {
+    setProbando('conexion');
+    setResultadoPrueba(null);
+    try {
+      const r = await probarConexionOllama();
+      setResultadoPrueba(r.conectado ? `Conectado — versión ${r.version}.` : `Sin conexión: ${r.error}`);
+    } catch (err: any) {
+      setResultadoPrueba(`Error: ${err.message}`);
+    } finally {
+      setProbando(null);
+    }
+  }
+
+  async function generacion() {
+    setProbando('generacion');
+    setResultadoPrueba(null);
+    try {
+      const r = await probarGeneracionOllama();
+      setResultadoPrueba(r.ok ? `Respuesta (${r.duracionMs} ms): "${r.respuesta}"` : `Falló: ${r.error}`);
+    } catch (err: any) {
+      setResultadoPrueba(`Error: ${err.message}`);
+    } finally {
+      setProbando(null);
+    }
+  }
+
+  return (
+    <div className="card" style={{ background: '#0f172a', display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <strong style={{ fontSize: 13 }}>Estado de Ollama</strong>
+        <button type="button" className="service-secondary" onClick={() => void refrescar()} disabled={cargando}>{cargando ? 'Consultando...' : 'Actualizar'}</button>
+      </div>
+      {error && <p className="form-error">{error}</p>}
+      {estado && (
+        <>
+          <p style={{ fontSize: 13 }}>
+            <span className="badge" style={{ background: estado.conectado ? '#166534' : '#7f1d1d', marginRight: 8 }}>{estado.conectado ? 'Conectado' : 'No disponible'}</span>
+            {estado.url}
+            {estado.error && !estado.conectado && <span style={{ color: '#94a3b8' }}> — {estado.error}</span>}
+          </p>
+          {estado.conectado && (
+            <p style={{ fontSize: 12, color: estado.modeloDisponible ? '#4ade80' : '#f87171' }}>
+              Modelo configurado: {estado.modeloConfigurado ?? '(ninguno seleccionado)'} — {estado.modeloConfigurado ? (estado.modeloDisponible ? 'disponible' : 'NO está instalado') : 'elegí uno de la lista'}
+            </p>
+          )}
+          {estado.modelosInstalados.length > 0 ? (
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+              <thead>
+                <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
+                  <th style={{ padding: '4px' }}>Modelo</th>
+                  <th style={{ padding: '4px' }}>Tamaño</th>
+                  <th style={{ padding: '4px' }}>Activo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {estado.modelosInstalados.map((m) => (
+                  <tr key={m.nombre} style={{ borderBottom: '1px solid #1f2937' }}>
+                    <td style={{ padding: '4px' }}>{m.nombre}</td>
+                    <td style={{ padding: '4px' }}>{formatearBytes(m.tamanoBytes)}</td>
+                    <td style={{ padding: '4px' }}>
+                      {modeloSeleccionado === m.nombre ? (
+                        <span className="badge" style={{ background: '#166534' }}>Seleccionado</span>
+                      ) : (
+                        <button type="button" className="service-secondary" style={{ padding: '2px 8px', fontSize: 11 }} onClick={() => onSeleccionarModelo(m.nombre)}>Usar este</button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : estado.conectado ? (
+            <p style={{ fontSize: 12, color: '#94a3b8' }}>Ollama está corriendo pero no tiene ningún modelo instalado (<code>ollama pull &lt;modelo&gt;</code>).</p>
+          ) : null}
+        </>
+      )}
+      <div style={{ display: 'flex', gap: 8 }}>
+        <button type="button" className="service-secondary" disabled={probando !== null} onClick={() => void conexion()}>{probando === 'conexion' ? 'Probando...' : 'Probar conexión'}</button>
+        <button type="button" className="service-secondary" disabled={probando !== null || !estado?.modeloDisponible} onClick={() => void generacion()}>{probando === 'generacion' ? 'Generando...' : 'Probar generación'}</button>
+      </div>
+      {resultadoPrueba && <p style={{ fontSize: 12, color: '#94a3b8' }}>{resultadoPrueba}</p>}
+    </div>
+  );
+}
+
+/** Panel técnico de voz (Configuración → Inteligencia Artificial → Snoopy
+ * → Voz local, Etapa 2): estado de whisper.cpp (conectividad HTTP) y Piper
+ * (archivos en disco), más una prueba real que reproduce el audio
+ * generado -- mismo criterio que "Probar generación" de Ollama: el admin
+ * escucha el resultado, no solo un booleano. */
+function PanelVoz() {
+  const [estadoWhisper, setEstadoWhisper] = useState<EstadoWhisper | null>(null);
+  const [estadoPiper, setEstadoPiper] = useState<EstadoPiper | null>(null);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [probando, setProbando] = useState(false);
+  const [resultadoPrueba, setResultadoPrueba] = useState<string | null>(null);
+
+  async function refrescar() {
+    setCargando(true);
+    setError(null);
+    try {
+      const [w, p] = await Promise.all([cargarEstadoWhisper(), cargarEstadoPiper()]);
+      setEstadoWhisper(w);
+      setEstadoPiper(p);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setCargando(false);
+    }
+  }
+
+  useEffect(() => {
+    void refrescar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function probar() {
+    setProbando(true);
+    setResultadoPrueba(null);
+    try {
+      const blob = await probarPiper();
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      audio.onended = () => URL.revokeObjectURL(url);
+      await audio.play();
+      setResultadoPrueba('Reproduciendo...');
+    } catch (err: any) {
+      setResultadoPrueba(`Falló: ${err.message}`);
+    } finally {
+      setProbando(false);
+    }
+  }
+
+  return (
+    <div className="card" style={{ background: '#0f172a', display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <strong style={{ fontSize: 13 }}>Estado de voz</strong>
+        <button type="button" className="service-secondary" onClick={() => void refrescar()} disabled={cargando}>{cargando ? 'Consultando...' : 'Actualizar'}</button>
+      </div>
+      {error && <p className="form-error">{error}</p>}
+      {estadoWhisper && (
+        <p style={{ fontSize: 13 }}>
+          <span className="badge" style={{ background: estadoWhisper.conectado ? '#166534' : '#7f1d1d', marginRight: 8 }}>{estadoWhisper.conectado ? 'Conectado' : 'No disponible'}</span>
+          whisper.cpp (entrada por voz) — {estadoWhisper.url}
+          {estadoWhisper.error && !estadoWhisper.conectado && <span style={{ color: '#94a3b8' }}> — {estadoWhisper.error}</span>}
+        </p>
+      )}
+      {estadoPiper && (
+        <p style={{ fontSize: 13 }}>
+          <span className="badge" style={{ background: estadoPiper.disponible ? '#166534' : '#7f1d1d', marginRight: 8 }}>{estadoPiper.disponible ? 'Disponible' : 'No disponible'}</span>
+          Piper (respuesta por voz)
+          {estadoPiper.error && !estadoPiper.disponible && <span style={{ color: '#94a3b8' }}> — {estadoPiper.error}</span>}
+        </p>
+      )}
+      <div style={{ display: 'flex', gap: 8 }}>
+        <button type="button" className="service-secondary" disabled={probando || !estadoPiper?.disponible} onClick={() => void probar()}>{probando ? 'Generando...' : 'Probar voz'}</button>
+      </div>
+      {resultadoPrueba && <p style={{ fontSize: 12, color: '#94a3b8' }}>{resultadoPrueba}</p>}
+    </div>
+  );
+}
+
 function ZonaPeligro({ onEliminado }: { onEliminado: () => void }) {
   const [abierto, setAbierto] = useState(false);
   const [confirmacion, setConfirmacion] = useState('');
@@ -255,6 +462,28 @@ export default function ConfiguracionIaPage() {
   const [motivoEstado, setMotivoEstado] = useState('');
   const [mensajeMantenimiento, setMensajeMantenimiento] = useState('');
 
+  const [ollamaHabilitado, setOllamaHabilitado] = useState(false);
+  const [ollamaUrl, setOllamaUrl] = useState('http://localhost');
+  const [ollamaPuerto, setOllamaPuerto] = useState('11434');
+  const [ollamaModelo, setOllamaModelo] = useState('');
+  const [ollamaTimeoutMs, setOllamaTimeoutMs] = useState('8000');
+  const [ollamaTemperatura, setOllamaTemperatura] = useState('0.3');
+
+  const [vozHabilitada, setVozHabilitada] = useState(false);
+  const [entradaVozHabilitada, setEntradaVozHabilitada] = useState(true);
+  const [respuestaVozHabilitada, setRespuestaVozHabilitada] = useState(true);
+  const [vozVolumen, setVozVolumen] = useState('1');
+  const [vozVelocidad, setVozVelocidad] = useState('1');
+  const [vozSeleccionada, setVozSeleccionada] = useState('');
+  const [vozIdioma, setVozIdioma] = useState('es');
+  const [whisperUrl, setWhisperUrl] = useState('http://localhost');
+  const [whisperPuerto, setWhisperPuerto] = useState('8090');
+  const [whisperTimeoutMs, setWhisperTimeoutMs] = useState('15000');
+  const [piperRutaBinario, setPiperRutaBinario] = useState('');
+  const [piperRutaVoz, setPiperRutaVoz] = useState('');
+  const [piperTimeoutMs, setPiperTimeoutMs] = useState('15000');
+  const [vocesDisponibles, setVocesDisponibles] = useState<VozPiperDisponible[]>([]);
+
   const permisos = obtenerSesion()?.usuario.permisos ?? [];
   const puedeDesactivar = permisos.includes('inteligencia:desactivar');
   const puedeEliminar = permisos.includes('inteligencia:eliminar');
@@ -276,6 +505,25 @@ export default function ConfiguracionIaPage() {
       setLimiteHora(String(c.limiteConsultasHora));
       setMensajeMantenimiento(c.mensajeMantenimiento ?? '');
       setExplicarInterpretacion(c.explicarInterpretacion);
+      setOllamaHabilitado(c.ollamaHabilitado);
+      setOllamaUrl(c.ollamaUrl);
+      setOllamaPuerto(String(c.ollamaPuerto));
+      setOllamaModelo(c.ollamaModelo ?? '');
+      setOllamaTimeoutMs(String(c.ollamaTimeoutMs));
+      setOllamaTemperatura(String(c.ollamaTemperatura));
+      setVozHabilitada(c.vozHabilitada);
+      setEntradaVozHabilitada(c.entradaVozHabilitada);
+      setRespuestaVozHabilitada(c.respuestaVozHabilitada);
+      setVozVolumen(String(c.vozVolumen));
+      setVozVelocidad(String(c.vozVelocidad));
+      setVozSeleccionada(c.vozSeleccionada ?? '');
+      setVozIdioma(c.vozIdioma);
+      setWhisperUrl(c.whisperUrl);
+      setWhisperPuerto(String(c.whisperPuerto));
+      setWhisperTimeoutMs(String(c.whisperTimeoutMs));
+      setPiperRutaBinario(c.piperRutaBinario ?? '');
+      setPiperRutaVoz(c.piperRutaVoz ?? '');
+      setPiperTimeoutMs(String(c.piperTimeoutMs));
       try {
         setModulosHabilitados(JSON.parse(c.modulosHabilitadosJson));
       } catch {
@@ -288,6 +536,12 @@ export default function ConfiguracionIaPage() {
 
   useEffect(() => {
     cargar();
+    // Voces reales instaladas en disco (Cierre de Snoopy) -- si Piper no
+    // esta instalado o la carpeta no existe, la lista queda vacia y el
+    // combo lo dice explicitamente en vez de fallar la pantalla entera.
+    cargarVocesPiper()
+      .then(setVocesDisponibles)
+      .catch(() => setVocesDisponibles([]));
   }, []);
 
   function alternarModulo(slug: string) {
@@ -314,6 +568,25 @@ export default function ConfiguracionIaPage() {
         limiteConsultasHora: Number(limiteHora),
         modulosHabilitados,
         explicarInterpretacion,
+        ollamaHabilitado,
+        ollamaUrl,
+        ollamaPuerto: Number(ollamaPuerto),
+        ollamaModelo: ollamaModelo || undefined,
+        ollamaTimeoutMs: Number(ollamaTimeoutMs),
+        ollamaTemperatura: Number(ollamaTemperatura),
+        vozHabilitada,
+        entradaVozHabilitada,
+        respuestaVozHabilitada,
+        vozVolumen: Number(vozVolumen),
+        vozVelocidad: Number(vozVelocidad),
+        vozSeleccionada: vozSeleccionada || undefined,
+        vozIdioma,
+        whisperUrl,
+        whisperPuerto: Number(whisperPuerto),
+        whisperTimeoutMs: Number(whisperTimeoutMs),
+        piperRutaBinario: piperRutaBinario || undefined,
+        piperRutaVoz: piperRutaVoz || undefined,
+        piperTimeoutMs: Number(piperTimeoutMs),
         motivo: motivo || undefined,
       });
       setMensaje('Configuración actualizada.');
@@ -444,6 +717,125 @@ export default function ConfiguracionIaPage() {
               <input className="input-field" type="number" min={1} value={limiteHora} onChange={(e) => setLimiteHora(e.target.value)} />
             </div>
           </div>
+        )}
+
+        <h3 style={{ fontSize: 14, marginTop: 6 }}>Motor local (Ollama)</h3>
+        <p style={{ fontSize: 12, color: '#94a3b8' }}>
+          Infraestructura interna — para quien usa el asistente, sigue existiendo únicamente {config?.nombre || 'Snoopy'}. Ollama solo (a) sugiere qué consultar cuando el
+          reconocimiento habitual no encuentra nada, y (b) redacta en lenguaje más natural un resultado que el sistema ya calculó y ya autorizó. Nunca decide qué datos se
+          entregan ni consulta la base directamente. Apagado por defecto.
+        </p>
+        <label style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <input type="checkbox" checked={ollamaHabilitado} onChange={(e) => setOllamaHabilitado(e.target.checked)} />
+          Activar motor local Ollama
+        </label>
+        {ollamaHabilitado && (
+          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 10 }}>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>URL</label>
+              <input className="input-field" value={ollamaUrl} onChange={(e) => setOllamaUrl(e.target.value)} placeholder="http://localhost" />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Puerto</label>
+              <input className="input-field" type="number" value={ollamaPuerto} onChange={(e) => setOllamaPuerto(e.target.value)} />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Timeout (ms)</label>
+              <input className="input-field" type="number" min={500} max={120000} value={ollamaTimeoutMs} onChange={(e) => setOllamaTimeoutMs(e.target.value)} />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Temperatura (0–1)</label>
+              <input className="input-field" type="number" min={0} max={1} step={0.05} value={ollamaTemperatura} onChange={(e) => setOllamaTemperatura(e.target.value)} />
+            </div>
+          </div>
+        )}
+        {ollamaHabilitado && <PanelOllama modeloSeleccionado={ollamaModelo} onSeleccionarModelo={setOllamaModelo} />}
+
+        <h3 style={{ fontSize: 14, marginTop: 6 }}>Voz local (Etapa 2)</h3>
+        <p style={{ fontSize: 12, color: '#94a3b8' }}>
+          Igual de local que Ollama: whisper.cpp transcribe lo que el usuario habla (nunca sale de esta red) y Piper convierte la respuesta de {config?.nombre || 'Snoopy'} en
+          audio. Ninguno de los dos decide qué datos se entregan — solo convierten audio↔texto alrededor del mismo chat de siempre. Apagado por defecto.
+        </p>
+        <label style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <input type="checkbox" checked={vozHabilitada} onChange={(e) => setVozHabilitada(e.target.checked)} />
+          Activar voz
+        </label>
+        {vozHabilitada && (
+          <>
+            <div style={{ display: 'flex', gap: 16 }}>
+              <label style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <input type="checkbox" checked={entradaVozHabilitada} onChange={(e) => setEntradaVozHabilitada(e.target.checked)} />
+                Entrada por voz (micrófono)
+              </label>
+              <label style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <input type="checkbox" checked={respuestaVozHabilitada} onChange={(e) => setRespuestaVozHabilitada(e.target.checked)} />
+                Respuesta por voz (altavoz)
+              </label>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Volumen (0–1)</label>
+                <input className="input-field" type="number" min={0} max={1} step={0.1} value={vozVolumen} onChange={(e) => setVozVolumen(e.target.value)} />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Velocidad (0.5–2)</label>
+                <input className="input-field" type="number" min={0.5} max={2} step={0.1} value={vozVelocidad} onChange={(e) => setVozVelocidad(e.target.value)} />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Voz (Piper)</label>
+                <ComboBuscable
+                  opciones={vocesDisponibles.map((v) => ({ value: v.archivo.replace(/\.onnx$/i, ''), label: v.etiqueta }))}
+                  value={vozSeleccionada}
+                  onChange={(value) => {
+                    setVozSeleccionada(value);
+                    const voz = vocesDisponibles.find((v) => v.archivo.replace(/\.onnx$/i, '') === value);
+                    if (voz) setPiperRutaVoz(voz.ruta);
+                  }}
+                  ningunaLabel={vocesDisponibles.length === 0 ? 'Sin voces instaladas' : 'Elegir voz...'}
+                  disabled={vocesDisponibles.length === 0}
+                />
+                {vocesDisponibles.length <= 1 && (
+                  <p style={{ fontSize: 11, color: '#64748b', marginTop: 4 }}>
+                    {vocesDisponibles.length === 0
+                      ? 'No se encontró ninguna voz instalada en la carpeta configurada.'
+                      : 'Solo hay 1 voz instalada. Para tener más opciones, agregá archivos .onnx de Piper a la misma carpeta.'}
+                  </p>
+                )}
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Idioma</label>
+                <input className="input-field" value={vozIdioma} onChange={(e) => setVozIdioma(e.target.value)} placeholder="es" />
+              </div>
+            </div>
+            <p style={{ fontSize: 11, color: '#64748b', marginTop: 4 }}>Configuración técnica (solo si hace falta cambiar dónde corren whisper.cpp/Piper):</p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>URL whisper.cpp</label>
+                <input className="input-field" value={whisperUrl} onChange={(e) => setWhisperUrl(e.target.value)} />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Puerto whisper.cpp</label>
+                <input className="input-field" type="number" value={whisperPuerto} onChange={(e) => setWhisperPuerto(e.target.value)} />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Timeout whisper.cpp (ms)</label>
+                <input className="input-field" type="number" min={500} max={120000} value={whisperTimeoutMs} onChange={(e) => setWhisperTimeoutMs(e.target.value)} />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ruta piper.exe</label>
+                <input className="input-field" value={piperRutaBinario} onChange={(e) => setPiperRutaBinario(e.target.value)} />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ruta del archivo de voz (.onnx)</label>
+                <input className="input-field" value={piperRutaVoz} onChange={(e) => setPiperRutaVoz(e.target.value)} />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Timeout Piper (ms)</label>
+                <input className="input-field" type="number" min={500} max={120000} value={piperTimeoutMs} onChange={(e) => setPiperTimeoutMs(e.target.value)} />
+              </div>
+            </div>
+            <PanelVoz />
+          </>
         )}
 
         <h3 style={{ fontSize: 14, marginTop: 6 }}>Módulos consultables</h3>

@@ -23,6 +23,10 @@ Tabla organizacion.ascensos (15 columnas). Creada en 012_organizacion.sql, modif
 
 - **Esquema:** organizacion · **Columnas:** 15
 
+## Restricciones CHECK (reglas que la BD impone)
+
+- `estado IN ('REGISTRADO','ANULADO')`
+
 ## Llaves foraneas
 
 - `bombero_id` → [[table--personal-bomberos|personal.bomberos]]

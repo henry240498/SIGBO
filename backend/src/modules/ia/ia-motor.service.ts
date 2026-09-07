@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfiguracionIa } from '../../shared/entities';
 import { AuthenticatedUser } from '../auth/types/authenticated-user';
+import { OllamaService } from './ollama/ollama.service';
 import { AiTool, ResultadoHerramientaIa } from './tools/ia-tool.interface';
 import { IaToolsService, SIN_PERMISO } from './tools/ia-tools.service';
 
@@ -17,9 +18,24 @@ export interface RespuestaMotorIa {
   resultadoHerramienta: 'PERMITIDO' | 'DENEGADO' | 'ERROR' | null;
   resumenAuditoria: string | null;
   nuevoContexto: ContextoConversacionIa | null;
+  /** Modelo local de Ollama que ayudo a redactar `contenidoRespuesta`,
+   * si alguno -- null en el 100% de las respuestas mientras Ollama este
+   * apagado (seccion 18 del pedido de integracion, auditoria). */
+  modeloUtilizado: string | null;
 }
 
-const MARCADORES_SEGUIMIENTO = [/^y\s/, /^ y /, /tambien/, /ademas/, /y (a que hora|quien|cuando|donde|cuanto)/];
+// Preguntas de seguimiento con posesivo ("¿cual es SU rango?", "¿y SUS
+// certificaciones?") en vez del conector "y" (Estabilizacion, seccion 2,
+// bug real detectado en vivo): "buscar bombero BC-61" -> "¿cual es su
+// rango?" caia en "no entendi" porque ningun marcador de seguimiento
+// matcheaba y el patron generico de get_personal exige un nombre/codigo que
+// esta segunda pregunta no repite. Solo importa cuando YA hay contexto
+// previo (esPosibleSeguimiento exige contextoPrevio ademas de esto), asi
+// que ampliar la lista no afecta mensajes sueltos sin conversacion activa.
+const MARCADORES_SEGUIMIENTO = [
+  /^y\s/, /^ y /, /tambien/, /ademas/, /y (a que hora|quien|cuando|donde|cuanto)/,
+  /^(cual|cuales)\s+(es|son)\s+(su|sus)\b/, /^su\s/, /^sus\s/,
+];
 
 const PATRONES_RIESGO_GRAVE = [/quiero morir/, /no quiero vivir/, /hacerme dano/, /lastimarme/, /suicid/, /no aguanto mas/];
 const PATRONES_ANIMO = [
@@ -46,12 +62,91 @@ const PATRONES_IDENTIDAD = [
 ];
 const PATRONES_AGRADECIMIENTO = [/gracias/, /te lo agradezco/, /muy amable/];
 const PATRONES_AYUDA = [/que (podes|puedes) hacer/, /^ayuda$/, /en que me (ayudas|podes ayudar)/, /que sabes hacer/, /para que servis/];
+/** "Cuantos anios tenes", "que edad tenes": pregunta de personaje, no una
+ * busqueda de una tercera persona -- misma logica que PATRONES_IDENTIDAD. */
+const PATRONES_EDAD = [/cuant[oa]s? anos (tenes|tienes)/, /que edad (tenes|tienes)/, /cuando (naciste|te crearon|te activaron)/];
+/** Reacciones de confusion, siempre como mensaje COMPLETO (nunca como
+ * substring): alguien que no entendio la respuesta anterior escribe "Que",
+ * "Como", "Eh" -- sin esto, ese mensaje corto y sin contenido quedaba
+ * expuesto a que elegirHerramienta() no matchee nada y, con Ollama activo,
+ * a que sugirierHerramienta() le adivine (mal) una herramienta a un
+ * mensaje que no tiene ninguna intencion real detras. Se resuelve ANTES
+ * de llegar a esa sugerencia, no despues. */
+const PATRONES_CONFUSION = [
+  // normalizar() ya saco los signos de puntuacion antes de esto -- "¿Que?"
+  // llega aca como "que", por eso no hace falta una variante con "?".
+  /^que$/, /^como$/, /^eh$/, /^ah$/, /^perdon$/, /^disculpa$/,
+  /^que dijiste$/, /^no entendi$/, /^no te entendi$/, /^que cosa$/, /^como asi$/, /^en serio$/, /^enserio$/,
+];
+// (le|les|lo|los|la|las)? despues de cada verbo: formas coloquiales con
+// pronombre atado ("cambiaLE el rango", "borraLO", "aprobaLE") no matcheaban
+// -- el \b original exigia un limite de palabra justo despues del verbo
+// base, y "cambiale" no lo tiene ahi (sigue en "le", ambos caracteres de
+// palabra). Bug real de seguridad detectado en vivo: "cambiale el rango a
+// BC-61 a Comandante" no disparaba este bloque y caia en get_personal, que
+// por suerte no encontraba coincidencia -- pero la red de seguridad en si
+// no estaba actuando, dependia de que la busqueda fallara por accidente.
+//
+// Prioridad 6 de la correccion post-auditoria: la lista de verbos/sustantivos
+// tenia huecos reales -- "rechazar"/"asignar" no estaban en NINGUN grupo, y
+// el grupo de creacion solo cubria (usuario|permiso|rol), no servicio/
+// guardia/vehiculo/equipo/bombero/documento. Se comparte UNA lista de
+// entidades institucionales entre todos los grupos de verbos en vez de que
+// cada uno mantenga su propia lista parcial (misma logica de "familia" que
+// DISPARADORES_SOLICITUD en ia-tools.service.ts). "poner...como" (ej.
+// "ponelo como fuera de servicio") se cubre aparte porque "poner" es
+// irregular -- su imperativo con clitico no sigue el patron regular de los
+// verbos en -ar (no es "ponale", es "ponle"/"ponelo").
+const ENTIDADES_INSTITUCIONALES = 'rango|permiso|usuario|documento|guardia|guardias|servicio|equipo|vehiculo|personal|bombero|cargo|contrasena|password|rol|cuenta|turno|asistencia|finanzas|deposito|articulo|curso|actividad|registro';
+// Codigo institucional suelto (BC-61, REGA-5, E-1): referirse a un registro
+// puntual por su codigo, sin decir la palabra de la categoria, es tan valido
+// como decir "el bombero" o "el vehiculo" -- "Rechaza la solicitud de BC-61"
+// no menciona "bombero" en ningun lado.
+const PATRON_CODIGO_INSTITUCIONAL = '[a-z]{1,5}-\\d+';
+// "aproba(le)"/"denega(le)" (Estabilizacion, seccion 5): el voseo rioplatense/
+// paraguayo NO aplica el cambio de raiz de los verbos irregulares en el
+// imperativo -- "aprobar" es o->ue en tu-forma ("aprueba") pero el
+// imperativo de vos es regular ("aproba"/"aprobá"). Sin la raiz regular,
+// "aprobale"/"denegale" no matcheaban ni "aprueba" ni "aprobar" como
+// substring (bug real: pedido explicito de probar "aprobale" que no
+// coincidia con ningun verbo de la lista).
+const VERBOS_CAMBIO_ESTADO = 'cambia|cambiar|modifica|modificar|actualiza|actualizar|edita|editar|pon|pone|ponelo|ponlo|ponele|ponla';
+const VERBOS_ELIMINACION = 'elimina|eliminar|borra|borrar|quita|quitar|saca|sacar|da(le)? de baja';
+const VERBOS_DECISION = 'aprueba|aproba|aprobar|rechaza|rechazar|autoriza|autorizar|deniega|denega|denegar|firma|firmar';
+const VERBOS_CREACION = 'crea|crear|agrega|agregar|registra|registrar|asigna|asignar|reasigna|reasignar|inscribe|inscribir|inscribi';
+const VERBOS_ACCESO = 'bloquea|bloquear|desbloquea|desbloquear';
+const TODOS_LOS_VERBOS = `${VERBOS_CAMBIO_ESTADO}|${VERBOS_ELIMINACION}|${VERBOS_DECISION}|${VERBOS_CREACION}|${VERBOS_ACCESO}`;
+// "inscribime" (Estabilizacion, seccion 5, bug real detectado en vivo): el
+// grupo de cliticos original solo cubria le/les/lo/los/la/las (objeto de
+// 3ra persona). "me"/"nos" son cliticos de 1ra persona igual de comunes en
+// pedidos coloquiales ("inscribime", "avisame") y sin ellos el \b que sigue
+// al grupo nunca se cumple a mitad de palabra -- "inscribi" + "me" quedaba
+// sin matchear ningun patron.
+const CLITICOS = 'le|les|lo|los|la|las|me|nos';
+
 const PATRONES_MODIFICACION = [
-  /(cambia|cambiar|modifica|modificar|actualiza|actualizar|edita|editar)\b.*(rango|permiso|usuario|documento|guardia|servicio|equipo|vehiculo|personal|bombero|cargo|contrasena|password)/,
-  /(elimina|eliminar|borra|borrar|da(le)? de baja)\b.*(usuario|documento|guardia|servicio|equipo|vehiculo|personal|bombero|registro)/,
-  /(aprueba|aprobar|autoriza|autorizar|firma|firmar)\b.*(documento|gasto|orden|pago)/,
-  /(crea|crear|agrega|agregar|registra|registrar)\b.*(usuario|permiso|rol)/,
-  /(bloquea|bloquear|desbloquea|desbloquear)\b.*(usuario|cuenta)/,
+  new RegExp(`(${VERBOS_CAMBIO_ESTADO})(${CLITICOS})?\\b.*(${ENTIDADES_INSTITUCIONALES})`),
+  new RegExp(`(${VERBOS_ELIMINACION})(${CLITICOS})?\\b.*(${ENTIDADES_INSTITUCIONALES})`),
+  // "propuesta" (Estabilizacion, seccion 5, bug real): "aprobale la
+  // propuesta de mejora numero 3" y "firma la aprobacion de la propuesta"
+  // no matcheaban -- ENTIDADES_INSTITUCIONALES no incluye "propuesta" (las
+  // PropuestaMejoraIa son un concepto real del modulo de IA) y la lista
+  // extra de VERBOS_DECISION solo tenia gasto/orden/pago/solicitud.
+  new RegExp(`(${VERBOS_DECISION})(${CLITICOS})?\\b.*(${ENTIDADES_INSTITUCIONALES}|gasto|orden|pago|solicitud|propuesta)`),
+  new RegExp(`(${VERBOS_CREACION})(${CLITICOS})?\\b.*(${ENTIDADES_INSTITUCIONALES})`),
+  new RegExp(`(${VERBOS_ACCESO})(${CLITICOS})?\\b.*(usuario|cuenta)`),
+  // Cualquier verbo de esta familia seguido de un codigo institucional
+  // puntual, tenga o no una palabra de categoria explicita al lado (ej.
+  // "Rechaza la solicitud de BC-61", "Asigna a BC-61 a la guardia de mañana").
+  new RegExp(`(${TODOS_LOS_VERBOS})(${CLITICOS})?\\b.*\\b${PATRON_CODIGO_INSTITUCIONAL}\\b`),
+  // Verbo + clitico SIN ningun objeto explicito (Estabilizacion, seccion 5,
+  // pedido explicito de probar "rechazalo" suelto): un pedido tipo
+  // "-lo/-la/-le" sin nombrar la categoria ni el codigo igual significa
+  // "hacele esto a lo que ya estabamos hablando" -- el clitico es
+  // obligatorio aca (a diferencia de los patrones de arriba) y el mensaje
+  // se ancla al inicio para no disparar sobre una mencion incidental en
+  // medio de una frase mas larga sin relacion.
+  new RegExp(`^(${TODOS_LOS_VERBOS})(${CLITICOS})\\b`),
 ];
 
 /** Terminos de estado que existen en mas de un modulo con significados
@@ -87,12 +182,27 @@ function coincideAlguno(texto: string, patrones: RegExp[]): boolean {
  * nuevo SI detecto pisan a las previas, las que no detecto se mantienen.
  * Los tools upgradeados solo incluyen las claves que efectivamente
  * reconocieron -- por eso un spread simple alcanza, sin necesidad de
- * marcar explicitamente "esto no cambio". */
+ * marcar explicitamente "esto no cambio".
+ *
+ * `query` (Prioridad 2 de la correccion post-auditoria) es la EXCEPCION
+ * deliberada a ese spread simple: es el sujeto puntual de una busqueda por
+ * nombre/codigo ("bc-61", "rega-5"), no un filtro mas. Antes, un spread
+ * simple dejaba que el `query` del mensaje nuevo pisara siempre al previo
+ * -- "Buscar bombero BC-61" -> "¿Y su rango?" perdia "bc-61" por completo
+ * porque "rango" (que sobrevivia como unica palabra libre de esa segunda
+ * pregunta) lo reemplazaba, y la busqueda quedaba reducida a "rango" sin
+ * encontrar a nadie (bug real detectado en vivo). Ahora el `query` del
+ * mensaje nuevo solo reemplaza al previo si vino con contenido real -- las
+ * herramientas (get_personal/get_vehiculos/get_equipos) ya se encargan de
+ * NO devolver ningun `query` cuando lo unico que sobrevive es una palabra
+ * de atributo ("rango", "año", "responsable"), justamente para que este
+ * fallback conserve el sujeto original en esos casos. */
 function fusionarArgumentos(previo: Record<string, unknown>, nuevo: Record<string, unknown>): Record<string, unknown> {
   const filtrosPrevios = (previo?.filtros as Record<string, unknown>) ?? {};
   const filtrosNuevos = (nuevo?.filtros as Record<string, unknown>) ?? {};
   const resumenPrevio = (previo?._resumen as Record<string, string>) ?? {};
   const resumenNuevo = (nuevo?._resumen as Record<string, string>) ?? {};
+  const queryNuevo = typeof nuevo.query === 'string' ? nuevo.query.trim() : '';
   return {
     ...previo,
     ...nuevo,
@@ -102,6 +212,7 @@ function fusionarArgumentos(previo: Record<string, unknown>, nuevo: Record<strin
     // pregunta -- si el mensaje nuevo no trae su propia intencion
     // explicita, se hereda la de la consulta anterior en vez de perderla.
     intent: nuevo.intent ?? previo.intent,
+    ...('query' in previo || 'query' in nuevo ? { query: queryNuevo || previo.query || '' } : {}),
   };
 }
 
@@ -115,7 +226,10 @@ function fusionarArgumentos(previo: Record<string, unknown>, nuevo: Record<strin
  * comunes en espanol para cada tema, documentado como limitacion real. */
 @Injectable()
 export class IaMotorService {
-  constructor(private readonly toolsService: IaToolsService) {}
+  constructor(
+    private readonly toolsService: IaToolsService,
+    private readonly ollamaService: OllamaService,
+  ) {}
 
   async procesar(
     mensajeOriginal: string,
@@ -125,7 +239,7 @@ export class IaMotorService {
     contextoPrevio: ContextoConversacionIa | null,
   ): Promise<RespuestaMotorIa> {
     const mensaje = normalizar(mensajeOriginal);
-    const sinRespuesta: RespuestaMotorIa = { contenidoRespuesta: '', fuentes: undefined, herramientaUsada: null, argumentosUsados: null, resultadoHerramienta: null, resumenAuditoria: null, nuevoContexto: contextoPrevio };
+    const sinRespuesta: RespuestaMotorIa = { contenidoRespuesta: '', fuentes: undefined, herramientaUsada: null, argumentosUsados: null, resultadoHerramienta: null, resumenAuditoria: null, nuevoContexto: contextoPrevio, modeloUtilizado: null };
 
     // Prioridad maxima: senales de riesgo grave -- nunca compite con nada mas.
     if (coincideAlguno(mensaje, PATRONES_RIESGO_GRAVE)) {
@@ -159,8 +273,20 @@ export class IaMotorService {
     // -- se resuelven ANTES de llegar a get_personal (que interpretaria
     // "quien es" como el inicio de una busqueda de un bombero y quedaria
     // esperando un nombre que nunca llega).
+    // nuevoContexto: null (no sinRespuesta.nuevoContexto) en identidad/edad:
+    // son una desviacion real de tema, no un contenido sobre el que se pueda
+    // seguir preguntando con un tool. Sin este corte, una pregunta de
+    // seguimiento como "¿y que dia fue eso?" reactivaba, varios turnos
+    // despues, el contexto de una consulta de datos completamente distinta y
+    // ya vieja (bug real detectado en vivo: goteaba un conteo de vehiculos
+    // de turnos atras como respuesta a una pregunta sobre la fecha de
+    // activacion de Snoopy).
     if (coincideAlguno(mensaje, PATRONES_IDENTIDAD)) {
-      return { ...sinRespuesta, contenidoRespuesta: this.mensajeIdentidad(config) };
+      return { ...sinRespuesta, nuevoContexto: null, contenidoRespuesta: this.mensajeIdentidad(config) };
+    }
+
+    if (coincideAlguno(mensaje, PATRONES_EDAD)) {
+      return { ...sinRespuesta, nuevoContexto: null, contenidoRespuesta: this.aplicarTono('No tengo edad como las personas -- soy un programa. Si te sirve como respuesta, naci el dia que se activo SIGBO en este cuartel.', config) };
     }
 
     if (coincideAlguno(mensaje, PATRONES_DESPEDIDA)) {
@@ -173,8 +299,23 @@ export class IaMotorService {
 
     const herramientasDisponibles = this.toolsService.herramientasDisponibles(usuario, modulosHabilitados);
 
+    // Reacciones de confusion ("Que", "Como", "Eh"): siempre ANTES de
+    // intentar reconocer una herramienta o de pedirle a Ollama que
+    // sugiera una -- un mensaje de una sola palabra sin contenido real
+    // detras no tiene una intencion que adivinar (seccion detectada en
+    // vivo: Ollama llegaba a sugerir get_guardia_actual para un simple
+    // "Que", una herramienta sin ninguna relacion).
+    // nuevoContexto: null -- misma razon que identidad/edad arriba: confusion
+    // ("Que", "Como") es una senal de que el hilo anterior se rompio, no de
+    // que haya que seguir construyendo sobre el. Arrastrarlo es lo que
+    // permitia que un "y ..." posterior reactivara una consulta vieja y no
+    // relacionada.
+    if (coincideAlguno(mensaje, PATRONES_CONFUSION)) {
+      return { ...sinRespuesta, nuevoContexto: null, contenidoRespuesta: this.mensajeConfusion(config, herramientasDisponibles) };
+    }
+
     if (coincideAlguno(mensaje, PATRONES_AYUDA)) {
-      return { ...sinRespuesta, contenidoRespuesta: this.mensajeAyuda(config, herramientasDisponibles) };
+      return { ...sinRespuesta, nuevoContexto: null, contenidoRespuesta: this.mensajeAyuda(config, herramientasDisponibles) };
     }
 
     // Reconoce la intencion sobre TODAS las herramientas habilitadas por la
@@ -197,10 +338,49 @@ export class IaMotorService {
       }
     }
 
-    let herramienta = this.elegirHerramienta(mensaje, herramientasDelModulo);
+    let herramienta: AiTool | null = null;
     let argumentos: Record<string, unknown> | null = null;
 
+    // Prioridad 3 de la correccion post-auditoria: "¿quien es el/la <rol>?"
+    // justo despues de consultar una guardia no es una busqueda nueva de
+    // persona -- es una pregunta sobre ESA guardia ("¿quien es el oficial a
+    // cargo?" despues de "¿quien esta de guardia?"). El patron generico de
+    // get_personal (/quien es\b/) siempre gana la carrera de puntaje contra
+    // cualquier patron nuevo en get_guardia_actual (empatan en 10, y
+    // get_personal se evalua primero en `todas()`) -- por eso se resuelve
+    // ACA, antes de que elegirHerramienta() tenga oportunidad de decidir.
+    // Solo se activa con contexto de guardia RECIENTE (seccion 3 del pedido:
+    // "no quiero que Snoopy arrastre contexto indefinidamente") -- sin ese
+    // contexto puntual, el mensaje sigue el camino normal de siempre.
+    const matchRolGuardia = mensaje.match(/quien (es|era|sera)( el| la)? ([a-z]+)/);
+    const esContextoGuardia = !!contextoPrevio && (contextoPrevio.herramienta === 'get_guardia_actual' || contextoPrevio.herramienta === 'get_guardias');
+    if (matchRolGuardia && esContextoGuardia) {
+      const herramientaGuardia = this.toolsService.buscarPorNombre('get_guardia_actual') ?? null;
+      if (herramientaGuardia) {
+        herramienta = herramientaGuardia;
+        argumentos = { ...contextoPrevio!.argumentos, rolBuscado: matchRolGuardia[3] };
+      }
+    }
+
+    // Estabilizacion (seccion 4): "¿y qué grupo/turno es?" sobre una guardia
+    // ya consultada -- "grupo" no es un campo propio (verificado contra el
+    // modelo real antes de escribir esto: Guardia no tiene columna "grupo",
+    // solo `turno`), asi que se responde con el turno real en vez de
+    // inventar un concepto nuevo. Mismo criterio de contexto reciente que
+    // el caso de "quien es el rol" de arriba.
+    if (!herramienta && /que (turno|grupo) es/.test(mensaje) && esContextoGuardia) {
+      const herramientaGuardia = this.toolsService.buscarPorNombre('get_guardia_actual') ?? null;
+      if (herramientaGuardia) {
+        herramienta = herramientaGuardia;
+        argumentos = { ...contextoPrevio!.argumentos, modoTurno: true };
+      }
+    }
+
     if (herramienta) {
+      // Ya resuelto por el caso especial de "quien es el <rol>" de arriba --
+      // `argumentos` viene armado con el contexto de la guardia, no hay que
+      // volver a extraerlo del mensaje.
+    } else if ((herramienta = this.elegirHerramienta(mensaje, herramientasDelModulo))) {
       argumentos = await herramienta.extraerArgumentos(mensaje, mensajeOriginal);
     } else if (esPosibleSeguimiento) {
       // Pregunta de seguimiento (seccion 51): sin match propio, pero hay
@@ -218,8 +398,51 @@ export class IaMotorService {
       }
     }
 
+    // Ollama como respaldo (seccion 4 del pedido de integracion): solo si
+    // el reconocimiento por patrones no encontro NADA. La lista de
+    // candidatos es la misma `herramientasDelModulo` que ya usa el
+    // reconocimiento por patrones (habilitadas por la institucion, sin
+    // filtrar todavia por permiso del usuario) -- asi una sugerencia de
+    // Ollama sobre un tema sin permiso sigue cayendo en el mensaje
+    // explicito de "no autorizado" mas abajo, nunca en "no entendi".
+    // sugerirHerramienta() ya valida que la respuesta sea EXACTAMENTE uno
+    // de los nombres de la lista; cualquier otra cosa se descarta sola.
+    // Ademas de PATRONES_CONFUSION (que cubre las reacciones cortas mas
+    // comunes), esta es una segunda red de seguridad general: un mensaje
+    // de una o dos palabras casi no tiene contenido semantico para que ni
+    // siquiera un modelo grande elija bien -- no vale la pena arriesgarse
+    // a una sugerencia mala por una frase que probablemente ni siquiera
+    // estaba en PATRONES_CONFUSION todavia.
+    const tieneContenidoSuficiente = mensaje.split(' ').filter(Boolean).length >= 3 || mensaje.length >= 12;
+
+    if (!herramienta && !esPosibleSeguimiento && config.ollamaHabilitado && tieneContenidoSuficiente) {
+      const nombreSugerido = await this.ollamaService.sugerirHerramienta(config, mensajeOriginal, herramientasDelModulo.map((t) => t.nombre));
+      if (nombreSugerido) {
+        const herramientaSugerida = this.toolsService.buscarPorNombre(nombreSugerido);
+        // No basta con que Ollama devuelva un nombre de la lista blanca: eso
+        // solo prueba que no alucino un nombre inexistente, no que el
+        // mensaje tenga relacion real con esa herramienta (bug real
+        // detectado en vivo: para "no, que dia se activo SIGBO" -- cero
+        // coincidencia de patron o palabra clave con get_personal -- Ollama
+        // igual sugirio get_personal, y "activo" matcheo el sinonimo de
+        // estado ACTIVO, devolviendo una respuesta de personal totalmente
+        // ajena a la pregunta). Ollama solo puede inclinar la balanza hacia
+        // un tema que el mensaje ya toca minimamente (aunque sea con una sola
+        // palabra clave, por debajo del umbral de 2 de elegirHerramienta),
+        // nunca inventar un tema de la nada.
+        if (herramientaSugerida && this.tieneRelacionMinima(mensaje, herramientaSugerida)) {
+          herramienta = herramientaSugerida;
+          argumentos = await herramienta.extraerArgumentos(mensaje, mensajeOriginal);
+        }
+      }
+    }
+
     if (!herramienta || !argumentos) {
-      return { ...sinRespuesta, contenidoRespuesta: this.mensajeNoEntendido(config, herramientasDisponibles) };
+      // nuevoContexto: null -- no entendido tambien corta el hilo (misma
+      // razon que identidad/edad/confusion mas arriba): si no se entendio
+      // esta pregunta, la siguiente no deberia heredar en silencio el tema de
+      // la ULTIMA que si se entendio, que puede ser de varios turnos atras.
+      return { ...sinRespuesta, nuevoContexto: null, contenidoRespuesta: this.mensajeNoEntendido(config, herramientasDisponibles) };
     }
 
     if (!this.toolsService.autorizada(herramienta, usuario, modulosHabilitados)) {
@@ -236,14 +459,29 @@ export class IaMotorService {
     try {
       const resultado = await herramienta.ejecutar(argumentos, usuario);
       const prefijoInterpretacion = config.explicarInterpretacion ? this.explicarInterpretacion(herramienta, argumentos) : '';
+
+      // Ollama reformula (seccion 12 del pedido): SOLO recibe el texto que
+      // el tool ya redacto y ya paso por autorizacion -- nunca el mensaje
+      // original del usuario (mitigacion de prompt injection, seccion 17).
+      // Si esta apagado, no disponible o tarda de mas, reformular() ya
+      // devuelve el texto sin tocar -- no hace falta un try/catch aca.
+      let contenidoFinal = resultado.contenidoRespuesta;
+      let modeloUtilizado: string | null = null;
+      if (config.ollamaHabilitado) {
+        const reformulado = await this.ollamaService.reformular(config, resultado.contenidoRespuesta);
+        contenidoFinal = reformulado.texto;
+        modeloUtilizado = reformulado.modeloUsado;
+      }
+
       return {
-        contenidoRespuesta: prefijoInterpretacion + resultado.contenidoRespuesta,
+        contenidoRespuesta: prefijoInterpretacion + contenidoFinal,
         fuentes: resultado.fuentes,
         herramientaUsada: herramienta.nombre,
         argumentosUsados: argumentos,
         resultadoHerramienta: 'PERMITIDO',
         resumenAuditoria: resultado.resumenAuditoria,
         nuevoContexto: { herramienta: herramienta.nombre, argumentos },
+        modeloUtilizado,
       };
     } catch (error) {
       return {
@@ -253,6 +491,7 @@ export class IaMotorService {
         resultadoHerramienta: 'ERROR',
         resumenAuditoria: (error as Error).message?.slice(0, 290) ?? 'Error desconocido',
         nuevoContexto: contextoPrevio,
+        modeloUtilizado: null,
       };
     }
   }
@@ -276,6 +515,16 @@ export class IaMotorService {
       }
     }
     return mejorPuntaje >= 2 ? mejor : null;
+  }
+
+  /** Chequeo de cordura para la sugerencia de Ollama (ver comentario en el
+   * llamador): el mensaje tiene que tocar la herramienta sugerida con AL
+   * MENOS una palabra clave o un patron, aunque no alcance el umbral de 2 de
+   * elegirHerramienta(). Ollama ayuda a interpretar un fraseo raro de un
+   * tema que el mensaje ya menciona -- no elige un tema de la nada. */
+  private tieneRelacionMinima(mensaje: string, tool: AiTool): boolean {
+    if (tool.patrones.some((p) => p.test(mensaje))) return true;
+    return tool.palabrasClave.some((palabra) => mensaje.includes(palabra));
   }
 
   /** Seccion 13 del pedido: no adivinar cuando un termino de estado solo
@@ -339,6 +588,18 @@ export class IaMotorService {
     }
     const temas = [...new Set(herramientas.map((t) => t.moduloSlug))].slice(0, 6);
     return this.aplicarTono(`No entendi bien tu consulta. Puedo ayudarte con informacion de: ${temas.join(', ')}. ¿Podes reformularla?`, config);
+  }
+
+  /** Distinto de mensajeNoEntendido(): esto es una reaccion del USUARIO a
+   * algo que la IA ya dijo ("Que", "Como"), no una consulta nueva sin
+   * reconocer. Se disculpa por la confusion en vez de listar temas como si
+   * fuera la primera vez que habla con el usuario. */
+  private mensajeConfusion(config: ConfiguracionIa, herramientas: AiTool[]): string {
+    if (herramientas.length === 0) {
+      return this.aplicarTono('Perdon, no me expliqué bien. ¿Podés repetir tu pregunta de otra forma?', config);
+    }
+    const temas = [...new Set(herramientas.map((t) => t.moduloSlug))].slice(0, 6);
+    return this.aplicarTono(`Perdon, no me expliqué bien. ¿Podés reformular tu pregunta? Puedo ayudarte con: ${temas.join(', ')}.`, config);
   }
 
   private aplicarTono(texto: string, config: ConfiguracionIa): string {

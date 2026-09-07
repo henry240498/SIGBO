@@ -19,7 +19,7 @@ terminos: [bombero, bomberos, personal, estado, aspirante, activo, suspendido, l
 Entidad Bombero, persistida en personal.bomberos.
 
 - **Tabla:** [[table--personal-bomberos|personal.bomberos]]
-- **Columnas mapeadas:** 59
+- **Columnas mapeadas:** 60
 
 ## Estados y enumeraciones
 
@@ -28,9 +28,9 @@ Entidad Bombero, persistida en personal.bomberos.
 
 ## Donde se usa
 
-- **Pantallas:** `/`, `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`, `/dashboard/guardias`, `/dashboard/guardias/[id]`, `/dashboard/guardias/esquemas-horario`, `/dashboard/guardias/generar`, `/dashboard/guardias/grupos`, `/dashboard/guardias/grupos/[id]`, `/dashboard/guardias/ordenes`, `/dashboard/guardias/ordenes/[id]`, `/dashboard/guardias/ordenes/configuracion`, `/dashboard/guardias/ordenes/nueva`, `/dashboard/guardias/pernoctes`, `/dashboard/guardias/requisitos`, `/dashboard/guardias/sorteos`, `/dashboard/guardias/sorteos/[id]`, `/dashboard/organizacion/ascensos`, `/dashboard/organizacion/designaciones`, `/dashboard/organizacion/feriados`, `/dashboard/personal/[id]`, `/dashboard/publicaciones`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`
-- **Endpoints:** ActividadProfesionalController, AscensosController, BitacoraController, BomberosController, CondicionController, DesignacionesController, EspecialidadesBomberoController, EventosAsistenciaController, FojaServicioController, GruposGuardiaController, GuardiasController, HistorialInstitucionalController, IdiomasController, ImportacionesController, MarcacionesController, NovedadesController, OrdenesGuardiaController, PernoctesController, PublicacionesController, SegurosBomberoController, ServiciosController, SorteosController
-- **Servicios:** ActividadProfesionalService, AscensosService, BitacoraService, BomberosService, CondicionService, DesignacionesService, ElegibilidadService, EspecialidadesBomberoService, EventosAsistenciaService, FojaServicioService, GeneracionService, GruposGuardiaService, GuardiasService, HistorialInstitucionalService, IdiomasService, ImportacionesService, MarcacionesService, NovedadesService, OrdenesGuardiaService, PernoctesService, PublicacionesService, SegurosBomberoService, ServiciosService, SorteosService
+- **Pantallas:** `/`, `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`, `/dashboard/deposito`, `/dashboard/deposito/articulos`, `/dashboard/deposito/articulos/[id]`, `/dashboard/deposito/bajas`, `/dashboard/deposito/categorias`, `/dashboard/deposito/entradas`, `/dashboard/deposito/incidencias`, `/dashboard/deposito/inventarios-fisicos`, `/dashboard/deposito/inventarios-fisicos/[id]`, `/dashboard/deposito/mantenimientos`, `/dashboard/deposito/movimientos`, `/dashboard/deposito/prestamos`, `/dashboard/deposito/proveedores`, `/dashboard/deposito/ubicaciones`, `/dashboard/documentos`, `/dashboard/documentos/[id]`, `/dashboard/documentos/auditoria`, `/dashboard/documentos/expedientes`, `/dashboard/documentos/expedientes/[id]`, `/dashboard/documentos/listado`, `/dashboard/documentos/plantillas`, `/dashboard/documentos/vencimientos`, `/dashboard/finanzas`, `/dashboard/finanzas/beneficios`, `/dashboard/finanzas/cajas`, `/dashboard/finanzas/cuentas-bancarias`, `/dashboard/finanzas/cuotas`, `/dashboard/finanzas/ejercicios-fiscales`, `/dashboard/finanzas/facturacion`, `/dashboard/finanzas/movimientos`, `/dashboard/finanzas/movimientos-bancarios`, `/dashboard/finanzas/ordenes-pago`, `/dashboard/finanzas/presupuesto`, `/dashboard/finanzas/socios-protectores`, `/dashboard/finanzas/socios-protectores/[id]`, `/dashboard/guardias`, `/dashboard/guardias/[id]`, `/dashboard/guardias/esquemas-horario`, `/dashboard/guardias/generar`, `/dashboard/guardias/grupos`, `/dashboard/guardias/grupos/[id]`, `/dashboard/guardias/ordenes`, `/dashboard/guardias/ordenes/[id]`, `/dashboard/guardias/ordenes/configuracion`, `/dashboard/guardias/ordenes/nueva`, `/dashboard/guardias/pernoctes`, `/dashboard/guardias/requisitos`, `/dashboard/guardias/sorteos`, `/dashboard/guardias/sorteos/[id]`, `/dashboard/organizacion/ascensos`, `/dashboard/organizacion/designaciones`, `/dashboard/organizacion/documentos`, `/dashboard/organizacion/feriados`, `/dashboard/personal/[id]`, `/dashboard/publicaciones`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`
+- **Endpoints:** ActividadProfesionalController, ActividadesAcademicasController, AscensosController, BitacoraController, BomberosController, CertificacionesAcademiaController, CondicionController, ConsultasAcademiaController, DesignacionesController, EspecialidadesBomberoController, EvaluacionesAcademiaController, EventosAsistenciaController, FirmasDocumentoController, FojaServicioController, GruposGuardiaController, GuardiasController, HistorialInstitucionalController, IdiomasController, ImportacionesController, InscripcionesAcademiaController, IntegracionDepositoController, MarcacionesController, NovedadesController, OrdenesGuardiaController, PernoctesController, PlantillasController, PublicacionesController, ReportesAcademiaController, ReportesFinanzasController, SegurosBomberoController, ServiciosController, SociosProtectoresController, SorteosController
+- **Servicios:** ActividadProfesionalService, ActividadesAcademicasService, AscensosService, BitacoraService, BomberosService, CertificacionesAcademiaService, CondicionService, ConsultasAcademiaService, DesignacionesService, ElegibilidadService, EspecialidadesBomberoService, EvaluacionesAcademiaService, EventosAsistenciaService, FirmasDocumentoService, FojaServicioService, GeneracionService, GruposGuardiaService, GuardiasService, HistorialInstitucionalService, IaToolsService, IdiomasService, ImportacionesService, InscripcionesAcademiaService, IntegracionDepositoService, MarcacionesService, NovedadesService, OrdenesGuardiaService, PernoctesService, PlantillasService, PublicacionesService, ReportesAcademiaService, ReportesFinanzasService, SegurosBomberoService, ServiciosService, SociosProtectoresService, SorteosService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -46,6 +46,17 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 
 ## Referenciado por
 
+- [[service--academia-actividades-academicas|ActividadesAcademicasService]] `uses` →
+- [[service--academia-certificaciones-academia|CertificacionesAcademiaService]] `uses` →
+- [[service--academia-consultas-academia|ConsultasAcademiaService]] `uses` →
+- [[service--academia-evaluaciones-academia|EvaluacionesAcademiaService]] `uses` →
+- [[service--academia-inscripciones-academia|InscripcionesAcademiaService]] `uses` →
+- [[service--academia-reportes-academia|ReportesAcademiaService]] `uses` →
+- [[service--deposito-integracion-deposito|IntegracionDepositoService]] `uses` →
+- [[service--documentos-firmas-documento|FirmasDocumentoService]] `uses` →
+- [[service--documentos-plantillas|PlantillasService]] `uses` →
+- [[service--finanzas-reportes-finanzas|ReportesFinanzasService]] `uses` →
+- [[service--finanzas-socios-protectores|SociosProtectoresService]] `uses` →
 - [[service--guardias-bitacora|BitacoraService]] `uses` →
 - [[service--guardias-elegibilidad|ElegibilidadService]] `uses` →
 - [[service--guardias-generacion|GeneracionService]] `uses` →
@@ -55,6 +66,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[service--guardias-ordenes-guardia|OrdenesGuardiaService]] `uses` →
 - [[service--guardias-pernoctes|PernoctesService]] `uses` →
 - [[service--guardias-sorteos|SorteosService]] `uses` →
+- [[service--ia-ia-tools|IaToolsService]] `uses` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `uses` →
 - [[service--operaciones-importaciones|ImportacionesService]] `uses` →
 - [[service--operaciones-marcaciones|MarcacionesService]] `uses` →

@@ -26,7 +26,9 @@ Tabla operaciones.participantes_evento (17 columnas). Creada en 020_asistencia.s
 
 ## Restricciones CHECK (reglas que la BD impone)
 
-- `estado_participacion IN ('COMPLETA','PARCIAL','NO_REGISTRADA','AUSENTE_CONFIRMADO')), CONSTRAINT CK_partev_fuente CHECK (fuente IN ('MARCADOR_DIGITAL','MANUAL','IMPORTACION_EXCEL','EVENTO','GUARDIA','OTRO')), CONSTRAINT CK_partev_participante CHECK ( (bombero_id IS NOT NULL AND participante_externo_id IS NULL) OR (bombero_id IS NULL AND participante_externo_id IS NOT NULL`
+- `estado_participacion IN ('COMPLETA','PARCIAL','NO_REGISTRADA','AUSENTE_CONFIRMADO')`
+- `fuente IN ('MARCADOR_DIGITAL','MANUAL','IMPORTACION_EXCEL','EVENTO','GUARDIA','OTRO')`
+- `(bombero_id IS NOT NULL AND participante_externo_id IS NULL) OR (bombero_id IS NULL AND participante_externo_id IS NOT NULL`
 
 ## Llaves foraneas
 
@@ -58,7 +60,7 @@ Tabla operaciones.participantes_evento (17 columnas). Creada en 020_asistencia.s
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
+- **Pantallas:** `/dashboard/academia/[id]`, `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
 - **Endpoints:** BitacoraController, DashboardAsistenciaController, EventosAsistenciaController, MarcacionesController
 - **Servicios:** BitacoraService, DashboardAsistenciaService, EventosAsistenciaService
 

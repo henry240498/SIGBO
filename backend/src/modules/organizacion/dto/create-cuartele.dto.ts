@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsIn, IsNotEmpty, IsOptional, IsString, Matches } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsIn, IsNotEmpty, IsNumber, IsOptional, IsString, Matches, Max, Min } from 'class-validator';
 import { GUID_REGEX, GUID_REGEX_MENSAJE } from '../../../shared/utils/guid';
 
 export class CreateCuartelDto {
@@ -30,4 +31,12 @@ export class CreateCuartelDto {
   @IsOptional()
   @IsIn(['ACTIVO', 'INACTIVO'])
   estado?: string;
+
+  @ApiProperty({ required: false, description: 'Para el marcador "Cuartel" y la distancia de las pruebas de comunicación en Servicios > Seguimiento Geográfico' })
+  @IsOptional() @Type(() => Number) @IsNumber() @Min(-90) @Max(90)
+  latitud?: number;
+
+  @ApiProperty({ required: false })
+  @IsOptional() @Type(() => Number) @IsNumber() @Min(-180) @Max(180)
+  longitud?: number;
 }

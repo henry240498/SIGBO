@@ -19,7 +19,7 @@ terminos: [certificacion, certificaciones, personal, tipo, basico, intermedio, a
 Entidad Certificacion, persistida en personal.certificaciones.
 
 - **Tabla:** [[table--personal-certificaciones|personal.certificaciones]]
-- **Columnas mapeadas:** 11
+- **Columnas mapeadas:** 12
 
 ## Estados y enumeraciones
 
@@ -28,8 +28,8 @@ Entidad Certificacion, persistida en personal.certificaciones.
 ## Donde se usa
 
 - **Pantallas:** — (sin pantalla que llegue hasta aca)
-- **Endpoints:** FojaServicioController
-- **Servicios:** FojaServicioService
+- **Endpoints:** CertificacionesAcademiaController, ConsultasAcademiaController, FojaServicioController
+- **Servicios:** CertificacionesAcademiaService, ConsultasAcademiaService, FojaServicioService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -45,6 +45,8 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 
 ## Referenciado por
 
+- [[service--academia-certificaciones-academia|CertificacionesAcademiaService]] `uses` →
+- [[service--academia-consultas-academia|ConsultasAcademiaService]] `uses` →
 - [[service--personal-foja-servicio|FojaServicioService]] `uses` →
 
 ---

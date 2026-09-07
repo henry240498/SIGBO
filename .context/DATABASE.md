@@ -5,32 +5,49 @@ nivel: L1
 
 # Base de datos
 
-SQL Server 2019 Express, base `sigbo_cbvc`. **12 esquemas, 88 tablas, 0 procedimientos.**
-El esquema se construye con 29 migraciones SQL escritas a mano; TypeORM nunca lo altera.
+SQL Server 2019 Express, base `sigbo_cbvc`. **14 esquemas, 150 tablas, 0 procedimientos.**
+El esquema se construye con 77 migraciones SQL escritas a mano; TypeORM nunca lo altera.
 
 > `docs/README.md` afirma "42 tablas, 10 esquemas". Eso quedó viejo. Los números de acá
-> los cuenta `build-graph.mjs` aplicando las migraciones en orden.
+> los cuenta `build-graph.mjs` aplicando las migraciones en orden — correlos de nuevo
+> (`node .context/graph/build-graph.mjs`) antes de confiar en esta tabla si pasó tiempo
+> desde la última actualización: crecen rápido y nadie los actualiza a mano.
 
 ## Esquemas
 
 | Esquema | Tablas | Estado |
 |---|---|---|
+| `operaciones` | 23 | Activo. **Asistencia y Guardias comparten este esquema** |
+| `finanzas` | 21 | Activo. Movimientos, Socios Protectores, facturación, presupuesto |
+| `deposito` | 18 | Activo |
 | `personal` | 18 | Activo. El expediente del bombero |
-| `operaciones` | 16 | Activo. **Asistencia y Guardias comparten este esquema** |
 | `seguridad` | 15 | Activo. Usuarios, permisos, auditoría, configuración |
-| `organizacion` | 13 | Activo. Organigrama y catálogos |
-| `academia` | 7 | Parcial: solo cursos, materias e inscripciones tienen entidad |
+| `organizacion` | 15 | Activo. Organigrama, catálogos, identidad institucional |
+| `documentos` | 8 | Activo. Numeración institucional, plantillas, expedientes |
+| `academia` | 8 | Activo |
+| `ia` | 6 | Activo. Motor local (Snoopy), sin dominio propio en `modulos.ts` — ver nota abajo |
 | `servicios` | 5 | Activo |
-| `vehiculos` | 4 | API sin pantalla |
-| `equipos` | 4 | API sin pantalla |
-| `finanzas` | 2 | Solo esquema |
-| `deposito` | 2 | Solo esquema |
-| `documentos` | 1 | Solo esquema |
+| `vehiculos` | 4 | Activo |
+| `denuncias` | 4 | Activo |
+| `equipos` | 4 | Activo |
 | `contenido` | 1 | Publicaciones (migración 026, creado condicionalmente) |
 
-**14 tablas no tienen entidad**: el esquema se diseñó completo desde el principio y el
-backend se construye por fases. Una tabla sin entidad no es un error, es trabajo
-pendiente.
+**11 tablas no tienen entidad** (`seguridad.restricciones`, `personal.licencias`,
+`personal.historial_medico`, `personal.historial_disciplinario`, `academia.aspirantes`,
+`servicios.historial_servicios`, `finanzas.cuentas_contables`, `finanzas.movimientos`,
+`deposito.items_deposito`, `deposito.movimientos_deposito`,
+`documentos.documentos` — este último es la tabla legada `documentos.documentos`,
+distinta de `documentos.documentos_institucionales`, que sí tiene entidad): el esquema
+se diseñó completo desde el principio y el backend se construye por fases. Una tabla sin
+entidad no es un error, es trabajo pendiente. Lista siempre actual:
+`node .context/graph/validar.mjs` → `tablasSinEntidad`.
+
+**El esquema `ia` no tiene un dominio propio con ese nombre**: `modulos.ts` declara el
+dominio como `inteligencia` (permiso `inteligencia:*`), mientras que el esquema SQL, la
+carpeta del módulo NestJS y las tablas se llaman `ia`. Mismo patrón que
+`guardias`/`operaciones` — ver [[rule--guardias-vive-en-operaciones]]. `build-graph.mjs`
+tiene el alias (`DOMAIN_OF_SCHEMA.ia` / `DOMAIN_OF_MODULE.ia` → `'inteligencia'`); si se
+renombra el esquema o el módulo alguna vez, ese alias deja de hacer falta.
 
 **No existe un esquema `guardias`.** Sus siete tablas están en `operaciones` — ver
 [[rule--guardias-vive-en-operaciones]].
@@ -115,9 +132,11 @@ database\run-migrations.ps1     # ejecuta en orden numérico, con QUOTED_IDENTIF
 
 Reglas: [[rule--migracion-nunca-se-edita]] y [[decision--migraciones-a-mano]].
 
-**Antes de crear una nueva, verificá el número libre.** La numeración ya colisionó (dos
-archivos `017`), y el repositorio está en desarrollo activo: hoy la última es
-`027_personal_reconciliacion_segura.sql`.
+**Antes de crear una nueva, verificá el número libre.** La numeración ya colisionó varias
+veces (`017`, `023`, `024`, `026`, `027`, `031` — cada uno con dos archivos, orden de
+ejecución no garantizado), y el repositorio está en desarrollo activo:
+`node .context/graph/validar.mjs` imprime el último prefijo usado y el siguiente libre en
+su primera línea.
 
 ```bash
 ls database/migrations | sort | tail -5

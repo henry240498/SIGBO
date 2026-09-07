@@ -17,6 +17,7 @@ export default function VehiculosPage() {
 
   const [numeroInterno, setNumeroInterno] = useState('');
   const [tipo, setTipo] = useState('');
+  const [alias, setAlias] = useState('');
   const [marca, setMarca] = useState('');
   const [modelo, setModelo] = useState('');
   const [anio, setAnio] = useState('');
@@ -45,6 +46,7 @@ export default function VehiculosPage() {
       (v) =>
         v.numeroInterno.toLowerCase().includes(qn) ||
         v.tipo.toLowerCase().includes(qn) ||
+        (v.alias ?? '').toLowerCase().includes(qn) ||
         (v.marca ?? '').toLowerCase().includes(qn) ||
         (v.patente ?? '').toLowerCase().includes(qn),
     );
@@ -53,6 +55,7 @@ export default function VehiculosPage() {
   function limpiarForm() {
     setNumeroInterno('');
     setTipo('');
+    setAlias('');
     setMarca('');
     setModelo('');
     setAnio('');
@@ -68,6 +71,7 @@ export default function VehiculosPage() {
       await crearVehiculo({
         numeroInterno,
         tipo,
+        alias: alias || undefined,
         marca: marca || undefined,
         modelo: modelo || undefined,
         anio: anio ? Number(anio) : undefined,
@@ -99,7 +103,7 @@ export default function VehiculosPage() {
         <input
           className="input-field"
           style={{ maxWidth: 260 }}
-          placeholder="Buscar por codigo, tipo, marca o patente..."
+          placeholder="Buscar por codigo, alias, tipo, marca o patente..."
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
@@ -124,6 +128,10 @@ export default function VehiculosPage() {
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
               <input className="input-field" value={tipo} onChange={(e) => setTipo(e.target.value)} placeholder="Autobomba, Ambulancia..." required />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Alias</label>
+              <input className="input-field" value={alias} onChange={(e) => setAlias(e.target.value)} placeholder="Nombre informal (opcional)" />
             </div>
             <div>
               <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Marca</label>
@@ -169,6 +177,7 @@ export default function VehiculosPage() {
                   <Link href={`/dashboard/vehiculos/${v.id}`} style={{ color: '#60a5fa', textDecoration: 'none' }}>
                     {v.numeroInterno}
                   </Link>
+                  {v.alias && <span style={{ color: '#94a3b8' }}> ({v.alias})</span>}
                 </td>
                 <td style={{ padding: '6px 4px' }}>{v.tipo}</td>
                 <td style={{ padding: '6px 4px' }}>{[v.marca, v.modelo].filter(Boolean).join(' ') || '—'}</td>

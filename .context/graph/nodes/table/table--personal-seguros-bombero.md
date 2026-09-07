@@ -23,6 +23,10 @@ Tabla personal.seguros_bombero (14 columnas). Creada en 018_parametros_y_normali
 
 - **Esquema:** personal · **Columnas:** 14
 
+## Restricciones CHECK (reglas que la BD impone)
+
+- `estado IN ('ACTIVO','INACTIVO')`
+
 ## Llaves foraneas
 
 - `bombero_id` → [[table--personal-bomberos|personal.bomberos]]

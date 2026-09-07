@@ -14,6 +14,8 @@ interface Cuartel {
   responsableBomberoId: string | null;
   estado: string;
   eliminadoEn: string | null;
+  latitud: number | null;
+  longitud: number | null;
 }
 
 interface Compania {
@@ -49,6 +51,8 @@ export default function CuartelesPage() {
   const [telefono, setTelefono] = useState('');
   const [responsableBomberoId, setResponsableBomberoId] = useState('');
   const [estado, setEstado] = useState('ACTIVO');
+  const [latitud, setLatitud] = useState('');
+  const [longitud, setLongitud] = useState('');
 
   async function cargar() {
     setError(null);
@@ -86,6 +90,8 @@ export default function CuartelesPage() {
     setTelefono('');
     setResponsableBomberoId('');
     setEstado('ACTIVO');
+    setLatitud('');
+    setLongitud('');
     setEditandoId(null);
   }
 
@@ -98,6 +104,8 @@ export default function CuartelesPage() {
     setTelefono(c.telefono ?? '');
     setResponsableBomberoId(c.responsableBomberoId ?? '');
     setEstado(c.estado);
+    setLatitud(c.latitud != null ? String(c.latitud) : '');
+    setLongitud(c.longitud != null ? String(c.longitud) : '');
     setMostrarForm(true);
   }
 
@@ -112,6 +120,8 @@ export default function CuartelesPage() {
       telefono: telefono || undefined,
       responsableBomberoId: responsableBomberoId || undefined,
       estado,
+      latitud: latitud !== '' ? Number(latitud) : undefined,
+      longitud: longitud !== '' ? Number(longitud) : undefined,
     };
 
     const res = editandoId
@@ -280,6 +290,17 @@ export default function CuartelesPage() {
               <input className="input-field" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
             </div>
           </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Latitud</label>
+              <input className="input-field" type="number" step="any" placeholder="Ej. -25.3853" value={latitud} onChange={(e) => setLatitud(e.target.value)} />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Longitud</label>
+              <input className="input-field" type="number" step="any" placeholder="Ej. -57.3311" value={longitud} onChange={(e) => setLongitud(e.target.value)} />
+            </div>
+          </div>
+          <p style={{ fontSize: 11, color: '#94a3b8', marginTop: -4 }}>Se usan como marcador &quot;Cuartel&quot; y punto de referencia para la distancia de las pruebas de comunicación en Servicios &gt; Seguimiento Geográfico.</p>
           <div>
             <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
             <select

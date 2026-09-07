@@ -22,10 +22,6 @@ Tabla seguridad.configuracion_valores (8 columnas). Creada en 021_configuracion_
 
 - **Esquema:** seguridad · **Columnas:** 8
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `alcance IN ('GLOBAL','USUARIO')`
-
 ## Llaves foraneas
 
 - `usuario_id` → [[table--seguridad-usuarios|seguridad.usuarios]]

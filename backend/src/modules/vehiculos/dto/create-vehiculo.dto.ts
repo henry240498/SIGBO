@@ -14,6 +14,8 @@ export class CreateVehiculoDto {
 
   @ApiProperty() @IsString() @MinLength(1) @MaxLength(50) tipo: string;
 
+  @ApiProperty({ required: false }) @IsOptional() @IsString() @MaxLength(50) alias?: string;
+
   @ApiProperty({ required: false }) @IsOptional() @IsString() @MaxLength(50) marca?: string;
 
   @ApiProperty({ required: false }) @IsOptional() @IsString() @MaxLength(50) modelo?: string;

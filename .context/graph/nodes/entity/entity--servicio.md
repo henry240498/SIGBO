@@ -28,9 +28,9 @@ Registro de cada servicio/intervencion (schema servicios).
 
 ## Donde se usa
 
-- **Pantallas:** `/`, `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/equipos/[id]`, `/dashboard/personal/[id]`, `/dashboard/publicaciones`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
-- **Endpoints:** BitacoraController, ConsultasCruzadasController, DenunciasController, DenunciasPublicasController, PublicacionesController, ServiciosController, VehiculosController
-- **Servicios:** BitacoraService, ConsultasCruzadasService, DenunciasService, PublicacionesService, ServiciosService, VehiculosService
+- **Pantallas:** `/`, `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/deposito`, `/dashboard/deposito/articulos`, `/dashboard/deposito/articulos/[id]`, `/dashboard/deposito/bajas`, `/dashboard/deposito/categorias`, `/dashboard/deposito/entradas`, `/dashboard/deposito/incidencias`, `/dashboard/deposito/inventarios-fisicos`, `/dashboard/deposito/inventarios-fisicos/[id]`, `/dashboard/deposito/mantenimientos`, `/dashboard/deposito/movimientos`, `/dashboard/deposito/prestamos`, `/dashboard/deposito/proveedores`, `/dashboard/deposito/ubicaciones`, `/dashboard/equipos/[id]`, `/dashboard/finanzas/movimientos`, `/dashboard/finanzas/ordenes-pago`, `/dashboard/personal/[id]`, `/dashboard/publicaciones`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
+- **Endpoints:** BitacoraController, ConsultasCruzadasController, DenunciasController, DenunciasPublicasController, IntegracionDepositoController, PublicacionesController, ServiciosController, VehiculosController
+- **Servicios:** BitacoraService, ConsultasCruzadasService, DenunciasService, IaToolsService, IntegracionDepositoService, PublicacionesService, ServiciosService, VehiculosService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -47,7 +47,9 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 ## Referenciado por
 
 - [[service--denuncias-denuncias|DenunciasService]] `uses` →
+- [[service--deposito-integracion-deposito|IntegracionDepositoService]] `uses` →
 - [[service--guardias-bitacora|BitacoraService]] `uses` →
+- [[service--ia-ia-tools|IaToolsService]] `uses` →
 - [[service--personal-consultas-cruzadas|ConsultasCruzadasService]] `uses` →
 - [[service--publicaciones-publicaciones|PublicacionesService]] `uses` →
 - [[service--servicios-servicios|ServiciosService]] `uses` →

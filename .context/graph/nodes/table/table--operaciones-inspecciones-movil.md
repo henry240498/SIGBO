@@ -65,6 +65,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 
 ## Referenciado por
 
+- [[table--deposito-incidencias|deposito.incidencias]] `references` →
 - [[entity--inspeccion-movil|InspeccionMovil]] `persisted_in` →
 - [[service--guardias-bitacora|BitacoraService]] `reads` →
 - [[service--guardias-inspecciones-movil|InspeccionesMovilService]] `reads` →

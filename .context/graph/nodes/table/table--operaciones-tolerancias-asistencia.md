@@ -21,6 +21,10 @@ Tabla operaciones.tolerancias_asistencia (8 columnas). Creada en 020_asistencia.
 
 - **Esquema:** operaciones · **Columnas:** 8
 
+## Restricciones CHECK (reglas que la BD impone)
+
+- `estado IN ('ACTIVO','INACTIVO')`
+
 ## Llaves foraneas
 
 - `tipo_evento_id` → [[table--organizacion-parametros|organizacion.parametros]]
@@ -40,7 +44,7 @@ Tabla operaciones.tolerancias_asistencia (8 columnas). Creada en 020_asistencia.
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
+- **Pantallas:** `/dashboard/academia/[id]`, `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`
 - **Endpoints:** ToleranciasController
 - **Servicios:** ToleranciasService
 

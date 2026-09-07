@@ -94,15 +94,18 @@ const DOMAIN_OF_SCHEMA = {
   operaciones: 'asistencia', servicios: 'servicios', vehiculos: 'vehiculos',
   equipos: 'equipos', academia: 'academia', finanzas: 'finanzas',
   deposito: 'deposito', documentos: 'documentos', contenido: 'publicaciones',
+  ia: 'inteligencia',
   // No hay esquema 'guardias': sus tablas viven en 'operaciones'. El modulo NestJS
   // guardias si es un dominio propio (ver DOMAIN_OF_MODULE y rule--guardias-vive-en-operaciones).
+  // Mismo patron para 'ia': el esquema/carpeta de modulo se llaman 'ia', pero el
+  // dominio declarado en modulos.ts (permisoPrefijo 'inteligencia:') es 'inteligencia'.
 };
 /** Carpeta de modulo NestJS -> slug de dominio. */
 const DOMAIN_OF_MODULE = {
   auth: 'seguridad', seguridad: 'seguridad', personal: 'personal',
   organizacion: 'organizacion', operaciones: 'asistencia', servicios: 'servicios',
   vehiculos: 'vehiculos', equipos: 'equipos', publicaciones: 'publicaciones',
-  configuracion: 'seguridad', guardias: 'guardias',
+  configuracion: 'seguridad', guardias: 'guardias', ia: 'inteligencia',
 };
 /** Raiz de ruta del frontend que no coincide con el slug de un modulo. */
 const DOMAIN_OF_ROUTE = {

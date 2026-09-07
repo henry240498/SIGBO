@@ -117,12 +117,13 @@ refactors: no hay red de seguridad.
 | Dónde | Qué |
 |---|---|
 | `.context/INDEX.md` | Índice semántico, protocolo de consulta y niveles |
-| `.context/RULES.md` | Los 21 invariantes, con severidad |
-| `.context/DECISIONS.md` | Las 10 decisiones de arquitectura y su costo |
-| `.context/DATABASE.md` | 12 esquemas, 88 tablas, convenciones |
+| `.context/RULES.md` | Los invariantes, con severidad |
+| `.context/DECISIONS.md` | Las decisiones de arquitectura y su costo |
+| `.context/DATABASE.md` | Esquemas, tablas, convenciones |
 | `.context/WORKFLOWS.md` | Máquinas de estado del dominio |
 | `docs/GUIA-DE-ESTILO.md` | Paleta, medidas y patrones de pantalla (verificado contra el código) |
 | `docs/CREDENCIALES-Y-ROLES.md` | Usuarios y roles de desarrollo |
 
-`docs/README.md` está **desactualizado** (dice "42 tablas, 10 esquemas"; son 88 en 12).
-Cuando dude, mandan `.context/` y el código.
+`docs/README.md` está **desactualizado** (dice "42 tablas, 10 esquemas"; la cuenta real
+crece con cada módulo nuevo — `node .context/graph/validar.mjs` la imprime siempre
+actual). Cuando dude, mandan `.context/` y el código.
