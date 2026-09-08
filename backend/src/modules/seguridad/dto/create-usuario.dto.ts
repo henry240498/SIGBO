@@ -9,7 +9,7 @@ import {
   Matches,
   MinLength,
 } from 'class-validator';
-import { PASSWORD_REGEX, PASSWORD_REGEX_MENSAJE } from '../../../shared/utils/password-policy';
+import { MaxBytesBcrypt, PASSWORD_REGEX, PASSWORD_REGEX_MENSAJE } from '../../../shared/utils/password-policy';
 import { GUID_REGEX, GUID_REGEX_MENSAJE } from '../../../shared/utils/guid';
 
 export class CreateUsuarioDto {
@@ -18,6 +18,7 @@ export class CreateUsuarioDto {
 
   @ApiProperty()
   @IsString()
+  @MaxBytesBcrypt()
   @Matches(PASSWORD_REGEX, { message: PASSWORD_REGEX_MENSAJE })
   password: string;
 

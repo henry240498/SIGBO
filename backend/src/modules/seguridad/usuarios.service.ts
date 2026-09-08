@@ -364,6 +364,9 @@ export class UsuariosService {
         this.asignacionRolRepo.create({ usuarioId, rolId, asignadoPor: ctx.actorId }),
       );
     }
+    if (aQuitar.length > 0 || aAgregar.length > 0) {
+      await this.sesionesService.cerrarTodas(usuarioId);
+    }
 
     if (auditar) {
       await this.auditoriaService.registrar({
@@ -419,6 +422,7 @@ export class UsuariosService {
       ip: ctx.ip,
       userAgent: ctx.userAgent,
     });
+    await this.sesionesService.cerrarTodas(usuarioId);
 
     return this.policyEngine.getPermisosEfectivos(usuarioId);
   }
@@ -440,6 +444,7 @@ export class UsuariosService {
       ip: ctx.ip,
       userAgent: ctx.userAgent,
     });
+    await this.sesionesService.cerrarTodas(usuarioId);
 
     return this.policyEngine.getPermisosEfectivos(usuarioId);
   }

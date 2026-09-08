@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { API_ORIGIN, apiFetch, obtenerSesion } from '@/lib/api';
+import { API_ORIGIN, apiFetch } from '@/lib/api';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 interface Rol {
   id: string;
@@ -155,13 +157,11 @@ export default function UsuarioDetallePage() {
     try {
       const formData = new FormData();
       formData.append('archivo', archivo);
-      const sesion = obtenerSesion();
-      const headers: HeadersInit = {};
-      if (sesion) headers['Authorization'] = `Bearer ${sesion.accessToken}`;
       const res = await fetch(`${API_ORIGIN}/api/v1/seguridad/usuarios/${params.id}/perfil/foto`, {
         method: 'PUT',
-        headers,
+        headers: { 'X-SIGBO-Request': '1' },
         body: formData,
+        credentials: 'include',
       });
       if (!res.ok) throw new Error('No se pudo subir la foto');
       setMensaje('Foto actualizada');
@@ -233,8 +233,8 @@ export default function UsuarioDetallePage() {
     await cargar();
   }
 
-  if (error && !detalle) return <p style={{ color: '#f87171' }}>{error}</p>;
-  if (!detalle) return <p style={{ color: '#94a3b8' }}>Cargando...</p>;
+  if (error && !detalle) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
+  if (!detalle) return <Cargando texto="Cargando…" />;
 
   const { usuario } = detalle;
   const permisosPorCategoria = new Map<string, Permiso[]>();
@@ -246,8 +246,8 @@ export default function UsuarioDetallePage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       <section className="card">
         <h2 style={{ fontSize: 16, marginBottom: 12 }}>{usuario.username}</h2>
@@ -258,7 +258,7 @@ export default function UsuarioDetallePage() {
           <strong>Estado:</strong> <span className="badge">{usuario.estado}</span>
         </p>
         <p style={{ marginBottom: 4 }}>
-          <strong>Ultimo acceso:</strong>{' '}
+          <strong>Último acceso:</strong>{' '}
           {usuario.ultimoAcceso ? new Date(usuario.ultimoAcceso).toLocaleString('es-PY') : '—'} (
           {usuario.ipUltimoAcceso ?? '—'})
         </p>
@@ -268,7 +268,7 @@ export default function UsuarioDetallePage() {
         <p style={{ marginBottom: 4 }}>
           <strong>2FA:</strong> {usuario.twoFactorEnabled ? 'Activado' : 'Desactivado'}
         </p>
-        <p style={{ fontSize: 13, color: '#94a3b8' }}>
+        <p style={{ fontSize: 13, color: 'var(--muted)' }}>
           {usuario.debeCambiarPassword && 'Debe cambiar su contrasena. '}
           {usuario.passwordExpiraEn &&
             `Contrasena expira: ${new Date(usuario.passwordExpiraEn).toLocaleDateString('es-PY')}`}
@@ -277,19 +277,19 @@ export default function UsuarioDetallePage() {
 
       <section className="card">
         <h2 style={{ fontSize: 15, marginBottom: 12 }}>
-          Datos personales <span style={{ fontSize: 11, color: '#64748b', fontWeight: 400 }}>(edicion de administrador, no pasa por la politica Libre/Fijo)</span>
+          Datos personales <span style={{ fontSize: 11, color: 'var(--muted)', fontWeight: 400 }}>(edición de administrador, no pasa por la politica Libre/Fijo)</span>
         </h2>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
           {perfilAdmin?.avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={`${API_ORIGIN}${perfilAdmin.avatarUrl}`}
+              src={`${API_ORIGIN}/api/v1/seguridad/usuarios/${params.id}/perfil/foto`}
               alt="Foto"
-              style={{ width: 56, height: 56, objectFit: 'cover', borderRadius: '50%', border: '1px solid #334155' }}
+              style={{ width: 56, height: 56, objectFit: 'cover', borderRadius: '50%', border: '1px solid var(--line)' }}
             />
           ) : (
-            <div style={{ width: 56, height: 56, borderRadius: '50%', border: '1px solid #334155', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24 }}>
+            <div style={{ width: 56, height: 56, borderRadius: '50%', border: '1px solid var(--line)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24 }}>
               👤
             </div>
           )}
@@ -304,7 +304,7 @@ export default function UsuarioDetallePage() {
             }}
             style={{ fontSize: 12 }}
           />
-          {subiendoFotoAdmin && <span style={{ fontSize: 12, color: '#94a3b8' }}>Subiendo...</span>}
+          {subiendoFotoAdmin && <span style={{ fontSize: 12, color: 'var(--muted)' }}>Subiendo...</span>}
         </div>
 
         <div style={{ marginBottom: 12 }}>
@@ -313,7 +313,7 @@ export default function UsuarioDetallePage() {
             <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 6 }}>
               <input
                 className="input-field"
-                placeholder="Numero"
+                placeholder="Número"
                 value={t.numero}
                 onChange={(e) => setTelefonosAdmin((prev) => prev.map((x, idx) => (idx === i ? { ...x, numero: e.target.value } : x)))}
               />
@@ -324,7 +324,7 @@ export default function UsuarioDetallePage() {
                 value={t.etiqueta ?? ''}
                 onChange={(e) => setTelefonosAdmin((prev) => prev.map((x, idx) => (idx === i ? { ...x, etiqueta: e.target.value } : x)))}
               />
-              <button type="button" onClick={() => setTelefonosAdmin((prev) => prev.filter((_, idx) => idx !== i))} style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer' }}>
+              <button type="button" onClick={() => setTelefonosAdmin((prev) => prev.filter((_, idx) => idx !== i))} style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer' }}>
                 quitar
               </button>
             </div>
@@ -351,7 +351,7 @@ export default function UsuarioDetallePage() {
                 value={c.etiqueta ?? ''}
                 onChange={(e) => setCorreosAdmin((prev) => prev.map((x, idx) => (idx === i ? { ...x, etiqueta: e.target.value } : x)))}
               />
-              <button type="button" onClick={() => setCorreosAdmin((prev) => prev.filter((_, idx) => idx !== i))} style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer' }}>
+              <button type="button" onClick={() => setCorreosAdmin((prev) => prev.filter((_, idx) => idx !== i))} style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer' }}>
                 quitar
               </button>
             </div>
@@ -363,24 +363,24 @@ export default function UsuarioDetallePage() {
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 14 }}>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>WhatsApp</label>
-            <input className="input-field" value={whatsappAdmin} onChange={(e) => setWhatsappAdmin(e.target.value)} placeholder="+595 981 234567" />
+            <label htmlFor="whatsapp" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>WhatsApp</label>
+            <input id="whatsapp" className="input-field" value={whatsappAdmin} onChange={(e) => setWhatsappAdmin(e.target.value)} placeholder="+595 981 234567" />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Facebook</label>
-            <input className="input-field" value={facebookAdmin} onChange={(e) => setFacebookAdmin(e.target.value)} />
+            <label htmlFor="facebook" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Facebook</label>
+            <input id="facebook" className="input-field" value={facebookAdmin} onChange={(e) => setFacebookAdmin(e.target.value)} />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Instagram</label>
-            <input className="input-field" value={instagramAdmin} onChange={(e) => setInstagramAdmin(e.target.value)} />
+            <label htmlFor="instagram" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Instagram</label>
+            <input id="instagram" className="input-field" value={instagramAdmin} onChange={(e) => setInstagramAdmin(e.target.value)} />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>X (Twitter)</label>
-            <input className="input-field" value={xAdmin} onChange={(e) => setXAdmin(e.target.value)} />
+            <label htmlFor="x-twitter" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>X (Twitter)</label>
+            <input id="x-twitter" className="input-field" value={xAdmin} onChange={(e) => setXAdmin(e.target.value)} />
           </div>
         </div>
 
-        <button className="btn-primary" disabled={guardandoPerfil} onClick={guardarPerfilAdmin}>
+        <button type="button" className="btn-primary" disabled={guardandoPerfil} onClick={guardarPerfilAdmin}>
           {guardandoPerfil ? 'Guardando...' : 'Guardar datos personales'}
         </button>
       </section>
@@ -395,7 +395,7 @@ export default function UsuarioDetallePage() {
             </label>
           ))}
         </div>
-        <button className="btn-primary" onClick={guardarRoles}>
+        <button type="button" className="btn-primary" onClick={guardarRoles}>
           Guardar roles
         </button>
       </section>
@@ -426,26 +426,26 @@ export default function UsuarioDetallePage() {
               </optgroup>
             ))}
           </select>
-          <button className="btn-primary" style={{ background: '#16a34a' }} onClick={() => aplicarPermisoDirecto(true)}>
+          <button type="button" className="btn-primary" style={{ background: '#16a34a' }} onClick={() => aplicarPermisoDirecto(true)}>
             Conceder
           </button>
-          <button className="btn-primary" style={{ background: '#7f1d1d' }} onClick={() => aplicarPermisoDirecto(false)}>
+          <button type="button" className="btn-primary" style={{ background: '#7f1d1d' }} onClick={() => aplicarPermisoDirecto(false)}>
             Denegar
           </button>
         </div>
 
         {detalle.permisosDirectos.length === 0 && (
-          <p style={{ fontSize: 13, color: '#94a3b8' }}>Sin excepciones directas; usa solo los permisos de sus roles.</p>
+          <p style={{ fontSize: 13, color: 'var(--muted)' }}>Sin excepciones directas; usa solo los permisos de sus roles.</p>
         )}
         {detalle.permisosDirectos.map((pd) => (
           <div key={pd.permisoId} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, marginBottom: 4 }}>
-            <span className="badge" style={{ background: pd.concedido ? '#166534' : '#7f1d1d' }}>
+            <span className="badge" style={{ background: pd.concedido ? 'var(--ok-fill)' : 'var(--bad-fill)' }}>
               {pd.concedido ? 'Concedido' : 'Denegado'}
             </span>
             <span>{pd.nombre}</span>
-            <button
+            <button type="button"
               onClick={() => quitarPermisoDirecto(pd.permisoId)}
-              style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', textDecoration: 'underline' }}
+              style={{ background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', textDecoration: 'underline' }}
             >
               quitar
             </button>
@@ -455,15 +455,15 @@ export default function UsuarioDetallePage() {
 
       <section className="card">
         <h2 style={{ fontSize: 15, marginBottom: 12 }}>Sesiones activas ({detalle.sesiones.length})</h2>
-        {detalle.sesiones.length === 0 && <p style={{ fontSize: 13, color: '#94a3b8' }}>Sin sesiones activas.</p>}
+        {detalle.sesiones.length === 0 && <p style={{ fontSize: 13, color: 'var(--muted)' }}>Sin sesiones activas.</p>}
         {detalle.sesiones.map((s) => (
           <div key={s.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 6 }}>
             <span>
               {s.ip} — {new Date(s.fechaUltimaActividad).toLocaleString('es-PY')}
             </span>
-            <button
+            <button type="button"
               onClick={() => cerrarSesion(s.id)}
-              style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', textDecoration: 'underline' }}
+              style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', textDecoration: 'underline' }}
             >
               cerrar
             </button>
@@ -472,17 +472,17 @@ export default function UsuarioDetallePage() {
       </section>
 
       <section className="card">
-        <h2 style={{ fontSize: 15, marginBottom: 12 }}>Historial de auditoria</h2>
-        {detalle.auditoria.length === 0 && <p style={{ fontSize: 13, color: '#94a3b8' }}>Sin actividad registrada.</p>}
+        <h2 style={{ fontSize: 15, marginBottom: 12 }}>Historial de auditoría</h2>
+        {detalle.auditoria.length === 0 && <p style={{ fontSize: 13, color: 'var(--muted)' }}>Sin actividad registrada.</p>}
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <tbody>
             {detalle.auditoria.map((a) => (
-              <tr key={a.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={a.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>
                   <span className="badge">{a.accion}</span>
                 </td>
                 <td style={{ padding: '6px 4px' }}>{a.recurso}</td>
-                <td style={{ padding: '6px 4px', color: '#94a3b8', textAlign: 'right' }}>
+                <td style={{ padding: '6px 4px', color: 'var(--muted)', textAlign: 'right' }}>
                   {new Date(a.fecha).toLocaleString('es-PY')}
                 </td>
               </tr>

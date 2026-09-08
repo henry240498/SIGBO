@@ -48,7 +48,6 @@ Superficie HTTP de vehiculos bajo /api/v1/vehiculos/vehiculos.
 
 ## Referenciado por
 
-- [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `calls` →
 - [[component--front-vehiculos|vehiculos]] `calls` →
 - [[component--front-vehiculos|vehiculos]] `calls` →
 - [[component--front-vehiculos|vehiculos]] `calls` →

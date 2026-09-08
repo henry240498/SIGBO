@@ -14,6 +14,7 @@ edges:
   - [belongs_to, domain--academia]
   - [uses, component--front-api]
   - [uses, component--front-academia]
+  - [uses, component--front-aviso]
 terminos: [academia, cursos, externos, configurar]
 ---
 
@@ -33,6 +34,7 @@ Pantalla /dashboard/academia/cursos-externos.
 - `belongs_to` → [[domain--academia|Academia]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-academia|academia]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

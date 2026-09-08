@@ -48,7 +48,6 @@ Superficie HTTP de equipamiento bombero bajo /api/v1/personal/bomberos.
 - [[screen--dashboard-personal-nuevo|/dashboard/personal/nuevo]] `calls` →
 - [[screen--dashboard-personal|/dashboard/personal]] `calls` →
 - [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `calls` →
-- [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `calls` →
 - [[screen--dashboard-seguridad-usuarios|/dashboard/seguridad/usuarios]] `calls` →
 - [[component--front-academia|academia]] `calls` →
 - [[component--front-equipos|equipos]] `calls` →

@@ -17,6 +17,8 @@ edges:
   - [uses, component--front-personal]
   - [uses, component--front-deposito]
   - [uses, component--front-finanzas]
+  - [uses, component--front-aviso]
+  - [uses, component--front-paginador]
 terminos: [finanzas, movimientos, crear, anular, reportes]
 ---
 
@@ -39,6 +41,8 @@ Pantalla /dashboard/finanzas/movimientos.
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-deposito|deposito]]
 - `uses` → [[component--front-finanzas|finanzas]]
+- `uses` → [[component--front-aviso|Aviso]]
+- `uses` → [[component--front-paginador|Paginador]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

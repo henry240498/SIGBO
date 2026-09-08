@@ -5,8 +5,8 @@ import { usePathname } from 'next/navigation';
 
 const TABS = [
   { href: '/dashboard/academia', label: 'Actividades', exact: true },
-  { href: '/dashboard/academia/instructores-externos', label: 'Instructores Externos' },
-  { href: '/dashboard/academia/cursos-externos', label: 'Cursos Externos (OBA)' },
+  { href: '/dashboard/academia/instructores-externos', label: 'Instructores externos' },
+  { href: '/dashboard/academia/cursos-externos', label: 'Cursos externos (OBA)' },
 ];
 
 export default function AcademiaLayout({ children }: { children: React.ReactNode }) {
@@ -19,7 +19,7 @@ export default function AcademiaLayout({ children }: { children: React.ReactNode
           display: 'flex',
           gap: 4,
           flexWrap: 'wrap',
-          borderBottom: '1px solid #334155',
+          borderBottom: '1px solid var(--line)',
           marginBottom: 20,
           paddingBottom: 0,
         }}
@@ -34,7 +34,7 @@ export default function AcademiaLayout({ children }: { children: React.ReactNode
                 padding: '8px 12px',
                 fontSize: 13,
                 textDecoration: 'none',
-                color: activo ? '#e2e8f0' : '#94a3b8',
+                color: activo ? 'var(--ink)' : 'var(--muted)',
                 fontWeight: activo ? 600 : 400,
                 borderBottom: activo ? '2px solid #2563eb' : '2px solid transparent',
               }}

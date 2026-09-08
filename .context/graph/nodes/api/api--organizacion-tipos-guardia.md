@@ -46,9 +46,9 @@ Superficie HTTP de tipos guardia bajo /api/v1/organizacion/tipos-guardia.
 
 ## Referenciado por
 
-- [[screen--dashboard-organizacion-guardias|/dashboard/organizacion/guardias]] `calls` →
-- [[screen--dashboard-organizacion-guardias|/dashboard/organizacion/guardias]] `calls` →
-- [[screen--dashboard-organizacion-guardias|/dashboard/organizacion/guardias]] `calls` →
+- [[screen--dashboard-organizacion-tipos-guardia|/dashboard/organizacion/tipos-guardia]] `calls` →
+- [[screen--dashboard-organizacion-tipos-guardia|/dashboard/organizacion/tipos-guardia]] `calls` →
+- [[screen--dashboard-organizacion-tipos-guardia|/dashboard/organizacion/tipos-guardia]] `calls` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

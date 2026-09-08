@@ -11,8 +11,10 @@ archivos:
   - frontend/src/app/dashboard/organizacion/designaciones/page.tsx
 edges:
   - [belongs_to, domain--organizacion]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-exportar]
+  - [uses, component--front-aviso]
   - [calls, api--organizacion-designaciones]
   - [calls, api--equipos-equipamiento-bombero]
   - [calls, api--organizacion-cargos]
@@ -44,8 +46,10 @@ Pantalla /dashboard/organizacion/designaciones, consume 6 endpoint(s).
 ## Relaciones
 
 - `belongs_to` → [[domain--organizacion|Organización Institucional]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-exportar|exportar]]
+- `uses` → [[component--front-aviso|Aviso]]
 - `calls` → [[api--organizacion-designaciones|DesignacionesController]]
 - `calls` → [[api--equipos-equipamiento-bombero|EquipamientoBomberoController]]
 - `calls` → [[api--organizacion-cargos|CargosController]]

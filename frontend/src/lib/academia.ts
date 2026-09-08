@@ -1,4 +1,4 @@
-import { API_ORIGIN, apiFetch, obtenerSesion } from './api';
+import { apiFetch } from './api';
 import { cargarParametros } from './parametros';
 import { EventoAsistencia } from './asistencia';
 
@@ -367,10 +367,7 @@ function construirFormDataCertificacion(datos: CertificacionInput, archivo?: Fil
 }
 
 async function fetchConArchivo(path: string, method: 'POST' | 'PATCH', formData: FormData) {
-  const sesion = obtenerSesion();
-  const headers: HeadersInit = {};
-  if (sesion) headers['Authorization'] = `Bearer ${sesion.accessToken}`;
-  const res = await fetch(`${API_ORIGIN}/api/v1${path}`, { method, headers, body: formData });
+  const res = await apiFetch(path, { method, body: formData });
   if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo guardar la certificacion'));
   return res.json();
 }

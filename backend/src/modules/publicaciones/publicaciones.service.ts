@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Bombero, Publicacion, Servicio, TipoServicio, Vehiculo } from '../../shared/entities';
+import { GUID_REGEX } from '../../shared/utils/guid';
 
 export type SeccionPublica='PORTADA'|'RESUMEN'|'HISTORIA'|'FLOTA'|'LOGRO'|'NOTICIA'|'SUCESO'|'EVENTO'|'TRANSPARENCIA'|'CONTACTO'|'FOOTER';
 export type EstadoContenido='BORRADOR'|'PROGRAMADA'|'PUBLICADA'|'ARCHIVADA';
@@ -48,7 +49,23 @@ export class PublicacionesService {
   }
   private publicable(x:PublicacionPublica,now:Date){if(!x.visible||x.estado==='BORRADOR'||x.estado==='ARCHIVADA')return false;if(x.estado==='PROGRAMADA'&&(!x.publicarEn||new Date(x.publicarEn)>now))return false;if(x.caducarEn&&new Date(x.caducarEn)<=now)return false;return true;}
   private async guardar(x:PublicacionPublica){const actual=await this.publicaciones.findOne({where:{id:x.id}});await this.publicaciones.save(this.publicaciones.create({...actual,id:x.id,seccion:x.seccion,estado:x.estado,visible:x.visible,destacada:x.destacada,orden:x.orden,fecha:x.fecha||null,publicarEn:x.publicarEn?new Date(x.publicarEn):null,caducarEn:x.caducarEn?new Date(x.caducarEn):null,contenidoJson:JSON.stringify(x)}));}
-  private validar(x:PublicacionPublica){const sections:SeccionPublica[]=['PORTADA','RESUMEN','HISTORIA','FLOTA','LOGRO','NOTICIA','SUCESO','EVENTO','TRANSPARENCIA','CONTACTO','FOOTER'];const states:EstadoContenido[]=['BORRADOR','PROGRAMADA','PUBLICADA','ARCHIVADA'];if(!x.id||!x.titulo?.trim())throw new BadRequestException('Cada contenido requiere identificador y título');if(!sections.includes(x.seccion)||!states.includes(x.estado))throw new BadRequestException(`Sección o estado inválido en ${x.titulo}`);if(!/^#[0-9a-f]{6}$/i.test(x.color))throw new BadRequestException(`Color inválido en ${x.titulo}`);if(x.imagen&&x.imagen.length>2_800_000)throw new BadRequestException(`La imagen de ${x.titulo} supera el límite`);if(x.enlace&&!/^(https?:\/\/|\/|#|mailto:|tel:)/i.test(x.enlace))throw new BadRequestException(`Enlace inválido en ${x.titulo}`);return x;}
+  private validar(x:PublicacionPublica){
+    const sections:SeccionPublica[]=['PORTADA','RESUMEN','HISTORIA','FLOTA','LOGRO','NOTICIA','SUCESO','EVENTO','TRANSPARENCIA','CONTACTO','FOOTER'];
+    const states:EstadoContenido[]=['BORRADOR','PROGRAMADA','PUBLICADA','ARCHIVADA'];
+    const fechaValida=(valor:string)=>!valor||(!Number.isNaN(Date.parse(valor))&&valor.length<=35);
+    if(!GUID_REGEX.test(x.id)||!x.titulo?.trim())throw new BadRequestException('Cada contenido requiere identificador válido y título');
+    if(!sections.includes(x.seccion)||!states.includes(x.estado))throw new BadRequestException(`Sección o estado inválido en ${x.titulo}`);
+    if(x.titulo.length>160||x.subtitulo.length>200||x.resumen.length>500||x.contenido.length>12_000||x.ubicacion.length>200||x.categoria.length>80||x.botonTexto.length>80||x.imagenAlt.length>200)throw new BadRequestException('Uno de los textos de la publicación supera su límite permitido');
+    if(x.etiquetas.length>20||x.etiquetas.some(etiqueta=>etiqueta.length>80))throw new BadRequestException('Las etiquetas no son válidas');
+    if(!Number.isInteger(x.orden)||x.orden<0||x.orden>100_000)throw new BadRequestException('El orden debe ser un entero entre 0 y 100000');
+    if(!/^#[0-9a-f]{6}$/i.test(x.color))throw new BadRequestException(`Color inválido en ${x.titulo}`);
+    if(x.imagen&&(!/^data:image\/(png|jpeg|webp);base64,[a-z0-9+/=\r\n]+$/i.test(x.imagen)||x.imagen.length>2_800_000))throw new BadRequestException(`La imagen de ${x.titulo} debe ser PNG, JPG o WebP y respetar el límite`);
+    if(x.imagen&&!x.imagenAlt.trim())throw new BadRequestException('Toda imagen publicada requiere texto alternativo');
+    if(x.enlace.length>2048||x.enlace&&!/^(https?:\/\/|\/|#|mailto:|tel:)/i.test(x.enlace))throw new BadRequestException(`Enlace inválido en ${x.titulo}`);
+    if(!fechaValida(x.fecha)||!fechaValida(x.fechaFin)||!fechaValida(x.publicarEn)||!fechaValida(x.caducarEn))throw new BadRequestException('Las fechas de publicación no son válidas');
+    if(x.publicarEn&&x.caducarEn&&Date.parse(x.caducarEn)<=Date.parse(x.publicarEn))throw new BadRequestException('La caducidad debe ser posterior a la publicación');
+    return x;
+  }
   private normalizar(x:Partial<PublicacionPublica>):PublicacionPublica{return{id:String(x.id||''),seccion:(x.seccion||this.legacySection(x)) as SeccionPublica,titulo:String(x.titulo||''),subtitulo:String(x.subtitulo||''),resumen:String(x.resumen||''),contenido:String(x.contenido||''),fecha:String(x.fecha||''),fechaFin:String(x.fechaFin||''),hora:String(x.hora||''),ubicacion:String(x.ubicacion||''),categoria:String(x.categoria||''),etiquetas:Array.isArray(x.etiquetas)?x.etiquetas.map(String):[],imagen:String(x.imagen||''),imagenAlt:String(x.imagenAlt||''),color:String(x.color||'#2563eb'),botonTexto:String(x.botonTexto||''),enlace:String(x.enlace||''),visible:x.visible!==false,destacada:!!x.destacada,orden:Number(x.orden||0),estado:(x.estado||'PUBLICADA') as EstadoContenido,publicarEn:String(x.publicarEn||''),caducarEn:String(x.caducarEn||'')}}
   private legacySection(x:Partial<PublicacionPublica>){const c=String(x.categoria||'').toUpperCase();return(['NOTICIA','SUCESO','EVENTO','LOGRO'].includes(c)?c:'NOTICIA') as SeccionPublica;}
 }

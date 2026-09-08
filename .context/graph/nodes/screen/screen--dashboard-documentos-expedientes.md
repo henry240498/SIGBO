@@ -14,6 +14,7 @@ edges:
   - [belongs_to, domain--documentos]
   - [uses, component--front-api]
   - [uses, component--front-documentos]
+  - [uses, component--front-aviso]
 terminos: [documentos, expedientes, crear, editar]
 ---
 
@@ -33,6 +34,7 @@ Pantalla /dashboard/documentos/expedientes.
 - `belongs_to` → [[domain--documentos|Documentos]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-documentos|documentos]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

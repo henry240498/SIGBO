@@ -12,9 +12,12 @@ archivos:
   - frontend/src/app/dashboard/deposito/inventarios-fisicos/[id]/page.tsx
 edges:
   - [belongs_to, domain--deposito]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-equipos]
   - [uses, component--front-deposito]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
 terminos: [deposito, inventarios, fisicos, inventario, fisico]
 ---
 
@@ -32,9 +35,12 @@ Pantalla /dashboard/deposito/inventarios-fisicos/[id].
 ## Relaciones
 
 - `belongs_to` → [[domain--deposito|Depósito]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-equipos|equipos]]
 - `uses` → [[component--front-deposito|deposito]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

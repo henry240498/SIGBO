@@ -5,7 +5,7 @@ nivel: L0
 
 # Reglas e invariantes
 
-22 reglas verificadas contra el código. Cada una tiene su nodo curado con el detalle, el
+26 reglas verificadas contra el código. Cada una tiene su nodo curado con el detalle, el
 archivo donde vive y qué pasa si se rompe.
 
 > Si vas a modificar código de SIGBO, las **CRÍTICAS** son lectura obligatoria.
@@ -27,8 +27,9 @@ archivo donde vive y qué pasa si se rompe.
 | Regla | En una línea |
 |---|---|
 | [[rule--guardias-vive-en-operaciones]] | No existe el esquema `guardias`: sus tablas están en `operaciones` |
+| [[rule--un-fallo-no-se-anuncia-como-vacio]] | Carga, vacío y error son **tres** estados; un 500 no dice "sin datos" |
 | [[rule--elegibilidad-de-rol-guardia]] | OR entre filas, AND entre columnas; sin requisitos configurados, no se restringe |
-| [[rule--sin-clases-css-nuevas]] | Solo 4 clases; hex exactos, nunca parecidos. ACTIVO verde / malo rojo |
+| [[rule--sin-clases-css-nuevas]] | El color sale de `var(--token)`, no de un hex. ACTIVO verde / malo rojo |
 | [[rule--api-v1-y-contrato-http]] | `/api/v1` lo agrega `apiFetch`; las pantallas pasan rutas relativas |
 | [[rule--identidad-y-tiempo-en-sql-server]] | PK `UNIQUEIDENTIFIER` + `NEWSEQUENTIALID()`, tiempos `DATETIMEOFFSET(3)` |
 | [[rule--cedula-y-numero-bombero-unicos]] | Únicos en toda la institución, incluso para quien está de baja |
@@ -43,9 +44,12 @@ archivo donde vive y qué pasa si se rompe.
 |---|---|
 | [[rule--pantalla-cliente-sin-store]] | `'use client'`, estado local, recargar con `cargar()` tras cada mutación |
 | [[rule--snake-case-en-bd-camel-en-typescript]] | `SnakeNamingStrategy` traduce; `name` explícito solo en timestamps |
-| [[rule--tema-oscuro-fijo]] | Oscuro fijo en pantallas, aunque Configuración prometa temas |
+| [[rule--tema-claro-unico]] | Un solo tema, claro, con `var(--token)`; el login es la única excepción |
 | [[rule--modulo-visible-por-prefijo]] | Un módulo se ve si `disponible: true` **y** hay permisos de su prefijo |
 | [[rule--espanol-y-auditoria]] | Todo en español; auditoría técnica ≠ historial de expediente |
+| [[rule--etiqueta-nombra-su-control]] | `htmlFor` + `id` (o `aria-label`); `<th scope="col">` |
+| [[rule--registro-de-pantallas-generado]] | Pantalla nueva ⇒ `TABS` del módulo + `npm run generar:pantallas` |
+| [[rule--expediente-una-seccion-un-archivo]] | `personal/[id]`: una pestaña por archivo en `secciones/` |
 
 ## Las cuatro trampas que más tiempo cuestan
 
@@ -53,15 +57,10 @@ Ordenadas por cuánto se tarda en darse cuenta:
 
 ### 1. "Mi cambio no surte efecto"
 
-`start-sigbo.ps1` **no reinicia** un servicio que ya escucha: sigue corriendo el proceso
-viejo. Antes de dudar del código:
-
-```powershell
-Get-Process node | Select-Object Id, StartTime
-```
-
-Si el `StartTime` es anterior a tu edición, no es tu código el que corre.
-Ver [[error--start-script-no-reinicia-servicios]].
+`start-sigbo.ps1` recompila y reinicia las instancias previas de SIGBO que ocupen
+los puertos 3000 o 3001. Si detecta un proceso ajeno en esos puertos, aborta sin
+terminarlo y muestra su línea de comando; no se debe matar procesos ajenos por
+suposición.
 
 ### 2. Buscar el esquema `guardias`
 
@@ -90,7 +89,6 @@ node .context/graph/context.mjs --tipo ERROR --level L2
 - [[error--tcp-sqlexpress-deshabilitado]] — SQLEXPRESS viene con TCP apagado
 - [[error--pool-conexion-colgada]] — timeouts de exactamente 15 s en todo
 - [[error--quoted-identifier-en-migraciones]] — migraciones que fallan solo en el runner
-- [[error--start-script-no-reinicia-servicios]] — el cambio que "no surte efecto"
 - [[error--413-croquis-grande]] — 413 al guardar una comunicación con croquis
 - [[error--context-borrado-del-disco]] — por qué este directorio tiene que estar en git
 

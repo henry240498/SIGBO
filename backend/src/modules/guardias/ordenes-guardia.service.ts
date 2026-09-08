@@ -24,7 +24,7 @@ import { AnularOrdenGuardiaDto, RegistrarModificacionOrdenDto } from './dto/anul
 import { OrdenGuardiaSnapshot, PersonaResumen } from './types/orden-guardia-snapshot';
 import { generarOrdenGuardiaPdf } from '../../shared/utils/orden-guardia-pdf';
 import { generarOrdenGuardiaDocx } from '../../shared/utils/orden-guardia-docx';
-import { guardarBuffer } from '../../shared/utils/almacenamiento';
+import { guardarBufferRestringido, leerBufferRestringido } from '../../shared/utils/almacenamiento';
 import { resolverFirmante } from '../../shared/utils/firmantes-institucionales';
 
 type LineaDestacada = { texto: string; tipo: 'SUBTITULO' | 'DISTINCION' | 'OTRO'; visible: boolean; orden: number };
@@ -220,8 +220,8 @@ export class OrdenesGuardiaService {
       generarOrdenGuardiaDocx(snapshot),
     ]);
     const [archivoPdfUrl, archivoDocxUrl] = await Promise.all([
-      guardarBuffer(pdfBuffer, '.pdf', CARPETA_ORDENES),
-      guardarBuffer(docxBuffer, '.docx', CARPETA_ORDENES),
+      guardarBufferRestringido(pdfBuffer, '.pdf', CARPETA_ORDENES),
+      guardarBufferRestringido(docxBuffer, '.docx', CARPETA_ORDENES),
     ]);
 
     await this.ordenRepo.update(id, { archivoPdfUrl, archivoDocxUrl });
@@ -517,8 +517,8 @@ export class OrdenesGuardiaService {
       generarOrdenGuardiaDocx(snapshotFinal),
     ]);
     const [archivoPdfUrl, archivoDocxUrl] = await Promise.all([
-      guardarBuffer(pdfBuffer, '.pdf', CARPETA_ORDENES),
-      guardarBuffer(docxBuffer, '.docx', CARPETA_ORDENES),
+      guardarBufferRestringido(pdfBuffer, '.pdf', CARPETA_ORDENES),
+      guardarBufferRestringido(docxBuffer, '.docx', CARPETA_ORDENES),
     ]);
 
     await this.ordenRepo.update(id, {
@@ -613,6 +613,17 @@ export class OrdenesGuardiaService {
   async listarModificaciones(ordenId: string) {
     await this.findOne(ordenId);
     return this.modificacionRepo.find({ where: { ordenId }, order: { registradoEn: 'DESC' } });
+  }
+
+  async descargarArchivo(id: string, formato: 'pdf' | 'docx'): Promise<Buffer> {
+    const orden = await this.findOne(id);
+    const ruta = formato === 'pdf' ? orden.archivoPdfUrl : orden.archivoDocxUrl;
+    if (!ruta) throw new NotFoundException(`No hay archivo ${formato.toUpperCase()} para esta orden de guardia`);
+    try {
+      return await leerBufferRestringido(ruta, CARPETA_ORDENES);
+    } catch {
+      throw new NotFoundException('El archivo de la orden de guardia no está disponible');
+    }
   }
 
   async registrarModificacion(

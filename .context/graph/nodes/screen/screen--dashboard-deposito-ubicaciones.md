@@ -13,9 +13,11 @@ archivos:
 edges:
   - [belongs_to, domain--deposito]
   - [uses, component--front-api]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-personal]
   - [uses, component--front-parametros]
   - [uses, component--front-deposito]
+  - [uses, component--front-aviso]
 terminos: [deposito, ubicaciones, crear, editar, eliminar]
 ---
 
@@ -34,9 +36,11 @@ Pantalla /dashboard/deposito/ubicaciones.
 
 - `belongs_to` → [[domain--deposito|Depósito]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-deposito|deposito]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

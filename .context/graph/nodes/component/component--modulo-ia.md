@@ -24,7 +24,7 @@ ConfiguracionIa, HistorialConfiguracionIa, ConversacionIa, MensajeIa, EjecucionH
       // en solo lectura (mismo patron de bajo acoplamiento ya usado en
       // Deposito/Academia/Finanzas/Documentos): nunca se duplican, nunca
       // se escriben desde aca.
-      Bombero, Guardia, AsignacionGuardia, Servicio, Vehiculo, Equipo, MarcacionAsistencia, ActividadAcademica, CursoExternoCache, MovimientoFinanciero, Articulo, IdentidadInstitucional, Parametro, Rango, TipoBombero, InscripcionActividadAcademica, Usuario
+      Bombero, Guardia, AsignacionGuardia, Servicio, Vehiculo, Equipo, MarcacionAsistencia, ActividadAcademica, CursoExternoCache, MovimientoFinanciero, Articulo, IdentidadInstitucional, Parametro, Rango, TipoBombero, InscripcionActividadAcademica, Usuario, Feriado, TipoServicio
 
 ## Archivos
 
@@ -42,7 +42,11 @@ ConfiguracionIa, HistorialConfiguracionIa, ConversacionIa, MensajeIa, EjecucionH
 - [[service--ia-ia-dashboard|IaDashboardService]] `uses` →
 - [[service--ia-ia-motor|IaMotorService]] `uses` →
 - [[service--ia-ia-propuestas-mejora|IaPropuestasMejoraService]] `uses` →
+- [[service--ia-ia-voz|IaVozService]] `uses` →
+- [[service--ia-ollama|OllamaService]] `uses` →
+- [[service--ia-piper|PiperService]] `uses` →
 - [[service--ia-ia-tools|IaToolsService]] `uses` →
+- [[service--ia-whisper|WhisperService]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

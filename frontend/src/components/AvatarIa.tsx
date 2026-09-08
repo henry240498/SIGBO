@@ -35,7 +35,7 @@ export function AvatarIa({ avatarUrl, avatarEmoji, avatarColorFondo, nombre, siz
           width: size,
           height: size,
           borderRadius: '50%',
-          background: avatarColorFondo ?? '#334155',
+          background: avatarColorFondo ?? 'var(--neutral-fill)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -48,7 +48,7 @@ export function AvatarIa({ avatarUrl, avatarEmoji, avatarColorFondo, nombre, siz
     );
   }
   return (
-    <div style={{ width: size, height: size, borderRadius: '50%', background: '#334155', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: size * 0.5, flexShrink: 0 }}>
+    <div style={{ width: size, height: size, borderRadius: '50%', background: 'var(--neutral-fill)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: size * 0.5, flexShrink: 0 }}>
       🐶
     </div>
   );

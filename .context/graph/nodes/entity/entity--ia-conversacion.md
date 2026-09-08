@@ -28,8 +28,8 @@ Una sesion de chat con el asistente (seccion 6 del pedido): contenedor de Mensaj
 ## Donde se usa
 
 - **Pantallas:** `/dashboard/inteligencia`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`
-- **Endpoints:** IaAdminConversacionesController, IaChatController, IaConfiguracionController, IaDashboardController
-- **Servicios:** IaChatService, IaConfiguracionService, IaConversacionesService, IaDashboardService
+- **Endpoints:** IaAdminConversacionesController, IaChatController, IaConfiguracionController, IaDashboardController, IaVozController
+- **Servicios:** IaChatService, IaConfiguracionService, IaConversacionesService, IaDashboardService, IaVozService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -49,6 +49,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[service--ia-ia-configuracion|IaConfiguracionService]] `uses` →
 - [[service--ia-ia-conversaciones|IaConversacionesService]] `uses` →
 - [[service--ia-ia-dashboard|IaDashboardService]] `uses` →
+- [[service--ia-ia-voz|IaVozService]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

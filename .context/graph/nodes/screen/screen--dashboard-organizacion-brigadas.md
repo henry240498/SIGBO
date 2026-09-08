@@ -11,8 +11,10 @@ archivos:
   - frontend/src/app/dashboard/organizacion/brigadas/page.tsx
 edges:
   - [belongs_to, domain--organizacion]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-exportar]
+  - [uses, component--front-aviso]
   - [calls, api--organizacion-brigadas]
   - [calls, api--organizacion-brigadas]
 terminos: [organizacion, brigadas]
@@ -36,8 +38,10 @@ Pantalla /dashboard/organizacion/brigadas, consume 2 endpoint(s).
 ## Relaciones
 
 - `belongs_to` → [[domain--organizacion|Organización Institucional]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-exportar|exportar]]
+- `uses` → [[component--front-aviso|Aviso]]
 - `calls` → [[api--organizacion-brigadas|BrigadasController]]
 - `calls` → [[api--organizacion-brigadas|BrigadasController]]
 

@@ -113,7 +113,7 @@ export default function MapaSeguimiento({ cuartel, incidente, rutaPlanificada, r
         capaRef.current.marcadores.push(m);
       }
       for (const prueba of pruebas) {
-        const color = COLOR_NIVEL[prueba.nivel] ?? '#64748b';
+        const color = COLOR_NIVEL[prueba.nivel] ?? 'var(--muted)';
         const m = L.marker([prueba.lat, prueba.lon], { icon: icono(color, String(prueba.nivel)) }).addTo(mapa).bindPopup(
           `<strong>Prueba de comunicación</strong><br/>Nivel: ${prueba.nivel}/5<br/>${prueba.distanciaMetros != null ? `Distancia: ${(prueba.distanciaMetros / 1000).toFixed(2)} km<br/>` : ''}${prueba.movil ? `Móvil: ${prueba.movil}<br/>` : ''}${new Date(prueba.creadoEn).toLocaleString('es-PY')}${prueba.observacion ? `<br/>${prueba.observacion}` : ''}`,
         );

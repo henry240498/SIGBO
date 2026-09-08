@@ -3,12 +3,53 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import type { StringValue } from 'ms';
 import { AsignacionRol, Rol, Sesion, Usuario } from '../../shared/entities';
 import { PolicyEngineService } from '../seguridad/policy-engine.service';
 import { AuditoriaService } from '../seguridad/auditoria.service';
 
 const MAX_INTENTOS_FALLIDOS = 5;
 const BLOQUEO_MINUTOS = 15;
+
+function secretoRequerido(nombre: 'JWT_SECRET' | 'REFRESH_TOKEN_SECRET'): string {
+  const valor = process.env[nombre]?.trim();
+  if (!valor || valor.length < 32) {
+    throw new Error(`${nombre} debe estar definido y tener al menos 32 caracteres.`);
+  }
+  return valor;
+}
+
+function expiracionJwt(nombre: 'JWT_EXPIRATION' | 'REFRESH_TOKEN_EXPIRATION', predeterminado: StringValue): StringValue {
+  const valor = process.env[nombre]?.trim();
+  if (!valor) return predeterminado;
+  if (!/^[1-9]\d*(?:ms|s|m|h|d|w|y)$/.test(valor)) {
+    throw new Error(`${nombre} debe usar una duración positiva, por ejemplo "15m", "1h" o "7d".`);
+  }
+  return valor as StringValue;
+}
+
+export function duracionEnMilisegundos(
+  nombre: 'JWT_EXPIRATION' | 'REFRESH_TOKEN_EXPIRATION',
+  predeterminado: StringValue,
+): number {
+  const valor = expiracionJwt(nombre, predeterminado);
+  const coincidencia = /^([1-9]\d*)(ms|s|m|h|d|w|y)$/.exec(valor);
+  if (!coincidencia) throw new Error(`${nombre} tiene una duración inválida.`);
+  const cantidad = Number(coincidencia[1]);
+  const multiplicadores: Record<string, number> = {
+    ms: 1, s: 1_000, m: 60_000, h: 3_600_000, d: 86_400_000, w: 604_800_000, y: 31_536_000_000,
+  };
+  const resultado = cantidad * multiplicadores[coincidencia[2]];
+  if (!Number.isSafeInteger(resultado)) throw new Error(`${nombre} supera la duración admitida.`);
+  return resultado;
+}
+
+export function validarConfiguracionAuth(): void {
+  secretoRequerido('JWT_SECRET');
+  secretoRequerido('REFRESH_TOKEN_SECRET');
+  expiracionJwt('JWT_EXPIRATION', '15m');
+  duracionEnMilisegundos('REFRESH_TOKEN_EXPIRATION', '7d');
+}
 
 export interface LoginResult {
   accessToken: string;
@@ -103,10 +144,14 @@ export class AuthService {
     return this.emitirTokens(usuario, ip, userAgent);
   }
 
-  async refresh(refreshToken: string): Promise<{ accessToken: string }> {
+  async refresh(refreshToken: string): Promise<{
+    accessToken: string;
+    refreshToken: string;
+    usuario: LoginResult['usuario'];
+  }> {
     let payload: { sub: string; sid: string };
     try {
-      payload = this.jwtService.verify(refreshToken, { secret: process.env.REFRESH_TOKEN_SECRET });
+      payload = this.jwtService.verify(refreshToken, { secret: secretoRequerido('REFRESH_TOKEN_SECRET') });
     } catch {
       throw new UnauthorizedException('Refresh token invalido o expirado');
     }
@@ -114,6 +159,10 @@ export class AuthService {
     const sesion = await this.sesionRepo.findOne({ where: { id: payload.sid } });
     if (!sesion || !sesion.activa || sesion.usuarioId !== payload.sub) {
       throw new UnauthorizedException('Sesion invalida');
+    }
+    if (!sesion.fechaExpiracion || sesion.fechaExpiracion <= new Date()) {
+      await this.sesionRepo.update(sesion.id, { activa: false });
+      throw new UnauthorizedException('Sesion expirada');
     }
 
     const coincide = await bcrypt.compare(refreshToken, sesion.refreshTokenHash);
@@ -126,17 +175,41 @@ export class AuthService {
       throw new UnauthorizedException('Usuario no disponible');
     }
 
-    await this.sesionRepo.update(sesion.id, { fechaUltimaActividad: new Date() });
-
     const { roles, permisos } = await this.getRolesYPermisos(usuario.id);
-    const accessToken = this.firmarAccessToken(usuario, roles, permisos);
-    return { accessToken };
+    const accessToken = this.firmarAccessToken(usuario, roles, permisos, sesion.id);
+    const nuevoRefreshToken = this.firmarRefreshToken(usuario.id, sesion.id);
+    const actualizacion = await this.sesionRepo.update({
+      id: sesion.id,
+      activa: true,
+      refreshTokenHash: sesion.refreshTokenHash,
+    }, {
+      fechaUltimaActividad: new Date(),
+      refreshTokenHash: await bcrypt.hash(nuevoRefreshToken, 10),
+    });
+    // Compare-and-swap: dos refresh simultáneos no pueden emitir dos pares de
+    // credenciales válidas a partir del mismo token anterior.
+    if (actualizacion.affected !== 1) {
+      throw new UnauthorizedException('La sesión fue renovada en otro dispositivo o pestaña');
+    }
+    const passwordExpirada = usuario.passwordExpiraEn ? usuario.passwordExpiraEn < new Date() : false;
+    return {
+      accessToken,
+      refreshToken: nuevoRefreshToken,
+      usuario: {
+        id: usuario.id,
+        email: usuario.email,
+        username: usuario.username,
+        roles,
+        permisos,
+        debeCambiarPassword: usuario.debeCambiarPassword || passwordExpirada,
+      },
+    };
   }
 
   async logout(refreshToken: string): Promise<void> {
     try {
       const payload = this.jwtService.verify<{ sid: string; sub: string }>(refreshToken, {
-        secret: process.env.REFRESH_TOKEN_SECRET,
+        secret: secretoRequerido('REFRESH_TOKEN_SECRET'),
       });
       await this.sesionRepo.update(payload.sid, { activa: false });
       await this.auditoriaService.registrar({
@@ -172,7 +245,7 @@ export class AuthService {
     return { roles, permisos };
   }
 
-  private firmarAccessToken(usuario: Usuario, roles: string[], permisos: string[]): string {
+  private firmarAccessToken(usuario: Usuario, roles: string[], permisos: string[], sesionId: string): string {
     return this.jwtService.sign(
       {
         sub: usuario.id,
@@ -180,33 +253,37 @@ export class AuthService {
         username: usuario.username,
         roles,
         permisos,
+        sid: sesionId,
       },
-      { secret: process.env.JWT_SECRET, expiresIn: process.env.JWT_EXPIRATION ?? '1h' },
+      { secret: secretoRequerido('JWT_SECRET'), expiresIn: expiracionJwt('JWT_EXPIRATION', '15m') },
+    );
+  }
+
+  private firmarRefreshToken(usuarioId: string, sesionId: string): string {
+    return this.jwtService.sign(
+      { sub: usuarioId, sid: sesionId },
+      {
+        secret: secretoRequerido('REFRESH_TOKEN_SECRET'),
+        expiresIn: expiracionJwt('REFRESH_TOKEN_EXPIRATION', '7d'),
+      },
     );
   }
 
   private async emitirTokens(usuario: Usuario, ip?: string, userAgent?: string): Promise<LoginResult> {
-    const { roles, permisos } = await this.getRolesYPermisos(usuario.id);
-    const accessToken = this.firmarAccessToken(usuario, roles, permisos);
-
     const sesion = await this.sesionRepo.save(
       this.sesionRepo.create({
         usuarioId: usuario.id,
         refreshTokenHash: 'pendiente',
         ip: ip ?? null,
         userAgent: userAgent ?? null,
-        fechaExpiracion: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        fechaExpiracion: new Date(Date.now() + duracionEnMilisegundos('REFRESH_TOKEN_EXPIRATION', '7d')),
         activa: true,
       }),
     );
 
-    const refreshToken = this.jwtService.sign(
-      { sub: usuario.id, sid: sesion.id },
-      {
-        secret: process.env.REFRESH_TOKEN_SECRET,
-        expiresIn: process.env.REFRESH_TOKEN_EXPIRATION ?? '7d',
-      },
-    );
+    const { roles, permisos } = await this.getRolesYPermisos(usuario.id);
+    const accessToken = this.firmarAccessToken(usuario, roles, permisos, sesion.id);
+    const refreshToken = this.firmarRefreshToken(usuario.id, sesion.id);
 
     const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
     await this.sesionRepo.update(sesion.id, { refreshTokenHash });

@@ -4,16 +4,16 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const TABS = [
-  { href: '/dashboard/deposito', label: 'Dashboard', exact: true },
-  { href: '/dashboard/deposito/articulos', label: 'Articulos' },
-  { href: '/dashboard/deposito/categorias', label: 'Categorias' },
+  { href: '/dashboard/deposito', label: 'Resumen', exact: true },
+  { href: '/dashboard/deposito/articulos', label: 'Artículos' },
+  { href: '/dashboard/deposito/categorias', label: 'Categorías' },
   { href: '/dashboard/deposito/ubicaciones', label: 'Ubicaciones' },
   { href: '/dashboard/deposito/movimientos', label: 'Movimientos' },
   { href: '/dashboard/deposito/entradas', label: 'Entradas' },
   { href: '/dashboard/deposito/bajas', label: 'Bajas' },
-  { href: '/dashboard/deposito/prestamos', label: 'Prestamos' },
+  { href: '/dashboard/deposito/prestamos', label: 'Préstamos' },
   { href: '/dashboard/deposito/mantenimientos', label: 'Mantenimientos' },
-  { href: '/dashboard/deposito/inventarios-fisicos', label: 'Inventarios Fisicos' },
+  { href: '/dashboard/deposito/inventarios-fisicos', label: 'Inventarios físicos' },
   { href: '/dashboard/deposito/incidencias', label: 'Incidencias' },
   { href: '/dashboard/deposito/proveedores', label: 'Proveedores' },
 ];
@@ -28,7 +28,7 @@ export default function DepositoLayout({ children }: { children: React.ReactNode
           display: 'flex',
           gap: 4,
           flexWrap: 'wrap',
-          borderBottom: '1px solid #334155',
+          borderBottom: '1px solid var(--line)',
           marginBottom: 20,
           paddingBottom: 0,
         }}
@@ -43,7 +43,7 @@ export default function DepositoLayout({ children }: { children: React.ReactNode
                 padding: '8px 12px',
                 fontSize: 13,
                 textDecoration: 'none',
-                color: activo ? '#e2e8f0' : '#94a3b8',
+                color: activo ? 'var(--ink)' : 'var(--muted)',
                 fontWeight: activo ? 600 : 400,
                 borderBottom: activo ? '2px solid #2563eb' : '2px solid transparent',
               }}

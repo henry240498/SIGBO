@@ -50,7 +50,7 @@ Documento oficial de Orden de Guardia -- capa de lectura/agregacion sobre la pla
 
 ## Metodos
 
-`findAll()` · `findOne()` · `crear()` · `regenerarPreview()` · `generarDocumentos()` · `revisar()` · `volverABorrador()` · `aprobar()` · `publicar()` · `anular()` · `listarModificaciones()` · `registrarModificacion()`
+`findAll()` · `findOne()` · `crear()` · `regenerarPreview()` · `generarDocumentos()` · `revisar()` · `volverABorrador()` · `aprobar()` · `publicar()` · `anular()` · `listarModificaciones()` · `descargarArchivo()` · `registrarModificacion()`
 
 ## Archivos
 

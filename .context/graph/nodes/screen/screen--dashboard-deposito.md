@@ -13,6 +13,7 @@ edges:
   - [belongs_to, domain--deposito]
   - [uses, component--front-parametros]
   - [uses, component--front-deposito]
+  - [uses, component--front-cargando]
 terminos: [deposito]
 ---
 
@@ -31,6 +32,7 @@ Pantalla /dashboard/deposito.
 - `belongs_to` → [[domain--deposito|Depósito]]
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-deposito|deposito]]
+- `uses` → [[component--front-cargando|Cargando]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

@@ -3,16 +3,16 @@ id: component--front-api
 tipo: COMPONENT
 nombre: api
 nivel: L2
-resumen: "Helper de frontend \"api\" (10 exportaciones)."
+resumen: "Helper de frontend \"api\" (11 exportaciones)."
 capa: frontend
 archivos:
   - frontend/src/lib/api.ts
-terminos: [api, url, origin, descargar, archivo, sesion, guardar, obtener, cerrar, local, login, logout, fetch]
+terminos: [api, url, origin, descargar, archivo, sesion, evento, finalizada, guardar, obtener, cerrar, local, login, logout, fetch]
 ---
 
 # api
 
-Helper de frontend "api" (10 exportaciones).
+Helper de frontend "api" (11 exportaciones).
 
 
 ## Archivos

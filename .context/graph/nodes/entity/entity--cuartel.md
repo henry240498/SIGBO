@@ -19,13 +19,13 @@ terminos: [cuartel, cuarteles, organizacion]
 Entidad Cuartel, persistida en organizacion.cuarteles.
 
 - **Tabla:** [[table--organizacion-cuarteles|organizacion.cuarteles]]
-- **Columnas mapeadas:** 10
+- **Columnas mapeadas:** 12
 
 ## Donde se usa
 
 - **Pantallas:** `/dashboard/organizacion/cuarteles`, `/dashboard/organizacion/designaciones`
-- **Endpoints:** CuartelsController, DesignacionesController
-- **Servicios:** CuartelsService, DashboardService, DesignacionesService
+- **Endpoints:** CuartelsController, DesignacionesController, SeguimientoGeograficoController
+- **Servicios:** CuartelsService, DashboardService, DesignacionesService, SeguimientoGeograficoService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -44,6 +44,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[service--organizacion-cuarteles|CuartelsService]] `uses` →
 - [[service--organizacion-dashboard|DashboardService]] `uses` →
 - [[service--organizacion-designaciones|DesignacionesService]] `uses` →
+- [[service--servicios-seguimiento-geografico|SeguimientoGeograficoService]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

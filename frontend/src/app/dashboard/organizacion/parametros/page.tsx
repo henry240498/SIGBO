@@ -1,9 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
 import { cargarParametros, Parametro, TipoParametro } from '@/lib/parametros';
+import { Aviso } from '@/app/components/Aviso';
 
 interface Familia {
   tipo: TipoParametro;
@@ -41,6 +43,7 @@ const CADENA_ANCESTROS: Partial<Record<TipoParametro, { tipo: TipoParametro; lab
 };
 
 export default function ParametrosPage() {
+  const confirmar = useConfirmacion();
   const [familia, setFamilia] = useState<TipoParametro>('PAIS');
   const [cadena, setCadena] = useState<Record<string, string>>({});
   const [opcionesCadena, setOpcionesCadena] = useState<Record<string, Parametro[]>>({});
@@ -171,7 +174,7 @@ export default function ParametrosPage() {
   }
 
   async function darBaja(id: string) {
-    if (!window.confirm(`Dar de baja este ${familiaActual.labelSingular}?`)) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: `Dar de baja este ${familiaActual.labelSingular}?`, confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/organizacion/parametros/${id}/baja`, { method: 'PATCH' });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
@@ -195,7 +198,7 @@ export default function ParametrosPage() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div>
         <h2 style={{ fontSize: 16, marginBottom: 8 }}>Parámetros institucionales</h2>
-        <p style={{ fontSize: 13, color: '#94a3b8' }}>
+        <p style={{ fontSize: 13, color: 'var(--muted)' }}>
           Catálogos administrables que evitan texto libre en Personal (país, ubicación, profesión,
           idiomas, salud, seguros). Los demás módulos consumen estos valores mediante combos.
         </p>
@@ -203,14 +206,14 @@ export default function ParametrosPage() {
 
       <div className="card" style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         {FAMILIAS.map((f) => (
-          <button
+          <button type="button"
             key={f.tipo}
             onClick={() => cambiarFamilia(f.tipo)}
             className="btn-primary"
             style={{
               padding: '6px 12px',
               fontSize: 12,
-              background: familia === f.tipo ? '#2563eb' : '#334155',
+              background: familia === f.tipo ? '#2563eb' : '#475569',
             }}
           >
             {f.label}
@@ -226,6 +229,7 @@ export default function ParametrosPage() {
               <div key={a.tipo}>
                 <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>{a.label}</label>
                 <select
+                  aria-label={a.label}
                   className="input-field"
                   style={{ minWidth: 180 }}
                   value={cadena[a.tipo] ?? ''}
@@ -246,7 +250,7 @@ export default function ParametrosPage() {
       )}
 
       {!cadenaCompleta && (
-        <p style={{ color: '#94a3b8', fontSize: 13 }}>
+        <p style={{ color: 'var(--muted)', fontSize: 13 }}>
           Selecciona {ancestros[ancestros.length - 1]?.label.toLowerCase()} para ver/crear{' '}
           {familiaActual.label.toLowerCase()}.
         </p>
@@ -259,7 +263,7 @@ export default function ParametrosPage() {
               {familiaActual.label} ({items?.length ?? 0})
             </h3>
             <div style={{ display: 'flex', gap: 8 }}>
-              <button
+              <button type="button"
                 className="btn-primary"
                 onClick={() =>
                   descargarArchivo(`/organizacion/parametros/exportar/excel?tipo=${familia}`, `parametros-${familia}.xlsx`)
@@ -267,7 +271,7 @@ export default function ParametrosPage() {
               >
                 Exportar a Excel
               </button>
-              <button
+              <button type="button"
                 className="btn-primary"
                 onClick={() =>
                   descargarArchivo(`/organizacion/parametros/exportar/pdf?tipo=${familia}`, `parametros-${familia}.pdf`)
@@ -275,7 +279,7 @@ export default function ParametrosPage() {
               >
                 Exportar a PDF
               </button>
-              <button
+              <button type="button"
                 className="btn-primary"
                 onClick={() => {
                   if (mostrarForm) {
@@ -296,23 +300,23 @@ export default function ParametrosPage() {
             Mostrar eliminados
           </label>
 
-          {error && <p style={{ color: '#f87171' }}>{error}</p>}
-          {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+          {error && <Aviso tipo="error" texto={error} />}
+          {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
           {mostrarForm && (
             <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 10 }}>
                 <div>
-                  <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-                  <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+                  <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+                  <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
                 </div>
                 <div>
-                  <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Código (opcional)</label>
-                  <input className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} />
+                  <label htmlFor="codigo-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Código (opcional)</label>
+                  <input id="codigo-opcional" className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} />
                 </div>
                 <div>
-                  <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Orden</label>
-                  <input
+                  <label htmlFor="orden" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Orden</label>
+                  <input id="orden"
                     className="input-field"
                     type="number"
                     value={orden}
@@ -320,8 +324,8 @@ export default function ParametrosPage() {
                   />
                 </div>
                 <div>
-                  <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-                  <select
+                  <label htmlFor="estado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
+                  <select id="estado"
                     className="input-field"
                     value={estado}
                     onChange={(e) => setEstado(e.target.value as 'ACTIVO' | 'INACTIVO')}
@@ -332,11 +336,11 @@ export default function ParametrosPage() {
                 </div>
               </div>
               <div>
-                <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label>
-                <input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
+                <label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label>
+                <input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} />
               </div>
               <div style={{ display: 'flex', gap: 8 }}>
-                <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
+                <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
                   {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear'}
                 </button>
               </div>
@@ -344,35 +348,35 @@ export default function ParametrosPage() {
           )}
 
           {items && items.length === 0 && (
-            <p style={{ color: '#94a3b8', fontSize: 13 }}>Todavía no hay {familiaActual.label.toLowerCase()} cargados.</p>
+            <p style={{ color: 'var(--muted)', fontSize: 13 }}>Todavía no hay {familiaActual.label.toLowerCase()} cargados.</p>
           )}
 
           {items && items.length > 0 && (
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
-                <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-                  <th style={{ padding: '6px 4px' }}>Nombre</th>
-                  <th style={{ padding: '6px 4px' }}>Código</th>
-                  <th style={{ padding: '6px 4px' }}>Estado</th>
-                  <th style={{ padding: '6px 4px' }}>Acciones</th>
+                <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+                  <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+                  <th scope="col" style={{ padding: '6px 4px' }}>Código</th>
+                  <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+                  <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
                 </tr>
               </thead>
               <tbody>
                 {items.map((p) => (
-                  <tr key={p.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                  <tr key={p.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                     <td style={{ padding: '6px 4px' }}>{p.nombre}</td>
                     <td style={{ padding: '6px 4px' }}>{p.codigo ?? ''}</td>
                     <td style={{ padding: '6px 4px' }}>
-                      <span className="badge" style={{ background: p.estado === 'ACTIVO' ? '#166534' : '#7f1d1d' }}>
+                      <span className="badge" style={{ background: p.estado === 'ACTIVO' ? 'var(--ok-fill)' : 'var(--bad-fill)' }}>
                         {p.estado}
                       </span>
                     </td>
                     <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                      <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(p)}>
+                      <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(p)}>
                         Editar
                       </button>
                       {p.eliminadoEn === null ? (
-                        <button
+                        <button type="button"
                           className="btn-primary"
                           style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                           onClick={() => darBaja(p.id)}
@@ -380,7 +384,7 @@ export default function ParametrosPage() {
                           Eliminar
                         </button>
                       ) : (
-                        <button
+                        <button type="button"
                           className="btn-primary"
                           style={{ padding: '4px 8px', fontSize: 12, background: '#166534' }}
                           onClick={() => reactivar(p.id)}

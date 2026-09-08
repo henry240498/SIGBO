@@ -127,6 +127,19 @@ export class BomberosController {
     return this.bomberosService.cargarFirmaDigital(id, file, user.id, req.ip);
   }
 
+  @Get(':id/firma-digital')
+  @RequirePermission('personal:ver')
+  async obtenerFirmaDigital(@Param('id') id: string, @Res() res: Response) {
+    const { buffer, mimeType } = await this.bomberosService.obtenerFirmaDigital(id);
+    res.set({
+      'Content-Type': mimeType,
+      'Content-Length': String(buffer.length),
+      'Cache-Control': 'private, no-store',
+      'X-Content-Type-Options': 'nosniff',
+    });
+    res.send(buffer);
+  }
+
   @Delete(':id/firma-digital')
   @RequirePermission('personal:gestionar_firma_digital')
   eliminarFirmaDigital(@Param('id') id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {

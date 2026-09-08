@@ -20,7 +20,7 @@ const REPORTES = [
 export default function ReportesPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <p style={{ fontSize: 13, color: '#94a3b8' }}>
+      <p style={{ fontSize: 13, color: 'var(--muted)' }}>
         Exportacion disponible en Excel (.xlsx) y PDF para los 12 catalogos de este modulo.
       </p>
 
@@ -35,14 +35,14 @@ export default function ReportesPage() {
           <div key={r.ruta} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <div style={{ fontWeight: 600 }}>{r.nombre}</div>
             <div style={{ display: 'flex', gap: 8 }}>
-              <button
+              <button type="button"
                 className="btn-primary"
                 style={{ flex: 1 }}
                 onClick={() => descargarArchivo(`/organizacion/${r.ruta}/exportar/excel`, `${r.ruta}.xlsx`)}
               >
                 Excel
               </button>
-              <button
+              <button type="button"
                 className="btn-primary"
                 style={{ flex: 1 }}
                 onClick={() => descargarArchivo(`/organizacion/${r.ruta}/exportar/pdf`, `${r.ruta}.pdf`)}

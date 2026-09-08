@@ -1,8 +1,11 @@
 'use client';
 
+import { estiloBadgeColor } from '@/lib/color';
 import { useEffect, useState } from 'react';
+import { useEntradaConfirmada } from '@/app/components/InputProvider';
 import Link from 'next/link';
 import { apiFetch } from '@/lib/api';
+import { Aviso } from '@/app/components/Aviso';
 
 interface RolBadge {
   id: string;
@@ -37,6 +40,7 @@ interface Bombero {
 const ESTADOS = ['ACTIVO', 'INACTIVO', 'BLOQUEADO', 'PENDIENTE_VERIFICACION'];
 
 export default function UsuariosPage() {
+  const solicitarEntrada = useEntradaConfirmada();
   const [usuarios, setUsuarios] = useState<Usuario[] | null>(null);
   const [roles, setRoles] = useState<Rol[]>([]);
   const [bomberos, setBomberos] = useState<Bombero[]>([]);
@@ -127,7 +131,7 @@ export default function UsuariosPage() {
 
   async function darBaja(id: string) {
     setError(null);
-    const motivo = window.prompt('Motivo de la baja (opcional):') ?? undefined;
+    const motivo = (await solicitarEntrada({ titulo: 'Dar de baja usuario', mensaje: 'Puede registrar un motivo para la baja.', etiqueta: 'Motivo', confirmar: 'Continuar', peligro: true })) ?? undefined;
     const res = await apiFetch(`/seguridad/usuarios/${id}/baja`, {
       method: 'PATCH',
       body: JSON.stringify({ motivo }),
@@ -141,7 +145,7 @@ export default function UsuariosPage() {
 
   async function resetearPassword(id: string) {
     setError(null);
-    const nueva = window.prompt('Nueva contrasena temporal (min 8, mayuscula, minuscula, numero y especial):');
+    const nueva = await solicitarEntrada({ titulo: 'Restablecer contraseña', mensaje: 'Indique una contraseña temporal con al menos 8 caracteres, mayúscula, minúscula, número y símbolo.', etiqueta: 'Contraseña temporal', confirmar: 'Restablecer', tipo: 'password', requerida: true });
     if (!nueva) return;
     const res = await apiFetch(`/seguridad/usuarios/${id}/password`, {
       method: 'PATCH',
@@ -159,28 +163,28 @@ export default function UsuariosPage() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Usuarios ({usuarios?.length ?? 0})</h2>
-        <button className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
+        <button type="button" className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
           {mostrarForm ? 'Cancelar' : 'Nuevo usuario'}
         </button>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form className="card" onSubmit={crearUsuario} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Usuario</label>
-              <input className="input-field" value={username} onChange={(e) => setUsername(e.target.value)} required />
+              <label htmlFor="usuario" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Usuario</label>
+              <input id="usuario" className="input-field" value={username} onChange={(e) => setUsername(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Email</label>
-              <input className="input-field" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              <label htmlFor="email" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Email</label>
+              <input id="email" className="input-field" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Contrasena</label>
-              <input
+              <label htmlFor="contrasena" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Contrasena</label>
+              <input id="contrasena"
                 className="input-field"
                 type="password"
                 value={password}
@@ -190,8 +194,8 @@ export default function UsuariosPage() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-              <select className="input-field" value={estado} onChange={(e) => setEstado(e.target.value)}>
+              <label htmlFor="estado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
+              <select id="estado" className="input-field" value={estado} onChange={(e) => setEstado(e.target.value)}>
                 {ESTADOS.map((e) => (
                   <option key={e} value={e}>
                     {e}
@@ -200,10 +204,10 @@ export default function UsuariosPage() {
               </select>
             </div>
             <div style={{ gridColumn: '1 / -1' }}>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>
+              <label htmlFor="vincular-a-personal-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>
                 Vincular a Personal (opcional)
               </label>
-              <select className="input-field" value={bomberoId} onChange={(e) => setBomberoId(e.target.value)}>
+              <select id="vincular-a-personal-opcional" className="input-field" value={bomberoId} onChange={(e) => setBomberoId(e.target.value)}>
                 <option value="">-- ninguno --</option>
                 {bomberos.map((b) => (
                   <option key={b.id} value={b.id}>
@@ -230,7 +234,7 @@ export default function UsuariosPage() {
             </div>
           </div>
 
-          <button className="btn-primary" disabled={creando} style={{ alignSelf: 'flex-start' }}>
+          <button type="submit" className="btn-primary" disabled={creando} style={{ alignSelf: 'flex-start' }}>
             {creando ? 'Creando...' : 'Crear usuario'}
           </button>
         </form>
@@ -239,19 +243,19 @@ export default function UsuariosPage() {
       {usuarios && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Usuario</th>
-              <th style={{ padding: '6px 4px' }}>Email</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Roles</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Usuario</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Email</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Roles</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {usuarios.map((u) => {
               const bloqueado = !!(u.bloqueadoHasta && new Date(u.bloqueadoHasta) > new Date());
               return (
-                <tr key={u.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                <tr key={u.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                   <td style={{ padding: '6px 4px' }}>
                     <Link href={`/dashboard/seguridad/usuarios/${u.id}`} style={{ textDecoration: 'underline' }}>
                       {u.username}
@@ -261,26 +265,26 @@ export default function UsuariosPage() {
                   <td style={{ padding: '6px 4px' }}>
                     <span className="badge">{u.estado}</span>
                     {bloqueado && (
-                      <span className="badge" style={{ marginLeft: 4, background: '#7f1d1d' }}>
+                      <span className="badge" style={{ marginLeft: 4, background: 'var(--bad-fill)' }}>
                         BLOQUEADO
                       </span>
                     )}
                   </td>
                   <td style={{ padding: '6px 4px' }}>
                     {u.roles.map((r) => (
-                      <span key={r.id} className="badge" style={{ marginRight: 4, background: r.color }}>
+                      <span key={r.id} className="badge" style={{ marginRight: 4, ...estiloBadgeColor(r.color) }}>
                         {r.nombre}
                       </span>
                     ))}
                   </td>
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => bloquear(u.id, !bloqueado)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => bloquear(u.id, !bloqueado)}>
                       {bloqueado ? 'Desbloquear' : 'Bloquear'}
                     </button>
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => resetearPassword(u.id)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => resetearPassword(u.id)}>
                       Resetear password
                     </button>
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }} onClick={() => darBaja(u.id)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }} onClick={() => darBaja(u.id)}>
                       Dar de baja
                     </button>
                   </td>

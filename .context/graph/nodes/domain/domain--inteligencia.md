@@ -41,12 +41,17 @@ Modulo funcional "Inteligencia Artificial". Habilitado en la navegacion.
 - [[service--ia-ia-dashboard|IaDashboardService]] `belongs_to` →
 - [[service--ia-ia-motor|IaMotorService]] `belongs_to` →
 - [[service--ia-ia-propuestas-mejora|IaPropuestasMejoraService]] `belongs_to` →
+- [[service--ia-ia-voz|IaVozService]] `belongs_to` →
+- [[service--ia-ollama|OllamaService]] `belongs_to` →
+- [[service--ia-piper|PiperService]] `belongs_to` →
 - [[service--ia-ia-tools|IaToolsService]] `belongs_to` →
+- [[service--ia-whisper|WhisperService]] `belongs_to` →
 - [[api--ia-ia-admin-conversaciones|IaAdminConversacionesController]] `belongs_to` →
 - [[api--ia-ia-chat|IaChatController]] `belongs_to` →
 - [[api--ia-ia-configuracion|IaConfiguracionController]] `belongs_to` →
 - [[api--ia-ia-dashboard|IaDashboardController]] `belongs_to` →
 - [[api--ia-ia-propuestas-mejora|IaPropuestasMejoraController]] `belongs_to` →
+- [[api--ia-ia-voz|IaVozController]] `belongs_to` →
 - [[screen--dashboard-inteligencia|/dashboard/inteligencia]] `belongs_to` →
 
 ---

@@ -12,6 +12,7 @@ edges:
   - [belongs_to, domain--inteligencia]
   - [uses, component--modulo-ia]
   - [uses, service--ia-ia-tools]
+  - [uses, service--ia-ollama]
 terminos: [motor]
 ---
 
@@ -33,6 +34,7 @@ Motor de razonamiento LOCAL de Snoopy: sin llamadas salientes, sin agente extern
 - `belongs_to` → [[domain--inteligencia|Inteligencia Artificial]]
 - `uses` → [[component--modulo-ia|ia (modulo NestJS)]]
 - `uses` → [[service--ia-ia-tools|IaToolsService]]
+- `uses` → [[service--ia-ollama|OllamaService]]
 
 ## Referenciado por
 

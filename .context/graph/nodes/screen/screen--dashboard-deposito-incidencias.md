@@ -16,6 +16,7 @@ edges:
   - [uses, component--front-equipos]
   - [uses, component--front-vehiculos]
   - [uses, component--front-deposito]
+  - [uses, component--front-aviso]
 terminos: [deposito, incidencias, crear, editar]
 ---
 
@@ -37,6 +38,7 @@ Pantalla /dashboard/deposito/incidencias.
 - `uses` → [[component--front-equipos|equipos]]
 - `uses` → [[component--front-vehiculos|vehiculos]]
 - `uses` → [[component--front-deposito|deposito]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

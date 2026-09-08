@@ -36,8 +36,8 @@ Tabla servicios.personal_servicio (6 columnas). Creada en 007_servicios.sql, mod
 ## Donde se usa
 
 - **Pantallas:** — (sin pantalla que llegue hasta aca)
-- **Endpoints:** ConsultasCruzadasController
-- **Servicios:** ConsultasCruzadasService
+- **Endpoints:** ConsultasCruzadasController, PerfilController
+- **Servicios:** ConsultasCruzadasService, PerfilService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -56,6 +56,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 
 - [[entity--personal-servicio|PersonalServicio]] `persisted_in` →
 - [[service--personal-consultas-cruzadas|ConsultasCruzadasService]] `reads` →
+- [[service--seguridad-perfil|PerfilService]] `reads` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

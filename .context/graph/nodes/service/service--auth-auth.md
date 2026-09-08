@@ -31,7 +31,7 @@ Logica de negocio de auth (modulo auth).
 
 ## Metodos
 
-`login()` · `refresh()` · `logout()`
+`if()` · `if()` · `if()` · `if()` · `if()` · `secretoRequerido()` · `secretoRequerido()` · `expiracionJwt()` · `duracionEnMilisegundos()` · `login()` · `refresh()` · `logout()`
 
 ## Archivos
 

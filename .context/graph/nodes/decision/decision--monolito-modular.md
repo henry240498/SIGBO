@@ -65,7 +65,7 @@ actuales lo permitirian sin reescribir la logica de negocio.
 
 ## Relaciones
 
-- `depends_on` → [[dependency--nestjs|NestJS 10 + TypeORM 0.3]]
+- `depends_on` → [[dependency--nestjs|NestJS 11 + TypeORM 0.3]]
 
 ---
 <sub>Nodo **curado** (editable a mano).</sub>

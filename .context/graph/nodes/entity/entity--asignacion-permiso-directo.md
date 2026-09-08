@@ -23,7 +23,7 @@ Entidad AsignacionPermisoDirecto, persistida en seguridad.asignacion_permisos_di
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/mi-perfil`, `/dashboard/seguridad/permisos`, `/dashboard/seguridad/roles`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Pantallas:** `/dashboard`, `/dashboard/mi-perfil`, `/dashboard/seguridad/permisos`, `/dashboard/seguridad/roles`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
 - **Endpoints:** MeController, PermisosController, UsuariosController
 - **Servicios:** PermisosService, PolicyEngineService, UsuariosService
 

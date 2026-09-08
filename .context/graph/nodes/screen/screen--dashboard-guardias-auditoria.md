@@ -12,6 +12,8 @@ archivos:
 edges:
   - [belongs_to, domain--guardias]
   - [uses, component--front-api]
+  - [uses, component--front-json-seguro]
+  - [uses, component--front-cargando]
   - [calls, api--seguridad-auditoria]
 terminos: [guardias, auditoria]
 ---
@@ -34,6 +36,8 @@ Pantalla /dashboard/guardias/auditoria, consume 1 endpoint(s).
 
 - `belongs_to` → [[domain--guardias|Guardias]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-json-seguro|json-seguro]]
+- `uses` → [[component--front-cargando|Cargando]]
 - `calls` → [[api--seguridad-auditoria|AuditoriaController]]
 
 ---

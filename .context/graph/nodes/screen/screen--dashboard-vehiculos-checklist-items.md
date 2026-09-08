@@ -12,8 +12,10 @@ archivos:
   - frontend/src/app/dashboard/vehiculos/checklist-items/page.tsx
 edges:
   - [belongs_to, domain--vehiculos]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-vehiculos]
+  - [uses, component--front-aviso]
 terminos: [vehiculos, checklist, items, editar]
 ---
 
@@ -31,8 +33,10 @@ Pantalla /dashboard/vehiculos/checklist-items.
 ## Relaciones
 
 - `belongs_to` → [[domain--vehiculos|Vehículos]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-vehiculos|vehiculos]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

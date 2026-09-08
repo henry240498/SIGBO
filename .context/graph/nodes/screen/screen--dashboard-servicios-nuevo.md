@@ -11,6 +11,7 @@ archivos:
   - frontend/src/app/dashboard/servicios/nuevo/page.tsx
 edges:
   - [belongs_to, domain--servicios]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-vehiculos]
   - [calls, api--servicios-servicios]
@@ -36,6 +37,7 @@ Pantalla /dashboard/servicios/nuevo, consume 2 endpoint(s).
 ## Relaciones
 
 - `belongs_to` → [[domain--servicios|Servicios]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-vehiculos|vehiculos]]
 - `calls` → [[api--servicios-servicios|ServiciosController]]

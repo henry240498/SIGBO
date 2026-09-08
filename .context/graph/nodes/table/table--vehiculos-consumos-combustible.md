@@ -39,7 +39,7 @@ Tabla vehiculos.consumos_combustible (11 columnas). Creada en 006_vehiculos_equi
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/deposito/articulos/[id]`, `/dashboard/deposito/bajas`, `/dashboard/deposito/incidencias`, `/dashboard/deposito/movimientos`, `/dashboard/equipos/[id]`, `/dashboard/personal/[id]`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
+- **Pantallas:** `/dashboard/deposito/articulos/[id]`, `/dashboard/deposito/bajas`, `/dashboard/deposito/incidencias`, `/dashboard/deposito/movimientos`, `/dashboard/equipos/[id]`, `/dashboard/servicios/nuevo`, `/dashboard/vehiculos`, `/dashboard/vehiculos/[id]`, `/dashboard/vehiculos/checklist-items`
 - **Endpoints:** VehiculosController
 - **Servicios:** VehiculosService
 

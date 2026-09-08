@@ -15,6 +15,7 @@ edges:
   - [uses, component--front-api]
   - [uses, component--front-personal]
   - [uses, component--front-asistencia]
+  - [uses, component--front-aviso]
 terminos: [asistencia, registro, crear]
 ---
 
@@ -35,6 +36,7 @@ Pantalla /dashboard/asistencia/registro.
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-asistencia|asistencia]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

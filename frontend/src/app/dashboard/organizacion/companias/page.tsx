@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
+import { Aviso } from '@/app/components/Aviso';
 
 interface Compania {
   id: string;
@@ -16,6 +18,7 @@ interface Compania {
 }
 
 export default function CompaniasPage() {
+  const confirmar = useConfirmacion();
   const [companias, setCompanias] = useState<Compania[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
@@ -113,7 +116,7 @@ export default function CompaniasPage() {
 
   async function darBaja(id: string) {
     setError(null);
-    if (!window.confirm('Dar de baja esta compania?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Dar de baja esta compania?', confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/organizacion/companias/${id}/baja`, { method: 'PATCH' });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
@@ -139,15 +142,15 @@ export default function CompaniasPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ fontSize: 16 }}>Companias ({companias?.length ?? 0})</h2>
+        <h2 style={{ fontSize: 16 }}>Compañías ({companias?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/companias/exportar/excel', 'companias.xlsx')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/companias/exportar/excel', 'companias.xlsx')}>
             Exportar a Excel
           </button>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/companias/exportar/pdf', 'companias.pdf')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/companias/exportar/pdf', 'companias.pdf')}>
             Exportar a PDF
           </button>
-          <button
+          <button type="button"
             className="btn-primary"
             onClick={() => {
               if (mostrarForm) {
@@ -165,7 +168,7 @@ export default function CompaniasPage() {
         <input
           className="input-field"
           style={{ maxWidth: 260 }}
-          placeholder="Buscar por codigo o nombre..."
+          placeholder="Buscar por código o nombre..."
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
@@ -180,29 +183,29 @@ export default function CompaniasPage() {
         </label>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
+      {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
 
       {mostrarForm && (
         <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Codigo</label>
-              <input className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} required />
+              <label htmlFor="codigo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Código</label>
+              <input id="codigo" className="input-field" value={codigo} onChange={(e) => setCodigo(e.target.value)} required />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
-              <input className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+              <label htmlFor="nombre" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Nombre</label>
+              <input id="nombre" className="input-field" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ciudad</label>
-              <input className="input-field" value={ciudad} onChange={(e) => setCiudad(e.target.value)} />
+              <label htmlFor="ciudad" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ciudad</label>
+              <input id="ciudad" className="input-field" value={ciudad} onChange={(e) => setCiudad(e.target.value)} />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de creacion</label>
-              <input
+              <label htmlFor="fecha-de-creacion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha de creacion</label>
+              <input id="fecha-de-creacion"
                 className="input-field"
                 type="date"
                 value={fechaCreacion}
@@ -210,19 +213,19 @@ export default function CompaniasPage() {
               />
             </div>
             <div>
-              <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-              <select className="input-field" value={estado} onChange={(e) => setEstado(e.target.value as 'ACTIVO' | 'INACTIVO')}>
+              <label htmlFor="estado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
+              <select id="estado" className="input-field" value={estado} onChange={(e) => setEstado(e.target.value as 'ACTIVO' | 'INACTIVO')}>
                 <option value="ACTIVO">ACTIVO</option>
                 <option value="INACTIVO">INACTIVO</option>
               </select>
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Direccion</label>
-            <input className="input-field" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
+            <label htmlFor="direccion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Dirección</label>
+            <input id="direccion" className="input-field" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
+            <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>
               {guardando ? 'Guardando...' : editandoId ? 'Guardar cambios' : 'Crear compania'}
             </button>
             {editandoId && (
@@ -245,33 +248,33 @@ export default function CompaniasPage() {
       {companias && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Codigo</th>
-              <th style={{ padding: '6px 4px' }}>Nombre</th>
-              <th style={{ padding: '6px 4px' }}>Ciudad</th>
-              <th style={{ padding: '6px 4px' }}>Fecha creacion</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Código</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Nombre</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Ciudad</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Fecha creacion</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {companias.map((c) => (
-              <tr key={c.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={c.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{c.codigo}</td>
                 <td style={{ padding: '6px 4px' }}>{c.nombre}</td>
                 <td style={{ padding: '6px 4px' }}>{c.ciudad ?? '-'}</td>
                 <td style={{ padding: '6px 4px' }}>{c.fechaCreacion ?? '-'}</td>
                 <td style={{ padding: '6px 4px' }}>
-                  <span className="badge" style={{ background: c.estado === 'ACTIVO' ? '#166534' : '#7f1d1d' }}>
+                  <span className="badge" style={{ background: c.estado === 'ACTIVO' ? 'var(--ok-fill)' : 'var(--bad-fill)' }}>
                     {c.estado}
                   </span>
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(c)}>
+                  <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => editar(c)}>
                     Editar
                   </button>
                   {c.eliminadoEn === null ? (
-                    <button
+                    <button type="button"
                       className="btn-primary"
                       style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
                       onClick={() => darBaja(c.id)}
@@ -279,7 +282,7 @@ export default function CompaniasPage() {
                       Eliminar
                     </button>
                   ) : (
-                    <button className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => reactivar(c.id)}>
+                    <button type="button" className="btn-primary" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => reactivar(c.id)}>
                       Reactivar
                     </button>
                   )}

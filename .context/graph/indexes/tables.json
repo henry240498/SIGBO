@@ -212,7 +212,7 @@
    "clase": "Vehiculo"
   },
   "migracion": "database/migrations/006_vehiculos_equipos.sql",
-  "columnas": 35,
+  "columnas": 36,
   "fks": []
  },
  "vehiculos.mantenimientos_vehiculos": {
@@ -317,9 +317,12 @@
  "servicios.historial_servicios": {
   "id": "table--servicios-historial-servicios",
   "dominio": "servicios",
-  "entidad": null,
+  "entidad": {
+   "id": "entity--historial-servicio",
+   "clase": "HistorialServicio"
+  },
   "migracion": "database/migrations/007_servicios.sql",
-  "columnas": 10,
+  "columnas": 12,
   "fks": []
  },
  "finanzas.cuentas_contables": {
@@ -429,7 +432,7 @@
    "clase": "Cuartel"
   },
   "migracion": "database/migrations/012_organizacion.sql",
-  "columnas": 13,
+  "columnas": 15,
   "fks": [
    "organizacion.companias"
   ]
@@ -1760,7 +1763,7 @@
    "clase": "ConfiguracionIa"
   },
   "migracion": "database/migrations/057_ia_estructura.sql",
-  "columnas": 24,
+  "columnas": 43,
   "fks": [
    "seguridad.usuarios"
   ]
@@ -1800,7 +1803,7 @@
    "clase": "MensajeIa"
   },
   "migracion": "database/migrations/057_ia_estructura.sql",
-  "columnas": 9,
+  "columnas": 10,
   "fks": [
    "ia.conversaciones"
   ]
@@ -1981,6 +1984,36 @@
   "fks": [
    "finanzas.facturas",
    "organizacion.parametros",
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.rutas_planificadas": {
+  "id": "table--servicios-rutas-planificadas",
+  "dominio": "servicios",
+  "entidad": {
+   "id": "entity--ruta-planificada-servicio",
+   "clase": "RutaPlanificadaServicio"
+  },
+  "migracion": "database/migrations/071_servicios_seguimiento_geografico.sql",
+  "columnas": 7,
+  "fks": [
+   "servicios.servicios",
+   "seguridad.usuarios",
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.pruebas_comunicacion": {
+  "id": "table--servicios-pruebas-comunicacion",
+  "dominio": "servicios",
+  "entidad": {
+   "id": "entity--prueba-comunicacion-servicio",
+   "clase": "PruebaComunicacionServicio"
+  },
+  "migracion": "database/migrations/071_servicios_seguimiento_geografico.sql",
+  "columnas": 10,
+  "fks": [
+   "servicios.servicios",
+   "vehiculos.vehiculos",
    "seguridad.usuarios"
   ]
  }

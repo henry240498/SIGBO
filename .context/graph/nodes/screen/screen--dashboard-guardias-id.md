@@ -12,10 +12,15 @@ archivos:
   - frontend/src/app/dashboard/guardias/[id]/page.tsx
 edges:
   - [belongs_to, domain--guardias]
+  - [uses, component--front-inputprovider]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
+  - [uses, component--front-json-seguro]
   - [uses, component--front-personal]
   - [uses, component--front-parametros]
   - [uses, component--front-guardias]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
 terminos: [guardias, editar, eliminar, asignar, reemplazar]
 ---
 
@@ -33,10 +38,15 @@ Pantalla /dashboard/guardias/[id].
 ## Relaciones
 
 - `belongs_to` → [[domain--guardias|Guardias]]
+- `uses` → [[component--front-inputprovider|InputProvider]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-json-seguro|json-seguro]]
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-guardias|guardias]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

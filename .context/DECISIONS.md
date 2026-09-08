@@ -5,7 +5,7 @@ nivel: L1
 
 # Decisiones de arquitectura
 
-11 decisiones vigentes, cada una con su nodo curado. Todas tienen un **costo aceptado**:
+12 decisiones vigentes, cada una con su nodo curado. Todas tienen un **costo aceptado**:
 esa sección es la más importante, porque explica qué no vas a poder hacer fácil y por qué
 el sistema no está "mal hecho" cuando te choques con el límite.
 
@@ -13,7 +13,7 @@ el sistema no está "mal hecho" cuando te choques con el límite.
 |---|---|---|
 | 1 | [[decision--monolito-modular]] — monolito NestJS, no microservicios | Sin event sourcing ni búsqueda full-text; los límites modulares no los fuerza nada |
 | 2 | [[decision--sqlserver-en-vez-de-postgres]] — SQL Server Express | Sin `JSONB`; límite de 10 GB; sin Agent ni TimescaleDB |
-| 3 | [[decision--sin-libreria-ui]] — 4 clases CSS y estilos inline | Sin variables CSS: cambiar la paleta es find-and-replace |
+| 3 | [[decision--sin-libreria-ui]] — sin librería de UI, clases propias y estilos inline | Se pagó al cambiar de tema; hoy el color sale de `var(--token)` |
 | 4 | [[decision--logica-en-typescript]] — cero procedimientos almacenados | Invariantes duplicados entre BD y servicios |
 | 5 | [[decision--permisos-dinamicos]] — permisos como datos, no roles fijos | Varias consultas por request, sin caché |
 | 6 | [[decision--migraciones-a-mano]] — `synchronize: false` | Toda entidad exige su migración |
@@ -22,6 +22,7 @@ el sistema no está "mal hecho" cuando te choques con el límite.
 | 9 | [[decision--pool-idle-timeout]] — pool que recicla conexiones seguido | Reconexión más frecuente |
 | 10 | [[decision--body-parser-8mb]] — body de 8 MB y CORS permisivo | `/uploads` se sirve sin guard de permisos |
 | 11 | [[decision--rate-limit-propio]] — rate limiting propio en memoria, no `@nestjs/throttler` | El contador es por proceso: no sobrevive a un reinicio ni escala a varias instancias |
+| 12 | [[decision--pantalla-vive-donde-su-permiso]] — una pantalla vive donde manda su permiso | Mover una pantalla obliga a redirigir la ruta vieja y regenerar el registro |
 
 ## Las tres que más condicionan el trabajo diario
 
@@ -61,10 +62,11 @@ responder a medias.
    TRANSFER` más siete `schema:` — barato en código, no gratis en riesgo. Ver
    [[rule--guardias-vive-en-operaciones]].
 
-2. **Tema claro a medio camino.** `configuracion.registry.ts` define
-   `tokens.background: '#f3f7f8'` y `appearance.theme: 'auto'`, pero las ~56 pantallas
-   tienen el oscuro hardcodeado. Hay que elegir un lado antes de tocar apariencia —
-   [[rule--tema-oscuro-fijo]].
+2. **Tokens de tema definidos en dos lados.** El tema claro ya está completo en las
+   pantallas, pero `:root` lo tiene fijo en `globals.css` mientras
+   `configuracion.registry.ts` define los mismos tokens en base de datos y
+   `appearance.theme` sigue ofreciendo `light`/`dark`/`auto` cuando solo hay claro.
+   Nadie lee todavía los de base de datos — [[rule--tema-claro-unico]].
 
 3. **Cuatro mecanismos de parametrización.** `organizacion.parametros`,
    `operaciones.tolerancias_asistencia`, `operaciones.requisitos_rol_guardia` y el
@@ -84,10 +86,12 @@ responder a medias.
    la fila. La solución estructural es subirlo a `/uploads` y guardar la referencia; la
    infraestructura ya existe (`multer`) — [[error--413-croquis-grande]].
 
-7. **Sin pruebas automatizadas.** No es una decisión documentada, es una ausencia. Con
-   decenas de controladores y 150 tablas (`node .context/graph/validar.mjs` para el
-   número actual — crece con cada módulo), toda verificación es manual. Es la deuda que
-   hace más riesgoso cada uno de los cambios de esta lista.
+7. **Cobertura de pruebas despareja.** El backend tiene 17 suites y 70 casos que corren
+   sin base de datos; el frontend, 9 casos sobre un solo helper. Con decenas de
+   controladores y decenas de pantallas, casi toda la verificación de interfaz sigue
+   siendo manual, y eso es lo que hace más riesgoso cada uno de los cambios de esta
+   lista. Lo amortiguan cuatro comprobaciones estáticas: `audit:a11y`,
+   `audit:contraste`, `verificar-endpoints.mjs` y `auditar-secciones-expediente.mjs`.
 
 ## Al tomar una decisión nueva
 

@@ -1,4 +1,4 @@
-import { API_ORIGIN, apiFetch, obtenerSesion } from './api';
+import { API_ORIGIN, apiFetch } from './api';
 import { cargarParametros } from './parametros';
 
 /* ------------------------------------------------------------------ */
@@ -345,14 +345,11 @@ export async function cargarIndicadoresDashboard() {
 export async function analizarImportacionMarcador(archivo: File): Promise<ImportacionMarcador> {
   const formData = new FormData();
   formData.append('archivo', archivo);
-  const sesion = obtenerSesion();
-  const headers: HeadersInit = {};
-  if (sesion) headers['Authorization'] = `Bearer ${sesion.accessToken}`;
-
   const res = await fetch(`${API_ORIGIN}/api/v1/operaciones/importaciones/analizar`, {
     method: 'POST',
-    headers,
+    headers: { 'X-SIGBO-Request': '1' },
     body: formData,
+    credentials: 'include',
   });
   if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo analizar el archivo'));
   return res.json();

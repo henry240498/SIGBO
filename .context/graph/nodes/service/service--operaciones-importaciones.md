@@ -30,7 +30,7 @@ Logica de negocio de importaciones (modulo operaciones).
 
 ## Metodos
 
-`if()` · `for()` · `if()` · `for()` · `if()` · `if()` · `if()` · `analizar()` · `findOne()` · `historial()` · `listarFilas()` · `confirmar()` · `cancelar()`
+`if()` · `for()` · `for()` · `if()` · `for()` · `if()` · `if()` · `if()` · `analizar()` · `findOne()` · `historial()` · `listarFilas()` · `confirmar()` · `cancelar()`
 
 ## Archivos
 

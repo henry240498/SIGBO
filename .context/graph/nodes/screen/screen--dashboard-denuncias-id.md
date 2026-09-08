@@ -12,6 +12,7 @@ archivos:
 edges:
   - [belongs_to, domain--denuncias]
   - [uses, component--front-api]
+  - [uses, component--front-cargando]
   - [calls, api--denuncias-denuncias]
   - [calls, api--denuncias-denuncias]
 terminos: [denuncias]
@@ -36,6 +37,7 @@ Pantalla /dashboard/denuncias/[id], consume 2 endpoint(s).
 
 - `belongs_to` → [[domain--denuncias|Denuncias]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-cargando|Cargando]]
 - `calls` → [[api--denuncias-denuncias|DenunciasController]]
 - `calls` → [[api--denuncias-denuncias|DenunciasController]]
 

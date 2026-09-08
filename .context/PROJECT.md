@@ -41,9 +41,9 @@ cd frontend; npm run dev          # http://localhost:3000
 O `start-sigbo.ps1`, que hace las dos cosas y abre el navegador. Los logs quedan en
 `logs/`.
 
-**Trampa conocida:** ese script no reinicia servicios que ya escuchan. Si tu cambio "no
-surte efecto", revisá [[error--start-script-no-reinicia-servicios]] antes de depurar
-cualquier otra cosa.
+El iniciador recompila y reinicia solo procesos de SIGBO previamente detectados en los
+puertos 3000/3001. Si uno pertenece a otro proyecto, se detiene con un mensaje para
+evitar terminarlo accidentalmente.
 
 - Swagger: `http://localhost:3001/api/docs`
 - Credenciales de desarrollo: `docs/CREDENCIALES-Y-ROLES.md` (7 roles, 7 usuarios)
@@ -61,16 +61,22 @@ cualquier otra cosa.
 
 ## Deuda técnica conocida, priorizada
 
-1. **Sin pruebas automatizadas.** No hay suite en backend ni frontend. Toda verificación
-   es manual o vía Swagger. Es la deuda más costosa: cada cambio se valida a mano.
+1. **Pruebas: el backend tiene, el frontend casi no.** El backend corre **17 suites y 70
+   casos** (`cd backend; npm test`), sin tocar la base de datos, así que andan sin SQL
+   Server; cubren auth, cookies, CSRF, contraseñas, rate limit, roles y geolocalización.
+   El frontend tiene 9 casos, solo sobre la resolución de `?seccion=`. Ahí la deuda sigue
+   siendo la más costosa: cada pantalla se valida a mano o vía Swagger. Lo que la
+   amortigua son cuatro comprobaciones estáticas — ver la sección Verificación de
+   `CLAUDE.md`.
 2. **Documentación desactualizada.** `docs/README.md` dice "42 tablas, 10 esquemas"; la
    realidad son **88 tablas en 12 esquemas**. Es la prueba viva de por qué este grafo se
    regenera en vez de escribirse.
 3. **Guardias vive en el esquema `operaciones`** aunque sea un módulo propio, y hay
    superposición con Asistencia (pantallas de guardias en los dos lados) —
    ver [[rule--guardias-vive-en-operaciones]].
-4. **Tema claro a medio camino.** El registro de configuración define tokens de tema
-   claro que ninguna pantalla consume — ver [[rule--tema-oscuro-fijo]].
+4. **Los tokens de tema de Configuración no están cableados.** El tema claro ya está
+   completo en las pantallas, pero sale de `:root` en `globals.css`, no de
+   `configuracion_valores` — ver [[rule--tema-claro-unico]].
 5. **Numeración de migraciones colisionada:** dos archivos con prefijo `017`.
 6. **Secretos de desarrollo en el repositorio:** `JWT_SECRET` y contraseñas semilla hay
    que rotar antes de cualquier uso real.

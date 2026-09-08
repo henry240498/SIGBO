@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Bombero, Guardia, GrupoGuardia, GrupoGuardiaMiembro } from '../../shared/entities';
@@ -32,30 +32,48 @@ export class GruposGuardiaService {
   }
 
   async create(dto: CreateGrupoGuardiaDto, actorId: string, ip?: string) {
-    if (dto.oficialACargoId) {
-      await this.elegibilidadService.validar('OFICIAL_A_CARGO', dto.oficialACargoId);
+    if (dto.oficialACargoId === dto.choferId) {
+      throw new BadRequestException('El responsable a cargo y el chofer deben ser personas distintas');
     }
-    const grupo = await this.grupoRepo.save(
-      this.grupoRepo.create({
-        nombre: dto.nombre,
-        oficialACargoId: dto.oficialACargoId ?? null,
-        estado: (dto.estado as GrupoGuardia['estado']) ?? 'ACTIVO',
-        observaciones: dto.observaciones ?? null,
-        cicloRotacionDias: dto.cicloRotacionDias ?? null,
-        diasSemanaCsv: dto.diasSemanaCsv ?? null,
-        cantidadMinima: dto.cantidadMinima ?? null,
-        cantidadMaxima: dto.cantidadMaxima ?? null,
-        cantidadOficiales: dto.cantidadOficiales ?? null,
-        cantidadChoferes: dto.cantidadChoferes ?? null,
-        creadoPor: actorId,
-      }),
-    );
+    await this.elegibilidadService.validar('OFICIAL_A_CARGO', dto.oficialACargoId);
+    await this.elegibilidadService.validar('CHOFER', dto.choferId);
+    const { grupo, chofer } = await this.grupoRepo.manager.transaction(async (manager) => {
+      const grupoCreado = await manager.getRepository(GrupoGuardia).save(
+        manager.getRepository(GrupoGuardia).create({
+          nombre: dto.nombre,
+          oficialACargoId: dto.oficialACargoId,
+          estado: (dto.estado as GrupoGuardia['estado']) ?? 'ACTIVO',
+          observaciones: dto.observaciones ?? null,
+          cicloRotacionDias: dto.cicloRotacionDias ?? null,
+          diasSemanaCsv: dto.diasSemanaCsv ?? null,
+          cantidadMinima: dto.cantidadMinima ?? null,
+          cantidadMaxima: dto.cantidadMaxima ?? null,
+          cantidadOficiales: dto.cantidadOficiales ?? null,
+          cantidadChoferes: dto.cantidadChoferes ?? null,
+          creadoPor: actorId,
+        }),
+      );
+      const choferCreado = await manager.getRepository(GrupoGuardiaMiembro).save(
+        manager.getRepository(GrupoGuardiaMiembro).create({
+          grupoId: grupoCreado.id, bomberoId: dto.choferId, rol: 'CHOFER', orden: 0,
+        }),
+      );
+      return { grupo: grupoCreado, chofer: choferCreado };
+    });
     await this.auditoriaService.registrar({
       usuarioId: actorId,
       accion: 'CREAR',
       recurso: 'operaciones.grupos_guardia',
       recursoId: grupo.id,
       datosDespues: grupo,
+      ip: ip ?? null,
+    });
+    await this.auditoriaService.registrar({
+      usuarioId: actorId,
+      accion: 'AGREGAR_MIEMBRO_GRUPO_GUARDIA',
+      recurso: 'operaciones.grupos_guardia_miembros',
+      recursoId: chofer.id,
+      datosDespues: chofer,
       ip: ip ?? null,
     });
     return grupo;

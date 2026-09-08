@@ -12,10 +12,13 @@ archivos:
   - frontend/src/app/dashboard/asistencia/eventos/[id]/page.tsx
 edges:
   - [belongs_to, domain--asistencia]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-personal]
   - [uses, component--front-asistencia]
   - [uses, component--front-parametros]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
 terminos: [asistencia, eventos, editar]
 ---
 
@@ -33,10 +36,13 @@ Pantalla /dashboard/asistencia/eventos/[id].
 ## Relaciones
 
 - `belongs_to` → [[domain--asistencia|Asistencia]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-asistencia|asistencia]]
 - `uses` → [[component--front-parametros|parametros]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

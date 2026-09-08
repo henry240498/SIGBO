@@ -3,6 +3,8 @@ on:
   pull_request:
   push:
     branches: [main]
+permissions:
+  contents: read
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,8 +22,67 @@ jobs:
           cache: npm
           cache-dependency-path: ${{ matrix.proyecto }}/package-lock.json
       - run: npm ci
+      - run: npm audit --omit=dev --audit-level=high
       - run: npm run build
       - if: matrix.proyecto == 'backend'
         run: npm run test:ci
       - if: matrix.proyecto == 'frontend'
         run: npm run audit:a11y
+  context:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: pwsh -NoProfile -File database/run-migrations.ps1 -ValidateOnly
+      - run: node .context/graph/build-graph.mjs
+      - run: node .context/graph/validar.mjs
+  migration-history:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Proteger migraciones históricas
+        shell: pwsh
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          $cambios = git diff --name-status $env:BASE_SHA $env:HEAD_SHA -- database/migrations
+          $invalidos = @($cambios | Where-Object { $_ -match '^(M|D|R|C)\s' })
+          if ($invalidos.Count -gt 0) {
+            Write-Error "Las migraciones históricas son inmutables. Agregue una nueva migración en lugar de modificar, borrar, renombrar o copiar una existente."
+            $invalidos | ForEach-Object { Write-Error $_ }
+            exit 1
+          }
+  security-baseline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bloquear secretos y evidencias versionadas
+        shell: pwsh
+        run: |
+          $archivos = @(git ls-files)
+          $prohibidos = @($archivos | Where-Object {
+            (($_ -match '(^|/)\.env(?:\.|$)') -and ($_ -notmatch '(^|/)\.env\.example$')) -or
+            ($_ -match '^backend/(private_uploads|uploads)/')
+          })
+          if ($prohibidos.Count -gt 0) {
+            Write-Error 'No se versionan archivos de entorno, adjuntos ni evidencia privada.'
+            $prohibidos | ForEach-Object { Write-Error $_ }
+            exit 1
+          }
+
+          $hallazgos = @(rg -n -i 'sigbo\.local\.2026|mock-(access|refresh)-token' backend/src frontend/src database workflows)
+          if ($LASTEXITCODE -gt 1) {
+            Write-Error 'No se pudo ejecutar la comprobacion de seguridad.'
+            exit $LASTEXITCODE
+          }
+          if ($hallazgos.Count -gt 0) {
+            Write-Error 'Se detectaron credenciales o tokens de prueba prohibidos.'
+            $hallazgos | ForEach-Object { Write-Error $_ }
+            exit 1
+          }

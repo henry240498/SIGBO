@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { AsignacionGuardia, Bombero, Guardia, GrupoGuardiaMiembro, MarcacionAsistencia } from '../../shared/entities';
+import { AsignacionGuardia, Bombero, Guardia, GrupoGuardia, GrupoGuardiaMiembro, MarcacionAsistencia } from '../../shared/entities';
 import { AuditoriaService } from '../seguridad/auditoria.service';
 import { ElegibilidadService } from './elegibilidad.service';
 import { OrdenGuardiaConfiguracionService } from './orden-guardia-configuracion.service';
@@ -11,6 +11,7 @@ import { AsignarPersonalDto } from './dto/asignar-personal.dto';
 import { RegistrarHorarioDto } from './dto/registrar-horario.dto';
 import { ActualizarPresenciaDto } from './dto/actualizar-presencia.dto';
 import { ReemplazarAsignacionDto } from './dto/reemplazar-asignacion.dto';
+import { PlanificarGuardiasDto } from './dto/planificar-guardias.dto';
 
 function normalizarHora(hora: string): string {
   return hora.length === 5 ? `${hora}:00` : hora;
@@ -22,6 +23,7 @@ export class GuardiasService {
     @InjectRepository(Guardia) private readonly guardiaRepo: Repository<Guardia>,
     @InjectRepository(AsignacionGuardia) private readonly asignacionRepo: Repository<AsignacionGuardia>,
     @InjectRepository(GrupoGuardiaMiembro) private readonly miembroRepo: Repository<GrupoGuardiaMiembro>,
+    @InjectRepository(GrupoGuardia) private readonly grupoRepo: Repository<GrupoGuardia>,
     @InjectRepository(Bombero) private readonly bomberoRepo: Repository<Bombero>,
     @InjectRepository(MarcacionAsistencia) private readonly marcacionRepo: Repository<MarcacionAsistencia>,
     private readonly auditoriaService: AuditoriaService,
@@ -53,7 +55,39 @@ export class GuardiasService {
     return { inicio, fin };
   }
 
+  /** Un grupo puede compartir integrantes con otros grupos. Lo que se exige
+   * al usarlo en una guardia es una composición operativa mínima: responsable
+   * y al menos un chofer habilitado. */
+  private async validarGrupoOperativo(grupoId: string) {
+    const grupo = await this.grupoRepo.findOne({ where: { id: grupoId } });
+    if (!grupo || grupo.estado !== 'ACTIVO') throw new BadRequestException('El grupo de guardia seleccionado no está activo');
+    if (!grupo.oficialACargoId) throw new BadRequestException(`El grupo ${grupo.nombre} debe tener un responsable de guardia`);
+    await this.elegibilidadService.validar('OFICIAL_A_CARGO', grupo.oficialACargoId);
+    const miembros = await this.miembroRepo.find({ where: { grupoId }, order: { orden: 'ASC' } });
+    const choferes = miembros.filter((m) => m.rol === 'CHOFER');
+    if (choferes.length === 0) throw new BadRequestException(`El grupo ${grupo.nombre} debe tener al menos un chofer habilitado`);
+    if (choferes.every((chofer) => chofer.bomberoId === grupo.oficialACargoId)) {
+      throw new BadRequestException(`El responsable y el chofer del grupo ${grupo.nombre} deben ser personas distintas`);
+    }
+    for (const chofer of choferes) await this.elegibilidadService.validar('CHOFER', chofer.bomberoId);
+    return { grupo, miembros };
+  }
+
+  private async aplicarGrupo(guardiaId: string, grupoId: string, actorId: string, reemplazar = false) {
+    const { grupo, miembros } = await this.validarGrupoOperativo(grupoId);
+    if (reemplazar) await this.asignacionRepo.delete({ guardiaId });
+    const roles = new Map<string, string>(miembros.map((m) => [m.bomberoId, m.rol]));
+    roles.set(grupo.oficialACargoId as string, 'OFICIAL_A_CARGO');
+    for (const [bomberoId, rol] of roles) {
+      await this.asignacionRepo.save(this.asignacionRepo.create({
+        guardiaId, bomberoId, rol, estado: 'ASIGNADO', tipoParticipacion: 'TITULAR',
+        fechaAsignacion: new Date(), asignadoPor: actorId,
+      }));
+    }
+  }
+
   async create(dto: CreateGuardiaDto, actorId: string, ip?: string) {
+    if (dto.grupoGuardiaId) await this.validarGrupoOperativo(dto.grupoGuardiaId);
     const guardia = await this.guardiaRepo.save(
       this.guardiaRepo.create({
         fecha: dto.fecha,
@@ -61,7 +95,7 @@ export class GuardiasService {
         horaInicio: normalizarHora(dto.horaInicio),
         horaFin: normalizarHora(dto.horaFin),
         tipo: (dto.tipo as any) ?? 'ORDINARIA',
-        jefeGuardiaId: dto.jefeGuardiaId ?? null,
+        jefeGuardiaId: dto.jefeGuardiaId ?? (dto.grupoGuardiaId ? (await this.grupoRepo.findOne({ where: { id: dto.grupoGuardiaId } }))?.oficialACargoId ?? null : null),
         grupoGuardiaId: dto.grupoGuardiaId ?? null,
         observaciones: dto.observaciones ?? null,
         esquemaHorarioId: dto.esquemaHorarioId ?? null,
@@ -69,22 +103,7 @@ export class GuardiasService {
       }),
     );
 
-    if (dto.grupoGuardiaId) {
-      const miembros = await this.miembroRepo.find({ where: { grupoId: dto.grupoGuardiaId } });
-      for (const m of miembros) {
-        await this.asignacionRepo.save(
-          this.asignacionRepo.create({
-            guardiaId: guardia.id,
-            bomberoId: m.bomberoId,
-            rol: m.rol,
-            estado: 'ASIGNADO',
-            tipoParticipacion: 'TITULAR',
-            fechaAsignacion: new Date(),
-            asignadoPor: actorId,
-          }),
-        );
-      }
-    }
+    if (dto.grupoGuardiaId) await this.aplicarGrupo(guardia.id, dto.grupoGuardiaId, actorId);
 
     await this.auditoriaService.registrar({
       usuarioId: actorId,
@@ -101,6 +120,7 @@ export class GuardiasService {
    * nunca debe bloquear al responsable de la planificacion. */
   async update(id: string, dto: UpdateGuardiaDto, actorId: string, ip?: string) {
     const anterior = await this.findOne(id);
+    if (dto.grupoGuardiaId) await this.validarGrupoOperativo(dto.grupoGuardiaId);
     await this.guardiaRepo.update(id, {
       ...(dto.fecha !== undefined ? { fecha: dto.fecha } : {}),
       ...(dto.turno !== undefined ? { turno: dto.turno as any } : {}),
@@ -126,6 +146,35 @@ export class GuardiasService {
       ip: ip ?? null,
     });
     return actualizada;
+  }
+
+  async planificarManual(dto: PlanificarGuardiasDto, actorId: string, ip?: string) {
+    const resultado: Guardia[] = [];
+    for (const item of dto.items) {
+      if (!item.guardiaId) {
+        resultado.push(await this.create({ ...item, tipo: 'ORDINARIA' }, actorId, ip));
+        continue;
+      }
+      const anterior = await this.findOne(item.guardiaId);
+      if (anterior.estado !== 'PLANIFICADA') {
+        throw new BadRequestException(`La guardia ${anterior.fecha} no está planificada y no puede reemplazarse desde la grilla`);
+      }
+      if (!dto.reemplazarPlanificadas) {
+        throw new BadRequestException('Confirme el reemplazo de guardias planificadas antes de guardar la distribución');
+      }
+      await this.validarGrupoOperativo(item.grupoGuardiaId);
+      await this.guardiaRepo.update(anterior.id, {
+        fecha: item.fecha, turno: item.turno as Guardia['turno'], horaInicio: normalizarHora(item.horaInicio),
+        horaFin: normalizarHora(item.horaFin), grupoGuardiaId: item.grupoGuardiaId,
+        jefeGuardiaId: (await this.grupoRepo.findOne({ where: { id: item.grupoGuardiaId } }))?.oficialACargoId ?? null,
+        observaciones: item.observaciones ?? null,
+      });
+      await this.aplicarGrupo(anterior.id, item.grupoGuardiaId, actorId, true);
+      const actualizada = await this.findOne(anterior.id);
+      await this.auditoriaService.registrar({ usuarioId: actorId, accion: 'PLANIFICAR_GRILLA_GUARDIA', recurso: 'operaciones.guardias', recursoId: anterior.id, datosAntes: anterior, datosDespues: actualizada, ip: ip ?? null });
+      resultado.push(actualizada);
+    }
+    return resultado;
   }
 
   /** Anulacion no destructiva (secciones 23/47): nunca se borra la fila,

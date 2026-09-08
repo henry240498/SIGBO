@@ -43,8 +43,14 @@ edges:
   - [reads, table--personal-tipos-bombero]
   - [uses, entity--inscripcion-actividad-academica]
   - [reads, table--academia-inscripciones]
+  - [uses, entity--feriado]
+  - [reads, table--organizacion-feriados]
+  - [uses, entity--tipo-servicio]
+  - [reads, table--servicios-tipos-servicio]
+  - [uses, entity--usuario]
+  - [reads, table--seguridad-usuarios]
   - [uses, service--documentos-documentos]
-terminos: [tools, bombero, guardia, asignacion, servicio, vehiculo, equipo, marcacion, asistencia, actividad, academica, curso, externo, cache, movimiento, financiero, articulo, identidad, institucional, parametro, rango, tipo, inscripcion]
+terminos: [tools, bombero, guardia, asignacion, servicio, vehiculo, equipo, marcacion, asistencia, actividad, academica, curso, externo, cache, movimiento, financiero, articulo, identidad, institucional, parametro, rango, tipo, inscripcion, feriado, usuario]
 ---
 
 # IaToolsService
@@ -96,6 +102,12 @@ Registro y ejecucion de las herramientas controladas de Snoopy (secciones 12/45 
 - `reads` → [[table--personal-tipos-bombero|personal.tipos_bombero]]
 - `uses` → [[entity--inscripcion-actividad-academica|InscripcionActividadAcademica]]
 - `reads` → [[table--academia-inscripciones|academia.inscripciones]]
+- `uses` → [[entity--feriado|Feriado]]
+- `reads` → [[table--organizacion-feriados|organizacion.feriados]]
+- `uses` → [[entity--tipo-servicio|TipoServicio]]
+- `reads` → [[table--servicios-tipos-servicio|servicios.tipos_servicio]]
+- `uses` → [[entity--usuario|Usuario]]
+- `reads` → [[table--seguridad-usuarios|seguridad.usuarios]]
 - `uses` → [[service--documentos-documentos|DocumentosService]]
 
 ## Referenciado por

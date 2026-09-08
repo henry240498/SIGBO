@@ -1,14 +1,14 @@
 import PDFDocument from 'pdfkit';
 import { existsSync } from 'fs';
-import { join } from 'path';
 import { OrdenGuardiaSnapshot } from '../../modules/guardias/types/orden-guardia-snapshot';
+import { rutaAbsolutaAlmacenamiento } from './almacenamiento';
 
 const MARGEN = 38;
 const MESES = ['', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'setiembre', 'octubre', 'noviembre', 'diciembre'];
 
 function rutaAbsoluta(rutaServida: string | null): string | null {
-  if (!rutaServida) return null;
-  const absoluta = join(process.cwd(), rutaServida.replace(/^\//, ''));
+  const absoluta = rutaAbsolutaAlmacenamiento(rutaServida);
+  if (!absoluta) return null;
   return existsSync(absoluta) ? absoluta : null;
 }
 

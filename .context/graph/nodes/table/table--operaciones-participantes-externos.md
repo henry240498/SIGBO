@@ -37,7 +37,7 @@ Tabla operaciones.participantes_externos (10 columnas). Creada en 020_asistencia
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`, `/dashboard/finanzas/beneficios`, `/dashboard/personal/[id]`
+- **Pantallas:** `/dashboard/academia`, `/dashboard/academia/[id]`, `/dashboard/academia/cursos-externos`, `/dashboard/academia/instructores-externos`, `/dashboard/asistencia`, `/dashboard/asistencia/eventos`, `/dashboard/asistencia/eventos/[id]`, `/dashboard/asistencia/externos`, `/dashboard/asistencia/registro`, `/dashboard/asistencia/tolerancias`, `/dashboard/finanzas/beneficios`
 - **Endpoints:** EvaluacionesAcademiaController, EventosAsistenciaController, InscripcionesAcademiaController, MarcacionesController, ParticipantesExternosController
 - **Servicios:** EvaluacionesAcademiaService, EventosAsistenciaService, InscripcionesAcademiaService, ParticipantesExternosService
 

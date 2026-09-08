@@ -13,11 +13,13 @@ archivos:
 edges:
   - [belongs_to, domain--deposito]
   - [uses, component--front-api]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-parametros]
   - [uses, component--front-personal]
   - [uses, component--front-vehiculos]
   - [uses, component--front-equipos]
   - [uses, component--front-deposito]
+  - [uses, component--front-aviso]
 terminos: [deposito, bajas, baja]
 ---
 
@@ -36,11 +38,13 @@ Pantalla /dashboard/deposito/bajas.
 
 - `belongs_to` → [[domain--deposito|Depósito]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-vehiculos|vehiculos]]
 - `uses` → [[component--front-equipos|equipos]]
 - `uses` → [[component--front-deposito|deposito]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

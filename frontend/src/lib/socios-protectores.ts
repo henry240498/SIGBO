@@ -1,4 +1,4 @@
-import { apiFetch, API_ORIGIN, obtenerSesion } from './api';
+import { apiFetch } from './api';
 import { cargarParametros } from './parametros';
 
 async function mensajeError(res: Response, porDefecto: string): Promise<string> {
@@ -309,10 +309,7 @@ export async function anularAporte(id: string, motivoAnulacionId: string, motivo
 export async function subirComprobanteAporte(archivo: File): Promise<{ archivoUrl: string }> {
   const formData = new FormData();
   formData.append('archivo', archivo);
-  const sesion = obtenerSesion();
-  const headers: HeadersInit = {};
-  if (sesion) headers['Authorization'] = `Bearer ${sesion.accessToken}`;
-  const res = await fetch(`${API_ORIGIN}/api/v1/finanzas/aportes/comprobante`, { method: 'POST', headers, body: formData });
+  const res = await apiFetch('/finanzas/aportes/comprobante', { method: 'POST', body: formData });
   if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo subir el comprobante'));
   return res.json();
 }
@@ -379,10 +376,7 @@ export async function anularFactura(id: string, motivo: string): Promise<Factura
 export async function subirArchivoFactura(archivo: File): Promise<{ archivoUrl: string }> {
   const formData = new FormData();
   formData.append('archivo', archivo);
-  const sesion = obtenerSesion();
-  const headers: HeadersInit = {};
-  if (sesion) headers['Authorization'] = `Bearer ${sesion.accessToken}`;
-  const res = await fetch(`${API_ORIGIN}/api/v1/finanzas/facturas/archivo`, { method: 'POST', headers, body: formData });
+  const res = await apiFetch('/finanzas/facturas/archivo', { method: 'POST', body: formData });
   if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo subir el archivo'));
   return res.json();
 }

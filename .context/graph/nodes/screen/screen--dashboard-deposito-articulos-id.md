@@ -17,6 +17,8 @@ edges:
   - [uses, component--front-personal]
   - [uses, component--front-vehiculos]
   - [uses, component--front-deposito]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
 terminos: [deposito, articulos, editar, crear]
 ---
 
@@ -39,6 +41,8 @@ Pantalla /dashboard/deposito/articulos/[id].
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-vehiculos|vehiculos]]
 - `uses` → [[component--front-deposito|deposito]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

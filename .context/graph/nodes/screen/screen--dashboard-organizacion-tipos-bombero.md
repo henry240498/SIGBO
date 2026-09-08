@@ -11,8 +11,10 @@ archivos:
   - frontend/src/app/dashboard/organizacion/tipos-bombero/page.tsx
 edges:
   - [belongs_to, domain--organizacion]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-exportar]
+  - [uses, component--front-aviso]
   - [calls, api--personal-tipos-bombero]
   - [calls, api--personal-tipos-bombero]
   - [calls, api--personal-tipos-bombero]
@@ -38,8 +40,10 @@ Pantalla /dashboard/organizacion/tipos-bombero, consume 3 endpoint(s).
 ## Relaciones
 
 - `belongs_to` → [[domain--organizacion|Organización Institucional]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-exportar|exportar]]
+- `uses` → [[component--front-aviso|Aviso]]
 - `calls` → [[api--personal-tipos-bombero|TiposBomberoController]]
 - `calls` → [[api--personal-tipos-bombero|TiposBomberoController]]
 - `calls` → [[api--personal-tipos-bombero|TiposBomberoController]]

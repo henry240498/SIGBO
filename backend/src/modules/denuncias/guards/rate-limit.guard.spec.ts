@@ -101,4 +101,22 @@ describe('RateLimitGuard', () => {
     // mismo IP, otro endpoint: cupo propio
     expect(guard.canActivate(contexto('7.7.7.7'))).toBe(true);
   });
+
+  it('conserva la ventana propia de cada endpoint durante la limpieza', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2026-08-14T10:00:00Z'));
+    let opcionesActuales: RateLimitOpciones = { ...OPCIONES, nombre: 'crear', ventanaMs: 60 * 60_000 };
+    const reflector = { getAllAndOverride: () => opcionesActuales } as unknown as Reflector;
+    const guard = new RateLimitGuard(reflector);
+
+    guard.canActivate(contexto('8.8.8.8'));
+    guard.canActivate(contexto('8.8.8.8'));
+
+    jest.setSystemTime(new Date('2026-08-14T10:02:00Z'));
+    opcionesActuales = { ...OPCIONES, nombre: 'catalogos', ventanaMs: 60_000 };
+    guard.canActivate(contexto('9.9.9.9'));
+
+    opcionesActuales = { ...OPCIONES, nombre: 'crear', ventanaMs: 60 * 60_000 };
+    expect(guard.canActivate(contexto('8.8.8.8'))).toBe(true);
+    expect(() => guard.canActivate(contexto('8.8.8.8'))).toThrow(HttpException);
+  });
 });

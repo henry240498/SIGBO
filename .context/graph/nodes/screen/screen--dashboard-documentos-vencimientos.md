@@ -13,6 +13,7 @@ edges:
   - [belongs_to, domain--documentos]
   - [uses, component--front-parametros]
   - [uses, component--front-documentos]
+  - [uses, component--front-aviso]
 terminos: [documentos, vencimientos]
 ---
 
@@ -31,6 +32,7 @@ Pantalla /dashboard/documentos/vencimientos.
 - `belongs_to` → [[domain--documentos|Documentos]]
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-documentos|documentos]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

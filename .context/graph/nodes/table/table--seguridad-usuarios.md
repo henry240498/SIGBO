@@ -57,9 +57,9 @@ Tabla seguridad.usuarios (26 columnas). Creada en 002_seguridad.sql, modificada 
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/inteligencia`, `/dashboard/mi-perfil`, `/dashboard/mi-perfil/seguridad`, `/dashboard/organizacion`, `/dashboard/seguridad`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Pantallas:** `/dashboard`, `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/inteligencia`, `/dashboard/mi-perfil`, `/dashboard/mi-perfil/seguridad`, `/dashboard/organizacion`, `/dashboard/seguridad`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
 - **Endpoints:** AuthController, BitacoraController, CertificacionesAcademiaController, DashboardController, DashboardController, DenunciasController, DenunciasPublicasController, IaAdminConversacionesController, IaChatController, MeController, PerfilController, SesionesController, UsuariosController
-- **Servicios:** AuthService, BitacoraService, CertificacionesAcademiaService, DashboardService, DenunciasService, IaConversacionesService, PerfilService, SesionesService, UsuariosService
+- **Servicios:** AuthService, BitacoraService, CertificacionesAcademiaService, DashboardService, DenunciasService, IaConversacionesService, IaToolsService, PerfilService, SesionesService, UsuariosService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -129,15 +129,15 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[table--finanzas-facturas|finanzas.facturas]] `references` →
 - [[table--finanzas-facturas|finanzas.facturas]] `references` →
 - [[table--finanzas-notas-credito|finanzas.notas_credito]] `references` →
+- [[table--servicios-rutas-planificadas|servicios.rutas_planificadas]] `references` →
+- [[table--servicios-rutas-planificadas|servicios.rutas_planificadas]] `references` →
+- [[table--servicios-pruebas-comunicacion|servicios.pruebas_comunicacion]] `references` →
 - [[entity--usuario|Usuario]] `persisted_in` →
 - [[service--academia-certificaciones-academia|CertificacionesAcademiaService]] `reads` →
 - [[service--auth-auth|AuthService]] `reads` →
 - [[service--denuncias-denuncias|DenunciasService]] `reads` →
 - [[service--guardias-bitacora|BitacoraService]] `reads` →
 - [[service--ia-ia-conversaciones|IaConversacionesService]] `reads` →
-- [[service--seguridad-dashboard|DashboardService]] `reads` →
-- [[service--seguridad-perfil|PerfilService]] `reads` →
-- [[service--seguridad-sesiones|SesionesService]] `reads` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

@@ -11,8 +11,10 @@ archivos:
   - frontend/src/app/dashboard/organizacion/turnos/page.tsx
 edges:
   - [belongs_to, domain--organizacion]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-exportar]
+  - [uses, component--front-aviso]
   - [calls, api--organizacion-turnos]
   - [calls, api--equipos-equipamiento-bombero]
   - [calls, api--organizacion-turnos]
@@ -40,8 +42,10 @@ Pantalla /dashboard/organizacion/turnos, consume 4 endpoint(s).
 ## Relaciones
 
 - `belongs_to` → [[domain--organizacion|Organización Institucional]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-exportar|exportar]]
+- `uses` → [[component--front-aviso|Aviso]]
 - `calls` → [[api--organizacion-turnos|TurnosController]]
 - `calls` → [[api--equipos-equipamiento-bombero|EquipamientoBomberoController]]
 - `calls` → [[api--organizacion-turnos|TurnosController]]

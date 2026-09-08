@@ -58,13 +58,39 @@ Las críticas, en corto. El detalle está en `.context/RULES.md`.
    lista de permisos vive en `localStorage`.
 5. **Permiso efectivo** = roles vigentes + directos concedidos − directos denegados. La
    denegación directa gana sobre cualquier rol.
-6. **CSS:** solo existen `.card`, `.btn-primary`, `.input-field`, `.badge`. Lo demás es
-   `style={{}}` inline con los hex **exactos** de `docs/GUIA-DE-ESTILO.md`. Sin Tailwind,
-   sin librería de UI. Tema oscuro. `ACTIVO` verde / cualquier estado malo rojo `#7f1d1d`.
+6. **CSS: tema claro, y el color sale de un token, no de un hex.** Sin Tailwind, sin
+   librería de UI. `globals.css` define ~116 clases (`.card`, `.btn-primary`,
+   `.input-field`, `.badge` y las de cada dominio) más las variables de `:root`. Lo que
+   no cubran va `style={{}}` inline pero **con `var(--…)`**: `--muted`, `--danger`,
+   `--success`, `--warning`, `--signal`, `--ink`, `--line`, `--line-soft`. Un hex crudo
+   de texto en una pantalla es la falla que se corrigió en toda la app: quedaron de la
+   época del tema oscuro y sobre tarjeta blanca daban 2,5:1. `npm run audit:contraste`
+   falla si vuelve alguno.
+   **Chips y botones no se pintan igual.** `.badge` fija `color: var(--ink)`, así que un
+   badge lleva fondo de **tinte claro** (`--ok-fill`, `--bad-fill`, `--warn-fill`,
+   `--info-fill`, `--neutral-fill`); con fondo sólido oscuro queda en 1,5:1. `.btn-primary`
+   fija texto blanco, así que un botón sí lleva fondo **sólido oscuro**. La semántica no
+   cambia: `ACTIVO` verde / cualquier estado malo rojo — `--bad-fill` en chip, `#7f1d1d`
+   en botón.
 7. **Pantallas:** `'use client'`, estado local con `useState`/`useEffect`, y recargar con
    `cargar()` después de cada mutación. No hay store global ni React Query.
 8. **API:** el backend usa `setGlobalPrefix('api/v1')` y `apiFetch()` ya lo agrega — las
    pantallas pasan rutas relativas (`apiFetch('/guardias/grupos')`).
+9. **Piezas compartidas de pantalla, en vez de repetir el patrón suelto:**
+   `<Aviso tipo="error|exito" texto={x} />` para el resultado de una acción (lleva
+   `role`, y el de éxito se retira solo), `<Cargando texto="…" />` para el estado de
+   carga (esqueleto con `role="status"`), `<ComboBuscable ariaLabel="…">` para un
+   combo que puede crecer, y `usePaginacion` + `<Paginador>` para un listado que trae
+   todo el conjunto en una sola consulta.
+10. **Toda etiqueta nombra a su control.** `<label htmlFor>` + `id` en el control; si el
+    control se repite en una lista, `useId()` para el prefijo, o `aria-label` cuando el
+    texto de la etiqueta es dinámico. Un `<label>` suelto no nombra el campo ni permite
+    enfocarlo con un clic. Los `<th>` llevan `scope="col"`.
+    `npm run audit:a11y` falla si vuelve a aparecer alguno sin asociar.
+11. **Pantalla nueva ⇒ `npm run generar:pantallas`.** `src/lib/pantallas.generado.ts`
+    alimenta las migas de pan y el buscador (Ctrl+K); si no se regenera, la pantalla
+    existe pero nadie la encuentra. El nombre legible sale del array `TABS` del
+    `layout.tsx` del módulo, así que conviene agregarla ahí primero.
 
 ## Dos particularidades que sorprenden
 
@@ -85,7 +111,9 @@ Las críticas, en corto. El detalle está en `.context/RULES.md`.
 | Esquema SQL | `operaciones` | **`operaciones`** ← el mismo |
 
 **No existe el prefijo `operaciones:` ni el esquema `guardias`.** Los dos dominios
-comparten el esquema `operaciones`, y quedaron pantallas de guardias en ambos lados.
+comparten el esquema `operaciones`. Las **pantallas** ya no están repartidas: cada una
+vive en el módulo cuyo permiso gobierna sus endpoints — ver
+`.context/graph/curated/decision/decision--pantalla-vive-donde-su-permiso.md`.
 
 ## Cómo correrlo
 
@@ -108,9 +136,34 @@ SQL Server Express local con TCP/IP deshabilitado de fábrica
 
 ## Verificación
 
-**No hay pruebas automatizadas** en backend ni frontend. Cualquier cambio se verifica a
-mano o vía Swagger (`http://localhost:3001/api/docs`). Tenelo en cuenta al proponer
-refactors: no hay red de seguridad.
+**El backend sí tiene pruebas: 17 suites, 70 casos** (`cd backend; npm test`, ~2 min).
+Cubren auth, cookies, CSRF, política de contraseñas, rate limit, roles, geolocalización
+y el armado del `DataSource` — no tocan la base, así que corren **sin SQL Server**.
+Al cambiar algo de esas áreas, correlas.
+
+**El frontend casi no tiene.** Solo `npm test` sobre la resolución de `?seccion=`
+(9 casos, runner nativo de Node, sin dependencias). Todo lo demás se verifica a mano o
+vía Swagger (`http://localhost:3001/api/docs`). Tenelo en cuenta al proponer refactors
+de frontend: ahí la red de seguridad es fina.
+
+Lo que suple parte de esa falta son cuatro comprobaciones estáticas. Las dos auditorías
+tienen línea base y **fallan si la deuda crece**; las otras dos encuentran defectos que
+`tsc` no ve, porque una ruta mal escrita es una cadena:
+
+```powershell
+cd frontend
+npm run audit:contraste   # paleta del tema oscuro sobre fondo claro
+npm run audit:a11y        # etiquetas sin asociar, th sin scope, confirm/alert nativos
+npm test                  # resolución de ?seccion= del expediente
+npx tsc --noEmit          # el build no corre en CI: esto es lo más rápido
+
+cd ..
+node scripts/verificar-endpoints.mjs            # llamadas del front sin ruta en el back
+node scripts/auditar-secciones-expediente.mjs   # carga/vacío/error por sección
+```
+
+Y con el backend levantado, `node scripts/smoke-expediente.mjs --usuario <u> --password <p>`
+recorre las rutas de las 20 secciones del expediente y reporta el código de cada una.
 
 ## Documentación
 

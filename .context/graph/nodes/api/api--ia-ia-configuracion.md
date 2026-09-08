@@ -13,6 +13,9 @@ archivos:
 edges:
   - [belongs_to, domain--inteligencia]
   - [exposes, service--ia-ia-configuracion]
+  - [exposes, service--ia-ollama]
+  - [exposes, service--ia-whisper]
+  - [exposes, service--ia-piper]
   - [exposes, service--ia-ia-configuracion]
 terminos: [configuracion, admin, config, inteligencia, configurar, desactivar]
 ---
@@ -28,6 +31,11 @@ Superficie HTTP de ia configuracion bajo /api/v1/ia/admin/config.
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
 | GET | `/ia/admin/config` | `inteligencia:configurar` |
+| GET | `/ia/admin/config/ollama/estado` | `inteligencia:configurar` |
+| POST | `/ia/admin/config/ollama/probar-conexion` | `inteligencia:configurar` |
+| GET | `/ia/admin/config/whisper/estado` | `inteligencia:configurar` |
+| GET | `/ia/admin/config/piper/estado` | `inteligencia:configurar` |
+| GET | `/ia/admin/config/piper/voces` | `inteligencia:configurar` |
 | GET | `/ia/admin/config/historial` | `inteligencia:configurar` |
 | PATCH | `/ia/admin/config` | `inteligencia:configurar` |
 | PATCH | `/ia/admin/config` | `inteligencia:desactivar` |
@@ -40,10 +48,21 @@ Superficie HTTP de ia configuracion bajo /api/v1/ia/admin/config.
 
 - `belongs_to` → [[domain--inteligencia|Inteligencia Artificial]]
 - `exposes` → [[service--ia-ia-configuracion|IaConfiguracionService]]
+- `exposes` → [[service--ia-ollama|OllamaService]]
+- `exposes` → [[service--ia-whisper|WhisperService]]
+- `exposes` → [[service--ia-piper|PiperService]]
 - `exposes` → [[service--ia-ia-configuracion|IaConfiguracionService]]
 
 ## Referenciado por
 
+- [[component--front-ia|ia]] `calls` →
+- [[component--front-ia|ia]] `calls` →
+- [[component--front-ia|ia]] `calls` →
+- [[component--front-ia|ia]] `calls` →
+- [[component--front-ia|ia]] `calls` →
+- [[component--front-ia|ia]] `calls` →
+- [[component--front-ia|ia]] `calls` →
+- [[component--front-ia|ia]] `calls` →
 - [[component--front-ia|ia]] `calls` →
 - [[component--front-ia|ia]] `calls` →
 - [[component--front-ia|ia]] `calls` →

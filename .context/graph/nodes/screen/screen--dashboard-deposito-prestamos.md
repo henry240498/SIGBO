@@ -17,6 +17,8 @@ edges:
   - [uses, component--front-personal]
   - [uses, component--front-equipos]
   - [uses, component--front-deposito]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
 terminos: [deposito, prestamos, prestar]
 ---
 
@@ -39,6 +41,8 @@ Pantalla /dashboard/deposito/prestamos.
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-equipos|equipos]]
 - `uses` → [[component--front-deposito|deposito]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

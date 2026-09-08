@@ -4,7 +4,7 @@ tipo: SCREEN
 nombre: /dashboard
 nivel: L1
 dominio: seguridad
-resumen: Pantalla /dashboard.
+resumen: Pantalla /dashboard, consume 1 endpoint(s).
 ruta: /dashboard
 capa: frontend
 archivos:
@@ -14,13 +14,20 @@ edges:
   - [uses, component--front-api]
   - [uses, component--front-modulos]
   - [uses, component--front-systemicon]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
+  - [calls, api--seguridad-me]
 ---
 
 # /dashboard
 
-Pantalla /dashboard.
+Pantalla /dashboard, consume 1 endpoint(s).
 
 - **Ruta:** `/dashboard`
+
+## Endpoints que consume
+
+- `/seguridad/mi-inicio`
 
 ## Archivos
 
@@ -32,6 +39,9 @@ Pantalla /dashboard.
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-modulos|modulos]]
 - `uses` → [[component--front-systemicon|SystemIcon]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
+- `calls` → [[api--seguridad-me|MeController]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

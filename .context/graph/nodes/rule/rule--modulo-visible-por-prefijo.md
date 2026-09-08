@@ -74,5 +74,9 @@ permisos `asistencia:guardias_*` a modulo propio con prefijo `guardias:` (5 perm
 
 - `affects` → [[component--front-modulos|modulos]]
 
+## Referenciado por
+
+- [[decision--pantalla-vive-donde-su-permiso|Una pantalla vive en el modulo cuyo permiso gobierna sus endpoints]] `affects` →
+
 ---
 <sub>Nodo **curado** (editable a mano).</sub>

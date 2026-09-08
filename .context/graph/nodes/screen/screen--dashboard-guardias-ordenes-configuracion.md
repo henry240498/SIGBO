@@ -13,6 +13,8 @@ edges:
   - [belongs_to, domain--guardias]
   - [uses, component--front-personal]
   - [uses, component--front-guardias]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
 terminos: [guardias, ordenes, configuracion]
 ---
 
@@ -31,6 +33,8 @@ Pantalla /dashboard/guardias/ordenes/configuracion.
 - `belongs_to` → [[domain--guardias|Guardias]]
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-guardias|guardias]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

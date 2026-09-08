@@ -1,4 +1,4 @@
-import { apiFetch, API_ORIGIN, obtenerSesion } from './api';
+import { apiFetch, API_ORIGIN } from './api';
 
 /**
  * Reglas GLOBALES de SIGBO para trabajar con Personal (bomberos). Cualquier
@@ -135,14 +135,11 @@ async function mensajeErrorFirma(res: Response, porDefecto: string): Promise<str
 export async function subirFirmaDigital(bomberoId: string, archivo: File): Promise<unknown> {
   const formData = new FormData();
   formData.append('archivo', archivo);
-  const sesion = obtenerSesion();
-  const headers: HeadersInit = {};
-  if (sesion) headers['Authorization'] = `Bearer ${sesion.accessToken}`;
-
   const res = await fetch(`${API_ORIGIN}/api/v1/personal/bomberos/${bomberoId}/firma-digital`, {
     method: 'PUT',
-    headers,
+    headers: { 'X-SIGBO-Request': '1' },
     body: formData,
+    credentials: 'include',
   });
   if (!res.ok) throw new Error(await mensajeErrorFirma(res, 'No se pudo subir la firma digital'));
   return res.json();

@@ -20,7 +20,7 @@ Modulo NestJS que cablea controladores, servicios y repositorios de seguridad.
 
 ## Entidades registradas (forFeature)
 
-Usuario, Rol, Permiso, AsignacionRol, AsignacionPermisoRol, AsignacionPermisoDirecto, HistorialContrasena, LogAuditoria, Sesion, ConfiguracionSistema, UsuarioTelefono, UsuarioCorreo
+Usuario, Rol, Permiso, AsignacionRol, AsignacionPermisoRol, AsignacionPermisoDirecto, HistorialContrasena, LogAuditoria, Sesion, ConfiguracionSistema, UsuarioTelefono, UsuarioCorreo, AsignacionGuardia, Guardia, PersonalServicio, Servicio, TipoServicio
 
 ## Archivos
 

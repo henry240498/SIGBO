@@ -14,6 +14,8 @@ edges:
   - [belongs_to, domain--guardias]
   - [uses, component--front-api]
   - [uses, component--front-guardias]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
 terminos: [guardias, sorteos, crear]
 ---
 
@@ -33,6 +35,8 @@ Pantalla /dashboard/guardias/sorteos/[id].
 - `belongs_to` → [[domain--guardias|Guardias]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-guardias|guardias]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

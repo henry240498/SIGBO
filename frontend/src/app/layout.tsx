@@ -3,17 +3,18 @@ import './globals.css';
 import 'leaflet/dist/leaflet.css';
 import { ConfigBootstrap } from './components/ConfigBootstrap';
 import { ConfirmProvider } from './components/ConfirmProvider';
+import { InputProvider } from './components/InputProvider';
 import { ExperienceGuard } from './components/ExperienceGuard';
 
 export const metadata: Metadata = {
   title: 'SIGBO-CBVC',
-  description: 'Sistema Integral de Gestion para Bomberos Voluntarios',
+  description: 'Sistema Integral de Gestión para Bomberos Voluntarios',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body><ConfirmProvider><a className="skip-link" href="#contenido-principal">Saltar al contenido principal</a><ExperienceGuard/>{children}<ConfigBootstrap /></ConfirmProvider></body>
+      <body><ConfirmProvider><InputProvider><a className="skip-link" href="#contenido-principal">Saltar al contenido principal</a><ExperienceGuard/>{children}<ConfigBootstrap /></InputProvider></ConfirmProvider></body>
     </html>
   );
 }

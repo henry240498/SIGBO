@@ -1,4 +1,4 @@
-import { apiFetch, API_ORIGIN, obtenerSesion } from './api';
+import { apiFetch } from './api';
 import { cargarParametros } from './parametros';
 
 /* ------------------------------------------------------------------ */
@@ -267,10 +267,7 @@ export async function subirArchivoDocumento(id: string, archivo: File, motivo?: 
   const formData = new FormData();
   formData.append('archivo', archivo);
   if (motivo) formData.append('motivo', motivo);
-  const sesion = obtenerSesion();
-  const headers: HeadersInit = {};
-  if (sesion) headers['Authorization'] = `Bearer ${sesion.accessToken}`;
-  const res = await fetch(`${API_ORIGIN}/api/v1/documentos/${id}/archivo`, { method: 'POST', headers, body: formData });
+  const res = await apiFetch(`/documentos/${id}/archivo`, { method: 'POST', body: formData });
   if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo subir el archivo'));
   return res.json() as Promise<Documento>;
 }

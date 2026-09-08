@@ -11,8 +11,10 @@ archivos:
   - frontend/src/app/dashboard/organizacion/cuarteles/page.tsx
 edges:
   - [belongs_to, domain--organizacion]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-exportar]
+  - [uses, component--front-aviso]
   - [calls, api--organizacion-cuarteles]
   - [calls, api--organizacion-companias]
   - [calls, api--equipos-equipamiento-bombero]
@@ -42,8 +44,10 @@ Pantalla /dashboard/organizacion/cuarteles, consume 5 endpoint(s).
 ## Relaciones
 
 - `belongs_to` → [[domain--organizacion|Organización Institucional]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-exportar|exportar]]
+- `uses` → [[component--front-aviso|Aviso]]
 - `calls` → [[api--organizacion-cuarteles|CuartelsController]]
 - `calls` → [[api--organizacion-companias|CompaniasController]]
 - `calls` → [[api--equipos-equipamiento-bombero|EquipamientoBomberoController]]

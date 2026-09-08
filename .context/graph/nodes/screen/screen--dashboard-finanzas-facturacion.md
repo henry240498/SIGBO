@@ -13,9 +13,11 @@ archivos:
 edges:
   - [belongs_to, domain--finanzas]
   - [uses, component--front-api]
+  - [uses, component--front-inputprovider]
   - [uses, component--front-finanzas]
   - [uses, component--front-socios-protectores]
   - [uses, component--front-parametros]
+  - [uses, component--front-aviso]
 terminos: [finanzas, facturacion, crear, anular, notas, credito]
 ---
 
@@ -34,9 +36,11 @@ Pantalla /dashboard/finanzas/facturacion.
 
 - `belongs_to` → [[domain--finanzas|Finanzas]]
 - `uses` → [[component--front-api|api]]
+- `uses` → [[component--front-inputprovider|InputProvider]]
 - `uses` → [[component--front-finanzas|finanzas]]
 - `uses` → [[component--front-socios-protectores|socios-protectores]]
 - `uses` → [[component--front-parametros|parametros]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

@@ -22,6 +22,7 @@ Helper de frontend "SystemIcon" (1 exportaciones).
 ## Referenciado por
 
 - [[screen--dashboard|/dashboard]] `uses` →
+- [[screen--dashboard-modulo|/dashboard/[modulo]]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

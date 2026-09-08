@@ -124,7 +124,6 @@ Helper de frontend "deposito" (83 exportaciones, consume 41 endpoint(s)).
 - [[screen--dashboard-deposito-ubicaciones|/dashboard/deposito/ubicaciones]] `uses` →
 - [[screen--dashboard-finanzas-movimientos|/dashboard/finanzas/movimientos]] `uses` →
 - [[screen--dashboard-finanzas-ordenes-pago|/dashboard/finanzas/ordenes-pago]] `uses` →
-- [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

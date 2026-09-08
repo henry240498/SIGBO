@@ -8,7 +8,13 @@ interface Ventana {
   golpes: number[];
   /** Hasta cuando queda penalizado quien supero el limite. */
   bloqueadoHasta: number;
+  /** Cada endpoint conserva su propia ventana aun cuando otro active la limpieza. */
+  ventanaMs: number;
+  /** Permite desalojar la entrada menos usada si llega una lluvia de IPs únicas. */
+  ultimoAcceso: number;
 }
+
+const MAX_CLAVES_EN_MEMORIA = 10_000;
 
 /**
  * Limitador de solicitudes por IP para endpoints publicos.
@@ -41,9 +47,14 @@ export class RateLimitGuard implements CanActivate {
     const clave = `${opciones.nombre}:${request.ip ?? 'sin-ip'}`;
     const ahora = Date.now();
 
-    this.limpiar(ahora, opciones.ventanaMs);
+    this.limpiar(ahora);
 
-    const ventana = this.ventanas.get(clave) ?? { golpes: [], bloqueadoHasta: 0 };
+    let ventana = this.ventanas.get(clave);
+    if (!ventana) {
+      this.reservarEspacio();
+      ventana = { golpes: [], bloqueadoHasta: 0, ventanaMs: opciones.ventanaMs, ultimoAcceso: ahora };
+    }
+    ventana.ultimoAcceso = ahora;
 
     if (ventana.bloqueadoHasta > ahora) {
       throw this.demasiadas(ventana.bloqueadoHasta - ahora);
@@ -75,12 +86,26 @@ export class RateLimitGuard implements CanActivate {
   }
 
   /** Evita que el Map crezca sin techo con IPs que no vuelven. */
-  private limpiar(ahora: number, ventanaMs: number) {
+  private limpiar(ahora: number) {
     if (ahora - this.ultimaLimpieza < 60_000) return;
     this.ultimaLimpieza = ahora;
     for (const [clave, ventana] of this.ventanas) {
-      const vencida = ventana.golpes.every((marca) => ahora - marca >= ventanaMs);
+      const vencida = ventana.golpes.every((marca) => ahora - marca >= ventana.ventanaMs);
       if (vencida && ventana.bloqueadoHasta <= ahora) this.ventanas.delete(clave);
     }
+  }
+
+  /** Acota memoria incluso si un atacante rota IPs antes del siguiente barrido. */
+  private reservarEspacio() {
+    if (this.ventanas.size < MAX_CLAVES_EN_MEMORIA) return;
+    let candidata: string | undefined;
+    let accesoMasAntiguo = Infinity;
+    for (const [clave, ventana] of this.ventanas) {
+      if (ventana.ultimoAcceso < accesoMasAntiguo) {
+        candidata = clave;
+        accesoMasAntiguo = ventana.ultimoAcceso;
+      }
+    }
+    if (candidata) this.ventanas.delete(candidata);
   }
 }

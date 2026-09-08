@@ -104,7 +104,6 @@ import { OrdenGuardiaConfiguracionService } from './orden-guardia-configuracion.
     DocumentosModule,
   ],
   controllers: [
-    GuardiasController,
     GruposGuardiaController,
     PernoctesController,
     InspeccionesEstacionController,
@@ -115,6 +114,7 @@ import { OrdenGuardiaConfiguracionService } from './orden-guardia-configuracion.
     InspeccionesMovilController,
     BitacoraController,
     OrdenesGuardiaController,
+    GuardiasController,
   ],
   providers: [
     ElegibilidadService,

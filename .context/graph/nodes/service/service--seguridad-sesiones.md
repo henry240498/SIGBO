@@ -43,6 +43,7 @@ Logica de negocio de sesiones (modulo seguridad).
 ## Referenciado por
 
 - [[service--seguridad-dashboard|DashboardService]] `uses` →
+- [[service--seguridad-roles|RolesService]] `uses` →
 - [[service--seguridad-usuarios|UsuariosService]] `uses` →
 - [[api--seguridad-sesiones|SesionesController]] `exposes` →
 

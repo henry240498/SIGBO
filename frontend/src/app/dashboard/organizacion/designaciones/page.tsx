@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { apiFetch } from '@/lib/api';
 import { descargarArchivo } from '@/lib/exportar';
+import { Aviso } from '@/app/components/Aviso';
 
 interface Opcion {
   id: string;
@@ -35,6 +37,7 @@ interface Designacion {
 }
 
 export default function DesignacionesPage() {
+  const confirmar = useConfirmacion();
   const [designaciones, setDesignaciones] = useState<Designacion[] | null>(null);
   const [bomberos, setBomberos] = useState<Bombero[]>([]);
   const [cargos, setCargos] = useState<Opcion[]>([]);
@@ -118,7 +121,7 @@ export default function DesignacionesPage() {
 
   async function anular(id: string) {
     setError(null);
-    if (!window.confirm('Anular esta designacion?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Anular esta designacion?', confirmar: 'Continuar', peligro: true })) return;
     const res = await apiFetch(`/organizacion/designaciones/${id}/baja`, { method: 'PATCH' });
     if (!res.ok) {
       setError('No se pudo anular la designacion');
@@ -134,25 +137,25 @@ export default function DesignacionesPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: 16 }}>Designaciones ({designaciones?.length ?? 0})</h2>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/designaciones/exportar/excel', 'designaciones.xlsx')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/designaciones/exportar/excel', 'designaciones.xlsx')}>
             Exportar a Excel
           </button>
-          <button className="btn-primary" onClick={() => descargarArchivo('/organizacion/designaciones/exportar/pdf', 'designaciones.pdf')}>
+          <button type="button" className="btn-primary" onClick={() => descargarArchivo('/organizacion/designaciones/exportar/pdf', 'designaciones.pdf')}>
             Exportar a PDF
           </button>
-          <button className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
+          <button type="button" className="btn-primary" onClick={() => setMostrarForm((v) => !v)}>
             {mostrarForm ? 'Cancelar' : 'Nueva designacion'}
           </button>
         </div>
       </div>
 
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
 
       {mostrarForm && (
         <form className="card" onSubmit={crear} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Bombero</label>
-            <select className="input-field" value={bomberoId} onChange={(e) => setBomberoId(e.target.value)} required>
+            <label htmlFor="bombero" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Bombero</label>
+            <select id="bombero" className="input-field" value={bomberoId} onChange={(e) => setBomberoId(e.target.value)} required>
               <option value="">-- seleccionar --</option>
               {bomberos.map((b) => (
                 <option key={b.id} value={b.id}>
@@ -162,8 +165,8 @@ export default function DesignacionesPage() {
             </select>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cargo</label>
-            <select className="input-field" value={cargoId} onChange={(e) => setCargoId(e.target.value)} required>
+            <label htmlFor="cargo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cargo</label>
+            <select id="cargo" className="input-field" value={cargoId} onChange={(e) => setCargoId(e.target.value)} required>
               <option value="">-- seleccionar --</option>
               {cargos.map((c) => (
                 <option key={c.id} value={c.id}>
@@ -173,8 +176,8 @@ export default function DesignacionesPage() {
             </select>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Compania (opcional)</label>
-            <select className="input-field" value={companiaId} onChange={(e) => setCompaniaId(e.target.value)}>
+            <label htmlFor="compania-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Compañía (opcional)</label>
+            <select id="compania-opcional" className="input-field" value={companiaId} onChange={(e) => setCompaniaId(e.target.value)}>
               <option value="">-- ninguna --</option>
               {companias.map((c) => (
                 <option key={c.id} value={c.id}>
@@ -184,8 +187,8 @@ export default function DesignacionesPage() {
             </select>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cuartel (opcional)</label>
-            <select className="input-field" value={cuartelId} onChange={(e) => setCuartelId(e.target.value)}>
+            <label htmlFor="cuartel-opcional" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Cuartel (opcional)</label>
+            <select id="cuartel-opcional" className="input-field" value={cuartelId} onChange={(e) => setCuartelId(e.target.value)}>
               <option value="">-- ninguno --</option>
               {cuarteles.map((c) => (
                 <option key={c.id} value={c.id}>
@@ -195,8 +198,8 @@ export default function DesignacionesPage() {
             </select>
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Desde</label>
-            <input
+            <label htmlFor="desde" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Desde</label>
+            <input id="desde"
               className="input-field"
               type="date"
               value={fechaDesde}
@@ -205,14 +208,14 @@ export default function DesignacionesPage() {
             />
           </div>
           <div>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo</label>
-            <input className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
+            <label htmlFor="motivo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Motivo</label>
+            <input id="motivo" className="input-field" value={motivo} onChange={(e) => setMotivo(e.target.value)} />
           </div>
           <div style={{ gridColumn: '1 / -1' }}>
-            <label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
-            <input className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
+            <label htmlFor="observaciones" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Observaciones</label>
+            <input id="observaciones" className="input-field" value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
           </div>
-          <button className="btn-primary" style={{ gridColumn: '1 / -1', justifySelf: 'start' }}>
+          <button type="submit" className="btn-primary" style={{ gridColumn: '1 / -1', justifySelf: 'start' }}>
             Crear designacion
           </button>
         </form>
@@ -221,22 +224,22 @@ export default function DesignacionesPage() {
       {designaciones && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
-            <tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-              <th style={{ padding: '6px 4px' }}>Bombero</th>
-              <th style={{ padding: '6px 4px' }}>Cargo</th>
-              <th style={{ padding: '6px 4px' }}>Compania / Cuartel</th>
-              <th style={{ padding: '6px 4px' }}>Desde</th>
-              <th style={{ padding: '6px 4px' }}>Hasta</th>
-              <th style={{ padding: '6px 4px' }}>Estado</th>
-              <th style={{ padding: '6px 4px' }}>Acciones</th>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+              <th scope="col" style={{ padding: '6px 4px' }}>Bombero</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Cargo</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Compañía / Cuartel</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Desde</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Hasta</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Estado</th>
+              <th scope="col" style={{ padding: '6px 4px' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {designaciones.map((d) => (
-              <tr key={d.id} style={{ borderBottom: '1px solid #1f2937' }}>
+              <tr key={d.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
                 <td style={{ padding: '6px 4px' }}>{d.bomberoNombre}</td>
                 <td style={{ padding: '6px 4px' }}>{d.cargoNombre}</td>
-                <td style={{ padding: '6px 4px', color: '#94a3b8' }}>
+                <td style={{ padding: '6px 4px', color: 'var(--muted)' }}>
                   {d.companiaNombre ?? '—'} {d.cuartelNombre ? `/ ${d.cuartelNombre}` : ''}
                 </td>
                 <td style={{ padding: '6px 4px' }}>{d.fechaDesde}</td>
@@ -246,17 +249,17 @@ export default function DesignacionesPage() {
                 </td>
                 <td style={{ padding: '6px 4px', display: 'flex', gap: 8 }}>
                   {d.estado === 'ACTIVA' && (
-                    <button
+                    <button type="button"
                       onClick={() => finalizar(d.id)}
-                      style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
+                      style={{ background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
                     >
                       finalizar
                     </button>
                   )}
                   {!d.eliminadoEn && (
-                    <button
+                    <button type="button"
                       onClick={() => anular(d.id)}
-                      style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
+                      style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', textDecoration: 'underline', fontSize: 12 }}
                     >
                       anular
                     </button>

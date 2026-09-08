@@ -4,23 +4,24 @@ tipo: TABLE
 nombre: ia.mensajes
 nivel: L2
 dominio: inteligencia
-resumen: Tabla ia.mensajes (9 columnas). Creada en 057_ia_estructura.sql, modificada por 060_ia_motor_local.sql.
+resumen: Tabla ia.mensajes (10 columnas). Creada en 057_ia_estructura.sql, modificada por 060_ia_motor_local.sql, 072_ia_ollama_motor_local.sql.
 tabla: mensajes
 archivos:
   - database/migrations/057_ia_estructura.sql
   - database/migrations/060_ia_motor_local.sql
+  - database/migrations/072_ia_ollama_motor_local.sql
 edges:
   - [defined_in, file--057-ia-estructura]
   - [belongs_to, domain--inteligencia]
   - [references, table--ia-conversaciones]
-terminos: [mensajes, conversacion, rol, contenido, duracion, fuentes, json, resultado, error, detalle, creado]
+terminos: [mensajes, conversacion, rol, contenido, duracion, fuentes, json, resultado, error, detalle, creado, modelo, utilizado]
 ---
 
 # ia.mensajes
 
-Tabla ia.mensajes (9 columnas). Creada en 057_ia_estructura.sql, modificada por 060_ia_motor_local.sql.
+Tabla ia.mensajes (10 columnas). Creada en 057_ia_estructura.sql, modificada por 060_ia_motor_local.sql, 072_ia_ollama_motor_local.sql.
 
-- **Esquema:** ia · **Columnas:** 9
+- **Esquema:** ia · **Columnas:** 10
 
 ## Restricciones CHECK (reglas que la BD impone)
 
@@ -44,12 +45,13 @@ Tabla ia.mensajes (9 columnas). Creada en 057_ia_estructura.sql, modificada por 
 | resultado | NVARCHAR(20) |
 | error_detalle | NVARCHAR(500) |
 | creado_en | DATETIMEOFFSET(3) |
+| modelo_utilizado | NVARCHAR(100) |
 
 ## Donde se usa
 
 - **Pantallas:** `/dashboard/inteligencia`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`
-- **Endpoints:** IaAdminConversacionesController, IaChatController, IaConfiguracionController, IaDashboardController
-- **Servicios:** IaChatService, IaConfiguracionService, IaConversacionesService, IaDashboardService
+- **Endpoints:** IaAdminConversacionesController, IaChatController, IaConfiguracionController, IaDashboardController, IaVozController
+- **Servicios:** IaChatService, IaConfiguracionService, IaConversacionesService, IaDashboardService, IaVozService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -58,6 +60,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 
 - `database/migrations/057_ia_estructura.sql`
 - `database/migrations/060_ia_motor_local.sql`
+- `database/migrations/072_ia_ollama_motor_local.sql`
 
 ## Relaciones
 
@@ -73,6 +76,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[service--ia-ia-configuracion|IaConfiguracionService]] `reads` →
 - [[service--ia-ia-conversaciones|IaConversacionesService]] `reads` →
 - [[service--ia-ia-dashboard|IaDashboardService]] `reads` →
+- [[service--ia-ia-voz|IaVozService]] `reads` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

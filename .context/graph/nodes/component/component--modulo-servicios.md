@@ -20,7 +20,7 @@ Modulo NestJS que cablea controladores, servicios y repositorios de servicios.
 
 ## Entidades registradas (forFeature)
 
-Servicio, TipoServicio, ComunicacionServicio, LogAuditoria, Bombero, Vehiculo
+Servicio, TipoServicio, ComunicacionServicio, LogAuditoria, Bombero, Vehiculo, Cuartel, HistorialServicio, RutaPlanificadaServicio, PruebaComunicacionServicio
 
 ## Archivos
 
@@ -32,6 +32,7 @@ Servicio, TipoServicio, ComunicacionServicio, LogAuditoria, Bombero, Vehiculo
 
 ## Referenciado por
 
+- [[service--servicios-seguimiento-geografico|SeguimientoGeograficoService]] `uses` →
 - [[service--servicios-servicios|ServiciosService]] `uses` →
 
 ---

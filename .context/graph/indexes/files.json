@@ -1,18 +1,18 @@
 {
  "frontend/src/lib/modulos.ts": [
-  "domain--organizacion",
-  "domain--personal",
-  "domain--asistencia",
-  "domain--guardias",
   "domain--servicios",
+  "domain--denuncias",
+  "domain--guardias",
+  "domain--asistencia",
+  "domain--personal",
+  "domain--academia",
   "domain--vehiculos",
   "domain--equipos",
-  "domain--academia",
-  "domain--finanzas",
   "domain--deposito",
+  "domain--organizacion",
+  "domain--finanzas",
   "domain--documentos",
   "domain--publicaciones",
-  "domain--denuncias",
   "domain--seguridad",
   "domain--inteligencia",
   "component--front-modulos",
@@ -215,6 +215,9 @@
  "backend/src/shared/entities/historial-institucional.entity.ts": [
   "entity--historial-institucional"
  ],
+ "backend/src/shared/entities/historial-servicio.entity.ts": [
+  "entity--historial-servicio"
+ ],
  "backend/src/shared/entities/ia-configuracion.entity.ts": [
   "entity--ia-configuracion"
  ],
@@ -359,6 +362,9 @@
  "backend/src/shared/entities/proveedor-deposito.entity.ts": [
   "entity--proveedor-deposito"
  ],
+ "backend/src/shared/entities/prueba-comunicacion-servicio.entity.ts": [
+  "entity--prueba-comunicacion-servicio"
+ ],
  "backend/src/shared/entities/publicacion.entity.ts": [
   "entity--publicacion"
  ],
@@ -371,6 +377,9 @@
  ],
  "backend/src/shared/entities/rol.entity.ts": [
   "entity--rol"
+ ],
+ "backend/src/shared/entities/ruta-planificada-servicio.entity.ts": [
+  "entity--ruta-planificada-servicio"
  ],
  "backend/src/shared/entities/seguro-bombero.entity.ts": [
   "entity--seguro-bombero"
@@ -916,6 +925,29 @@
   "file--070-identidad-alineacion-titulo",
   "table--organizacion-identidad-institucional"
  ],
+ "database/migrations/071_servicios_seguimiento_geografico.sql": [
+  "file--071-servicios-seguimiento-geografico",
+  "table--servicios-historial-servicios",
+  "table--organizacion-cuarteles",
+  "table--servicios-rutas-planificadas",
+  "table--servicios-pruebas-comunicacion"
+ ],
+ "database/migrations/072_ia_ollama_motor_local.sql": [
+  "file--072-ia-ollama-motor-local",
+  "table--ia-configuraciones",
+  "table--ia-mensajes"
+ ],
+ "database/migrations/073_ia_voz_local.sql": [
+  "file--073-ia-voz-local",
+  "table--ia-configuraciones"
+ ],
+ "database/migrations/074_academia_permiso_autoservicio.sql": [
+  "file--074-academia-permiso-autoservicio"
+ ],
+ "database/migrations/075_vehiculos_alias.sql": [
+  "file--075-vehiculos-alias",
+  "table--vehiculos-vehiculos"
+ ],
  "backend/src/modules/academia/academia.module.ts": [
   "component--modulo-academia"
  ],
@@ -957,6 +989,9 @@
  ],
  "backend/src/modules/publicaciones/publicaciones.module.ts": [
   "component--modulo-publicaciones"
+ ],
+ "backend/src/modules/salud/salud.module.ts": [
+  "component--modulo-salud"
  ],
  "backend/src/modules/seguridad/seguridad.module.ts": [
   "component--modulo-seguridad"
@@ -1202,8 +1237,20 @@
  "backend/src/modules/ia/ia-propuestas-mejora.service.ts": [
   "service--ia-ia-propuestas-mejora"
  ],
+ "backend/src/modules/ia/ia-voz.service.ts": [
+  "service--ia-ia-voz"
+ ],
+ "backend/src/modules/ia/ollama/ollama.service.ts": [
+  "service--ia-ollama"
+ ],
+ "backend/src/modules/ia/piper/piper.service.ts": [
+  "service--ia-piper"
+ ],
  "backend/src/modules/ia/tools/ia-tools.service.ts": [
   "service--ia-ia-tools"
+ ],
+ "backend/src/modules/ia/whisper/whisper.service.ts": [
+  "service--ia-whisper"
  ],
  "backend/src/modules/operaciones/dashboard-asistencia.service.ts": [
   "service--operaciones-dashboard-asistencia"
@@ -1338,6 +1385,9 @@
  ],
  "backend/src/modules/seguridad/usuarios.service.ts": [
   "service--seguridad-usuarios"
+ ],
+ "backend/src/modules/servicios/seguimiento/seguimiento-geografico.service.ts": [
+  "service--servicios-seguimiento-geografico"
  ],
  "backend/src/modules/servicios/servicios.service.ts": [
   "service--servicios-servicios",
@@ -1574,6 +1624,9 @@
  "backend/src/modules/ia/ia-propuestas-mejora.controller.ts": [
   "api--ia-ia-propuestas-mejora"
  ],
+ "backend/src/modules/ia/ia-voz.controller.ts": [
+  "api--ia-ia-voz"
+ ],
  "backend/src/modules/operaciones/dashboard-asistencia.controller.ts": [
   "api--operaciones-dashboard-asistencia"
  ],
@@ -1674,6 +1727,9 @@
  "backend/src/modules/publicaciones/publicaciones.controller.ts": [
   "api--publicaciones-publicaciones"
  ],
+ "backend/src/modules/salud/salud.controller.ts": [
+  "api--salud-salud"
+ ],
  "backend/src/modules/seguridad/apariencia.controller.ts": [
   "api--seguridad-apariencia"
  ],
@@ -1700,6 +1756,9 @@
  ],
  "backend/src/modules/seguridad/usuarios.controller.ts": [
   "api--seguridad-usuarios"
+ ],
+ "backend/src/modules/servicios/seguimiento/seguimiento-geografico.controller.ts": [
+  "api--servicios-seguimiento-geografico"
  ],
  "backend/src/modules/servicios/servicios.controller.ts": [
   "api--servicios-servicios",
@@ -1900,6 +1959,10 @@
  "frontend/src/app/dashboard/guardias/pernoctes/page.tsx": [
   "screen--dashboard-guardias-pernoctes"
  ],
+ "frontend/src/app/dashboard/guardias/planificacion/page.tsx": [
+  "screen--dashboard-guardias-planificacion",
+  "decision--pantalla-vive-donde-su-permiso"
+ ],
  "frontend/src/app/dashboard/guardias/requisitos/page.tsx": [
   "screen--dashboard-guardias-requisitos"
  ],
@@ -1954,9 +2017,6 @@
  "frontend/src/app/dashboard/organizacion/feriados/page.tsx": [
   "screen--dashboard-organizacion-feriados"
  ],
- "frontend/src/app/dashboard/organizacion/guardias/page.tsx": [
-  "screen--dashboard-organizacion-guardias"
- ],
  "frontend/src/app/dashboard/organizacion/page.tsx": [
   "screen--dashboard-organizacion"
  ],
@@ -1971,6 +2031,10 @@
  ],
  "frontend/src/app/dashboard/organizacion/tipos-bombero/page.tsx": [
   "screen--dashboard-organizacion-tipos-bombero"
+ ],
+ "frontend/src/app/dashboard/organizacion/tipos-guardia/page.tsx": [
+  "screen--dashboard-organizacion-tipos-guardia",
+  "decision--pantalla-vive-donde-su-permiso"
  ],
  "frontend/src/app/dashboard/organizacion/turnos/page.tsx": [
   "screen--dashboard-organizacion-turnos"
@@ -1988,7 +2052,8 @@
   "screen--dashboard-personal"
  ],
  "frontend/src/app/dashboard/personal/[id]/page.tsx": [
-  "screen--dashboard-personal-id"
+  "screen--dashboard-personal-id",
+  "rule--expediente-una-seccion-un-archivo"
  ],
  "frontend/src/app/dashboard/publicaciones/page.tsx": [
   "screen--dashboard-publicaciones"
@@ -2057,7 +2122,8 @@
   "screen--denuncias"
  ],
  "frontend/src/app/login/page.tsx": [
-  "screen--login"
+  "screen--login",
+  "rule--tema-claro-unico"
  ],
  "frontend/src/app/page.tsx": [
   "screen--raiz"
@@ -2073,6 +2139,9 @@
  ],
  "frontend/src/lib/asistencia.ts": [
   "component--front-asistencia"
+ ],
+ "frontend/src/lib/color.ts": [
+  "component--front-color"
  ],
  "frontend/src/lib/configuracion.ts": [
   "component--front-configuracion"
@@ -2098,8 +2167,19 @@
  "frontend/src/lib/ia.ts": [
   "component--front-ia"
  ],
+ "frontend/src/lib/json-seguro.ts": [
+  "component--front-json-seguro"
+ ],
+ "frontend/src/lib/navegacion.ts": [
+  "component--front-navegacion",
+  "rule--registro-de-pantallas-generado"
+ ],
  "frontend/src/lib/organizacion.ts": [
   "component--front-organizacion"
+ ],
+ "frontend/src/lib/pantallas.generado.ts": [
+  "component--front-pantallas-generado",
+  "rule--registro-de-pantallas-generado"
  ],
  "frontend/src/lib/parametros.ts": [
   "component--front-parametros"
@@ -2110,6 +2190,12 @@
  "frontend/src/lib/publicaciones.ts": [
   "component--front-publicaciones"
  ],
+ "frontend/src/lib/seccion-url.ts": [
+  "component--front-seccion-url"
+ ],
+ "frontend/src/lib/seguimiento-geografico.ts": [
+  "component--front-seguimiento-geografico"
+ ],
  "frontend/src/lib/socios-protectores.ts": [
   "component--front-socios-protectores"
  ],
@@ -2119,6 +2205,17 @@
  "frontend/src/lib/vehiculos.ts": [
   "component--front-vehiculos"
  ],
+ "frontend/src/app/components/Aviso.tsx": [
+  "component--front-aviso",
+  "rule--un-fallo-no-se-anuncia-como-vacio"
+ ],
+ "frontend/src/app/components/BuscadorPantallas.tsx": [
+  "component--front-buscadorpantallas",
+  "rule--registro-de-pantallas-generado"
+ ],
+ "frontend/src/app/components/Cargando.tsx": [
+  "component--front-cargando"
+ ],
  "frontend/src/app/components/ConfigBootstrap.tsx": [
   "component--front-configbootstrap"
  ],
@@ -2127,6 +2224,12 @@
  ],
  "frontend/src/app/components/ExperienceGuard.tsx": [
   "component--front-experienceguard"
+ ],
+ "frontend/src/app/components/InputProvider.tsx": [
+  "component--front-inputprovider"
+ ],
+ "frontend/src/app/components/Paginador.tsx": [
+  "component--front-paginador"
  ],
  "frontend/src/app/components/SystemIcon.tsx": [
   "component--front-systemicon"
@@ -2141,7 +2244,7 @@
   "configuration--navegacion",
   "configuration--seguridad-global",
   "configuration--mantenimiento",
-  "rule--tema-oscuro-fijo",
+  "rule--tema-claro-unico",
   "workflow--configuracion-versionada"
  ],
  "backend/src/core/database/data-source-options.ts": [
@@ -2171,6 +2274,9 @@
   "decision--monolito-modular",
   "decision--sqlserver-en-vez-de-postgres"
  ],
+ "frontend/next.config.js": [
+  "decision--pantalla-vive-donde-su-permiso"
+ ],
  "backend/src/modules/seguridad/guards/permissions.guard.ts": [
   "decision--permisos-dinamicos",
   "rule--frontend-no-autoriza",
@@ -2185,13 +2291,14 @@
  "frontend/src/app/globals.css": [
   "decision--sin-libreria-ui",
   "rule--sin-clases-css-nuevas",
-  "rule--tema-oscuro-fijo"
+  "rule--tema-claro-unico"
  ],
  "docs/GUIA-DE-ESTILO.md": [
   "decision--sin-libreria-ui",
+  "rule--etiqueta-nombra-su-control",
   "rule--pantalla-cliente-sin-store",
   "rule--sin-clases-css-nuevas",
-  "rule--tema-oscuro-fijo"
+  "rule--tema-claro-unico"
  ],
  "backend/package.json": [
   "dependency--nestjs"
@@ -2200,8 +2307,7 @@
   "dependency--nextjs"
  ],
  "start-sigbo.ps1": [
-  "dependency--nodejs",
-  "error--start-script-no-reinicia-servicios"
+  "dependency--nodejs"
  ],
  "database/install_local.ps1": [
   "dependency--nodejs",
@@ -2222,10 +2328,33 @@
   "rule--identidad-y-tiempo-en-sql-server",
   "rule--migracion-nunca-se-edita"
  ],
+ "frontend/scripts/audit-accessibility.mjs": [
+  "rule--etiqueta-nombra-su-control"
+ ],
+ "frontend/src/components/ComboBuscable.tsx": [
+  "rule--etiqueta-nombra-su-control"
+ ],
+ "frontend/src/app/dashboard/personal/[id]/expediente.tsx": [
+  "rule--expediente-una-seccion-un-archivo"
+ ],
+ "frontend/src/app/dashboard/personal/[id]/secciones": [
+  "rule--expediente-una-seccion-un-archivo",
+  "rule--un-fallo-no-se-anuncia-como-vacio"
+ ],
  "backend/src/modules/guardias": [
   "rule--guardias-vive-en-operaciones"
  ],
+ "frontend/scripts/generar-pantallas.mjs": [
+  "rule--registro-de-pantallas-generado"
+ ],
+ "frontend/scripts/audit-contraste.mjs": [
+  "rule--sin-clases-css-nuevas",
+  "rule--tema-claro-unico"
+ ],
  "backend/src/modules/seguridad/decorators/require-permission.decorator.ts": [
   "rule--todo-endpoint-mutante-con-permiso"
+ ],
+ "scripts/auditar-secciones-expediente.mjs": [
+  "rule--un-fallo-no-se-anuncia-como-vacio"
  ]
 }

@@ -147,6 +147,27 @@ export async function cargarGuardias(desde?: string, hasta?: string) {
   return res.json() as Promise<Guardia[]>;
 }
 
+export interface ItemPlanificacionGuardia {
+  guardiaId?: string;
+  fecha: string;
+  turno: string;
+  horaInicio: string;
+  horaFin: string;
+  grupoGuardiaId: string;
+  observaciones?: string;
+}
+
+/** Guarda una distribución de la grilla. La API sólo permite reemplazar
+ * guardias aún planificadas y registra cada modificación en auditoría. */
+export async function planificarGuardias(items: ItemPlanificacionGuardia[]) {
+  const res = await apiFetch('/guardias/planificacion/manual', {
+    method: 'POST',
+    body: JSON.stringify({ items, reemplazarPlanificadas: true }),
+  });
+  if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo guardar la planificación'));
+  return res.json() as Promise<Guardia[]>;
+}
+
 export async function cargarGuardia(id: string) {
   const res = await apiFetch(`/guardias/${id}`);
   if (!res.ok) throw new Error('No se pudo cargar la guardia');

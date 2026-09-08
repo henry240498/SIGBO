@@ -1,4 +1,4 @@
-import { apiFetch, API_ORIGIN, obtenerSesion } from './api';
+import { apiFetch } from './api';
 
 /* ------------------------------------------------------------------ */
 /* Tipos                                                                */
@@ -206,16 +206,13 @@ export async function enviarMensajeIa(mensaje: string, conversacionId?: string) 
 
 /** Sube un audio grabado por el navegador (MediaRecorder produce webm/ogg
  * segun el navegador -- nunca WAV) y devuelve el texto transcrito por
- * whisper.cpp LOCAL. No usa apiFetch: FormData necesita que el navegador
- * arme su propio boundary de multipart, forzar 'Content-Type: application/
- * json' lo rompe (mismo motivo por el que subirAvatarIa tampoco lo usa). */
+ * whisper.cpp LOCAL. apiFetch no fuerza 'Content-Type' en cuerpos FormData,
+ * asi que el navegador arma su propio boundary de multipart (mismo patron
+ * que subirAvatarIa). */
 export async function transcribirVoz(audio: Blob): Promise<{ texto: string }> {
   const formData = new FormData();
   formData.append('audio', audio, 'audio.webm');
-  const sesion = obtenerSesion();
-  const headers: HeadersInit = {};
-  if (sesion) headers['Authorization'] = `Bearer ${sesion.accessToken}`;
-  const res = await fetch(`${API_ORIGIN}/api/v1/ia/voz/transcribir`, { method: 'POST', headers, body: formData });
+  const res = await apiFetch('/ia/voz/transcribir', { method: 'POST', body: formData });
   if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo transcribir el audio'));
   return res.json();
 }
@@ -346,10 +343,7 @@ export async function cargarHistorialConfiguracionIa() {
 export async function subirAvatarIa(archivo: File) {
   const formData = new FormData();
   formData.append('archivo', archivo);
-  const sesion = obtenerSesion();
-  const headers: HeadersInit = {};
-  if (sesion) headers['Authorization'] = `Bearer ${sesion.accessToken}`;
-  const res = await fetch(`${API_ORIGIN}/api/v1/ia/admin/config/avatar`, { method: 'POST', headers, body: formData });
+  const res = await apiFetch('/ia/admin/config/avatar', { method: 'POST', body: formData });
   if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo subir el avatar'));
   return res.json() as Promise<ConfiguracionIa>;
 }

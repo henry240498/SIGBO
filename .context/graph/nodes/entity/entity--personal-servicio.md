@@ -24,8 +24,8 @@ Personal que participo en un servicio (schema servicios).
 ## Donde se usa
 
 - **Pantallas:** — (sin pantalla que llegue hasta aca)
-- **Endpoints:** ConsultasCruzadasController
-- **Servicios:** ConsultasCruzadasService
+- **Endpoints:** ConsultasCruzadasController, PerfilController
+- **Servicios:** ConsultasCruzadasService, PerfilService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -42,6 +42,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 ## Referenciado por
 
 - [[service--personal-consultas-cruzadas|ConsultasCruzadasService]] `uses` →
+- [[service--seguridad-perfil|PerfilService]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

@@ -48,8 +48,8 @@ Tabla ia.conversaciones (10 columnas). Creada en 057_ia_estructura.sql, modifica
 ## Donde se usa
 
 - **Pantallas:** `/dashboard/inteligencia`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`
-- **Endpoints:** IaAdminConversacionesController, IaChatController, IaConfiguracionController, IaDashboardController
-- **Servicios:** IaChatService, IaConfiguracionService, IaConversacionesService, IaDashboardService
+- **Endpoints:** IaAdminConversacionesController, IaChatController, IaConfiguracionController, IaDashboardController, IaVozController
+- **Servicios:** IaChatService, IaConfiguracionService, IaConversacionesService, IaDashboardService, IaVozService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -74,6 +74,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[service--ia-ia-configuracion|IaConfiguracionService]] `reads` →
 - [[service--ia-ia-conversaciones|IaConversacionesService]] `reads` →
 - [[service--ia-ia-dashboard|IaDashboardService]] `reads` →
+- [[service--ia-ia-voz|IaVozService]] `reads` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

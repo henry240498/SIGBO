@@ -1,22 +1,22 @@
 ---
 id: dependency--nextjs
 tipo: DEPENDENCY
-nombre: Next.js 14 (App Router) + React 18
+nombre: Next.js 16 (App Router) + React 19
 nivel: L1
-resumen: "Frontend con Next.js 14.2 App Router y React 18.3. Solo tres dependencias de produccion: next, react y react-dom."
+resumen: "Frontend con Next.js 16.3 App Router y React 19.2. Solo tres dependencias de produccion: next, react y react-dom."
 archivos:
   - frontend/package.json
 terminos: [next, nextjs, react, app, router, frontend, cliente, tsx, dependencias, solo, tres, produccion, dom]
 ---
 
-# Next.js 14 (App Router) + React 18
+# Next.js 16 (App Router) + React 19
 
-Frontend con Next.js 14.2 App Router y React 18.3. Solo tres dependencias de produccion: next, react y react-dom.
+Frontend con Next.js 16.3 App Router y React 19.2. Solo tres dependencias de produccion: next, react y react-dom.
 
 ## Las tres dependencias, y eso es todo
 
 ```json
-"next": "^14.2.18", "react": "^18.3.1", "react-dom": "^18.3.1"
+"next": "^16.3.2", "react": "^19.2.8", "react-dom": "^19.2.8"
 ```
 
 No hay libreria de UI, ni de estado, ni de formularios, ni de fechas, ni cliente HTTP.

@@ -28,7 +28,7 @@ Logica de negocio de bomberos (modulo personal).
 
 ## Metodos
 
-`if()` · `if()` · `if()` · `findAll()` · `filasExportables()` · `findOne()` · `create()` · `update()` · `darBaja()` · `eliminarFisico()` · `cargarFirmaDigital()` · `eliminarFirmaDigital()` · `cambiarAutorizacionFirma()`
+`if()` · `if()` · `if()` · `findAll()` · `filasExportables()` · `findOne()` · `create()` · `update()` · `darBaja()` · `eliminarFisico()` · `cargarFirmaDigital()` · `obtenerFirmaDigital()` · `eliminarFirmaDigital()` · `cambiarAutorizacionFirma()`
 
 ## Archivos
 

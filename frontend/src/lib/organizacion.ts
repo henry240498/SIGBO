@@ -1,4 +1,4 @@
-import { apiFetch, API_ORIGIN, obtenerSesion } from './api';
+import { apiFetch, API_ORIGIN } from './api';
 
 async function mensajeError(res: Response, porDefecto: string): Promise<string> {
   const body = await res.json().catch(() => ({}));
@@ -58,14 +58,11 @@ export async function actualizarIdentidadInstitucional(payload: Record<string, u
 export async function subirLogoInstitucional(lado: 'izquierda' | 'derecha', archivo: File): Promise<IdentidadInstitucional> {
   const formData = new FormData();
   formData.append('archivo', archivo);
-  const sesion = obtenerSesion();
-  const headers: HeadersInit = {};
-  if (sesion) headers['Authorization'] = `Bearer ${sesion.accessToken}`;
-
   const res = await fetch(`${API_ORIGIN}/api/v1/organizacion/identidad-institucional/logo/${lado}`, {
     method: 'PUT',
-    headers,
+    headers: { 'X-SIGBO-Request': '1' },
     body: formData,
+    credentials: 'include',
   });
   if (!res.ok) throw new Error(await mensajeError(res, 'No se pudo subir el logo'));
   return res.json();

@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 
 const TABS = [
   { href: '/dashboard/equipos', label: 'Equipos', exact: true },
-  { href: '/dashboard/equipos/categorias', label: 'Categorias' },
+  { href: '/dashboard/equipos/categorias', label: 'Categorías' },
 ];
 
 export default function EquiposLayout({ children }: { children: React.ReactNode }) {
@@ -18,7 +18,7 @@ export default function EquiposLayout({ children }: { children: React.ReactNode 
           display: 'flex',
           gap: 4,
           flexWrap: 'wrap',
-          borderBottom: '1px solid #334155',
+          borderBottom: '1px solid var(--line)',
           marginBottom: 20,
           paddingBottom: 0,
         }}
@@ -33,7 +33,7 @@ export default function EquiposLayout({ children }: { children: React.ReactNode 
                 padding: '8px 12px',
                 fontSize: 13,
                 textDecoration: 'none',
-                color: activo ? '#e2e8f0' : '#94a3b8',
+                color: activo ? 'var(--ink)' : 'var(--muted)',
                 fontWeight: activo ? 600 : 400,
                 borderBottom: activo ? '2px solid #2563eb' : '2px solid transparent',
               }}

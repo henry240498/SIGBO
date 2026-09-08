@@ -4,7 +4,7 @@ tipo: API
 nombre: OrdenesGuardiaController
 nivel: L2
 dominio: guardias
-resumen: Superficie HTTP de ordenes guardia bajo /api/v1/guardias/ordenes.
+resumen: "Las rutas literales preceden a :id y el módulo registra este controlador antes del recurso raíz de Guardias; ParseUUIDPipe valida cada id."
 prefijo: /api/v1/guardias/ordenes
 capa: backend
 permisos: [guardias:ordenes_ver, guardias:ordenes_configurar, guardias:ordenes_crear, guardias:ordenes_editar, guardias:ordenes_aprobar, guardias:ordenes_publicar, guardias:ordenes_anular]
@@ -19,7 +19,7 @@ terminos: [ordenes, guardia, guardias, ver, configurar, crear, editar, aprobar, 
 
 # OrdenesGuardiaController
 
-Superficie HTTP de ordenes guardia bajo /api/v1/guardias/ordenes.
+Las rutas literales preceden a :id y el módulo registra este controlador antes del recurso raíz de Guardias; ParseUUIDPipe valida cada id.
 
 - **Prefijo:** `/api/v1/guardias/ordenes`
 
@@ -31,16 +31,16 @@ Superficie HTTP de ordenes guardia bajo /api/v1/guardias/ordenes.
 | GET | `/guardias/ordenes/configuracion` | `guardias:ordenes_ver` |
 | PUT | `/guardias/ordenes/configuracion` | `guardias:ordenes_configurar` |
 | POST | `/guardias/ordenes` | `guardias:ordenes_crear` |
-| GET | `/guardias/ordenes/`:id(${GUID_PATH}` | `guardias:ordenes_ver` |
-| POST | `/guardias/ordenes/`:id(${GUID_PATH}` | `guardias:ordenes_editar` |
-| POST | `/guardias/ordenes/`:id(${GUID_PATH}` | `guardias:ordenes_editar` |
-| POST | `/guardias/ordenes/`:id(${GUID_PATH}` | `guardias:ordenes_editar` |
-| POST | `/guardias/ordenes/`:id(${GUID_PATH}` | `guardias:ordenes_editar` |
-| POST | `/guardias/ordenes/`:id(${GUID_PATH}` | `guardias:ordenes_aprobar` |
-| POST | `/guardias/ordenes/`:id(${GUID_PATH}` | `guardias:ordenes_publicar` |
-| POST | `/guardias/ordenes/`:id(${GUID_PATH}` | `guardias:ordenes_anular` |
-| GET | `/guardias/ordenes/`:id(${GUID_PATH}` | `guardias:ordenes_ver` |
-| POST | `/guardias/ordenes/`:id(${GUID_PATH}` | `guardias:ordenes_editar` |
+| GET | `/guardias/ordenes/:id` | `guardias:ordenes_ver` |
+| POST | `/guardias/ordenes/:id/regenerar-preview` | `guardias:ordenes_editar` |
+| POST | `/guardias/ordenes/:id/generar-documentos` | `guardias:ordenes_editar` |
+| POST | `/guardias/ordenes/:id/revisar` | `guardias:ordenes_editar` |
+| POST | `/guardias/ordenes/:id/volver-borrador` | `guardias:ordenes_editar` |
+| POST | `/guardias/ordenes/:id/aprobar` | `guardias:ordenes_aprobar` |
+| POST | `/guardias/ordenes/:id/publicar` | `guardias:ordenes_publicar` |
+| POST | `/guardias/ordenes/:id/anular` | `guardias:ordenes_anular` |
+| GET | `/guardias/ordenes/:id/modificaciones` | `guardias:ordenes_ver` |
+| POST | `/guardias/ordenes/:id/modificaciones` | `guardias:ordenes_editar` |
 
 ## Archivos
 

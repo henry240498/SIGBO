@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { useParams } from 'next/navigation';
 import { obtenerSesion } from '@/lib/api';
 import {
@@ -19,6 +20,8 @@ import {
   crearMantenimiento,
   darBajaVehiculo,
 } from '@/lib/vehiculos';
+import { Cargando } from '@/app/components/Cargando';
+import { Aviso } from '@/app/components/Aviso';
 
 type Vista = 'datos' | 'mantenimientos' | 'combustible' | 'historial';
 const SUBTABS: { id: Vista; label: string }[] = [
@@ -49,8 +52,8 @@ export default function VehiculoDetallePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id]);
 
-  if (error) return <p style={{ color: '#f87171' }}>{error}</p>;
-  if (!vehiculo) return <p style={{ color: '#94a3b8' }}>Cargando...</p>;
+  if (error) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
+  if (!vehiculo) return <Cargando texto="Cargando…" />;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -61,15 +64,15 @@ export default function VehiculoDetallePage() {
         </h2>
         <span
           className="badge"
-          style={{ background: vehiculo.estado === 'OPERATIVO' ? '#166534' : vehiculo.estado === 'BAJA' ? '#7f1d1d' : '#854d0e' }}
+          style={{ background: vehiculo.estado === 'OPERATIVO' ? 'var(--ok-fill)' : vehiculo.estado === 'BAJA' ? 'var(--bad-fill)' : 'var(--warn-fill)' }}
         >
           {vehiculo.estado}
         </span>
       </div>
 
-      <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid #1f2937' }}>
+      <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid var(--line-soft)' }}>
         {SUBTABS.map((t) => (
-          <button
+          <button type="button"
             key={t.id}
             onClick={() => setVista(t.id)}
             style={{
@@ -78,7 +81,7 @@ export default function VehiculoDetallePage() {
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
-              color: vista === t.id ? '#e2e8f0' : '#94a3b8',
+              color: vista === t.id ? 'var(--ink)' : 'var(--muted)',
               fontWeight: vista === t.id ? 600 : 400,
               borderBottom: vista === t.id ? '2px solid #2563eb' : '2px solid transparent',
             }}
@@ -97,6 +100,7 @@ export default function VehiculoDetallePage() {
 }
 
 function TabDatos({ vehiculo, puedeEditar, onCambio }: { vehiculo: Vehiculo; puedeEditar: boolean; onCambio: () => void }) {
+  const confirmar = useConfirmacion();
   const [editando, setEditando] = useState(false);
   const [campos, setCampos] = useState(vehiculo);
   const [guardando, setGuardando] = useState(false);
@@ -148,7 +152,7 @@ function TabDatos({ vehiculo, puedeEditar, onCambio }: { vehiculo: Vehiculo; pue
   }
 
   async function baja() {
-    if (!window.confirm('Dar de baja este movil?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: 'Dar de baja este movil?', confirmar: 'Continuar', peligro: true })) return;
     try {
       await darBajaVehiculo(vehiculo.id, motivoBaja || undefined);
       onCambio();
@@ -160,7 +164,7 @@ function TabDatos({ vehiculo, puedeEditar, onCambio }: { vehiculo: Vehiculo; pue
   if (!editando) {
     return (
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
+        {mensaje && <Aviso tipo="exito" texto={mensaje} fontSize={13} />}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10, fontSize: 13 }}>
           <div><b>Alias:</b> {vehiculo.alias ?? '—'}</div>
           <div><b>Marca:</b> {vehiculo.marca ?? '—'}</div>
@@ -173,20 +177,20 @@ function TabDatos({ vehiculo, puedeEditar, onCambio }: { vehiculo: Vehiculo; pue
           <div><b>Capacidad carga:</b> {vehiculo.capacidadCarga ?? '—'}</div>
           <div><b>Capacidad pasajeros:</b> {vehiculo.capacidadPasajeros ?? '—'}</div>
           <div><b>Km actual:</b> {vehiculo.kilometrajeActual.toLocaleString()}</div>
-          <div><b>Ubicacion actual:</b> {vehiculo.ubicacionActual ?? '—'}</div>
+          <div><b>Ubicación actual:</b> {vehiculo.ubicacionActual ?? '—'}</div>
           <div><b>ITV vencimiento:</b> {vehiculo.itvVencimiento ?? '—'}</div>
           <div><b>Seguro empresa:</b> {vehiculo.seguroEmpresa ?? '—'}</div>
           <div><b>Seguro poliza:</b> {vehiculo.seguroPoliza ?? '—'}</div>
           <div><b>Seguro vencimiento:</b> {vehiculo.seguroVencimiento ?? '—'}</div>
         </div>
         {vehiculo.estado === 'BAJA' && (
-          <p style={{ fontSize: 13, color: '#f87171' }}>
+          <p style={{ fontSize: 13, color: 'var(--danger)' }}>
             Dado de baja el {vehiculo.fechaBaja} {vehiculo.motivoBaja ? `— ${vehiculo.motivoBaja}` : ''}
           </p>
         )}
         {puedeEditar && (
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn-primary" onClick={() => setEditando(true)}>Editar datos</button>
+            <button type="button" className="btn-primary" onClick={() => setEditando(true)}>Editar datos</button>
             {vehiculo.estado !== 'BAJA' && (
               <>
                 <input
@@ -196,7 +200,7 @@ function TabDatos({ vehiculo, puedeEditar, onCambio }: { vehiculo: Vehiculo; pue
                   value={motivoBaja}
                   onChange={(e) => setMotivoBaja(e.target.value)}
                 />
-                <button style={{ background: '#7f1d1d', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 14px' }} onClick={baja}>
+                <button type="button" style={{ background: '#7f1d1d', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 14px' }} onClick={baja}>
                   Dar de baja
                 </button>
               </>
@@ -209,32 +213,32 @@ function TabDatos({ vehiculo, puedeEditar, onCambio }: { vehiculo: Vehiculo; pue
 
   return (
     <form className="card" onSubmit={guardar} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label><input className="input-field" value={campo('tipo')} onChange={(e) => setCampos({ ...campos, tipo: e.target.value })} required /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Alias</label><input className="input-field" value={campo('alias')} onChange={(e) => setCampos({ ...campos, alias: e.target.value })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Marca</label><input className="input-field" value={campo('marca')} onChange={(e) => setCampos({ ...campos, marca: e.target.value })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Modelo</label><input className="input-field" value={campo('modelo')} onChange={(e) => setCampos({ ...campos, modelo: e.target.value })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Anio</label><input className="input-field" type="number" value={campo('anio')} onChange={(e) => setCampos({ ...campos, anio: e.target.value ? Number(e.target.value) : null })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Patente</label><input className="input-field" value={campo('patente')} onChange={(e) => setCampos({ ...campos, patente: e.target.value })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Color</label><input className="input-field" value={campo('color')} onChange={(e) => setCampos({ ...campos, color: e.target.value })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>N. chasis</label><input className="input-field" value={campo('numeroChasis')} onChange={(e) => setCampos({ ...campos, numeroChasis: e.target.value })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>N. motor</label><input className="input-field" value={campo('numeroMotor')} onChange={(e) => setCampos({ ...campos, numeroMotor: e.target.value })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Capacidad carga</label><input className="input-field" type="number" value={campo('capacidadCarga')} onChange={(e) => setCampos({ ...campos, capacidadCarga: e.target.value ? Number(e.target.value) : null })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Capacidad pasajeros</label><input className="input-field" type="number" value={campo('capacidadPasajeros')} onChange={(e) => setCampos({ ...campos, capacidadPasajeros: e.target.value ? Number(e.target.value) : null })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
-          <select className="input-field" value={campos.estado} onChange={(e) => setCampos({ ...campos, estado: e.target.value as Vehiculo['estado'] })}>
+        <div><label htmlFor="tipo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label><input id="tipo" className="input-field" value={campo('tipo')} onChange={(e) => setCampos({ ...campos, tipo: e.target.value })} required /></div>
+        <div><label htmlFor="alias" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Alias</label><input id="alias" className="input-field" value={campo('alias')} onChange={(e) => setCampos({ ...campos, alias: e.target.value })} /></div>
+        <div><label htmlFor="marca" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Marca</label><input id="marca" className="input-field" value={campo('marca')} onChange={(e) => setCampos({ ...campos, marca: e.target.value })} /></div>
+        <div><label htmlFor="modelo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Modelo</label><input id="modelo" className="input-field" value={campo('modelo')} onChange={(e) => setCampos({ ...campos, modelo: e.target.value })} /></div>
+        <div><label htmlFor="anio" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Anio</label><input id="anio" className="input-field" type="number" value={campo('anio')} onChange={(e) => setCampos({ ...campos, anio: e.target.value ? Number(e.target.value) : null })} /></div>
+        <div><label htmlFor="patente" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Patente</label><input id="patente" className="input-field" value={campo('patente')} onChange={(e) => setCampos({ ...campos, patente: e.target.value })} /></div>
+        <div><label htmlFor="color" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Color</label><input id="color" className="input-field" value={campo('color')} onChange={(e) => setCampos({ ...campos, color: e.target.value })} /></div>
+        <div><label htmlFor="n-chasis" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>N. chasis</label><input id="n-chasis" className="input-field" value={campo('numeroChasis')} onChange={(e) => setCampos({ ...campos, numeroChasis: e.target.value })} /></div>
+        <div><label htmlFor="n-motor" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>N. motor</label><input id="n-motor" className="input-field" value={campo('numeroMotor')} onChange={(e) => setCampos({ ...campos, numeroMotor: e.target.value })} /></div>
+        <div><label htmlFor="capacidad-carga" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Capacidad carga</label><input id="capacidad-carga" className="input-field" type="number" value={campo('capacidadCarga')} onChange={(e) => setCampos({ ...campos, capacidadCarga: e.target.value ? Number(e.target.value) : null })} /></div>
+        <div><label htmlFor="capacidad-pasajeros" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Capacidad pasajeros</label><input id="capacidad-pasajeros" className="input-field" type="number" value={campo('capacidadPasajeros')} onChange={(e) => setCampos({ ...campos, capacidadPasajeros: e.target.value ? Number(e.target.value) : null })} /></div>
+        <div><label htmlFor="estado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
+          <select id="estado" className="input-field" value={campos.estado} onChange={(e) => setCampos({ ...campos, estado: e.target.value as Vehiculo['estado'] })}>
             {ESTADOS_VEHICULO.map((e) => <option key={e} value={e}>{e}</option>)}
           </select>
         </div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicacion actual</label><input className="input-field" value={campo('ubicacionActual')} onChange={(e) => setCampos({ ...campos, ubicacionActual: e.target.value })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>ITV vencimiento</label><input className="input-field" type="date" value={campo('itvVencimiento')} onChange={(e) => setCampos({ ...campos, itvVencimiento: e.target.value })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Seguro empresa</label><input className="input-field" value={campo('seguroEmpresa')} onChange={(e) => setCampos({ ...campos, seguroEmpresa: e.target.value })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Seguro poliza</label><input className="input-field" value={campo('seguroPoliza')} onChange={(e) => setCampos({ ...campos, seguroPoliza: e.target.value })} /></div>
-        <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Seguro vencimiento</label><input className="input-field" type="date" value={campo('seguroVencimiento')} onChange={(e) => setCampos({ ...campos, seguroVencimiento: e.target.value })} /></div>
+        <div><label htmlFor="ubicacion-actual" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Ubicación actual</label><input id="ubicacion-actual" className="input-field" value={campo('ubicacionActual')} onChange={(e) => setCampos({ ...campos, ubicacionActual: e.target.value })} /></div>
+        <div><label htmlFor="itv-vencimiento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>ITV vencimiento</label><input id="itv-vencimiento" className="input-field" type="date" value={campo('itvVencimiento')} onChange={(e) => setCampos({ ...campos, itvVencimiento: e.target.value })} /></div>
+        <div><label htmlFor="seguro-empresa" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Seguro empresa</label><input id="seguro-empresa" className="input-field" value={campo('seguroEmpresa')} onChange={(e) => setCampos({ ...campos, seguroEmpresa: e.target.value })} /></div>
+        <div><label htmlFor="seguro-poliza" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Seguro poliza</label><input id="seguro-poliza" className="input-field" value={campo('seguroPoliza')} onChange={(e) => setCampos({ ...campos, seguroPoliza: e.target.value })} /></div>
+        <div><label htmlFor="seguro-vencimiento" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Seguro vencimiento</label><input id="seguro-vencimiento" className="input-field" type="date" value={campo('seguroVencimiento')} onChange={(e) => setCampos({ ...campos, seguroVencimiento: e.target.value })} /></div>
       </div>
       <div style={{ display: 'flex', gap: 8 }}>
-        <button className="btn-primary" disabled={guardando}>{guardando ? 'Guardando...' : 'Guardar cambios'}</button>
+        <button type="submit" className="btn-primary" disabled={guardando}>{guardando ? 'Guardando...' : 'Guardar cambios'}</button>
         <button type="button" style={{ background: '#475569', color: '#fff', border: 'none', borderRadius: 6, padding: '8px 14px' }} onClick={() => setEditando(false)}>Cancelar</button>
       </div>
     </form>
@@ -282,35 +286,35 @@ function TabMantenimientos({ vehiculoId, puedeEditar }: { vehiculoId: string; pu
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {puedeEditar && (
-        <button className="btn-primary" style={{ alignSelf: 'flex-start' }} onClick={() => setMostrarForm((v) => !v)}>
+        <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} onClick={() => setMostrarForm((v) => !v)}>
           {mostrarForm ? 'Cancelar' : 'Registrar mantenimiento'}
         </button>
       )}
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
       {mostrarForm && (
         <form className="card" onSubmit={crear} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
-            <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
-              <select className="input-field" value={tipo} onChange={(e) => setTipo(e.target.value as MantenimientoVehiculo['tipo'])}>
+            <div><label htmlFor="tipo-2" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Tipo</label>
+              <select id="tipo-2" className="input-field" value={tipo} onChange={(e) => setTipo(e.target.value as MantenimientoVehiculo['tipo'])}>
                 {TIPOS_MANTENIMIENTO.map((t) => <option key={t} value={t}>{t}</option>)}
               </select>
             </div>
-            <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label><input className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required /></div>
-            <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Costo</label><input className="input-field" type="number" value={costo} onChange={(e) => setCosto(e.target.value)} /></div>
-            <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Kilometraje</label><input className="input-field" type="number" value={kilometraje} onChange={(e) => setKilometraje(e.target.value)} /></div>
+            <div><label htmlFor="fecha" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label><input id="fecha" className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required /></div>
+            <div><label htmlFor="costo" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Costo</label><input id="costo" className="input-field" type="number" value={costo} onChange={(e) => setCosto(e.target.value)} /></div>
+            <div><label htmlFor="kilometraje" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Kilometraje</label><input id="kilometraje" className="input-field" type="number" value={kilometraje} onChange={(e) => setKilometraje(e.target.value)} /></div>
           </div>
-          <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripcion</label><input className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required /></div>
-          <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>{guardando ? 'Guardando...' : 'Guardar'}</button>
+          <div><label htmlFor="descripcion" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Descripción</label><input id="descripcion" className="input-field" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} required /></div>
+          <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>{guardando ? 'Guardando...' : 'Guardar'}</button>
         </form>
       )}
-      {items && items.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin mantenimientos registrados.</p>}
+      {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin mantenimientos registrados.</p>}
       {items && items.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-          <thead><tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-            <th style={{ padding: '6px 4px' }}>Fecha</th><th style={{ padding: '6px 4px' }}>Tipo</th><th style={{ padding: '6px 4px' }}>Descripcion</th><th style={{ padding: '6px 4px' }}>Costo</th><th style={{ padding: '6px 4px' }}>Km</th>
+          <thead><tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+            <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th><th scope="col" style={{ padding: '6px 4px' }}>Tipo</th><th scope="col" style={{ padding: '6px 4px' }}>Descripción</th><th scope="col" style={{ padding: '6px 4px' }}>Costo</th><th scope="col" style={{ padding: '6px 4px' }}>Km</th>
           </tr></thead>
           <tbody>{items.map((m) => (
-            <tr key={m.id} style={{ borderBottom: '1px solid #1f2937' }}>
+            <tr key={m.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
               <td style={{ padding: '6px 4px' }}>{m.fecha}</td>
               <td style={{ padding: '6px 4px' }}><span className="badge">{m.tipo}</span></td>
               <td style={{ padding: '6px 4px' }}>{m.descripcion}</td>
@@ -363,30 +367,30 @@ function TabCombustible({ vehiculoId, puedeEditar }: { vehiculoId: string; puede
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {puedeEditar && (
-        <button className="btn-primary" style={{ alignSelf: 'flex-start' }} onClick={() => setMostrarForm((v) => !v)}>
+        <button type="button" className="btn-primary" style={{ alignSelf: 'flex-start' }} onClick={() => setMostrarForm((v) => !v)}>
           {mostrarForm ? 'Cancelar' : 'Registrar carga de combustible'}
         </button>
       )}
-      {error && <p style={{ color: '#f87171' }}>{error}</p>}
+      {error && <Aviso tipo="error" texto={error} />}
       {mostrarForm && (
         <form className="card" onSubmit={crear} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10 }}>
-            <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label><input className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required /></div>
-            <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Galones</label><input className="input-field" type="number" step="0.01" value={galones} onChange={(e) => setGalones(e.target.value)} required /></div>
-            <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Kilometraje actual</label><input className="input-field" type="number" value={kilometrajeActual} onChange={(e) => setKilometrajeActual(e.target.value)} required /></div>
-            <div><label style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Costo</label><input className="input-field" type="number" value={costo} onChange={(e) => setCosto(e.target.value)} /></div>
+            <div><label htmlFor="fecha-2" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Fecha</label><input id="fecha-2" className="input-field" type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} required /></div>
+            <div><label htmlFor="galones" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Galones</label><input id="galones" className="input-field" type="number" step="0.01" value={galones} onChange={(e) => setGalones(e.target.value)} required /></div>
+            <div><label htmlFor="kilometraje-actual" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Kilometraje actual</label><input id="kilometraje-actual" className="input-field" type="number" value={kilometrajeActual} onChange={(e) => setKilometrajeActual(e.target.value)} required /></div>
+            <div><label htmlFor="costo-2" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Costo</label><input id="costo-2" className="input-field" type="number" value={costo} onChange={(e) => setCosto(e.target.value)} /></div>
           </div>
-          <button className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>{guardando ? 'Guardando...' : 'Guardar'}</button>
+          <button type="submit" className="btn-primary" disabled={guardando} style={{ alignSelf: 'flex-start' }}>{guardando ? 'Guardando...' : 'Guardar'}</button>
         </form>
       )}
-      {items && items.length === 0 && <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin cargas de combustible registradas.</p>}
+      {items && items.length === 0 && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin cargas de combustible registradas.</p>}
       {items && items.length > 0 && (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-          <thead><tr style={{ textAlign: 'left', borderBottom: '1px solid #334155' }}>
-            <th style={{ padding: '6px 4px' }}>Fecha</th><th style={{ padding: '6px 4px' }}>Galones</th><th style={{ padding: '6px 4px' }}>Tipo</th><th style={{ padding: '6px 4px' }}>Km</th><th style={{ padding: '6px 4px' }}>Costo</th>
+          <thead><tr style={{ textAlign: 'left', borderBottom: '1px solid var(--line)' }}>
+            <th scope="col" style={{ padding: '6px 4px' }}>Fecha</th><th scope="col" style={{ padding: '6px 4px' }}>Galones</th><th scope="col" style={{ padding: '6px 4px' }}>Tipo</th><th scope="col" style={{ padding: '6px 4px' }}>Km</th><th scope="col" style={{ padding: '6px 4px' }}>Costo</th>
           </tr></thead>
           <tbody>{items.map((c) => (
-            <tr key={c.id} style={{ borderBottom: '1px solid #1f2937' }}>
+            <tr key={c.id} style={{ borderBottom: '1px solid var(--line-soft)' }}>
               <td style={{ padding: '6px 4px' }}>{c.fecha}</td>
               <td style={{ padding: '6px 4px' }}>{c.galones}</td>
               <td style={{ padding: '6px 4px' }}>{c.tipoCombustible}</td>
@@ -408,18 +412,18 @@ function TabHistorial({ vehiculoId }: { vehiculoId: string }) {
     cargarHistorialVehiculo(vehiculoId).then(setEventos).catch((err) => setError(err.message));
   }, [vehiculoId]);
 
-  if (error) return <p style={{ color: '#f87171' }}>{error}</p>;
-  if (!eventos) return <p style={{ color: '#94a3b8' }}>Cargando...</p>;
-  if (eventos.length === 0) return <p style={{ color: '#94a3b8', fontSize: 13 }}>Sin eventos registrados todavia.</p>;
+  if (error) return <p style={{ color: 'var(--danger)' }}>{error}</p>;
+  if (!eventos) return <Cargando texto="Cargando…" />;
+  if (eventos.length === 0) return <p style={{ color: 'var(--muted)', fontSize: 13 }}>Sin eventos registrados todavía.</p>;
 
-  const colorTipo: Record<string, string> = { MANTENIMIENTO: '#854d0e', COMBUSTIBLE: '#1d4ed8', SERVICIO: '#166534' };
+  const colorTipo: Record<string, string> = { MANTENIMIENTO: 'var(--warn-fill)', COMBUSTIBLE: 'var(--info-fill)', SERVICIO: 'var(--ok-fill)' };
 
   return (
     <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
       {eventos.map((ev, i) => (
-        <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'baseline', fontSize: 13, borderBottom: '1px solid #1f2937', paddingBottom: 8 }}>
-          <span style={{ color: '#94a3b8', minWidth: 140 }}>{new Date(ev.fecha).toLocaleDateString()}</span>
-          <span className="badge" style={{ background: colorTipo[ev.tipo] ?? '#334155' }}>{ev.tipo}</span>
+        <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'baseline', fontSize: 13, borderBottom: '1px solid var(--line-soft)', paddingBottom: 8 }}>
+          <span style={{ color: 'var(--muted)', minWidth: 140 }}>{new Date(ev.fecha).toLocaleDateString()}</span>
+          <span className="badge" style={{ background: colorTipo[ev.tipo] ?? 'var(--neutral-fill)' }}>{ev.tipo}</span>
           <span>{ev.detalle}</span>
         </div>
       ))}

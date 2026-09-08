@@ -3,17 +3,60 @@ import { DataSourceOptions } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import * as entities from '../../shared/entities';
 
+function booleanoConfiguracion(
+  entorno: Record<string, string | undefined>,
+  nombre: string,
+  predeterminado: boolean,
+): boolean {
+  const valor = entorno[nombre]?.toLowerCase();
+  if (valor === undefined || valor === '') return predeterminado;
+  if (valor === 'true') return true;
+  if (valor === 'false') return false;
+  throw new Error(nombre + ' debe ser true o false.');
+}
+
+/**
+ * SQL Server local puede usar certificado autofirmado, pero un despliegue de
+ * produccion debe declarar cifrado y validacion de certificado de forma
+ * explicita. Fallar al iniciar evita una degradacion silenciosa de TLS.
+ */
+export function obtenerSeguridadMssql(
+  entorno: Record<string, string | undefined> = process.env,
+): { encrypt: boolean; trustServerCertificate: boolean } {
+  const encrypt = booleanoConfiguracion(entorno, 'DB_ENCRYPT', false);
+  const trustServerCertificate = booleanoConfiguracion(
+    entorno,
+    'DB_TRUST_SERVER_CERTIFICATE',
+    true,
+  );
+  if (
+    entorno.NODE_ENV === 'production' &&
+    (!encrypt || trustServerCertificate)
+  ) {
+    throw new Error(
+      'En produccion DB_ENCRYPT=true y DB_TRUST_SERVER_CERTIFICATE=false son obligatorios.',
+    );
+  }
+  return { encrypt, trustServerCertificate };
+}
+
+const seguridadMssql = obtenerSeguridadMssql();
+// El iniciador local puede descubrir el puerto TCP dinámico de SQLEXPRESS.
+// Esta variable de proceso tiene prioridad sólo para esa ejecución y evita
+// depender de SQL Server Browser o alterar el archivo .env del operador.
+const puertoMssqlDescubierto = process.env.DB_DISCOVERED_PORT;
+const instanciaMssql = puertoMssqlDescubierto ? undefined : process.env.DB_INSTANCE;
+
 export const dataSourceOptions: DataSourceOptions = {
   type: 'mssql',
   host: process.env.DB_HOST ?? 'localhost',
-  ...(process.env.DB_INSTANCE ? {} : { port: Number(process.env.DB_PORT ?? 1433) }),
+  ...(instanciaMssql ? {} : { port: Number(puertoMssqlDescubierto ?? process.env.DB_PORT ?? 1433) }),
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME ?? 'sigbo_cbvc',
   options: {
-    ...(process.env.DB_INSTANCE ? { instanceName: process.env.DB_INSTANCE } : {}),
-    encrypt: process.env.DB_ENCRYPT === 'true',
-    trustServerCertificate: process.env.DB_TRUST_SERVER_CERTIFICATE !== 'false',
+    ...(instanciaMssql ? { instanceName: instanciaMssql } : {}),
+    ...seguridadMssql,
     connectTimeout: 15000,
   },
   requestTimeout: 15000,

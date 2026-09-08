@@ -24,8 +24,8 @@ Catalogo configurable de tipos de servicio (schema servicios).
 ## Donde se usa
 
 - **Pantallas:** `/`, `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/publicaciones`, `/dashboard/servicios`, `/dashboard/servicios/nuevo`
-- **Endpoints:** ConsultasCruzadasController, DenunciasController, DenunciasPublicasController, PublicacionesController, ServiciosController
-- **Servicios:** ConsultasCruzadasService, DenunciasService, PublicacionesService, ServiciosService
+- **Endpoints:** ConsultasCruzadasController, DenunciasController, DenunciasPublicasController, PerfilController, PublicacionesController, ServiciosController
+- **Servicios:** ConsultasCruzadasService, DenunciasService, IaToolsService, PerfilService, PublicacionesService, ServiciosService
 
 <sub>Camino derivado: TABLE ← reads ← SERVICE ← exposes ← API ← calls ← SCREEN.
 Una llamada con la ruta armada en una variable no se detecta — ver rule--el-grafo-no-es-la-verdad.</sub>
@@ -42,8 +42,10 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 ## Referenciado por
 
 - [[service--denuncias-denuncias|DenunciasService]] `uses` →
+- [[service--ia-ia-tools|IaToolsService]] `uses` →
 - [[service--personal-consultas-cruzadas|ConsultasCruzadasService]] `uses` →
 - [[service--publicaciones-publicaciones|PublicacionesService]] `uses` →
+- [[service--seguridad-perfil|PerfilService]] `uses` →
 - [[service--servicios-servicios|ServiciosService]] `uses` →
 
 ---

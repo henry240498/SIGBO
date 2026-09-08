@@ -51,7 +51,7 @@ Logica de negocio de foja servicio (modulo personal).
 
 ## Metodos
 
-`generar()` · `listarAnios()` · `obtenerPorAnio()`
+`generar()` · `listarAnios()` · `obtenerPorAnio()` · `descargarArchivo()`
 
 ## Archivos
 

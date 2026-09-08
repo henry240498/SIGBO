@@ -53,6 +53,7 @@ Modulo funcional "Seguridad". Habilitado en la navegacion.
 - [[table--seguridad-configuracion-versiones|seguridad.configuracion_versiones]] `belongs_to` →
 - [[component--modulo-auth|auth (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-configuracion|configuracion (modulo NestJS)]] `belongs_to` →
+- [[component--modulo-salud|salud (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-seguridad|seguridad (modulo NestJS)]] `belongs_to` →
 - [[service--auth-auth|AuthService]] `belongs_to` →
 - [[service--configuracion-configuracion|ConfiguracionService]] `belongs_to` →
@@ -67,6 +68,7 @@ Modulo funcional "Seguridad". Habilitado en la navegacion.
 - [[service--seguridad-usuarios|UsuariosService]] `belongs_to` →
 - [[api--auth-auth|AuthController]] `belongs_to` →
 - [[api--configuracion-configuracion|ConfiguracionController]] `belongs_to` →
+- [[api--salud-salud|SaludController]] `belongs_to` →
 - [[api--seguridad-apariencia|AparienciaController]] `belongs_to` →
 - [[api--seguridad-auditoria|AuditoriaController]] `belongs_to` →
 - [[api--seguridad-dashboard|DashboardController]] `belongs_to` →
@@ -80,8 +82,6 @@ Modulo funcional "Seguridad". Habilitado en la navegacion.
 - [[screen--dashboard-mi-perfil-preferencias|/dashboard/mi-perfil/preferencias]] `belongs_to` →
 - [[screen--dashboard-mi-perfil-seguridad|/dashboard/mi-perfil/seguridad]] `belongs_to` →
 - [[screen--dashboard|/dashboard]] `belongs_to` →
-- [[screen--dashboard-seguridad-apariencia|/dashboard/seguridad/apariencia]] `belongs_to` →
-- [[screen--dashboard-seguridad-auditoria|/dashboard/seguridad/auditoria]] `belongs_to` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

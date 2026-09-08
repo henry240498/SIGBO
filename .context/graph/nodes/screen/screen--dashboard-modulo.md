@@ -12,6 +12,7 @@ archivos:
 edges:
   - [belongs_to, domain--seguridad]
   - [uses, component--front-modulos]
+  - [uses, component--front-systemicon]
 terminos: [modulo]
 ---
 
@@ -29,6 +30,7 @@ Pantalla /dashboard/[modulo].
 
 - `belongs_to` → [[domain--seguridad|Seguridad]]
 - `uses` → [[component--front-modulos|modulos]]
+- `uses` → [[component--front-systemicon|SystemIcon]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

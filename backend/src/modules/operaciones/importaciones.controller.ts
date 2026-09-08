@@ -15,8 +15,8 @@ const OPCIONES_ARCHIVO = {
   storage: memoryStorage(),
   limits: { fileSize: 20 * 1024 * 1024 },
   fileFilter: (_req: unknown, file: Express.Multer.File, callback: (err: Error | null, ok: boolean) => void) => {
-    if (!/\.(xls|xlsx)$/i.test(file.originalname)) {
-      callback(new BadRequestException('El archivo debe ser un Excel (.xls o .xlsx) exportado del marcador biometrico'), false);
+    if (!/\.xlsx$/i.test(file.originalname)) {
+      callback(new BadRequestException('El archivo debe ser un Excel (.xlsx) exportado del marcador biométrico'), false);
       return;
     }
     callback(null, true);

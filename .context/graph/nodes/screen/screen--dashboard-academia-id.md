@@ -12,12 +12,15 @@ archivos:
   - frontend/src/app/dashboard/academia/[id]/page.tsx
 edges:
   - [belongs_to, domain--academia]
+  - [uses, component--front-confirmprovider]
   - [uses, component--front-api]
   - [uses, component--front-personal]
   - [uses, component--front-parametros]
   - [uses, component--front-academia]
   - [uses, component--front-api]
   - [uses, component--front-asistencia]
+  - [uses, component--front-cargando]
+  - [uses, component--front-aviso]
 terminos: [academia, editar, curso, gestionar, instructores, inscribir, calificar, registrar, asistencia]
 ---
 
@@ -35,12 +38,15 @@ Pantalla /dashboard/academia/[id].
 ## Relaciones
 
 - `belongs_to` → [[domain--academia|Academia]]
+- `uses` → [[component--front-confirmprovider|ConfirmProvider]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-personal|personal]]
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-academia|academia]]
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-asistencia|asistencia]]
+- `uses` → [[component--front-cargando|Cargando]]
+- `uses` → [[component--front-aviso|Aviso]]
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

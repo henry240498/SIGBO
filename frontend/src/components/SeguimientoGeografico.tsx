@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { obtenerSesion } from '@/lib/api';
 import { cargarVehiculos, type Vehiculo } from '@/lib/vehiculos';
 import {
@@ -18,7 +19,7 @@ import {
 } from '@/lib/seguimiento-geografico';
 import type { ModoClicMapa } from './MapaSeguimiento';
 
-const MapaSeguimiento = dynamic(() => import('./MapaSeguimiento'), { ssr: false, loading: () => <p style={{ color: '#94a3b8', fontSize: 13 }}>Cargando mapa…</p> });
+const MapaSeguimiento = dynamic(() => import('./MapaSeguimiento'), { ssr: false, loading: () => <p style={{ color: 'var(--muted)', fontSize: 13 }}>Cargando mapa…</p> });
 
 const TIPOS_EVENTO: TipoEventoGeografico[] = [
   'SALIDA_CUARTEL', 'LLEGADA_SERVICIO', 'SALIDA_SERVICIO', 'LLEGADA_CENTRO_SALUD',
@@ -38,6 +39,7 @@ const NIVELES = [
  * usa su propio modulo backend, servicios:ver_gps/despachar). Solo se
  * muestra cuando ya existe un servicioId (primer guardado hecho). */
 export function SeguimientoGeografico({ servicioId }: { servicioId: string }) {
+  const confirmar = useConfirmacion();
   const permisos = obtenerSesion()?.usuario.permisos ?? [];
   const puedeVer = permisos.includes('servicios:ver_gps');
   const puedeGestionar = permisos.includes('servicios:despachar');
@@ -111,7 +113,7 @@ export function SeguimientoGeografico({ servicioId }: { servicioId: string }) {
   }
 
   async function quitarRuta() {
-    if (!window.confirm('¿Eliminar la ruta planificada de este servicio?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: '¿Eliminar la ruta planificada de este servicio?', confirmar: 'Eliminar', peligro: true })) return;
     setGuardando(true);
     try {
       await eliminarRutaPlanificada(servicioId);
@@ -170,7 +172,7 @@ export function SeguimientoGeografico({ servicioId }: { servicioId: string }) {
   }
 
   async function quitarEvento(id: string) {
-    if (!window.confirm('¿Eliminar este evento?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: '¿Eliminar este evento?', confirmar: 'Eliminar', peligro: true })) return;
     try {
       await eliminarEventoGeografico(servicioId, id);
       await cargar();
@@ -180,7 +182,7 @@ export function SeguimientoGeografico({ servicioId }: { servicioId: string }) {
   }
 
   async function quitarPrueba(id: string) {
-    if (!window.confirm('¿Eliminar esta prueba de comunicación?')) return;
+    if (!await confirmar({ titulo: 'Confirmar acción', mensaje: '¿Eliminar esta prueba de comunicación?', confirmar: 'Eliminar', peligro: true })) return;
     try {
       await eliminarPruebaComunicacion(servicioId, id);
       await cargar();
@@ -196,8 +198,8 @@ export function SeguimientoGeografico({ servicioId }: { servicioId: string }) {
       <div className="service-section-title"><span>🗺️</span><div><h3>Seguimiento Geográfico y Operativo</h3><p>Ubicación del cuartel e incidente, ruta planificada, eventos del recorrido y pruebas de comunicación.</p></div></div>
 
       {error && <p className="form-error" role="alert">{error}</p>}
-      {mensaje && <p style={{ color: '#4ade80', fontSize: 13 }}>{mensaje}</p>}
-      {cargando && <p style={{ color: '#94a3b8', fontSize: 13 }}>Cargando seguimiento…</p>}
+      {mensaje && <p style={{ color: 'var(--success)', fontSize: 13 }}>{mensaje}</p>}
+      {cargando && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Cargando seguimiento…</p>}
 
       {resumen && (
         <>
@@ -215,16 +217,16 @@ export function SeguimientoGeografico({ servicioId }: { servicioId: string }) {
             />
           </div>
 
-          <div className="geo-legend" style={{ display: 'flex', gap: 14, flexWrap: 'wrap', fontSize: 12, color: '#94a3b8', marginBottom: 12 }}>
+          <div className="geo-legend" style={{ display: 'flex', gap: 14, flexWrap: 'wrap', fontSize: 12, color: 'var(--muted)', marginBottom: 12 }}>
             <span>🟢 Cuartel</span>
             <span>🔴 Incidente</span>
-            <span style={{ color: '#2563eb' }}>— Ruta planificada</span>
+            <span style={{ color: 'var(--signal)' }}>— Ruta planificada</span>
             <span style={{ color: '#0891b2' }}>— Ruta realizada</span>
             <span>📍 Evento</span>
             <span>🟢🟡🟠🔴 Prueba de comunicación (nivel 5→1)</span>
           </div>
 
-          {!resumen.cuartel && <p style={{ fontSize: 12, color: '#94a3b8' }}>No hay un cuartel de referencia con coordenadas cargadas (o hay más de uno activo) — la distancia de las pruebas de comunicación no se calculará hasta configurarlo en Organización Institucional.</p>}
+          {!resumen.cuartel && <p style={{ fontSize: 12, color: 'var(--muted)' }}>No hay un cuartel de referencia con coordenadas cargadas (o hay más de uno activo) — la distancia de las pruebas de comunicación no se calculará hasta configurarlo en Organización Institucional.</p>}
 
           {puedeGestionar && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -239,20 +241,20 @@ export function SeguimientoGeografico({ servicioId }: { servicioId: string }) {
                   {resumen.rutaPlanificada && <button type="button" className="service-secondary" onClick={() => void quitarRuta()} disabled={guardando}>Eliminar ruta planificada</button>}
                 </>}
                 {modo === 'ruta' && <>
-                  <span style={{ fontSize: 13, color: '#94a3b8', alignSelf: 'center' }}>Haga clic en el mapa para agregar puntos ({rutaEnEdicion.length} agregado{rutaEnEdicion.length === 1 ? '' : 's'}).</span>
+                  <span style={{ fontSize: 13, color: 'var(--muted)', alignSelf: 'center' }}>Haga clic en el mapa para agregar puntos ({rutaEnEdicion.length} agregado{rutaEnEdicion.length === 1 ? '' : 's'}).</span>
                   <button type="button" className="btn-primary" disabled={guardando} onClick={() => void guardarRuta()}>Guardar ruta</button>
                   <button type="button" className="service-secondary" onClick={cancelarModo}>Cancelar</button>
                 </>}
                 {(modo === 'evento' || modo === 'prueba') && !pendiente && (
                   <>
-                    <span style={{ fontSize: 13, color: '#94a3b8', alignSelf: 'center' }}>Haga clic en el mapa para marcar {modo === 'evento' ? 'el evento' : 'la prueba'}.</span>
+                    <span style={{ fontSize: 13, color: 'var(--muted)', alignSelf: 'center' }}>Haga clic en el mapa para marcar {modo === 'evento' ? 'el evento' : 'la prueba'}.</span>
                     <button type="button" className="service-secondary" onClick={cancelarModo}>Cancelar</button>
                   </>
                 )}
               </div>
 
               {pendiente && modo === 'evento' && (
-                <div className="card" style={{ background: '#0f172a', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div className="card" style={{ background: 'var(--surface-soft)', display: 'flex', flexDirection: 'column', gap: 8 }}>
                   <strong style={{ fontSize: 13 }}>Nuevo evento: {ETIQUETA_EVENTO[tipoEventoElegido]}</strong>
                   <input className="input-field" placeholder="Destino / etiqueta (ej. nombre del centro de salud)" value={destino} onChange={(e) => setDestino(e.target.value)} />
                   <select className="input-field" value={movilId} onChange={(e) => setMovilId(e.target.value)}>
@@ -268,11 +270,11 @@ export function SeguimientoGeografico({ servicioId }: { servicioId: string }) {
               )}
 
               {pendiente && modo === 'prueba' && (
-                <div className="card" style={{ background: '#0f172a', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div className="card" style={{ background: 'var(--surface-soft)', display: 'flex', flexDirection: 'column', gap: 8 }}>
                   <strong style={{ fontSize: 13 }}>Nueva prueba de comunicación</strong>
                   <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                     {NIVELES.map((n) => (
-                      <button key={n.valor} type="button" onClick={() => setNivel(n.valor)} style={{ padding: '6px 12px', borderRadius: 8, border: nivel === n.valor ? `2px solid ${n.color}` : '1px solid #334155', background: nivel === n.valor ? n.color : 'transparent', color: '#fff', cursor: 'pointer', fontSize: 12 }}>
+                      <button key={n.valor} type="button" onClick={() => setNivel(n.valor)} style={{ padding: '6px 12px', borderRadius: 8, border: nivel === n.valor ? `2px solid ${n.color}` : '1px solid var(--line)', background: nivel === n.valor ? n.color : 'transparent', color: nivel === n.valor ? '#fff' : 'var(--ink)', cursor: 'pointer', fontSize: 12 }}>
                         {n.valor}/5 — {n.etiqueta}
                       </button>
                     ))}
@@ -291,16 +293,16 @@ export function SeguimientoGeografico({ servicioId }: { servicioId: string }) {
             </div>
           )}
 
-          <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 12 }}>
+          <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 12 }}>
             Ruta planificada: {resumen.rutaPlanificada ? 'Sí' : 'No'} · Ruta realizada: {resumen.rutaRealizada.length > 0 ? `Disponible (${resumen.rutaRealizada.length} puntos)` : 'No disponible'}
           </p>
 
           {resumen.eventos.length > 0 && (
             <div style={{ marginTop: 10 }}>
-              <p style={{ fontSize: 12, color: '#94a3b8', marginBottom: 6 }}>Eventos del recorrido</p>
+              <p style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 6 }}>Eventos del recorrido</p>
               {resumen.eventos.map((e) => (
-                <div key={e.id} style={{ fontSize: 12, padding: '5px 0', borderBottom: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', gap: 8 }}>
-                  <span><span className="badge" style={{ background: '#334155', marginRight: 6 }}>{ETIQUETA_EVENTO[e.tipoEvento]}</span>{e.destino ? `${e.destino} · ` : ''}{e.movil ? `${e.movil} · ` : ''}{new Date(e.timestamp).toLocaleString('es-PY')}</span>
+                <div key={e.id} style={{ fontSize: 12, padding: '5px 0', borderBottom: '1px solid var(--line-soft)', display: 'flex', justifyContent: 'space-between', gap: 8 }}>
+                  <span><span className="badge" style={{ background: 'var(--neutral-fill)', marginRight: 6 }}>{ETIQUETA_EVENTO[e.tipoEvento]}</span>{e.destino ? `${e.destino} · ` : ''}{e.movil ? `${e.movil} · ` : ''}{new Date(e.timestamp).toLocaleString('es-PY')}</span>
                   {puedeGestionar && <button type="button" className="service-secondary" style={{ padding: '2px 8px', fontSize: 11 }} onClick={() => void quitarEvento(e.id)}>Eliminar</button>}
                 </div>
               ))}
@@ -309,9 +311,9 @@ export function SeguimientoGeografico({ servicioId }: { servicioId: string }) {
 
           {resumen.pruebasComunicacion.length > 0 && (
             <div style={{ marginTop: 10 }}>
-              <p style={{ fontSize: 12, color: '#94a3b8', marginBottom: 6 }}>Pruebas de comunicación</p>
+              <p style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 6 }}>Pruebas de comunicación</p>
               {resumen.pruebasComunicacion.map((prueba) => (
-                <div key={prueba.id} style={{ fontSize: 12, padding: '5px 0', borderBottom: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', gap: 8 }}>
+                <div key={prueba.id} style={{ fontSize: 12, padding: '5px 0', borderBottom: '1px solid var(--line-soft)', display: 'flex', justifyContent: 'space-between', gap: 8 }}>
                   <span>
                     <span className="badge" style={{ background: COLOR(prueba.nivel), marginRight: 6 }}>{prueba.nivel}/5</span>
                     {prueba.distanciaMetros != null ? `${(prueba.distanciaMetros / 1000).toFixed(2)} km del cuartel · ` : ''}

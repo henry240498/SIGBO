@@ -106,6 +106,8 @@ const DOMAIN_OF_MODULE = {
   organizacion: 'organizacion', operaciones: 'asistencia', servicios: 'servicios',
   vehiculos: 'vehiculos', equipos: 'equipos', publicaciones: 'publicaciones',
   configuracion: 'seguridad', guardias: 'guardias', ia: 'inteligencia',
+  // Sonda técnica de la plataforma; no es un dominio funcional navegable.
+  salud: 'seguridad',
 };
 /** Raiz de ruta del frontend que no coincide con el slug de un modulo. */
 const DOMAIN_OF_ROUTE = {
