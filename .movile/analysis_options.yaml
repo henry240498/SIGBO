@@ -1,0 +1,13 @@
+# Sin includes externos: reglas minimas en linea para analisis determinista
+# en cualquier entorno (local, CI).
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+  language:
+    strict-casts: false
+linter:
+  rules:
+    - avoid_print
+    - prefer_final_fields

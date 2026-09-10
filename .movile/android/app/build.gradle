@@ -1,0 +1,67 @@
+plugins {
+    id "com.android.application"
+    id "org.jetbrains.kotlin.android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0.0-local'
+}
+
+android {
+    namespace = "org.cbvc.sigbo"
+    compileSdk = 36
+    ndkVersion = "28.2.13676358"
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+        // Exigido por flutter_local_notifications (core library desugaring).
+        coreLibraryDesugaringEnabled = true
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        applicationId = "org.cbvc.sigbo"
+        minSdk = 26
+        targetSdk = 36
+        versionCode = flutterVersionCode.toInteger()
+        versionName = flutterVersionName
+        // La URL del backend NO se hardcodea aqui: vive en Ajustes > Servidor
+        // (SigboConfig) con valor inicial de --dart-define=SIGBO_API_URL.
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.debug
+        }
+    }
+}
+
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
+}
+
+// DSL nuevo (AGP 9 / flutter-plugin-loader 1.x): sin bloque `flutter {}`;
+// el origen por defecto es la raiz del proyecto (..).

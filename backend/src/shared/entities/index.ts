@@ -140,3 +140,4 @@ export * from './aplicacion-beneficio.entity';
 export * from './factura.entity';
 export * from './nota-credito.entity';
 export * from './numeracion-comprobante.entity';
+export * from './alerta-emergencia.entity';

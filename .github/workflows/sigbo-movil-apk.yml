@@ -1,0 +1,61 @@
+# Compila el APK de la app movil SIGBO (Flutter) sin necesidad de SDK local.
+# Se ejecuta al cambiar archivos de .movile/ o manualmente (Actions > SIGBO movil APK).
+name: SIGBO movil APK
+
+on:
+  push:
+    paths:
+      - ".movile/**"
+  workflow_dispatch:
+    inputs:
+      api_url:
+        description: "URL de fabrica del backend (opcional, se cambia en la app)"
+        required: false
+        default: ""
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .movile
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: "3.32.0"
+
+      - name: Andamiaje nativo Android
+        run: |
+          flutter create --org org.cbvc.sigbo --project-name sigbo_alertas \
+            --platforms android --android-language kotlin /tmp/sigbo-base
+          cp -R /tmp/sigbo-base/android ./android
+          mkdir -p android/app/src/main/kotlin/org/cbvc/sigbo android/app/src/main/res/values
+          cp android_app_src/AndroidManifest.xml android/app/src/main/AndroidManifest.xml
+          cp android_app_src/MainActivity.kt android/app/src/main/kotlin/org/cbvc/sigbo/MainActivity.kt
+          cp android_app_src/build.gradle android/app/build.gradle
+          cp android_app_src/styles.xml android/app/src/main/res/values/styles.xml
+
+      - name: Dependencias y analisis
+        run: |
+          flutter pub get
+          flutter analyze
+
+      - name: Compilar APK depuracion
+        run: |
+          DEFINE=""
+          if [ -n "${{ inputs.api_url }}" ]; then DEFINE="--dart-define=SIGBO_API_URL=${{ inputs.api_url }}"; fi
+          flutter build apk --debug $DEFINE
+
+      - name: Publicar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: sigbo-alertas-debug
+          path: .movile/build/app/outputs/flutter-apk/app-debug.apk

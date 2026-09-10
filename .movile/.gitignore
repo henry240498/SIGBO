@@ -1,0 +1,11 @@
+.dart_tool/
+.build/
+build/
+ios/Flutter/Flutter.podspec
+ios/.symlinks/
+ios/Pods/
+android/.gradle/
+android/local.properties
+*.apk
+*.aab
+*.ipa

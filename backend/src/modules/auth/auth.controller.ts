@@ -18,6 +18,17 @@ export class AuthController {
     res.setHeader('Pragma', 'no-cache');
   }
 
+  /**
+   * Las apps nativas (carpeta .movile) no corren en un navegador y no estan
+   * expuestas a XSS: cuando envian `X-SIGBO-Dispositivo: movil` reciben los
+   * tokens tambien en el JSON para guardarlos en almacenamiento cifrado del
+   * equipo y autenticarse con `Authorization: Bearer`. El navegador web sigue
+   * usando exclusivamente cookies HttpOnly.
+   */
+  private esDispositivoMovil(req: Request): boolean {
+    return req.headers['x-sigbo-dispositivo'] === 'movil';
+  }
+
   @Post('login')
   @UseGuards(RateLimitGuard)
   @RateLimit({ nombre: 'auth-login', ventanaMs: 15 * 60_000, maximo: 10, penalizacionMs: 15 * 60_000 })
@@ -33,6 +44,13 @@ export class AuthController {
     // Las credenciales ya viajan en cookies HttpOnly. Exponerlas nuevamente en
     // JSON permitirÃ­a que un script inyectado las leyera y anularÃ­a esa
     // protecciÃ³n.
+    if (this.esDispositivoMovil(req)) {
+      return {
+        usuario: resultado.usuario,
+        accessToken: resultado.accessToken,
+        refreshToken: resultado.refreshToken,
+      };
+    }
     return { usuario: resultado.usuario };
   }
 
@@ -45,6 +63,13 @@ export class AuthController {
     if (!refreshToken) throw new UnauthorizedException('Refresh token requerido');
     const resultado = await this.authService.refresh(refreshToken);
     establecerCookiesAuth(res, resultado.accessToken, resultado.refreshToken);
+    if (this.esDispositivoMovil(req)) {
+      return {
+        usuario: resultado.usuario,
+        accessToken: resultado.accessToken,
+        refreshToken: resultado.refreshToken,
+      };
+    }
     return { usuario: resultado.usuario };
   }
 

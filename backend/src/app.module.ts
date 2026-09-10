@@ -21,6 +21,7 @@ import { FinanzasModule } from './modules/finanzas/finanzas.module';
 import { DocumentosModule } from './modules/documentos/documentos.module';
 import { IaModule } from './modules/ia/ia.module';
 import { SaludModule } from './modules/salud/salud.module';
+import { AlertasModule } from './modules/alertas/alertas.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { SaludModule } from './modules/salud/salud.module';
     DocumentosModule,
     IaModule,
     SaludModule,
+    AlertasModule,
   ],
 })
 export class AppModule implements NestModule {
