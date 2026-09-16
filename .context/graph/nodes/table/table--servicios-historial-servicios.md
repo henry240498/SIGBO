@@ -24,7 +24,6 @@ Tabla servicios.historial_servicios (12 columnas). Creada en 007_servicios.sql, 
 
 ## Restricciones CHECK (reglas que la BD impone)
 
-- `tipo_evento IN ('SALIDA','LLEGADA','GPS','COMBUSTIBLE','INCIDENTE','FIN')`
 - `tipo_evento IN ( N'SALIDA_CUARTEL', N'LLEGADA_SERVICIO', N'SALIDA_SERVICIO', N'LLEGADA_CENTRO_SALUD', N'SALIDA_CENTRO_SALUD', N'REGRESO_CUARTEL', N'FIN_SERVICIO', N'PUNTO_CONTROL', N'GPS', N'INCIDENTE', N'OBSERVACION', N'OTRO' )`
 
 ## Columnas

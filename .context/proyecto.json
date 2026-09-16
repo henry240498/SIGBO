@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "PROJECT_ID": "sigbo",
+  "PROJECT_NAME": "SIGBO",
+  "TYPE": "web-mobile",
+  "TECH_STACK": "NestJS 11, Next.js 16, React 19, TypeORM; SQL Server; Flutter/Android",
+  "TECH_STACK_SOURCE": [
+    ".movile/pubspec.yaml",
+    ".movile/android/build.gradle",
+    ".movile/android/app/build.gradle",
+    ".movile/android_app_src/build.gradle",
+    "backend/package.json",
+    "frontend/package.json"
+  ],
+  "ENVIRONMENT": "NO DETERMINADO",
+  "STATUS": "NO DETERMINADO",
+  "OBSERVED_STATE": "Sistema institucional con grafo documental amplio.",
+  "VERSION_SOURCE": [
+    ".movile/pubspec.yaml",
+    ".movile/android/build.gradle",
+    ".movile/android/app/build.gradle",
+    ".movile/android_app_src/build.gradle",
+    "backend/package.json",
+    "frontend/package.json"
+  ],
+  "LAST_CONTEXT_UPDATE": "2026-09-14",
+  "LAST_VALIDATION": {
+    "date": "NO DETERMINADO",
+    "revision": "NO DETERMINADO",
+    "command": "NO DETERMINADO",
+    "result": "NO DETERMINADO"
+  },
+  "LAST_DEPLOY": "NO DETERMINADO",
+  "EXTERNAL_DEPENDENCIES": "Node, SQL Server; SDK móvil y firma para distribución.",
+  "CONFIG_SOURCES": [
+    ".github/workflows/build.yml",
+    ".github/workflows/sigbo-movil-apk.yml"
+  ],
+  "SOURCE_HASHES": {
+    ".movile/pubspec.yaml": "47b1880217a07352eb45fe3f9ab83c1199a90a754802ccb2336fc143af3a7435",
+    ".movile/android/build.gradle": "018d24d1d0854b1c51dec6f13894c481fc13f3cf7c28c6ca5a7e0b4830039920",
+    ".movile/android/app/build.gradle": "2787d45f3764d67ee873753ef69c61b2de4d6713055bc3279aa9e4a5e6ba901a",
+    ".movile/android_app_src/build.gradle": "2787d45f3764d67ee873753ef69c61b2de4d6713055bc3279aa9e4a5e6ba901a",
+    "backend/package.json": "0ddd88535a8545329b6ac2389bba479c8b3b08b3ee3308a5ab80b3e7448386e1",
+    "frontend/package.json": "d8f321038811c433d1fb105d3c3f09b4777928172a9a69aaf4fcc8fd3db504cb",
+    ".github/workflows/build.yml": "bc260c29c25fe3fb3d9d72fce2f7115d2a74218f84f9790d77da2f7fcf305f79",
+    ".github/workflows/sigbo-movil-apk.yml": "73fb35d7adb622efc88e8e81978e2e0f5eec1fa6323c49c0fbd834c7427725d8"
+  },
+  "VAULTS_ROOT_RELATIVE": "../Vaults/jmartinez"
+}

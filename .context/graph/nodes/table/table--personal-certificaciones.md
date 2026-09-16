@@ -25,7 +25,6 @@ Tabla personal.certificaciones (15 columnas). Creada en 003_personal.sql, modifi
 
 ## Restricciones CHECK (reglas que la BD impone)
 
-- `tipo IN ('BASICO','INTERMEDIO','AVANZADO','ESPECIALIDAD')`
 - `tipo IN ('BASICO','INTERMEDIO','AVANZADO','ESPECIALIDAD','CURSO','SEMINARIO','TALLER','ENTRENAMIENTO')`
 
 ## Columnas

@@ -28,8 +28,7 @@ Tabla academia.inscripciones (17 columnas). Creada en 036_academia_estructura.sq
 
 ## Restricciones CHECK (reglas que la BD impone)
 
-- `estado IN (N'INSCRITO',N'ACTIVO',N'RETIRADO',N'FINALIZADO')`
-- `(bombero_id IS NOT NULL AND participante_externo_id IS NULL) OR (bombero_id IS NULL AND participante_externo_id IS NOT NULL`
+- `estado IN (N'INSCRITO',N'ACTIVO',N'RETIRADO',N'FINALIZADO')), CONSTRAINT CK_acad_insc_participante CHECK ( (bombero_id IS NOT NULL AND participante_externo_id IS NULL) OR (bombero_id IS NULL AND participante_externo_id IS NOT NULL`
 
 ## Llaves foraneas
 

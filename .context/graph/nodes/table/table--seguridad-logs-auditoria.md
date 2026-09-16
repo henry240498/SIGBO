@@ -21,11 +21,6 @@ Tabla seguridad.logs_auditoria (11 columnas). Creada en 002_seguridad.sql, modif
 
 - **Esquema:** seguridad · **Columnas:** 11
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `datos_antes IS NULL OR ISJSON(datos_antes) = 1`
-- `datos_despues IS NULL OR ISJSON(datos_despues) = 1`
-
 ## Columnas
 
 | Columna | Tipo |

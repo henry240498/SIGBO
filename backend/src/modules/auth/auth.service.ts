@@ -176,7 +176,7 @@ export class AuthService {
     }
 
     const { roles, permisos } = await this.getRolesYPermisos(usuario.id);
-    const accessToken = this.firmarAccessToken(usuario, roles, permisos, sesion.id);
+    const accessToken = this.firmarAccessToken(usuario, roles, sesion.id);
     const nuevoRefreshToken = this.firmarRefreshToken(usuario.id, sesion.id);
     const actualizacion = await this.sesionRepo.update({
       id: sesion.id,
@@ -245,14 +245,15 @@ export class AuthService {
     return { roles, permisos };
   }
 
-  private firmarAccessToken(usuario: Usuario, roles: string[], permisos: string[], sesionId: string): string {
+  private firmarAccessToken(usuario: Usuario, roles: string[], sesionId: string): string {
     return this.jwtService.sign(
       {
         sub: usuario.id,
         email: usuario.email,
         username: usuario.username,
         roles,
-        permisos,
+        // El catálogo completo excede los 4 KB admitidos por una cookie.
+        // JwtStrategy obtiene los permisos vigentes al validar la sesión.
         sid: sesionId,
       },
       { secret: secretoRequerido('JWT_SECRET'), expiresIn: expiracionJwt('JWT_EXPIRATION', '15m') },
@@ -282,7 +283,7 @@ export class AuthService {
     );
 
     const { roles, permisos } = await this.getRolesYPermisos(usuario.id);
-    const accessToken = this.firmarAccessToken(usuario, roles, permisos, sesion.id);
+    const accessToken = this.firmarAccessToken(usuario, roles, sesion.id);
     const refreshToken = this.firmarRefreshToken(usuario.id, sesion.id);
 
     const refreshTokenHash = await bcrypt.hash(refreshToken, 10);

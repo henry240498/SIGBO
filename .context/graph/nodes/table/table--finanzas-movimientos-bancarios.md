@@ -24,11 +24,6 @@ Tabla finanzas.movimientos_bancarios (13 columnas). Creada en 050_finanzas_banco
 
 - **Esquema:** finanzas · **Columnas:** 13
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `tipo IN (N'DEPOSITO', N'TRANSFERENCIA', N'DEBITO', N'CREDITO', N'COMISION', N'OTRO')`
-- `estado_conciliacion IN (N'PENDIENTE', N'CONCILIADO', N'DIFERENCIA')`
-
 ## Llaves foraneas
 
 - `cuenta_bancaria_id` → [[table--finanzas-cuentas-bancarias|finanzas.cuentas_bancarias]]

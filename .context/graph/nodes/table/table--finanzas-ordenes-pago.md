@@ -31,11 +31,6 @@ Tabla finanzas.ordenes_pago (26 columnas). Creada en 051_finanzas_ordenes_pago.s
 
 - **Esquema:** finanzas · **Columnas:** 26
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN (N'BORRADOR', N'SOLICITADO', N'PENDIENTE_AUTORIZACION', N'AUTORIZADO', N'RECHAZADO', N'PAGADO', N'ANULADO')`
-- `importe > 0`
-
 ## Llaves foraneas
 
 - `categoria_egreso_id` → [[table--organizacion-parametros|organizacion.parametros]]

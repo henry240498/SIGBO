@@ -31,8 +31,7 @@ Tabla deposito.tenencias (16 columnas). Creada en 041_deposito_estructura.sql.
 
 ## Restricciones CHECK (reglas que la BD impone)
 
-- `tipo_elemento IN (N'EQUIPO', N'ARTICULO')`
-- `(tipo_elemento = N'EQUIPO' AND equipo_id IS NOT NULL AND articulo_id IS NULL) OR (tipo_elemento = N'ARTICULO' AND articulo_id IS NOT NULL AND equipo_id IS NULL`
+- `tipo_elemento IN (N'EQUIPO', N'ARTICULO')), CONSTRAINT CK_ten_elemento CHECK ( (tipo_elemento = N'EQUIPO' AND equipo_id IS NOT NULL AND articulo_id IS NULL) OR (tipo_elemento = N'ARTICULO' AND articulo_id IS NOT NULL AND equipo_id IS NULL`
 
 ## Llaves foraneas
 

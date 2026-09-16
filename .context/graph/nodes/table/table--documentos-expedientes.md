@@ -22,10 +22,6 @@ Tabla documentos.expedientes (8 columnas). Creada en 054_documentos_expedientes_
 - **Esquema:** documentos · **Columnas:** 8
 - **UNIQUE:** `numero`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN (N'ABIERTO', N'CERRADO')`
-
 ## Llaves foraneas
 
 - `creado_por` → [[table--seguridad-usuarios|seguridad.usuarios]]

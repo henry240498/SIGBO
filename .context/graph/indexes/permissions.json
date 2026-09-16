@@ -1348,6 +1348,7 @@
  "servicios:crear": {
   "modulo": "servicios",
   "exigidoPor": [
+   "api--alertas-alertas",
    "api--servicios-servicios"
   ]
  },
@@ -1378,6 +1379,7 @@
  "servicios:ver": {
   "modulo": "servicios",
   "exigidoPor": [
+   "api--alertas-alertas",
    "api--servicios-servicios"
   ]
  },

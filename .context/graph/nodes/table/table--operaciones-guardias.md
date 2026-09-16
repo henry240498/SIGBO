@@ -26,8 +26,6 @@ Tabla operaciones.guardias (19 columnas). Creada en 005_operaciones.sql, modific
 
 ## Restricciones CHECK (reglas que la BD impone)
 
-- `turno IN ('DIURNO','NOCTURNO','COMPLETO')`
-- `tipo IN ('ORDINARIA','ESPECIAL','EXTRAORDINARIA')`
 - `cierre_resumen IS NULL OR ISJSON(cierre_resumen) = 1`
 - `estado IN ('PLANIFICADA','CONFIRMADA','EN_CURSO','FINALIZADA','CANCELADA','ANULADA')`
 

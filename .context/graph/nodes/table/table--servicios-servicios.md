@@ -22,12 +22,6 @@ Tabla servicios.servicios (30 columnas). Creada en 007_servicios.sql, modificada
 - **Esquema:** servicios · **Columnas:** 30
 - **UNIQUE:** `numero_servicio`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `gravedad IS NULL OR gravedad IN ('LEVE','MODERADA','GRAVE','CRITICA')`
-- `estado IN ('REGISTRADO','DESPACHADO','EN_CURSO','FINALIZADO','CANCELADO')`
-- `ISJSON(fotos) = 1`
-
 ## Columnas
 
 | Columna | Tipo |

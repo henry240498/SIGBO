@@ -24,11 +24,6 @@ Tabla academia.actividades (26 columnas). Creada en 036_academia_estructura.sql,
 
 - **Esquema:** academia · **Columnas:** 26
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN (N'PLANIFICADA',N'ABIERTA',N'EN_CURSO',N'FINALIZADA',N'CANCELADA')`
-- `fecha_fin >= fecha_inicio`
-
 ## Llaves foraneas
 
 - `tipo_actividad_id` → [[table--organizacion-parametros|organizacion.parametros]]

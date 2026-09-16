@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:uuid/uuid.dart';
 
 import 'api.dart';
 import 'background.dart';
 import 'models.dart';
 import 'notifier.dart';
+import 'outbox.dart';
 import 'siren.dart';
 import 'store.dart';
 
@@ -161,6 +163,10 @@ class _PrincipalState extends State<PantallaPrincipal> {
   StreamSubscription<Alerta>? _sse;
   final _vistos = <String>{};
   bool _primera = true;
+  // Cola offline: solicitudes que se enviaran solas al volver la señal.
+  List<SolicitudEncolada> _cola = [];
+  bool _sinConexion = false;
+  String _datosHora = '';
 
   bool get _puedeAtender => _permisos.contains('servicios:editar');
 
@@ -190,8 +196,24 @@ class _PrincipalState extends State<PantallaPrincipal> {
   }
 
   Future<void> _refrescar() async {
+    // 1) Enviar lo que quedo en cola offline (misma clave: sin duplicar).
+    try {
+      final f = await Outbox.enviarPendientes();
+      if (f.enviadas > 0 && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+                'Conexion recuperada: ${f.enviadas} solicitud(es) enviada(s).')));
+      }
+    } catch (_) {}
+    if (mounted) {
+      setState(() {});
+      _cola = await Outbox.leerCola();
+      if (mounted) setState(() {});
+    }
+    // 2) Lista actual (o cache si no hay red).
     try {
       final lista = await _api.pendientes();
+      await Outbox.guardarCache(lista);
       final nuevas = lista.where((a) => !_vistos.contains(a.id)).toList();
       if (_primera) {
         _vistos.addAll(lista.map((a) => a.id));
@@ -205,11 +227,24 @@ class _PrincipalState extends State<PantallaPrincipal> {
       if (mounted) {
         setState(() {
           _pendientes = lista;
+          _sinConexion = false;
+          _datosHora = '';
           if (_estado.startsWith('Sin conexion')) _estado = '';
         });
       }
     } catch (e) {
-      if (mounted) setState(() => _estado = 'Sin conexion: $e');
+      final cache = await Outbox.leerCache();
+      final ts = await Outbox.cacheTs();
+      if (mounted) {
+        setState(() {
+          _pendientes = cache;
+          _sinConexion = true;
+          _datosHora = ts > 0
+              ? 'Ultimos datos: ${AlertaNotifier.fechaHora(DateTime.fromMillisecondsSinceEpoch(ts).toUtc().toIso8601String())}'
+              : 'Sin datos guardados todavia.';
+          _estado = 'Sin conexion: $e';
+        });
+      }
     }
   }
 
@@ -220,14 +255,24 @@ class _PrincipalState extends State<PantallaPrincipal> {
       _bloqueado = true;
       _estado = 'Enviando solicitud...';
     });
+    double? lat, lng;
+    if (await Prefs.ubicacion()) {
+      final pos = await _ubicacion();
+      lat = pos?.latitude;
+      lng = pos?.longitude;
+    }
+    // La clave se genera ANTES de enviar: si no hay red, la solicitud
+    // queda en cola con la misma clave y no se duplica al reintentar.
+    final s = SolicitudEncolada(
+      tipo: tipo,
+      lat: lat,
+      lng: lng,
+      clave: const Uuid().v4(),
+      creadaEn: DateTime.now().toIso8601String(),
+    );
     try {
-      double? lat, lng;
-      if (await Prefs.ubicacion()) {
-        final pos = await _ubicacion();
-        lat = pos?.latitude;
-        lng = pos?.longitude;
-      }
-      final r = await _api.crearAlerta(tipo, lat: lat, lng: lng);
+      final r = await _api.crearAlerta(tipo,
+          lat: lat, lng: lng, clave: s.clave);
       if (!mounted) return;
       setState(() => _estado = r.duplicada
           ? 'Ya existe una solicitud igual (no se duplico).'
@@ -235,7 +280,16 @@ class _PrincipalState extends State<PantallaPrincipal> {
       if (!r.duplicada) await AlertaNotifier.notificar(r.alerta);
       await _refrescar();
     } catch (e) {
-      if (mounted) setState(() => _estado = 'Error: $e');
+      if (mounted) {
+        // Sin red: se guarda en cola y se envia sola al volver la señal.
+        await Outbox.encolar(s);
+        final cola = await Outbox.leerCola();
+        setState(() {
+          _cola = cola;
+          _estado =
+              'Sin conexion: la solicitud quedo en cola (${cola.length}) y se enviara automaticamente.';
+        });
+      }
     } finally {
       await Future.delayed(const Duration(seconds: 3));
       if (mounted) setState(() => _bloqueado = false);
@@ -330,6 +384,28 @@ class _PrincipalState extends State<PantallaPrincipal> {
           if (_estado.isNotEmpty) ...[
             const SizedBox(height: 4),
             Text(_estado),
+          ],
+          if (_cola.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Card(
+              color: Colors.amber[100],
+              child: ListTile(
+                leading:
+                    const Icon(Icons.cloud_off, color: Colors.black87),
+                title: Text(
+                    'Pendientes de envio: ${_cola.length} (se enviaran solas al volver la señal)'),
+                trailing: IconButton(
+                  icon: const Icon(Icons.refresh),
+                  tooltip: 'Reintentar ahora',
+                  onPressed: () => _refrescar(),
+                ),
+              ),
+            ),
+          ],
+          if (_sinConexion && _datosHora.isNotEmpty) ...[
+            const SizedBox(height: 4),
+            Text(_datosHora,
+                style: const TextStyle(fontStyle: FontStyle.italic)),
           ],
           const SizedBox(height: 12),
           SizedBox(

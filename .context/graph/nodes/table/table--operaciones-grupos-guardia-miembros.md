@@ -23,10 +23,6 @@ Tabla operaciones.grupos_guardia_miembros (6 columnas). Creada en 025_guardias.s
 - **Esquema:** operaciones · **Columnas:** 6
 - **UNIQUE:** `grupo_id, bombero_id`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `rol IN ('TITULAR','CHOFER')`
-
 ## Llaves foraneas
 
 - `grupo_id` → [[table--operaciones-grupos-guardia|operaciones.grupos_guardia]]

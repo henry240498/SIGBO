@@ -23,12 +23,6 @@ Tabla equipos.equipos (22 columnas). Creada en 006_vehiculos_equipos.sql, modifi
 - **Esquema:** equipos · **Columnas:** 22
 - **UNIQUE:** `codigo_interno`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN ('OPERATIVO','EN_MANTENIMIENTO','DANIADO','BAJA','PRESTADO')`
-- `ISJSON(fotos) = 1`
-- `ISJSON(documentos) = 1`
-
 ## Columnas
 
 | Columna | Tipo |

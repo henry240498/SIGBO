@@ -24,11 +24,6 @@ Tabla finanzas.acuerdos_aporte (15 columnas). Creada en 063_finanzas_acuerdos_ap
 
 - **Esquema:** finanzas · **Columnas:** 15
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `monto_acordado > 0`
-- `estado IN (N'ACTIVO', N'FINALIZADO', N'SUSPENDIDO', N'CANCELADO')`
-
 ## Llaves foraneas
 
 - `socio_protector_id` → [[table--finanzas-socios-protectores|finanzas.socios_protectores]]

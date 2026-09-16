@@ -21,11 +21,6 @@ Tabla documentos.documentos (17 columnas). Creada en 008_admin.sql, modificada p
 
 - **Esquema:** documentos · **Columnas:** 17
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `tipo IN ('RESOLUCION','CIRCULAR','CITACION','NOTA','PERMISO','JUSTIFICACION','ACTA','INFORME')`
-- `estado IN ('ACTIVO','ARCHIVADO','VENCIDO')`
-
 ## Columnas
 
 | Columna | Tipo |

@@ -22,10 +22,6 @@ Tabla ia.conversaciones (10 columnas). Creada en 057_ia_estructura.sql, modifica
 
 - **Esquema:** ia · **Columnas:** 10
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN (N'ACTIVA', N'CERRADA')`
-
 ## Llaves foraneas
 
 - `usuario_id` → [[table--seguridad-usuarios|seguridad.usuarios]]

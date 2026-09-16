@@ -1,6 +1,7 @@
 {"from":"entity--actividad-academica","tipo":"belongs_to","to":"domain--academia"}
 {"from":"entity--actividad-profesional","tipo":"belongs_to","to":"domain--personal"}
 {"from":"entity--acuerdo-aporte","tipo":"belongs_to","to":"domain--finanzas"}
+{"from":"entity--alerta-emergencia","tipo":"belongs_to","to":"domain--servicios"}
 {"from":"entity--aplicacion-beneficio","tipo":"belongs_to","to":"domain--finanzas"}
 {"from":"entity--aporte","tipo":"belongs_to","to":"domain--finanzas"}
 {"from":"entity--articulo","tipo":"belongs_to","to":"domain--deposito"}
@@ -676,9 +677,12 @@
 {"from":"table--servicios-pruebas-comunicacion","tipo":"references","to":"table--servicios-servicios"}
 {"from":"table--servicios-pruebas-comunicacion","tipo":"references","to":"table--vehiculos-vehiculos"}
 {"from":"table--servicios-pruebas-comunicacion","tipo":"references","to":"table--seguridad-usuarios"}
+{"from":"table--servicios-alertas-emergencia","tipo":"defined_in","to":"file--076-alertas-emergencia"}
+{"from":"table--servicios-alertas-emergencia","tipo":"belongs_to","to":"domain--servicios"}
 {"from":"entity--actividad-academica","tipo":"persisted_in","to":"table--academia-actividades"}
 {"from":"entity--actividad-profesional","tipo":"persisted_in","to":"table--personal-actividad-profesional"}
 {"from":"entity--acuerdo-aporte","tipo":"persisted_in","to":"table--finanzas-acuerdos-aporte"}
+{"from":"entity--alerta-emergencia","tipo":"persisted_in","to":"table--servicios-alertas-emergencia"}
 {"from":"entity--aplicacion-beneficio","tipo":"persisted_in","to":"table--finanzas-aplicaciones-beneficio"}
 {"from":"entity--aporte","tipo":"persisted_in","to":"table--finanzas-aportes"}
 {"from":"entity--articulo","tipo":"persisted_in","to":"table--deposito-articulos"}
@@ -819,6 +823,7 @@
 {"from":"entity--vehiculo","tipo":"persisted_in","to":"table--vehiculos-vehiculos"}
 {"from":"entity--version-archivo-documento","tipo":"persisted_in","to":"table--documentos-versiones-archivo"}
 {"from":"component--modulo-academia","tipo":"belongs_to","to":"domain--academia"}
+{"from":"component--modulo-alertas","tipo":"belongs_to","to":"domain--servicios"}
 {"from":"component--modulo-auth","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"component--modulo-configuracion","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"component--modulo-denuncias","tipo":"belongs_to","to":"domain--denuncias"}
@@ -936,6 +941,10 @@
 {"from":"service--academia-sesiones-academia","tipo":"reads","to":"table--operaciones-eventos-asistencia"}
 {"from":"service--academia-sesiones-academia","tipo":"uses","to":"entity--inscripcion-actividad-academica"}
 {"from":"service--academia-sesiones-academia","tipo":"reads","to":"table--academia-inscripciones"}
+{"from":"service--alertas-alertas","tipo":"belongs_to","to":"domain--servicios"}
+{"from":"service--alertas-alertas","tipo":"uses","to":"component--modulo-alertas"}
+{"from":"service--alertas-alertas","tipo":"uses","to":"entity--alerta-emergencia"}
+{"from":"service--alertas-alertas","tipo":"reads","to":"table--servicios-alertas-emergencia"}
 {"from":"service--auth-auth","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"service--auth-auth","tipo":"uses","to":"component--modulo-auth"}
 {"from":"service--auth-auth","tipo":"uses","to":"entity--usuario"}
@@ -2042,6 +2051,7 @@
 {"from":"service--academia-reportes-academia","tipo":"uses","to":"service--academia-inscripciones-academia"}
 {"from":"service--academia-sesiones-academia","tipo":"uses","to":"service--operaciones-eventos-asistencia"}
 {"from":"service--academia-sesiones-academia","tipo":"uses","to":"service--seguridad-auditoria"}
+{"from":"service--alertas-alertas","tipo":"uses","to":"service--seguridad-auditoria"}
 {"from":"service--auth-auth","tipo":"uses","to":"service--seguridad-policy-engine"}
 {"from":"service--auth-auth","tipo":"uses","to":"service--seguridad-auditoria"}
 {"from":"service--configuracion-configuracion","tipo":"uses","to":"service--seguridad-auditoria"}
@@ -2164,6 +2174,8 @@
 {"from":"api--academia-reportes-academia","tipo":"exposes","to":"service--academia-reportes-academia"}
 {"from":"api--academia-sesiones-academia","tipo":"belongs_to","to":"domain--academia"}
 {"from":"api--academia-sesiones-academia","tipo":"exposes","to":"service--academia-sesiones-academia"}
+{"from":"api--alertas-alertas","tipo":"belongs_to","to":"domain--servicios"}
+{"from":"api--alertas-alertas","tipo":"exposes","to":"service--alertas-alertas"}
 {"from":"api--auth-auth","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"api--auth-auth","tipo":"exposes","to":"service--auth-auth"}
 {"from":"api--configuracion-configuracion","tipo":"belongs_to","to":"domain--seguridad"}

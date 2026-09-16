@@ -1,6 +1,7 @@
 {
  "servicios": [
   "domain--servicios",
+  "entity--alerta-emergencia",
   "entity--comunicacion-servicio",
   "entity--historial-servicio",
   "entity--personal-servicio",
@@ -15,9 +16,13 @@
   "table--servicios-comunicaciones-servicio",
   "table--servicios-rutas-planificadas",
   "table--servicios-pruebas-comunicacion",
+  "table--servicios-alertas-emergencia",
+  "component--modulo-alertas",
   "component--modulo-servicios",
+  "service--alertas-alertas",
   "service--servicios-seguimiento-geografico",
   "service--servicios-servicios",
+  "api--alertas-alertas",
   "api--servicios-seguimiento-geografico",
   "api--servicios-servicios",
   "screen--dashboard-servicios-nuevo",

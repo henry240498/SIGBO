@@ -25,8 +25,7 @@ Tabla academia.instructores_actividad (6 columnas). Creada en 036_academia_estru
 
 ## Restricciones CHECK (reglas que la BD impone)
 
-- `rol_instructor IN (N'PRINCIPAL',N'AYUDANTE')`
-- `(bombero_id IS NOT NULL AND instructor_externo_id IS NULL) OR (bombero_id IS NULL AND instructor_externo_id IS NOT NULL`
+- `rol_instructor IN (N'PRINCIPAL',N'AYUDANTE')), CONSTRAINT CK_acad_inst_persona CHECK ( (bombero_id IS NOT NULL AND instructor_externo_id IS NULL) OR (bombero_id IS NULL AND instructor_externo_id IS NOT NULL`
 
 ## Llaves foraneas
 

@@ -108,6 +108,8 @@ const DOMAIN_OF_MODULE = {
   configuracion: 'seguridad', guardias: 'guardias', ia: 'inteligencia',
   // Sonda técnica de la plataforma; no es un dominio funcional navegable.
   salud: 'seguridad',
+  // Las alertas móviles reutilizan los permisos y las tablas de Servicios.
+  alertas: 'servicios',
 };
 /** Raiz de ruta del frontend que no coincide con el slug de un modulo. */
 const DOMAIN_OF_ROUTE = {

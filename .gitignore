@@ -30,3 +30,8 @@ Thumbs.db
 .vscode/
 .idea/
 .context/.obsidian/workspace.json
+
+# Firma privada de entregas Android
+**/key.properties
+**/*.jks
+**/*.keystore

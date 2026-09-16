@@ -24,11 +24,6 @@ Tabla organizacion.designaciones (16 columnas). Creada en 012_organizacion.sql, 
 
 - **Esquema:** organizacion · **Columnas:** 16
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN ('ACTIVA','FINALIZADA','ANULADA')`
-- `fecha_hasta IS NULL OR fecha_hasta >= fecha_desde`
-
 ## Llaves foraneas
 
 - `bombero_id` → [[table--personal-bomberos|personal.bomberos]]

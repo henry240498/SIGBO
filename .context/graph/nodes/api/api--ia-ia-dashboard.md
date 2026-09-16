@@ -4,8 +4,8 @@ tipo: API
 nombre: IaDashboardController
 nivel: L2
 dominio: inteligencia
-resumen: Superficie HTTP de ia dashboard bajo /api/v1/ia/admin/dashboard.
-prefijo: /api/v1/ia/admin/dashboard
+resumen: Superficie HTTP de ia dashboard bajo /api/v1/ia/admin / <CONFIGURAR_ACCESO_LOCAL>
+prefijo: /api/v1/ia/admin / <CONFIGURAR_ACCESO_LOCAL>
 capa: backend
 permisos: [inteligencia:ver_dashboard, inteligencia:exportar_reportes]
 archivos:
@@ -18,16 +18,16 @@ terminos: [admin, inteligencia, ver, exportar, reportes]
 
 # IaDashboardController
 
-Superficie HTTP de ia dashboard bajo /api/v1/ia/admin/dashboard.
+Superficie HTTP de ia dashboard bajo /api/v1/ia/admin / <CONFIGURAR_ACCESO_LOCAL>
 
-- **Prefijo:** `/api/v1/ia/admin/dashboard`
+- **Prefijo:** `/api/v1/ia/admin / <CONFIGURAR_ACCESO_LOCAL>
 
 ## Rutas
 
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
-| GET | `/ia/admin/dashboard` | `inteligencia:ver_dashboard` |
-| GET | `/ia/admin/dashboard/uso-por-herramienta` | `inteligencia:exportar_reportes` |
+| GET | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL> | `inteligencia:ver_dashboard` |
+| GET | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL>/uso-por-herramienta` | `inteligencia:exportar_reportes` |
 
 ## Archivos
 

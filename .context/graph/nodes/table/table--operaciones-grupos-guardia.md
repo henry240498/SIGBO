@@ -23,10 +23,6 @@ Tabla operaciones.grupos_guardia (14 columnas). Creada en 025_guardias.sql, modi
 
 - **Esquema:** operaciones · **Columnas:** 14
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN ('ACTIVO','INACTIVO')`
-
 ## Llaves foraneas
 
 - `oficial_a_cargo_id` → [[table--personal-bomberos|personal.bomberos]]

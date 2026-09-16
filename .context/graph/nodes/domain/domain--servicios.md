@@ -22,6 +22,7 @@ Modulo funcional "Servicios". Habilitado en la navegacion.
 
 ## Referenciado por
 
+- [[entity--alerta-emergencia|AlertaEmergencia]] `belongs_to` →
 - [[entity--comunicacion-servicio|ComunicacionServicio]] `belongs_to` →
 - [[entity--historial-servicio|HistorialServicio]] `belongs_to` →
 - [[entity--personal-servicio|PersonalServicio]] `belongs_to` →
@@ -36,9 +37,13 @@ Modulo funcional "Servicios". Habilitado en la navegacion.
 - [[table--servicios-comunicaciones-servicio|servicios.comunicaciones_servicio]] `belongs_to` →
 - [[table--servicios-rutas-planificadas|servicios.rutas_planificadas]] `belongs_to` →
 - [[table--servicios-pruebas-comunicacion|servicios.pruebas_comunicacion]] `belongs_to` →
+- [[table--servicios-alertas-emergencia|servicios.alertas_emergencia]] `belongs_to` →
+- [[component--modulo-alertas|alertas (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-servicios|servicios (modulo NestJS)]] `belongs_to` →
+- [[service--alertas-alertas|AlertasService]] `belongs_to` →
 - [[service--servicios-seguimiento-geografico|SeguimientoGeograficoService]] `belongs_to` →
 - [[service--servicios-servicios|ServiciosService]] `belongs_to` →
+- [[api--alertas-alertas|AlertasController]] `belongs_to` →
 - [[api--servicios-seguimiento-geografico|SeguimientoGeograficoController]] `belongs_to` →
 - [[api--servicios-servicios|ServiciosController]] `belongs_to` →
 - [[screen--dashboard-servicios-nuevo|/dashboard/servicios/nuevo]] `belongs_to` →

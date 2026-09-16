@@ -50,6 +50,10 @@ async function seed() {
     }
     permisoMap.set(p.nombre, permiso);
   }
+  // Las migraciones también agregan permisos usados por estos roles.
+  for (const permiso of await permisoRepo.find()) {
+    permisoMap.set(permiso.nombre, permiso);
+  }
   console.log(`Permisos: ${permisoMap.size} disponibles en base de datos.`);
 
   // 2. Roles + asignacion de permisos
@@ -66,12 +70,15 @@ async function seed() {
           esAdministrativo: r.esAdministrativo,
           esOperativo: !r.esAdministrativo,
           esSistema: true,
+          // En una base nueva el seed corre después de la migración 035,
+          // cuando todavía no existía el rol que esa migración actualiza.
+          accesoTotal: r.permisos === 'all',
         }),
       );
     }
     rolMap.set(r.slug, rol);
 
-    const permisosDelRol = r.permisos === 'all' ? PERMISOS.map((p) => p.nombre) : r.permisos;
+    const permisosDelRol = r.permisos === 'all' ? [...permisoMap.keys()] : r.permisos;
     const existentes = await asignacionPermisoRolRepo.find({ where: { rolId: rol.id } });
     const existentesIds = new Set(existentes.map((e) => e.permisoId));
 

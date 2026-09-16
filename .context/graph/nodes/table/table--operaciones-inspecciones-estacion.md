@@ -23,10 +23,6 @@ Tabla operaciones.inspecciones_estacion (7 columnas). Creada en 025_guardias.sql
 
 - **Esquema:** operaciones · **Columnas:** 7
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN ('OK','NO_OK')`
-
 ## Llaves foraneas
 
 - `guardia_id` → [[table--operaciones-guardias|operaciones.guardias]]

@@ -21,10 +21,6 @@ Tabla finanzas.cajas (12 columnas). Creada en 048_finanzas_estructura.sql.
 
 - **Esquema:** finanzas · **Columnas:** 12
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN (N'ACTIVA', N'INACTIVA')`
-
 ## Llaves foraneas
 
 - `responsable_id` → [[table--personal-bomberos|personal.bomberos]]

@@ -23,10 +23,6 @@ Tabla finanzas.cuentas_bancarias (14 columnas). Creada en 048_finanzas_estructur
 - **Esquema:** finanzas · **Columnas:** 14
 - **UNIQUE:** `banco, numero_cuenta`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN (N'ACTIVA', N'INACTIVA')`
-
 ## Llaves foraneas
 
 - `tipo_cuenta_id` → [[table--organizacion-parametros|organizacion.parametros]]

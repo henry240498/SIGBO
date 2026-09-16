@@ -22,11 +22,6 @@ Tabla finanzas.numeraciones_comprobantes (15 columnas). Creada en 065_finanzas_f
 
 - **Esquema:** finanzas · **Columnas:** 15
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN (N'ACTIVA', N'INACTIVA', N'AGOTADA')`
-- `numeracion_hasta >= numeracion_desde`
-
 ## Llaves foraneas
 
 - `tipo_comprobante_id` → [[table--organizacion-parametros|organizacion.parametros]]

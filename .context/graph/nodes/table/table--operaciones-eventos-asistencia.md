@@ -23,12 +23,6 @@ Tabla operaciones.eventos_asistencia (14 columnas). Creada en 005_operaciones.sq
 
 - **Esquema:** operaciones · **Columnas:** 14
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `tipo IN ('GUARDIA','PRACTICA','CITACION','CURSO','ASAMBLEA','SERVICIO')`
-- `estado IN ('PROGRAMADO','EN_CURSO','FINALIZADO','CANCELADO')`
-- `fecha_fin >= fecha_inicio`
-
 ## Columnas
 
 | Columna | Tipo |

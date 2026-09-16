@@ -22,10 +22,6 @@ Tabla operaciones.importaciones_marcador_filas (12 columnas). Creada en 020_asis
 
 - **Esquema:** operaciones · **Columnas:** 12
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado_fila IN ('RECONOCIDO','NO_IDENTIFICADO','DUPLICADO','YA_IMPORTADO','INCONSISTENTE')`
-
 ## Llaves foraneas
 
 - `importacion_id` → [[table--operaciones-importaciones-marcador|operaciones.importaciones_marcador]]

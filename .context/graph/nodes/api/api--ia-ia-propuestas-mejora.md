@@ -4,8 +4,8 @@ tipo: API
 nombre: IaPropuestasMejoraController
 nivel: L2
 dominio: inteligencia
-resumen: Superficie HTTP de ia propuestas mejora bajo /api/v1/ia/admin/propuestas.
-prefijo: /api/v1/ia/admin/propuestas
+resumen: Superficie HTTP de ia propuestas mejora bajo /api/v1/ia/admin / <CONFIGURAR_ACCESO_LOCAL>
+prefijo: /api/v1/ia/admin / <CONFIGURAR_ACCESO_LOCAL>
 capa: backend
 permisos: [inteligencia:gestionar_mejoras]
 archivos:
@@ -18,21 +18,21 @@ terminos: [propuestas, mejora, admin, inteligencia, gestionar, mejoras]
 
 # IaPropuestasMejoraController
 
-Superficie HTTP de ia propuestas mejora bajo /api/v1/ia/admin/propuestas.
+Superficie HTTP de ia propuestas mejora bajo /api/v1/ia/admin / <CONFIGURAR_ACCESO_LOCAL>
 
-- **Prefijo:** `/api/v1/ia/admin/propuestas`
+- **Prefijo:** `/api/v1/ia/admin / <CONFIGURAR_ACCESO_LOCAL>
 
 ## Rutas
 
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
-| GET | `/ia/admin/propuestas` | `inteligencia:gestionar_mejoras` |
-| GET | `/ia/admin/propuestas/:id` | `inteligencia:gestionar_mejoras` |
-| POST | `/ia/admin/propuestas` | `inteligencia:gestionar_mejoras` |
-| POST | `/ia/admin/propuestas/:id/enviar-revision` | `inteligencia:gestionar_mejoras` |
-| POST | `/ia/admin/propuestas/:id/aprobar` | `inteligencia:gestionar_mejoras` |
-| POST | `/ia/admin/propuestas/:id/rechazar` | `inteligencia:gestionar_mejoras` |
-| POST | `/ia/admin/propuestas/:id/publicar` | `inteligencia:gestionar_mejoras` |
+| GET | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL> | `inteligencia:gestionar_mejoras` |
+| GET | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL>/:id` | `inteligencia:gestionar_mejoras` |
+| POST | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL> | `inteligencia:gestionar_mejoras` |
+| POST | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL>/:id/enviar-revision` | `inteligencia:gestionar_mejoras` |
+| POST | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL>/:id/aprobar` | `inteligencia:gestionar_mejoras` |
+| POST | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL>/:id/rechazar` | `inteligencia:gestionar_mejoras` |
+| POST | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL>/:id/publicar` | `inteligencia:gestionar_mejoras` |
 
 ## Archivos
 

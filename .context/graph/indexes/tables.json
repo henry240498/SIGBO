@@ -2016,5 +2016,16 @@
    "vehiculos.vehiculos",
    "seguridad.usuarios"
   ]
+ },
+ "servicios.alertas_emergencia": {
+  "id": "table--servicios-alertas-emergencia",
+  "dominio": "servicios",
+  "entidad": {
+   "id": "entity--alerta-emergencia",
+   "clase": "AlertaEmergencia"
+  },
+  "migracion": "database/migrations/076_alertas_emergencia.sql",
+  "columnas": 15,
+  "fks": []
  }
 }

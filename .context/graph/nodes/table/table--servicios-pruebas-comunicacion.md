@@ -23,10 +23,6 @@ Tabla servicios.pruebas_comunicacion (10 columnas). Creada en 071_servicios_segu
 
 - **Esquema:** servicios · **Columnas:** 10
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `nivel BETWEEN 1 AND 5`
-
 ## Llaves foraneas
 
 - `servicio_id` → [[table--servicios-servicios|servicios.servicios]]

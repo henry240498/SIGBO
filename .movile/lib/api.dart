@@ -66,12 +66,15 @@ class SigboApi {
     String? detalle,
     double? lat,
     double? lng,
+    // Clave propia para reintentos offline: la cola la reutiliza y el
+    // servidor responde la alerta original en vez de duplicar.
+    String? clave,
   }) async {
     // Clave de idempotencia por pulsacion intencional: reintentos de red
     // con la misma clave devuelven la alerta original (sin duplicar).
     final body = <String, dynamic>{
       'tipo': tipo,
-      'claveIdempotencia': _uuid.v4(),
+      'claveIdempotencia': clave ?? _uuid.v4(),
       if (detalle != null && detalle.trim().isNotEmpty)
         'detalle': detalle.trim(),
       if (lat != null) 'latitud': lat,

@@ -30,9 +30,6 @@ Tabla personal.bomberos (71 columnas). Creada en 003_personal.sql, modificada po
 
 ## Restricciones CHECK (reglas que la BD impone)
 
-- `sexo IS NULL OR sexo IN ('M','F')`
-- `estado IN ('ACTIVO','RESERVA','INOPERATIVO','RETIRADO','SUSPENDIDO')`
-- `ISJSON(contactos_emergencia) = 1`
 - `estado IN ('ASPIRANTE','ACTIVO','SUSPENDIDO','LICENCIA','RETIRADO','FALLECIDO','HONORARIO')`
 - `condicion_institucional IS NULL OR condicion_institucional IN ('INCORPORADO','COMBATIENTE','APOYO_ECONOMICO','HONORARIO')`
 - `dia_preferente_guardia IN ('NINGUNA','LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO')`

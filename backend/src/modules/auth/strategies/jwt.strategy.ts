@@ -6,13 +6,13 @@ import { Repository } from 'typeorm';
 import { AuthenticatedUser } from '../types/authenticated-user';
 import { extraerAccessToken } from '../auth-cookies';
 import { Sesion } from '../../../shared/entities';
+import { PolicyEngineService } from '../../seguridad/policy-engine.service';
 
 interface JwtPayload {
   sub: string;
   email: string;
   username: string;
   roles: string[];
-  permisos: string[];
   sid: string;
 }
 
@@ -26,7 +26,10 @@ function jwtSecret(): string {
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
-  constructor(@InjectRepository(Sesion) private readonly sesionRepo: Repository<Sesion>) {
+  constructor(
+    @InjectRepository(Sesion) private readonly sesionRepo: Repository<Sesion>,
+    private readonly policyEngine: PolicyEngineService,
+  ) {
     super({
       jwtFromRequest: (request) => extraerAccessToken(request),
       ignoreExpiration: false,
@@ -45,7 +48,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       email: payload.email,
       username: payload.username,
       roles: payload.roles,
-      permisos: payload.permisos,
+      permisos: await this.policyEngine.getPermisosEfectivos(payload.sub),
     };
   }
 }

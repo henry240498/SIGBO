@@ -23,10 +23,6 @@ Tabla ia.ejecuciones_herramientas (12 columnas). Creada en 057_ia_estructura.sql
 
 - **Esquema:** ia · **Columnas:** 12
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `resultado IN (N'PERMITIDO', N'DENEGADO', N'ERROR')`
-
 ## Llaves foraneas
 
 - `mensaje_id` → [[table--ia-mensajes|ia.mensajes]]

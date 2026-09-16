@@ -24,10 +24,6 @@ Tabla servicios.rutas_planificadas (7 columnas). Creada en 071_servicios_seguimi
 - **Esquema:** servicios · **Columnas:** 7
 - **UNIQUE:** `servicio_id`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `ISJSON(puntos) = 1`
-
 ## Llaves foraneas
 
 - `servicio_id` → [[table--servicios-servicios|servicios.servicios]]

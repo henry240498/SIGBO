@@ -42,11 +42,11 @@ export class AlertaEmergencia {
   estado: EstadoAlertaEmergencia;
 
   /** Usuario SIGBO que presiono el boton. FK logica a seguridad.usuarios. */
-  @Column({ type: 'uniqueidentifier' })
+  @Column({ name: 'solicitanteId', type: 'uniqueidentifier' })
   solicitanteId: string;
 
   /** Foto del nombre al momento de la solicitud (el username puede cambiar). */
-  @Column({ type: 'nvarchar', length: 200 })
+  @Column({ name: 'solicitanteNombre', type: 'nvarchar', length: 200 })
   solicitanteNombre: string;
 
   @Column({ type: 'nvarchar', length: 500, nullable: true })
@@ -63,21 +63,21 @@ export class AlertaEmergencia {
    * intencional). UNIQUE: las repeticiones accidentales devuelven la alerta
    * original en lugar de crear duplicadas.
    */
-  @Column({ type: 'nvarchar', length: 64, unique: true })
+  @Column({ name: 'claveIdempotencia', type: 'nvarchar', length: 64, unique: true })
   claveIdempotencia: string;
 
   /** Quien marco ATENDIDA/CANCELADA (autoridad/operador que la toma). */
-  @Column({ type: 'uniqueidentifier', nullable: true })
+  @Column({ name: 'atendidaPor', type: 'uniqueidentifier', nullable: true })
   atendidaPor: string | null;
 
-  @Column({ type: 'nvarchar', length: 200, nullable: true })
+  @Column({ name: 'atendidaPorNombre', type: 'nvarchar', length: 200, nullable: true })
   atendidaPorNombre: string | null;
 
-  @Column({ type: 'datetimeoffset', precision: 3, nullable: true })
+  @Column({ name: 'atendidaEn', type: 'datetimeoffset', precision: 3, nullable: true })
   atendidaEn: Date | null;
 
   /** Fundamento breve del cambio de estado (exigido por trazabilidad). */
-  @Column({ type: 'nvarchar', length: 500, nullable: true })
+  @Column({ name: 'motivoEstado', type: 'nvarchar', length: 500, nullable: true })
   motivoEstado: string | null;
 
   @CreateDateColumn({ name: 'creado_en', type: 'datetimeoffset', precision: 3 })

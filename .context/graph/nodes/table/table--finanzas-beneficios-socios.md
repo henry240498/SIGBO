@@ -24,13 +24,6 @@ Tabla finanzas.beneficios_socios (18 columnas). Creada en 064_finanzas_beneficio
 
 - **Esquema:** finanzas · **Columnas:** 18
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `ambito IN (N'ACADEMIA', N'SERVICIOS', N'GENERAL')`
-- `estado IN (N'ACTIVO', N'INACTIVO')`
-- `porcentaje_descuento IS NULL OR (porcentaje_descuento > 0 AND porcentaje_descuento <= 100)`
-- `porcentaje_descuento IS NOT NULL OR monto_fijo_descuento IS NOT NULL`
-
 ## Llaves foraneas
 
 - `tipo_id` → [[table--organizacion-parametros|organizacion.parametros]]

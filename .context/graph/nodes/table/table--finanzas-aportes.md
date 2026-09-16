@@ -29,12 +29,6 @@ Tabla finanzas.aportes (25 columnas). Creada en 063_finanzas_acuerdos_aportes.sq
 
 - **Esquema:** finanzas · **Columnas:** 25
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `monto > 0`
-- `estado IN (N'REGISTRADO', N'ANULADO')`
-- `periodo_correspondiente IS NULL OR periodo_correspondiente LIKE '[0-9][0-9][0-9][0-9]-[0-9][0-9]'`
-
 ## Llaves foraneas
 
 - `socio_protector_id` → [[table--finanzas-socios-protectores|finanzas.socios_protectores]]

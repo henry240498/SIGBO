@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AlertaEmergencia } from '../../shared/entities/alerta-emergencia.entity';
+import { SeguridadModule } from '../seguridad/seguridad.module';
 import { AlertasController } from './alertas.controller';
 import { AlertasService } from './alertas.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([AlertaEmergencia])],
+  imports: [TypeOrmModule.forFeature([AlertaEmergencia]), SeguridadModule],
   controllers: [AlertasController],
   providers: [AlertasService],
   exports: [AlertasService],

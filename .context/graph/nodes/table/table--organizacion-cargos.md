@@ -21,10 +21,6 @@ Tabla organizacion.cargos (13 columnas). Creada en 012_organizacion.sql, modific
 - **Esquema:** organizacion · **Columnas:** 13
 - **UNIQUE:** `codigo`, `nombre`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN ('ACTIVO','INACTIVO')`
-
 ## Llaves foraneas
 
 - `dependencia_cargo_id` → [[table--organizacion-cargos|organizacion.cargos]]

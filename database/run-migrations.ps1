@@ -101,7 +101,13 @@ $ordenMigraciones = @(
     "067_ia_explicar_interpretacion.sql",
     "068_ia_eliminar_conversaciones.sql",
     "069_documentos_numeracion_avanzada.sql",
-    "070_identidad_alineacion_titulo.sql"
+    "070_identidad_alineacion_titulo.sql",
+    "071_servicios_seguimiento_geografico.sql",
+    "072_ia_ollama_motor_local.sql",
+    "073_ia_voz_local.sql",
+    "074_academia_permiso_autoservicio.sql",
+    "075_vehiculos_alias.sql",
+    "076_alertas_emergencia.sql"
 )
 
 if (!(Test-Path -LiteralPath $migrationsDir)) {

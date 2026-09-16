@@ -22,10 +22,6 @@ Tabla finanzas.ejercicios_fiscales (8 columnas). Creada en 048_finanzas_estructu
 - **Esquema:** finanzas · **Columnas:** 8
 - **UNIQUE:** `anio`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN (N'ABIERTO', N'CERRADO')`
-
 ## Llaves foraneas
 
 - `creado_por` → [[table--seguridad-usuarios|seguridad.usuarios]]

@@ -31,15 +31,15 @@ Superficie HTTP de configuracion bajo /api/v1/configuracion.
 | GET | `/configuracion/registro-preferencias` | — |
 | GET | `/configuracion/mis-preferencias` | — |
 | PUT | `/configuracion/mis-preferencias` | — |
-| GET | `/configuracion/admin/registro` | `configuracion:ver` o `seguridad:configurar_apariencia` |
-| POST | `/configuracion/admin/borradores` | `configuracion:editar_borrador` o `seguridad:configurar_apariencia` |
-| GET | `/configuracion/admin/borradores/:id` | `configuracion:ver` o `seguridad:configurar_apariencia` |
-| PUT | `/configuracion/admin/borradores/:id` | `configuracion:editar_borrador` o `seguridad:configurar_apariencia` |
-| POST | `/configuracion/admin/borradores/:id/validar` | `configuracion:ver` o `seguridad:configurar_apariencia` |
-| POST | `/configuracion/admin/borradores/:id/publicar` | `configuracion:publicar` o `seguridad:configurar_apariencia` |
-| GET | `/configuracion/admin/versiones` | `configuracion:ver` o `seguridad:configurar_apariencia` |
-| POST | `/configuracion/admin/versiones/:id/restaurar` | `configuracion:restaurar` o `seguridad:configurar_apariencia` |
-| GET | `/configuracion/admin/exportar` | `configuracion:exportar` o `seguridad:configurar_apariencia` |
+| GET | `/configuracion/admin / <CONFIGURAR_ACCESO_LOCAL> | `configuracion:ver` o `seguridad:configurar_apariencia` |
+| POST | `/configuracion/admin / <CONFIGURAR_ACCESO_LOCAL> | `configuracion:editar_borrador` o `seguridad:configurar_apariencia` |
+| GET | `/configuracion/admin / <CONFIGURAR_ACCESO_LOCAL>/:id` | `configuracion:ver` o `seguridad:configurar_apariencia` |
+| PUT | `/configuracion/admin / <CONFIGURAR_ACCESO_LOCAL>/:id` | `configuracion:editar_borrador` o `seguridad:configurar_apariencia` |
+| POST | `/configuracion/admin / <CONFIGURAR_ACCESO_LOCAL>/:id/validar` | `configuracion:ver` o `seguridad:configurar_apariencia` |
+| POST | `/configuracion/admin / <CONFIGURAR_ACCESO_LOCAL>/:id/publicar` | `configuracion:publicar` o `seguridad:configurar_apariencia` |
+| GET | `/configuracion/admin / <CONFIGURAR_ACCESO_LOCAL> | `configuracion:ver` o `seguridad:configurar_apariencia` |
+| POST | `/configuracion/admin / <CONFIGURAR_ACCESO_LOCAL>/:id/restaurar` | `configuracion:restaurar` o `seguridad:configurar_apariencia` |
+| GET | `/configuracion/admin / <CONFIGURAR_ACCESO_LOCAL> | `configuracion:exportar` o `seguridad:configurar_apariencia` |
 
 ## Archivos
 

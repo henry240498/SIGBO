@@ -23,11 +23,6 @@ Tabla finanzas.cuotas (12 columnas). Creada en 049_finanzas_movimientos.sql.
 - **Esquema:** finanzas · **Columnas:** 12
 - **UNIQUE:** `bombero_id, periodo`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN (N'PENDIENTE', N'PAGADA', N'PARCIAL', N'ANULADA', N'EXONERADA')`
-- `periodo LIKE '[0-9][0-9][0-9][0-9]-[0-9][0-9]'`
-
 ## Llaves foraneas
 
 - `bombero_id` → [[table--personal-bomberos|personal.bomberos]]

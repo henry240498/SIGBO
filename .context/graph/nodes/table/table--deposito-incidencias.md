@@ -25,11 +25,6 @@ Tabla deposito.incidencias (17 columnas). Creada en 045_deposito_inventario_fisi
 
 - **Esquema:** deposito · **Columnas:** 17
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `origen_tipo IN (N'INSPECCION_VEHICULO', N'INVENTARIO_FISICO', N'MANUAL', N'OTRO')`
-- `gravedad IN (N'BAJA', N'MEDIA', N'ALTA')`
-
 ## Llaves foraneas
 
 - `articulo_id` → [[table--deposito-articulos|deposito.articulos]]

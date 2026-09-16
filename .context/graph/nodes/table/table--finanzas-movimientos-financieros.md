@@ -38,10 +38,7 @@ Tabla finanzas.movimientos_financieros (31 columnas). Creada en 049_finanzas_mov
 
 ## Restricciones CHECK (reglas que la BD impone)
 
-- `tipo IN (N'INGRESO', N'EGRESO')`
-- `estado IN (N'REGISTRADO', N'ANULADO')`
-- `importe > 0`
-- `(caja_id IS NOT NULL AND cuenta_bancaria_id IS NULL) OR (caja_id IS NULL AND cuenta_bancaria_id IS NOT NULL`
+- `tipo IN (N'INGRESO', N'EGRESO')), CONSTRAINT CK_movf_estado CHECK (estado IN (N'REGISTRADO', N'ANULADO')), CONSTRAINT CK_movf_importe CHECK (importe > 0), CONSTRAINT CK_movf_origen CHECK ( (caja_id IS NOT NULL AND cuenta_bancaria_id IS NULL) OR (caja_id IS NULL AND cuenta_bancaria_id IS NOT NULL`
 - `(tipo = N'INGRESO' AND tipo_ingreso_id IS NOT NULL AND categoria_egreso_id IS NULL) OR (tipo = N'EGRESO' AND categoria_egreso_id IS NOT NULL AND tipo_ingreso_id IS NULL`
 
 ## Llaves foraneas

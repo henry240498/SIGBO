@@ -23,10 +23,6 @@ Tabla finanzas.presupuestos (9 columnas). Creada en 050_finanzas_bancos_presupue
 - **Esquema:** finanzas · **Columnas:** 9
 - **UNIQUE:** `ejercicio_id, categoria_egreso_id`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `monto_presupuestado >= 0`
-
 ## Llaves foraneas
 
 - `ejercicio_id` → [[table--finanzas-ejercicios-fiscales|finanzas.ejercicios_fiscales]]

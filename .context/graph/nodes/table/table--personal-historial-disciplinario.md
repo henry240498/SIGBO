@@ -21,10 +21,6 @@ Tabla personal.historial_disciplinario (15 columnas). Creada en 003_personal.sql
 
 - **Esquema:** personal · **Columnas:** 15
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `tipo IN ('APERCIBIMIENTO','SUSPENSION','MULTA','BAJA')`
-
 ## Columnas
 
 | Columna | Tipo |

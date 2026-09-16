@@ -25,10 +25,6 @@ Tabla deposito.prestamo_items (10 columnas). Creada en 044_deposito_prestamos.sq
 
 - **Esquema:** deposito · **Columnas:** 10
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `tipo_elemento IN (N'EQUIPO', N'ARTICULO')`
-
 ## Llaves foraneas
 
 - `prestamo_id` → [[table--deposito-prestamos|deposito.prestamos]]

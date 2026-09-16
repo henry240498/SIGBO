@@ -29,12 +29,6 @@ Tabla finanzas.facturas (34 columnas). Creada en 065_finanzas_facturacion.sql.
 - **Esquema:** finanzas · **Columnas:** 34
 - **UNIQUE:** `numero, timbrado, establecimiento, punto_expedicion`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `origen IN (N'MANUAL', N'SIGBO')`
-- `estado IN (N'EMITIDA', N'ANULADA')`
-- `total >= 0`
-
 ## Llaves foraneas
 
 - `tipo_comprobante_id` → [[table--organizacion-parametros|organizacion.parametros]]

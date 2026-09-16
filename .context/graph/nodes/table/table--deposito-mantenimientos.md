@@ -27,10 +27,6 @@ Tabla deposito.mantenimientos (20 columnas). Creada en 046_deposito_mantenimient
 
 - **Esquema:** deposito · **Columnas:** 20
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `tipo_elemento IN (N'EQUIPO', N'ARTICULO')`
-
 ## Llaves foraneas
 
 - `articulo_id` → [[table--deposito-articulos|deposito.articulos]]

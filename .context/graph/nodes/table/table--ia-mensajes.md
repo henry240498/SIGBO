@@ -23,11 +23,6 @@ Tabla ia.mensajes (10 columnas). Creada en 057_ia_estructura.sql, modificada por
 
 - **Esquema:** ia · **Columnas:** 10
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `rol IN (N'USUARIO', N'IA', N'SISTEMA', N'HERRAMIENTA')`
-- `resultado IN (N'OK', N'DENEGADO', N'ERROR', N'BLOQUEADO')`
-
 ## Llaves foraneas
 
 - `conversacion_id` → [[table--ia-conversaciones|ia.conversaciones]]

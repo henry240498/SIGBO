@@ -23,11 +23,6 @@ Tabla finanzas.notas_credito (12 columnas). Creada en 065_finanzas_facturacion.s
 
 - **Esquema:** finanzas · **Columnas:** 12
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `importe > 0`
-- `estado IN (N'EMITIDA', N'ANULADA')`
-
 ## Llaves foraneas
 
 - `factura_id` → [[table--finanzas-facturas|finanzas.facturas]]

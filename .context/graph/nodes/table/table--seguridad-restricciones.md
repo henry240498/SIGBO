@@ -21,10 +21,6 @@ Tabla seguridad.restricciones (9 columnas). Creada en 002_seguridad.sql, modific
 
 - **Esquema:** seguridad · **Columnas:** 9
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `tipo IN ('campo','recurso','tiempo','ubicacion','custom')`
-
 ## Columnas
 
 | Columna | Tipo |

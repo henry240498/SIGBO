@@ -22,11 +22,6 @@ Tabla ia.propuestas_mejora (12 columnas). Creada en 057_ia_estructura.sql.
 
 - **Esquema:** ia · **Columnas:** 12
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `origen IN (N'IA', N'USUARIO')`
-- `estado IN (N'BORRADOR', N'PROPUESTA', N'REVISION', N'APROBADO', N'RECHAZADO', N'PUBLICADO')`
-
 ## Llaves foraneas
 
 - `creado_por` → [[table--seguridad-usuarios|seguridad.usuarios]]

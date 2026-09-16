@@ -22,6 +22,12 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0.0-local'
 }
 
+def releaseProperties = new Properties()
+def releasePropertiesFile = rootProject.file('key.properties')
+if (releasePropertiesFile.exists()) {
+    releasePropertiesFile.withInputStream { stream -> releaseProperties.load(stream) }
+}
+
 android {
     namespace = "org.cbvc.sigbo"
     compileSdk = 36
@@ -52,9 +58,19 @@ android {
         // (SigboConfig) con valor inicial de --dart-define=SIGBO_API_URL.
     }
 
+    signingConfigs {
+        production {
+            if (releasePropertiesFile.exists()) {
+                storeFile = file(releaseProperties.getProperty('storeFile'))
+                storePassword = releaseProperties.getProperty('storePassword')
+                keyAlias = releaseProperties.getProperty('keyAlias')
+                keyPassword = releaseProperties.getProperty('keyPassword')
+            }
+        }
+    }
     buildTypes {
         release {
-            signingConfig = signingConfigs.debug
+            signingConfig = signingConfigs.production
         }
     }
 }
@@ -65,3 +81,15 @@ dependencies {
 
 // DSL nuevo (AGP 9 / flutter-plugin-loader 1.x): sin bloque `flutter {}`;
 // el origen por defecto es la raiz del proyecto (..).
+
+gradle.taskGraph.whenReady { graph ->
+    if (graph.allTasks.any { it.name.toLowerCase().contains('release') }) {
+        if (!releasePropertiesFile.exists()) {
+            throw new GradleException('Release requiere android/key.properties y firma estable. Para desarrollo use flutter build apk --debug.')
+        }
+        ['storeFile', 'storePassword', 'keyAlias', 'keyPassword'].each { name ->
+            if (!releaseProperties.getProperty(name)?.trim()) { throw new GradleException("Falta propiedad de firma: $name") }
+        }
+        if (!file(releaseProperties.getProperty('storeFile')).isFile()) { throw new GradleException('No existe el keystore de release.') }
+    }
+}

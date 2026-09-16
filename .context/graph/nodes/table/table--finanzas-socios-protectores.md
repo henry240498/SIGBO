@@ -29,10 +29,6 @@ Tabla finanzas.socios_protectores (28 columnas). Creada en 062_finanzas_socios_p
 - **Esquema:** finanzas · **Columnas:** 28
 - **UNIQUE:** `codigo`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `tipo_persona IN (N'FISICA', N'JURIDICA')`
-
 ## Llaves foraneas
 
 - `bombero_id` → [[table--personal-bomberos|personal.bomberos]]

@@ -27,9 +27,9 @@ Panel exclusivo de Seguridad -> Inteligencia Artificial (seccion 34 del pedido):
 
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
-| GET | `/ia/admin/conversaciones` | `inteligencia:ver_conversaciones` |
-| GET | `/ia/admin/conversaciones/:id/ejecuciones` | `inteligencia:ver_conversaciones` |
-| GET | `/ia/admin/auditoria` | `inteligencia:ver_auditoria` |
+| GET | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL> | `inteligencia:ver_conversaciones` |
+| GET | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL>/:id/ejecuciones` | `inteligencia:ver_conversaciones` |
+| GET | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL> | `inteligencia:ver_auditoria` |
 
 ## Archivos
 

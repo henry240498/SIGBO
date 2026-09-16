@@ -3,20 +3,25 @@ tipo: ARCHITECTURE
 nivel: L1
 ---
 
+<!-- BEGIN ECOSYSTEM CURRENT -->
+Versiones contrastadas con manifiestos el 2026-09-14. Los conteos de pantallas, entidades y tablas del diagrama son una fotografía histórica; consultar el grafo vigente antes de utilizarlos para planificar cambios.
+<!-- END ECOSYSTEM CURRENT -->
+
+
 # Arquitectura
 
-Monolito modular NestJS + Next.js 14 + SQL Server Express. Tres procesos, sin cola de
+Monolito modular NestJS + Next.js 16 + SQL Server Express. Tres procesos, sin cola de
 mensajes, sin caché, sin servicios externos.
 
 ```
 ┌──────────────────────────────┐
-│  Next.js 14 · puerto 3000    │   56 pantallas, todas 'use client'
-│  App Router · React 18       │   sin store global, sin librería de UI
+│  Next.js 16 · puerto 3000    │   56 pantallas, todas 'use client'
+│  App Router · React 19       │   sin store global, sin librería de UI
 └──────────────┬───────────────┘
                │  apiFetch('/ruta')  →  Bearer token, reintento en 401
                ▼
 ┌──────────────────────────────┐
-│  NestJS 10 · puerto 3001     │   prefijo global /api/v1 · Swagger en /api/docs
+│  NestJS 11 · puerto 3001     │   prefijo global /api/v1 · Swagger en /api/docs
 │  ┌────────────────────────┐  │
 │  │ JwtAuthGuard           │  │   valida el token
 │  │ PermissionsGuard       │  │   consulta permisos efectivos en cada request
@@ -134,7 +139,7 @@ frontend/src/
 
 Sin Redis, Kafka, Elasticsearch, MinIO, Docker, Kubernetes. Sin microservicios. Sin
 caché de permisos. Sin store global en el cliente. Sin librería de UI. Sin i18n. Sin
-procedimientos almacenados. **Sin pruebas automatizadas.** Sin CI.
+procedimientos almacenados. Hay pruebas automatizadas y workflows de build/APK; consultar package.json de backend/frontend y .github/workflows. Su último resultado es NO DETERMINADO.
 
 Cada ausencia es una decisión, no un olvido: ver [DECISIONS.md](DECISIONS.md).
 

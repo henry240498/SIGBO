@@ -24,7 +24,6 @@ Tabla operaciones.marcaciones_asistencia (22 columnas). Creada en 005_operacione
 
 ## Restricciones CHECK (reglas que la BD impone)
 
-- `tipo_marcacion IN ('ENTRADA','SALIDA')`
 - `fuente IN ('MARCADOR_DIGITAL','MANUAL','IMPORTACION_EXCEL','EVENTO','GUARDIA','OTRO')`
 
 ## Columnas

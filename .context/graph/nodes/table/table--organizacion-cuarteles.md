@@ -23,10 +23,6 @@ Tabla organizacion.cuarteles (15 columnas). Creada en 012_organizacion.sql, modi
 - **Esquema:** organizacion · **Columnas:** 15
 - **UNIQUE:** `codigo`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN ('ACTIVO','INACTIVO')`
-
 ## Llaves foraneas
 
 - `compania_id` → [[table--organizacion-companias|organizacion.companias]]

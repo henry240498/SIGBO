@@ -43,6 +43,7 @@ Logica de negocio de auditoria (modulo seguridad).
 - [[service--academia-evaluaciones-academia|EvaluacionesAcademiaService]] `uses` →
 - [[service--academia-inscripciones-academia|InscripcionesAcademiaService]] `uses` →
 - [[service--academia-sesiones-academia|SesionesAcademiaService]] `uses` →
+- [[service--alertas-alertas|AlertasService]] `uses` →
 - [[service--auth-auth|AuthService]] `uses` →
 - [[service--configuracion-configuracion|ConfiguracionService]] `uses` →
 - [[service--denuncias-denuncias|DenunciasService]] `uses` →
@@ -97,7 +98,6 @@ Logica de negocio de auditoria (modulo seguridad).
 - [[service--organizacion-feriados|FeriadosService]] `uses` →
 - [[service--personal-bomberos|BomberosService]] `uses` →
 - [[service--seguridad-dashboard|DashboardService]] `uses` →
-- [[service--seguridad-permisos|PermisosService]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

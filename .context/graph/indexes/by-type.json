@@ -20,6 +20,7 @@
   "entity--actividad-academica",
   "entity--actividad-profesional",
   "entity--acuerdo-aporte",
+  "entity--alerta-emergencia",
   "entity--aplicacion-beneficio",
   "entity--aporte",
   "entity--articulo",
@@ -242,7 +243,8 @@
   "file--072-ia-ollama-motor-local",
   "file--073-ia-voz-local",
   "file--074-academia-permiso-autoservicio",
-  "file--075-vehiculos-alias"
+  "file--075-vehiculos-alias",
+  "file--076-alertas-emergencia"
  ],
  "TABLE": [
   "table--seguridad-usuarios",
@@ -396,10 +398,12 @@
   "table--finanzas-facturas",
   "table--finanzas-notas-credito",
   "table--servicios-rutas-planificadas",
-  "table--servicios-pruebas-comunicacion"
+  "table--servicios-pruebas-comunicacion",
+  "table--servicios-alertas-emergencia"
  ],
  "COMPONENT": [
   "component--modulo-academia",
+  "component--modulo-alertas",
   "component--modulo-auth",
   "component--modulo-configuracion",
   "component--modulo-denuncias",
@@ -462,6 +466,7 @@
   "service--academia-instructores-externos",
   "service--academia-reportes-academia",
   "service--academia-sesiones-academia",
+  "service--alertas-alertas",
   "service--auth-auth",
   "service--configuracion-configuracion",
   "service--denuncias-denuncias",
@@ -592,6 +597,7 @@
   "api--academia-instructores-externos",
   "api--academia-reportes-academia",
   "api--academia-sesiones-academia",
+  "api--alertas-alertas",
   "api--auth-auth",
   "api--configuracion-configuracion",
   "api--denuncias-denuncias-publicas",

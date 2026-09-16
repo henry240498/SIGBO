@@ -23,12 +23,6 @@ Tabla vehiculos.vehiculos (36 columnas). Creada en 006_vehiculos_equipos.sql, mo
 - **Esquema:** vehiculos · **Columnas:** 36
 - **UNIQUE:** `numero_interno`, `patente`
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `estado IN ('OPERATIVO','EN_MANTENIMIENTO','FUERA_SERVICIO','BAJA')`
-- `ISJSON(fotos) = 1`
-- `ISJSON(documentos) = 1`
-
 ## Columnas
 
 | Columna | Tipo |

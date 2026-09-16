@@ -28,8 +28,6 @@ Tabla ia.configuraciones (43 columnas). Creada en 057_ia_estructura.sql, modific
 
 ## Restricciones CHECK (reglas que la BD impone)
 
-- `formalidad IN (N'BAJA', N'MEDIA', N'ALTA')`
-- `estado IN (N'ACTIVA', N'INACTIVA', N'MANTENIMIENTO')`
 - `ollama_puerto BETWEEN 1 AND 65535`
 - `ollama_timeout_ms BETWEEN 500 AND 120000`
 - `ollama_temperatura BETWEEN 0 AND 1`

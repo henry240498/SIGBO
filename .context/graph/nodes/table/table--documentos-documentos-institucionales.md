@@ -31,10 +31,6 @@ Tabla documentos.documentos_institucionales (35 columnas). Creada en 052_documen
 
 - **Esquema:** documentos · **Columnas:** 35
 
-## Restricciones CHECK (reglas que la BD impone)
-
-- `origen IN (N'INTERNO', N'EXTERNO')`
-
 ## Llaves foraneas
 
 - `tipo_documento_id` → [[table--organizacion-parametros|organizacion.parametros]]

@@ -31,6 +31,18 @@ export const PERMISOS: PermisoSeed[] = [
   { nombre: 'asistencia:editar', recurso: 'asistencia', accion: 'editar', categoria: 'Asistencia' },
   { nombre: 'asistencia:ver_porcentaje', recurso: 'asistencia', accion: 'ver_porcentaje', categoria: 'Asistencia' },
   { nombre: 'asistencia:generar_alertas', recurso: 'asistencia', accion: 'generar_alertas', categoria: 'Asistencia' },
+  // Nombres vigentes de los controladores; la migración 020 conservó
+  // el prefijo histórico operaciones: y no los crea en una base nueva.
+  { nombre: 'asistencia:asistencia_ver', recurso: 'asistencia', accion: 'asistencia_ver', categoria: 'Asistencia' },
+  { nombre: 'asistencia:asistencia_crear', recurso: 'asistencia', accion: 'asistencia_crear', categoria: 'Asistencia' },
+  { nombre: 'asistencia:asistencia_editar', recurso: 'asistencia', accion: 'asistencia_editar', categoria: 'Asistencia' },
+  { nombre: 'asistencia:eventos_ver', recurso: 'asistencia', accion: 'eventos_ver', categoria: 'Asistencia' },
+  { nombre: 'asistencia:eventos_crear', recurso: 'asistencia', accion: 'eventos_crear', categoria: 'Asistencia' },
+  { nombre: 'asistencia:eventos_editar', recurso: 'asistencia', accion: 'eventos_editar', categoria: 'Asistencia' },
+  { nombre: 'asistencia:externos_ver', recurso: 'asistencia', accion: 'externos_ver', categoria: 'Asistencia' },
+  { nombre: 'asistencia:externos_crear', recurso: 'asistencia', accion: 'externos_crear', categoria: 'Asistencia' },
+  { nombre: 'asistencia:externos_editar', recurso: 'asistencia', accion: 'externos_editar', categoria: 'Asistencia' },
+  { nombre: 'asistencia:importar_marcador', recurso: 'asistencia', accion: 'importar_marcador', categoria: 'Asistencia' },
   // GUARDIAS
   { nombre: 'guardias:ver', recurso: 'guardias', accion: 'ver', categoria: 'Guardias' },
   { nombre: 'guardias:crear', recurso: 'guardias', accion: 'crear', categoria: 'Guardias' },

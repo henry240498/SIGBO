@@ -3,6 +3,7 @@ import 'package:workmanager/workmanager.dart';
 
 import 'api.dart';
 import 'notifier.dart';
+import 'outbox.dart';
 import 'store.dart';
 
 /// Sondeo de respaldo con la app cerrada (WorkManager, minimo 15 min en
@@ -14,6 +15,8 @@ void workerCallback() {
   Workmanager().executeTask((tarea, datos) async {
     try {
       if (!await TokenStore.haySesion()) return true;
+      // Primero: enviar lo encolado offline (misma clave, sin duplicar).
+      await Outbox.enviarPendientes();
       final api = SigboApi();
       final pendientes = await api.pendientes();
       var ultima = await Prefs.ultimaVistaMs();

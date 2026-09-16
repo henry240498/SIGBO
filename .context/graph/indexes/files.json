@@ -28,6 +28,9 @@
  "backend/src/shared/entities/acuerdo-aporte.entity.ts": [
   "entity--acuerdo-aporte"
  ],
+ "backend/src/shared/entities/alerta-emergencia.entity.ts": [
+  "entity--alerta-emergencia"
+ ],
  "backend/src/shared/entities/aplicacion-beneficio.entity.ts": [
   "entity--aplicacion-beneficio"
  ],
@@ -948,8 +951,15 @@
   "file--075-vehiculos-alias",
   "table--vehiculos-vehiculos"
  ],
+ "database/migrations/076_alertas_emergencia.sql": [
+  "file--076-alertas-emergencia",
+  "table--servicios-alertas-emergencia"
+ ],
  "backend/src/modules/academia/academia.module.ts": [
   "component--modulo-academia"
+ ],
+ "backend/src/modules/alertas/alertas.module.ts": [
+  "component--modulo-alertas"
  ],
  "backend/src/modules/auth/auth.module.ts": [
   "component--modulo-auth"
@@ -1028,6 +1038,9 @@
  ],
  "backend/src/modules/academia/sesiones-academia.service.ts": [
   "service--academia-sesiones-academia"
+ ],
+ "backend/src/modules/alertas/alertas.service.ts": [
+  "service--alertas-alertas"
  ],
  "backend/src/modules/auth/auth.service.ts": [
   "service--auth-auth",
@@ -1428,6 +1441,9 @@
  ],
  "backend/src/modules/academia/sesiones-academia.controller.ts": [
   "api--academia-sesiones-academia"
+ ],
+ "backend/src/modules/alertas/alertas.controller.ts": [
+  "api--alertas-alertas"
  ],
  "backend/src/modules/auth/auth.controller.ts": [
   "api--auth-auth"
