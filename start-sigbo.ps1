@@ -31,12 +31,27 @@ function Test-Puerto {
 }
 
 function Esperar-Puerto {
-    param([int]$Puerto, [string]$Nombre, [int]$MaxSegundos = 45)
-    Write-Host "Esperando que $Nombre responda en el puerto $Puerto..." -ForegroundColor DarkGray
+    # En el primer arranque tras encender el equipo, el antivirus escanea cada
+    # archivo de node_modules y cargar el backend puede tardar mas de 2 minutos
+    # (en caliente son ~5 s). Por eso se espera mientras el proceso siga vivo,
+    # con un tope amplio, en vez de abandonar a los pocos segundos.
+    param([int]$Puerto, [string]$Nombre, $Proceso, [string]$LogError, [int]$MaxSegundos = 300)
+    Write-Host "Esperando que $Nombre responda en el puerto $Puerto (el primer arranque del dia puede tardar unos minutos)..." -ForegroundColor DarkGray
     $intentos = 0
     while (-not (Test-Puerto -Puerto $Puerto)) {
+        if ($Proceso -and $Proceso.HasExited) {
+            Write-Host "ERROR: el proceso de $Nombre termino inesperadamente (codigo $($Proceso.ExitCode))." -ForegroundColor Red
+            if ($LogError -and (Test-Path -LiteralPath $LogError)) {
+                Get-Content -LiteralPath $LogError -Tail 20 | ForEach-Object { Write-Host "  $_" -ForegroundColor Red }
+            }
+            Write-Host "Revisa los logs en: $logsDir" -ForegroundColor Red
+            return $false
+        }
         Start-Sleep -Seconds 1
         $intentos++
+        if ($intentos % 15 -eq 0) {
+            Write-Host "  ...$Nombre sigue iniciando ($intentos s)" -ForegroundColor DarkGray
+        }
         if ($intentos -ge $MaxSegundos) {
             Write-Host "ERROR: $Nombre no respondio en $Puerto tras $MaxSegundos segundos." -ForegroundColor Red
             Write-Host "Revisa los logs en: $logsDir" -ForegroundColor Red
@@ -153,7 +168,8 @@ try {
         -RedirectStandardError (Join-Path $logsDir "backend-err.log") `
         -WindowStyle Hidden -PassThru
 
-    $backendOk = Esperar-Puerto -Puerto $backendPort -Nombre "Backend"
+    $backendOk = Esperar-Puerto -Puerto $backendPort -Nombre "Backend" `
+        -Proceso $backendProcesoIniciado -LogError (Join-Path $logsDir "backend-err.log")
 
     # --- FRONTEND ---
     Write-Host "Compilando Frontend (Next.js)..." -ForegroundColor Cyan
@@ -187,7 +203,8 @@ try {
         -RedirectStandardError (Join-Path $logsDir "frontend-err.log") `
         -WindowStyle Hidden -PassThru
 
-    $frontendOk = Esperar-Puerto -Puerto 3000 -Nombre "Frontend"
+    $frontendOk = Esperar-Puerto -Puerto 3000 -Nombre "Frontend" `
+        -Proceso $frontendProcesoIniciado -LogError (Join-Path $logsDir "frontend-err.log")
 
     Write-Host ""
     if ($backendOk -and $frontendOk) {
