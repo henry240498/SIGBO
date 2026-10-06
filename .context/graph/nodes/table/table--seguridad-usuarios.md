@@ -57,7 +57,7 @@ Tabla seguridad.usuarios (26 columnas). Creada en 002_seguridad.sql, modificada 
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard`, `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/inteligencia`, `/dashboard/mi-perfil`, `/dashboard/mi-perfil/seguridad`, `/dashboard/organizacion`, `/dashboard/seguridad`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
+- **Pantallas:** `/dashboard`, `/dashboard/denuncias`, `/dashboard/denuncias/[id]`, `/dashboard/inteligencia`, `/dashboard/mi-perfil`, `/dashboard/mi-perfil/seguridad`, `/dashboard/organizacion`, `/dashboard/seguridad`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`, `/dashboard/seguridad/navegacion`, `/dashboard/seguridad/sesiones`, `/dashboard/seguridad/usuarios`, `/dashboard/seguridad/usuarios/[id]`
 - **Endpoints:** AuthController, BitacoraController, CertificacionesAcademiaController, DashboardController, DashboardController, DenunciasController, DenunciasPublicasController, IaAdminConversacionesController, IaChatController, MeController, PerfilController, SesionesController, UsuariosController
 - **Servicios:** AuthService, BitacoraService, CertificacionesAcademiaService, DashboardService, DenunciasService, IaConversacionesService, IaToolsService, PerfilService, SesionesService, UsuariosService
 
@@ -132,12 +132,12 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[table--servicios-rutas-planificadas|servicios.rutas_planificadas]] `references` →
 - [[table--servicios-rutas-planificadas|servicios.rutas_planificadas]] `references` →
 - [[table--servicios-pruebas-comunicacion|servicios.pruebas_comunicacion]] `references` →
-- [[entity--usuario|Usuario]] `persisted_in` →
-- [[service--academia-certificaciones-academia|CertificacionesAcademiaService]] `reads` →
-- [[service--auth-auth|AuthService]] `reads` →
-- [[service--denuncias-denuncias|DenunciasService]] `reads` →
-- [[service--guardias-bitacora|BitacoraService]] `reads` →
-- [[service--ia-ia-conversaciones|IaConversacionesService]] `reads` →
+- [[table--vehiculos-movil-estado-historial|vehiculos.movil_estado_historial]] `references` →
+- [[table--servicios-despachos|servicios.despachos]] `references` →
+- [[table--vehiculos-posicion-actual|vehiculos.posicion_actual]] `references` →
+- [[table--servicios-llamados|servicios.llamados]] `references` →
+- [[table--servicios-llamados|servicios.llamados]] `references` →
+- [[table--servicios-convocatorias|servicios.convocatorias]] `references` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

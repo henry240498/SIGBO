@@ -5,6 +5,9 @@ import { usePathname } from 'next/navigation';
 
 const TABS = [
   { href: '/dashboard/vehiculos', label: 'Vehículos', exact: true },
+  { href: '/dashboard/vehiculos/flota', label: 'Flota en vivo' },
+  { href: '/dashboard/vehiculos/mapa', label: 'Mapa de flota' },
+  { href: '/dashboard/vehiculos/dotacion', label: 'Dotación y bitácora' },
   { href: '/dashboard/vehiculos/checklist-items', label: 'Catálogo de checklist' },
 ];
 

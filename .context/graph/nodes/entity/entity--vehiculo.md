@@ -11,7 +11,7 @@ archivos:
 edges:
   - [belongs_to, domain--vehiculos]
   - [persisted_in, table--vehiculos-vehiculos]
-terminos: [vehiculo, vehiculos, estado, operativo, mantenimiento, fuera, servicio, baja]
+terminos: [vehiculo, vehiculos, estado, operativo, mantenimiento, fuera, servicio, baja, movil, cuartel, despachado, regresando]
 ---
 
 # Vehiculo
@@ -19,11 +19,12 @@ terminos: [vehiculo, vehiculos, estado, operativo, mantenimiento, fuera, servici
 Entidad Vehiculo, persistida en vehiculos.vehiculos.
 
 - **Tabla:** [[table--vehiculos-vehiculos|vehiculos.vehiculos]]
-- **Columnas mapeadas:** 33
+- **Columnas mapeadas:** 35
 
 ## Estados y enumeraciones
 
 - `EstadoVehiculo`: `OPERATIVO` · `EN_MANTENIMIENTO` · `FUERA_SERVICIO` · `BAJA`
+- `EstadoOperativoMovil`: `EN_CUARTEL` · `DESPACHADO` · `EN_SERVICIO` · `REGRESANDO`
 
 ## Donde se usa
 

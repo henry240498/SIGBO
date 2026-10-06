@@ -56,6 +56,7 @@ Helper de frontend "personal" (13 exportaciones, consume 3 endpoint(s)).
 - [[screen--dashboard-guardias-pernoctes|/dashboard/guardias/pernoctes]] `uses` →
 - [[screen--dashboard-guardias-requisitos|/dashboard/guardias/requisitos]] `uses` →
 - [[screen--dashboard-guardias-id|/dashboard/guardias/[id]]] `uses` →
+- [[screen--dashboard-personal-control|/dashboard/personal/control]] `uses` →
 - [[screen--dashboard-personal|/dashboard/personal]] `uses` →
 
 ---

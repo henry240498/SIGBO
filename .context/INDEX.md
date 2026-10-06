@@ -57,6 +57,8 @@ Curados a mano, para leer completos cuando querés entender, no buscar:
 | [DOMAIN.md](DOMAIN.md) | Los 14 módulos funcionales y sus entidades |
 | [DATABASE.md](DATABASE.md) | 12 esquemas, 88 tablas, convenciones, migraciones |
 | [WORKFLOWS.md](WORKFLOWS.md) | Los flujos con estados: login, guardias, comunicación, asistencia |
+| [DESPACHO.md](DESPACHO.md) | Despacho y coordinación operativa: solicitudes, disponibilidad, respuestas, línea de tiempo; estado por fases |
+| [MOVIL.md](MOVIL.md) | App Android, funcionamiento sin conexión, conexión del celular, APK, buzón de reportes, estado de las pruebas y pendientes |
 | [DECISIONS.md](DECISIONS.md) | Las 10 decisiones de arquitectura y su costo |
 | [RULES.md](RULES.md) | Los 21 invariantes que no hay que romper |
 | [graph/SCHEMA.md](graph/SCHEMA.md) | Contrato de tipos y aristas del grafo |

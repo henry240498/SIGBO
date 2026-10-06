@@ -35,6 +35,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [cargando, setCargando] = useState(false);
+  const [mantener, setMantener] = useState(false);
   const [apariencia, setApariencia] = useState<Apariencia | null>(null);
 
   useEffect(() => {
@@ -48,8 +49,15 @@ export default function LoginPage() {
     setError(null);
     setCargando(true);
     try {
-      await login(usernameOrEmail, password);
-      router.push('/dashboard');
+      await login(usernameOrEmail, password, mantener);
+      // Solo se vuelve a una pantalla de la lista blanca (el fichaje por QR): nunca a una direccion libre.
+      let destino = '/dashboard';
+      try {
+        if (sessionStorage.getItem('sigbo_volver') === '/fichar') destino = '/fichar';
+      } catch {
+        /* sin almacenamiento de sesion */
+      }
+      router.push(destino);
     } catch (err: unknown) {
       // Un fallo de red ocurre antes de validar las credenciales; no debe
       // mostrarse al usuario el mensaje técnico del navegador.
@@ -168,6 +176,11 @@ export default function LoginPage() {
             style={{ border: 'none', background: 'transparent', outline: 'none', flex: 1, color: '#e2e8f0', fontSize: 16 }}
           />
         </div>
+
+        <label htmlFor="login-mantener" style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 14, fontSize: 13, cursor: 'pointer' }}>
+          <input id="login-mantener" type="checkbox" checked={mantener} onChange={(e) => setMantener(e.target.checked)} />
+          Mantener sesión iniciada
+        </label>
 
         {error && <p id="login-error" role="alert" style={{ color: '#f87171', fontSize: 13, marginTop: 14 }}>{error}</p>}
 

@@ -125,3 +125,12 @@ ayuda a nadie a las tres de la mañana.
 
 Solo escribí reglas **verificadas contra el código**. Después:
 `node .context/graph/build-graph.mjs && node .context/graph/validar.mjs`.
+
+## Reglas agregadas con la app móvil (2026-10-06)
+
+- [[rule--hora-del-hecho-acotada]] (ALTA) — la hora que declara un dispositivo se acota (no futura, ≤72 h, no antes del hito previo).
+- [[rule--textos-de-la-app-con-tildes]] (MEDIA) — tildes y ñ en la app, con `scripts/tildes-dart.py` y revisión del diff.
+
+- [[rule--entrega-y-respuesta-son-ejes-distintos]] (ALTA) — qué se envió y qué respondió no se mezclan.
+- [[rule--linea-de-tiempo-inmutable]] (CRITICA) — la línea de tiempo de una solicitud solo se agrega.
+- [[rule--confidencial-lo-decide-la-matriz]] (ALTA) — lo confidencial lo decide la matriz de pantallas, en el backend.

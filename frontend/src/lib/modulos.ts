@@ -41,6 +41,7 @@ export const MODULOS: ModuloConfig[] = [
   { slug: 'deposito', nombre: 'Depósito', icono: 'box', permisoPrefijo: 'deposito:', disponible: true, grupo: 'recursos', descripcion: 'Inventario por cantidad: artículos, movimientos, préstamos y bajas.' },
 
   { slug: 'organizacion', nombre: 'Organización Institucional', icono: 'building', permisoPrefijo: 'organizacion:', disponible: true, grupo: 'administracion', descripcion: 'Estructura institucional: compañías, cuarteles, rangos y parámetros.' },
+  { slug: 'reservas', nombre: 'Reservas', icono: 'building', permisoPrefijo: 'reservas:', disponible: true, grupo: 'administracion', descripcion: 'Salón, patio de simulacros y otras instalaciones: solicitudes y aprobaciones.' },
   { slug: 'finanzas', nombre: 'Finanzas', icono: 'finance', permisoPrefijo: 'finanzas:', disponible: true, grupo: 'administracion', descripcion: 'Cuotas, aportes, caja, presupuesto y facturación.' },
   { slug: 'documentos', nombre: 'Documentos', icono: 'document', permisoPrefijo: 'documentos:', disponible: true, grupo: 'administracion', descripcion: 'Expedientes, plantillas, numeración y vencimientos.' },
   { slug: 'publicaciones', nombre: 'Publicaciones', icono: 'document', permisoPrefijo: 'publicaciones:', disponible: true, grupo: 'administracion', descripcion: 'Contenido para el sitio público del cuerpo.' },

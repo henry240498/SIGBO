@@ -2,6 +2,10 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateCol
 
 export type EstadoVehiculo = 'OPERATIVO' | 'EN_MANTENIMIENTO' | 'FUERA_SERVICIO' | 'BAJA';
 
+/** Donde esta el movil respecto de un servicio (migracion 077). Es otro eje
+ * distinto de `estado`, que es el estado administrativo/mecanico. */
+export type EstadoOperativoMovil = 'EN_CUARTEL' | 'DESPACHADO' | 'EN_SERVICIO' | 'REGRESANDO';
+
 @Entity({ name: 'vehiculos', schema: 'vehiculos' })
 export class Vehiculo {
   @PrimaryGeneratedColumn('uuid')
@@ -54,6 +58,12 @@ export class Vehiculo {
 
   @Column({ type: 'nvarchar', length: 20, default: 'OPERATIVO' })
   estado: EstadoVehiculo;
+
+  @Column({ type: 'nvarchar', length: 20, default: 'EN_CUARTEL' })
+  estadoOperativo: EstadoOperativoMovil;
+
+  @Column({ type: 'datetimeoffset', precision: 3, nullable: true })
+  estadoOperativoDesde: Date | null;
 
   @Column({ type: 'nvarchar', length: 100, nullable: true })
   ubicacionActual: string | null;

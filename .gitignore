@@ -17,6 +17,7 @@ npm-debug.log*
 # Uploads / runtime data
 backend/uploads/
 backend/private_uploads/
+backend/storage/
 logs/
 tmp/
 *.mdf
@@ -35,3 +36,6 @@ Thumbs.db
 **/key.properties
 **/*.jks
 **/*.keystore
+
+# Respaldos locales de la base (contienen todos los datos)
+respaldos/

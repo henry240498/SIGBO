@@ -4,12 +4,14 @@ tipo: TABLE
 nombre: vehiculos.vehiculos
 nivel: L2
 dominio: vehiculos
-resumen: Tabla vehiculos.vehiculos (36 columnas). Creada en 006_vehiculos_equipos.sql, modificada por 023_moviles.sql, 075_vehiculos_alias.sql.
+resumen: Tabla vehiculos.vehiculos (38 columnas). Creada en 006_vehiculos_equipos.sql, modificada por 023_moviles.sql, 075_vehiculos_alias.sql, 077_flota_estado_despacho.sql, 084_vehiculos_patente_opcional.sql.
 tabla: vehiculos
 archivos:
   - database/migrations/006_vehiculos_equipos.sql
   - database/migrations/023_moviles.sql
   - database/migrations/075_vehiculos_alias.sql
+  - database/migrations/077_flota_estado_despacho.sql
+  - database/migrations/084_vehiculos_patente_opcional.sql
 edges:
   - [defined_in, file--006-vehiculos-equipos]
   - [belongs_to, domain--vehiculos]
@@ -18,9 +20,9 @@ terminos: [vehiculos, numero, interno, tipo, marca, modelo, anio, patente, color
 
 # vehiculos.vehiculos
 
-Tabla vehiculos.vehiculos (36 columnas). Creada en 006_vehiculos_equipos.sql, modificada por 023_moviles.sql, 075_vehiculos_alias.sql.
+Tabla vehiculos.vehiculos (38 columnas). Creada en 006_vehiculos_equipos.sql, modificada por 023_moviles.sql, 075_vehiculos_alias.sql, 077_flota_estado_despacho.sql, 084_vehiculos_patente_opcional.sql.
 
-- **Esquema:** vehiculos · **Columnas:** 36
+- **Esquema:** vehiculos · **Columnas:** 38
 - **UNIQUE:** `numero_interno`, `patente`
 
 ## Columnas
@@ -63,6 +65,8 @@ Tabla vehiculos.vehiculos (36 columnas). Creada en 006_vehiculos_equipos.sql, mo
 | fecha_baja | DATE |
 | motivo_baja | NVARCHAR(MAX) |
 | alias | NVARCHAR(50) |
+| estado_operativo | NVARCHAR(20) |
+| estado_operativo_desde | DATETIMEOFFSET(3) |
 
 ## Donde se usa
 
@@ -78,6 +82,8 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - `database/migrations/006_vehiculos_equipos.sql`
 - `database/migrations/023_moviles.sql`
 - `database/migrations/075_vehiculos_alias.sql`
+- `database/migrations/077_flota_estado_despacho.sql`
+- `database/migrations/084_vehiculos_patente_opcional.sql`
 
 ## Relaciones
 
@@ -94,6 +100,11 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[table--deposito-movimientos|deposito.movimientos]] `references` →
 - [[table--deposito-incidencias|deposito.incidencias]] `references` →
 - [[table--servicios-pruebas-comunicacion|servicios.pruebas_comunicacion]] `references` →
+- [[table--vehiculos-movil-estado-historial|vehiculos.movil_estado_historial]] `references` →
+- [[table--servicios-despachos|servicios.despachos]] `references` →
+- [[table--vehiculos-posicion-actual|vehiculos.posicion_actual]] `references` →
+- [[table--vehiculos-dotacion-movil|vehiculos.dotacion_movil]] `references` →
+- [[table--servicios-solicitud-moviles|servicios.solicitud_moviles]] `references` →
 - [[entity--vehiculo|Vehiculo]] `persisted_in` →
 - [[service--denuncias-denuncias|DenunciasService]] `reads` →
 - [[service--deposito-integracion-deposito|IntegracionDepositoService]] `reads` →

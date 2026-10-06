@@ -80,3 +80,58 @@ class ResultadoAlerta {
   final bool duplicada;
   ResultadoAlerta({required this.alerta, required this.duplicada});
 }
+
+/// Movil (vehiculo) elegible para reportar posicion.
+class MovilBasico {
+  final String id;
+  final String numeroInterno;
+  final String? alias;
+  MovilBasico({required this.id, required this.numeroInterno, this.alias});
+
+  factory MovilBasico.fromJson(Map<String, dynamic> j) => MovilBasico(
+        id: j['id'].toString(),
+        numeroInterno: j['numeroInterno'].toString(),
+        alias: j['alias']?.toString(),
+      );
+
+  String get nombre => alias == null || alias!.isEmpty
+      ? numeroInterno
+      : '$numeroInterno · $alias';
+}
+
+/// Convocatoria abierta del cuartel y la respuesta propia (si ya contesto).
+class ConvocatoriaApp {
+  final String id;
+  final String mensaje;
+  final String creadoEn;
+  final String? miRespuesta; // VOY | NO_PUEDO | null
+  final int? miEtaMinutos;
+  final String? miMotivo;
+  final String? miEnCaminoEn;
+  final String? miCanceladaEn;
+
+  ConvocatoriaApp({
+    required this.id,
+    required this.mensaje,
+    required this.creadoEn,
+    this.miRespuesta,
+    this.miEtaMinutos,
+    this.miMotivo,
+    this.miEnCaminoEn,
+    this.miCanceladaEn,
+  });
+
+  factory ConvocatoriaApp.fromJson(Map<String, dynamic> j) {
+    final r = j['miRespuesta'] as Map<String, dynamic>?;
+    return ConvocatoriaApp(
+      id: j['id'].toString(),
+      mensaje: (j['mensaje'] ?? '').toString(),
+      creadoEn: (j['creadoEn'] ?? '').toString(),
+      miRespuesta: r?['respuesta']?.toString(),
+      miEtaMinutos: (r?['etaMinutos'] as num?)?.toInt(),
+      miMotivo: r?['motivo']?.toString(),
+      miEnCaminoEn: r?['enCaminoEn']?.toString(),
+      miCanceladaEn: r?['canceladaEn']?.toString(),
+    );
+  }
+}

@@ -60,6 +60,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 ## Referenciado por
 
 - [[table--finanzas-beneficios-socios|finanzas.beneficios_socios]] `references` →
+- [[table--servicios-llamados|servicios.llamados]] `references` →
 - [[entity--tipo-servicio|TipoServicio]] `persisted_in` →
 - [[service--denuncias-denuncias|DenunciasService]] `reads` →
 - [[service--ia-ia-tools|IaToolsService]] `reads` →

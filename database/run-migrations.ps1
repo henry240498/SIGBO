@@ -1,13 +1,13 @@
-<#
+﻿<#
     SIGBO-CBVC - Ejecutor de migraciones para SQL Server
 
     Uso:
       .\run-migrations.ps1 [-Server ".\SQLEXPRESS"] [-Database "sigbo_cbvc"]
       .\run-migrations.ps1 -ValidateOnly
 
-    Las migraciones históricas crean la base sigbo_cbvc de forma explícita.
+    Las migraciones histÃ³ricas crean la base sigbo_cbvc de forma explÃ­cita.
     El ejecutor guarda el hash de cada script aplicado para que una siguiente
-    ejecución sólo aplique migraciones nuevas y detecte cambios incompatibles.
+    ejecuciÃ³n sÃ³lo aplique migraciones nuevas y detecte cambios incompatibles.
 #>
 [CmdletBinding()]
 param(
@@ -23,8 +23,8 @@ $databaseCanonica = "sigbo_cbvc"
 Write-Host "=== SIGBO-CBVC: ejecutando migraciones ===" -ForegroundColor Cyan
 Write-Host "Servidor: $Server" -ForegroundColor DarkGray
 
-# Hay prefijos históricos duplicados (por ejemplo 017 y 023). El manifiesto
-# explícito impide que el orden dependa del filesystem.
+# Hay prefijos histÃ³ricos duplicados (por ejemplo 017 y 023). El manifiesto
+# explÃ­cito impide que el orden dependa del filesystem.
 $ordenMigraciones = @(
     "001_schemas.sql",
     "002_seguridad.sql",
@@ -107,7 +107,23 @@ $ordenMigraciones = @(
     "073_ia_voz_local.sql",
     "074_academia_permiso_autoservicio.sql",
     "075_vehiculos_alias.sql",
-    "076_alertas_emergencia.sql"
+    "076_alertas_emergencia.sql",
+    "077_flota_estado_despacho.sql",
+    "078_flota_posicion_mapa.sql",
+    "079_llamados_convocatorias.sql",
+    "080_cartografia_operativa.sql",
+    "081_flota_dotacion_bitacora.sql",
+    "082_control_personal.sql",
+    "083_reservas_prevencion.sql",
+    "084_vehiculos_patente_opcional.sql",
+    "085_llamados_idempotencia.sql",
+    "086_campo_adjuntos_ausencias.sql",
+    "087_reportes_permiso.sql",
+    "088_despacho_nucleo.sql",
+    "089_convocatoria_historial_operativo.sql",
+    "090_despacho_servicio_seguridad.sql",
+    "091_pantallas_auditoria_movil.sql",
+    "092_despacho_chofer_habilitado.sql"
 )
 
 if (!(Test-Path -LiteralPath $migrationsDir)) {
@@ -134,10 +150,10 @@ foreach ($linea in Get-Content -LiteralPath $hashesPath) {
         continue
     }
     if ($linea -notmatch '^(?<hash>[A-Fa-f0-9]{64})\s{2,}(?<nombre>[^\\/:*?"<>|]+\.sql)$') {
-        throw "Formato inválido en el manifiesto de hashes: $linea"
+        throw "Formato invÃ¡lido en el manifiesto de hashes: $linea"
     }
     if ($hashesEsperados.ContainsKey($Matches.nombre)) {
-        throw "Migración repetida en el manifiesto de hashes: $($Matches.nombre)"
+        throw "MigraciÃ³n repetida en el manifiesto de hashes: $($Matches.nombre)"
     }
     $hashesEsperados[$Matches.nombre] = $Matches.hash.ToUpperInvariant()
 }
@@ -152,19 +168,19 @@ if ($hashesFaltantes.Count -gt 0 -or $hashesNoDeclarados.Count -gt 0) {
 foreach ($nombre in $migracionesConHash) {
     $actual = (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $migrationsDir $nombre)).Hash.ToUpperInvariant()
     if ($actual -ne $hashesEsperados[$nombre]) {
-        throw "La migración $nombre fue modificada; su hash SHA-256 no coincide con el manifiesto."
+        throw "La migraciÃ³n $nombre fue modificada; su hash SHA-256 no coincide con el manifiesto."
     }
 }
 
 if ($ValidateOnly) {
-    Write-Host "=== Manifiesto de migraciones válido; no se alteró la base de datos ===" -ForegroundColor Green
+    Write-Host "=== Manifiesto de migraciones vÃ¡lido; no se alterÃ³ la base de datos ===" -ForegroundColor Green
     return
 }
 
 # 000_create_database.sql crea literalmente sigbo_cbvc. Rechazar otro nombre
 # evita crear una base y luego intentar migrar una distinta.
 if ($Database -ne $databaseCanonica) {
-    throw "Esta cadena de migraciones crea únicamente '$databaseCanonica'. No use -Database '$Database' hasta disponer de una migración parametrizada aprobada."
+    throw "Esta cadena de migraciones crea Ãºnicamente '$databaseCanonica'. No use -Database '$Database' hasta disponer de una migraciÃ³n parametrizada aprobada."
 }
 
 function Invoke-SigboSqlArchivo {
@@ -190,8 +206,8 @@ function Invoke-SigboSqlConsulta {
     return ($salida | Out-String).Trim()
 }
 
-# La creación es idempotente; ejecutarla contra master también confirma que la
-# cadena actual sigue siendo compatible con la base canónica.
+# La creaciÃ³n es idempotente; ejecutarla contra master tambiÃ©n confirma que la
+# cadena actual sigue siendo compatible con la base canÃ³nica.
 Invoke-SigboSqlArchivo -Base "master" -Ruta (Join-Path $migrationsDir "000_create_database.sql")
 
 $inicializarHistorial = @'
@@ -199,7 +215,7 @@ SET NOCOUNT ON;
 IF OBJECT_ID(N'dbo.__sigbo_migrations', N'U') IS NULL
 BEGIN
     IF EXISTS (SELECT 1 FROM sys.tables WHERE is_ms_shipped = 0)
-        THROW 51000, N'La base ya contiene tablas pero no tiene historial de migraciones SIGBO. No se reaplicará DDL histórico; cree una línea base institucional antes de actualizarla.', 1;
+        THROW 51000, N'La base ya contiene tablas pero no tiene historial de migraciones SIGBO. No se reaplicarÃ¡ DDL histÃ³rico; cree una lÃ­nea base institucional antes de actualizarla.', 1;
 
     CREATE TABLE dbo.__sigbo_migrations (
         nombre NVARCHAR(260) NOT NULL PRIMARY KEY,
@@ -218,7 +234,7 @@ function VerificarORegistrarMigracion {
     $hashAplicado = Invoke-SigboSqlConsulta -Base $Database -Consulta "SET NOCOUNT ON; SELECT hash_sha256 FROM dbo.__sigbo_migrations WHERE nombre = N'$nombreSql';"
     if (![string]::IsNullOrWhiteSpace($hashAplicado)) {
         if ($hashAplicado.Trim().ToUpperInvariant() -ne $hashEsperado) {
-            throw "La migración registrada $Nombre no coincide con el hash actual. No se continuará."
+            throw "La migraciÃ³n registrada $Nombre no coincide con el hash actual. No se continuarÃ¡."
         }
         return $true
     }

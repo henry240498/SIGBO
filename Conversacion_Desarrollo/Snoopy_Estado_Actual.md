@@ -1,6 +1,6 @@
 # Snoopy — Estado actual (documento de continuidad)
 
-**Última actualización:** 2026-09-01, tras la "AUDITORÍA FINAL DE ARQUITECTURA Y PREPARACIÓN PARA PRODUCCIÓN" (solo lectura — no se modificó código; ver `Snoopy_Auditoria_PreProduccion.md` para el detalle completo).
+**Última actualización:** 2026-10-05, se agregó la herramienta de solo lectura `get_flota` (estado operativo de los móviles). Antes: 2026-09-01, auditoría final de arquitectura y preparación para producción.
 
 **Regla permanente desde esta etapa**: cada vez que se termine un desarrollo o ajuste de Snoopy, este archivo se actualiza. Es el estado de verdad persistente — no la memoria de una conversación anterior. Al empezar cualquier sesión nueva sobre Snoopy: leer este archivo primero, después el documento de la etapa más reciente en este mismo directorio (`Snoopy_Ollama_Integracion.md`, buscar el último `# ETAPA` o `# AUDITORÍA`), después inspeccionar el código real de lo que se vaya a tocar — nunca asumir que algo está terminado solo porque se menciona acá o en una conversación previa.
 
@@ -8,7 +8,7 @@
 
 ## 1. Qué es Snoopy
 
-El asistente conversacional de SIGBO-CBVC. Responde preguntas en español sobre los datos reales de la institución (personal, guardias, vehículos, equipos, servicios, academia, depósito, documentos, finanzas, asistencia, organización) usando el permiso REAL del usuario autenticado que pregunta. No es un agente: no ejecuta acciones, no modifica nada, no tiene una tabla de "herramientas de escritura" en absoluto — cada una de sus 13 herramientas es una consulta de solo lectura contra la base real.
+El asistente conversacional de SIGBO-CBVC. Responde preguntas en español sobre los datos reales de la institución (personal, guardias, vehículos, equipos, servicios, academia, depósito, documentos, finanzas, asistencia, organización) usando el permiso REAL del usuario autenticado que pregunta. No es un agente: no ejecuta acciones, no modifica nada, no tiene una tabla de "herramientas de escritura" en absoluto — cada una de sus 14 herramientas es una consulta de solo lectura contra la base real.
 
 ## 2. Arquitectura (invariante — no cambia sin una decisión explícita mayor)
 
@@ -17,7 +17,7 @@ Usuario autenticado → mensaje en español
   → IaMotorService.procesar() (motor determinístico local, sin red)
     → reconoce intención por patrones/palabras clave en español
     → resuelve contexto de la conversación (sujeto/fecha/guardia previos)
-    → elige UNA herramienta de una lista blanca fija (13 herramientas)
+    → elige UNA herramienta de una lista blanca fija (14 herramientas)
     → [opcional] Ollama sugiere cuál herramienta si el patrón no alcanzó
        el umbral — Ollama NUNCA decide autorización ni accede a datos
   → IaToolsService: verifica @RequirePermission del usuario REAL
@@ -46,6 +46,7 @@ Usuario autenticado → mensaje en español
 | `get_documentos` | documentos | `documentos:ver` | busca documentos por nombre/tipo |
 | `get_servicios` | servicios | `servicios:ver` | cuenta/resume servicios por rango de fechas o tipo real; último servicio |
 | `get_vehiculos` | vehículos | `vehiculos:ver` | busca por nombre/código/**alias** (nuevo, migración 075), lista por estado, superlativos de antigüedad/kilometraje |
+| `get_flota` | vehículos | `vehiculos:ver` | dónde está cada móvil ahora: en el cuartel, despachado, en servicio o regresando (estado operativo, migración 077); distinta de `get_vehiculos`, que responde por el estado administrativo/mecánico |
 | `get_equipos` | equipos | `equipos:ver` | busca por código, lista por estado, responsable actual, superlativo de antigüedad |
 | `get_asistencia` | operaciones (marcaciones) | `asistencia:ver` | marcaciones de asistencia |
 | `get_academia` | academia | `academia:ver` | catálogo de cursos/actividades con filtro real (**ya no incluye "mis cursos"**, ver `get_mis_cursos_academia`) |

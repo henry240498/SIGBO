@@ -33,6 +33,9 @@ Usuario, Sesion, AsignacionRol, Rol
 ## Referenciado por
 
 - [[service--auth-auth|AuthService]] `uses` →
+- [[decision--cliente-nativo-exento-de-csrf|El cliente nativo móvil queda exento de la comprobación de Origin del CSRF]] `constrains` →
+- [[decision--sesion-mantenida-o-corta|La sesión depende de "Mantener sesión iniciada": 30 días renovables, 12 horas, o los 7 de siempre]] `constrains` →
+- [[rule--confidencial-lo-decide-la-matriz|Qué información confidencial ve una persona lo decide la matriz de pantallas, en el backend]] `affects` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

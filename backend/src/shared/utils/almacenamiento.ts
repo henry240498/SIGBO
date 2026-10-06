@@ -21,6 +21,7 @@ export const CARPETAS_UPLOADS_RESTRINGIDAS = new Set([
   'importaciones-marcador',
   'firmas-bomberos',
   'perfiles',
+  'adjuntos-campo',
 ]);
 
 type ImagenDetectada = {

@@ -4,8 +4,8 @@ tipo: API
 nombre: IaConfiguracionController
 nivel: L2
 dominio: inteligencia
-resumen: Superficie HTTP de ia configuracion bajo /api/v1/ia/admin / <CONFIGURAR_ACCESO_LOCAL>
-prefijo: /api/v1/ia/admin / <CONFIGURAR_ACCESO_LOCAL>
+resumen: Superficie HTTP de ia configuracion bajo /api/v1/ia/admin/config.
+prefijo: /api/v1/ia/admin/config
 capa: backend
 permisos: [inteligencia:configurar, inteligencia:desactivar]
 archivos:
@@ -22,23 +22,23 @@ terminos: [configuracion, admin, config, inteligencia, configurar, desactivar]
 
 # IaConfiguracionController
 
-Superficie HTTP de ia configuracion bajo /api/v1/ia/admin / <CONFIGURAR_ACCESO_LOCAL>
+Superficie HTTP de ia configuracion bajo /api/v1/ia/admin/config.
 
-- **Prefijo:** `/api/v1/ia/admin / <CONFIGURAR_ACCESO_LOCAL>
+- **Prefijo:** `/api/v1/ia/admin/config`
 
 ## Rutas
 
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
-| GET | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL> | `inteligencia:configurar` |
-| GET | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL>/ollama/estado` | `inteligencia:configurar` |
-| POST | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL>/ollama/probar-conexion` | `inteligencia:configurar` |
-| GET | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL>/whisper/estado` | `inteligencia:configurar` |
-| GET | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL>/piper/estado` | `inteligencia:configurar` |
-| GET | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL>/piper/voces` | `inteligencia:configurar` |
-| GET | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL>/historial` | `inteligencia:configurar` |
-| PATCH | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL> | `inteligencia:configurar` |
-| PATCH | `/ia/admin / <CONFIGURAR_ACCESO_LOCAL> | `inteligencia:desactivar` |
+| GET | `/ia/admin/config` | `inteligencia:configurar` |
+| GET | `/ia/admin/config/ollama/estado` | `inteligencia:configurar` |
+| POST | `/ia/admin/config/ollama/probar-conexion` | `inteligencia:configurar` |
+| GET | `/ia/admin/config/whisper/estado` | `inteligencia:configurar` |
+| GET | `/ia/admin/config/piper/estado` | `inteligencia:configurar` |
+| GET | `/ia/admin/config/piper/voces` | `inteligencia:configurar` |
+| GET | `/ia/admin/config/historial` | `inteligencia:configurar` |
+| PATCH | `/ia/admin/config` | `inteligencia:configurar` |
+| PATCH | `/ia/admin/config` | `inteligencia:desactivar` |
 
 ## Archivos
 

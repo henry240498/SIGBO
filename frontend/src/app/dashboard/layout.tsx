@@ -155,6 +155,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </nav>
         <div className="sidebar-footer">
           <MenuLink href="/dashboard/mi-perfil" icono="user" nombre="Mi perfil" activo={pathname === '/dashboard/mi-perfil'} />
+          <MenuLink href="/dashboard/reportar" icono="document" nombre="Reportar un problema" activo={pathname === '/dashboard/reportar'} />
           <button type="button" className="logout-button" onClick={onLogout}>Cerrar sesión</button>
         </div>
       </aside>

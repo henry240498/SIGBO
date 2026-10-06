@@ -23,6 +23,7 @@ Helper de frontend "Cargando" (1 exportaciones).
 
 - [[screen--dashboard-academia-id|/dashboard/academia/[id]]] `uses` →
 - [[screen--dashboard-asistencia-auditoria|/dashboard/asistencia/auditoria]] `uses` →
+- [[screen--dashboard-asistencia-ausencias|/dashboard/asistencia/ausencias]] `uses` →
 - [[screen--dashboard-asistencia-eventos-id|/dashboard/asistencia/eventos/[id]]] `uses` →
 - [[screen--dashboard-asistencia|/dashboard/asistencia]] `uses` →
 - [[screen--dashboard-denuncias|/dashboard/denuncias]] `uses` →
@@ -48,14 +49,25 @@ Helper de frontend "Cargando" (1 exportaciones).
 - [[screen--dashboard-organizacion-documentos|/dashboard/organizacion/documentos]] `uses` →
 - [[screen--dashboard-organizacion|/dashboard/organizacion]] `uses` →
 - [[screen--dashboard|/dashboard]] `uses` →
+- [[screen--dashboard-personal-control|/dashboard/personal/control]] `uses` →
 - [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `uses` →
+- [[screen--dashboard-reservas|/dashboard/reservas]] `uses` →
 - [[screen--dashboard-seguridad-apariencia|/dashboard/seguridad/apariencia]] `uses` →
 - [[screen--dashboard-seguridad-inteligencia-artificial-configuracion|/dashboard/seguridad/inteligencia-artificial/configuracion]] `uses` →
 - [[screen--dashboard-seguridad-inteligencia-artificial-conversaciones|/dashboard/seguridad/inteligencia-artificial/conversaciones]] `uses` →
 - [[screen--dashboard-seguridad-inteligencia-artificial|/dashboard/seguridad/inteligencia-artificial]] `uses` →
 - [[screen--dashboard-seguridad|/dashboard/seguridad]] `uses` →
 - [[screen--dashboard-seguridad-usuarios-id|/dashboard/seguridad/usuarios/[id]]] `uses` →
+- [[screen--dashboard-servicios-cartografia|/dashboard/servicios/cartografia]] `uses` →
+- [[screen--dashboard-servicios-convocatorias|/dashboard/servicios/convocatorias]] `uses` →
+- [[screen--dashboard-servicios-despacho|/dashboard/servicios/despacho]] `uses` →
+- [[screen--dashboard-servicios-indicadores|/dashboard/servicios/indicadores]] `uses` →
+- [[screen--dashboard-servicios-llamados|/dashboard/servicios/llamados]] `uses` →
+- [[screen--dashboard-servicios-prevencion|/dashboard/servicios/prevencion]] `uses` →
+- [[screen--dashboard-vehiculos-dotacion|/dashboard/vehiculos/dotacion]] `uses` →
+- [[screen--dashboard-vehiculos-flota|/dashboard/vehiculos/flota]] `uses` →
 - [[screen--dashboard-vehiculos-id|/dashboard/vehiculos/[id]]] `uses` →
+- [[screen--fichar|/fichar]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

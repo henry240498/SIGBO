@@ -25,6 +25,7 @@ import {
 import { AuthenticatedUser } from '../../auth/types/authenticated-user';
 import { DocumentosService } from '../../documentos/documentos.service';
 import { AiTool, ResultadoHerramientaIa } from './ia-tool.interface';
+import { PATRONES_FLOTA, filtroDeMensaje, responderFlota } from './flota-tool.util';
 import {
   detectarIntent,
   DISPARADORES_SOLICITUD,
@@ -201,6 +202,7 @@ export class IaToolsService {
       this.getDocumentos(),
       this.getServicios(),
       this.getVehiculos(),
+      this.getFlota(),
       this.getEquipos(),
       this.getAsistencia(),
       this.getAcademia(),
@@ -751,6 +753,23 @@ export class IaToolsService {
         const introduccion = etiqueta === 'este mes' ? 'Este mes' : `Para ${etiqueta}`;
         const notaTipo = args.tipoNombre ? ` de tipo "${args.tipoNombre}"` : '';
         return { contenidoRespuesta: `${introduccion} hubo ${servicios.length} servicios${notaTipo}. Por gravedad: ${resumen}.`, resumenAuditoria: `Servicios -> resumen ${desde} a ${hasta} (${servicios.length})` };
+      },
+    };
+  }
+
+  /** Estado operativo de la flota (en el cuartel / despachado / en servicio / regresando). Solo lectura. */
+  private getFlota(): AiTool {
+    return {
+      nombre: 'get_flota',
+      descripcion: 'Donde esta cada movil ahora: en el cuartel, despachado, en servicio o regresando.',
+      moduloSlug: 'vehiculos',
+      permisoRequerido: 'vehiculos:ver',
+      patrones: PATRONES_FLOTA,
+      palabrasClave: [],
+      extraerArgumentos: (mensajeNormalizado) => ({ filtro: filtroDeMensaje(mensajeNormalizado) }),
+      ejecutar: async (args) => {
+        const moviles = await this.vehiculoRepo.find({ order: { numeroInterno: 'ASC' } });
+        return responderFlota(moviles, (args.filtro as ReturnType<typeof filtroDeMensaje>) ?? null);
       },
     };
   }

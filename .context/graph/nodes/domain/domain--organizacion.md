@@ -34,6 +34,7 @@ Modulo funcional "Organización Institucional". Habilitado en la navegacion.
 - [[entity--identidad-institucional|IdentidadInstitucional]] `belongs_to` →
 - [[entity--parametro|Parametro]] `belongs_to` →
 - [[entity--rango|Rango]] `belongs_to` →
+- [[entity--reserva-prevencion|Instalacion]] `belongs_to` →
 - [[entity--tipo-guardia|TipoGuardia]] `belongs_to` →
 - [[entity--turno|Turno]] `belongs_to` →
 - [[entity--unidad|Unidad]] `belongs_to` →
@@ -52,6 +53,8 @@ Modulo funcional "Organización Institucional". Habilitado en la navegacion.
 - [[table--organizacion-parametros|organizacion.parametros]] `belongs_to` →
 - [[table--organizacion-feriados|organizacion.feriados]] `belongs_to` →
 - [[table--organizacion-identidad-institucional|organizacion.identidad_institucional]] `belongs_to` →
+- [[table--organizacion-instalaciones|organizacion.instalaciones]] `belongs_to` →
+- [[table--organizacion-reservas-instalacion|organizacion.reservas_instalacion]] `belongs_to` →
 - [[component--modulo-organizacion|organizacion (modulo NestJS)]] `belongs_to` →
 - [[service--organizacion-ascensos|AscensosService]] `belongs_to` →
 - [[service--organizacion-brigadas|BrigadasService]] `belongs_to` →
@@ -79,9 +82,6 @@ Modulo funcional "Organización Institucional". Habilitado en la navegacion.
 - [[api--organizacion-designaciones|DesignacionesController]] `belongs_to` →
 - [[api--organizacion-especialidades|EspecialidadesController]] `belongs_to` →
 - [[api--organizacion-feriados|FeriadosController]] `belongs_to` →
-- [[api--organizacion-identidad-institucional|IdentidadInstitucionalController]] `belongs_to` →
-- [[api--organizacion-parametros|ParametrosController]] `belongs_to` →
-- [[api--organizacion-rangos|RangosController]] `belongs_to` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

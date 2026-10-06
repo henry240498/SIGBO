@@ -4,6 +4,19 @@ App multiplataforma (un solo codigo Dart) + extension del backend existente.
 **No es un sistema paralelo**: reutiliza login JWT, permisos, auditoria y base
 de datos de SIGBO; solo agrega lo que no existia (ver tabla abajo).
 
+Al ingresar, la pantalla principal muestra el estado de conexión, los avisos y
+las solicitudes pendientes. Desde **Accesos rápidos** se puede solicitar un
+chofer, registrar un llamado (reportar servicio) o pedir apoyo. Estas acciones
+se atenúan y quedan deshabilitadas mientras el servidor no responda; si la
+conexión se corta durante el envío, se conserva la cola local con reintento
+automático. Las herramientas operativas quedan debajo del resumen y los ajustes
+y el cierre de sesión al final de la pantalla.
+
+El menú de Operaciones agrupa las pantallas por respuesta en terreno, guardia y
+personal, recursos del cuartel y gestión e informes. Las pantallas de flota,
+llamados y fichaje destacan el siguiente paso y separan los estados de las
+acciones disponibles.
+
 ## Analisis previo (que existe / que se reutiliza / que es nuevo)
 
 | Necesidad | Estado en SIGBO | Decision |

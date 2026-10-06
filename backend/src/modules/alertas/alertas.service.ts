@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, Optional } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MoreThan, Repository } from 'typeorm';
 import { Subject } from 'rxjs';
@@ -6,6 +6,7 @@ import {
   AlertaEmergencia,
   EstadoAlertaEmergencia,
 } from '../../shared/entities/alerta-emergencia.entity';
+import { TelegramService } from '../notificaciones/telegram.service';
 import { AuditoriaService } from '../seguridad/auditoria.service';
 import { CambiarEstadoAlertaDto, CrearAlertaDto } from './dto/alertas.dto';
 
@@ -35,6 +36,7 @@ export class AlertasService {
     @InjectRepository(AlertaEmergencia)
     private readonly alertaRepo: Repository<AlertaEmergencia>,
     private readonly auditoriaService: AuditoriaService,
+    @Optional() private readonly telegram?: TelegramService,
   ) {}
 
   observarEventos(): Subject<AlertaEmergencia> {
@@ -92,6 +94,11 @@ export class AlertasService {
         userAgent: ctx.userAgent ?? null,
       });
       this.eventos$.next(alerta);
+      this.telegram?.enviarEnSegundoPlano(
+        `ALERTA: ${alerta.tipo === 'SOLICITUD_APOYO' ? 'solicitud de apoyo' : 'solicitud de chofer'}
+Solicita: ${alerta.solicitanteNombre}${alerta.detalle ? `
+${alerta.detalle}` : ''}`,
+      );
       return { alerta, duplicada: false };
     } catch (error) {
       // Carrera entre dos pulsaciones simultaneas: la UNIQUE de

@@ -86,6 +86,15 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[table--deposito-prestamos|deposito.prestamos]] `references` →
 - [[table--servicios-rutas-planificadas|servicios.rutas_planificadas]] `references` →
 - [[table--servicios-pruebas-comunicacion|servicios.pruebas_comunicacion]] `references` →
+- [[table--vehiculos-movil-estado-historial|vehiculos.movil_estado_historial]] `references` →
+- [[table--servicios-despachos|servicios.despachos]] `references` →
+- [[table--servicios-llamados|servicios.llamados]] `references` →
+- [[table--servicios-convocatorias|servicios.convocatorias]] `references` →
+- [[table--servicios-victimas-servicio|servicios.victimas_servicio]] `references` →
+- [[table--servicios-solicitudes-despacho|servicios.solicitudes_despacho]] `references` →
+- [[table--servicios-servicio-participantes|servicios.servicio_participantes]] `references` →
+- [[table--servicios-servicio-mensajes|servicios.servicio_mensajes]] `references` →
+- [[table--servicios-formulario-respuestas|servicios.formulario_respuestas]] `references` →
 - [[entity--servicio|Servicio]] `persisted_in` →
 - [[service--denuncias-denuncias|DenunciasService]] `reads` →
 - [[service--deposito-integracion-deposito|IntegracionDepositoService]] `reads` →

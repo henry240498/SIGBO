@@ -21,15 +21,19 @@ Helper de frontend "InputProvider" (2 exportaciones).
 
 ## Referenciado por
 
+- [[screen--dashboard-asistencia-ausencias|/dashboard/asistencia/ausencias]] `uses` →
 - [[screen--dashboard-finanzas-cuotas|/dashboard/finanzas/cuotas]] `uses` →
 - [[screen--dashboard-finanzas-facturacion|/dashboard/finanzas/facturacion]] `uses` →
 - [[screen--dashboard-finanzas-socios-protectores-id|/dashboard/finanzas/socios-protectores/[id]]] `uses` →
 - [[screen--dashboard-guardias-ordenes-id|/dashboard/guardias/ordenes/[id]]] `uses` →
 - [[screen--dashboard-guardias-id|/dashboard/guardias/[id]]] `uses` →
 - [[screen--dashboard-personal|/dashboard/personal]] `uses` →
+- [[screen--dashboard-reservas|/dashboard/reservas]] `uses` →
 - [[screen--dashboard-seguridad-configuracion|/dashboard/seguridad/configuracion]] `uses` →
 - [[screen--dashboard-seguridad-roles|/dashboard/seguridad/roles]] `uses` →
 - [[screen--dashboard-seguridad-usuarios|/dashboard/seguridad/usuarios]] `uses` →
+- [[screen--dashboard-servicios-llamados|/dashboard/servicios/llamados]] `uses` →
+- [[screen--dashboard-vehiculos-flota|/dashboard/vehiculos/flota]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

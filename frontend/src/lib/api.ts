@@ -59,11 +59,11 @@ export function cerrarSesionLocal() {
   }
 }
 
-export async function login(usernameOrEmail: string, password: string): Promise<Sesion> {
+export async function login(usernameOrEmail: string, password: string, mantenerSesion?: boolean): Promise<Sesion> {
   const res = await fetch(`${API_URL}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...CABECERA_SOLICITUD_SIGBO },
-    body: JSON.stringify({ usernameOrEmail, password }),
+    body: JSON.stringify({ usernameOrEmail, password, ...(mantenerSesion === undefined ? {} : { mantenerSesion }) }),
     credentials: 'include',
   });
   if (!res.ok) {

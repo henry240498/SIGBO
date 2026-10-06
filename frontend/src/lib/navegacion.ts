@@ -71,7 +71,7 @@ export function buscarPantallas(consulta: string, permisos: string[]): Resultado
   const termino = consulta.trim();
 
   return PANTALLAS
-    .filter((p) => p.modulo === 'inicio' || p.modulo === 'mi-perfil' || visibles.has(p.modulo))
+    .filter((p) => p.modulo === 'inicio' || p.modulo === 'mi-perfil' || p.modulo === 'reportar' || visibles.has(p.modulo))
     .map((p) => ({
       ...p,
       contexto: MODULOS.find((m) => m.slug === p.modulo)?.nombre ?? 'General',

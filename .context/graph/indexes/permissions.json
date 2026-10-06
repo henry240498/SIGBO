@@ -64,6 +64,12 @@
    "api--academia-sesiones-academia"
   ]
  },
+ "adjuntos:ver": {
+  "modulo": "adjuntos",
+  "exigidoPor": [
+   "api--campo-campo"
+  ]
+ },
  "asistencia:asistencia_crear": {
   "modulo": "asistencia",
   "exigidoPor": [
@@ -84,6 +90,13 @@
    "api--operaciones-dashboard-asistencia",
    "api--operaciones-marcaciones",
    "api--operaciones-tolerancias"
+  ]
+ },
+ "asistencia:editar": {
+  "modulo": "asistencia",
+  "exigidoPor": [
+   "api--control-personal-control-personal",
+   "screen--dashboard-personal-control"
   ]
  },
  "asistencia:eventos_crear": {
@@ -130,6 +143,33 @@
   "modulo": "asistencia",
   "exigidoPor": [
    "api--operaciones-importaciones"
+  ]
+ },
+ "asistencia:marcar": {
+  "modulo": "asistencia",
+  "exigidoPor": [
+   "api--control-personal-control-personal"
+  ]
+ },
+ "asistencia:ver": {
+  "modulo": "asistencia",
+  "exigidoPor": [
+   "api--control-personal-control-personal",
+   "screen--dashboard-personal-control"
+  ]
+ },
+ "ausencias:decidir": {
+  "modulo": "ausencias",
+  "exigidoPor": [
+   "api--campo-campo",
+   "screen--dashboard-asistencia-ausencias"
+  ]
+ },
+ "ausencias:solicitar": {
+  "modulo": "ausencias",
+  "exigidoPor": [
+   "api--campo-campo",
+   "screen--dashboard-asistencia-ausencias"
   ]
  },
  "configuracion:editar_borrador": {
@@ -283,6 +323,38 @@
    "api--deposito-prestamos",
    "api--deposito-proveedores",
    "api--deposito-ubicaciones-deposito"
+  ]
+ },
+ "despacho:formularios_admin": {
+  "modulo": "despacho",
+  "exigidoPor": [
+   "api--despacho-servicio-activo"
+  ]
+ },
+ "despacho:responder": {
+  "modulo": "despacho",
+  "exigidoPor": [
+   "api--despacho-despacho"
+  ]
+ },
+ "despacho:seguimiento": {
+  "modulo": "despacho",
+  "exigidoPor": [
+   "api--despacho-despacho",
+   "screen--dashboard-servicios-despacho"
+  ]
+ },
+ "despacho:servicio": {
+  "modulo": "despacho",
+  "exigidoPor": [
+   "api--despacho-servicio-activo"
+  ]
+ },
+ "despacho:solicitar": {
+  "modulo": "despacho",
+  "exigidoPor": [
+   "api--despacho-despacho",
+   "screen--dashboard-servicios-despacho"
   ]
  },
  "documentos:administrar": {
@@ -614,6 +686,7 @@
  "guardias:editar": {
   "modulo": "guardias",
   "exigidoPor": [
+   "api--control-personal-control-personal",
    "api--guardias-bitacora",
    "api--guardias-grupos-guardia",
    "api--guardias-guardias",
@@ -623,7 +696,8 @@
    "api--guardias-pernoctes",
    "screen--dashboard-guardias-grupos-id",
    "screen--dashboard-guardias-pernoctes",
-   "screen--dashboard-guardias-id"
+   "screen--dashboard-guardias-id",
+   "screen--dashboard-personal-control"
   ]
  },
  "guardias:eliminar": {
@@ -709,6 +783,7 @@
  "guardias:ver": {
   "modulo": "guardias",
   "exigidoPor": [
+   "api--control-personal-control-personal",
    "api--guardias-bitacora",
    "api--guardias-esquemas-horario",
    "api--guardias-grupos-guardia",
@@ -716,7 +791,8 @@
    "api--guardias-inspecciones-estacion",
    "api--guardias-inspecciones-movil",
    "api--guardias-novedades",
-   "api--guardias-pernoctes"
+   "api--guardias-pernoctes",
+   "screen--dashboard-personal-control"
   ]
  },
  "inteligencia:configurar": {
@@ -779,6 +855,12 @@
   "modulo": "inteligencia",
   "exigidoPor": [
    "api--ia-ia-dashboard"
+  ]
+ },
+ "navegacion:registrar": {
+  "modulo": "navegacion",
+  "exigidoPor": [
+   "api--pantallas-pantallas"
   ]
  },
  "organizacion:ascensos_anular": {
@@ -1158,7 +1240,14 @@
    "api--personal-historial-institucional",
    "api--personal-idiomas",
    "api--vehiculos-vehiculos-autorizados",
+   "screen--dashboard-personal-control",
    "screen--dashboard-personal-id"
+  ]
+ },
+ "personal:editar_medico": {
+  "modulo": "personal",
+  "exigidoPor": [
+   "screen--dashboard-personal-control"
   ]
  },
  "personal:eliminar": {
@@ -1239,6 +1328,7 @@
   "modulo": "personal",
   "exigidoPor": [
    "api--academia-certificaciones-academia",
+   "api--control-personal-control-personal",
    "api--equipos-equipamiento-bombero",
    "api--personal-actividad-profesional",
    "api--personal-bomberos",
@@ -1255,6 +1345,32 @@
   "modulo": "publicaciones",
   "exigidoPor": [
    "api--publicaciones-publicaciones"
+  ]
+ },
+ "reportes:enviar": {
+  "modulo": "reportes",
+  "exigidoPor": [
+   "api--reportes-reportes"
+  ]
+ },
+ "reservas:decidir": {
+  "modulo": "reservas",
+  "exigidoPor": [
+   "api--reservas-reservas",
+   "screen--dashboard-reservas"
+  ]
+ },
+ "reservas:solicitar": {
+  "modulo": "reservas",
+  "exigidoPor": [
+   "api--reservas-reservas",
+   "screen--dashboard-reservas"
+  ]
+ },
+ "reservas:ver": {
+  "modulo": "reservas",
+  "exigidoPor": [
+   "api--reservas-reservas"
   ]
  },
  "seguridad:cerrar_sesion": {
@@ -1334,6 +1450,12 @@
    "api--seguridad-usuarios"
   ]
  },
+ "seguridad:gestionar_pantallas": {
+  "modulo": "seguridad",
+  "exigidoPor": [
+   "api--pantallas-pantallas"
+  ]
+ },
  "seguridad:ver_usuarios": {
   "modulo": "seguridad",
   "exigidoPor": [
@@ -1345,23 +1467,43 @@
    "api--seguridad-usuarios"
   ]
  },
+ "servicios:convocar": {
+  "modulo": "servicios",
+  "exigidoPor": [
+   "api--llamados-llamados",
+   "screen--dashboard-servicios-convocatorias"
+  ]
+ },
  "servicios:crear": {
   "modulo": "servicios",
   "exigidoPor": [
    "api--alertas-alertas",
-   "api--servicios-servicios"
+   "api--cartografia-cartografia",
+   "api--llamados-llamados",
+   "api--prevencion-prevencion",
+   "api--servicios-servicios",
+   "screen--dashboard-servicios-cartografia",
+   "screen--dashboard-servicios-llamados",
+   "screen--dashboard-servicios-prevencion"
   ]
  },
  "servicios:despachar": {
   "modulo": "servicios",
   "exigidoPor": [
-   "api--servicios-seguimiento-geografico"
+   "api--flota-flota",
+   "api--servicios-seguimiento-geografico",
+   "screen--dashboard-vehiculos-flota"
   ]
  },
  "servicios:editar": {
   "modulo": "servicios",
   "exigidoPor": [
-   "api--servicios-servicios"
+   "api--campo-campo",
+   "api--cartografia-cartografia",
+   "api--llamados-llamados",
+   "api--servicios-servicios",
+   "screen--dashboard-servicios-cartografia",
+   "screen--dashboard-servicios-llamados"
   ]
  },
  "servicios:eliminar": {
@@ -1380,6 +1522,12 @@
   "modulo": "servicios",
   "exigidoPor": [
    "api--alertas-alertas",
+   "api--campo-campo",
+   "api--cartografia-cartografia",
+   "api--flota-flota",
+   "api--indicadores-indicadores",
+   "api--llamados-llamados",
+   "api--prevencion-prevencion",
    "api--servicios-servicios"
   ]
  },
@@ -1402,6 +1550,13 @@
    "screen--dashboard-vehiculos"
   ]
  },
+ "vehiculos:dotacion": {
+  "modulo": "vehiculos",
+  "exigidoPor": [
+   "api--flota-flota",
+   "screen--dashboard-vehiculos-dotacion"
+  ]
+ },
  "vehiculos:editar": {
   "modulo": "vehiculos",
   "exigidoPor": [
@@ -1417,17 +1572,37 @@
    "api--vehiculos-vehiculos"
   ]
  },
+ "vehiculos:estado": {
+  "modulo": "vehiculos",
+  "exigidoPor": [
+   "api--flota-flota",
+   "screen--dashboard-vehiculos-flota"
+  ]
+ },
  "vehiculos:mantenimiento": {
   "modulo": "vehiculos",
   "exigidoPor": [
    "api--vehiculos-vehiculos"
   ]
  },
+ "vehiculos:posicion": {
+  "modulo": "vehiculos",
+  "exigidoPor": [
+   "api--flota-flota"
+  ]
+ },
  "vehiculos:ver": {
   "modulo": "vehiculos",
   "exigidoPor": [
+   "api--flota-flota",
    "api--vehiculos-checklist-items",
    "api--vehiculos-vehiculos"
+  ]
+ },
+ "vehiculos:ver_mapa": {
+  "modulo": "vehiculos",
+  "exigidoPor": [
+   "api--flota-flota"
   ]
  }
 }

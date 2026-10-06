@@ -25,6 +25,7 @@ Helper de frontend "Aviso" (1 exportaciones).
 - [[screen--dashboard-academia-instructores-externos|/dashboard/academia/instructores-externos]] `uses` →
 - [[screen--dashboard-academia|/dashboard/academia]] `uses` →
 - [[screen--dashboard-academia-id|/dashboard/academia/[id]]] `uses` →
+- [[screen--dashboard-asistencia-ausencias|/dashboard/asistencia/ausencias]] `uses` →
 - [[screen--dashboard-asistencia-eventos|/dashboard/asistencia/eventos]] `uses` →
 - [[screen--dashboard-asistencia-eventos-id|/dashboard/asistencia/eventos/[id]]] `uses` →
 - [[screen--dashboard-asistencia-externos|/dashboard/asistencia/externos]] `uses` →
@@ -80,7 +81,6 @@ Helper de frontend "Aviso" (1 exportaciones).
 - [[screen--dashboard-guardias-id|/dashboard/guardias/[id]]] `uses` →
 - [[screen--dashboard-mi-perfil|/dashboard/mi-perfil]] `uses` →
 - [[screen--dashboard-organizacion-ascensos|/dashboard/organizacion/ascensos]] `uses` →
-- [[screen--dashboard-organizacion-brigadas|/dashboard/organizacion/brigadas]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

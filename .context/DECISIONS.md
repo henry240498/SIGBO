@@ -115,3 +115,15 @@ Y en el cuerpo: **Contexto**, **Decisión**, **Motivo**, **Costo aceptado**, y s
 documentado es una que nadie va a poder revisar con criterio después.
 
 Después: `node .context/graph/build-graph.mjs && node .context/graph/validar.mjs`.
+
+## Decisiones agregadas con la app móvil (2026-10-06)
+
+Detalle completo en los nodos de `graph/curated/decision/` y en [MOVIL.md](MOVIL.md):
+
+- [[decision--app-movil-offline-primero]] — la app guarda primero y sincroniza después.
+- [[decision--cliente-nativo-exento-de-csrf]] — el cliente móvil no manda `Origin`; se lo reconoce por cabecera.
+- [[decision--apk-depuracion-firmado-con-clave-propia]] — APK de depuración firmado con la clave del cuartel; el release está bloqueado por Windows.
+- [[decision--reportes-como-texto-plano]] — errores y sugerencias como archivos `.txt` en el servidor, sin pantalla de lectura.
+
+- [[decision--despacho-extiende-lo-existente]] — el despacho operativo extiende llamados, convocatorias y flota.
+- [[decision--sesion-mantenida-o-corta]] — la sesión depende de "Mantener sesión iniciada": 30 días renovables, 12 horas, o 7 de siempre.

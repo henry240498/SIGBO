@@ -22,6 +22,19 @@ import { DocumentosModule } from './modules/documentos/documentos.module';
 import { IaModule } from './modules/ia/ia.module';
 import { SaludModule } from './modules/salud/salud.module';
 import { AlertasModule } from './modules/alertas/alertas.module';
+import { FlotaModule } from './modules/flota/flota.module';
+import { AppMovilModule } from './modules/app-movil/app-movil.module';
+import { LlamadosModule } from './modules/llamados/llamados.module';
+import { CartografiaModule } from './modules/cartografia/cartografia.module';
+import { ControlPersonalModule } from './modules/control-personal/control-personal.module';
+import { IndicadoresModule } from './modules/indicadores/indicadores.module';
+import { CampoModule } from './modules/campo/campo.module';
+import { ReportesModule } from './modules/reportes/reportes.module';
+import { DespachoModule } from './modules/despacho/despacho.module';
+import { PantallasModule } from './modules/pantallas/pantallas.module';
+import { NotificacionesModule } from './modules/notificaciones/notificaciones.module';
+import { ReservasModule } from './modules/reservas/reservas.module';
+import { PrevencionModule } from './modules/prevencion/prevencion.module';
 
 @Module({
   imports: [
@@ -46,6 +59,19 @@ import { AlertasModule } from './modules/alertas/alertas.module';
     IaModule,
     SaludModule,
     AlertasModule,
+    FlotaModule,
+    AppMovilModule,
+    LlamadosModule,
+    CartografiaModule,
+    ControlPersonalModule,
+    IndicadoresModule,
+    NotificacionesModule,
+    CampoModule,
+    ReportesModule,
+    DespachoModule,
+    PantallasModule,
+    ReservasModule,
+    PrevencionModule,
   ],
 })
 export class AppModule implements NestModule {

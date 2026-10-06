@@ -60,6 +60,7 @@ tener requisitos propios mas alla de lo que el proyecto ya usa.
 
 ## Referenciado por
 
+- [[dependency--flutter|Flutter y el SDK de Android compilan la app móvil]] `depends_on` →
 - [[error--context-borrado-del-disco|.context/ desaparecio del disco por estar en .gitignore]] `originates_from` →
 
 ---

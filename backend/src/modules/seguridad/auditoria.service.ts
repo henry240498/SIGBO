@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { LogAuditoria } from '../../shared/entities';
 
 export interface RegistrarAuditoriaInput {
@@ -35,9 +35,10 @@ export class AuditoriaService {
     @InjectRepository(LogAuditoria) private readonly logRepo: Repository<LogAuditoria>,
   ) {}
 
-  async registrar(input: RegistrarAuditoriaInput): Promise<void> {
-    await this.logRepo.save(
-      this.logRepo.create({
+  async registrar(input: RegistrarAuditoriaInput, manager?: EntityManager): Promise<void> {
+    const repo = manager?.getRepository(LogAuditoria) ?? this.logRepo;
+    await repo.save(
+      repo.create({
         usuarioId: input.usuarioId,
         accion: input.accion,
         recurso: input.recurso,

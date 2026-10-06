@@ -46,6 +46,8 @@ No copiar versiones, estado de Git o resultados históricos como si fueran hecho
 <!-- BEGIN ECOSYSTEM DETAILS -->
 ## Documentos por tarea
 
+- [DESPACHO.md](<DESPACHO.md>) — despacho y coordinación operativa (estado por fases)
+- [MOVIL.md](<MOVIL.md>) — app móvil, offline, APK, reportes y estado de pruebas
 - [arquitectura.md](<arquitectura.md>)
 - [testing.md](<testing.md>)
 - [base-datos.md](<base-datos.md>)

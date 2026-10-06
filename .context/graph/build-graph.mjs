@@ -103,6 +103,7 @@ const DOMAIN_OF_SCHEMA = {
 /** Carpeta de modulo NestJS -> slug de dominio. */
 const DOMAIN_OF_MODULE = {
   auth: 'seguridad', seguridad: 'seguridad', personal: 'personal',
+  pantallas: 'seguridad',
   organizacion: 'organizacion', operaciones: 'asistencia', servicios: 'servicios',
   vehiculos: 'vehiculos', equipos: 'equipos', publicaciones: 'publicaciones',
   configuracion: 'seguridad', guardias: 'guardias', ia: 'inteligencia',
@@ -110,6 +111,13 @@ const DOMAIN_OF_MODULE = {
   salud: 'seguridad',
   // Las alertas móviles reutilizan los permisos y las tablas de Servicios.
   alertas: 'servicios',
+  // Modulos del despacho, la flota y la app movil (2026-10): comparten permisos y tablas de
+  // Servicios, Vehiculos y Asistencia; ninguno es una entrada propia del menu.
+  despacho: 'servicios', llamados: 'servicios', campo: 'servicios', cartografia: 'servicios',
+  prevencion: 'servicios', indicadores: 'servicios', notificaciones: 'servicios',
+  'app-movil': 'servicios', flota: 'vehiculos', 'control-personal': 'asistencia',
+  // El buzon de reportes es una herramienta del sistema, no de un area operativa.
+  reportes: 'seguridad',
 };
 /** Raiz de ruta del frontend que no coincide con el slug de un modulo. */
 const DOMAIN_OF_ROUTE = {

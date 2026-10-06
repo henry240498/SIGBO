@@ -44,6 +44,56 @@ export function duracionEnMilisegundos(
   return resultado;
 }
 
+export type ModoSesion = 'ESTANDAR' | 'MANTENIDA' | 'CORTA';
+
+export interface PoliticaSesion {
+  modo: ModoSesion;
+  /** Cuanto dura la sesion desde el inicio (o desde la ultima renovacion si es deslizante). */
+  ms: number;
+  /** Si cada renovacion estira el vencimiento. */
+  deslizante: boolean;
+  /** Tope absoluto desde el inicio de sesion, aunque se use todos los dias. */
+  maximoMs: number;
+}
+
+const acotar = (valor: number, minimo: number, maximo: number, predeterminado: number) =>
+  Number.isFinite(valor) && valor > 0 ? Math.min(Math.max(valor, minimo), maximo) : predeterminado;
+
+/**
+ * Politica de la sesion segun lo que la persona eligio al iniciar:
+ *  - sin elegir (web, clientes viejos): el comportamiento de siempre, 7 dias fijos;
+ *  - "mantener sesion": SESION_MANTENIDA_DIAS (30) que se renuevan con el uso, con tope SESION_MANTENIDA_MAX_DIAS (90);
+ *  - sin mantener: SESION_CORTA_HORAS (12), sin renovacion mas alla de ese plazo.
+ */
+export function politicaSesion(modo: ModoSesion | boolean | undefined): PoliticaSesion {
+  const normal = duracionEnMilisegundos('REFRESH_TOKEN_EXPIRATION', '7d');
+  if (modo === undefined || modo === 'ESTANDAR') return { modo: 'ESTANDAR', ms: normal, deslizante: false, maximoMs: normal };
+  if (modo === true || modo === 'MANTENIDA') {
+    const dias = acotar(Number(process.env.SESION_MANTENIDA_DIAS), 1, 90, 30);
+    const tope = acotar(Number(process.env.SESION_MANTENIDA_MAX_DIAS), dias, 365, 90);
+    return { modo: 'MANTENIDA', ms: dias * 86_400_000, deslizante: true, maximoMs: tope * 86_400_000 };
+  }
+  const horas = acotar(Number(process.env.SESION_CORTA_HORAS), 1, 24, 12);
+  return { modo: 'CORTA', ms: horas * 3_600_000, deslizante: false, maximoMs: horas * 3_600_000 };
+}
+
+/** Nuevo vencimiento tras una renovacion: se estira solo si la politica es deslizante y sin pasar el tope. */
+export function vencimientoTrasRenovar(politica: PoliticaSesion, inicio: Date, vencimientoActual: Date, ahora: Date): Date {
+  if (!politica.deslizante) return vencimientoActual;
+  const estirado = ahora.getTime() + politica.ms;
+  const tope = inicio.getTime() + politica.maximoMs;
+  return new Date(Math.max(vencimientoActual.getTime(), Math.min(estirado, tope)));
+}
+
+export function modoDeSesion(sessionData: string | null | undefined): ModoSesion {
+  try {
+    const m = (JSON.parse(sessionData ?? '{}') as { modo?: string }).modo;
+    return m === 'MANTENIDA' || m === 'CORTA' ? m : 'ESTANDAR';
+  } catch {
+    return 'ESTANDAR';
+  }
+}
+
 export function validarConfiguracionAuth(): void {
   secretoRequerido('JWT_SECRET');
   secretoRequerido('REFRESH_TOKEN_SECRET');
@@ -54,6 +104,8 @@ export function validarConfiguracionAuth(): void {
 export interface LoginResult {
   accessToken: string;
   refreshToken: string;
+  /** Cuanto vive la sesion (para la cookie del navegador). */
+  duracionSesionMs?: number;
   usuario: {
     id: string;
     email: string;
@@ -81,6 +133,8 @@ export class AuthService {
     password: string,
     ip?: string,
     userAgent?: string,
+    mantenerSesion?: boolean,
+    dispositivo?: string,
   ): Promise<LoginResult> {
     const usuario = await this.usuarioRepo
       .createQueryBuilder('u')
@@ -93,6 +147,7 @@ export class AuthService {
         accion: 'LOGIN_FALLIDO',
         recurso: 'auth',
         datosDespues: { usernameOrEmail, motivo: 'usuario no encontrado' },
+        metadata: { dispositivo: dispositivo ?? null },
         ip,
         userAgent,
       });
@@ -118,6 +173,7 @@ export class AuthService {
         recurso: 'auth',
         recursoId: usuario.id,
         datosDespues: { motivo: 'password incorrecta' },
+        metadata: { dispositivo: dispositivo ?? null },
         ip,
         userAgent,
       });
@@ -132,27 +188,42 @@ export class AuthService {
       userAgent: userAgent ?? null,
     });
 
+    const politica = politicaSesion(mantenerSesion);
     await this.auditoriaService.registrar({
       usuarioId: usuario.id,
       accion: 'LOGIN',
       recurso: 'auth',
       recursoId: usuario.id,
+      metadata: { modoSesion: politica.modo, dispositivo: dispositivo ?? null },
       ip,
       userAgent,
     });
 
-    return this.emitirTokens(usuario, ip, userAgent);
+    return this.emitirTokens(usuario, ip, userAgent, politica, dispositivo);
   }
 
   async refresh(refreshToken: string): Promise<{
     accessToken: string;
     refreshToken: string;
+    duracionSesionMs: number;
     usuario: LoginResult['usuario'];
   }> {
     let payload: { sub: string; sid: string };
     try {
       payload = this.jwtService.verify(refreshToken, { secret: secretoRequerido('REFRESH_TOKEN_SECRET') });
-    } catch {
+    } catch (e) {
+      // un token vencido (pero autentico) es una sesion que expiro: queda registrado
+      if ((e as { name?: string }).name === 'TokenExpiredError') {
+        try {
+          const vencido = this.jwtService.verify<{ sub: string; sid: string }>(refreshToken, {
+            secret: secretoRequerido('REFRESH_TOKEN_SECRET'),
+            ignoreExpiration: true,
+          });
+          await this.expirarSesion(vencido.sid, vencido.sub, 'refresh token vencido');
+        } catch {
+          // firma invalida: no es de este sistema, no se audita como sesion
+        }
+      }
       throw new UnauthorizedException('Refresh token invalido o expirado');
     }
 
@@ -161,7 +232,7 @@ export class AuthService {
       throw new UnauthorizedException('Sesion invalida');
     }
     if (!sesion.fechaExpiracion || sesion.fechaExpiracion <= new Date()) {
-      await this.sesionRepo.update(sesion.id, { activa: false });
+      await this.expirarSesion(sesion.id, sesion.usuarioId, 'vencimiento de la sesion');
       throw new UnauthorizedException('Sesion expirada');
     }
 
@@ -177,13 +248,18 @@ export class AuthService {
 
     const { roles, permisos } = await this.getRolesYPermisos(usuario.id);
     const accessToken = this.firmarAccessToken(usuario, roles, sesion.id);
-    const nuevoRefreshToken = this.firmarRefreshToken(usuario.id, sesion.id);
+    const ahora = new Date();
+    const politica = politicaSesion(modoDeSesion(sesion.sessionData));
+    const nuevoVencimiento = vencimientoTrasRenovar(politica, sesion.fechaInicio ?? ahora, sesion.fechaExpiracion, ahora);
+    // el refresh token nunca vive mas que la sesion a la que pertenece
+    const nuevoRefreshToken = this.firmarRefreshToken(usuario.id, sesion.id, Math.max(1, Math.floor((nuevoVencimiento.getTime() - ahora.getTime()) / 1000)));
     const actualizacion = await this.sesionRepo.update({
       id: sesion.id,
       activa: true,
       refreshTokenHash: sesion.refreshTokenHash,
     }, {
-      fechaUltimaActividad: new Date(),
+      fechaUltimaActividad: ahora,
+      fechaExpiracion: nuevoVencimiento,
       refreshTokenHash: await bcrypt.hash(nuevoRefreshToken, 10),
     });
     // Compare-and-swap: dos refresh simultáneos no pueden emitir dos pares de
@@ -191,10 +267,18 @@ export class AuthService {
     if (actualizacion.affected !== 1) {
       throw new UnauthorizedException('La sesión fue renovada en otro dispositivo o pestaña');
     }
+    await this.auditoriaService.registrar({
+      usuarioId: usuario.id,
+      accion: 'SESION_RENOVADA',
+      recurso: 'auth',
+      recursoId: sesion.id,
+      metadata: { modoSesion: politica.modo, venceEn: nuevoVencimiento.toISOString() },
+    });
     const passwordExpirada = usuario.passwordExpiraEn ? usuario.passwordExpiraEn < new Date() : false;
     return {
       accessToken,
       refreshToken: nuevoRefreshToken,
+      duracionSesionMs: Math.max(1000, nuevoVencimiento.getTime() - ahora.getTime()),
       usuario: {
         id: usuario.id,
         email: usuario.email,
@@ -260,31 +344,49 @@ export class AuthService {
     );
   }
 
-  private firmarRefreshToken(usuarioId: string, sesionId: string): string {
+  /** `segundos` fija la duracion; sin indicarla rige REFRESH_TOKEN_EXPIRATION. */
+  private firmarRefreshToken(usuarioId: string, sesionId: string, segundos?: number): string {
     return this.jwtService.sign(
       { sub: usuarioId, sid: sesionId },
       {
         secret: secretoRequerido('REFRESH_TOKEN_SECRET'),
-        expiresIn: expiracionJwt('REFRESH_TOKEN_EXPIRATION', '7d'),
+        expiresIn: segundos ?? expiracionJwt('REFRESH_TOKEN_EXPIRATION', '7d'),
       },
     );
   }
 
-  private async emitirTokens(usuario: Usuario, ip?: string, userAgent?: string): Promise<LoginResult> {
+  /** Una sesion vencida se desactiva y deja un registro, una sola vez. */
+  private async expirarSesion(sesionId: string, usuarioId: string, motivo: string): Promise<void> {
+    const sesion = await this.sesionRepo.findOne({ where: { id: sesionId } });
+    if (!sesion || !sesion.activa) return;
+    await this.sesionRepo.update(sesion.id, { activa: false });
+    await this.auditoriaService.registrar({
+      usuarioId,
+      accion: 'SESION_EXPIRADA',
+      recurso: 'auth',
+      recursoId: sesion.id,
+      datosDespues: { motivo },
+      metadata: { modoSesion: modoDeSesion(sesion.sessionData), dispositivo: sesion.dispositivo ?? null },
+    });
+  }
+
+  private async emitirTokens(usuario: Usuario, ip?: string, userAgent?: string, politica: PoliticaSesion = politicaSesion(undefined), dispositivo?: string): Promise<LoginResult> {
     const sesion = await this.sesionRepo.save(
       this.sesionRepo.create({
         usuarioId: usuario.id,
         refreshTokenHash: 'pendiente',
         ip: ip ?? null,
         userAgent: userAgent ?? null,
-        fechaExpiracion: new Date(Date.now() + duracionEnMilisegundos('REFRESH_TOKEN_EXPIRATION', '7d')),
+        dispositivo: dispositivo ?? null,
+        fechaExpiracion: new Date(Date.now() + politica.ms),
         activa: true,
+        sessionData: JSON.stringify({ modo: politica.modo }),
       }),
     );
 
     const { roles, permisos } = await this.getRolesYPermisos(usuario.id);
     const accessToken = this.firmarAccessToken(usuario, roles, sesion.id);
-    const refreshToken = this.firmarRefreshToken(usuario.id, sesion.id);
+    const refreshToken = this.firmarRefreshToken(usuario.id, sesion.id, Math.floor(politica.ms / 1000));
 
     const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
     await this.sesionRepo.update(sesion.id, { refreshTokenHash });
@@ -294,6 +396,7 @@ export class AuthService {
     return {
       accessToken,
       refreshToken,
+      duracionSesionMs: politica.ms,
       usuario: {
         id: usuario.id,
         email: usuario.email,

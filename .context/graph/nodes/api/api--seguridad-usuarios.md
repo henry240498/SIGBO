@@ -51,6 +51,7 @@ Superficie HTTP de usuarios bajo /api/v1/seguridad/usuarios.
 
 ## Referenciado por
 
+- [[screen--dashboard-seguridad-navegacion|/dashboard/seguridad/navegacion]] `calls` →
 - [[screen--dashboard-seguridad-sesiones|/dashboard/seguridad/sesiones]] `calls` →
 - [[screen--dashboard-seguridad-usuarios|/dashboard/seguridad/usuarios]] `calls` →
 - [[screen--dashboard-seguridad-usuarios|/dashboard/seguridad/usuarios]] `calls` →

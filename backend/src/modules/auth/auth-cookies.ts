@@ -86,13 +86,14 @@ export function leerAccessCookie(req: Request): string | undefined {
   return leerCookie(req, ACCESS_COOKIE);
 }
 
-export function establecerCookiesAuth(res: Response, accessToken: string, refreshToken?: string): void {
+/** `refreshMaxAgeMs`: lo que dura la cookie de renovacion; debe coincidir con la sesion (mantenida = mas de 7 dias). */
+export function establecerCookiesAuth(res: Response, accessToken: string, refreshToken?: string, refreshMaxAgeMs?: number): void {
   res.cookie(ACCESS_COOKIE, accessToken, opciones('/api/v1'));
   if (refreshToken) {
     res.cookie(
       REFRESH_COOKIE,
       refreshToken,
-      opciones('/api/v1/auth', duracionEnMilisegundos('REFRESH_TOKEN_EXPIRATION', '7d')),
+      opciones('/api/v1/auth', refreshMaxAgeMs ?? duracionEnMilisegundos('REFRESH_TOKEN_EXPIRATION', '7d')),
     );
   }
 }

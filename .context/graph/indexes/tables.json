@@ -212,7 +212,7 @@
    "clase": "Vehiculo"
   },
   "migracion": "database/migrations/006_vehiculos_equipos.sql",
-  "columnas": 36,
+  "columnas": 38,
   "fks": []
  },
  "vehiculos.mantenimientos_vehiculos": {
@@ -2027,5 +2027,440 @@
   "migracion": "database/migrations/076_alertas_emergencia.sql",
   "columnas": 15,
   "fks": []
+ },
+ "vehiculos.movil_estado_historial": {
+  "id": "table--vehiculos-movil-estado-historial",
+  "dominio": "vehiculos",
+  "entidad": {
+   "id": "entity--movil-estado-historial",
+   "clase": "MovilEstadoHistorial"
+  },
+  "migracion": "database/migrations/077_flota_estado_despacho.sql",
+  "columnas": 9,
+  "fks": [
+   "vehiculos.vehiculos",
+   "servicios.servicios",
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.despachos": {
+  "id": "table--servicios-despachos",
+  "dominio": "servicios",
+  "entidad": {
+   "id": "entity--despacho",
+   "clase": "Despacho"
+  },
+  "migracion": "database/migrations/077_flota_estado_despacho.sql",
+  "columnas": 16,
+  "fks": [
+   "servicios.servicios",
+   "vehiculos.vehiculos",
+   "seguridad.usuarios"
+  ]
+ },
+ "vehiculos.posicion_actual": {
+  "id": "table--vehiculos-posicion-actual",
+  "dominio": "vehiculos",
+  "entidad": {
+   "id": "entity--posicion-movil",
+   "clase": "PosicionMovil"
+  },
+  "migracion": "database/migrations/078_flota_posicion_mapa.sql",
+  "columnas": 8,
+  "fks": [
+   "vehiculos.vehiculos",
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.llamados": {
+  "id": "table--servicios-llamados",
+  "dominio": "servicios",
+  "entidad": {
+   "id": "entity--llamado",
+   "clase": "Llamado"
+  },
+  "migracion": "database/migrations/079_llamados_convocatorias.sql",
+  "columnas": 18,
+  "fks": [
+   "servicios.tipos_servicio",
+   "servicios.servicios",
+   "seguridad.usuarios",
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.convocatorias": {
+  "id": "table--servicios-convocatorias",
+  "dominio": "servicios",
+  "entidad": {
+   "id": "entity--convocatoria",
+   "clase": "Convocatoria"
+  },
+  "migracion": "database/migrations/079_llamados_convocatorias.sql",
+  "columnas": 9,
+  "fks": [
+   "servicios.llamados",
+   "servicios.servicios",
+   "seguridad.usuarios",
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.convocatoria_respuestas": {
+  "id": "table--servicios-convocatoria-respuestas",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/079_llamados_convocatorias.sql",
+  "columnas": 10,
+  "fks": [
+   "servicios.convocatorias",
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.hidrantes": {
+  "id": "table--servicios-hidrantes",
+  "dominio": "servicios",
+  "entidad": {
+   "id": "entity--hidrante",
+   "clase": "Hidrante"
+  },
+  "migracion": "database/migrations/080_cartografia_operativa.sql",
+  "columnas": 15,
+  "fks": [
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.puntos_riesgo": {
+  "id": "table--servicios-puntos-riesgo",
+  "dominio": "servicios",
+  "entidad": {
+   "id": "entity--punto-riesgo",
+   "clase": "PuntoRiesgo"
+  },
+  "migracion": "database/migrations/080_cartografia_operativa.sql",
+  "columnas": 14,
+  "fks": [
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.preplanes": {
+  "id": "table--servicios-preplanes",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/080_cartografia_operativa.sql",
+  "columnas": 8,
+  "fks": [
+   "servicios.puntos_riesgo",
+   "seguridad.usuarios"
+  ]
+ },
+ "vehiculos.dotacion_movil": {
+  "id": "table--vehiculos-dotacion-movil",
+  "dominio": "vehiculos",
+  "entidad": {
+   "id": "entity--dotacion-movil",
+   "clase": "DotacionMovil"
+  },
+  "migracion": "database/migrations/081_flota_dotacion_bitacora.sql",
+  "columnas": 11,
+  "fks": [
+   "vehiculos.vehiculos",
+   "seguridad.usuarios"
+  ]
+ },
+ "personal.aptitudes": {
+  "id": "table--personal-aptitudes",
+  "dominio": "personal",
+  "entidad": {
+   "id": "entity--aptitud",
+   "clase": "Aptitud"
+  },
+  "migracion": "database/migrations/082_control_personal.sql",
+  "columnas": 11,
+  "fks": [
+   "personal.bomberos",
+   "seguridad.usuarios"
+  ]
+ },
+ "operaciones.limites_horas_servicio": {
+  "id": "table--operaciones-limites-horas-servicio",
+  "dominio": "asistencia",
+  "entidad": {
+   "id": "entity--control-horas-fichaje",
+   "clase": "LimiteHorasServicio"
+  },
+  "migracion": "database/migrations/082_control_personal.sql",
+  "columnas": 7,
+  "fks": [
+   "seguridad.usuarios"
+  ]
+ },
+ "operaciones.puntos_fichaje": {
+  "id": "table--operaciones-puntos-fichaje",
+  "dominio": "asistencia",
+  "entidad": null,
+  "migracion": "database/migrations/082_control_personal.sql",
+  "columnas": 6,
+  "fks": [
+   "seguridad.usuarios"
+  ]
+ },
+ "operaciones.fichajes": {
+  "id": "table--operaciones-fichajes",
+  "dominio": "asistencia",
+  "entidad": null,
+  "migracion": "database/migrations/082_control_personal.sql",
+  "columnas": 6,
+  "fks": [
+   "operaciones.puntos_fichaje",
+   "seguridad.usuarios"
+  ]
+ },
+ "organizacion.instalaciones": {
+  "id": "table--organizacion-instalaciones",
+  "dominio": "organizacion",
+  "entidad": {
+   "id": "entity--reserva-prevencion",
+   "clase": "Instalacion"
+  },
+  "migracion": "database/migrations/083_reservas_prevencion.sql",
+  "columnas": 6,
+  "fks": []
+ },
+ "organizacion.reservas_instalacion": {
+  "id": "table--organizacion-reservas-instalacion",
+  "dominio": "organizacion",
+  "entidad": null,
+  "migracion": "database/migrations/083_reservas_prevencion.sql",
+  "columnas": 14,
+  "fks": [
+   "organizacion.instalaciones",
+   "seguridad.usuarios",
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.inspecciones_prevencion": {
+  "id": "table--servicios-inspecciones-prevencion",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/083_reservas_prevencion.sql",
+  "columnas": 11,
+  "fks": [
+   "servicios.puntos_riesgo",
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.adjuntos": {
+  "id": "table--servicios-adjuntos",
+  "dominio": "servicios",
+  "entidad": {
+   "id": "entity--campo",
+   "clase": "Adjunto"
+  },
+  "migracion": "database/migrations/086_campo_adjuntos_ausencias.sql",
+  "columnas": 11,
+  "fks": [
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.victimas_servicio": {
+  "id": "table--servicios-victimas-servicio",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/086_campo_adjuntos_ausencias.sql",
+  "columnas": 7,
+  "fks": [
+   "servicios.servicios",
+   "seguridad.usuarios"
+  ]
+ },
+ "operaciones.ausencias": {
+  "id": "table--operaciones-ausencias",
+  "dominio": "asistencia",
+  "entidad": null,
+  "migracion": "database/migrations/086_campo_adjuntos_ausencias.sql",
+  "columnas": 11,
+  "fks": [
+   "personal.bomberos",
+   "seguridad.usuarios",
+   "seguridad.usuarios"
+  ]
+ },
+ "personal.avisos_vencimiento": {
+  "id": "table--personal-avisos-vencimiento",
+  "dominio": "personal",
+  "entidad": null,
+  "migracion": "database/migrations/086_campo_adjuntos_ausencias.sql",
+  "columnas": 2,
+  "fks": []
+ },
+ "servicios.disponibilidad_personal": {
+  "id": "table--servicios-disponibilidad-personal",
+  "dominio": "servicios",
+  "entidad": {
+   "id": "entity--despacho-operativo",
+   "clase": "DisponibilidadPersonal"
+  },
+  "migracion": "database/migrations/088_despacho_nucleo.sql",
+  "columnas": 10,
+  "fks": [
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.disponibilidad_horarios": {
+  "id": "table--servicios-disponibilidad-horarios",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/088_despacho_nucleo.sql",
+  "columnas": 6,
+  "fks": [
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.disponibilidad_excepciones": {
+  "id": "table--servicios-disponibilidad-excepciones",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/088_despacho_nucleo.sql",
+  "columnas": 9,
+  "fks": [
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.solicitudes_despacho": {
+  "id": "table--servicios-solicitudes-despacho",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/088_despacho_nucleo.sql",
+  "columnas": 14,
+  "fks": [
+   "servicios.servicios",
+   "servicios.llamados",
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.solicitud_moviles": {
+  "id": "table--servicios-solicitud-moviles",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/088_despacho_nucleo.sql",
+  "columnas": 3,
+  "fks": [
+   "servicios.solicitudes_despacho",
+   "vehiculos.vehiculos"
+  ]
+ },
+ "servicios.solicitud_destinatarios": {
+  "id": "table--servicios-solicitud-destinatarios",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/088_despacho_nucleo.sql",
+  "columnas": 17,
+  "fks": [
+   "servicios.solicitudes_despacho",
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.solicitud_eventos": {
+  "id": "table--servicios-solicitud-eventos",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/088_despacho_nucleo.sql",
+  "columnas": 9,
+  "fks": [
+   "servicios.solicitudes_despacho"
+  ]
+ },
+ "servicios.convocatoria_respuesta_eventos": {
+  "id": "table--servicios-convocatoria-respuesta-eventos",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/089_convocatoria_historial_operativo.sql",
+  "columnas": 8,
+  "fks": [
+   "servicios.convocatorias",
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.servicio_participantes": {
+  "id": "table--servicios-servicio-participantes",
+  "dominio": "servicios",
+  "entidad": {
+   "id": "entity--despacho-servicio",
+   "clase": "ServicioParticipante"
+  },
+  "migracion": "database/migrations/090_despacho_servicio_seguridad.sql",
+  "columnas": 11,
+  "fks": [
+   "servicios.servicios",
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.servicio_mensajes": {
+  "id": "table--servicios-servicio-mensajes",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/090_despacho_servicio_seguridad.sql",
+  "columnas": 8,
+  "fks": [
+   "servicios.servicios",
+   "seguridad.usuarios"
+  ]
+ },
+ "servicios.formulario_definiciones": {
+  "id": "table--servicios-formulario-definiciones",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/090_despacho_servicio_seguridad.sql",
+  "columnas": 14,
+  "fks": []
+ },
+ "servicios.formulario_respuestas": {
+  "id": "table--servicios-formulario-respuestas",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/090_despacho_servicio_seguridad.sql",
+  "columnas": 11,
+  "fks": [
+   "servicios.servicios",
+   "servicios.formulario_definiciones"
+  ]
+ },
+ "servicios.formulario_historial": {
+  "id": "table--servicios-formulario-historial",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/090_despacho_servicio_seguridad.sql",
+  "columnas": 11,
+  "fks": [
+   "servicios.formulario_respuestas"
+  ]
+ },
+ "seguridad.pantallas": {
+  "id": "table--seguridad-pantallas",
+  "dominio": "seguridad",
+  "entidad": null,
+  "migracion": "database/migrations/090_despacho_servicio_seguridad.sql",
+  "columnas": 5,
+  "fks": []
+ },
+ "seguridad.pantalla_permisos": {
+  "id": "table--seguridad-pantalla-permisos",
+  "dominio": "seguridad",
+  "entidad": null,
+  "migracion": "database/migrations/090_despacho_servicio_seguridad.sql",
+  "columnas": 13,
+  "fks": [
+   "seguridad.pantallas"
+  ]
+ },
+ "seguridad.navegacion_eventos": {
+  "id": "table--seguridad-navegacion-eventos",
+  "dominio": "seguridad",
+  "entidad": null,
+  "migracion": "database/migrations/090_despacho_servicio_seguridad.sql",
+  "columnas": 14,
+  "fks": [
+   "seguridad.usuarios",
+   "seguridad.pantallas"
+  ]
  }
 }

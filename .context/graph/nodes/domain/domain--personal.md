@@ -23,6 +23,7 @@ Modulo funcional "Personal". Habilitado en la navegacion.
 ## Referenciado por
 
 - [[entity--actividad-profesional|ActividadProfesional]] `belongs_to` →
+- [[entity--aptitud|Aptitud]] `belongs_to` →
 - [[entity--bombero-especialidad|BomberoEspecialidad]] `belongs_to` →
 - [[entity--bombero|Bombero]] `belongs_to` →
 - [[entity--certificacion|Certificacion]] `belongs_to` →
@@ -55,6 +56,8 @@ Modulo funcional "Personal". Habilitado en la navegacion.
 - [[table--personal-fojas-servicio|personal.fojas_servicio]] `belongs_to` →
 - [[table--personal-tipos-bombero|personal.tipos_bombero]] `belongs_to` →
 - [[table--personal-seguros-bombero|personal.seguros_bombero]] `belongs_to` →
+- [[table--personal-aptitudes|personal.aptitudes]] `belongs_to` →
+- [[table--personal-avisos-vencimiento|personal.avisos_vencimiento]] `belongs_to` →
 - [[component--modulo-personal|personal (modulo NestJS)]] `belongs_to` →
 - [[service--personal-actividad-profesional|ActividadProfesionalService]] `belongs_to` →
 - [[service--personal-bomberos|BomberosService]] `belongs_to` →
@@ -76,12 +79,9 @@ Modulo funcional "Personal". Habilitado en la navegacion.
 - [[api--personal-idiomas|IdiomasController]] `belongs_to` →
 - [[api--personal-seguros-bombero|SegurosBomberoController]] `belongs_to` →
 - [[api--personal-tipos-bombero|TiposBomberoController]] `belongs_to` →
+- [[screen--dashboard-personal-control|/dashboard/personal/control]] `belongs_to` →
 - [[screen--dashboard-personal-nuevo|/dashboard/personal/nuevo]] `belongs_to` →
 - [[screen--dashboard-personal|/dashboard/personal]] `belongs_to` →
-- [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `belongs_to` →
-- [[rule--cedula-y-numero-bombero-unicos|Cedula y numero de bombero son unicos en toda la institucion]] `belongs_to` →
-- [[rule--expediente-una-seccion-un-archivo|El expediente del bombero es una seccion por archivo]] `belongs_to` →
-- [[rule--un-fallo-no-se-anuncia-como-vacio|Un fallo de consulta nunca se muestra como lista vacia]] `belongs_to` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

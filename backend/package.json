@@ -8,6 +8,8 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "cargar:moviles": "node scripts/cargar-moviles.js",
+    "verificar:escrituras": "node scripts/verificar-escrituras.js",
     "test": "jest --runInBand",
     "test:ci": "jest --runInBand --ci",
     "seed": "ts-node -r tsconfig-paths/register src/database/seed.ts"

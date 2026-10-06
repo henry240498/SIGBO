@@ -24,6 +24,7 @@ Modulo funcional "Asistencia". Habilitado en la navegacion.
 
 - [[entity--asignacion-guardia|AsignacionGuardia]] `belongs_to` →
 - [[entity--cambio-guardia|CambioGuardia]] `belongs_to` →
+- [[entity--control-horas-fichaje|LimiteHorasServicio]] `belongs_to` →
 - [[entity--esquema-horario-guardia|EsquemaHorarioGuardia]] `belongs_to` →
 - [[entity--evento-asistencia|EventoAsistencia]] `belongs_to` →
 - [[entity--grupo-guardia-miembro|GrupoGuardiaMiembro]] `belongs_to` →
@@ -68,20 +69,19 @@ Modulo funcional "Asistencia". Habilitado en la navegacion.
 - [[table--operaciones-orden-guardia-configuracion|operaciones.orden_guardia_configuracion]] `belongs_to` →
 - [[table--operaciones-ordenes-guardia|operaciones.ordenes_guardia]] `belongs_to` →
 - [[table--operaciones-ordenes-guardia-modificaciones|operaciones.ordenes_guardia_modificaciones]] `belongs_to` →
+- [[table--operaciones-limites-horas-servicio|operaciones.limites_horas_servicio]] `belongs_to` →
+- [[table--operaciones-puntos-fichaje|operaciones.puntos_fichaje]] `belongs_to` →
+- [[table--operaciones-fichajes|operaciones.fichajes]] `belongs_to` →
+- [[table--operaciones-ausencias|operaciones.ausencias]] `belongs_to` →
+- [[component--modulo-control-personal|control-personal (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-operaciones|operaciones (modulo NestJS)]] `belongs_to` →
+- [[service--control-personal-avisos-vencimiento|AvisosVencimientoService]] `belongs_to` →
+- [[service--control-personal-fichaje|FichajeService]] `belongs_to` →
+- [[service--control-personal-horas-servicio|HorasServicioService]] `belongs_to` →
+- [[service--control-personal-vencimientos|VencimientosService]] `belongs_to` →
 - [[service--operaciones-dashboard-asistencia|DashboardAsistenciaService]] `belongs_to` →
 - [[service--operaciones-eventos-asistencia|EventosAsistenciaService]] `belongs_to` →
 - [[service--operaciones-importaciones|ImportacionesService]] `belongs_to` →
-- [[service--operaciones-marcaciones|MarcacionesService]] `belongs_to` →
-- [[service--operaciones-participantes-externos|ParticipantesExternosService]] `belongs_to` →
-- [[service--operaciones-tolerancias|ToleranciasService]] `belongs_to` →
-- [[api--operaciones-dashboard-asistencia|DashboardAsistenciaController]] `belongs_to` →
-- [[api--operaciones-eventos-asistencia|EventosAsistenciaController]] `belongs_to` →
-- [[api--operaciones-importaciones|ImportacionesController]] `belongs_to` →
-- [[api--operaciones-marcaciones|MarcacionesController]] `belongs_to` →
-- [[api--operaciones-participantes-externos|ParticipantesExternosController]] `belongs_to` →
-- [[api--operaciones-tolerancias|ToleranciasController]] `belongs_to` →
-- [[screen--dashboard-asistencia-auditoria|/dashboard/asistencia/auditoria]] `belongs_to` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

@@ -145,3 +145,11 @@ Tres pares que parecen sinónimos y no lo son:
 4. Revisar los badges de la interfaz: ¿es un estado "bueno" (verde) o "malo" (rojo)?
 
 Saltearse el paso 2 es el error más común y el más confuso de diagnosticar.
+
+## Flujos operativos de la app móvil (2026-10-06)
+
+- [[workflow--apk-compilar-firmar-publicar]] — subir versión, compilar, firmar, publicar, instalar por `adb`.
+- [[workflow--conectar-celular-al-servidor]] — levantar el sistema, QR, probar conexión, túnel.
+
+- [[workflow--solicitud-de-despacho]] — de la creación de la solicitud a la llegada de cada persona.
+- [[workflow--servicio-activo]] — incorporarse, comunicarse y completar formularios en un servicio activo.

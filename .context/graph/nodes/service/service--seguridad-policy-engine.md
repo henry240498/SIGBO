@@ -55,6 +55,7 @@ Logica de negocio de policy engine (modulo seguridad).
 ## Referenciado por
 
 - [[service--auth-auth|AuthService]] `uses` →
+- [[service--despacho-despacho|DespachoService]] `uses` →
 - [[service--seguridad-usuarios|UsuariosService]] `uses` →
 - [[rule--permisos-efectivos|El permiso efectivo es roles vigentes mas directos concedidos menos directos denegados]] `affects` →
 

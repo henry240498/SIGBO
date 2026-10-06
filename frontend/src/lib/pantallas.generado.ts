@@ -42,6 +42,11 @@ export const PANTALLAS: PantallaRegistrada[] = [
     "modulo": "asistencia"
   },
   {
+    "ruta": "/dashboard/asistencia/ausencias",
+    "nombre": "Ausencias",
+    "modulo": "asistencia"
+  },
+  {
     "ruta": "/dashboard/asistencia/eventos",
     "nombre": "Eventos",
     "modulo": "asistencia"
@@ -402,6 +407,11 @@ export const PANTALLAS: PantallaRegistrada[] = [
     "modulo": "personal"
   },
   {
+    "ruta": "/dashboard/personal/control",
+    "nombre": "Control: vencimientos, horas y fichaje",
+    "modulo": "personal"
+  },
+  {
     "ruta": "/dashboard/personal/nuevo",
     "nombre": "Nuevo bombero",
     "modulo": "personal"
@@ -410,6 +420,16 @@ export const PANTALLAS: PantallaRegistrada[] = [
     "ruta": "/dashboard/publicaciones",
     "nombre": "Publicaciones",
     "modulo": "publicaciones"
+  },
+  {
+    "ruta": "/dashboard/reportar",
+    "nombre": "Reportar",
+    "modulo": "reportar"
+  },
+  {
+    "ruta": "/dashboard/reservas",
+    "nombre": "Reservas",
+    "modulo": "reservas"
   },
   {
     "ruta": "/dashboard/seguridad",
@@ -457,6 +477,16 @@ export const PANTALLAS: PantallaRegistrada[] = [
     "modulo": "seguridad"
   },
   {
+    "ruta": "/dashboard/seguridad/navegacion",
+    "nombre": "Navegación",
+    "modulo": "seguridad"
+  },
+  {
+    "ruta": "/dashboard/seguridad/pantallas",
+    "nombre": "Permisos por pantalla",
+    "modulo": "seguridad"
+  },
+  {
     "ruta": "/dashboard/seguridad/permisos",
     "nombre": "Permisos",
     "modulo": "seguridad"
@@ -478,12 +508,42 @@ export const PANTALLAS: PantallaRegistrada[] = [
   },
   {
     "ruta": "/dashboard/servicios",
-    "nombre": "Servicios",
+    "nombre": "Comunicaciones",
+    "modulo": "servicios"
+  },
+  {
+    "ruta": "/dashboard/servicios/cartografia",
+    "nombre": "Hidrantes y riesgos",
+    "modulo": "servicios"
+  },
+  {
+    "ruta": "/dashboard/servicios/convocatorias",
+    "nombre": "Convocatorias",
+    "modulo": "servicios"
+  },
+  {
+    "ruta": "/dashboard/servicios/despacho",
+    "nombre": "Despacho operativo",
+    "modulo": "servicios"
+  },
+  {
+    "ruta": "/dashboard/servicios/indicadores",
+    "nombre": "Indicadores",
+    "modulo": "servicios"
+  },
+  {
+    "ruta": "/dashboard/servicios/llamados",
+    "nombre": "Llamados",
     "modulo": "servicios"
   },
   {
     "ruta": "/dashboard/servicios/nuevo",
     "nombre": "Nuevo servicio",
+    "modulo": "servicios"
+  },
+  {
+    "ruta": "/dashboard/servicios/prevencion",
+    "nombre": "Prevención",
     "modulo": "servicios"
   },
   {
@@ -494,6 +554,21 @@ export const PANTALLAS: PantallaRegistrada[] = [
   {
     "ruta": "/dashboard/vehiculos/checklist-items",
     "nombre": "Catálogo de checklist",
+    "modulo": "vehiculos"
+  },
+  {
+    "ruta": "/dashboard/vehiculos/dotacion",
+    "nombre": "Dotación y bitácora",
+    "modulo": "vehiculos"
+  },
+  {
+    "ruta": "/dashboard/vehiculos/flota",
+    "nombre": "Flota en vivo",
+    "modulo": "vehiculos"
+  },
+  {
+    "ruta": "/dashboard/vehiculos/mapa",
+    "nombre": "Mapa de flota",
     "modulo": "vehiculos"
   }
 ];

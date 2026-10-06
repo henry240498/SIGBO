@@ -39,8 +39,10 @@ export class AuthController {
       dto.password,
       req.ip,
       req.headers['user-agent'],
+      dto.mantenerSesion,
+      dto.dispositivo,
     );
-    establecerCookiesAuth(res, resultado.accessToken, resultado.refreshToken);
+    establecerCookiesAuth(res, resultado.accessToken, resultado.refreshToken, resultado.duracionSesionMs);
     // Las credenciales ya viajan en cookies HttpOnly. Exponerlas nuevamente en
     // JSON permitirÃ­a que un script inyectado las leyera y anularÃ­a esa
     // protecciÃ³n.
@@ -62,7 +64,7 @@ export class AuthController {
     const refreshToken = dto.refreshToken ?? leerRefreshCookie(req);
     if (!refreshToken) throw new UnauthorizedException('Refresh token requerido');
     const resultado = await this.authService.refresh(refreshToken);
-    establecerCookiesAuth(res, resultado.accessToken, resultado.refreshToken);
+    establecerCookiesAuth(res, resultado.accessToken, resultado.refreshToken, resultado.duracionSesionMs);
     if (this.esDispositivoMovil(req)) {
       return {
         usuario: resultado.usuario,

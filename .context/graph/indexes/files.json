@@ -10,6 +10,7 @@
   "domain--equipos",
   "domain--deposito",
   "domain--organizacion",
+  "domain--reservas",
   "domain--finanzas",
   "domain--documentos",
   "domain--publicaciones",
@@ -36,6 +37,9 @@
  ],
  "backend/src/shared/entities/aporte.entity.ts": [
   "entity--aporte"
+ ],
+ "backend/src/shared/entities/aptitud.entity.ts": [
+  "entity--aptitud"
  ],
  "backend/src/shared/entities/articulo.entity.ts": [
   "entity--articulo"
@@ -75,6 +79,9 @@
  ],
  "backend/src/shared/entities/cambio-guardia.entity.ts": [
   "entity--cambio-guardia"
+ ],
+ "backend/src/shared/entities/campo.entity.ts": [
+  "entity--campo"
  ],
  "backend/src/shared/entities/cargo.entity.ts": [
   "entity--cargo"
@@ -125,6 +132,12 @@
  "backend/src/shared/entities/consumo-combustible.entity.ts": [
   "entity--consumo-combustible"
  ],
+ "backend/src/shared/entities/control-horas-fichaje.entity.ts": [
+  "entity--control-horas-fichaje"
+ ],
+ "backend/src/shared/entities/convocatoria.entity.ts": [
+  "entity--convocatoria"
+ ],
  "backend/src/shared/entities/cuartel.entity.ts": [
   "entity--cuartel"
  ],
@@ -146,6 +159,15 @@
  "backend/src/shared/entities/designacion.entity.ts": [
   "entity--designacion"
  ],
+ "backend/src/shared/entities/despacho-operativo.entity.ts": [
+  "entity--despacho-operativo"
+ ],
+ "backend/src/shared/entities/despacho-servicio.entity.ts": [
+  "entity--despacho-servicio"
+ ],
+ "backend/src/shared/entities/despacho.entity.ts": [
+  "entity--despacho"
+ ],
  "backend/src/shared/entities/documento-relacion.entity.ts": [
   "entity--documento-relacion"
  ],
@@ -154,6 +176,9 @@
  ],
  "backend/src/shared/entities/documento.entity.ts": [
   "entity--documento"
+ ],
+ "backend/src/shared/entities/dotacion-movil.entity.ts": [
+  "entity--dotacion-movil"
  ],
  "backend/src/shared/entities/ejercicio-fiscal.entity.ts": [
   "entity--ejercicio-fiscal"
@@ -205,6 +230,9 @@
  ],
  "backend/src/shared/entities/guardia.entity.ts": [
   "entity--guardia"
+ ],
+ "backend/src/shared/entities/hidrante.entity.ts": [
+  "entity--hidrante"
  ],
  "backend/src/shared/entities/historial-codigo.entity.ts": [
   "entity--historial-codigo"
@@ -275,6 +303,9 @@
  "backend/src/shared/entities/inventario-fisico-item-deposito.entity.ts": [
   "entity--inventario-fisico-item-deposito"
  ],
+ "backend/src/shared/entities/llamado.entity.ts": [
+  "entity--llamado"
+ ],
  "backend/src/shared/entities/log-auditoria.entity.ts": [
   "entity--log-auditoria"
  ],
@@ -292,6 +323,9 @@
  ],
  "backend/src/shared/entities/marcacion-asistencia.entity.ts": [
   "entity--marcacion-asistencia"
+ ],
+ "backend/src/shared/entities/movil-estado-historial.entity.ts": [
+  "entity--movil-estado-historial"
  ],
  "backend/src/shared/entities/movimiento-bancario.entity.ts": [
   "entity--movimiento-bancario"
@@ -350,6 +384,9 @@
  "backend/src/shared/entities/plantilla-documento.entity.ts": [
   "entity--plantilla-documento"
  ],
+ "backend/src/shared/entities/posicion-movil.entity.ts": [
+  "entity--posicion-movil"
+ ],
  "backend/src/shared/entities/prestamo-deposito-item.entity.ts": [
   "entity--prestamo-deposito-item"
  ],
@@ -371,12 +408,18 @@
  "backend/src/shared/entities/publicacion.entity.ts": [
   "entity--publicacion"
  ],
+ "backend/src/shared/entities/punto-riesgo.entity.ts": [
+  "entity--punto-riesgo"
+ ],
  "backend/src/shared/entities/rango.entity.ts": [
   "entity--rango"
  ],
  "backend/src/shared/entities/requisito-rol-guardia.entity.ts": [
   "entity--requisito-rol-guardia",
   "rule--elegibilidad-de-rol-guardia"
+ ],
+ "backend/src/shared/entities/reserva-prevencion.entity.ts": [
+  "entity--reserva-prevencion"
  ],
  "backend/src/shared/entities/rol.entity.ts": [
   "entity--rol"
@@ -955,23 +998,133 @@
   "file--076-alertas-emergencia",
   "table--servicios-alertas-emergencia"
  ],
+ "database/migrations/077_flota_estado_despacho.sql": [
+  "file--077-flota-estado-despacho",
+  "table--vehiculos-vehiculos",
+  "table--vehiculos-movil-estado-historial",
+  "table--servicios-despachos"
+ ],
+ "database/migrations/078_flota_posicion_mapa.sql": [
+  "file--078-flota-posicion-mapa",
+  "table--vehiculos-posicion-actual"
+ ],
+ "database/migrations/079_llamados_convocatorias.sql": [
+  "file--079-llamados-convocatorias",
+  "table--servicios-llamados",
+  "table--servicios-convocatorias",
+  "table--servicios-convocatoria-respuestas"
+ ],
+ "database/migrations/080_cartografia_operativa.sql": [
+  "file--080-cartografia-operativa",
+  "table--servicios-hidrantes",
+  "table--servicios-puntos-riesgo",
+  "table--servicios-preplanes"
+ ],
+ "database/migrations/081_flota_dotacion_bitacora.sql": [
+  "file--081-flota-dotacion-bitacora",
+  "table--servicios-despachos",
+  "table--vehiculos-dotacion-movil"
+ ],
+ "database/migrations/082_control_personal.sql": [
+  "file--082-control-personal",
+  "table--personal-aptitudes",
+  "table--operaciones-limites-horas-servicio",
+  "table--operaciones-puntos-fichaje",
+  "table--operaciones-fichajes"
+ ],
+ "database/migrations/083_reservas_prevencion.sql": [
+  "file--083-reservas-prevencion",
+  "table--organizacion-instalaciones",
+  "table--organizacion-reservas-instalacion",
+  "table--servicios-inspecciones-prevencion"
+ ],
+ "database/migrations/084_vehiculos_patente_opcional.sql": [
+  "file--084-vehiculos-patente-opcional",
+  "table--vehiculos-vehiculos"
+ ],
+ "database/migrations/085_llamados_idempotencia.sql": [
+  "file--085-llamados-idempotencia",
+  "table--servicios-llamados"
+ ],
+ "database/migrations/086_campo_adjuntos_ausencias.sql": [
+  "file--086-campo-adjuntos-ausencias",
+  "table--servicios-adjuntos",
+  "table--servicios-victimas-servicio",
+  "table--operaciones-ausencias",
+  "table--personal-avisos-vencimiento"
+ ],
+ "database/migrations/087_reportes_permiso.sql": [
+  "file--087-reportes-permiso",
+  "decision--reportes-como-texto-plano"
+ ],
+ "database/migrations/088_despacho_nucleo.sql": [
+  "file--088-despacho-nucleo",
+  "table--servicios-disponibilidad-personal",
+  "table--servicios-disponibilidad-horarios",
+  "table--servicios-disponibilidad-excepciones",
+  "table--servicios-solicitudes-despacho",
+  "table--servicios-solicitud-moviles",
+  "table--servicios-solicitud-destinatarios",
+  "table--servicios-solicitud-eventos",
+  "decision--despacho-extiende-lo-existente",
+  "rule--entrega-y-respuesta-son-ejes-distintos",
+  "rule--linea-de-tiempo-inmutable"
+ ],
+ "database/migrations/089_convocatoria_historial_operativo.sql": [
+  "file--089-convocatoria-historial-operativo",
+  "table--servicios-convocatoria-respuestas",
+  "table--servicios-convocatoria-respuesta-eventos"
+ ],
+ "database/migrations/090_despacho_servicio_seguridad.sql": [
+  "file--090-despacho-servicio-seguridad",
+  "table--servicios-servicio-participantes",
+  "table--servicios-servicio-mensajes",
+  "table--servicios-formulario-definiciones",
+  "table--servicios-formulario-respuestas",
+  "table--servicios-formulario-historial",
+  "table--seguridad-pantallas",
+  "table--seguridad-pantalla-permisos",
+  "table--seguridad-navegacion-eventos"
+ ],
+ "database/migrations/091_pantallas_auditoria_movil.sql": [
+  "file--091-pantallas-auditoria-movil"
+ ],
+ "database/migrations/092_despacho_chofer_habilitado.sql": [
+  "file--092-despacho-chofer-habilitado",
+  "table--servicios-solicitud-destinatarios"
+ ],
  "backend/src/modules/academia/academia.module.ts": [
   "component--modulo-academia"
  ],
  "backend/src/modules/alertas/alertas.module.ts": [
   "component--modulo-alertas"
  ],
+ "backend/src/modules/app-movil/app-movil.module.ts": [
+  "component--modulo-app-movil"
+ ],
  "backend/src/modules/auth/auth.module.ts": [
   "component--modulo-auth"
  ],
+ "backend/src/modules/campo/campo.module.ts": [
+  "component--modulo-campo"
+ ],
+ "backend/src/modules/cartografia/cartografia.module.ts": [
+  "component--modulo-cartografia"
+ ],
  "backend/src/modules/configuracion/configuracion.module.ts": [
   "component--modulo-configuracion"
+ ],
+ "backend/src/modules/control-personal/control-personal.module.ts": [
+  "component--modulo-control-personal"
  ],
  "backend/src/modules/denuncias/denuncias.module.ts": [
   "component--modulo-denuncias"
  ],
  "backend/src/modules/deposito/deposito.module.ts": [
   "component--modulo-deposito"
+ ],
+ "backend/src/modules/despacho/despacho.module.ts": [
+  "component--modulo-despacho"
  ],
  "backend/src/modules/documentos/documentos.module.ts": [
   "component--modulo-documentos"
@@ -982,11 +1135,23 @@
  "backend/src/modules/finanzas/finanzas.module.ts": [
   "component--modulo-finanzas"
  ],
+ "backend/src/modules/flota/flota.module.ts": [
+  "component--modulo-flota"
+ ],
  "backend/src/modules/guardias/guardias.module.ts": [
   "component--modulo-guardias"
  ],
  "backend/src/modules/ia/ia.module.ts": [
   "component--modulo-ia"
+ ],
+ "backend/src/modules/indicadores/indicadores.module.ts": [
+  "component--modulo-indicadores"
+ ],
+ "backend/src/modules/llamados/llamados.module.ts": [
+  "component--modulo-llamados"
+ ],
+ "backend/src/modules/notificaciones/notificaciones.module.ts": [
+  "component--modulo-notificaciones"
  ],
  "backend/src/modules/operaciones/operaciones.module.ts": [
   "component--modulo-operaciones"
@@ -994,11 +1159,23 @@
  "backend/src/modules/organizacion/organizacion.module.ts": [
   "component--modulo-organizacion"
  ],
+ "backend/src/modules/pantallas/pantallas.module.ts": [
+  "component--modulo-pantallas"
+ ],
  "backend/src/modules/personal/personal.module.ts": [
   "component--modulo-personal"
  ],
+ "backend/src/modules/prevencion/prevencion.module.ts": [
+  "component--modulo-prevencion"
+ ],
  "backend/src/modules/publicaciones/publicaciones.module.ts": [
   "component--modulo-publicaciones"
+ ],
+ "backend/src/modules/reportes/reportes.module.ts": [
+  "component--modulo-reportes"
+ ],
+ "backend/src/modules/reservas/reservas.module.ts": [
+  "component--modulo-reservas"
  ],
  "backend/src/modules/salud/salud.module.ts": [
   "component--modulo-salud"
@@ -1042,14 +1219,43 @@
  "backend/src/modules/alertas/alertas.service.ts": [
   "service--alertas-alertas"
  ],
+ "backend/src/modules/app-movil/app-movil.service.ts": [
+  "service--app-movil-app-movil"
+ ],
  "backend/src/modules/auth/auth.service.ts": [
   "service--auth-auth",
+  "decision--sesion-mantenida-o-corta",
   "rule--bloqueo-tras-cinco-intentos",
   "workflow--login-y-sesion"
+ ],
+ "backend/src/modules/campo/adjuntos.service.ts": [
+  "service--campo-adjuntos"
+ ],
+ "backend/src/modules/campo/ausencias.service.ts": [
+  "service--campo-ausencias"
+ ],
+ "backend/src/modules/campo/victimas.service.ts": [
+  "service--campo-victimas"
+ ],
+ "backend/src/modules/cartografia/cartografia.service.ts": [
+  "service--cartografia-cartografia"
  ],
  "backend/src/modules/configuracion/configuracion.service.ts": [
   "service--configuracion-configuracion",
   "workflow--configuracion-versionada"
+ ],
+ "backend/src/modules/control-personal/avisos-vencimiento.service.ts": [
+  "service--control-personal-avisos-vencimiento"
+ ],
+ "backend/src/modules/control-personal/fichaje.service.ts": [
+  "service--control-personal-fichaje",
+  "rule--hora-del-hecho-acotada"
+ ],
+ "backend/src/modules/control-personal/horas-servicio.service.ts": [
+  "service--control-personal-horas-servicio"
+ ],
+ "backend/src/modules/control-personal/vencimientos.service.ts": [
+  "service--control-personal-vencimientos"
  ],
  "backend/src/modules/denuncias/denuncias.service.ts": [
   "service--denuncias-denuncias",
@@ -1103,6 +1309,20 @@
  ],
  "backend/src/modules/deposito/ubicaciones-deposito.service.ts": [
   "service--deposito-ubicaciones-deposito"
+ ],
+ "backend/src/modules/despacho/despacho-tiempo-real.service.ts": [
+  "service--despacho-despacho-tiempo-real"
+ ],
+ "backend/src/modules/despacho/despacho.service.ts": [
+  "service--despacho-despacho",
+  "rule--entrega-y-respuesta-son-ejes-distintos",
+  "rule--linea-de-tiempo-inmutable",
+  "workflow--solicitud-de-despacho"
+ ],
+ "backend/src/modules/despacho/servicio-activo.service.ts": [
+  "service--despacho-servicio-activo",
+  "rule--confidencial-lo-decide-la-matriz",
+  "workflow--servicio-activo"
  ],
  "backend/src/modules/documentos/consultas-documentos.service.ts": [
   "service--documentos-consultas-documentos"
@@ -1188,6 +1408,18 @@
  "backend/src/modules/finanzas/socios-protectores.service.ts": [
   "service--finanzas-socios-protectores"
  ],
+ "backend/src/modules/flota/disponibilidad.service.ts": [
+  "service--flota-disponibilidad"
+ ],
+ "backend/src/modules/flota/dotacion.service.ts": [
+  "service--flota-dotacion"
+ ],
+ "backend/src/modules/flota/flota.service.ts": [
+  "service--flota-flota"
+ ],
+ "backend/src/modules/flota/informe.service.ts": [
+  "service--flota-informe"
+ ],
  "backend/src/modules/guardias/bitacora.service.ts": [
   "service--guardias-bitacora"
  ],
@@ -1265,6 +1497,15 @@
  "backend/src/modules/ia/whisper/whisper.service.ts": [
   "service--ia-whisper"
  ],
+ "backend/src/modules/indicadores/indicadores.service.ts": [
+  "service--indicadores-indicadores"
+ ],
+ "backend/src/modules/llamados/llamados.service.ts": [
+  "service--llamados-llamados"
+ ],
+ "backend/src/modules/notificaciones/telegram.service.ts": [
+  "service--notificaciones-telegram"
+ ],
  "backend/src/modules/operaciones/dashboard-asistencia.service.ts": [
   "service--operaciones-dashboard-asistencia"
  ],
@@ -1336,6 +1577,13 @@
  "backend/src/modules/organizacion/unidades.service.ts": [
   "service--organizacion-unidades"
  ],
+ "backend/src/modules/pantallas/navegacion.service.ts": [
+  "service--pantallas-navegacion"
+ ],
+ "backend/src/modules/pantallas/pantallas.service.ts": [
+  "service--pantallas-pantallas",
+  "rule--confidencial-lo-decide-la-matriz"
+ ],
  "backend/src/modules/personal/actividad-profesional.service.ts": [
   "service--personal-actividad-profesional"
  ],
@@ -1367,8 +1615,18 @@
  "backend/src/modules/personal/tipos-bombero.service.ts": [
   "service--personal-tipos-bombero"
  ],
+ "backend/src/modules/prevencion/prevencion.service.ts": [
+  "service--prevencion-prevencion"
+ ],
  "backend/src/modules/publicaciones/publicaciones.service.ts": [
   "service--publicaciones-publicaciones"
+ ],
+ "backend/src/modules/reportes/reportes.service.ts": [
+  "service--reportes-reportes",
+  "decision--reportes-como-texto-plano"
+ ],
+ "backend/src/modules/reservas/reservas.service.ts": [
+  "service--reservas-reservas"
  ],
  "backend/src/modules/seguridad/apariencia.service.ts": [
   "service--seguridad-apariencia"
@@ -1445,11 +1703,23 @@
  "backend/src/modules/alertas/alertas.controller.ts": [
   "api--alertas-alertas"
  ],
+ "backend/src/modules/app-movil/app-movil.controller.ts": [
+  "api--app-movil-app-movil"
+ ],
  "backend/src/modules/auth/auth.controller.ts": [
   "api--auth-auth"
  ],
+ "backend/src/modules/campo/campo.controller.ts": [
+  "api--campo-campo"
+ ],
+ "backend/src/modules/cartografia/cartografia.controller.ts": [
+  "api--cartografia-cartografia"
+ ],
  "backend/src/modules/configuracion/configuracion.controller.ts": [
   "api--configuracion-configuracion"
+ ],
+ "backend/src/modules/control-personal/control-personal.controller.ts": [
+  "api--control-personal-control-personal"
  ],
  "backend/src/modules/denuncias/denuncias-publicas.controller.ts": [
   "api--denuncias-denuncias-publicas",
@@ -1506,6 +1776,12 @@
  ],
  "backend/src/modules/deposito/ubicaciones-deposito.controller.ts": [
   "api--deposito-ubicaciones-deposito"
+ ],
+ "backend/src/modules/despacho/despacho.controller.ts": [
+  "api--despacho-despacho"
+ ],
+ "backend/src/modules/despacho/servicio-activo.controller.ts": [
+  "api--despacho-servicio-activo"
  ],
  "backend/src/modules/documentos/consultas-documentos.controller.ts": [
   "api--documentos-consultas-documentos"
@@ -1591,6 +1867,9 @@
  "backend/src/modules/finanzas/socios-protectores.controller.ts": [
   "api--finanzas-socios-protectores"
  ],
+ "backend/src/modules/flota/flota.controller.ts": [
+  "api--flota-flota"
+ ],
  "backend/src/modules/guardias/bitacora.controller.ts": [
   "api--guardias-bitacora"
  ],
@@ -1642,6 +1921,12 @@
  ],
  "backend/src/modules/ia/ia-voz.controller.ts": [
   "api--ia-ia-voz"
+ ],
+ "backend/src/modules/indicadores/indicadores.controller.ts": [
+  "api--indicadores-indicadores"
+ ],
+ "backend/src/modules/llamados/llamados.controller.ts": [
+  "api--llamados-llamados"
  ],
  "backend/src/modules/operaciones/dashboard-asistencia.controller.ts": [
   "api--operaciones-dashboard-asistencia"
@@ -1710,6 +1995,9 @@
  "backend/src/modules/organizacion/unidades.controller.ts": [
   "api--organizacion-unidades"
  ],
+ "backend/src/modules/pantallas/pantallas.controller.ts": [
+  "api--pantallas-pantallas"
+ ],
  "backend/src/modules/personal/actividad-profesional.controller.ts": [
   "api--personal-actividad-profesional"
  ],
@@ -1740,8 +2028,18 @@
  "backend/src/modules/personal/tipos-bombero.controller.ts": [
   "api--personal-tipos-bombero"
  ],
+ "backend/src/modules/prevencion/prevencion.controller.ts": [
+  "api--prevencion-prevencion"
+ ],
  "backend/src/modules/publicaciones/publicaciones.controller.ts": [
   "api--publicaciones-publicaciones"
+ ],
+ "backend/src/modules/reportes/reportes.controller.ts": [
+  "api--reportes-reportes",
+  "decision--reportes-como-texto-plano"
+ ],
+ "backend/src/modules/reservas/reservas.controller.ts": [
+  "api--reservas-reservas"
  ],
  "backend/src/modules/salud/salud.controller.ts": [
   "api--salud-salud"
@@ -1803,6 +2101,9 @@
  ],
  "frontend/src/app/dashboard/asistencia/auditoria/page.tsx": [
   "screen--dashboard-asistencia-auditoria"
+ ],
+ "frontend/src/app/dashboard/asistencia/ausencias/page.tsx": [
+  "screen--dashboard-asistencia-ausencias"
  ],
  "frontend/src/app/dashboard/asistencia/eventos/page.tsx": [
   "screen--dashboard-asistencia-eventos"
@@ -2061,6 +2362,9 @@
  "frontend/src/app/dashboard/page.tsx": [
   "screen--dashboard"
  ],
+ "frontend/src/app/dashboard/personal/control/page.tsx": [
+  "screen--dashboard-personal-control"
+ ],
  "frontend/src/app/dashboard/personal/nuevo/page.tsx": [
   "screen--dashboard-personal-nuevo"
  ],
@@ -2073,6 +2377,13 @@
  ],
  "frontend/src/app/dashboard/publicaciones/page.tsx": [
   "screen--dashboard-publicaciones"
+ ],
+ "frontend/src/app/dashboard/reportar/page.tsx": [
+  "screen--dashboard-reportar",
+  "decision--reportes-como-texto-plano"
+ ],
+ "frontend/src/app/dashboard/reservas/page.tsx": [
+  "screen--dashboard-reservas"
  ],
  "frontend/src/app/dashboard/seguridad/apariencia/page.tsx": [
   "screen--dashboard-seguridad-apariencia"
@@ -2098,8 +2409,14 @@
  "frontend/src/app/dashboard/seguridad/inteligencia-artificial/propuestas/page.tsx": [
   "screen--dashboard-seguridad-inteligencia-artificial-propuestas"
  ],
+ "frontend/src/app/dashboard/seguridad/navegacion/page.tsx": [
+  "screen--dashboard-seguridad-navegacion"
+ ],
  "frontend/src/app/dashboard/seguridad/page.tsx": [
   "screen--dashboard-seguridad"
+ ],
+ "frontend/src/app/dashboard/seguridad/pantallas/page.tsx": [
+  "screen--dashboard-seguridad-pantallas"
  ],
  "frontend/src/app/dashboard/seguridad/permisos/page.tsx": [
   "screen--dashboard-seguridad-permisos"
@@ -2116,14 +2433,41 @@
  "frontend/src/app/dashboard/seguridad/usuarios/[id]/page.tsx": [
   "screen--dashboard-seguridad-usuarios-id"
  ],
+ "frontend/src/app/dashboard/servicios/cartografia/page.tsx": [
+  "screen--dashboard-servicios-cartografia"
+ ],
+ "frontend/src/app/dashboard/servicios/convocatorias/page.tsx": [
+  "screen--dashboard-servicios-convocatorias"
+ ],
+ "frontend/src/app/dashboard/servicios/despacho/page.tsx": [
+  "screen--dashboard-servicios-despacho"
+ ],
+ "frontend/src/app/dashboard/servicios/indicadores/page.tsx": [
+  "screen--dashboard-servicios-indicadores"
+ ],
+ "frontend/src/app/dashboard/servicios/llamados/page.tsx": [
+  "screen--dashboard-servicios-llamados"
+ ],
  "frontend/src/app/dashboard/servicios/nuevo/page.tsx": [
   "screen--dashboard-servicios-nuevo"
  ],
  "frontend/src/app/dashboard/servicios/page.tsx": [
   "screen--dashboard-servicios"
  ],
+ "frontend/src/app/dashboard/servicios/prevencion/page.tsx": [
+  "screen--dashboard-servicios-prevencion"
+ ],
  "frontend/src/app/dashboard/vehiculos/checklist-items/page.tsx": [
   "screen--dashboard-vehiculos-checklist-items"
+ ],
+ "frontend/src/app/dashboard/vehiculos/dotacion/page.tsx": [
+  "screen--dashboard-vehiculos-dotacion"
+ ],
+ "frontend/src/app/dashboard/vehiculos/flota/page.tsx": [
+  "screen--dashboard-vehiculos-flota"
+ ],
+ "frontend/src/app/dashboard/vehiculos/mapa/page.tsx": [
+  "screen--dashboard-vehiculos-mapa"
  ],
  "frontend/src/app/dashboard/vehiculos/page.tsx": [
   "screen--dashboard-vehiculos"
@@ -2136,6 +2480,9 @@
  ],
  "frontend/src/app/denuncias/page.tsx": [
   "screen--denuncias"
+ ],
+ "frontend/src/app/fichar/page.tsx": [
+  "screen--fichar"
  ],
  "frontend/src/app/login/page.tsx": [
   "screen--login",
@@ -2156,14 +2503,26 @@
  "frontend/src/lib/asistencia.ts": [
   "component--front-asistencia"
  ],
+ "frontend/src/lib/ausencias.ts": [
+  "component--front-ausencias"
+ ],
+ "frontend/src/lib/cartografia.ts": [
+  "component--front-cartografia"
+ ],
  "frontend/src/lib/color.ts": [
   "component--front-color"
  ],
  "frontend/src/lib/configuracion.ts": [
   "component--front-configuracion"
  ],
+ "frontend/src/lib/control-personal.ts": [
+  "component--front-control-personal"
+ ],
  "frontend/src/lib/deposito.ts": [
   "component--front-deposito"
+ ],
+ "frontend/src/lib/despacho.ts": [
+  "component--front-despacho"
  ],
  "frontend/src/lib/documentos.ts": [
   "component--front-documentos"
@@ -2177,14 +2536,23 @@
  "frontend/src/lib/finanzas.ts": [
   "component--front-finanzas"
  ],
+ "frontend/src/lib/flota.ts": [
+  "component--front-flota"
+ ],
  "frontend/src/lib/guardias.ts": [
   "component--front-guardias"
  ],
  "frontend/src/lib/ia.ts": [
   "component--front-ia"
  ],
+ "frontend/src/lib/indicadores.ts": [
+  "component--front-indicadores"
+ ],
  "frontend/src/lib/json-seguro.ts": [
   "component--front-json-seguro"
+ ],
+ "frontend/src/lib/llamados.ts": [
+  "component--front-llamados"
  ],
  "frontend/src/lib/navegacion.ts": [
   "component--front-navegacion",
@@ -2205,6 +2573,9 @@
  ],
  "frontend/src/lib/publicaciones.ts": [
   "component--front-publicaciones"
+ ],
+ "frontend/src/lib/reservas.ts": [
+  "component--front-reservas"
  ],
  "frontend/src/lib/seccion-url.ts": [
   "component--front-seccion-url"
@@ -2272,10 +2643,45 @@
   "error--pool-conexion-colgada",
   "rule--snake-case-en-bd-camel-en-typescript"
  ],
+ ".movile/scripts/publicar-apk.ps1": [
+  "decision--apk-depuracion-firmado-con-clave-propia",
+  "workflow--apk-compilar-firmar-publicar"
+ ],
+ ".movile/scripts/firmar-version.mjs": [
+  "decision--apk-depuracion-firmado-con-clave-propia",
+  "workflow--apk-compilar-firmar-publicar"
+ ],
+ ".movile/android/key.properties": [
+  "decision--apk-depuracion-firmado-con-clave-propia"
+ ],
+ ".movile/lib/offline.dart": [
+  "decision--app-movil-offline-primero"
+ ],
+ ".movile/lib/outbox.dart": [
+  "decision--app-movil-offline-primero"
+ ],
+ "backend/src/shared/utils/instante.ts": [
+  "decision--app-movil-offline-primero",
+  "rule--hora-del-hecho-acotada"
+ ],
  "backend/src/main.ts": [
   "decision--body-parser-8mb",
   "error--413-croquis-grande",
   "rule--api-v1-y-contrato-http"
+ ],
+ "backend/src/modules/auth/csrf.middleware.ts": [
+  "decision--cliente-nativo-exento-de-csrf"
+ ],
+ ".movile/lib/api.dart": [
+  "decision--cliente-nativo-exento-de-csrf",
+  "decision--sesion-mantenida-o-corta"
+ ],
+ ".context/DESPACHO.md": [
+  "decision--despacho-extiende-lo-existente",
+  "workflow--solicitud-de-despacho"
+ ],
+ "backend/src/modules/despacho": [
+  "decision--despacho-extiende-lo-existente"
  ],
  "database/run-migrations.ps1": [
   "decision--migraciones-a-mano",
@@ -2304,6 +2710,19 @@
  "backend/src/modules/denuncias/decorators/rate-limit.decorator.ts": [
   "decision--rate-limit-propio"
  ],
+ ".movile/lib/reportes.dart": [
+  "decision--reportes-como-texto-plano"
+ ],
+ "backend/src/modules/auth/dto/login.dto.ts": [
+  "decision--sesion-mantenida-o-corta"
+ ],
+ "backend/src/modules/auth/auth-sesion.spec.ts": [
+  "decision--sesion-mantenida-o-corta"
+ ],
+ ".movile/lib/main.dart": [
+  "decision--sesion-mantenida-o-corta",
+  "error--editor-guarda-tildes-como-interrogacion"
+ ],
  "frontend/src/app/globals.css": [
   "decision--sin-libreria-ui",
   "rule--sin-clases-css-nuevas",
@@ -2315,6 +2734,17 @@
   "rule--pantalla-cliente-sin-store",
   "rule--sin-clases-css-nuevas",
   "rule--tema-claro-unico"
+ ],
+ ".movile/pubspec.yaml": [
+  "dependency--flutter",
+  "workflow--apk-compilar-firmar-publicar"
+ ],
+ ".movile/android/app/build.gradle": [
+  "dependency--flutter"
+ ],
+ ".movile/scripts/compilar-apk.ps1": [
+  "dependency--flutter",
+  "error--smart-app-control-bloquea-flutter"
  ],
  "backend/package.json": [
   "dependency--nestjs"
@@ -2336,6 +2766,27 @@
  ".gitignore": [
   "error--context-borrado-del-disco"
  ],
+ "iniciar-sigbo.ps1": [
+  "error--docker-parado-tras-reinicio"
+ ],
+ "iniciar-sigbo.bat": [
+  "error--docker-parado-tras-reinicio",
+  "workflow--conectar-celular-al-servidor"
+ ],
+ ".movile/lib/operacion.dart": [
+  "error--editor-guarda-tildes-como-interrogacion"
+ ],
+ "scripts/tildes-dart.py": [
+  "error--editor-guarda-tildes-como-interrogacion",
+  "rule--textos-de-la-app-con-tildes"
+ ],
+ "docs/CONECTAR-CELULARES.md": [
+  "error--instalacion-usb-xiaomi",
+  "workflow--conectar-celular-al-servidor"
+ ],
+ "backend/src/modules/pantallas/pantallas.logica.ts": [
+  "rule--confidencial-lo-decide-la-matriz"
+ ],
  "backend/src/shared/entities": [
   "rule--entidad-y-tabla-en-paralelo"
  ],
@@ -2343,6 +2794,10 @@
   "rule--entidad-y-tabla-en-paralelo",
   "rule--identidad-y-tiempo-en-sql-server",
   "rule--migracion-nunca-se-edita"
+ ],
+ "backend/src/modules/despacho/despacho.logica.ts": [
+  "rule--entrega-y-respuesta-son-ejes-distintos",
+  "workflow--solicitud-de-despacho"
  ],
  "frontend/scripts/audit-accessibility.mjs": [
   "rule--etiqueta-nombra-su-control"
@@ -2367,10 +2822,28 @@
   "rule--sin-clases-css-nuevas",
   "rule--tema-claro-unico"
  ],
+ ".movile/lib": [
+  "rule--textos-de-la-app-con-tildes"
+ ],
  "backend/src/modules/seguridad/decorators/require-permission.decorator.ts": [
   "rule--todo-endpoint-mutante-con-permiso"
  ],
  "scripts/auditar-secciones-expediente.mjs": [
   "rule--un-fallo-no-se-anuncia-como-vacio"
+ ],
+ "conectar-celulares.bat": [
+  "workflow--conectar-celular-al-servidor"
+ ],
+ "scripts/conectar-celulares.mjs": [
+  "workflow--conectar-celular-al-servidor"
+ ],
+ "tunel-sigbo.bat": [
+  "workflow--conectar-celular-al-servidor"
+ ],
+ "backend/src/modules/despacho/servicio-activo.logica.ts": [
+  "workflow--servicio-activo"
+ ],
+ ".movile/lib/servicio_activo.dart": [
+  "workflow--servicio-activo"
  ]
 }

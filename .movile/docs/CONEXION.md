@@ -53,3 +53,38 @@ importa si tambien se abre el frontend web desde el celular.
 - Segundo plano / arranque: solo si se activa **Monitoreo continuo**.
 - Ubicacion: solo si se activa **Enviar ubicacion** (se adjunta lat/lng).
 - Bateria: boton directo a los ajustes del sistema (Android exige hacerlo asi).
+
+
+## 4. Actualizacion automatica de la app
+
+La app se actualiza sola desde el servidor SIGBO (sin Play Store ni servicios de terceros).
+
+**Para el celular (usuario):**
+1. Al abrir la app, si hay una version nueva aparece «Nueva version X». Pulse **Actualizar ahora**.
+2. La primera vez Android pide un permiso: la app lo explica y abre la pantalla. Active **«Permitir desde esta fuente»** y vuelva con la flecha atras.
+3. Se descarga (con barra de avance) y Android muestra su instalador: pulse **Instalar**. La app se reinicia sola y conserva sesion y ajustes.
+4. En cualquier momento: **Ajustes > Aplicacion > Buscar actualizaciones**.
+
+### Como se garantiza que la actualizacion es legitima (cuatro candados)
+
+1. **Firma digital del cuartel (Ed25519).** El publicador firma version, hash, tamano, obligatoriedad y notas con una clave privada que vive en `~\.sigbo\clave-actualizaciones.pem`, **fuera del repositorio y del servidor**. La app lleva embebida la clave publica (`lib/clave_publica.dart`) y descarta cualquier version sin firma valida. Un servidor comprometido no puede ofrecer un APK propio.
+2. **Hash SHA-256 firmado.** La descarga se verifica contra el hash firmado; si no coincide, no se instala.
+3. **Firma de Android.** Android solo instala una actualizacion firmada con el mismo certificado que la app instalada. `publicar-apk.ps1` lo comprueba con `apksigner`, fija la huella del certificado en la primera publicacion y rechaza APK de depuracion.
+4. **El servidor verifica lo que anuncia.** Solo anuncia la version si `version.json` describe exactamente el APK que hay en disco, y limita a 5 las descargas simultaneas.
+
+### Primera vez (una sola vez)
+1. `node .movile\scripts\firmar-version.mjs generar-clave` — crea la clave privada y escribe la publica en la app.
+2. **Haga una copia de `~\.sigbo\clave-actualizaciones.pem` fuera de esta PC** (pendrive cifrado, gestor de contrasenas). Si se pierde, las apps ya instaladas no aceptaran mas actualizaciones y habra que reinstalarlas a mano.
+3. Cree la firma de release (`android\key.properties`, ver `android/app/build.gradle`) y compile con `flutter build apk --release`. Guarde ese keystore igual que la clave anterior.
+
+### Publicar una version
+1. Suba el numero en `pubspec.yaml` (`version: 1.2.0+3`; el numero tras el `+` debe crecer siempre).
+2. Compile el APK de release.
+3. `.\.movile\scripts\publicar-apk.ps1 -Notas "que cambio"` (`-Obligatoria` para forzarla). Verifica la firma del APK, fija el certificado, firma digitalmente, publica en `backend\storage\app-movil` (variable `APP_MOVIL_DIR`) y vuelve a verificar. No hace falta reiniciar el backend.
+4. Comprobar en cualquier momento lo publicado: `node .movile\scripts\firmar-version.mjs verificar --destino backend\storage\app-movil`.
+
+### Pruebas automaticas
+- App: `cd .movile; flutter test` (la verificacion de firma coincide entre Node y Dart, y rechaza datos alterados o mal formados).
+- Servidor: `cd backend; npm test` (`app-movil.service.spec.ts`).
+
+Los celulares con una version anterior a la 1.1.0 (sin este mecanismo) deben instalar el APK 1.1.0 a mano una vez; desde ahi se actualizan solos.
