@@ -230,7 +230,7 @@ que lo implementa.
 
 - Produce las decisiones **DEC-1 a DEC-5**, que leen las tareas 1, 2, 19 y 21. Si el usuario no contesta, valen las opciones marcadas "(Recomendado)".
 
-- [ ] **Paso 1: Base local arriba**
+- [x] **Paso 1: Base local arriba**
 
 ```bash
 docker ps --format "{{.Names}} {{.Status}}"
@@ -238,7 +238,7 @@ docker ps --format "{{.Names}} {{.Status}}"
 
 Resultado esperado: aparece `sigbo-sqlserver` "Up". Si falla, pedile al usuario que abra Docker Desktop y esperá su confirmación.
 
-- [ ] **Paso 2: Consultas de solo lectura**
+- [x] **Paso 2: Consultas de solo lectura**
 
 ```bash
 Q() { docker exec sigbo-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -C -f 65001 -d sigbo_cbvc -h -1 -W -s '|' -Q "SET NOCOUNT ON; $1"; }
@@ -259,7 +259,7 @@ Cómo leer cada resultado:
 - **Roles.** Anotá los nombres: con ellos le vas a explicar al usuario quién recibe `servicios:operar` y `servicios:comandar`.
 - **Guardias.** Si no hay ninguna `EN_CURSO` ni del día, la tarjeta "Guardia actual" de la tarea 22 dirá que no hay guardia. No es un error.
 
-- [ ] **Paso 3: Decisiones del cuartel**
+- [x] **Paso 3: Decisiones del cuartel**
 
 Hacé estas preguntas al usuario con la herramienta de preguntas (`AskUserQuestion`), las cuatro en una sola llamada. Cada respuesta cambia algo concreto:
 
@@ -297,7 +297,7 @@ Solo si el paso 2 dio servicios `REGISTRADO` sin comunicación, hacé otra pregu
 
    Para cerrarlos, en el `UPDATE` de relleno de la migración 093 reemplazá `THEN 'CERRADO' ELSE 'RECIBIDO' END END,` por `THEN 'CERRADO' ELSE 'CERRADO' END END,` y la línea del resultado por `resultado = CASE WHEN s.estado = 'CANCELADO' THEN 'CANCELADO' WHEN s.estado = 'REGISTRADO' THEN 'SIN_INTERVENCION' ELSE s.resultado END,`.
 
-- [ ] **Paso 4: Anotar las decisiones**
+- [x] **Paso 4: Anotar las decisiones**
 
 Crear `.context/INCIDENTES.md`:
 
@@ -321,7 +321,7 @@ Reemplazá cada `<…>` por lo que salió de los pasos 2 y 3. Los cambios que pi
 hacen al escribir la migración en la tarea 1, y el de DEC-4 al escribir `horasDeServicio` en la tarea 2:
 esos archivos todavía no existen.
 
-- [ ] **Paso 5: Commit**
+- [x] **Paso 5: Commit**
 
 ```bash
 cd /c/Proyectos/Personal/SIGBO
