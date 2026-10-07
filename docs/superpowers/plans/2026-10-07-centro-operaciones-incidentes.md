@@ -1260,7 +1260,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
   política, `horasDeServicio` usa `Math.ceil` o `Math.floor`, y su prueba cambia los valores esperados como
   indica la tarea 0.
 
-- [ ] **Paso 1: Escribir las pruebas**
+- [x] **Paso 1: Escribir las pruebas**
 
 Crear `backend/src/modules/incidente-nucleo/incidente.logica.spec.ts`:
 
@@ -1446,7 +1446,7 @@ describe('horas de servicio (política DEC-4)', () => {
 });
 ```
 
-- [ ] **Paso 2: Correr las pruebas para ver que fallan**
+- [x] **Paso 2: Correr las pruebas para ver que fallan**
 
 ```bash
 cd /c/Proyectos/Personal/SIGBO/backend && npx jest src/modules/incidente-nucleo/incidente.logica.spec.ts 2>&1 | tail -5
@@ -1454,7 +1454,7 @@ cd /c/Proyectos/Personal/SIGBO/backend && npx jest src/modules/incidente-nucleo/
 
 Resultado esperado: FAIL con `Cannot find module './incidente.logica'`.
 
-- [ ] **Paso 3: Implementar**
+- [x] **Paso 3: Implementar**
 
 Crear `backend/src/modules/incidente-nucleo/incidente.logica.ts`:
 
@@ -1671,7 +1671,7 @@ export function horasDeServicio(minutos: number): number {
 }
 ```
 
-- [ ] **Paso 4: Correr las pruebas para ver que pasan**
+- [x] **Paso 4: Correr las pruebas para ver que pasan**
 
 ```bash
 cd /c/Proyectos/Personal/SIGBO/backend && npx jest src/modules/incidente-nucleo/incidente.logica.spec.ts 2>&1 | tail -5
@@ -1679,7 +1679,7 @@ cd /c/Proyectos/Personal/SIGBO/backend && npx jest src/modules/incidente-nucleo/
 
 Resultado esperado: PASS, todos los casos.
 
-- [ ] **Paso 5: Commit**
+- [x] **Paso 5: Commit**
 
 ```bash
 cd /c/Proyectos/Personal/SIGBO
