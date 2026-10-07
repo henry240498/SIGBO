@@ -1,6 +1,6 @@
 # Centro de Operaciones e Incidentes — corte 1 (núcleo + web operativa)
 
-Fecha: 2026-10-06 · Estado: **diseño aprobado en conversación, pendiente de revisión escrita**
+Fecha: 2026-10-06 · Estado: **aprobado; plan de implementación escrito (2026-10-07), con los ajustes de la §12**
 
 Pedido original: "SIGBO — Centro de Operaciones, Incidentes y SCI" (48 puntos). Este documento
 cubre el **primer corte vertical**; el resto queda descompuesto en la sección 11.
@@ -206,7 +206,7 @@ SERVICIO_RECIBIDO, LLAMADO_VINCULADO, FASE_CAMBIADA, PRIORIDAD_CAMBIADA, MOVIL_D
 MOVIL_SALIO, MOVIL_LLEGO, MOVIL_RETORNA, MOVIL_DISPONIBLE, DESPACHO_CANCELADO,
 TRIPULACION_AJUSTADA, PERSONAL_SUMADO, COMANDO_ASUMIDO, SITUACION_MARCADA, SITUACION_RESUELTA,
 RECURSO_SOLICITADO, RECURSO_ACTUALIZADO, VICTIMA_REGISTRADA, FOTO_TOMADA, MENSAJE, EMERGENCIA,
-EMERGENCIA_ATENDIDA, RESULTADO_DECLARADO, INCIDENTE_CERRADO.
+EMERGENCIA_ATENDIDA, RESULTADO_DECLARADO, INCIDENTE_CERRADO, y `COMUNICACION` (ajuste D1, §12).
 
 Una acción = **un** evento. Si la acción además cambia la fase, el mismo evento lleva
 `fase_anterior`/`fase_nueva` (no se agrega un FASE_CAMBIADA aparte). FASE_CAMBIADA es solo
@@ -461,3 +461,24 @@ canal SSE para el tablero, hospitales/policía en el mapa.
 5. Voz → datos estructurados (Whisper + Ollama locales), siempre con Confirmar/Editar.
 6. Estadísticas de servicios, personal, móviles, recursos y tiempos.
 7. Administración de catálogos y SSE del tablero.
+
+## 12. Ajustes hechos al escribir el plan (2026-10-07)
+
+Surgieron al leer el código en detalle. El plan
+(`docs/superpowers/plans/2026-10-07-centro-operaciones-incidentes.md`) los implementa y prevalecen
+sobre lo escrito arriba.
+
+- **D1. MENSAJE → COMUNICACIÓN.** El chat existente exige ser participante del servicio y permiso de la
+  matriz de pantallas. Un bombero que llega por la tripulación del móvil no es participante. El botón
+  del Modo Incidente registra una **comunicación** (punto 28 del pedido) con `POST /incidentes/:id/comunicacion`
+  y el tipo de evento nuevo `COMUNICACION`, que se suma al CHECK de 4.6. El chat sigue escribiendo eventos `MENSAJE`.
+- **D2.** `GET /incidentes/activos` (`servicios:ver` o `servicios:operar`) para entrar al Modo Incidente
+  desde el inicio.
+- **D3.** Prioridad por defecto MODERADA (Media): `tipos_servicio.prioridad` es un entero de orden, no una gravedad.
+- **D4.** El login vuelve también a `/incidente/<id>` (lista blanca, como `/fichar`).
+- **D5.** Quien tiene `servicios:operar` recibe además `adjuntos:subir`; si no, la FOTO daría 403 al bombero.
+- **D6.** En el relleno, un servicio `REGISTRADO` **con comunicación** queda `CERRADO` (es documentación de
+  algo pasado); sin comunicación queda `RECIBIDO`. Los que se creen desde ahora con el formulario largo nacen
+  `RECIBIDO` y se cierran con un toque si eran solo papeleo, hasta que el corte 4 genere la comunicación desde el incidente.
+- **D7.** `GET /incidentes/catalogos` también devuelve los bomberos activos (el Modo Incidente los necesita
+  para ajustar la tripulación y el bombero no tiene `vehiculos:ver`).
