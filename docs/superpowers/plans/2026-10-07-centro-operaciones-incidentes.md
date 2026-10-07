@@ -19,7 +19,7 @@ backend y `node --test` (con eliminación de tipos de Node 24) en el frontend.
 
 **Spec:** [docs/superpowers/specs/2026-10-06-centro-operaciones-incidentes-design.md](../specs/2026-10-06-centro-operaciones-incidentes-design.md):
 leela entera antes de empezar. Este plan la implementa; si algo choca, gana la spec, salvo los
-**ajustes D1–D7** de la sección siguiente, que la corrigen y ya están reflejados en ella (§12 de la spec).
+**ajustes D1–D15** de la sección siguiente, que la corrigen y ya están reflejados en ella (§12 de la spec).
 
 ---
 
@@ -47,6 +47,41 @@ leela entera antes de empezar. Este plan la implementa; si algo choca, gana la s
   resuelve del todo el corte 4, que genera la comunicación desde el incidente.
 - **D7. Catálogos con bomberos.** `GET /incidentes/catalogos` también devuelve los bomberos activos,
   porque el Modo Incidente los necesita para ajustar la tripulación y el bombero no tiene `vehiculos:ver`.
+- **D8. Avisos inmediatos.** EMERGENCIA, condición crítica, pedido urgente, recuento con faltantes y nuevo
+  servicio viajan por el canal SSE que ya existe (`GET /despacho/stream?solo=incidentes`), que **no cuenta como
+  presencia** del despacho. La consulta cada 5 s queda de respaldo (tareas 17 y 21).
+- **D9. Control de personal en zona.** ENTRA/SALE por persona y recuento (PAR) del comando. Nadie se libera
+  solo: hay alertas en la central y el cierre se bloquea con alguien adentro (tareas 18 y 22).
+- **D10. Fotos de víctimas confidenciales.** La categoría VICTIMA solo se ve con `despacho:confidencial` y cada
+  acceso se audita. Se usa el permiso directamente, no la matriz de pantallas: es una simplificación de este
+  corte (tarea 19).
+- **D11. Función como código y minutos exactos.** `personal_servicio.funcion` guarda el código (ya no se
+  reconvierte buscando el nombre) y `minutos_servicio` los minutos. Las horas salen de `horasDeServicio`
+  (política DEC-4).
+- **D12. Tripulación desde la guardia.** `GET /flota/tripulacion/guardia-actual` y la pantalla de tripulación
+  muestran la guardia en curso y quién no tiene móvil.
+- **D13. Quien no figura en el incidente** queda marcado en la bitácora (`fueraDeAsignacion`) o se rechaza,
+  según DEC-2. La EMERGENCIA nunca se bloquea (tarea 19).
+- **D14. Modo noche** en el Modo Incidente, si DEC-3 lo aprueba: excepción a la regla 6 limitada a `/incidente`
+  (tarea 21).
+- **D15. Dos puntos de control.** El backend completo se prueba contra la base real, con concurrencia y avisos
+  (tarea 20), y el frontend con un recorrido automatizado en el navegador (tarea 23). Antes de empezar, la
+  tarea 0 consulta la base y le pregunta al usuario las decisiones que son del cuartel.
+
+## Orden de ejecución y puntos de control
+
+Las tareas están numeradas por cuándo se escribieron, pero **en este documento ya aparecen en el orden en que
+se ejecutan**: seguí el documento de arriba hacia abajo.
+
+| Fase | Tareas, en orden | Punto de control |
+|---|---|---|
+| 0. Preparación | 0 | Base local arriba, consultas leídas y decisiones del cuartel (DEC-1 a DEC-5) anotadas |
+| A. Backend | 1 → 9, 17, 18, 19 | **Tarea 20**: suite completa y prueba viva contra la base real, con concurrencia y avisos. No se pasa a la fase B con algo en rojo |
+| B. Frontend | 10 → 15, 21, 22 | **Tarea 23**: recorrido automatizado en el navegador, con el criterio de aceptación en 360 × 740 |
+| C. Cierre | 24 | Documentación, grafo y verificación final |
+
+Si la ejecución se reparte en dos sesiones, cortá después de la tarea 20: la fase B solo necesita el backend en
+verde y este documento.
 
 ## Antes de empezar (obligatorio)
 
@@ -66,7 +101,7 @@ leela entera antes de empezar. Este plan la implementa; si algo choca, gana la s
    `docker exec sigbo-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -C -f 65001 -d sigbo_cbvc -Q "<sql>"`
    (la clave de `sa` está en `logs/migrate-local.ps1` o en la variable que ese script usa; no la copies a ningún archivo versionado).
 5. **Estado inicial:** `cd backend && npm test` (~2 min). Anotá cuántas suites y casos pasan y cuáles
-   fallan **antes** de tu primer cambio, así no te atribuís fallas ajenas.
+   fallan **antes** de tu primer cambio, así no te atribuís fallas ajenas. Después, empezá por la **tarea 0**.
 6. Trabajá en `main`, como el resto del repo. Un commit por tarea, con el mensaje indicado y la línea
    `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>` al final.
 
@@ -114,6 +149,13 @@ que lo implementa.
 4. **Cierre con un móvil todavía afuera**: se rechaza con 409 y un mensaje claro. Prueba en la tarea 9.
 5. **Condiciones excluyentes**: marcar "Incendio controlado" con "Incendio activo" vigente deja activa
    solo la nueva, en un único evento. Pruebas en las tareas 2 y 8.
+6. **Dos personas hacen lo mismo a la vez** (dos operadores despachan el mismo móvil, dos celulares tocan
+   LLEGAMOS): gana una y la otra recibe un mensaje claro. Las bases falsas ignoran los bloqueos, así que esto se
+   prueba contra la base real en la tarea 20.
+7. **Alguien queda registrado dentro de la zona** cuando los móviles vuelven: alerta en la central y el cierre
+   se rechaza. Nadie se libera solo. Pruebas en las tareas 18 y 20.
+8. **Un aviso crítico** (EMERGENCIA) tiene que llegar a la central en menos de 3 s, sin esperar la consulta
+   periódica. Pruebas en las tareas 17 y 20.
 
 ---
 
@@ -151,14 +193,16 @@ que lo implementa.
 
 ### Backend: incidentes (`backend/src/modules/incidentes/`, módulo nuevo)
 
-- `dto/incidentes.dto.ts`, `contexto.ts`, `recepcion.service.ts`, `expediente.service.ts`, `acciones.service.ts`, `cierre.service.ts`, `incidentes.controller.ts`, `incidentes.module.ts`.
-- Pruebas: `recepcion.spec.ts`, `expediente.spec.ts`, `acciones.spec.ts`, `cierre.spec.ts`.
+- `dto/incidentes.dto.ts`, `contexto.ts`, `recepcion.service.ts`, `expediente.service.ts`, `acciones.service.ts`, `cierre.service.ts`, `cierre-comun.ts`, `etiquetas.ts`, `avisos.service.ts` (tarea 17), `incidentes.controller.ts`, `incidentes.module.ts`.
+- Pruebas: `recepcion.spec.ts`, `expediente.spec.ts`, `acciones.spec.ts`, `cierre.spec.ts`, `avisos.spec.ts`.
+- Se modifican además `despacho/despacho-tiempo-real.service.ts` y `despacho/despacho.controller.ts` (canal `?solo=incidentes`, tarea 17).
+- Se crea `scripts/smoke-incidente.mjs` (prueba viva, tarea 20).
 - Crear `backend/src/modules/servicios/numeracion-servicio.ts` y modificar `servicios.service.ts` para que use la función compartida.
 - Modificar `backend/src/app.module.ts` y `backend/src/database/seed-data.ts`.
 
 ### Frontend
 
-- Crear `src/lib/incidentes.ts` (tipos y llamadas), `src/lib/cola-incidente.ts` (cola sin conexión, pura) y `src/lib/fases-incidente.ts` (etiquetas, pura).
+- Crear `src/lib/incidentes.ts` (tipos y llamadas), `src/lib/cola-incidente.ts` (cola sin conexión, pura), `src/lib/fases-incidente.ts` (etiquetas, pura), `src/lib/use-cronologia.ts` y `src/lib/use-avisos-incidente.ts` (tarea 21).
 - Crear `scripts/pruebas/cola-incidente.test.mjs` y `scripts/pruebas/fases-incidente.test.mjs`.
 - Crear `src/components/MapaOperativo.tsx`.
 - Crear `src/app/dashboard/servicios/operaciones/page.tsx` (Centro de Operaciones).
@@ -172,6 +216,120 @@ que lo implementa.
 
 - Crear `.context/INCIDENTES.md` y los nodos curados en `.context/graph/curated/`.
 - Modificar `.context/contexto.md`.
+
+---
+
+## Tarea 0: Verificaciones previas y decisiones del cuartel
+
+**Archivos:**
+
+- Crear: `.context/INCIDENTES.md` (solo la sección de decisiones; la tarea 24 la completa)
+- Ningún archivo de código todavía: las respuestas DEC-1 y DEC-5 se aplican al escribir la migración (tarea 1) y DEC-4 al escribir `horasDeServicio` (tarea 2).
+
+**Interfaces:**
+
+- Produce las decisiones **DEC-1 a DEC-5**, que leen las tareas 1, 2, 19 y 21. Si el usuario no contesta, valen las opciones marcadas "(Recomendado)".
+
+- [ ] **Paso 1: Base local arriba**
+
+```bash
+docker ps --format "{{.Names}} {{.Status}}"
+```
+
+Resultado esperado: aparece `sigbo-sqlserver` "Up". Si falla, pedile al usuario que abra Docker Desktop y esperá su confirmación.
+
+- [ ] **Paso 2: Consultas de solo lectura**
+
+```bash
+Q() { docker exec sigbo-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -C -f 65001 -d sigbo_cbvc -h -1 -W -s '|' -Q "SET NOCOUNT ON; $1"; }
+Q "SELECT s.estado, COUNT(*) AS total, SUM(CASE WHEN c.servicio_id IS NULL THEN 0 ELSE 1 END) AS con_comunicacion FROM servicios.servicios s LEFT JOIN servicios.comunicaciones_servicio c ON c.servicio_id = s.id GROUP BY s.estado;"
+Q "SELECT st.name, st.auto_created, st.user_created FROM sys.stats st JOIN sys.stats_columns sc ON sc.object_id = st.object_id AND sc.stats_id = st.stats_id JOIN sys.columns col ON col.object_id = sc.object_id AND col.column_id = sc.column_id WHERE st.object_id = OBJECT_ID('servicios.despachos') AND col.name = 'hora_salida';"
+Q "SELECT definition FROM sys.check_constraints WHERE name = 'CK_param_tipo';"
+Q "SELECT nombre FROM seguridad.permisos WHERE nombre IN ('servicios:finalizar','despacho:responder','despacho:seguimiento','despacho:confidencial','adjuntos:subir','vehiculos:ver_mapa') ORDER BY nombre;"
+Q "SELECT r.nombre, COUNT(a.id) AS permisos FROM seguridad.roles r LEFT JOIN seguridad.asignacion_permisos_rol a ON a.rol_id = r.id GROUP BY r.nombre ORDER BY r.nombre;"
+Q "SELECT estado, COUNT(*) FROM operaciones.guardias WHERE fecha >= DATEADD(day, -1, CAST(SYSDATETIME() AS date)) GROUP BY estado;"
+```
+
+Cómo leer cada resultado:
+
+- **Servicios.** En la fila `REGISTRADO`, `total - con_comunicacion` es la cantidad que la migración dejará como RECIBIDO (ajuste D6). Si es mayor que 0, hacé la pregunta DEC-5 del paso 3.
+- **Estadísticas de `hora_salida`.** Si alguna tiene `user_created = 1`, agregá a la migración de la tarea 1, en un lote propio (`GO`) **antes** del `ALTER COLUMN hora_salida`, la línea `DROP STATISTICS servicios.despachos.<nombre>;`. Las automáticas (`auto_created = 1`) no bloquean.
+- **`CK_param_tipo`.** Tiene que coincidir con la lista de la tarea 1, paso 2. Si hay un tipo de más, sumalo a esa lista.
+- **Permisos.** Tienen que aparecer los 6. Si falta alguno, avisale al usuario antes de seguir: varias tareas dependen de ellos.
+- **Roles.** Anotá los nombres: con ellos le vas a explicar al usuario quién recibe `servicios:operar` y `servicios:comandar`.
+- **Guardias.** Si no hay ninguna `EN_CURSO` ni del día, la tarjeta "Guardia actual" de la tarea 22 dirá que no hay guardia. No es un error.
+
+- [ ] **Paso 3: Decisiones del cuartel**
+
+Hacé estas preguntas al usuario con la herramienta de preguntas (`AskUserQuestion`), las cuatro en una sola llamada. Cada respuesta cambia algo concreto:
+
+1. **DEC-1. ¿Qué condiciones disparan la alerta roja en la central?**
+   - "Las 10 propuestas (Recomendado)": incendio fuera de control, víctima, víctima atrapada, persona desaparecida, derrumbe, riesgo estructural, material peligroso, riesgo de explosión, riesgo químico y riesgo biológico.
+   - "Solo las de personas": víctima, víctima atrapada, persona desaparecida y derrumbe.
+   - Otra lista que dicte el usuario.
+
+   Se aplica cambiando la columna `critica` (1/0) en la semilla de `servicios.condiciones_situacion` de la migración 093.
+
+2. **DEC-2. ¿Quién puede registrar acciones en un incidente?**
+   - "Cualquiera con servicios:operar, y queda marcado si no figura en el incidente (Recomendado)".
+   - "Solo quien figura en el incidente; la EMERGENCIA la puede mandar cualquiera".
+
+   Se aplica en la tarea 19.
+
+3. **DEC-3. ¿Modo noche en el Modo Incidente?**
+   - "Sí, con un botón para cambiarlo (Recomendado)". Es una excepción a la regla 6 del repo (tema claro), limitada a `/incidente`.
+   - "No, solo tema claro".
+
+   Se aplica en la tarea 21.
+
+4. **DEC-4. ¿Cómo se cuentan las horas de servicio de cada persona?** Los minutos exactos se guardan siempre.
+   - "A la hora más cercana (Recomendado)" → `Math.round(minutos / 60)`.
+   - "Toda hora empezada cuenta entera" → `Math.ceil(minutos / 60)`.
+   - "Solo horas completas" → `Math.floor(minutos / 60)`.
+
+   Se aplica en `horasDeServicio` (tarea 2), ajustando también los valores esperados de su prueba: con `ceil`, 89 → 2 y 90 → 2; con `floor`, 89 → 1 y 90 → 1.
+
+Solo si el paso 2 dio servicios `REGISTRADO` sin comunicación, hacé otra pregunta:
+
+5. **DEC-5. Hay N servicios viejos registrados sin comunicación. ¿Qué hacemos con ellos al migrar?**
+   - "Dejarlos como recibidos (Recomendado si son pocos)".
+   - "Cerrarlos al migrar con resultado Sin intervención".
+
+   Para cerrarlos, en el `UPDATE` de relleno de la migración 093 reemplazá `THEN 'CERRADO' ELSE 'RECIBIDO' END END,` por `THEN 'CERRADO' ELSE 'CERRADO' END END,` y la línea del resultado por `resultado = CASE WHEN s.estado = 'CANCELADO' THEN 'CANCELADO' WHEN s.estado = 'REGISTRADO' THEN 'SIN_INTERVENCION' ELSE s.resultado END,`.
+
+- [ ] **Paso 4: Anotar las decisiones**
+
+Crear `.context/INCIDENTES.md`:
+
+```markdown
+# Centro de Operaciones e Incidentes
+
+## 0. Decisiones del cuartel (tarea 0, <fecha>)
+
+| Decisión | Respuesta | Dónde se aplica |
+|---|---|---|
+| DEC-1 Condiciones críticas | <respuesta> | Semilla de `servicios.condiciones_situacion` (migración 093) |
+| DEC-2 Quién registra en un incidente | <respuesta> | `AccionesService.registrarCampo` (tarea 19) |
+| DEC-3 Modo noche | <respuesta> | `/incidente` (tarea 21) |
+| DEC-4 Horas de servicio | <respuesta> | `horasDeServicio` (tarea 2) |
+| DEC-5 Servicios viejos sin comunicación | <respuesta o "no aplica"> | Relleno de la migración 093 |
+
+Resultado de las consultas previas: <cantidad de servicios por estado; estadísticas sobre hora_salida; roles existentes>.
+```
+
+Reemplazá cada `<…>` por lo que salió de los pasos 2 y 3. Los cambios que pidan DEC-1 y DEC-5 se
+hacen al escribir la migración en la tarea 1, y el de DEC-4 al escribir `horasDeServicio` en la tarea 2:
+esos archivos todavía no existen.
+
+- [ ] **Paso 5: Commit**
+
+```bash
+cd /c/Proyectos/Personal/SIGBO
+git add .context/INCIDENTES.md
+git commit -m "Incidentes: decisiones del cuartel y verificaciones previas a la implementación
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
 
 ---
 
@@ -193,7 +351,7 @@ que lo implementa.
 - Produce, exportado desde `backend/src/shared/entities`:
   - Tipos `FaseOperativa`, `ResultadoIncidente`, `TipoEventoIncidente`, `OrigenEvento`, `GrupoCondicion`, `CategoriaRecurso`, `PrioridadSolicitud`, `EstadoSolicitudRecurso`, `OrigenPersonalServicio` y `CategoriaFoto`.
   - Entidades `IncidenteEvento`, `CondicionSituacion`, `TipoRecurso`, `IncidenteSolicitud` y `TripulacionMovil`.
-  - `Servicio` con `faseOperativa`, `faseDesde` y `resultado`; `Despacho` con `horaDespacho: Date` y `horaSalida: Date | null`; `PersonalServicio` con `vehiculoId`, `despachoId` y `origen`; `Adjunto` con `latitud`, `longitud` y `categoria`; `TipoParametro` con `'FUNCION_INCIDENTE'`.
+  - `Servicio` con `faseOperativa`, `faseDesde` y `resultado`; `Despacho` con `horaDespacho: Date` y `horaSalida: Date | null`; `PersonalServicio` con `vehiculoId`, `despachoId`, `origen`, `funcion`, `enZona`, `zonaDesde` y `minutosServicio`; `Adjunto` con `latitud`, `longitud` y `categoria`; `TipoParametro` con `'FUNCION_INCIDENTE'`.
 
 - [ ] **Paso 1: Verificar el número libre y la definición actual de `CK_param_tipo`**
 
@@ -205,7 +363,11 @@ docker exec sigbo-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -C 
 
 Resultado esperado: la última migración es `092_…` y la definición contiene **exactamente** los tipos
 de la lista del paso 2 (la de `062_finanzas_socios_protectores.sql`). Si aparece otro tipo, agregalo a
-la lista del paso 2 antes de seguir.
+la lista del paso 2 antes de seguir. (La tarea 0 ya hizo esta consulta: si ya la tenés, no hace falta repetirla.)
+
+Al escribir la migración del paso 2 aplicá las decisiones de la tarea 0: **DEC-1** (valores de `critica` en la
+semilla de condiciones), **DEC-5** (relleno de servicios viejos) y, si hubo estadísticas creadas a mano sobre
+`hora_salida`, su `DROP STATISTICS` antes del `ALTER COLUMN`.
 
 - [ ] **Paso 2: Escribir la migración**
 
@@ -328,7 +490,8 @@ BEGIN
             'DESPACHO_CANCELADO', 'TRIPULACION_AJUSTADA', 'PERSONAL_SUMADO', 'COMANDO_ASUMIDO',
             'SITUACION_MARCADA', 'SITUACION_RESUELTA', 'RECURSO_SOLICITADO', 'RECURSO_ACTUALIZADO',
             'VICTIMA_REGISTRADA', 'FOTO_TOMADA', 'MENSAJE', 'COMUNICACION', 'EMERGENCIA',
-            'EMERGENCIA_ATENDIDA', 'RESULTADO_DECLARADO', 'INCIDENTE_CERRADO')),
+            'EMERGENCIA_ATENDIDA', 'RESULTADO_DECLARADO', 'INCIDENTE_CERRADO',
+            'PERSONAL_ENTRA_ZONA', 'PERSONAL_SALE_ZONA', 'RECUENTO_PERSONAL')),
         CONSTRAINT FK_inev_servicio FOREIGN KEY (servicio_id) REFERENCES servicios.servicios(id),
         CONSTRAINT FK_inev_usuario FOREIGN KEY (usuario_id) REFERENCES seguridad.usuarios(id),
         CONSTRAINT FK_inev_vehiculo FOREIGN KEY (vehiculo_id) REFERENCES vehiculos.vehiculos(id)
@@ -485,7 +648,14 @@ IF COL_LENGTH('servicios.personal_servicio', 'vehiculo_id') IS NULL
     ALTER TABLE servicios.personal_servicio ADD
         vehiculo_id UNIQUEIDENTIFIER NULL,
         despacho_id UNIQUEIDENTIFIER NULL,
-        origen NVARCHAR(12) NULL;
+        origen NVARCHAR(12) NULL,
+        /* Codigo del parametro FUNCION_INCIDENTE (rol guarda el nombre legible). */
+        funcion NVARCHAR(40) NULL,
+        /* Control de personal: dentro de la zona de trabajo y desde cuando. Nunca se libera solo. */
+        en_zona BIT NOT NULL CONSTRAINT DF_perser_enzona DEFAULT 0,
+        zona_desde DATETIMEOFFSET(3) NULL,
+        /* Minutos exactos de servicio; horas_servicio queda como el valor redondeado (DEC-4). */
+        minutos_servicio INT NULL;
 GO
 IF NOT EXISTS (SELECT 1 FROM sys.check_constraints WHERE name = 'CK_perser_origen')
     ALTER TABLE servicios.personal_servicio ADD CONSTRAINT CK_perser_origen
@@ -630,7 +800,8 @@ export type TipoEventoIncidente =
   | 'DESPACHO_CANCELADO' | 'TRIPULACION_AJUSTADA' | 'PERSONAL_SUMADO' | 'COMANDO_ASUMIDO'
   | 'SITUACION_MARCADA' | 'SITUACION_RESUELTA' | 'RECURSO_SOLICITADO' | 'RECURSO_ACTUALIZADO'
   | 'VICTIMA_REGISTRADA' | 'FOTO_TOMADA' | 'MENSAJE' | 'COMUNICACION' | 'EMERGENCIA'
-  | 'EMERGENCIA_ATENDIDA' | 'RESULTADO_DECLARADO' | 'INCIDENTE_CERRADO';
+  | 'EMERGENCIA_ATENDIDA' | 'RESULTADO_DECLARADO' | 'INCIDENTE_CERRADO'
+  | 'PERSONAL_ENTRA_ZONA' | 'PERSONAL_SALE_ZONA' | 'RECUENTO_PERSONAL';
 
 export type OrigenEvento = 'WEB' | 'APP' | 'SISTEMA';
 export type GrupoCondicion = 'SITUACION' | 'RIESGO';
@@ -910,6 +1081,21 @@ y después de la propiedad `observaciones` agregá:
   /** De donde salio la fila: la tripulacion del movil, un ajuste o una solicitud de despacho. */
   @Column({ type: 'nvarchar', length: 12, nullable: true })
   origen: OrigenPersonalServicio | null;
+
+  /** Codigo del parametro FUNCION_INCIDENTE (rol guarda el nombre legible). */
+  @Column({ type: 'nvarchar', length: 40, nullable: true })
+  funcion: string | null;
+
+  /** Control de personal: dentro de la zona de trabajo. Nunca se libera solo. */
+  @Column({ type: 'bit', default: false })
+  enZona: boolean;
+
+  @Column({ type: 'datetimeoffset', precision: 3, nullable: true })
+  zonaDesde: Date | null;
+
+  /** Minutos exactos de servicio; horasServicio queda como el valor redondeado (horasDeServicio). */
+  @Column({ type: 'int', nullable: true })
+  minutosServicio: number | null;
 ```
 
 En `backend/src/shared/entities/campo.entity.ts` reemplazá la línea
@@ -1030,7 +1216,7 @@ Q "DECLARE @s UNIQUEIDENTIFIER = (SELECT TOP 1 id FROM servicios.servicios WHERE
 
 Resultado esperado: `51093`. El servicio `PRUEBA-TECNICA-001` (CANCELADO) ya existe en la base local
 como registro de prueba (`.context/DESPACHO.md` §9). Anotá este evento en la sección de registros de
-prueba de `.context/INCIDENTES.md` (tarea 16): no se puede borrar.
+prueba de `.context/INCIDENTES.md` (tarea 24): no se puede borrar.
 
 - [ ] **Paso 9: Correr las pruebas del backend**
 
@@ -1052,6 +1238,8 @@ git commit -m "Incidentes: migración 093 (fase operativa, bitácora inmutable, 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
+
+
 ---
 
 ## Tarea 2: Lógica pura del incidente
@@ -1067,8 +1255,10 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 - Produce: `FASES`, `FASES_ACTIVAS`, `RESULTADOS`, `DESPACHO_ACTIVO`, `ordenFase`, `estadoDesdeFase`,
   `HechoAutomatico`, `faseAutomatica`, `AccionFase`, `transicionManual`, `exigirPermisoResultado`,
   `faseTrasResultado`, `validarCierre`, `condicionesActivas`, `excluyentesDe`, `CICLO_RECURSO`,
-  `validarEstadoRecurso`, `emergenciaActiva`, `NOMBRE_FASE`, `NOMBRE_RESULTADO`, `etiquetaMovil` y
-  `nombreBombero` (las firmas exactas están en el código del paso 3).
+  `validarEstadoRecurso`, `emergenciaActiva`, `NOMBRE_FASE`, `NOMBRE_RESULTADO`, `etiquetaMovil`,
+  `nombreBombero` y `horasDeServicio` (las firmas exactas están en el código del paso 3). Si DEC-4 eligió otra
+  política, `horasDeServicio` usa `Math.ceil` o `Math.floor`, y su prueba cambia los valores esperados como
+  indica la tarea 0.
 
 - [ ] **Paso 1: Escribir las pruebas**
 
@@ -1084,6 +1274,7 @@ import {
   exigirPermisoResultado,
   faseAutomatica,
   faseTrasResultado,
+  horasDeServicio,
   transicionManual,
   validarCierre,
   validarEstadoRecurso,
@@ -1242,6 +1433,15 @@ describe('emergencia', () => {
     expect(emergenciaActiva([{ tipo: 'EMERGENCIA' }, { tipo: 'EMERGENCIA_ATENDIDA' }])).toBe(false);
     expect(emergenciaActiva([{ tipo: 'EMERGENCIA' }, { tipo: 'EMERGENCIA_ATENDIDA' }, { tipo: 'EMERGENCIA' }])).toBe(true);
     expect(emergenciaActiva([])).toBe(false);
+  });
+});
+
+describe('horas de servicio (política DEC-4)', () => {
+  it('a la hora más cercana, y nunca negativa', () => {
+    expect(horasDeServicio(120)).toBe(2);
+    expect(horasDeServicio(89)).toBe(1);
+    expect(horasDeServicio(90)).toBe(2);
+    expect(horasDeServicio(-5)).toBe(0);
   });
 });
 ```
@@ -1461,6 +1661,14 @@ export function nombreBombero(b?: { nombre: string; apellido: string; numeroBomb
   if (!b) return 'Persona desconocida';
   return `${b.nombre} ${b.apellido}`.trim() + (b.numeroBombero ? ` (${b.numeroBombero})` : '');
 }
+
+/**
+ * Horas de servicio de una persona a partir de sus minutos exactos (que tambien se guardan).
+ * Politica DEC-4 de la tarea 0; por defecto, a la hora mas cercana. Cambiarla es cambiar SOLO esta funcion.
+ */
+export function horasDeServicio(minutos: number): number {
+  return Math.max(0, Math.round(minutos / 60));
+}
 ```
 
 - [ ] **Paso 4: Correr las pruebas para ver que pasan**
@@ -1480,6 +1688,8 @@ git commit -m "Incidentes: lógica pura de fases, resultados, condiciones, pedid
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
+
+
 
 ---
 
@@ -1820,6 +2030,8 @@ git commit -m "Incidentes: núcleo con bitácora idempotente y motor de fases tr
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
+
+
 ---
 
 ## Tarea 4: Tripulación por móvil
@@ -1842,8 +2054,10 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
   - `TripulacionService.vigente(m, vehiculoId)`, que devuelve `IntegranteTripulacion[]`.
   - `TripulacionService.copiarAlDespacho(m, { servicioId, despachoId, vehiculoId, integrantes, origen: 'TRIPULACION' | 'AJUSTE', reemplazar?: boolean })`, que devuelve `Promise<void>`.
   - `TripulacionService.nombre(bombero?)`, que devuelve un `string`.
+  - `TripulacionService.guardiaActual(ahora?)`, que devuelve `{ guardias: [{ id, fecha, turno, horaInicio, horaFin }], personal: [{ bomberoId, nombre, rol }] }`.
+  - `copiarAlDespacho` guarda también `personal_servicio.funcion` (el código de la función).
   - Los DTO `IntegranteTripulacionDto` y `TripulacionDto` en `flota.dto.ts`.
-  - `GET /flota/tripulacion` (`vehiculos:ver`) y `PUT /flota/moviles/:id/tripulacion` (`vehiculos:tripulacion`).
+  - `GET /flota/tripulacion` y `GET /flota/tripulacion/guardia-actual` (`vehiculos:ver`), y `PUT /flota/moviles/:id/tripulacion` (`vehiculos:tripulacion`).
 
 - [ ] **Paso 1: Escribir las pruebas**
 
@@ -1852,7 +2066,7 @@ Crear `backend/src/modules/flota/tripulacion.spec.ts`:
 ```ts
 import { BadRequestException, ConflictException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { Bombero, Parametro, PersonalServicio, TripulacionMovil, Vehiculo } from '../../shared/entities';
+import { AsignacionGuardia, Bombero, Guardia, Parametro, PersonalServicio, TripulacionMovil, Vehiculo } from '../../shared/entities';
 import { BaseFalsa } from '../../shared/testing/base-falsa';
 import { conductorDe, TripulacionService } from './tripulacion.service';
 
@@ -1916,7 +2130,7 @@ describe('TripulacionService', () => {
       integrantes: [{ bomberoId: 'B1', funcion: 'CONDUCTOR' }, { bomberoId: 'B2', funcion: 'JEFE_DOTACION' }],
     });
     expect(base.tabla('PersonalServicio')).toEqual([
-      expect.objectContaining({ servicioId: 'S1', bomberoId: 'B1', rol: 'Conductor', despachoId: 'D1', vehiculoId: 'V1', origen: 'TRIPULACION', horasServicio: 0 }),
+      expect.objectContaining({ servicioId: 'S1', bomberoId: 'B1', rol: 'Conductor', funcion: 'CONDUCTOR', despachoId: 'D1', vehiculoId: 'V1', origen: 'TRIPULACION', horasServicio: 0 }),
       expect.objectContaining({ bomberoId: 'B2', rol: 'Jefe de dotación' }),
     ]);
     await servicio.copiarAlDespacho(base as never, {
@@ -1934,6 +2148,19 @@ describe('TripulacionService', () => {
   it('la entidad PersonalServicio admite las columnas nuevas', () => {
     expect(Object.assign(new PersonalServicio(), { origen: 'AJUSTE' }).origen).toBe('AJUSTE');
     expect(new TripulacionMovil()).toBeInstanceOf(TripulacionMovil);
+  });
+
+  it('el personal de la guardia en curso, sin reemplazados ni ausentes', async () => {
+    await sembrar(base, Guardia, { id: 'G1', fecha: '2026-10-07', turno: 'DIURNO', horaInicio: '07:00:00', horaFin: '19:00:00', estado: 'EN_CURSO' });
+    await sembrar(base, AsignacionGuardia, { id: 'a1', guardiaId: 'G1', bomberoId: 'B1', rol: 'Chofer', estado: 'CONFIRMADO' });
+    await sembrar(base, AsignacionGuardia, { id: 'a2', guardiaId: 'G1', bomberoId: 'B2', rol: null, estado: 'REEMPLAZADO' });
+    const r = await servicio.guardiaActual(new Date(2026, 9, 7, 10, 0));
+    expect(r.guardias).toEqual([expect.objectContaining({ id: 'G1', turno: 'DIURNO' })]);
+    expect(r.personal).toEqual([{ bomberoId: 'B1', nombre: 'Ana Gómez (BC-01)', rol: 'Chofer' }]);
+  });
+
+  it('sin guardia en curso ni del día, devuelve listas vacías', async () => {
+    expect(await servicio.guardiaActual(new Date(2026, 9, 7, 10, 0))).toEqual({ guardias: [], personal: [] });
   });
 });
 ```
@@ -1954,7 +2181,7 @@ Crear `backend/src/modules/flota/tripulacion.service.ts`:
 import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource, EntityManager, In } from 'typeorm';
-import { Bombero, Parametro, PersonalServicio, TripulacionMovil, Vehiculo } from '../../shared/entities';
+import { AsignacionGuardia, Bombero, Guardia, Parametro, PersonalServicio, TripulacionMovil, Vehiculo } from '../../shared/entities';
 import { nombreBombero } from '../incidente-nucleo/incidente.logica';
 import { AuditoriaService } from '../seguridad/auditoria.service';
 import type { ContextoFlota } from './flota.service';
@@ -2068,6 +2295,30 @@ export class TripulacionService {
   }
 
   /**
+   * Personal de la guardia en curso (o, si no hay, la de hoy), para armar las tripulaciones repartiendo
+   * esa gente en vez de buscarla una por una. Sin reemplazados ni ausentes.
+   */
+  async guardiaActual(ahora = new Date()) {
+    const m = this.dataSource.manager;
+    const p = (n: number) => String(n).padStart(2, '0');
+    const hoy = `${ahora.getFullYear()}-${p(ahora.getMonth() + 1)}-${p(ahora.getDate())}`;
+    let guardias = await m.getRepository(Guardia).find({ where: { estado: 'EN_CURSO' } });
+    if (guardias.length === 0) {
+      guardias = (await m.getRepository(Guardia).find({ where: { fecha: hoy } })).filter((g) => g.estado === 'PLANIFICADA' || g.estado === 'CONFIRMADA');
+    }
+    if (guardias.length === 0) return { guardias: [], personal: [] };
+    const asignaciones = (await m.getRepository(AsignacionGuardia).find({ where: { guardiaId: In(guardias.map((g) => g.id)) } }))
+      .filter((a) => a.estado === 'ASIGNADO' || a.estado === 'CONFIRMADO');
+    const unicas = [...new Map(asignaciones.map((a) => [a.bomberoId, a])).values()];
+    const bomberos = unicas.length ? await m.getRepository(Bombero).find({ where: { id: In(unicas.map((a) => a.bomberoId)) } }) : [];
+    const persona = new Map(bomberos.map((b) => [b.id, b]));
+    return {
+      guardias: guardias.map((g) => ({ id: g.id, fecha: g.fecha, turno: g.turno, horaInicio: g.horaInicio, horaFin: g.horaFin })),
+      personal: unicas.map((a) => ({ bomberoId: a.bomberoId, nombre: nombreBombero(persona.get(a.bomberoId)), rol: a.rol })),
+    };
+  }
+
+  /**
    * Copia la tripulacion al personal del servicio, ligada al despacho. Lo heredado no se valida de
    * nuevo (en una emergencia no se bloquea un despacho por un dato viejo); lo ajustado a mano si.
    * Con `reemplazar`, quien ya no figura en la lista sale del personal de ese despacho.
@@ -2086,7 +2337,7 @@ export class TripulacionService {
       }
     }
     for (const i of d.integrantes) {
-      const datos = { vehiculoId: d.vehiculoId, despachoId: d.despachoId, rol: nombres.get(i.funcion) ?? i.funcion, origen: d.origen };
+      const datos = { vehiculoId: d.vehiculoId, despachoId: d.despachoId, rol: nombres.get(i.funcion) ?? i.funcion, funcion: i.funcion, origen: d.origen };
       const previo = await repo.findOne({ where: { servicioId: d.servicioId, bomberoId: i.bomberoId } });
       if (previo) await repo.update({ id: previo.id }, datos);
       else await repo.save(repo.create({ servicioId: d.servicioId, bomberoId: i.bomberoId, horasServicio: 0, observaciones: null, ...datos }));
@@ -2150,6 +2401,12 @@ En `backend/src/modules/flota/flota.controller.ts`:
     return this.tripulacion.listar();
   }
 
+  @Get('tripulacion/guardia-actual')
+  @RequirePermission('vehiculos:ver')
+  guardiaActual() {
+    return this.tripulacion.guardiaActual();
+  }
+
   @Put('moviles/:id/tripulacion')
   @RequirePermission('vehiculos:tripulacion')
   cargarTripulacion(
@@ -2181,6 +2438,8 @@ git commit -m "Flota: tripulación por móvil cargada al tomar la guardia (vehic
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
+
+
 
 ---
 
@@ -2715,6 +2974,8 @@ git commit -m "Flota: asignar o asignar y salir, paso SALIMOS, tripulación here
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
+
+
 ---
 
 ## Tarea 6: Víctimas, fotos, chat y personal sumado escriben en la bitácora
@@ -3080,6 +3341,8 @@ git commit -m "Incidentes: víctimas, fotos (con GPS y categoría), chat y perso
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
+
+
 
 ---
 
@@ -4144,6 +4407,8 @@ git commit -m "Incidentes: recepción rápida, expediente, cronología increment
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
+
+
 ---
 
 ## Tarea 8: Acciones del incidente (despacho rápido, pasos, comando, situación, pedidos, emergencia)
@@ -4845,6 +5110,8 @@ git commit -m "Incidentes: despacho rápido, pasos del móvil, comando, fases, r
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
+
+
 ---
 
 ## Tarea 9: Informe automático y cierre mínimo
@@ -4935,6 +5202,7 @@ describe('CierreService', () => {
     expect(servicio().fechaHoraFin).toBeInstanceOf(Date);
     expect(base.tabla('Llamado')[0]).toMatchObject({ estado: 'CERRADO' });
     expect((base.tabla('PersonalServicio')[0] as Record<string, unknown>).horasServicio).toBe(2); // 14:34 → 16:34
+    expect((base.tabla('PersonalServicio')[0] as Record<string, unknown>).minutosServicio).toBe(120);
     const ev = base.tabla('IncidenteEvento').at(-1)!;
     expect(ev).toMatchObject({ tipo: 'INCIDENTE_CERRADO', titulo: 'Incidente cerrado: Controlado', faseNueva: 'CERRADO' });
     expect(JSON.parse(ev.datos as string)).toEqual({ resultado: 'CONTROLADO', huboVictimas: true, huboDanos: false });
@@ -4989,7 +5257,7 @@ import { CondicionSituacion, Cuartel, Despacho, PersonalServicio, Servicio } fro
 import { distanciaMetros } from '../cartografia/geo.util';
 import { TripulacionService } from '../flota/tripulacion.service';
 import { CronologiaService } from '../incidente-nucleo/cronologia.service';
-import { NOMBRE_RESULTADO, validarCierre } from '../incidente-nucleo/incidente.logica';
+import { horasDeServicio, NOMBRE_RESULTADO, validarCierre } from '../incidente-nucleo/incidente.logica';
 import { MotorFases } from '../incidente-nucleo/motor-fases.service';
 import { AuditoriaService } from '../seguridad/auditoria.service';
 import { cerrarLlamadosDelIncidente, marcarFin } from './cierre-comun';
@@ -5093,7 +5361,8 @@ export class CierreService {
         const desde = ms(d.horaSalida ?? d.horaDespacho);
         const hasta = ms(d.horaRegreso ?? d.horaFin) ?? ahora.getTime();
         if (desde === null) continue;
-        await m.getRepository(PersonalServicio).update({ id: p.id }, { horasServicio: Math.max(0, Math.round((hasta - desde) / 3_600_000)) });
+        const minutosServicio = Math.max(0, Math.round((hasta - desde) / 60_000));
+        await m.getRepository(PersonalServicio).update({ id: p.id }, { minutosServicio, horasServicio: horasDeServicio(minutosServicio) });
       }
 
       const observaciones = dto.observaciones?.trim();
@@ -5167,6 +5436,1149 @@ git commit -m "Incidentes: informe automático con tiempos y distancia, y cierre
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
+
+
+---
+
+## Tarea 17: Avisos inmediatos por el canal en tiempo real (backend)
+
+Por qué: con la consulta cada 5 s, una EMERGENCIA puede tardar hasta 5 s en verse y solo suena con la
+pantalla abierta. El backend ya tiene un bus SSE (`DespachoTiempoReal`, `GET /despacho/stream`), así que
+los avisos críticos viajan por ahí. La consulta periódica queda de respaldo.
+
+**Archivos:**
+
+- Modificar: `backend/src/modules/despacho/despacho-tiempo-real.service.ts`, `backend/src/modules/despacho/despacho.controller.ts`
+- Crear: `backend/src/modules/incidentes/avisos.service.ts`
+- Modificar: `backend/src/modules/incidentes/acciones.service.ts`, `recepcion.service.ts`, `incidentes.module.ts`
+- Prueba: crear `backend/src/modules/incidentes/avisos.spec.ts`; modificar `acciones.spec.ts` y `recepcion.spec.ts`
+
+**Interfaces:**
+
+- Consume: `DespachoTiempoReal` (exportado por `DespachoModule`), `AccionesService` (tarea 8) y `RecepcionService` (tarea 7).
+- Produce:
+  - `EventoDespacho` con `tipo: … | 'incidente'` y el campo opcional `permiso?: string`.
+  - `flujoPara(usuarioId, puedeVerSeguimiento, permisos = [], soloIncidentes = false)`.
+  - `GET /despacho/stream?solo=incidentes`: solo avisos de incidentes y **sin contar como presencia** para el despacho.
+  - `AvisosIncidente.avisar(servicioId, alerta: TipoAviso, detalle?)` y `destinatarios(servicioId)`.
+  - `TipoAviso = 'NUEVO' | 'EMERGENCIA' | 'EMERGENCIA_ATENDIDA' | 'CONDICION_CRITICA' | 'PEDIDO_URGENTE' | 'PERSONAL_FALTANTE'`.
+  - El dato que recibe la pantalla: `{ tipo: 'incidente', servicioId, datos: { alerta, numeroServicio, texto } }`.
+
+- [ ] **Paso 1: Escribir las pruebas**
+
+Crear `backend/src/modules/incidentes/avisos.spec.ts`:
+
+```ts
+import { firstValueFrom } from 'rxjs';
+import { DataSource } from 'typeorm';
+import { PersonalServicio, Servicio, ServicioParticipante, Usuario } from '../../shared/entities';
+import { BaseFalsa } from '../../shared/testing/base-falsa';
+import { DespachoTiempoReal } from '../despacho/despacho-tiempo-real.service';
+import { AvisosIncidente } from './avisos.service';
+
+const sembrar = (base: BaseFalsa, clase: new () => object, datos: Record<string, unknown>) =>
+  base.getRepository(clase as never).save(Object.assign(new clase(), datos) as never);
+
+describe('AvisosIncidente', () => {
+  let base: BaseFalsa;
+  let tiempoReal: DespachoTiempoReal;
+  let avisos: AvisosIncidente;
+
+  beforeEach(async () => {
+    base = new BaseFalsa();
+    tiempoReal = new DespachoTiempoReal();
+    avisos = new AvisosIncidente(base as unknown as DataSource, tiempoReal);
+    await sembrar(base, Servicio, { id: 's1', numeroServicio: 'CS-2026-00157' });
+    await sembrar(base, PersonalServicio, { id: 'p1', servicioId: 's1', bomberoId: 'B1' });
+    await sembrar(base, Usuario, { id: 'u1', username: 'ana', bomberoId: 'B1' });
+    await sembrar(base, ServicioParticipante, { id: 'sp1', servicioId: 's1', usuarioId: 'u7' });
+  });
+
+  it('los destinatarios son la tripulación (por su usuario) y los participantes', async () => {
+    expect((await avisos.destinatarios('s1')).sort()).toEqual(['u1', 'u7']);
+  });
+
+  it('la central lo recibe por permiso, la tripulación por estar en el incidente, y nadie más', async () => {
+    const central = firstValueFrom(tiempoReal.flujoPara('uc', false, ['servicios:despachar'], true));
+    const tripulante = firstValueFrom(tiempoReal.flujoPara('u1', false, [], true));
+    let ajeno = false;
+    const sub = tiempoReal.flujoPara('ux', false, ['servicios:operar'], true).subscribe(() => { ajeno = true; });
+    await avisos.avisar('s1', 'EMERGENCIA');
+    expect((await central).datos).toMatchObject({ alerta: 'EMERGENCIA', numeroServicio: 'CS-2026-00157', texto: 'EMERGENCIA — CS-2026-00157' });
+    expect((await tripulante).servicioId).toBe('s1');
+    expect(ajeno).toBe(false);
+    sub.unsubscribe();
+  });
+
+  it('con soloIncidentes no pasan los demás eventos del despacho', async () => {
+    let recibidos = 0;
+    const sub = tiempoReal.flujoPara('u1', true, [], true).subscribe(() => { recibidos += 1; });
+    tiempoReal.emitir({ tipo: 'solicitud_nueva', para: ['u1'], seguimiento: true });
+    await avisos.avisar('s1', 'PEDIDO_URGENTE', '1 × Ambulancia');
+    expect(recibidos).toBe(1);
+    sub.unsubscribe();
+  });
+
+  it('un aviso que falla no lanza error (la acción ya quedó guardada)', async () => {
+    jest.spyOn(tiempoReal, 'emitir').mockImplementation(() => { throw new Error('bus caído'); });
+    await expect(avisos.avisar('s1', 'EMERGENCIA')).resolves.toBeUndefined();
+  });
+});
+```
+
+En `backend/src/modules/incidentes/acciones.spec.ts`:
+
+- Agregá `let avisos: { avisar: jest.Mock };` junto a las demás variables del `describe`.
+- Al principio del `beforeEach`, agregá `avisos = { avisar: jest.fn().mockResolvedValue(undefined) };`.
+- Pasá `avisos as never` como **último** argumento de `new AccionesService(…)`.
+- Agregá este caso:
+
+```ts
+  it('EMERGENCIA, condición crítica y pedido urgente avisan al instante; repetir no vuelve a avisar', async () => {
+    await acciones.emergencia('s1', {}, bombero);
+    expect(avisos.avisar).toHaveBeenLastCalledWith('s1', 'EMERGENCIA');
+    await acciones.situacion('s1', { condicion: 'MATERIAL_PELIGROSO', activa: true }, bombero);
+    await acciones.situacion('s1', { condicion: 'MATERIAL_PELIGROSO', activa: true }, bombero);
+    expect(avisos.avisar.mock.calls.filter((c) => c[1] === 'CONDICION_CRITICA')).toEqual([['s1', 'CONDICION_CRITICA', 'Material peligroso']]);
+    const dto = { tipoRecursoId: 'r1', prioridad: 'URGENTE' as const, claveIdempotencia: 'pedido-avisos-1' };
+    await acciones.solicitarRecurso('s1', dto, bombero);
+    await acciones.solicitarRecurso('s1', dto, bombero);
+    expect(avisos.avisar.mock.calls.filter((c) => c[1] === 'PEDIDO_URGENTE')).toEqual([['s1', 'PEDIDO_URGENTE', '1 × Ambulancia']]);
+    await acciones.emergenciaAtendida('s1', comando);
+    expect(avisos.avisar).toHaveBeenLastCalledWith('s1', 'EMERGENCIA_ATENDIDA');
+  });
+```
+
+En `backend/src/modules/incidentes/recepcion.spec.ts`:
+
+- Declará `let avisos: { avisar: jest.Mock };`, inicializalo en el `beforeEach` igual que arriba y pasá `avisos as never` como último argumento de `new RecepcionService(…)`.
+- En el caso "crea el incidente con tipo y dirección…", agregá al final:
+  `expect(avisos.avisar).toHaveBeenCalledWith(r.servicioId, 'NUEVO', 'Incendio estructural');`
+
+- [ ] **Paso 2: Correr las pruebas para ver que fallan**
+
+```bash
+cd /c/Proyectos/Personal/SIGBO/backend && npx jest src/modules/incidentes 2>&1 | tail -8
+```
+
+Resultado esperado: FAIL con `Cannot find module './avisos.service'`.
+
+- [ ] **Paso 3: El bus y el stream**
+
+En `backend/src/modules/despacho/despacho-tiempo-real.service.ts`:
+
+1. En el tipo `tipo` de `EventoDespacho`, agregá `| 'incidente'` al final de la unión.
+2. Dentro de `EventoDespacho`, después de `seguimiento?: boolean;`, agregá:
+
+```ts
+  /** Ademas, quien tenga este permiso (avisos del Centro de Operaciones a la central y al comando). */
+  permiso?: string;
+```
+
+3. Reemplazá el método `flujoPara` por:
+
+```ts
+  /** Flujo de eventos que le corresponden a una persona. Con `soloIncidentes`, solo los avisos de incidentes. */
+  flujoPara(usuarioId: string, puedeVerSeguimiento: boolean, permisos: readonly string[] = [], soloIncidentes = false): Observable<EventoDespacho> {
+    return this.bus$.pipe(
+      filter(
+        (e) =>
+          (!soloIncidentes || e.tipo === 'incidente') &&
+          (e.para.includes(usuarioId) || (!!e.seguimiento && puedeVerSeguimiento) || (!!e.permiso && permisos.includes(e.permiso))),
+      ),
+    );
+  }
+```
+
+En `backend/src/modules/despacho/despacho.controller.ts`, reemplazá el método `stream` completo (desde
+el comentario `/** Mantener este stream abierto…` hasta su llave de cierre) por:
+
+```ts
+  /**
+   * Mantener este stream abierto es lo que cuenta como "en linea" para recibir llamados.
+   * Con ?solo=incidentes (pantallas web del Centro de Operaciones y del Modo Incidente) solo llegan
+   * los avisos de incidentes y NO cuenta como presencia: abrir esa pantalla no hace que el despacho
+   * crea que la persona recibio una solicitud.
+   */
+  @Sse('stream')
+  @RequirePermission('despacho:responder')
+  stream(@CurrentUser() user: AuthenticatedUser, @Query('solo') solo?: string): Observable<{ data: unknown }> {
+    const soloIncidentes = solo === 'incidentes';
+    return new Observable((suscriptor) => {
+      if (!soloIncidentes) this.tiempoReal.conectar(user.id);
+      const sub = this.tiempoReal
+        .flujoPara(user.id, user.permisos.includes('despacho:seguimiento'), user.permisos, soloIncidentes)
+        // A la pantalla no le hace falta la lista de destinatarios de un aviso de incidente.
+        .subscribe((e) => suscriptor.next({ data: e.tipo === 'incidente' ? { tipo: e.tipo, servicioId: e.servicioId, datos: e.datos } : e }));
+      const reloj = setInterval(() => {
+        if (!soloIncidentes) this.tiempoReal.latido(user.id);
+        suscriptor.next({ data: { tipo: 'latido', hora: new Date().toISOString() } });
+      }, LATIDO_SSE_MS);
+      return () => {
+        clearInterval(reloj);
+        sub.unsubscribe();
+        if (!soloIncidentes) this.tiempoReal.desconectar(user.id);
+      };
+    });
+  }
+```
+
+(`Query` ya está importado en ese controlador; si no, sumalo al import de `@nestjs/common`.)
+
+- [ ] **Paso 4: Servicio de avisos**
+
+Crear `backend/src/modules/incidentes/avisos.service.ts`:
+
+```ts
+import { Injectable, Logger } from '@nestjs/common';
+import { InjectDataSource } from '@nestjs/typeorm';
+import { DataSource, In } from 'typeorm';
+import { PersonalServicio, Servicio, ServicioParticipante, Usuario } from '../../shared/entities';
+import { DespachoTiempoReal } from '../despacho/despacho-tiempo-real.service';
+
+export type TipoAviso = 'NUEVO' | 'EMERGENCIA' | 'EMERGENCIA_ATENDIDA' | 'CONDICION_CRITICA' | 'PEDIDO_URGENTE' | 'PERSONAL_FALTANTE';
+
+const ETIQUETA: Record<TipoAviso, string> = {
+  NUEVO: 'Nuevo servicio',
+  EMERGENCIA: 'EMERGENCIA',
+  EMERGENCIA_ATENDIDA: 'Emergencia atendida',
+  CONDICION_CRITICA: 'Condición crítica',
+  PEDIDO_URGENTE: 'Pedido urgente',
+  PERSONAL_FALTANTE: 'Recuento con personal sin confirmar',
+};
+
+/** Quien coordina recibe todos los avisos: la central y el comando. */
+export const PERMISO_AVISOS = 'servicios:despachar';
+
+/**
+ * Avisos inmediatos de un incidente por el canal en tiempo real del despacho. Llegan a la central
+ * (permiso servicios:despachar) y a quien trabaja en el incidente (su tripulacion y participantes).
+ * Se emiten DESPUES del commit y un aviso que falla nunca deshace la accion: la consulta periodica de
+ * las pantallas lo muestra igual, como mucho 5 s despues. Nada confidencial viaja por el stream.
+ */
+@Injectable()
+export class AvisosIncidente {
+  private readonly log = new Logger(AvisosIncidente.name);
+
+  constructor(
+    @InjectDataSource() private readonly dataSource: DataSource,
+    private readonly tiempoReal: DespachoTiempoReal,
+  ) {}
+
+  async destinatarios(servicioId: string): Promise<string[]> {
+    const m = this.dataSource.manager;
+    const [personal, participantes] = await Promise.all([
+      m.getRepository(PersonalServicio).find({ where: { servicioId } }),
+      m.getRepository(ServicioParticipante).find({ where: { servicioId } }),
+    ]);
+    const bomberos = [...new Set(personal.map((p) => p.bomberoId))];
+    const usuarios = bomberos.length ? await m.getRepository(Usuario).find({ where: { bomberoId: In(bomberos) } }) : [];
+    return [...new Set([...usuarios.map((u) => u.id), ...participantes.map((p) => p.usuarioId)])];
+  }
+
+  async avisar(servicioId: string, alerta: TipoAviso, detalle?: string): Promise<void> {
+    try {
+      const s = await this.dataSource.getRepository(Servicio).findOne({ where: { id: servicioId } });
+      const numero = s?.numeroServicio ?? '';
+      this.tiempoReal.emitir({
+        tipo: 'incidente',
+        servicioId,
+        para: await this.destinatarios(servicioId),
+        permiso: PERMISO_AVISOS,
+        datos: { alerta, numeroServicio: numero, texto: `${ETIQUETA[alerta]}${detalle ? `: ${detalle}` : ''} — ${numero}` },
+      });
+    } catch (error) {
+      this.log.warn(`No se pudo emitir el aviso ${alerta} de ${servicioId}: ${(error as Error).message}`);
+    }
+  }
+}
+```
+
+- [ ] **Paso 5: Emitir desde las acciones y la recepción**
+
+En `backend/src/modules/incidentes/acciones.service.ts`:
+
+- Import: `import { AvisosIncidente } from './avisos.service';`.
+- Constructor: agregá `private readonly avisos: AvisosIncidente,` como **último** parámetro.
+- En `emergencia`, después del `await this.auditar(ctx, 'EMERGENCIA', …);`, agregá `await this.avisos.avisar(servicioId, 'EMERGENCIA');`.
+- En `emergenciaAtendida`, después de su `await this.auditar(…);`, agregá `await this.avisos.avisar(servicioId, 'EMERGENCIA_ATENDIDA');`.
+- En `situacion`, reemplazá `return this.dataSource.transaction(async (m) => {` por `const r = await this.dataSource.transaction(async (m) => {`, y el final del método:
+
+```ts
+      return { repetido: false, activas: [...condicionesActivas([...eventos, { tipo, datos: JSON.stringify(datos) }])] };
+    });
+  }
+```
+
+  por:
+
+```ts
+      return { repetido: false, activas: [...condicionesActivas([...eventos, { tipo, datos: JSON.stringify(datos) }])] };
+    });
+    if (!r.repetido && dto.activa && condicion.critica) await this.avisos.avisar(servicioId, 'CONDICION_CRITICA', condicion.nombre);
+    return r;
+  }
+```
+
+- En `solicitarRecurso`, reemplazá `return this.dataSource.transaction(async (m) => {` por `const r = await this.dataSource.transaction(async (m) => {` y `if (previa) return previa;` por `if (previa) return { sol: previa, nuevo: false };`. El final del método:
+
+```ts
+        claveIdempotencia: dto.claveIdempotencia,
+      });
+      return sol;
+    });
+  }
+```
+
+  se reemplaza por:
+
+```ts
+        claveIdempotencia: dto.claveIdempotencia,
+      });
+      return { sol, nuevo: true };
+    });
+    if (r.nuevo && dto.prioridad === 'URGENTE') await this.avisos.avisar(servicioId, 'PEDIDO_URGENTE', `${r.sol.cantidad} × ${tipo.nombre}`);
+    return r.sol;
+  }
+```
+
+En `backend/src/modules/incidentes/recepcion.service.ts`:
+
+- Agregá `private readonly avisos: AvisosIncidente,` como último parámetro del constructor, con su import.
+- En `recibir`, justo antes de `return { servicioId: r.servicio.id, numeroServicio: …, repetido: false };`, agregá
+  `await this.avisos.avisar(r.servicio.id, 'NUEVO', tipo.nombre);`.
+
+En `backend/src/modules/incidentes/incidentes.module.ts`:
+
+- Agregá `DespachoModule` a `imports` (con `import { DespachoModule } from '../despacho/despacho.module';`).
+- Agregá `AvisosIncidente` a `providers`.
+- `DespachoModule` ya exporta `DespachoTiempoReal` y no importa `incidentes`, así que no se forma un ciclo.
+
+- [ ] **Paso 6: Correr las pruebas**
+
+```bash
+cd /c/Proyectos/Personal/SIGBO/backend && npx jest src/modules/incidentes src/modules/despacho 2>&1 | tail -8 && npx tsc --noEmit -p tsconfig.json 2>&1 | head -5
+```
+
+Resultado esperado: todo en verde. Las pruebas existentes de despacho siguen pasando: `flujoPara` con dos
+argumentos mantiene su comportamiento.
+
+- [ ] **Paso 7: Commit**
+
+```bash
+cd /c/Proyectos/Personal/SIGBO
+git add backend/src/modules/despacho backend/src/modules/incidentes
+git commit -m "Incidentes: avisos inmediatos por SSE (emergencia, condición crítica, pedido urgente) sin contar como presencia
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+
+---
+
+## Tarea 18: Control de personal en zona (backend)
+
+Por qué: lo primero que pregunta un comandante ante un derrumbe es quién está adentro. Cada persona del
+incidente registra si **entra o sale de la zona**, y el comando hace un **recuento** (PAR) confirmándolas una
+por una. Una persona en zona **nunca se libera sola**: si los móviles retornan con alguien adentro, la central
+recibe una alerta, y el incidente no se cierra hasta registrar su salida.
+
+**Archivos:**
+
+- Modificar: `backend/src/modules/incidentes/dto/incidentes.dto.ts`, `acciones.service.ts`, `incidentes.controller.ts`, `expediente.service.ts`, `cierre.service.ts`
+- Prueba: modificar `acciones.spec.ts`, `expediente.spec.ts`, `cierre.spec.ts`
+
+**Interfaces:**
+
+- Consume: las columnas `personal_servicio.en_zona` y `zona_desde` y los tipos `PERSONAL_ENTRA_ZONA`, `PERSONAL_SALE_ZONA` y `RECUENTO_PERSONAL` (tarea 1); `AvisosIncidente` (tarea 17).
+- Produce:
+  - Los DTO `ZonaDto { dentro }` y `RecuentoDto { presentes: string[]; faltantes: string[] }`, que extienden `AccionCampoDto`.
+  - `AccionesService.zona(servicioId, bomberoId, dto, ctx)` y `recuento(servicioId, dto, ctx)`.
+  - `POST /incidentes/:id/personal/:bomberoId/zona` (`servicios:operar`) y `POST /incidentes/:id/recuento` (`servicios:comandar`).
+  - En el expediente, cada tripulante suma `funcion`, `enZona` y `zonaDesde`, y el expediente suma `personalEnZona[]` y `ultimoRecuento`.
+  - En el tablero, `personalEnZona` por incidente y las alertas `PERSONAL_FALTANTE` (crítica) y `PERSONAL_EN_ZONA` (alta).
+  - El cierre se rechaza con alguien en zona.
+
+- [ ] **Paso 1: Escribir las pruebas**
+
+En `backend/src/modules/incidentes/acciones.spec.ts`, sumá `PersonalServicio` al import de entidades y agregá:
+
+```ts
+  it('control de personal: entra, sale, y un recuento con faltantes es crítico y avisa', async () => {
+    await sembrar(base, Bombero, { id: 'B2', nombre: 'Luis', apellido: 'Ríos', numeroBombero: 'BC-12', estado: 'ACTIVO' });
+    await sembrar(base, PersonalServicio, { id: 'ps1', servicioId: 's1', bomberoId: 'B1', rol: 'Bombero', enZona: false });
+    await sembrar(base, PersonalServicio, { id: 'ps2', servicioId: 's1', bomberoId: 'B2', rol: 'Bombero', enZona: false });
+    await acciones.zona('s1', 'B1', { dentro: true }, bombero);
+    await acciones.zona('s1', 'B2', { dentro: true }, bombero);
+    expect((await acciones.zona('s1', 'B1', { dentro: true }, bombero)).repetido).toBe(true);
+    await expect(acciones.recuento('s1', { presentes: ['B1'], faltantes: [] }, comando)).rejects.toThrow(/todas las personas/);
+    await acciones.recuento('s1', { presentes: ['B1'], faltantes: ['B2'] }, comando);
+    expect(base.tabla('IncidenteEvento').at(-1)).toMatchObject({ tipo: 'RECUENTO_PERSONAL', critico: true, titulo: 'Recuento: 1 sin confirmar (Luis Ríos (BC-12))' });
+    expect(avisos.avisar).toHaveBeenLastCalledWith('s1', 'PERSONAL_FALTANTE', '1 persona(s)');
+    await acciones.zona('s1', 'B2', { dentro: false }, bombero);
+    expect(base.tabla('PersonalServicio').find((p) => p.bomberoId === 'B2')).toMatchObject({ enZona: false, zonaDesde: null });
+    expect(base.tabla('IncidenteEvento').map((e) => e.tipo)).toEqual([
+      'PERSONAL_ENTRA_ZONA', 'PERSONAL_ENTRA_ZONA', 'RECUENTO_PERSONAL', 'PERSONAL_SALE_ZONA',
+    ]);
+  });
+
+  it('una persona que no figura en el incidente no se registra en zona', async () => {
+    await expect(acciones.zona('s1', 'B9', { dentro: true }, bombero)).rejects.toThrow(NotFoundException);
+  });
+
+  it('quien se sumó por una solicitud entra al personal al registrarse en zona', async () => {
+    await sembrar(base, Usuario, { id: 'u5', username: 'beto', bomberoId: 'B5' });
+    await sembrar(base, Bombero, { id: 'B5', nombre: 'Beto', apellido: 'Paz', numeroBombero: 'BC-30', estado: 'ACTIVO' });
+    await sembrar(base, ServicioParticipante, { id: 'sp5', servicioId: 's1', usuarioId: 'u5' });
+    await acciones.zona('s1', 'B5', { dentro: true }, bombero);
+    expect(base.tabla('PersonalServicio')).toEqual([expect.objectContaining({ bomberoId: 'B5', origen: 'SOLICITUD', enZona: true })]);
+  });
+```
+
+(Sumá también `ServicioParticipante` al import de entidades de ese archivo.)
+
+En `backend/src/modules/incidentes/expediente.spec.ts`, agregá al final del `describe`:
+
+```ts
+  it('alerta el recuento con faltantes y el personal en zona con el incidente en retorno', async () => {
+    Object.assign(base.tabla('Servicio').find((s) => s.id === 's1')!, { faseOperativa: 'RETORNO' });
+    Object.assign(base.tabla('PersonalServicio')[0], { enZona: true, zonaDesde: new Date('2026-10-07T14:50:00Z'), funcion: 'CONDUCTOR' });
+    await sembrar(base, IncidenteEvento, ev('6', 's1', 'RECUENTO_PERSONAL', { presentes: [], faltantes: ['B1'] }));
+    const t = await servicio.tablero(new Date('2026-10-07T16:00:00Z'));
+    expect(t.incidentes.find((i) => i.id === 's1')!.personalEnZona).toBe(1);
+    expect(t.alertas.map((a) => a.tipo)).toEqual(expect.arrayContaining(['PERSONAL_FALTANTE', 'PERSONAL_EN_ZONA']));
+    const e = await servicio.obtener('s1', 'u1');
+    expect(e.despachos[0].tripulacion[0]).toMatchObject({ funcion: 'CONDUCTOR', enZona: true });
+    expect(e.personalEnZona).toEqual([expect.objectContaining({ bomberoId: 'B1', nombre: 'Ana Gómez (BC-01)' })]);
+    expect(e.ultimoRecuento).toMatchObject({ presentes: 0, faltantes: ['Ana Gómez (BC-01)'] });
+  });
+```
+
+En `backend/src/modules/incidentes/cierre.spec.ts`, agregá:
+
+```ts
+  it('no se cierra con personas registradas dentro de la zona', async () => {
+    Object.assign(base.tabla('PersonalServicio')[0], { enZona: true });
+    await expect(cierre.cerrar('s1', { resultado: 'CONTROLADO', huboVictimas: false, huboDanos: false }, ctx)).rejects.toThrow(/dentro de la zona \(Ana Gómez \(BC-01\)\)/);
+  });
+```
+
+- [ ] **Paso 2: Correr las pruebas para ver que fallan**
+
+```bash
+cd /c/Proyectos/Personal/SIGBO/backend && npx jest src/modules/incidentes 2>&1 | tail -8
+```
+
+Resultado esperado: FAIL (`acciones.zona is not a function`, faltan campos del expediente y el cierre no rechaza).
+
+- [ ] **Paso 3: DTO y acciones**
+
+Al final de `backend/src/modules/incidentes/dto/incidentes.dto.ts` agregá:
+
+```ts
+export class ZonaDto extends AccionCampoDto {
+  @IsBoolean() dentro!: boolean;
+}
+
+/** Recuento de personal (PAR): todas las personas en zona, cada una como presente o sin confirmar. */
+export class RecuentoDto extends AccionCampoDto {
+  @IsArray() @ArrayMaxSize(100) @IsUUID('all', { each: true }) presentes!: string[];
+  @IsArray() @ArrayMaxSize(100) @IsUUID('all', { each: true }) faltantes!: string[];
+}
+```
+
+En `backend/src/modules/incidentes/acciones.service.ts`:
+
+- Imports:
+  - Sumá `Bombero`, `PersonalServicio` y `ServicioParticipante` al import de entidades.
+  - Cambiá `import { DataSource } from 'typeorm';` por `import { DataSource, In } from 'typeorm';`.
+  - Sumá `nombreBombero` al import de `incidente.logica`, y `RecuentoDto` y `ZonaDto` al de los DTO.
+- Agregá estos dos métodos antes de `private auditar(`:
+
+```ts
+  /** Control de personal: alguien entra o sale de la zona de trabajo. Nunca se libera solo. */
+  async zona(servicioId: string, bomberoId: string, dto: ZonaDto, ctx: ContextoIncidente) {
+    return this.dataSource.transaction(async (m) => {
+      if (dto.claveIdempotencia && (await this.cronologia.buscarPorClave(m, servicioId, dto.claveIdempotencia))) return { repetido: true };
+      const s = await this.motor.bloquear(m, servicioId);
+      if (s.faseOperativa === 'CERRADO') throw new ConflictException('El incidente ya está cerrado.');
+      const repo = m.getRepository(PersonalServicio);
+      let p = await repo.findOne({ where: { servicioId, bomberoId } });
+      if (!p) {
+        // Quien se sumo por una solicitud de despacho figura como participante: entra al personal ahora.
+        const usuario = await m.getRepository(Usuario).findOne({ where: { bomberoId } });
+        const participa = usuario ? await m.getRepository(ServicioParticipante).findOne({ where: { servicioId, usuarioId: usuario.id } }) : null;
+        if (!participa) throw new NotFoundException('Esa persona no figura en el personal del incidente.');
+        p = await repo.save(repo.create({
+          servicioId, bomberoId, rol: 'Sumado por solicitud', horasServicio: 0, observaciones: null,
+          vehiculoId: null, despachoId: null, origen: 'SOLICITUD', funcion: null, enZona: false, zonaDesde: null,
+        }));
+      }
+      if (!!p.enZona === dto.dentro) return { repetido: true };
+      const ocurridoEn = instanteDelHecho(dto.ocurridoEn);
+      await repo.update({ id: p.id }, { enZona: dto.dentro, zonaDesde: dto.dentro ? ocurridoEn : null });
+      const b = await m.getRepository(Bombero).findOne({ where: { id: bomberoId } });
+      const fase = dto.dentro ? await this.motor.alHecho(m, servicioId, 'ACCION_OPERATIVA', ocurridoEn) : null;
+      await this.cronologia.registrar(m, {
+        servicioId,
+        tipo: dto.dentro ? 'PERSONAL_ENTRA_ZONA' : 'PERSONAL_SALE_ZONA',
+        titulo: `${nombreBombero(b)} ${dto.dentro ? 'entra a' : 'sale de'} la zona`,
+        ocurridoEn, usuarioId: ctx.usuarioId, gps: dto.gps ?? null, fase,
+        fuente: 'personal_servicio', fuenteId: p.id, datos: { bomberoId },
+        origen: ctx.origen, dispositivo: ctx.dispositivo, claveIdempotencia: dto.claveIdempotencia,
+      });
+      return { repetido: false };
+    });
+  }
+
+  /** Recuento de personal (PAR): el comando confirma, una por una, a todas las personas en zona. */
+  async recuento(servicioId: string, dto: RecuentoDto, ctx: ContextoIncidente) {
+    const r = await this.dataSource.transaction(async (m) => {
+      if (dto.claveIdempotencia && (await this.cronologia.buscarPorClave(m, servicioId, dto.claveIdempotencia))) return { repetido: true, faltantes: 0 };
+      const s = await this.motor.bloquear(m, servicioId);
+      if (s.faseOperativa === 'CERRADO') throw new ConflictException('El incidente ya está cerrado.');
+      const enZona = (await m.getRepository(PersonalServicio).find({ where: { servicioId } })).filter((p) => p.enZona).map((p) => p.bomberoId);
+      if (enZona.length === 0) throw new ConflictException('No hay nadie registrado dentro de la zona.');
+      if (dto.presentes.some((x) => dto.faltantes.includes(x))) throw new BadRequestException('Una persona no puede estar presente y sin confirmar a la vez.');
+      const declarados = new Set([...dto.presentes, ...dto.faltantes]);
+      if (enZona.some((x) => !declarados.has(x))) throw new BadRequestException('El recuento tiene que incluir a todas las personas que están en zona.');
+      const bomberos = await m.getRepository(Bombero).find({ where: { id: In([...declarados]) } });
+      const nombre = new Map(bomberos.map((b) => [b.id, nombreBombero(b)]));
+      await this.cronologia.registrar(m, {
+        servicioId,
+        tipo: 'RECUENTO_PERSONAL',
+        titulo: dto.faltantes.length
+          ? `Recuento: ${dto.faltantes.length} sin confirmar (${dto.faltantes.map((x) => nombre.get(x) ?? 'persona').join(', ')})`
+          : `Recuento: ${dto.presentes.length} presentes, todos confirmados`,
+        ocurridoEn: instanteDelHecho(dto.ocurridoEn), usuarioId: ctx.usuarioId, gps: dto.gps ?? null,
+        critico: dto.faltantes.length > 0, datos: { presentes: dto.presentes, faltantes: dto.faltantes },
+        origen: ctx.origen, dispositivo: ctx.dispositivo, claveIdempotencia: dto.claveIdempotencia,
+      });
+      return { repetido: false, faltantes: dto.faltantes.length };
+    });
+    if (!r.repetido) {
+      await this.auditar(ctx, 'RECUENTO_PERSONAL', servicioId, null, { presentes: dto.presentes.length, faltantes: dto.faltantes });
+      if (r.faltantes > 0) await this.avisos.avisar(servicioId, 'PERSONAL_FALTANTE', `${r.faltantes} persona(s)`);
+    }
+    return r;
+  }
+```
+
+En `backend/src/modules/incidentes/incidentes.controller.ts`, sumá `RecuentoDto` y `ZonaDto` al import de los
+DTO y agregá al final de la clase:
+
+```ts
+  @Post(':id/personal/:bomberoId/zona')
+  @RequirePermission('servicios:operar')
+  zona(
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Param('bomberoId', new ParseUUIDPipe()) bomberoId: string,
+    @Body() dto: ZonaDto,
+    @CurrentUser() user: AuthenticatedUser,
+    @Req() req: Request,
+  ) {
+    return this.acciones.zona(id, bomberoId, dto, contextoDe(user, req));
+  }
+
+  @Post(':id/recuento')
+  @RequirePermission('servicios:comandar')
+  recuento(@Param('id', new ParseUUIDPipe()) id: string, @Body() dto: RecuentoDto, @CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
+    return this.acciones.recuento(id, dto, contextoDe(user, req));
+  }
+```
+
+- [ ] **Paso 4: Expediente y tablero**
+
+En `backend/src/modules/incidentes/expediente.service.ts`:
+
+1. En el tipo `AlertaTablero['tipo']` agregá `| 'PERSONAL_FALTANTE' | 'PERSONAL_EN_ZONA'`.
+2. Debajo de la función `presentarEvento`, agregá:
+
+```ts
+/** El ultimo RECUENTO_PERSONAL: cuando, cuantos presentes y quienes quedaron sin confirmar. */
+function ultimoRecuento(eventos: IncidenteEvento[], nombre: (id: string) => string) {
+  const e = [...eventos].reverse().find((x) => x.tipo === 'RECUENTO_PERSONAL');
+  if (!e) return null;
+  const d = leerDatos(e.datos) as { presentes?: string[]; faltantes?: string[] } | null;
+  return { ocurridoEn: e.ocurridoEn, presentes: d?.presentes?.length ?? 0, faltantes: (d?.faltantes ?? []).map(nombre) };
+}
+```
+
+3. En `tablero`, en la consulta de eventos, cambiá
+   `tipo: In(['SITUACION_MARCADA', 'SITUACION_RESUELTA', 'EMERGENCIA', 'EMERGENCIA_ATENDIDA'])` por
+   `tipo: In(['SITUACION_MARCADA', 'SITUACION_RESUELTA', 'EMERGENCIA', 'EMERGENCIA_ATENDIDA', 'RECUENTO_PERSONAL'])`.
+4. En `tablero`, inmediatamente después del bloque `const personal = despachos.length ? … : [];`, agregá:
+
+```ts
+    const enZona = vacio ? [] : await m.getRepository(PersonalServicio).find({ where: { servicioId: In(ids), enZona: true } });
+```
+
+5. En el objeto de cada incidente del tablero, después de `pedidosPendientes: …,`, agregá
+   `personalEnZona: enZona.filter((p) => p.servicioId === s.id).length,`.
+6. En el bucle de alertas `for (const i of incidentes) { … }`, después de la línea de condiciones críticas, agregá:
+
+```ts
+      const recuento = [...(porServicio.get(i.id) ?? [])].reverse().find((e) => e.tipo === 'RECUENTO_PERSONAL');
+      const faltan = (leerDatos(recuento?.datos ?? null) as { faltantes?: string[] } | null)?.faltantes?.length ?? 0;
+      if (faltan > 0) alertas.push({ nivel: 'CRITICA', tipo: 'PERSONAL_FALTANTE', servicioId: i.id, texto: `Recuento con ${faltan} persona(s) sin confirmar — ${i.numeroServicio}` });
+      if ((i.fase === 'RETORNO' || i.fase === 'DISPONIBLE') && i.personalEnZona > 0) {
+        alertas.push({ nivel: 'ALTA', tipo: 'PERSONAL_EN_ZONA', servicioId: i.id, texto: `${i.personalEnZona} persona(s) siguen registradas en zona con los móviles de vuelta — ${i.numeroServicio}` });
+      }
+```
+
+7. En `obtener`, reemplazá el `map` de la tripulación de cada despacho por
+   `tripulacion: personal.filter((p) => p.despachoId === d.id).map((p) => ({ bomberoId: p.bomberoId, nombre: nombre(p.bomberoId), rol: p.rol, funcion: p.funcion ?? null, enZona: !!p.enZona, zonaDesde: p.zonaDesde ?? null })),`
+8. En el objeto que devuelve `obtener`, después de `emergenciaActiva: emergenciaActiva(evs),`, agregá:
+
+```ts
+      personalEnZona: personal.filter((p) => p.enZona).map((p) => ({ bomberoId: p.bomberoId, nombre: nombre(p.bomberoId), desde: p.zonaDesde })),
+      ultimoRecuento: ultimoRecuento(evs, nombre),
+```
+
+- [ ] **Paso 5: El cierre no deja a nadie adentro**
+
+En `backend/src/modules/incidentes/cierre.service.ts`:
+
+- Sumá `Bombero` al import de entidades y `ConflictException` al de `@nestjs/common`.
+- Cambiá el import de `typeorm` a `import { DataSource, In } from 'typeorm';` y sumá `nombreBombero` al import de `incidente.logica`.
+- En `cerrar`, inmediatamente después de `validarCierre(s.faseOperativa, activos.length);`, agregá:
+
+```ts
+      const adentro = (await m.getRepository(PersonalServicio).find({ where: { servicioId } })).filter((p) => p.enZona);
+      if (adentro.length > 0) {
+        const bomberos = await m.getRepository(Bombero).find({ where: { id: In(adentro.map((p) => p.bomberoId)) } });
+        throw new ConflictException(
+          `No se puede cerrar: ${adentro.length} persona(s) siguen registradas dentro de la zona (${bomberos.map((b) => nombreBombero(b)).join(', ')}). Registrá su salida primero.`,
+        );
+      }
+```
+
+- [ ] **Paso 6: Correr las pruebas**
+
+```bash
+cd /c/Proyectos/Personal/SIGBO/backend && npx jest src/modules/incidentes 2>&1 | tail -8 && npx tsc --noEmit -p tsconfig.json 2>&1 | head -5
+```
+
+Resultado esperado: todo en verde.
+
+- [ ] **Paso 7: Commit**
+
+```bash
+cd /c/Proyectos/Personal/SIGBO
+git add backend/src/modules/incidentes
+git commit -m "Incidentes: control de personal en zona y recuento; alertas y cierre bloqueado con alguien adentro
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+
+---
+
+## Tarea 19: Fotos de víctimas confidenciales y marca de quien no figura en el incidente (backend)
+
+**Archivos:**
+
+- Modificar: `backend/src/modules/campo/adjuntos.service.ts`, `campo.controller.ts`, `campo.spec.ts`
+- Modificar: `backend/src/modules/incidentes/expediente.service.ts`, `cierre.service.ts`, `incidentes.controller.ts`, `acciones.service.ts`, `expediente.spec.ts`, `acciones.spec.ts`
+
+**Interfaces:**
+
+- Consume: el permiso existente `despacho:confidencial` (migración 090) y la decisión **DEC-2** de la tarea 0.
+- Produce:
+  - `AdjuntosService.listar(entidad, entidadId, verConfidencial = false)` y `archivo(id, verConfidencial = false, ctx?)`: las fotos con categoría `VICTIMA` solo se ven con ese permiso, y cada acceso queda auditado como `ACCESO_CONFIDENCIAL`.
+  - `ExpedienteService.obtener(servicioId, usuarioId, verConfidencial = false)`, que suma `fotosOcultas: number`, y `CierreService.informe(servicioId, verConfidencial = false)`.
+  - `AccionesService.registrarCampo(m, ctx, evento)`: marca `datos.fueraDeAsignacion = true` cuando quien actúa no figura en el incidente o, según DEC-2, lo rechaza (salvo EMERGENCIA).
+- Nota: se usa el permiso directamente y no la matriz de pantallas (que en despacho decide la columna
+  "Confidencial"). Es una simplificación de este corte; queda anotada en `.context/INCIDENTES.md` §7.
+
+- [ ] **Paso 1: Escribir las pruebas**
+
+En `backend/src/modules/campo/campo.spec.ts`, dentro del `describe` de `AdjuntosService`, agregá
+(`audit` es el mock de auditoría que ya usa ese `describe`):
+
+```ts
+  it('una foto de víctima solo se lista y se descarga con despacho:confidencial, y el acceso se audita', async () => {
+    await sembrar(base, Servicio, { id: 'S8', estado: 'EN_CURSO' });
+    const foto = await servicio.subir(archivo(PNG), { entidad: 'SERVICIO', entidadId: 'S8', tipo: 'FOTO', categoria: 'VICTIMA' }, ctx);
+    expect(await servicio.listar('SERVICIO', 'S8')).toEqual([]);
+    expect(await servicio.listar('SERVICIO', 'S8', true)).toHaveLength(1);
+    await expect(servicio.archivo(foto.id)).rejects.toThrow(ForbiddenException);
+    await servicio.archivo(foto.id, true, ctx).catch(() => undefined);
+    expect(audit.registrar).toHaveBeenCalledWith(expect.objectContaining({ accion: 'ACCESO_CONFIDENCIAL', recursoId: foto.id }));
+  });
+```
+
+(Sumá `ForbiddenException` al import de `@nestjs/common` si no estaba.)
+
+En `backend/src/modules/incidentes/expediente.spec.ts` sumá `Adjunto` al import de entidades y agregá:
+
+```ts
+  it('las fotos de víctimas no salen en el expediente sin permiso confidencial', async () => {
+    await sembrar(base, Adjunto, { id: 'f1', entidad: 'SERVICIO', entidadId: 's1', tipo: 'FOTO', categoria: 'VICTIMA', tomadoEn: new Date() });
+    await sembrar(base, Adjunto, { id: 'f2', entidad: 'SERVICIO', entidadId: 's1', tipo: 'FOTO', categoria: 'DANO', tomadoEn: new Date() });
+    const sin = await servicio.obtener('s1', 'u1');
+    expect(sin.fotos.map((f) => f.id)).toEqual(['f2']);
+    expect(sin.fotosOcultas).toBe(1);
+    const con = await servicio.obtener('s1', 'u1', true);
+    expect(con.fotos).toHaveLength(2);
+    expect(con.fotosOcultas).toBe(0);
+  });
+```
+
+En `backend/src/modules/incidentes/acciones.spec.ts`:
+
+- Sumá `ServicioParticipante` al import si no estaba.
+- En el `beforeEach`, después de sembrar los usuarios, agregá
+  `await sembrar(base, ServicioParticipante, { id: 'sp-u2', servicioId: 's1', usuarioId: 'u2' });`. Así
+  `bombero` figura en el incidente y las pruebas anteriores no cambian de sentido.
+- Agregá estas pruebas (`ajeno` no figura en el incidente):
+
+```ts
+  const ajeno: ContextoIncidente = { usuarioId: 'u3', username: 'otro', permisos: ['servicios:operar'], origen: 'WEB' };
+
+  it('quien no figura en el incidente queda marcado (la central y el comando no)', async () => {
+    await sembrar(base, Usuario, { id: 'u3', username: 'otro', bomberoId: null });
+    await acciones.comunicacion('s1', { texto: 'Desde otro incidente' }, ajeno);
+    await acciones.comunicacion('s1', { texto: 'Desde el comando' }, comando);
+    const [a, b] = base.tabla('IncidenteEvento');
+    expect(JSON.parse(a.datos as string)).toMatchObject({ fueraDeAsignacion: true });
+    expect(JSON.parse(b.datos as string).fueraDeAsignacion).toBeUndefined();
+  });
+
+  it('la EMERGENCIA nunca se bloquea, venga de quien venga', async () => {
+    await sembrar(base, Usuario, { id: 'u3', username: 'otro', bomberoId: null });
+    await expect(acciones.emergencia('s1', {}, ajeno)).resolves.toBeDefined();
+  });
+```
+
+  **Si DEC-2 fue "solo quien figura en el incidente"**, reemplazá la primera de las dos por:
+
+```ts
+  it('quien no figura en el incidente no puede registrar (la central y el comando sí)', async () => {
+    await sembrar(base, Usuario, { id: 'u3', username: 'otro', bomberoId: null });
+    await expect(acciones.comunicacion('s1', { texto: 'Desde otro incidente' }, ajeno)).rejects.toThrow(ForbiddenException);
+    await expect(acciones.comunicacion('s1', { texto: 'Desde el comando' }, comando)).resolves.toBeDefined();
+  });
+```
+
+- [ ] **Paso 2: Correr las pruebas para ver que fallan**
+
+```bash
+cd /c/Proyectos/Personal/SIGBO/backend && npx jest src/modules/campo src/modules/incidentes 2>&1 | tail -8
+```
+
+Resultado esperado: FAIL en las cuatro pruebas nuevas.
+
+- [ ] **Paso 3: Adjuntos**
+
+En `backend/src/modules/campo/adjuntos.service.ts`, sumá `ForbiddenException` al import de `@nestjs/common` y reemplazá:
+
+```ts
+  async listar(entidad: EntidadAdjunto, entidadId: string) {
+    const filas = await this.dataSource.getRepository(Adjunto).find({ where: { entidad, entidadId }, order: { creadoEn: 'DESC' } });
+    return filas.map(metadatos);
+  }
+```
+
+por:
+
+```ts
+  /** Las fotos clasificadas como VICTIMA son confidenciales (punto 24 del pedido): solo con despacho:confidencial. */
+  async listar(entidad: EntidadAdjunto, entidadId: string, verConfidencial = false) {
+    const filas = await this.dataSource.getRepository(Adjunto).find({ where: { entidad, entidadId }, order: { creadoEn: 'DESC' } });
+    return filas.filter((a) => verConfidencial || a.categoria !== 'VICTIMA').map(metadatos);
+  }
+```
+
+y el comienzo de `archivo`:
+
+```ts
+  async archivo(id: string): Promise<{ buffer: Buffer; mime: string }> {
+    const a = await this.dataSource.getRepository(Adjunto).findOne({ where: { id } });
+    if (!a) throw new NotFoundException('Adjunto no encontrado');
+```
+
+por:
+
+```ts
+  async archivo(id: string, verConfidencial = false, ctx?: ContextoCampo): Promise<{ buffer: Buffer; mime: string }> {
+    const a = await this.dataSource.getRepository(Adjunto).findOne({ where: { id } });
+    if (!a) throw new NotFoundException('Adjunto no encontrado');
+    if (a.categoria === 'VICTIMA') {
+      if (!verConfidencial) throw new ForbiddenException('Foto confidencial: hace falta el permiso despacho:confidencial.');
+      if (ctx) {
+        await this.auditoria.registrar({
+          usuarioId: ctx.usuarioId, accion: 'ACCESO_CONFIDENCIAL', recurso: 'servicios.adjunto', recursoId: a.id,
+          datosDespues: { categoria: a.categoria, entidadId: a.entidadId }, ip: ctx.ip ?? null, userAgent: ctx.userAgent ?? null,
+        });
+      }
+    }
+```
+
+En `backend/src/modules/campo/campo.controller.ts`, reemplazá los dos endpoints de lectura de adjuntos por:
+
+```ts
+  @Get('adjuntos')
+  @RequirePermission('adjuntos:ver')
+  listarAdjuntos(@Query('entidad') entidad: string, @Query('entidadId', new ParseUUIDPipe()) entidadId: string, @CurrentUser() user: AuthenticatedUser) {
+    if (!(ENTIDADES as readonly string[]).includes(entidad)) throw new BadRequestException('Entidad no valida.');
+    return this.adjuntos.listar(entidad as (typeof ENTIDADES)[number], entidadId, user.permisos.includes('despacho:confidencial'));
+  }
+
+  @Get('adjuntos/:id/archivo')
+  @RequirePermission('adjuntos:ver')
+  async archivo(@Param('id', new ParseUUIDPipe()) id: string, @CurrentUser() user: AuthenticatedUser, @Req() req: Request, @Res() res: Response) {
+    const { buffer, mime } = await this.adjuntos.archivo(id, user.permisos.includes('despacho:confidencial'), this.ctx(user, req));
+    res.set({ 'Content-Type': mime, 'Content-Length': String(buffer.length), 'Cache-Control': 'private, max-age=300', 'X-Content-Type-Options': 'nosniff' });
+    res.send(buffer);
+  }
+```
+
+- [ ] **Paso 4: Expediente e informe**
+
+En `backend/src/modules/incidentes/expediente.service.ts`:
+
+- Firma: `async obtener(servicioId: string, usuarioId: string | null, verConfidencial = false) {`.
+- En `fotos`, cambiá `.filter((a) => a.tipo === 'FOTO')` por `.filter((a) => a.tipo === 'FOTO' && (verConfidencial || a.categoria !== 'VICTIMA'))`.
+- Después de la propiedad `fotos: …,` agregá
+  `fotosOcultas: adjuntos.filter((a) => a.tipo === 'FOTO' && !verConfidencial && a.categoria === 'VICTIMA').length,`.
+
+En `backend/src/modules/incidentes/cierre.service.ts`:
+
+- Firma: `async informe(servicioId: string, verConfidencial = false) {`.
+- `const exp = await this.expediente.obtener(servicioId, null, verConfidencial);`
+
+En `backend/src/modules/incidentes/incidentes.controller.ts`:
+
+- En `obtener`: `return this.expediente.obtener(id, user.id, user.permisos.includes('despacho:confidencial'));`
+- En `informe`, agregá el parámetro `@CurrentUser() user: AuthenticatedUser` y devolvé
+  `this.cierre.informe(id, user.permisos.includes('despacho:confidencial'))`.
+
+- [ ] **Paso 5: Marca de quien no figura en el incidente**
+
+En `backend/src/modules/incidentes/acciones.service.ts`:
+
+- Sumá `ForbiddenException` al import de `@nestjs/common`, `EntityManager` al de `typeorm` y
+  `NuevoEvento` al de `cronologia.service`.
+- Agregá antes de `private auditar(`:
+
+```ts
+  /** La central y el comando estan asignados por su funcion; el resto, si figura en el personal o entre los participantes. */
+  private async fueraDeAsignacion(m: EntityManager, servicioId: string, ctx: ContextoIncidente): Promise<boolean> {
+    if (ctx.permisos.includes('servicios:despachar') || ctx.permisos.includes('servicios:comandar')) return false;
+    const u = await m.getRepository(Usuario).findOne({ where: { id: ctx.usuarioId } });
+    if (u?.bomberoId && (await m.getRepository(PersonalServicio).findOne({ where: { servicioId, bomberoId: u.bomberoId } }))) return false;
+    return !(await m.getRepository(ServicioParticipante).findOne({ where: { servicioId, usuarioId: ctx.usuarioId } }));
+  }
+
+  /** Evento de una accion de campo: quien no figura en el incidente queda marcado (DEC-2). La EMERGENCIA nunca se bloquea. */
+  private async registrarCampo(m: EntityManager, ctx: ContextoIncidente, e: NuevoEvento) {
+    if (!(await this.fueraDeAsignacion(m, e.servicioId, ctx))) return this.cronologia.registrar(m, e);
+    return this.cronologia.registrar(m, { ...e, datos: { ...(e.datos ?? {}), fueraDeAsignacion: true } });
+  }
+```
+
+- **Si DEC-2 fue "solo quien figura en el incidente"**, la segunda línea de `registrarCampo` queda así:
+
+```ts
+    if (e.tipo !== 'EMERGENCIA') throw new ForbiddenException('No figurás en el personal de este incidente: pedí que te sumen.');
+    return this.cronologia.registrar(m, { ...e, datos: { ...(e.datos ?? {}), fueraDeAsignacion: true } });
+```
+
+- En los métodos `situacion`, `solicitarRecurso`, `emergencia`, `comunicacion` y `zona`, reemplazá la llamada
+  `this.cronologia.registrar(m, {` por `this.registrarCampo(m, ctx, {`. Son cinco reemplazos; los demás métodos
+  (decisiones del comando y la central) siguen usando `this.cronologia.registrar`.
+
+- [ ] **Paso 6: Correr las pruebas**
+
+```bash
+cd /c/Proyectos/Personal/SIGBO/backend && npx jest src/modules/campo src/modules/incidentes 2>&1 | tail -8 && npx tsc --noEmit -p tsconfig.json 2>&1 | head -5
+```
+
+Resultado esperado: todo en verde.
+
+- [ ] **Paso 7: Commit**
+
+```bash
+cd /c/Proyectos/Personal/SIGBO
+git add backend/src/modules/campo backend/src/modules/incidentes
+git commit -m "Incidentes: fotos de víctimas solo con permiso confidencial y marca de quien no figura en el incidente
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+
+---
+
+## Tarea 20: Punto de control A: backend completo contra la base real
+
+Las bases falsas ignoran los bloqueos, así que la concurrencia real y el canal en tiempo real solo se
+prueban acá. **No se pasa a la fase B (frontend) con algo en rojo.**
+
+**Archivos:**
+
+- Crear: `scripts/smoke-incidente.mjs`
+
+**Interfaces:**
+
+- Consume: todos los endpoints de la fase A.
+- Produce: la prueba viva que la tarea 24 vuelve a correr al final.
+
+- [ ] **Paso 1: Suite y tipos**
+
+```bash
+cd /c/Proyectos/Personal/SIGBO/backend && npx tsc --noEmit -p tsconfig.json && npm test 2>&1 | tail -6
+```
+
+Resultado esperado: `tsc` limpio y todas las suites en verde. Son las del estado inicial más las 9 nuevas
+(`incidente.logica`, `incidente-nucleo`, `tripulacion`, `recepcion`, `expediente`, `acciones`, `cierre`, `avisos`;
+más los casos agregados a `flota.service`, `campo`, `despacho` y `servicio-activo`).
+
+- [ ] **Paso 2: Prueba viva**
+
+Crear `scripts/smoke-incidente.mjs`:
+
+```js
+#!/usr/bin/env node
+/**
+ * Prueba viva del Centro de Operaciones e Incidentes contra el backend y la base reales.
+ * Recorre un incidente completo por la API, como lo harian la central y el comando, y dice el
+ * resultado de cada paso. Prueba ademas lo que las pruebas unitarias no pueden: concurrencia real
+ * (dos operadores, dos celulares) y los avisos por el canal en tiempo real. Se detiene en el primer fallo.
+ *
+ * ESCRIBE EN LA BASE: deja un incidente de PRUEBA cerrado con su bitacora (inmutable: no se puede
+ * borrar), mueve dos moviles (vuelven al cuartel al final) y suma una persona al personal del
+ * incidente. Por eso exige --confirmar.
+ *
+ * Correr con el backend levantado:
+ *   node scripts/smoke-incidente.mjs --usuario admin --password <clave> --confirmar
+ *   [--base http://localhost:3001/api/v1] [--origen http://localhost:3000]
+ */
+const arg = (nombre, porDefecto = null) => {
+  const i = process.argv.indexOf(`--${nombre}`);
+  return i !== -1 && process.argv[i + 1] && !process.argv[i + 1].startsWith('--') ? process.argv[i + 1] : porDefecto;
+};
+
+const BASE = arg('base', 'http://localhost:3001/api/v1');
+const ORIGEN = arg('origen', 'http://localhost:3000');
+const usuario = arg('usuario');
+const password = arg('password');
+if (!process.argv.includes('--confirmar') || !usuario || !password) {
+  console.error('Uso: node scripts/smoke-incidente.mjs --usuario <u> --password <p> --confirmar');
+  process.exit(2);
+}
+
+let cookies = '';
+const pasos = [];
+const marca = Date.now().toString(36);
+const clave = (s) => `smoke-${marca}-${s}`;
+const gps = { latitud: -25.2865, longitud: -57.647, precisionM: 12 };
+const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function api(metodo, ruta, cuerpo) {
+  const cabeceras = { Accept: 'application/json', Cookie: cookies };
+  if (metodo !== 'GET') Object.assign(cabeceras, { 'Content-Type': 'application/json', 'X-SIGBO-Request': '1', Origin: ORIGEN });
+  const res = await fetch(BASE + ruta, { method: metodo, headers: cabeceras, body: cuerpo === undefined ? undefined : JSON.stringify(cuerpo) });
+  return { estado: res.status, datos: await res.json().catch(() => null) };
+}
+
+function resumen() {
+  const fallas = pasos.filter((p) => !p.ok).length;
+  console.log(`\n${pasos.length - fallas}/${pasos.length} pasos bien.`);
+}
+
+function paso(nombre, ok, detalle = '') {
+  pasos.push({ nombre, ok });
+  console.log(`${ok ? 'OK   ' : 'FALLA'} ${nombre}${detalle ? ` — ${detalle}` : ''}`);
+  if (!ok) {
+    resumen();
+    process.exit(1);
+  }
+}
+
+/** Escucha GET /despacho/stream?solo=incidentes y junta los avisos que llegan. */
+async function escucharAvisos() {
+  const control = new AbortController();
+  const recibidos = [];
+  const res = await fetch(`${BASE}/despacho/stream?solo=incidentes`, { headers: { Cookie: cookies, Accept: 'text/event-stream' }, signal: control.signal });
+  const lector = res.body.getReader();
+  const decodificador = new TextDecoder();
+  let resto = '';
+  const lectura = (async () => {
+    try {
+      for (;;) {
+        const { value, done } = await lector.read();
+        if (done) break;
+        resto += decodificador.decode(value, { stream: true });
+        const bloques = resto.split('\n\n');
+        resto = bloques.pop() ?? '';
+        for (const b of bloques) {
+          const linea = b.split('\n').find((l) => l.startsWith('data:'));
+          if (linea) {
+            try {
+              recibidos.push(JSON.parse(linea.slice(5).trim()));
+            } catch {
+              /* otro formato */
+            }
+          }
+        }
+      }
+    } catch {
+      /* cerrado por nosotros */
+    }
+  })();
+  return { estado: res.status, recibidos, cerrar: async () => { control.abort(); await lectura; } };
+}
+
+// 1. Sesion (cookie HttpOnly, como el navegador)
+const login = await fetch(`${BASE}/auth/login`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json', 'X-SIGBO-Request': '1', Origin: ORIGEN },
+  body: JSON.stringify({ usernameOrEmail: usuario, password }),
+});
+cookies = (login.headers.getSetCookie?.() ?? []).map((c) => c.split(';')[0]).join('; ');
+paso('Inicio de sesión', login.ok && cookies.length > 0, `HTTP ${login.status}`);
+
+// 2. Catalogos y moviles libres
+const cat = await api('GET', '/incidentes/catalogos');
+paso('Catálogos', cat.estado === 200 && cat.datos.condiciones.length >= 22 && cat.datos.tiposRecurso.length >= 12 && cat.datos.bomberos.length > 0, `${cat.datos?.condiciones?.length} condiciones`);
+const tipo = cat.datos.tiposServicio[0];
+const ambulancia = cat.datos.tiposRecurso.find((r) => r.codigo === 'AMBULANCIA');
+const persona = cat.datos.bomberos[0];
+const flota = await api('GET', '/flota/tablero');
+const libres = (flota.datos ?? []).filter((m) => m.estado === 'OPERATIVO' && m.estadoOperativo === 'EN_CUARTEL');
+paso('Hay dos móviles libres en el cuartel', libres.length >= 2, `${libres.length} libres`);
+const [m1, m2] = libres;
+
+// 3. Recepcion, con el canal de avisos abierto
+const oyente = await escucharAvisos();
+paso('Canal de avisos (SSE ?solo=incidentes)', oyente.estado === 200, `HTTP ${oyente.estado}`);
+const rec = await api('POST', '/incidentes', {
+  tipoServicioId: tipo.id,
+  direccion: 'PRUEBA TÉCNICA smoke-incidente (no es un servicio real)',
+  descripcion: 'Registro generado por scripts/smoke-incidente.mjs',
+  claveIdempotencia: clave('rec'),
+});
+paso('Recepción rápida con dos datos', rec.estado === 201, rec.datos?.numeroServicio);
+const id = rec.datos.servicioId;
+
+// 4. Concurrencia real: dos operadores despachan el mismo movil a la vez
+const [c1, c2] = await Promise.all([
+  api('POST', `/incidentes/${id}/despachos`, { moviles: [{ vehiculoId: m1.id, salir: true }] }),
+  api('POST', `/incidentes/${id}/despachos`, { moviles: [{ vehiculoId: m1.id, salir: true }] }),
+]);
+const intentos = [...(c1.datos?.resultados ?? []), ...(c2.datos?.resultados ?? [])];
+paso('Despacho simultáneo del mismo móvil: gana uno solo', intentos.filter((r) => r.ok).length === 1, JSON.stringify(intentos.map((r) => (r.ok ? 'ok' : r.error))));
+const asignado = await api('POST', `/incidentes/${id}/despachos`, { moviles: [{ vehiculoId: m2.id, salir: false }] });
+paso('Solo asignar el segundo móvil', asignado.datos?.resultados?.[0]?.ok === true);
+let exp = (await api('GET', `/incidentes/${id}`)).datos;
+const d1 = exp.despachos.find((d) => d.vehiculoId === m1.id);
+const d2 = exp.despachos.find((d) => d.vehiculoId === m2.id);
+paso('Fase EN_CAMINO; el segundo móvil espera SALIMOS', exp.incidente.fase === 'EN_CAMINO' && d1.siguientePaso === 'llegada' && d2.siguientePaso === 'salida', `${exp.incidente.fase} / ${d1.siguientePaso} / ${d2.siguientePaso}`);
+
+// 5. Campo
+paso('SALIMOS del segundo móvil', (await api('POST', `/incidentes/${id}/despachos/${d2.id}/salida`, { claveIdempotencia: clave('sal2') })).estado === 201);
+const [x1, x2] = await Promise.all([
+  api('POST', `/incidentes/${id}/despachos/${d1.id}/llegada`, { claveIdempotencia: clave('lleg-a'), gps }),
+  api('POST', `/incidentes/${id}/despachos/${d1.id}/llegada`, { claveIdempotencia: clave('lleg-b'), gps }),
+]);
+paso('LLEGAMOS desde dos celulares a la vez: uno registra, el otro recibe 409', [x1.estado, x2.estado].sort().join() === '201,409', `${x1.estado} ${x2.estado}`);
+const ganadora = x1.estado === 201 ? clave('lleg-a') : clave('lleg-b');
+const reintento = await api('POST', `/incidentes/${id}/despachos/${d1.id}/llegada`, { claveIdempotencia: ganadora, gps });
+paso('El reintento con la misma clave no se repite', reintento.estado === 201 && reintento.datos?.repetido === true);
+await api('POST', `/incidentes/${id}/despachos/${d2.id}/llegada`, { claveIdempotencia: clave('lleg2') });
+exp = (await api('GET', `/incidentes/${id}`)).datos;
+paso('Fase EN_LUGAR y coordenadas tomadas del GPS', exp.incidente.fase === 'EN_LUGAR' && exp.incidente.latitud !== null, `${exp.incidente.fase} ${exp.incidente.latitud}`);
+
+await api('POST', `/incidentes/${id}/situacion`, { condicion: 'INCENDIO_ACTIVO', activa: true, claveIdempotencia: clave('sit1') });
+const s2 = await api('POST', `/incidentes/${id}/situacion`, { condicion: 'INCENDIO_CONTROLADO', activa: true, claveIdempotencia: clave('sit2') });
+paso('Condiciones excluyentes: queda solo la última', s2.estado === 201 && JSON.stringify(s2.datos.activas) === JSON.stringify(['INCENDIO_CONTROLADO']), JSON.stringify(s2.datos?.activas));
+exp = (await api('GET', `/incidentes/${id}`)).datos;
+paso('La primera acción operativa pasa a OPERANDO', exp.incidente.fase === 'OPERANDO', exp.incidente.fase);
+
+const kPedido = clave('ped');
+const p1 = await api('POST', `/incidentes/${id}/solicitudes`, { tipoRecursoId: ambulancia.id, prioridad: 'URGENTE', claveIdempotencia: kPedido });
+const p2 = await api('POST', `/incidentes/${id}/solicitudes`, { tipoRecursoId: ambulancia.id, prioridad: 'URGENTE', claveIdempotencia: kPedido });
+paso('Pedido urgente idempotente', p1.estado === 201 && p2.datos?.id === p1.datos?.id);
+const tab = (await api('GET', '/incidentes/tablero')).datos;
+paso('El tablero alerta el pedido urgente', tab.alertas.some((a) => a.tipo === 'PEDIDO_URGENTE' && a.servicioId === id));
+paso('Pedido aprobado por la central', (await api('POST', `/incidentes/${id}/solicitudes/${p1.datos.id}/estado`, { estado: 'APROBADO', version: 0 })).estado === 201);
+
+// 6. Emergencia: tiene que llegar por el canal en tiempo real, no solo por el tablero
+await api('POST', `/incidentes/${id}/emergencia`, { detalle: 'Prueba técnica', claveIdempotencia: clave('emg') });
+let llego = false;
+for (let i = 0; i < 30 && !llego; i += 1) {
+  llego = oyente.recibidos.some((e) => e.tipo === 'incidente' && e.servicioId === id && e.datos?.alerta === 'EMERGENCIA');
+  if (!llego) await esperar(100);
+}
+paso('La EMERGENCIA llega por el canal en tiempo real en menos de 3 s', llego);
+paso('El canal no expone la lista de destinatarios', oyente.recibidos.every((e) => e.tipo !== 'incidente' || e.para === undefined));
+const tab2 = (await api('GET', '/incidentes/tablero')).datos;
+paso('EMERGENCIA encabeza las alertas del tablero', tab2.alertas[0]?.tipo === 'EMERGENCIA', tab2.alertas[0]?.texto);
+paso('Emergencia atendida', (await api('POST', `/incidentes/${id}/emergencia/atendida`, {})).estado === 201);
+paso('Comunicación en la bitácora', (await api('POST', `/incidentes/${id}/comunicacion`, { texto: 'Prueba técnica: comunicación registrada', claveIdempotencia: clave('com') })).estado === 201);
+
+// 7. Control de personal
+const trip = await api('PUT', `/incidentes/${id}/despachos/${d1.id}/tripulacion`, { integrantes: [{ bomberoId: persona.id, funcion: 'BOMBERO' }] });
+paso('Tripulación ajustada', trip.estado === 200, JSON.stringify(trip.datos?.message ?? ''));
+paso('Entra a la zona', (await api('POST', `/incidentes/${id}/personal/${persona.id}/zona`, { dentro: true, claveIdempotencia: clave('zona1') })).estado === 201);
+paso('Recuento con una persona sin confirmar', (await api('POST', `/incidentes/${id}/recuento`, { presentes: [], faltantes: [persona.id], claveIdempotencia: clave('par1') })).estado === 201);
+const tab3 = (await api('GET', '/incidentes/tablero')).datos;
+paso('El tablero alerta el recuento con faltantes', tab3.alertas.some((a) => a.tipo === 'PERSONAL_FALTANTE' && a.servicioId === id));
+paso('Recuento completo', (await api('POST', `/incidentes/${id}/recuento`, { presentes: [persona.id], faltantes: [], claveIdempotencia: clave('par2') })).estado === 201);
+const ctl = await api('POST', `/incidentes/${id}/fase`, { accion: 'CONTROLADO' });
+paso('Incidente controlado', ctl.estado === 201 && ctl.datos?.despues === 'CONTROLADO');
+
+// 8. Desmovilizacion y cierre
+const temprano = await api('POST', `/incidentes/${id}/cierre`, { resultado: 'CONTROLADO', huboVictimas: false, huboDanos: false });
+paso('El cierre se rechaza con móviles afuera', temprano.estado === 409, temprano.datos?.message);
+for (const d of [d1, d2]) await api('POST', `/incidentes/${id}/despachos/${d.id}/retorno`, { claveIdempotencia: clave(`ret-${d.id.slice(0, 8)}`) });
+exp = (await api('GET', `/incidentes/${id}`)).datos;
+paso('Fase RETORNO', exp.incidente.fase === 'RETORNO', exp.incidente.fase);
+for (const d of [d1, d2]) await api('POST', `/incidentes/${id}/despachos/${d.id}/disponible`, { claveIdempotencia: clave(`dis-${d.id.slice(0, 8)}`) });
+exp = (await api('GET', `/incidentes/${id}`)).datos;
+paso('Fase DISPONIBLE (móviles en el cuartel)', exp.incidente.fase === 'DISPONIBLE', exp.incidente.fase);
+const tab4 = (await api('GET', '/incidentes/tablero')).datos;
+paso('Alerta: alguien sigue en zona con los móviles de vuelta', tab4.alertas.some((a) => a.tipo === 'PERSONAL_EN_ZONA' && a.servicioId === id));
+const conGente = await api('POST', `/incidentes/${id}/cierre`, { resultado: 'CONTROLADO', huboVictimas: false, huboDanos: false });
+paso('El cierre se rechaza con una persona en zona', conGente.estado === 409 && /zona/.test(conGente.datos?.message ?? ''), conGente.datos?.message);
+paso('Sale de la zona', (await api('POST', `/incidentes/${id}/personal/${persona.id}/zona`, { dentro: false, claveIdempotencia: clave('zona2') })).estado === 201);
+
+const cierre = await api('POST', `/incidentes/${id}/cierre`, { resultado: 'CONTROLADO', huboVictimas: false, huboDanos: false, observaciones: 'Prueba técnica automatizada (scripts/smoke-incidente.mjs).' });
+paso('Cierre', cierre.estado === 201);
+const inf = (await api('GET', `/incidentes/${id}/informe`)).datos;
+paso('Informe armado solo: tiempos y cronología', inf.incidente.fase === 'CERRADO' && !!inf.tiempos.primeraLlegada && inf.cronologia.length >= 20, `${inf.cronologia.length} eventos`);
+paso('El aviso NUEVO llegó por el canal', oyente.recibidos.some((e) => e.tipo === 'incidente' && e.servicioId === id && e.datos?.alerta === 'NUEVO'));
+await oyente.cerrar();
+
+resumen();
+console.log(`\nIncidente de prueba: ${rec.datos.numeroServicio} (${id}). Su bitácora es inmutable: anotalo en .context/INCIDENTES.md §6.`);
+```
+
+Correlo con el backend levantado. Antes verificá que el proceso sea nuevo con
+`Get-Process node | Select-Object Id, StartTime`: `start-sigbo.ps1` no reinicia lo que ya escucha.
+
+```bash
+cd /c/Proyectos/Personal/SIGBO && node scripts/smoke-incidente.mjs --usuario admin --password "$SIGBO_DEMO_PASSWORD" --confirmar
+```
+
+Resultado esperado: todos los pasos `OK`. La clave es `SIGBO_DEMO_PASSWORD` de `backend/.env`: exportala en la
+terminal y **no la escribas en ningún archivo**. Si el inicio de sesión falla por el `Origin` del CSRF, pasá
+el que corresponda con `--origen`. Anotá el número del incidente de prueba.
+
+- [ ] **Paso 3: Informe al usuario y commit**
+
+Mostrale al usuario la salida del script y la cuenta de pruebas. Si algún paso falló, corregí **antes** de
+seguir; el arreglo va en su propio commit con un mensaje que diga qué falló.
+
+```bash
+cd /c/Proyectos/Personal/SIGBO
+git add scripts/smoke-incidente.mjs
+git commit -m "Incidentes: prueba viva del backend con concurrencia real, avisos en tiempo real y control de personal
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+
+Si la ejecución se reparte en dos sesiones, este es el punto de corte: la fase B solo necesita el backend en
+verde y este documento.
+
 ---
 
 ## Tarea 10: Frontend: etiquetas, cola sin conexión y cliente de la API
@@ -5188,7 +6600,8 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
     - Funciones `nuevaClave`, `clasificar`, `leerCola`, `encolar` y `vaciarCola`.
   - `incidentes.ts`:
     - Tipos `Catalogos`, `Tablero`, `AlertaTablero`, `IncidenteTablero`, `IncidenteActivo`, `Expediente`, `DespachoIncidente`, `PedidoRecurso`, `EventoIncidente`, `Informe`, `Tripulaciones`, `Integrante`, `ResultadoDespacho`, `Prioridad`, `Resultado`, `EstadoPedido`, `CategoriaVictima`, `AccionFase` y `Gps`.
-    - Funciones de lectura: `obtenerTablero`, `obtenerCatalogos`, `listarActivos`, `obtenerExpediente`, `obtenerCronologia`, `obtenerInforme` y `obtenerTripulaciones`.
+    - Funciones de lectura: `obtenerTablero`, `obtenerCatalogos`, `listarActivos`, `obtenerExpediente`, `obtenerCronologia`, `obtenerInforme`, `obtenerTripulaciones` y `obtenerGuardiaActual` (tipo `GuardiaActual`).
+    - Los tipos ya incluyen lo que agregan las tareas 17 a 19 (fase A, que se ejecuta antes): `tripulacion[].funcion/enZona/zonaDesde`, `personalEnZona`, `ultimoRecuento`, `fotosOcultas` y, en el tablero, `personalEnZona`.
     - Funciones de escritura: `recibirServicio`, `vincularLlamado`, `despacharMoviles`, `ajustarTripulacion`, `pasoMovilCentral`, `cambiarFase`, `declararResultado`, `cambiarPrioridad`, `asumirComando`, `actualizarPedido`, `atenderEmergencia`, `cerrarIncidente`, `guardarTripulacion` y `subirFoto`.
     - Ayudantes: `mensajeError`, `obtenerGps`, `accionCampo`, `pendientes` y `sincronizarPendientes`.
   - `use-cronologia.ts`: `useCronologia(servicioId, intervaloMs?)`, que devuelve `EventoIncidente[]` y agrega lo nuevo de forma incremental.
@@ -5527,7 +6940,7 @@ export interface AlertaTablero { nivel: 'CRITICA' | 'ALTA' | 'MEDIA' | 'INFO'; t
 export interface IncidenteTablero {
   id: string; numeroServicio: string; tipo: string; fase: Fase; faseDesde: string | null; prioridad: Prioridad | null;
   direccion: string; latitud: number | null; longitud: number | null; recibidoEn: string; moviles: number;
-  condicionesCriticas: string[]; emergencia: boolean; pedidosPendientes: number;
+  condicionesCriticas: string[]; emergencia: boolean; pedidosPendientes: number; personalEnZona: number;
 }
 
 export interface Tablero {
@@ -5545,7 +6958,7 @@ export interface IncidenteActivo { id: string; numeroServicio: string; tipo: str
 export interface DespachoIncidente {
   id: string; vehiculoId: string; movil: string; alias: string | null; estado: string; activo: boolean; siguientePaso: Paso | null;
   horaDespacho: string; horaSalida: string | null; horaLlegada: string | null; horaFin: string | null; horaRegreso: string | null;
-  tripulacion: Array<{ bomberoId: string; nombre: string; rol: string }>;
+  tripulacion: Array<{ bomberoId: string; nombre: string; rol: string; funcion: string | null; enZona: boolean; zonaDesde: string | null }>;
 }
 
 export interface PedidoRecurso {
@@ -5569,6 +6982,9 @@ export interface Expediente {
   victimas: Record<CategoriaVictima, number>;
   fotos: Array<{ id: string; categoria: string | null; tomadoEn: string; descripcion: string | null; latitud: number | null; longitud: number | null }>;
   emergenciaActiva: boolean;
+  personalEnZona: Array<{ bomberoId: string; nombre: string; desde: string | null }>;
+  ultimoRecuento: { ocurridoEn: string; presentes: number; faltantes: string[] } | null;
+  fotosOcultas: number;
   miDespachoId: string | null;
   ultimoEventoId: string | null;
 }
@@ -5626,6 +7042,11 @@ export const obtenerCronologia = (id: string, desde?: string | null) =>
   leer<EventoIncidente[]>(`/incidentes/${id}/cronologia${desde ? `?desde=${encodeURIComponent(desde)}` : ''}`);
 export const obtenerInforme = (id: string) => leer<Informe>(`/incidentes/${id}/informe`);
 export const obtenerTripulaciones = () => leer<Tripulaciones>('/flota/tripulacion');
+export interface GuardiaActual {
+  guardias: Array<{ id: string; fecha: string; turno: string; horaInicio: string; horaFin: string }>;
+  personal: Array<{ bomberoId: string; nombre: string; rol: string | null }>;
+}
+export const obtenerGuardiaActual = () => leer<GuardiaActual>('/flota/tripulacion/guardia-actual');
 
 // ---- central y comando (necesitan red) ----
 export interface DatosRecepcion {
@@ -5825,6 +7246,8 @@ git commit -m "Frontend de incidentes: etiquetas, cola sin conexión probada y c
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
+
+
 
 ---
 
@@ -6390,7 +7813,7 @@ Con backend y frontend levantados, entrá con `admin`, abrí **Servicios → Cen
 - **+ Nuevo servicio** crea un incidente con solo tipo y dirección, y lleva a su página (todavía vacía hasta la tarea 13).
 - Al tocar el mapa con el panel abierto, queda marcado el punto.
 
-Anotá el número del incidente de prueba para la tarea 16.
+Anotá el número del incidente de prueba para la tarea 24.
 
 - [ ] **Paso 7: Commit**
 
@@ -6401,6 +7824,8 @@ git commit -m "Centro de operaciones: tablero, alertas con aviso sonoro, recepci
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
+
+
 
 ---
 
@@ -6635,6 +8060,8 @@ git commit -m "Tripulación por móvil: editor compartido y pantalla de carga al
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
+
+
 
 ---
 
@@ -7223,6 +8650,8 @@ git commit -m "Incidente (central y comando): despacho rápido, móviles, fases,
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
+
+
 ---
 
 ## Tarea 14: Modo Incidente
@@ -7768,7 +9197,7 @@ function PanelPersonal({ exp, cat, miDespachoId, ocupado, alGuardar }: {
   const mio = exp.despachos.find((d) => d.id === miDespachoId) ?? null;
   const codigo = new Map((cat?.funciones ?? []).map((f) => [f.nombre, f.codigo]));
   const [lista, setLista] = useState<Integrante[]>(
-    () => mio?.tripulacion.map((t) => ({ bomberoId: t.bomberoId, funcion: codigo.get(t.rol) ?? cat?.funciones[0]?.codigo ?? '' })) ?? [],
+    () => mio?.tripulacion.map((t) => ({ bomberoId: t.bomberoId, funcion: t.funcion ?? codigo.get(t.rol) ?? cat?.funciones[0]?.codigo ?? '' })) ?? [],
   );
   return (
     <section className="mi-panel" aria-labelledby="mi-p-personal">
@@ -7862,6 +9291,8 @@ git commit -m "Modo Incidente: botones grandes, paso del móvil, situación, ped
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
+
+
 
 ---
 
@@ -7960,7 +9391,7 @@ export default function InformeIncidentePage() {
   const afuera = inf.despachos.filter((d) => d.activo);
   const codigoFuncion = new Map((cat?.funciones ?? []).map((f) => [f.nombre, f.codigo]));
   const tripulacionInicial = (despachoId: string): Integrante[] =>
-    inf.despachos.find((d) => d.id === despachoId)?.tripulacion.map((t) => ({ bomberoId: t.bomberoId, funcion: codigoFuncion.get(t.rol) ?? cat?.funciones[0]?.codigo ?? '' })) ?? [];
+    inf.despachos.find((d) => d.id === despachoId)?.tripulacion.map((t) => ({ bomberoId: t.bomberoId, funcion: t.funcion ?? codigoFuncion.get(t.rol) ?? cat?.funciones[0]?.codigo ?? '' })) ?? [];
 
   const cerrar = async () => {
     if (!resultado || huboVictimas === null || huboDanos === null) {
@@ -8161,16 +9592,494 @@ git commit -m "Informe automático del incidente y cierre mínimo en cinco pasos
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
+
+
 ---
 
-## Tarea 16: Prueba viva de punta a punta, documentación y verificación final
+## Tarea 21: Frontend: avisos inmediatos, marca de no asignado y modo noche
 
 **Archivos:**
 
-- Crear: `scripts/smoke-incidente.mjs`
-- Crear: `.context/INCIDENTES.md`
+- Crear: `frontend/src/lib/use-avisos-incidente.ts`
+- Modificar: `frontend/src/app/dashboard/servicios/operaciones/page.tsx`, `operaciones/[id]/page.tsx`, `frontend/src/app/incidente/[id]/page.tsx`, `frontend/src/app/incidente/page.tsx`
+- Modificar: `frontend/src/components/incidente/CronologiaIncidente.tsx`, `frontend/src/app/globals.css`
+
+**Interfaces:**
+
+- Consume: `GET /despacho/stream?solo=incidentes` (tarea 17), `API_URL` (`lib/api.ts`), `datos.fueraDeAsignacion` (tarea 19) y la decisión **DEC-3**.
+- Produce: `useAvisosIncidente(alRecibir: (a: AvisoIncidente) => void, activo = true)` y el tipo `AvisoIncidente { servicioId; alerta; texto; numeroServicio }`.
+
+- [ ] **Paso 1: El gancho de avisos**
+
+Crear `frontend/src/lib/use-avisos-incidente.ts`:
+
+```ts
+'use client';
+
+import { useEffect, useRef } from 'react';
+import { API_URL } from './api';
+
+export interface AvisoIncidente {
+  servicioId: string;
+  alerta: string;
+  texto: string;
+  numeroServicio: string | null;
+}
+
+/**
+ * Avisos inmediatos de incidentes (EMERGENCIA, condicion critica, pedido urgente, recuento, nuevo
+ * servicio) por el canal SSE del backend. Con ?solo=incidentes NO cuenta como "en linea" para el
+ * despacho. EventSource reconecta solo; si la sesion vencio, la consulta periodica de la pantalla sigue
+ * funcionando como respaldo.
+ */
+export function useAvisosIncidente(alRecibir: (a: AvisoIncidente) => void, activo = true) {
+  const manejador = useRef(alRecibir);
+  manejador.current = alRecibir;
+
+  useEffect(() => {
+    if (!activo || typeof EventSource === 'undefined') return;
+    const fuente = new EventSource(`${API_URL}/despacho/stream?solo=incidentes`, { withCredentials: true });
+    fuente.onmessage = (ev: MessageEvent<string>) => {
+      try {
+        const e = JSON.parse(ev.data) as { tipo?: string; servicioId?: string; datos?: { alerta?: string; texto?: string; numeroServicio?: string | null } };
+        if (e.tipo === 'incidente' && e.servicioId && e.datos?.alerta) {
+          manejador.current({ servicioId: e.servicioId, alerta: e.datos.alerta, texto: e.datos.texto ?? '', numeroServicio: e.datos.numeroServicio ?? null });
+        }
+      } catch {
+        /* latido u otro formato */
+      }
+    };
+    return () => fuente.close();
+  }, [activo]);
+}
+```
+
+- [ ] **Paso 2: Usarlo en las tres pantallas**
+
+En `frontend/src/app/dashboard/servicios/operaciones/page.tsx`:
+
+- Agregá `import { useAvisosIncidente } from '@/lib/use-avisos-incidente';`.
+- Inmediatamente antes de `const enIncidente = useMemo(`, agregá:
+
+```tsx
+  // Un aviso critico refresca el tablero al instante; cargar() hace sonar el pitido si hay una alerta critica nueva.
+  useAvisosIncidente(() => void cargar(), puedeVer);
+```
+
+En `frontend/src/app/dashboard/servicios/operaciones/[id]/page.tsx`:
+
+- Agregá el mismo import.
+- Inmediatamente después del `useEffect` que arma el `setInterval` de `cargar`, agregá:
+
+```tsx
+  useAvisosIncidente((a) => {
+    if (a.servicioId === id) void cargar();
+  });
+```
+
+En `frontend/src/app/incidente/[id]/page.tsx`:
+
+- Agregá el mismo import.
+- Inmediatamente después del segundo `useEffect` (el que registra `online`/`offline`), agregá:
+
+```tsx
+  // EMERGENCIA o un recuento con faltantes: vibra y lo muestra, sin esperar la consulta periodica.
+  useAvisosIncidente((a) => {
+    if (a.servicioId !== id) return;
+    void cargar();
+    if (a.alerta === 'EMERGENCIA' || a.alerta === 'PERSONAL_FALTANTE') {
+      navigator.vibrate?.([400, 150, 400]);
+      setAviso(a.texto);
+    }
+  });
+```
+
+- [ ] **Paso 3: Marca de no asignado en la cronología**
+
+En `frontend/src/components/incidente/CronologiaIncidente.tsx`, reemplazá:
+
+```tsx
+                {e.usuario ?? 'Sistema'}{e.latitud !== null ? ' · con GPS' : ''}{e.origen === 'APP' ? ' · desde la app' : ''}
+```
+
+por:
+
+```tsx
+                {e.usuario ?? 'Sistema'}{e.latitud !== null ? ' · con GPS' : ''}{e.origen === 'APP' ? ' · desde la app' : ''}
+                {e.datos?.fueraDeAsignacion ? ' · no figura en el incidente' : ''}
+```
+
+- [ ] **Paso 4: Modo noche (solo si DEC-3 fue "Sí")**
+
+Si DEC-3 fue "No", saltá este paso y anotalo en el commit.
+
+Al final de `frontend/src/app/globals.css` agregá:
+
+```css
+/* Modo noche del Modo Incidente (DEC-3): excepcion aprobada a la regla del tema claro, solo en /incidente.
+   Redefine los tokens dentro de .mi-noche: todo lo que ya usa var(--…) cambia solo. */
+.mi-noche {
+  --paper: #000; --surface: #0b0b0b; --surface-soft: #161616; --ink: #fff; --muted: #d4d4d4;
+  --line: #5c5c5c; --line-soft: #2a2a2a; --danger: #ff6b66; --success: #6ee7b7;
+  --ok-fill: #0f3d2a; --bad-fill: #4d0f0f; --warn-fill: #4a3200; --info-fill: #10264d; --neutral-fill: #222;
+}
+.mi-noche .mi-boton-primario, .mi-noche .mi-opcion[aria-pressed="true"], .mi-noche .mi-boton[aria-expanded="true"] { color: #000; background: #fff; border-color: #fff; }
+.mi-noche .mi-boton-peligro, .mi-noche .mi-opcion-critica[aria-pressed="true"] { color: #fff; background: #b91c1c; border-color: #ff6b66; }
+.mi-noche .input-field { color: #fff; background: #111; border-color: #5c5c5c; }
+.mi-noche a { color: #9cc3ff; }
+```
+
+En `frontend/src/app/incidente/[id]/page.tsx`:
+
+- Agregá a los estados: `const [noche, setNoche] = useState(false);`
+- En el primer `useEffect` (el de la sesión), después de `setMovilElegido(…)`, agregá `setNoche(leerLocal<boolean>('sigbo-modo-noche') ?? false);`
+- Agregá la función:
+
+```tsx
+  const alternarNoche = () => {
+    setNoche((n) => {
+      guardarLocal('sigbo-modo-noche', !n);
+      return !n;
+    });
+  };
+```
+
+- En **los dos** `<main className="mi-pagina"…>` de ese archivo, cambiá `className="mi-pagina"` por
+  ``className={`mi-pagina${noche ? ' mi-noche' : ''}`}``.
+- Dentro de `<header className="mi-cabecera">`, después de la línea de la dirección, agregá:
+
+```tsx
+        <button type="button" className="mi-opcion" aria-pressed={noche} onClick={alternarNoche}>{noche ? 'Modo día' : 'Modo noche'}</button>
+```
+
+En `frontend/src/app/incidente/page.tsx`, para que la lista respete la misma preferencia:
+
+- Agregá `const [noche, setNoche] = useState(false);`.
+- Dentro del `useEffect`, antes de `if (!obtenerSesion())`, agregá:
+
+```ts
+    try {
+      setNoche(localStorage.getItem('sigbo-modo-noche') === 'true');
+    } catch {
+      /* sin almacenamiento */
+    }
+```
+
+- Cambiá `className="mi-pagina"` por ``className={`mi-pagina${noche ? ' mi-noche' : ''}`}``.
+
+- [ ] **Paso 5: Comprobaciones y commit**
+
+```bash
+cd /c/Proyectos/Personal/SIGBO/frontend && npx tsc --noEmit 2>&1 | head -10 && npm run audit:contraste 2>&1 | tail -3 && npm run audit:a11y 2>&1 | tail -3
+```
+
+Resultado esperado: sin errores y auditorías en la línea base. La auditoría de contraste revisa los `.tsx`;
+los colores del modo noche están en `globals.css`.
+
+```bash
+cd /c/Proyectos/Personal/SIGBO
+git add frontend/src/lib/use-avisos-incidente.ts frontend/src/app frontend/src/components/incidente
+git commit -m "Incidentes (web): avisos inmediatos por SSE, marca de quien no figura en el incidente y modo noche
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+
+---
+
+## Tarea 22: Frontend: control de personal en zona y tripulación desde la guardia
+
+**Archivos:**
+
+- Modificar: `frontend/src/app/incidente/[id]/page.tsx` (`PanelPersonal`), `frontend/src/app/dashboard/servicios/operaciones/[id]/page.tsx`, `operaciones/[id]/informe/page.tsx`
+- Modificar: `frontend/src/app/dashboard/vehiculos/tripulacion/page.tsx`
+
+**Interfaces:**
+
+- Consume:
+  - `POST /incidentes/:id/personal/:bomberoId/zona` y `POST /incidentes/:id/recuento` (tarea 18), siempre por `accionCampo`, así funcionan también sin red.
+  - Del expediente: `personalEnZona`, `ultimoRecuento`, `tripulacion[].enZona`, `tripulacion[].zonaDesde` y `tripulacion[].funcion`.
+  - `fotosOcultas` (tarea 19) y `obtenerGuardiaActual` (tarea 10).
+- Produce: el panel PERSONAL con ENTRA/SALE por persona y RECUENTO para quien tiene `servicios:comandar`; la tarjeta "Control de personal" en el incidente; la tarjeta "Guardia actual" en tripulación.
+
+- [ ] **Paso 1: Panel PERSONAL del Modo Incidente**
+
+En `frontend/src/app/incidente/[id]/page.tsx`:
+
+- Sumá `horaCorta` al import de `@/lib/fases-incidente`.
+- Reemplazá **toda** la función `PanelPersonal` por:
+
+```tsx
+function PanelPersonal({ exp, cat, miDespachoId, puedeComandar, ocupado, alZona, alRecuento, alGuardar }: {
+  exp: Expediente;
+  cat: Catalogos | null;
+  miDespachoId: string | null;
+  puedeComandar: boolean;
+  ocupado: boolean;
+  alZona: (bomberoId: string, nombre: string, dentro: boolean) => void;
+  alRecuento: (presentes: string[], faltantes: string[]) => void;
+  alGuardar: (despachoId: string, lista: Integrante[]) => void;
+}) {
+  const mio = exp.despachos.find((d) => d.id === miDespachoId) ?? null;
+  const codigo = new Map((cat?.funciones ?? []).map((f) => [f.nombre, f.codigo]));
+  const [lista, setLista] = useState<Integrante[]>(
+    () => mio?.tripulacion.map((t) => ({ bomberoId: t.bomberoId, funcion: t.funcion ?? codigo.get(t.rol) ?? cat?.funciones[0]?.codigo ?? '' })) ?? [],
+  );
+  const [recuento, setRecuento] = useState<Record<string, 'PRESENTE' | 'FALTA'> | null>(null);
+  const personas = exp.despachos.filter((d) => d.activo).flatMap((d) => d.tripulacion.map((t) => ({ ...t, movil: d.movil })));
+  const enZona = exp.personalEnZona; // todos los que estan adentro, sumados por solicitud incluidos
+  const completo = recuento !== null && enZona.every((p) => recuento[p.bomberoId]);
+
+  return (
+    <section className="mi-panel" aria-labelledby="mi-p-personal">
+      <h2 id="mi-p-personal" className="mi-texto">Personal: {enZona.length} en zona</h2>
+      {personas.length === 0 && <p className="mi-texto">Sin tripulación registrada en los móviles del incidente.</p>}
+      {personas.map((p) => (
+        <div key={p.bomberoId} style={{ display: 'grid', gap: 6 }}>
+          <p className="mi-texto" style={{ fontWeight: 700 }}>
+            {p.nombre} · {p.rol} · {p.movil}{p.enZona && p.zonaDesde ? ` · en zona desde ${horaCorta(p.zonaDesde)}` : ''}
+          </p>
+          <div className="mi-grid">
+            <button type="button" className="mi-opcion" aria-pressed={p.enZona} disabled={ocupado || p.enZona} onClick={() => alZona(p.bomberoId, p.nombre, true)}>ENTRA</button>
+            <button type="button" className="mi-opcion" aria-pressed={!p.enZona} disabled={ocupado || !p.enZona} onClick={() => alZona(p.bomberoId, p.nombre, false)}>SALE</button>
+          </div>
+        </div>
+      ))}
+
+      {puedeComandar && enZona.length > 0 && (recuento === null ? (
+        <button type="button" className="mi-boton mi-boton-primario" onClick={() => setRecuento({})}>RECUENTO DE PERSONAL</button>
+      ) : (
+        <div style={{ display: 'grid', gap: 8 }}>
+          <h3 style={{ margin: 0, fontSize: 18 }}>Recuento: confirmá a cada persona</h3>
+          {enZona.map((p) => (
+            <div key={p.bomberoId} className="mi-grid">
+              <span className="mi-texto" style={{ gridColumn: '1 / -1', fontWeight: 700 }}>{p.nombre}</span>
+              <button type="button" className="mi-opcion" aria-pressed={recuento[p.bomberoId] === 'PRESENTE'}
+                onClick={() => setRecuento((r) => ({ ...r, [p.bomberoId]: 'PRESENTE' }))}>PRESENTE</button>
+              <button type="button" className="mi-opcion mi-opcion-critica" aria-pressed={recuento[p.bomberoId] === 'FALTA'}
+                onClick={() => setRecuento((r) => ({ ...r, [p.bomberoId]: 'FALTA' }))}>NO RESPONDE</button>
+            </div>
+          ))}
+          <button type="button" className="mi-boton mi-boton-primario" disabled={ocupado || !completo}
+            onClick={() => {
+              if (!recuento) return;
+              alRecuento(
+                enZona.filter((p) => recuento[p.bomberoId] === 'PRESENTE').map((p) => p.bomberoId),
+                enZona.filter((p) => recuento[p.bomberoId] === 'FALTA').map((p) => p.bomberoId),
+              );
+              setRecuento(null);
+            }}>
+            CONFIRMAR RECUENTO
+          </button>
+          <button type="button" className="mi-opcion" onClick={() => setRecuento(null)}>Cancelar recuento</button>
+        </div>
+      ))}
+
+      {mio && cat && (
+        <>
+          <h3 style={{ margin: 0, fontSize: 16 }}>Corregir la tripulación de {mio.movil}</h3>
+          <EditorTripulacion integrantes={lista} bomberos={cat.bomberos} funciones={cat.funciones} onChange={setLista} grande />
+          <button type="button" className="mi-boton mi-boton-primario" disabled={ocupado} onClick={() => alGuardar(mio.id, lista)}>GUARDAR TRIPULACIÓN</button>
+        </>
+      )}
+    </section>
+  );
+}
+```
+
+- Reemplazá el uso del panel:
+
+```tsx
+            <PanelPersonal exp={exp} cat={cat} miDespachoId={miDespacho?.id ?? null} ocupado={ocupado}
+              alGuardar={(despachoId, lista) => void decision(() => ajustarTripulacion(id, despachoId, lista), 'Tripulación actualizada.')} />
+```
+
+  por:
+
+```tsx
+            <PanelPersonal exp={exp} cat={cat} miDespachoId={miDespacho?.id ?? null} puedeComandar={puedeComandar} ocupado={ocupado}
+              alZona={(bomberoId, nombre, dentro) => void campo(`/personal/${bomberoId}/zona`, { dentro }, `${nombre}: ${dentro ? 'entra a' : 'sale de'} la zona`, `${nombre}: ${dentro ? 'en zona' : 'fuera de la zona'}.`)}
+              alRecuento={(presentes, faltantes) => void campo('/recuento', { presentes, faltantes }, 'Recuento de personal', faltantes.length ? `Recuento enviado: ${faltantes.length} sin confirmar.` : 'Recuento: todos presentes.')}
+              alGuardar={(despachoId, lista) => void decision(() => ajustarTripulacion(id, despachoId, lista), 'Tripulación actualizada.')} />
+```
+
+- En la cabecera, después de `<div className="mi-fase">…</div>`, agregá:
+
+```tsx
+        {exp.personalEnZona.length > 0 && <div style={{ fontSize: 16, fontWeight: 700 }}>{exp.personalEnZona.length} persona(s) en zona</div>}
+```
+
+- [ ] **Paso 2: Tarjeta "Control de personal" del incidente**
+
+En `frontend/src/app/dashboard/servicios/operaciones/[id]/page.tsx`:
+
+- En la celda de tripulación de la tabla de móviles, reemplazá
+  ``d.tripulacion.map((t) => `${t.nombre} (${t.rol})`).join(', ')`` por
+  ``d.tripulacion.map((t) => `${t.nombre} (${t.rol})${t.enZona ? ' · EN ZONA' : ''}`).join(', ')``.
+- Inmediatamente antes de `<section className="card" aria-labelledby="titulo-situacion"`, agregá:
+
+```tsx
+          <section className="card" aria-labelledby="titulo-control" style={{ display: 'grid', gap: 6 }}>
+            <h2 id="titulo-control" style={{ fontSize: 17, margin: 0 }}>Control de personal</h2>
+            <p style={{ margin: 0, fontWeight: 700, color: exp.personalEnZona.length ? 'var(--ink)' : 'var(--muted)' }}>
+              {exp.personalEnZona.length} persona(s) en zona
+            </p>
+            {exp.personalEnZona.map((p) => <p key={p.bomberoId} style={{ margin: 0, fontSize: 13 }}>{p.nombre} · desde {horaCorta(p.desde)}</p>)}
+            {exp.ultimoRecuento && (
+              <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: exp.ultimoRecuento.faltantes.length ? 'var(--danger)' : 'var(--success)' }}>
+                Último recuento {horaCorta(exp.ultimoRecuento.ocurridoEn)}:{' '}
+                {exp.ultimoRecuento.faltantes.length ? `sin confirmar ${exp.ultimoRecuento.faltantes.join(', ')}` : `${exp.ultimoRecuento.presentes} presentes`}
+              </p>
+            )}
+          </section>
+```
+
+- [ ] **Paso 3: Informe: fotos ocultas**
+
+En `frontend/src/app/dashboard/servicios/operaciones/[id]/informe/page.tsx`, inmediatamente antes de
+`<section className="informe-seccion no-imprimir" aria-label="Fotos">`, agregá:
+
+```tsx
+        {inf.fotosOcultas > 0 && (
+          <p className="no-imprimir" style={{ margin: 0, fontSize: 13, color: 'var(--muted)' }}>
+            {inf.fotosOcultas} foto(s) de víctimas no se muestran: hacen falta permisos confidenciales.
+          </p>
+        )}
+```
+
+- [ ] **Paso 4: Tripulación desde la guardia**
+
+En `frontend/src/app/dashboard/vehiculos/tripulacion/page.tsx`:
+
+- Cambiá el import de `@/lib/incidentes` por
+  `import { guardarTripulacion, obtenerGuardiaActual, obtenerTripulaciones, type GuardiaActual, type Integrante, type Tripulaciones } from '@/lib/incidentes';`
+- Agregá `const [guardia, setGuardia] = useState<GuardiaActual | null>(null);` junto a los demás estados.
+- En `cargar`, reemplazá `const d = await obtenerTripulaciones();` por:
+
+```ts
+      const [d, g] = await Promise.all([obtenerTripulaciones(), obtenerGuardiaActual().catch(() => null)]);
+      setGuardia(g);
+```
+
+- Después del `useMemo` de `movilDe`, agregá:
+
+```tsx
+  // La guardia en curso primero en la lista, marcada: armar la tripulacion es repartir esa gente.
+  const deGuardia = useMemo(() => new Set(guardia?.personal.map((p) => p.bomberoId) ?? []), [guardia]);
+  const bomberosOrdenados = useMemo(() => (datos ? [
+    ...datos.bomberos.filter((b) => deGuardia.has(b.id)).map((b) => ({ ...b, nombre: `${b.nombre} · de guardia` })),
+    ...datos.bomberos.filter((b) => !deGuardia.has(b.id)),
+  ] : []), [datos, deGuardia]);
+  const sinMovil = guardia?.personal.filter((p) => !movilDe.has(p.bomberoId)) ?? [];
+```
+
+- En el `<EditorTripulacion …>`, cambiá `bomberos={datos.bomberos}` por `bomberos={bomberosOrdenados}`.
+- Inmediatamente después de `{exito && <Aviso tipo="exito" texto={exito} />}`, agregá:
+
+```tsx
+      {guardia && (
+        <section className="card" aria-labelledby="titulo-guardia" style={{ display: 'grid', gap: 6 }}>
+          <h2 id="titulo-guardia" style={{ fontSize: 17, margin: 0 }}>Guardia actual</h2>
+          {guardia.guardias.length === 0 ? (
+            <p style={{ margin: 0, color: 'var(--muted)' }}>No hay una guardia en curso ni planificada para hoy.</p>
+          ) : (
+            <>
+              <p style={{ margin: 0, fontSize: 13 }}>
+                {guardia.guardias.map((g) => `${g.fecha} · ${g.turno.toLowerCase()} (${g.horaInicio.slice(0, 5)}–${g.horaFin.slice(0, 5)})`).join(' / ')} · {guardia.personal.length} persona(s)
+              </p>
+              <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: sinMovil.length ? 'var(--warning)' : 'var(--success)' }}>
+                {sinMovil.length ? `Sin móvil asignado: ${sinMovil.map((p) => p.nombre).join(', ')}` : 'Toda la guardia tiene móvil asignado.'}
+              </p>
+            </>
+          )}
+        </section>
+      )}
+```
+
+- [ ] **Paso 5: Comprobaciones y commit**
+
+```bash
+cd /c/Proyectos/Personal/SIGBO/frontend && npx tsc --noEmit 2>&1 | head -10 && npm run audit:a11y 2>&1 | tail -3 && npm run audit:contraste 2>&1 | tail -3 && npm test 2>&1 | tail -3
+cd .. && node scripts/verificar-endpoints.mjs 2>&1 | tail -3
+```
+
+Resultado esperado: todo en verde y en la línea base; ningún endpoint del frontend sin ruta.
+
+```bash
+cd /c/Proyectos/Personal/SIGBO
+git add frontend/src/app
+git commit -m "Incidentes (web): control de personal en zona con recuento, fotos ocultas y tripulación desde la guardia
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+
+---
+
+## Tarea 23: Punto de control B: recorrido automatizado en el navegador
+
+Sustituye a la revisión manual dispersa en las tareas 11 a 15 y 21 a 22: un mismo recorrido, hecho con las
+herramientas de navegador de la sesión y con capturas como evidencia. **No agrega dependencias.**
+
+**Archivos:** ninguno de código. Las capturas van al directorio temporal de la sesión, no al repo.
+
+**Interfaces:**
+
+- Consume: backend y frontend levantados, `admin` y un usuario con solo `servicios:operar` (por ejemplo `bombero`).
+
+- [ ] **Paso 1: Herramientas**
+
+Cargá las herramientas de navegador disponibles con `ToolSearch`, en una sola llamada. Por ejemplo, las de
+Playwright (`mcp__plugin_playwright_playwright__browser_navigate`, `browser_click`, `browser_type`,
+`browser_snapshot`, `browser_take_screenshot`, `browser_resize`, `browser_evaluate`) o las de Chrome DevTools
+(`navigate_page`, `click`, `fill`, `take_snapshot`, `take_screenshot`, `emulate`, `resize_page`). Si no hay ninguna
+disponible, avisale al usuario y hacé el recorrido a mano siguiendo los mismos pasos.
+
+- [ ] **Paso 2: Recorrido (en pantalla de escritorio, con `admin`)**
+
+1. Login → **Servicios → Centro de operaciones**: cargan contadores, alertas y mapa. Captura.
+2. **+ Nuevo servicio**: tipo y dirección. Crea y lleva al incidente. Anotá el número.
+3. **Despacho rápido**: un móvil con "Asignar y salir" y otro con "Solo asignar". La tabla muestra "Falta: LLEGAMOS" y "Falta: SALIMOS". Captura.
+4. **Vehículos → Tripulación**: se ve la tarjeta "Guardia actual"; cargá la tripulación de un móvil y guardala.
+
+- [ ] **Paso 3: Recorrido en celular (360 × 740, usuario con `servicios:operar` en la tripulación del móvil "Solo asignar")**
+
+Redimensioná la ventana a 360 × 740 y abrí `/incidente/<id>`:
+
+1. **SALIMOS** → **LLEGAMOS**. Si el navegador pide la ubicación, aceptala; en ese caso la cronología muestra "con GPS". Captura.
+2. **SITUACIÓN** → "Incendio activo" y después "Incendio controlado": queda marcado solo el segundo.
+3. **PERSONAL** → **ENTRA** para una persona. La cabecera dice "1 persona(s) en zona".
+4. **SOLICITAR RECURSO** → Ambulancia → URGENTE → CONFIRMAR.
+5. **Sin conexión**: activá el modo sin red de la herramienta (en Chrome DevTools, `emulate` con `networkConditions: "Offline"`). Tocá **COMUNICACIÓN** → "Situación bajo control". Aparece "SIN CONEXIÓN — 1 acción pendiente". Volvé a conectar: en menos de 10 s se envía sola y aparece en la cronología con la hora del toque. Si la herramienta no puede simular la red, hacé este punto a mano y anotalo.
+6. **EMERGENCIA**: el primer toque arma el botón y el segundo lo envía. Captura.
+7. Si DEC-3 fue "Sí": **Modo noche** cambia los colores y se mantiene al recargar.
+
+- [ ] **Paso 4: De vuelta en la central (`admin`, escritorio)**
+
+1. El Centro de Operaciones muestra la EMERGENCIA arriba **sin esperar 5 s**: llega por el canal en tiempo real. **Marcar atendida.**
+2. En el incidente, la tarjeta **Control de personal** muestra la persona en zona. Desde el Modo Incidente con `admin` (tiene `servicios:comandar`): **RECUENTO** → marcala "NO RESPONDE" → CONFIRMAR. La central recibe la alerta crítica "Recuento con personal sin confirmar".
+3. Hacé un recuento con todos presentes, después **SALE**, **CONTROLADO**, **RETORNANDO** y **DISPONIBLE** para cada móvil.
+4. **Informe y cierre**: cerralo. El informe tiene tiempos, distancia, personal, recursos y cronología, sin haber cargado datos a mano. Captura del informe.
+
+- [ ] **Paso 5: Criterio de aceptación y E2E permanente**
+
+Escribí en `.context/INCIDENTES.md` §6 el número del incidente de este recorrido, y en §7 todo lo que haya
+hecho falta tipear durante la operación de campo, porque la meta es que no haga falta nada.
+
+Preguntale al usuario (`AskUserQuestion`) si quiere convertir este recorrido en una **prueba automática
+permanente** con `@playwright/test`. Es software libre, pero sería una dependencia nueva del frontend, y este
+plan no permite agregarlas sin aprobación. Si dice que sí, no la agregues en este corte: anotala en
+`.context/INCIDENTES.md` §7 como próxima tarea.
+
+No hay commit en esta tarea, salvo las anotaciones en `.context/INCIDENTES.md` que la tarea 24 ya incluye.
+
+---
+
+## Tarea 24: Documentación, grafo y verificación final
+
+**Archivos:**
+
+- Modificar: `.context/INCIDENTES.md` (lo creó la tarea 0 con las decisiones)
 - Crear: `.context/graph/curated/decision/decision--incidente-es-el-servicio.md`, `decision--bitacora-unica-del-incidente.md`
-- Crear: `.context/graph/curated/rule/rule--bitacora-del-incidente-inmutable.md`
+- Crear: `.context/graph/curated/rule/rule--bitacora-del-incidente-inmutable.md`, `rule--personal-en-zona-no-se-libera-solo.md`
 - Crear: `.context/graph/curated/workflow/workflow--ciclo-del-incidente.md`
 - Modificar: `.context/contexto.md` (Documentos por tarea), y los derivados del grafo (`node .context/graph/build-graph.mjs`)
 
@@ -8180,171 +10089,22 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 - Produce: evidencia de que el corte cumple el criterio de aceptación (salida del script y revisión
   manual) y la documentación que leen las sesiones siguientes.
 
-- [ ] **Paso 1: Prueba viva por la API**
+- [ ] **Paso 1: Reejecutar la prueba viva**
 
-Crear `scripts/smoke-incidente.mjs`:
-
-```js
-#!/usr/bin/env node
-/**
- * Prueba viva del Centro de Operaciones e Incidentes contra el backend y la base reales.
- * Recorre un incidente completo por la API, como lo haria la central y el comando, y dice el
- * resultado de cada paso. Se detiene en el primero que falla.
- *
- * ESCRIBE EN LA BASE: deja un incidente de PRUEBA cerrado con su bitacora (inmutable: no se puede
- * borrar) y mueve dos moviles (vuelven al cuartel al final). Por eso exige --confirmar.
- *
- * Correr con el backend levantado:
- *   node scripts/smoke-incidente.mjs --usuario admin --password <clave> --confirmar
- *   [--base http://localhost:3001/api/v1] [--origen http://localhost:3000]
- */
-const arg = (nombre, porDefecto = null) => {
-  const i = process.argv.indexOf(`--${nombre}`);
-  return i !== -1 && process.argv[i + 1] && !process.argv[i + 1].startsWith('--') ? process.argv[i + 1] : porDefecto;
-};
-
-const BASE = arg('base', 'http://localhost:3001/api/v1');
-const ORIGEN = arg('origen', 'http://localhost:3000');
-const usuario = arg('usuario');
-const password = arg('password');
-if (!process.argv.includes('--confirmar') || !usuario || !password) {
-  console.error('Uso: node scripts/smoke-incidente.mjs --usuario <u> --password <p> --confirmar');
-  process.exit(2);
-}
-
-let cookies = '';
-const pasos = [];
-const marca = Date.now().toString(36);
-const clave = (s) => `smoke-${marca}-${s}`;
-const gps = { latitud: -25.2865, longitud: -57.647, precisionM: 12 };
-
-async function api(metodo, ruta, cuerpo) {
-  const cabeceras = { Accept: 'application/json', Cookie: cookies };
-  if (metodo !== 'GET') Object.assign(cabeceras, { 'Content-Type': 'application/json', 'X-SIGBO-Request': '1', Origin: ORIGEN });
-  const res = await fetch(BASE + ruta, { method: metodo, headers: cabeceras, body: cuerpo === undefined ? undefined : JSON.stringify(cuerpo) });
-  return { estado: res.status, datos: await res.json().catch(() => null) };
-}
-
-function resumen() {
-  const fallas = pasos.filter((p) => !p.ok).length;
-  console.log(`\n${pasos.length - fallas}/${pasos.length} pasos bien.`);
-}
-
-function paso(nombre, ok, detalle = '') {
-  pasos.push({ nombre, ok });
-  console.log(`${ok ? 'OK   ' : 'FALLA'} ${nombre}${detalle ? ` — ${detalle}` : ''}`);
-  if (!ok) {
-    resumen();
-    process.exit(1);
-  }
-}
-
-// 1. Sesion (cookie HttpOnly, como el navegador)
-const login = await fetch(`${BASE}/auth/login`, {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json', 'X-SIGBO-Request': '1', Origin: ORIGEN },
-  body: JSON.stringify({ usernameOrEmail: usuario, password }),
-});
-cookies = (login.headers.getSetCookie?.() ?? []).map((c) => c.split(';')[0]).join('; ');
-paso('Inicio de sesión', login.ok && cookies.length > 0, `HTTP ${login.status}`);
-
-// 2. Catalogos y moviles libres
-const cat = await api('GET', '/incidentes/catalogos');
-paso('Catálogos', cat.estado === 200 && cat.datos.condiciones.length >= 22 && cat.datos.tiposRecurso.length >= 12, `${cat.datos?.condiciones?.length} condiciones`);
-const tipo = cat.datos.tiposServicio[0];
-const ambulancia = cat.datos.tiposRecurso.find((r) => r.codigo === 'AMBULANCIA');
-const flota = await api('GET', '/flota/tablero');
-const libres = (flota.datos ?? []).filter((m) => m.estado === 'OPERATIVO' && m.estadoOperativo === 'EN_CUARTEL');
-paso('Hay dos móviles libres en el cuartel', libres.length >= 2, `${libres.length} libres`);
-const [m1, m2] = libres;
-
-// 3. Recepcion y despacho
-const rec = await api('POST', '/incidentes', {
-  tipoServicioId: tipo.id,
-  direccion: 'PRUEBA TÉCNICA smoke-incidente (no es un servicio real)',
-  descripcion: 'Registro generado por scripts/smoke-incidente.mjs',
-  claveIdempotencia: clave('rec'),
-});
-paso('Recepción rápida con dos datos', rec.estado === 201, rec.datos?.numeroServicio);
-const id = rec.datos.servicioId;
-
-const desp = await api('POST', `/incidentes/${id}/despachos`, { moviles: [{ vehiculoId: m1.id, salir: true }, { vehiculoId: m2.id, salir: false }] });
-paso('Despacho de dos móviles (asignar y salir / solo asignar)', desp.estado === 201 && desp.datos.resultados.every((r) => r.ok), JSON.stringify(desp.datos?.resultados));
-let exp = (await api('GET', `/incidentes/${id}`)).datos;
-const d1 = exp.despachos.find((d) => d.vehiculoId === m1.id);
-const d2 = exp.despachos.find((d) => d.vehiculoId === m2.id);
-paso('Fase EN_CAMINO; el segundo móvil espera SALIMOS', exp.incidente.fase === 'EN_CAMINO' && d1.siguientePaso === 'llegada' && d2.siguientePaso === 'salida', `${exp.incidente.fase} / ${d1.siguientePaso} / ${d2.siguientePaso}`);
-
-// 4. Campo
-paso('SALIMOS del segundo móvil', (await api('POST', `/incidentes/${id}/despachos/${d2.id}/salida`, { claveIdempotencia: clave('sal2') })).estado === 201);
-const kLlegada = clave('lleg1');
-const ll1 = await api('POST', `/incidentes/${id}/despachos/${d1.id}/llegada`, { claveIdempotencia: kLlegada, gps });
-const ll1b = await api('POST', `/incidentes/${id}/despachos/${d1.id}/llegada`, { claveIdempotencia: kLlegada, gps });
-paso('LLEGAMOS con GPS; el reintento con la misma clave no se repite', ll1.estado === 201 && ll1b.estado === 201 && ll1b.datos?.repetido === true);
-await api('POST', `/incidentes/${id}/despachos/${d2.id}/llegada`, { claveIdempotencia: clave('lleg2') });
-exp = (await api('GET', `/incidentes/${id}`)).datos;
-paso('Fase EN_LUGAR y coordenadas tomadas del GPS', exp.incidente.fase === 'EN_LUGAR' && exp.incidente.latitud !== null, `${exp.incidente.fase} ${exp.incidente.latitud}`);
-
-await api('POST', `/incidentes/${id}/situacion`, { condicion: 'INCENDIO_ACTIVO', activa: true, claveIdempotencia: clave('sit1') });
-const s2 = await api('POST', `/incidentes/${id}/situacion`, { condicion: 'INCENDIO_CONTROLADO', activa: true, claveIdempotencia: clave('sit2') });
-paso('Condiciones excluyentes: queda solo la última', s2.estado === 201 && JSON.stringify(s2.datos.activas) === JSON.stringify(['INCENDIO_CONTROLADO']), JSON.stringify(s2.datos?.activas));
-exp = (await api('GET', `/incidentes/${id}`)).datos;
-paso('La primera acción operativa pasa a OPERANDO', exp.incidente.fase === 'OPERANDO', exp.incidente.fase);
-
-const kPedido = clave('ped');
-const p1 = await api('POST', `/incidentes/${id}/solicitudes`, { tipoRecursoId: ambulancia.id, prioridad: 'URGENTE', claveIdempotencia: kPedido });
-const p2 = await api('POST', `/incidentes/${id}/solicitudes`, { tipoRecursoId: ambulancia.id, prioridad: 'URGENTE', claveIdempotencia: kPedido });
-paso('Pedido urgente idempotente', p1.estado === 201 && p2.datos?.id === p1.datos?.id);
-const tab = (await api('GET', '/incidentes/tablero')).datos;
-paso('El tablero alerta el pedido urgente', tab.alertas.some((a) => a.tipo === 'PEDIDO_URGENTE' && a.servicioId === id));
-paso('Pedido aprobado por la central', (await api('POST', `/incidentes/${id}/solicitudes/${p1.datos.id}/estado`, { estado: 'APROBADO', version: 0 })).estado === 201);
-
-await api('POST', `/incidentes/${id}/emergencia`, { detalle: 'Prueba técnica', claveIdempotencia: clave('emg') });
-const tab2 = (await api('GET', '/incidentes/tablero')).datos;
-paso('EMERGENCIA encabeza las alertas', tab2.alertas[0]?.tipo === 'EMERGENCIA', tab2.alertas[0]?.texto);
-paso('Emergencia atendida', (await api('POST', `/incidentes/${id}/emergencia/atendida`, {})).estado === 201);
-paso('Comunicación en la bitácora', (await api('POST', `/incidentes/${id}/comunicacion`, { texto: 'Prueba técnica: comunicación registrada', claveIdempotencia: clave('com') })).estado === 201);
-const ctl = await api('POST', `/incidentes/${id}/fase`, { accion: 'CONTROLADO' });
-paso('Incidente controlado', ctl.estado === 201 && ctl.datos?.despues === 'CONTROLADO');
-
-// 5. Desmovilizacion y cierre
-const temprano = await api('POST', `/incidentes/${id}/cierre`, { resultado: 'CONTROLADO', huboVictimas: false, huboDanos: false });
-paso('El cierre se rechaza con móviles afuera', temprano.estado === 409, temprano.datos?.message);
-for (const d of [d1, d2]) await api('POST', `/incidentes/${id}/despachos/${d.id}/retorno`, { claveIdempotencia: clave(`ret-${d.id.slice(0, 8)}`) });
-exp = (await api('GET', `/incidentes/${id}`)).datos;
-paso('Fase RETORNO', exp.incidente.fase === 'RETORNO', exp.incidente.fase);
-for (const d of [d1, d2]) await api('POST', `/incidentes/${id}/despachos/${d.id}/disponible`, { claveIdempotencia: clave(`dis-${d.id.slice(0, 8)}`) });
-exp = (await api('GET', `/incidentes/${id}`)).datos;
-paso('Fase DISPONIBLE (móviles en el cuartel)', exp.incidente.fase === 'DISPONIBLE', exp.incidente.fase);
-
-const cierre = await api('POST', `/incidentes/${id}/cierre`, { resultado: 'CONTROLADO', huboVictimas: false, huboDanos: false, observaciones: 'Prueba técnica automatizada (scripts/smoke-incidente.mjs).' });
-paso('Cierre', cierre.estado === 201);
-const inf = (await api('GET', `/incidentes/${id}/informe`)).datos;
-paso('Informe armado solo: tiempos y cronología', inf.incidente.fase === 'CERRADO' && !!inf.tiempos.primeraLlegada && inf.cronologia.length >= 15, `${inf.cronologia.length} eventos`);
-
-resumen();
-console.log(`\nIncidente de prueba: ${rec.datos.numeroServicio} (${id}). Su bitácora es inmutable: anotalo en .context/INCIDENTES.md.`);
-```
-
-Correlo con el backend levantado (`cd backend && npm run start:dev`; verificá con
-`Get-Process node | Select-Object Id, StartTime` que el proceso es nuevo):
+Con el frontend ya terminado, corré otra vez la prueba de la tarea 20 (backend levantado y proceso nuevo):
 
 ```bash
 cd /c/Proyectos/Personal/SIGBO && node scripts/smoke-incidente.mjs --usuario admin --password "$SIGBO_DEMO_PASSWORD" --confirmar
 ```
 
-Resultado esperado: todos los pasos `OK` y "N/N pasos bien". La clave está en `backend/.env`
-(`SIGBO_DEMO_PASSWORD`); exportala en la sesión de la terminal y **no la escribas en ningún archivo**.
-Si falla el inicio de sesión porque el CSRF exige otro `Origin`, pasá el que corresponda con
-`--origen`. Anotá el número del incidente de prueba.
+Resultado esperado: todos los pasos `OK`. Anotá el número del incidente que deja.
 
 - [ ] **Paso 2: Documentación de la sesión**
 
-Crear `.context/INCIDENTES.md`:
+Completá `.context/INCIDENTES.md`, que la tarea 0 creó con las decisiones del cuartel: agregá **debajo** de
+la sección "0. Decisiones del cuartel" este contenido:
 
 ```markdown
-# Centro de Operaciones e Incidentes
-
 Corte 1 (núcleo + web operativa). Spec: `docs/superpowers/specs/2026-10-06-centro-operaciones-incidentes-design.md`.
 Plan: `docs/superpowers/plans/2026-10-07-centro-operaciones-incidentes.md`. El código manda:
 `backend/src/modules/incidente-nucleo/`, `backend/src/modules/incidentes/`, `frontend/src/app/dashboard/servicios/operaciones/`,
@@ -8360,43 +10120,68 @@ transacción**; la tabla rechaza UPDATE y DELETE (disparador, error 51093).
 ## 2. Fases
 
 RECIBIDO → EVALUACIÓN → DESPACHADO → EN CAMINO → EN LUGAR → OPERANDO → CONTROLADO → RETORNO → DISPONIBLE → CERRADO.
-Automáticas (solo avanzan): primer despacho, primera salida, primera llegada, primera acción operativa en el
-lugar, todos retornando, todos de vuelta. Manuales: evaluación, operando, controlado, se reactivó, resultado, cierre.
-Los alternativos (falsa alarma, cancelado, derivado, no atendido, sin acceso, sin intervención) son **resultados**:
-con móviles afuera la fase pasa a RETORNO; sin haber despachado, cierra en el acto.
+Las automáticas (solo avanzan) son: primer despacho, primera salida, primera llegada, primera acción operativa
+en el lugar, todos retornando y todos de vuelta. Las manuales son: evaluación, operando, controlado, se
+reactivó, resultado y cierre.
+
+Los alternativos (falsa alarma, cancelado, derivado, no atendido, sin acceso, sin intervención) son
+**resultados**. Con móviles afuera, la fase pasa a RETORNO; sin haber despachado, el incidente se cierra en el acto.
 
 ## 3. Permisos
 
-`servicios:ver/crear/despachar/finalizar` (existentes) · `servicios:operar` (Modo Incidente; se dio a todo rol con
-`despacho:responder`, y con él `adjuntos:subir`) · `servicios:comandar` (roles con `servicios:finalizar`) ·
-`vehiculos:tripulacion` (roles con `servicios:despachar`).
+- `servicios:ver/crear/despachar/finalizar`: existentes.
+- `servicios:operar`: Modo Incidente. Se dio a todo rol con `despacho:responder`, y con él `adjuntos:subir`.
+- `servicios:comandar`: a los roles con `servicios:finalizar`.
+- `vehiculos:tripulacion`: a los roles con `servicios:despachar`.
+- `despacho:confidencial`: existente; ahora también protege las fotos de víctimas.
 
-## 4. Pantallas
+## 4. Tiempo real y seguridad del personal
 
-Centro de operaciones (`/dashboard/servicios/operaciones`), incidente (`…/[id]`), informe y cierre (`…/[id]/informe`),
-Modo Incidente (`/incidente/[id]`, fuera del dashboard), tripulación (`/dashboard/vehiculos/tripulacion`).
+- **Avisos inmediatos.** EMERGENCIA, condición crítica, pedido urgente, recuento con faltantes y nuevo servicio
+  llegan por `GET /despacho/stream?solo=incidentes`, que no cuenta como presencia del despacho. El resto se
+  actualiza por consulta cada 5 s.
+- **Control de personal.** ENTRA/SALE por persona y RECUENTO (PAR) del comando. Nadie se libera solo: si los
+  móviles vuelven con alguien en zona, la central recibe una alerta, y el cierre se rechaza.
+- **Fotos de víctimas.** Solo con `despacho:confidencial`; cada acceso se audita como `ACCESO_CONFIDENCIAL`.
+- **Quien no figura en el incidente** queda marcado o es rechazado, según DEC-2. La EMERGENCIA nunca se bloquea.
 
-## 5. Pruebas
+## 5. Pantallas
 
-Backend: `incidente.logica.spec`, `incidente-nucleo.spec`, `tripulacion.spec`, `flota.service.spec` (casos nuevos),
-`campo.spec`/`servicio-activo.spec`/`despacho.spec` (eventos), `recepcion/expediente/acciones/cierre.spec`.
-Frontend: `cola-incidente.test.mjs`, `fases-incidente.test.mjs`. Viva: `node scripts/smoke-incidente.mjs … --confirmar`.
+- Centro de operaciones: `/dashboard/servicios/operaciones`.
+- Incidente: `…/[id]`.
+- Informe y cierre: `…/[id]/informe`.
+- Modo Incidente: `/incidente/[id]`, fuera del dashboard, con modo noche si DEC-3 lo aprobó.
+- Tripulación: `/dashboard/vehiculos/tripulacion`, con la guardia actual.
 
-## 6. Registros de prueba en la base local (no se pueden borrar)
+## 6. Pruebas y registros de prueba
+
+Backend:
+
+- Suites nuevas: `incidente.logica.spec`, `incidente-nucleo.spec`, `tripulacion.spec`, `recepcion/expediente/acciones/cierre/avisos.spec`.
+- Casos nuevos en suites existentes: `flota.service.spec`, `campo.spec`, `despacho.spec` y `servicio-activo.spec`.
+
+Frontend: `cola-incidente.test.mjs` y `fases-incidente.test.mjs`. Prueba viva:
+`node scripts/smoke-incidente.mjs … --confirmar`. Recorrido en el navegador: tarea 23 del plan.
+
+Registros de prueba en la base local (no se pueden borrar):
 
 - Evento de prueba de inmutabilidad (migración 093) sobre `PRUEBA-TECNICA-001`.
-- <número> — incidente de `smoke-incidente.mjs` del <fecha>.
-- <número> — incidente de la revisión manual en el navegador del <fecha>.
+- <número> — incidente de `smoke-incidente.mjs` (tarea 20) del <fecha>.
+- <número> — incidente del recorrido en el navegador (tarea 23) del <fecha>.
+- <número> — incidente de `smoke-incidente.mjs` (tarea 24) del <fecha>.
 
-## 7. Límites conocidos de este corte
+## 7. Límites conocidos y pendientes
 
-- Tiempo real por consulta periódica (5 s); el SSE queda para más adelante.
-- Fotos sin conexión: no se encolan en la web (las resuelve la app, corte 2).
-- Servicios creados con el formulario largo nacen RECIBIDO (ajuste D6 del plan).
-- Voz, SCI completo (objetivos, sectores, instituciones), AAR, estadísticas y administración de catálogos: cortes 3 a 7 de la spec.
+- Sin red, la web no abre el Modo Incidente desde cero; lo resuelve la app (corte siguiente).
+- Las fotos no se encolan sin conexión en la web.
+- Los servicios creados con el formulario largo nacen RECIBIDO (ajuste D6) hasta que la comunicación se genere desde el incidente.
+- Las fotos confidenciales usan el permiso, no la matriz de pantallas.
+- Quien se suma por solicitud entra al personal recién cuando se registra en zona.
+- Lo que hubo que tipear en el recorrido de la tarea 23: <lista, o "nada">.
+- Prueba E2E permanente con `@playwright/test`: <decisión del usuario en la tarea 23>.
 ```
 
-Reemplazá los `<número>` y `<fecha>` con los datos reales de los pasos de prueba antes del commit.
+Reemplazá los `<número>` y `<fecha>` con los datos reales de las tareas 20, 23 y del paso 1 antes del commit.
 
 En `.context/contexto.md`, en "Documentos por tarea", agregá después de la línea de `DESPACHO.md`:
 
@@ -8517,6 +10302,31 @@ edges:
 6. **Cierre** (`servicios:finalizar`): cómo terminó, víctimas, daños, observaciones, tripulación; rechaza con móviles afuera.
 ```
 
+Crear `.context/graph/curated/rule/rule--personal-en-zona-no-se-libera-solo.md`:
+
+```markdown
+---
+id: rule--personal-en-zona-no-se-libera-solo
+tipo: RULE
+nombre: Una persona registrada en zona solo sale cuando alguien registra su salida
+nivel: L1
+resumen: personal_servicio.en_zona nunca se apaga solo (ni al retornar el móvil ni al cerrar); con alguien adentro y los móviles de vuelta la central recibe una alerta y el cierre se rechaza.
+severidad: CRITICA
+dominio: servicios
+fuente: backend/src/modules/incidentes/acciones.service.ts
+archivos: [backend/src/modules/incidentes/acciones.service.ts, backend/src/modules/incidentes/cierre.service.ts, backend/src/modules/incidentes/expediente.service.ts]
+terminos: [control de personal, zona, recuento, par, seguridad, bombero atrapado]
+edges:
+  - [affects, entity--despacho]
+---
+
+## Invariante
+
+Liberar a alguien automáticamente cuando su móvil retorna esconde justo el caso que importa: la persona que
+quedó adentro. Por eso la salida se registra siempre a mano (ENTRA/SALE en el Modo Incidente) y el recuento
+del comando (PAR) confirma a cada persona. Ver [[workflow--ciclo-del-incidente]].
+```
+
 - [ ] **Paso 4: Regenerar y validar el grafo**
 
 ```bash
@@ -8537,7 +10347,7 @@ cd .. && node scripts/verificar-endpoints.mjs 2>&1 | tail -3
 
 Resultado esperado:
 
-- Backend: `tsc` limpio y todas las suites en verde. La cuenta es la inicial más las 8 nuevas.
+- Backend: `tsc` limpio y todas las suites en verde. La cuenta es la inicial más las 9 nuevas.
 - Frontend: `tsc` limpio, pruebas en verde y auditorías en su línea base.
 - Ningún endpoint del frontend sin ruta en el backend.
 
@@ -8552,8 +10362,8 @@ cargado ningún dato a mano. Si algo hay que tipear, anotalo como hallazgo en `.
 
 ```bash
 cd /c/Proyectos/Personal/SIGBO
-git add scripts/smoke-incidente.mjs .context
-git commit -m "Incidentes: prueba viva de punta a punta, documentación y nodos del grafo
+git add .context
+git commit -m "Incidentes: documentación, nodos del grafo y verificación final
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 git log --oneline -17
@@ -8561,3 +10371,20 @@ git log --oneline -17
 
 Al terminar, preguntá al usuario si sube los commits a GitHub (`git push origin main`). No lo hagas sin
 que lo pida.
+
+---
+
+## Después de este corte (recomendación para confirmar con el comando del cuartel)
+
+Al terminar, mostrale al usuario este orden propuesto para los cortes siguientes. **No lo ejecutes**: cada uno
+lleva su propia especificación y su propio plan.
+
+1. **App Flutter con el Modo Incidente sin conexión.** Hoy la web solo trabaja sin red si la página ya estaba
+   abierta; en un sótano no se puede abrir desde cero. La app ya tiene cola local.
+2. **Comunicación oficial generada desde el incidente.** Elimina la doble carga del formulario largo, que va
+   contra "nunca preguntar dos veces", y resuelve el ajuste D6.
+3. **SCI completo:** oficiales de comando, objetivos, sectores, instituciones externas, desmovilización por
+   recurso, checklists por tipo y detalle de víctimas con permiso.
+4. **Voz a datos estructurados** (Whisper y Ollama locales), siempre con Confirmar o Editar.
+5. **Estadísticas** de servicios, personal, móviles, recursos y tiempos (los minutos de servicio ya quedan guardados).
+6. **Administración de catálogos** en pantalla y, si se aprueba la dependencia, la prueba E2E permanente con `@playwright/test`.

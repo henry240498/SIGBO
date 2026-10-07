@@ -482,3 +482,31 @@ sobre lo escrito arriba.
   `RECIBIDO` y se cierran con un toque si eran solo papeleo, hasta que el corte 4 genere la comunicación desde el incidente.
 - **D7.** `GET /incidentes/catalogos` también devuelve los bomberos activos (el Modo Incidente los necesita
   para ajustar la tripulación y el bombero no tiene `vehiculos:ver`).
+
+### Mejoras incorporadas después de la revisión del plan (2026-10-07)
+
+- **D8. Avisos inmediatos** por el SSE existente (`GET /despacho/stream?solo=incidentes`, que no cuenta como
+  presencia): EMERGENCIA, condición crítica, pedido urgente, recuento con faltantes y nuevo servicio. La consulta
+  cada 5 s queda de respaldo. Reemplaza "SSE para más adelante" de §5.4 y §10.
+- **D9. Control de personal en zona** (adelantado del corte SCI). ENTRA/SALE por persona y recuento (PAR) del
+  comando. Nadie se libera solo: hay alerta si los móviles vuelven con alguien adentro y el cierre se rechaza.
+- **D10. Fotos de víctimas** solo con `despacho:confidencial`, con cada acceso auditado (punto 24 del pedido).
+- **D11.** `personal_servicio` guarda la **función como código** y los **minutos exactos** de servicio. Las horas
+  salen de una única función con la política que elija el cuartel.
+- **D12. Tripulación desde la guardia en curso**, para no cargarla aparte.
+- **D13.** Quien registra en un incidente donde no figura **queda marcado**, o se le rechaza según lo que decida
+  el cuartel. La EMERGENCIA nunca se bloquea.
+- **D14. Modo noche** del Modo Incidente, si el cuartel aprueba la excepción a la regla del tema claro.
+- **D15.** Antes de implementar, el plan consulta la base y pregunta al cuartel las decisiones que le
+  corresponden: condiciones críticas, alcance de `servicios:operar`, modo noche, horas de servicio y servicios viejos.
+  La ejecución tiene dos puntos de control: el backend contra la base real (con concurrencia) y el recorrido
+  automatizado en el navegador.
+
+**Orden recomendado para los cortes siguientes** (reemplaza a §11, a confirmar con el comando):
+
+1. App Flutter con el Modo Incidente sin conexión.
+2. Comunicación oficial generada desde el incidente: elimina la doble carga y resuelve D6.
+3. SCI completo.
+4. Voz.
+5. Estadísticas.
+6. Administración de catálogos y prueba E2E permanente.
