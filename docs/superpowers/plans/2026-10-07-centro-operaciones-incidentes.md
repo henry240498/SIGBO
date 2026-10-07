@@ -1176,7 +1176,7 @@ En `backend/src/database/seed-data.ts`:
 - En el rol **Bombero Operativo**, después de `'servicios:ver',` agregá `'servicios:operar', 'adjuntos:subir',`
   (si el rol ya tenía `adjuntos:subir`, no lo dupliques).
 
-- [ ] **Paso 8: Aplicar la migración y verificarla**
+- [x] **Paso 8: Aplicar la migración y verificarla**
 
 ```bash
 cd /c/Proyectos/Personal/SIGBO && powershell -ExecutionPolicy Bypass -File logs/migrate-local.ps1 2>&1 | tail -5
