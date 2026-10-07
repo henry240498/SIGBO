@@ -104,7 +104,13 @@ function leer(datos: string | null): { codigo?: string; resueltas?: string[] } {
   if (!datos) return {};
   try {
     const valor: unknown = JSON.parse(datos);
-    return valor && typeof valor === 'object' ? valor as { codigo?: string; resueltas?: string[] } : {};
+    if (!valor || typeof valor !== 'object' || Array.isArray(valor)) return {};
+    const registro = valor as Record<string, unknown>;
+    const codigo = typeof registro.codigo === 'string' && registro.codigo.trim() ? registro.codigo : undefined;
+    const resueltas = Array.isArray(registro.resueltas)
+      ? registro.resueltas.filter((item): item is string => typeof item === 'string' && Boolean(item.trim()))
+      : undefined;
+    return { codigo, resueltas };
   } catch { return {}; }
 }
 /** Pliega en orden los eventos que marcan o resuelven condiciones. */

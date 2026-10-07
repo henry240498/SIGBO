@@ -74,7 +74,7 @@ describe('resultados alternativos', () => {
       expect(faseTrasResultado(fase, 0)).toBe('CERRADO');
     }
   });
-  it('con móviles afuera pasa a RETORNO y si ya volvieron requiere cierre explícito', () => {
+  it('sin móviles afuera cierra al declarar resultado y con móviles afuera pasa a RETORNO', () => {
     expect(faseTrasResultado('EN_CAMINO', 2)).toBe('RETORNO');
     expect(faseTrasResultado('OPERANDO', 1)).toBe('RETORNO');
     expect(faseTrasResultado('DISPONIBLE', 0)).toBe('CERRADO');
@@ -122,6 +122,19 @@ describe('condiciones de situación', () => {
   });
   it('ignora otros eventos y datos dañados', () => {
     expect(condicionesActivas([{ tipo: 'MOVIL_LLEGO', datos: null }, { tipo: 'SITUACION_MARCADA', datos: 'no-json' }]).size).toBe(0);
+  });
+  it('omite códigos inválidos y filtra resueltas con forma incorrecta sin interrumpir el pliegue', () => {
+    const activas = condicionesActivas([
+      { tipo: 'SITUACION_MARCADA', datos: JSON.stringify({ codigo: 42 }) },
+      { tipo: 'SITUACION_MARCADA', datos: JSON.stringify({ codigo: 'INCENDIO_ACTIVO' }) },
+      { tipo: 'SITUACION_MARCADA', datos: JSON.stringify({ codigo: 'INCENDIO_CONTROLADO', resueltas: 123 }) },
+    ]);
+    expect([...activas]).toEqual(['INCENDIO_ACTIVO', 'INCENDIO_CONTROLADO']);
+    const saneadas = condicionesActivas([
+      { tipo: 'SITUACION_MARCADA', datos: JSON.stringify({ codigo: 'INCENDIO_ACTIVO' }) },
+      { tipo: 'SITUACION_MARCADA', datos: JSON.stringify({ codigo: 'INCENDIO_CONTROLADO', resueltas: ['INCENDIO_ACTIVO', 7] }) },
+    ]);
+    expect([...saneadas]).toEqual(['INCENDIO_CONTROLADO']);
   });
 });
 
