@@ -20,8 +20,13 @@ export class Despacho {
   @Column({ type: 'nvarchar', length: 20, default: 'DESPACHADO' })
   estado: EstadoDespacho;
 
+  /** Cuando la central asigno el movil (migracion 093). */
   @Column({ type: 'datetimeoffset', precision: 3 })
-  horaSalida: Date;
+  horaDespacho: Date;
+
+  /** Cuando el movil salio. NULL = asignado, todavia en el cuartel. */
+  @Column({ type: 'datetimeoffset', precision: 3, nullable: true })
+  horaSalida: Date | null;
 
   @Column({ type: 'datetimeoffset', precision: 3, nullable: true })
   horaLlegada: Date | null;

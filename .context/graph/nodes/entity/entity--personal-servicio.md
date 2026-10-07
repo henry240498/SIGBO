@@ -11,7 +11,7 @@ archivos:
 edges:
   - [belongs_to, domain--servicios]
   - [persisted_in, table--servicios-personal-servicio]
-terminos: [personal, servicio, servicios]
+terminos: [personal, servicio, servicios, origen, tripulacion, ajuste, solicitud]
 ---
 
 # PersonalServicio
@@ -19,7 +19,11 @@ terminos: [personal, servicio, servicios]
 Personal que participo en un servicio (schema servicios).
 
 - **Tabla:** [[table--servicios-personal-servicio|servicios.personal_servicio]]
-- **Columnas mapeadas:** 5
+- **Columnas mapeadas:** 12
+
+## Estados y enumeraciones
+
+- `OrigenPersonalServicio`: `TRIPULACION` · `AJUSTE` · `SOLICITUD`
 
 ## Donde se usa
 

@@ -282,6 +282,9 @@
  "backend/src/shared/entities/incidencia-deposito.entity.ts": [
   "entity--incidencia-deposito"
  ],
+ "backend/src/shared/entities/incidente.entity.ts": [
+  "entity--incidente"
+ ],
  "backend/src/shared/entities/inscripcion-actividad-academica.entity.ts": [
   "entity--inscripcion-actividad-academica"
  ],
@@ -464,6 +467,9 @@
   "entity--tolerancia-asistencia",
   "decision--tolerancias-parametrizables",
   "rule--tolerancia-null-es-la-general"
+ ],
+ "backend/src/shared/entities/tripulacion-movil.entity.ts": [
+  "entity--tripulacion-movil"
  ],
  "backend/src/shared/entities/turno-caja.entity.ts": [
   "entity--turno-caja"
@@ -1092,6 +1098,19 @@
  "database/migrations/092_despacho_chofer_habilitado.sql": [
   "file--092-despacho-chofer-habilitado",
   "table--servicios-solicitud-destinatarios"
+ ],
+ "database/migrations/093_centro_operaciones_incidentes.sql": [
+  "file--093-centro-operaciones-incidentes",
+  "table--servicios-servicios",
+  "table--servicios-personal-servicio",
+  "table--organizacion-parametros",
+  "table--servicios-despachos",
+  "table--servicios-adjuntos",
+  "table--servicios-incidente-eventos",
+  "table--servicios-condiciones-situacion",
+  "table--servicios-tipos-recurso",
+  "table--servicios-incidente-solicitudes",
+  "table--vehiculos-tripulacion-movil"
  ],
  "backend/src/modules/academia/academia.module.ts": [
   "component--modulo-academia"

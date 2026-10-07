@@ -105,6 +105,7 @@
   "entity--importacion-marcador-fila",
   "entity--importacion-marcador",
   "entity--incidencia-deposito",
+  "entity--incidente",
   "entity--inscripcion-actividad-academica",
   "entity--inspeccion-estacion",
   "entity--inspeccion-movil",
@@ -165,6 +166,7 @@
   "entity--tipo-guardia",
   "entity--tipo-servicio",
   "entity--tolerancia-asistencia",
+  "entity--tripulacion-movil",
   "entity--turno-caja",
   "entity--turno",
   "entity--ubicacion-deposito",
@@ -275,7 +277,8 @@
   "file--089-convocatoria-historial-operativo",
   "file--090-despacho-servicio-seguridad",
   "file--091-pantallas-auditoria-movil",
-  "file--092-despacho-chofer-habilitado"
+  "file--092-despacho-chofer-habilitado",
+  "file--093-centro-operaciones-incidentes"
  ],
  "TABLE": [
   "table--seguridad-usuarios",
@@ -467,7 +470,12 @@
   "table--servicios-formulario-historial",
   "table--seguridad-pantallas",
   "table--seguridad-pantalla-permisos",
-  "table--seguridad-navegacion-eventos"
+  "table--seguridad-navegacion-eventos",
+  "table--servicios-incidente-eventos",
+  "table--servicios-condiciones-situacion",
+  "table--servicios-tipos-recurso",
+  "table--servicios-incidente-solicitudes",
+  "table--vehiculos-tripulacion-movil"
  ],
  "COMPONENT": [
   "component--modulo-academia",

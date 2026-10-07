@@ -11,7 +11,7 @@ archivos:
 edges:
   - [belongs_to, domain--servicios]
   - [persisted_in, table--servicios-adjuntos]
-terminos: [adjunto, adjuntos, servicios, entidad, servicio, despacho, vehiculo, hidrante, punto, riesgo, tipo, foto, firma, categoria, victima, rescatada, herida, fallecida, evacuada, estado, ausencia, solicitada, aprobada, rechazada, cancelada]
+terminos: [adjunto, adjuntos, servicios, entidad, servicio, despacho, vehiculo, hidrante, punto, riesgo, tipo, foto, firma, categoria, dano, victima, estructura, equipamiento, evidencia, otro, rescatada, herida, fallecida, evacuada, estado, ausencia, solicitada, aprobada, rechazada, cancelada]
 ---
 
 # Adjunto
@@ -19,12 +19,13 @@ terminos: [adjunto, adjuntos, servicios, entidad, servicio, despacho, vehiculo, 
 Foto o firma tomada con el celular (migracion 086). El archivo es privado: solo se sirve a usuarios autorizados.
 
 - **Tabla:** [[table--servicios-adjuntos|servicios.adjuntos]]
-- **Columnas mapeadas:** 24
+- **Columnas mapeadas:** 27
 
 ## Estados y enumeraciones
 
 - `EntidadAdjunto`: `SERVICIO` · `DESPACHO` · `VEHICULO` · `HIDRANTE` · `PUNTO_RIESGO`
 - `TipoAdjunto`: `FOTO` · `FIRMA`
+- `CategoriaFoto`: `DANO` · `VICTIMA` · `RIESGO` · `VEHICULO` · `ESTRUCTURA` · `EQUIPAMIENTO` · `EVIDENCIA` · `OTRO`
 - `CategoriaVictima`: `RESCATADA` · `HERIDA` · `FALLECIDA` · `EVACUADA`
 - `EstadoAusencia`: `SOLICITADA` · `APROBADA` · `RECHAZADA` · `CANCELADA`
 

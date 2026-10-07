@@ -28,6 +28,7 @@ Modulo funcional "Vehículos". Habilitado en la navegacion.
 - [[entity--mantenimiento-vehiculo|MantenimientoVehiculo]] `belongs_to` →
 - [[entity--movil-estado-historial|MovilEstadoHistorial]] `belongs_to` →
 - [[entity--posicion-movil|PosicionMovil]] `belongs_to` →
+- [[entity--tripulacion-movil|TripulacionMovil]] `belongs_to` →
 - [[entity--vehiculo|Vehiculo]] `belongs_to` →
 - [[table--vehiculos-vehiculos|vehiculos.vehiculos]] `belongs_to` →
 - [[table--vehiculos-mantenimientos-vehiculos|vehiculos.mantenimientos_vehiculos]] `belongs_to` →
@@ -36,6 +37,7 @@ Modulo funcional "Vehículos". Habilitado en la navegacion.
 - [[table--vehiculos-movil-estado-historial|vehiculos.movil_estado_historial]] `belongs_to` →
 - [[table--vehiculos-posicion-actual|vehiculos.posicion_actual]] `belongs_to` →
 - [[table--vehiculos-dotacion-movil|vehiculos.dotacion_movil]] `belongs_to` →
+- [[table--vehiculos-tripulacion-movil|vehiculos.tripulacion_movil]] `belongs_to` →
 - [[component--modulo-flota|flota (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-vehiculos|vehiculos (modulo NestJS)]] `belongs_to` →
 - [[service--flota-disponibilidad|DisponibilidadService]] `belongs_to` →

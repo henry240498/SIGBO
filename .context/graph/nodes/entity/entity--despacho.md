@@ -19,7 +19,7 @@ terminos: [despacho, despachos, servicios, estado, despachado, servicio, regresa
 Despacho de un movil a un servicio (migracion 077): salida, llegada, fin y regreso.
 
 - **Tabla:** [[table--servicios-despachos|servicios.despachos]]
-- **Columnas mapeadas:** 13
+- **Columnas mapeadas:** 14
 
 ## Estados y enumeraciones
 

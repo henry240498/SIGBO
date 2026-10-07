@@ -4,7 +4,7 @@ tipo: TABLE
 nombre: organizacion.parametros
 nivel: L2
 dominio: organizacion
-resumen: Tabla organizacion.parametros (14 columnas). Creada en 018_parametros_y_normalizacion_personal.sql, modificada por 020_asistencia.sql, 024_equipos.sql, 025_guardias.sql, 036_academia_estructura.sql, 041_deposito_estructura.sql, 043_deposito_bajas.sql, 044_deposito_prestamos.sql, 048_finanzas_estructura.sql, 052_documentos_estructura.sql, 062_finanzas_socios_protectores.sql.
+resumen: Tabla organizacion.parametros (14 columnas). Creada en 018_parametros_y_normalizacion_personal.sql, modificada por 020_asistencia.sql, 024_equipos.sql, 025_guardias.sql, 036_academia_estructura.sql, 041_deposito_estructura.sql, 043_deposito_bajas.sql, 044_deposito_prestamos.sql, 048_finanzas_estructura.sql, 052_documentos_estructura.sql, 062_finanzas_socios_protectores.sql, 093_centro_operaciones_incidentes.sql.
 tabla: parametros
 archivos:
   - database/migrations/018_parametros_y_normalizacion_personal.sql
@@ -18,6 +18,7 @@ archivos:
   - database/migrations/048_finanzas_estructura.sql
   - database/migrations/052_documentos_estructura.sql
   - database/migrations/062_finanzas_socios_protectores.sql
+  - database/migrations/093_centro_operaciones_incidentes.sql
 edges:
   - [defined_in, file--018-parametros-y-normalizacion-personal]
   - [belongs_to, domain--organizacion]
@@ -26,7 +27,7 @@ terminos: [organizacion, parametros, tipo, padre, nombre, normalizado, codigo, d
 
 # organizacion.parametros
 
-Tabla organizacion.parametros (14 columnas). Creada en 018_parametros_y_normalizacion_personal.sql, modificada por 020_asistencia.sql, 024_equipos.sql, 025_guardias.sql, 036_academia_estructura.sql, 041_deposito_estructura.sql, 043_deposito_bajas.sql, 044_deposito_prestamos.sql, 048_finanzas_estructura.sql, 052_documentos_estructura.sql, 062_finanzas_socios_protectores.sql.
+Tabla organizacion.parametros (14 columnas). Creada en 018_parametros_y_normalizacion_personal.sql, modificada por 020_asistencia.sql, 024_equipos.sql, 025_guardias.sql, 036_academia_estructura.sql, 041_deposito_estructura.sql, 043_deposito_bajas.sql, 044_deposito_prestamos.sql, 048_finanzas_estructura.sql, 052_documentos_estructura.sql, 062_finanzas_socios_protectores.sql, 093_centro_operaciones_incidentes.sql.
 
 - **Esquema:** organizacion · **Columnas:** 14
 
@@ -42,6 +43,7 @@ Tabla organizacion.parametros (14 columnas). Creada en 018_parametros_y_normaliz
 - `tipo IN ( N'PAIS', N'DEPARTAMENTO', N'CIUDAD', N'BARRIO', N'PROFESION', N'IDIOMA', N'NIVEL_IDIOMA', N'GRUPO_SANGUINEO', N'FACTOR_RH', N'TIPO_SEGURO', N'ASEGURADORA', N'TIPO_EVENTO_ASISTENCIA', N'UBICACION_EQUIPO', N'ESTADO_PRESENCIA_GUARDIA', N'SECTOR_ESTACION', N'TIPO_ACTIVIDAD_ACADEMICA', N'MODALIDAD_ACADEMICA', N'TIPO_EVALUACION_ACADEMICA', N'RESULTADO_ACADEMICO', N'TIPO_UBICACION_DEPOSITO', N'TIPO_TENENCIA_DEPOSITO', N'ESTADO_ELEMENTO_DEPOSITO', N'TIPO_MOVIMIENTO_DEPOSITO', N'UNIDAD_MEDIDA_DEPOSITO', N'MOTIVO_BAJA_DEPOSITO', N'TIPO_PRESTAMO_DEPOSITO', N'TIPO_INGRESO_FINANZAS', N'CATEGORIA_EGRESO_FINANZAS', N'TIPO_CUENTA_BANCARIA_FINANZAS', N'TIPO_DOCUMENTO_FINANZAS', N'MOTIVO_ANULACION_FINANZAS' )`
 - `tipo IN ( N'PAIS', N'DEPARTAMENTO', N'CIUDAD', N'BARRIO', N'PROFESION', N'IDIOMA', N'NIVEL_IDIOMA', N'GRUPO_SANGUINEO', N'FACTOR_RH', N'TIPO_SEGURO', N'ASEGURADORA', N'TIPO_EVENTO_ASISTENCIA', N'UBICACION_EQUIPO', N'ESTADO_PRESENCIA_GUARDIA', N'SECTOR_ESTACION', N'TIPO_ACTIVIDAD_ACADEMICA', N'MODALIDAD_ACADEMICA', N'TIPO_EVALUACION_ACADEMICA', N'RESULTADO_ACADEMICO', N'TIPO_UBICACION_DEPOSITO', N'TIPO_TENENCIA_DEPOSITO', N'ESTADO_ELEMENTO_DEPOSITO', N'TIPO_MOVIMIENTO_DEPOSITO', N'UNIDAD_MEDIDA_DEPOSITO', N'MOTIVO_BAJA_DEPOSITO', N'TIPO_PRESTAMO_DEPOSITO', N'TIPO_INGRESO_FINANZAS', N'CATEGORIA_EGRESO_FINANZAS', N'TIPO_CUENTA_BANCARIA_FINANZAS', N'TIPO_DOCUMENTO_FINANZAS', N'MOTIVO_ANULACION_FINANZAS', N'TIPO_DOCUMENTO', N'CATEGORIA_DOCUMENTO', N'ESTADO_DOCUMENTO', N'NIVEL_CONFIDENCIALIDAD_DOCUMENTO', N'MOTIVO_ANULACION_DOCUMENTO', N'ARCHIVO_FISICO_DOCUMENTO' )`
 - `tipo IN ( N'PAIS', N'DEPARTAMENTO', N'CIUDAD', N'BARRIO', N'PROFESION', N'IDIOMA', N'NIVEL_IDIOMA', N'GRUPO_SANGUINEO', N'FACTOR_RH', N'TIPO_SEGURO', N'ASEGURADORA', N'TIPO_EVENTO_ASISTENCIA', N'UBICACION_EQUIPO', N'ESTADO_PRESENCIA_GUARDIA', N'SECTOR_ESTACION', N'TIPO_ACTIVIDAD_ACADEMICA', N'MODALIDAD_ACADEMICA', N'TIPO_EVALUACION_ACADEMICA', N'RESULTADO_ACADEMICO', N'TIPO_UBICACION_DEPOSITO', N'TIPO_TENENCIA_DEPOSITO', N'ESTADO_ELEMENTO_DEPOSITO', N'TIPO_MOVIMIENTO_DEPOSITO', N'UNIDAD_MEDIDA_DEPOSITO', N'MOTIVO_BAJA_DEPOSITO', N'TIPO_PRESTAMO_DEPOSITO', N'TIPO_INGRESO_FINANZAS', N'CATEGORIA_EGRESO_FINANZAS', N'TIPO_CUENTA_BANCARIA_FINANZAS', N'TIPO_DOCUMENTO_FINANZAS', N'MOTIVO_ANULACION_FINANZAS', N'TIPO_DOCUMENTO', N'CATEGORIA_DOCUMENTO', N'ESTADO_DOCUMENTO', N'NIVEL_CONFIDENCIALIDAD_DOCUMENTO', N'MOTIVO_ANULACION_DOCUMENTO', N'ARCHIVO_FISICO_DOCUMENTO', N'ESTADO_SOCIO_PROTECTOR', N'PERIODICIDAD_APORTE', N'MEDIO_PAGO_FINANZAS', N'TIPO_BENEFICIO_SOCIO', N'MOTIVO_NOTA_CREDITO_FINANZAS' )`
+- `tipo IN ( N'PAIS', N'DEPARTAMENTO', N'CIUDAD', N'BARRIO', N'PROFESION', N'IDIOMA', N'NIVEL_IDIOMA', N'GRUPO_SANGUINEO', N'FACTOR_RH', N'TIPO_SEGURO', N'ASEGURADORA', N'TIPO_EVENTO_ASISTENCIA', N'UBICACION_EQUIPO', N'ESTADO_PRESENCIA_GUARDIA', N'SECTOR_ESTACION', N'TIPO_ACTIVIDAD_ACADEMICA', N'MODALIDAD_ACADEMICA', N'TIPO_EVALUACION_ACADEMICA', N'RESULTADO_ACADEMICO', N'TIPO_UBICACION_DEPOSITO', N'TIPO_TENENCIA_DEPOSITO', N'ESTADO_ELEMENTO_DEPOSITO', N'TIPO_MOVIMIENTO_DEPOSITO', N'UNIDAD_MEDIDA_DEPOSITO', N'MOTIVO_BAJA_DEPOSITO', N'TIPO_PRESTAMO_DEPOSITO', N'TIPO_INGRESO_FINANZAS', N'CATEGORIA_EGRESO_FINANZAS', N'TIPO_CUENTA_BANCARIA_FINANZAS', N'TIPO_DOCUMENTO_FINANZAS', N'MOTIVO_ANULACION_FINANZAS', N'TIPO_DOCUMENTO', N'CATEGORIA_DOCUMENTO', N'ESTADO_DOCUMENTO', N'NIVEL_CONFIDENCIALIDAD_DOCUMENTO', N'MOTIVO_ANULACION_DOCUMENTO', N'ARCHIVO_FISICO_DOCUMENTO', N'ESTADO_SOCIO_PROTECTOR', N'PERIODICIDAD_APORTE', N'MEDIO_PAGO_FINANZAS', N'TIPO_BENEFICIO_SOCIO', N'MOTIVO_NOTA_CREDITO_FINANZAS', N'FUNCION_INCIDENTE', N'POLITICA_INCIDENTE' )`
 
 ## Llaves foraneas
 
@@ -88,6 +90,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - `database/migrations/048_finanzas_estructura.sql`
 - `database/migrations/052_documentos_estructura.sql`
 - `database/migrations/062_finanzas_socios_protectores.sql`
+- `database/migrations/093_centro_operaciones_incidentes.sql`
 
 ## Relaciones
 

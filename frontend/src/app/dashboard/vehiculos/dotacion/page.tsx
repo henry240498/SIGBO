@@ -267,7 +267,7 @@ export default function DotacionPage() {
                 <tbody>
                   {bitacora.map((b) => (
                     <tr key={b.despachoId}>
-                      <td>{new Date(b.horaSalida).toLocaleString('es-PY')}</td>
+                      <td>{b.horaSalida ? new Date(b.horaSalida).toLocaleString('es-PY') : 'Sin salir'}</td>
                       <td>{b.numeroServicio ?? '—'}{b.direccion ? <div style={{ fontSize: 12, color: 'var(--muted)' }}>{b.direccion}</div> : null}</td>
                       <td>{b.estado.replace('_', ' ')}</td>
                       <td>{b.horaRegreso ? new Date(b.horaRegreso).toLocaleString('es-PY') : '—'}</td>

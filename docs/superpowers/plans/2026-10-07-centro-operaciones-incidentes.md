@@ -353,7 +353,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
   - Entidades `IncidenteEvento`, `CondicionSituacion`, `TipoRecurso`, `IncidenteSolicitud` y `TripulacionMovil`.
   - `Servicio` con `faseOperativa`, `faseDesde` y `resultado`; `Despacho` con `horaDespacho: Date` y `horaSalida: Date | null`; `PersonalServicio` con `vehiculoId`, `despachoId`, `origen`, `funcion`, `enZona`, `zonaDesde` y `minutosServicio`; `Adjunto` con `latitud`, `longitud` y `categoria`; `TipoParametro` con `'FUNCION_INCIDENTE'`.
 
-- [ ] **Paso 1: Verificar el número libre y la definición actual de `CK_param_tipo`**
+- [x] **Paso 1: Verificar el número libre y la definición actual de `CK_param_tipo`**
 
 ```bash
 cd /c/Proyectos/Personal/SIGBO && ls database/migrations | tail -3
@@ -369,7 +369,7 @@ Al escribir la migración del paso 2 aplicá las decisiones de la tarea 0: **DEC
 semilla de condiciones), **DEC-5** (relleno de servicios viejos) y, si hubo estadísticas creadas a mano sobre
 `hora_salida`, su `DROP STATISTICS` antes del `ALTER COLUMN`.
 
-- [ ] **Paso 2: Escribir la migración**
+- [x] **Paso 2: Escribir la migración**
 
 Crear `database/migrations/093_centro_operaciones_incidentes.sql` con este contenido exacto:
 
@@ -756,7 +756,7 @@ WHERE NOT EXISTS (SELECT 1 FROM seguridad.asignacion_permisos_rol x WHERE x.rol_
 GO
 ```
 
-- [ ] **Paso 3: Registrar la migración**
+- [x] **Paso 3: Registrar la migración**
 
 En `database/run-migrations.ps1` reemplazá la línea `    "092_despacho_chofer_habilitado.sql"` por:
 
@@ -777,7 +777,7 @@ tail -2 database/migrations.sha256
 Resultado esperado: la última línea es `<64 hex en mayúsculas>  093_centro_operaciones_incidentes.sql`.
 **Si después editás el `.sql`, recalculá el hash** (antes de aplicarla; una vez aplicada ya no se toca).
 
-- [ ] **Paso 4: Entidades nuevas**
+- [x] **Paso 4: Entidades nuevas**
 
 Crear `backend/src/shared/entities/incidente.entity.ts`:
 
@@ -1016,7 +1016,7 @@ export * from './incidente.entity';
 export * from './tripulacion-movil.entity';
 ```
 
-- [ ] **Paso 5: Ampliar las entidades existentes**
+- [x] **Paso 5: Ampliar las entidades existentes**
 
 En `backend/src/shared/entities/servicio.entity.ts`, agregá el import de tipos debajo del import de
 `typeorm`:
@@ -1123,7 +1123,7 @@ y en la clase `Adjunto`, después de la propiedad `tomadoEn`, agregá:
 En `backend/src/shared/entities/parametro.entity.ts` agregá `| 'FUNCION_INCIDENTE'` como último
 miembro del tipo `TipoParametro`, después del que hoy es el último.
 
-- [ ] **Paso 6: Compilar y corregir los usos de `horaSalida` nula**
+- [x] **Paso 6: Compilar y corregir los usos de `horaSalida` nula**
 
 ```bash
 cd /c/Proyectos/Personal/SIGBO/backend && npx tsc --noEmit -p tsconfig.json 2>&1 | head -30
@@ -1158,7 +1158,7 @@ cd /c/Proyectos/Personal/SIGBO/frontend && npx tsc --noEmit 2>&1 | head -20
 Resultado esperado: sin errores. Si otro archivo usa `despachoActivo.horaSalida` como `string`,
 mostrá `'Sin salir'` cuando sea `null`.
 
-- [ ] **Paso 7: Semilla de desarrollo**
+- [x] **Paso 7: Semilla de desarrollo**
 
 En `backend/src/database/seed-data.ts`:
 
@@ -1226,7 +1226,7 @@ cd /c/Proyectos/Personal/SIGBO/backend && npm test 2>&1 | tail -8
 
 Resultado esperado: el mismo número de suites y casos en verde que en el estado inicial.
 
-- [ ] **Paso 10: Commit**
+- [x] **Paso 10: Commit**
 
 ```bash
 cd /c/Proyectos/Personal/SIGBO

@@ -1,5 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
+import type { FaseOperativa, ResultadoIncidente } from './incidente.entity';
+
 export type GravedadServicio = 'LEVE' | 'MODERADA' | 'GRAVE' | 'CRITICA';
 export type EstadoServicio = 'REGISTRADO' | 'DESPACHADO' | 'EN_CURSO' | 'FINALIZADO' | 'CANCELADO';
 
@@ -47,6 +49,18 @@ export class Servicio {
 
   @Column({ type: 'nvarchar', length: 20, default: 'REGISTRADO' })
   estado: EstadoServicio;
+
+  /** Fase del flujo operativo (migracion 093). `estado` se deriva de ella: ver estadoDesdeFase. */
+  @Column({ type: 'nvarchar', length: 20, default: 'RECIBIDO' })
+  faseOperativa: FaseOperativa;
+
+  @Column({ type: 'datetimeoffset', precision: 3, nullable: true })
+  faseDesde: Date | null;
+
+  /** Como termino: se declara en el lugar o en el cierre. */
+  @Column({ type: 'nvarchar', length: 20, nullable: true })
+  resultado: ResultadoIncidente | null;
+
 
   @Column({ type: 'uniqueidentifier', nullable: true })
   vehiculoPrincipalId: string | null;

@@ -4,23 +4,29 @@ tipo: TABLE
 nombre: servicios.servicios
 nivel: L2
 dominio: servicios
-resumen: Tabla servicios.servicios (30 columnas). Creada en 007_servicios.sql, modificada por 009_foreign_keys.sql.
+resumen: Tabla servicios.servicios (33 columnas). Creada en 007_servicios.sql, modificada por 009_foreign_keys.sql, 093_centro_operaciones_incidentes.sql.
 tabla: servicios
 archivos:
   - database/migrations/007_servicios.sql
   - database/migrations/009_foreign_keys.sql
+  - database/migrations/093_centro_operaciones_incidentes.sql
 edges:
   - [defined_in, file--007-servicios]
   - [belongs_to, domain--servicios]
-terminos: [servicios, tipo, servicio, numero, fecha, hora, aviso, salida, llegada, fin, direccion, ciudad, coordenadas, lat, lon, descripcion, gravedad, estado, vehiculo, principal, oficial, jefe, kilometraje, total, combustible, usado, tiempo, minutos, informe, conclusiones, recomendaciones, fotos, documentos, creado, actualizado]
+terminos: [servicios, tipo, servicio, numero, fecha, hora, aviso, salida, llegada, fin, direccion, ciudad, coordenadas, lat, lon, descripcion, gravedad, estado, vehiculo, principal, oficial, jefe, kilometraje, total, combustible, usado, tiempo, minutos, informe, conclusiones, recomendaciones, fotos, documentos, creado, actualizado, fase, operativa, desde, resultado]
 ---
 
 # servicios.servicios
 
-Tabla servicios.servicios (30 columnas). Creada en 007_servicios.sql, modificada por 009_foreign_keys.sql.
+Tabla servicios.servicios (33 columnas). Creada en 007_servicios.sql, modificada por 009_foreign_keys.sql, 093_centro_operaciones_incidentes.sql.
 
-- **Esquema:** servicios · **Columnas:** 30
+- **Esquema:** servicios · **Columnas:** 33
 - **UNIQUE:** `numero_servicio`
+
+## Restricciones CHECK (reglas que la BD impone)
+
+- `fase_operativa IN ( 'RECIBIDO', 'EVALUACION', 'DESPACHADO', 'EN_CAMINO', 'EN_LUGAR', 'OPERANDO', 'CONTROLADO', 'RETORNO', 'DISPONIBLE', 'CERRADO')`
+- `resultado IS NULL OR resultado IN ( 'CONTROLADO', 'RESUELTO', 'FALSA_ALARMA', 'CANCELADO', 'DERIVADO', 'NO_ATENDIDO', 'SIN_ACCESO', 'SIN_INTERVENCION')`
 
 ## Columnas
 
@@ -56,6 +62,9 @@ Tabla servicios.servicios (30 columnas). Creada en 007_servicios.sql, modificada
 | creado_en | DATETIMEOFFSET(3) |
 | actualizado_en | DATETIMEOFFSET(3) |
 | creado_por | UNIQUEIDENTIFIER |
+| fase_operativa | NVARCHAR(20) |
+| fase_desde | DATETIMEOFFSET(3) |
+| resultado | NVARCHAR(20) |
 
 ## Donde se usa
 
@@ -70,6 +79,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 
 - `database/migrations/007_servicios.sql`
 - `database/migrations/009_foreign_keys.sql`
+- `database/migrations/093_centro_operaciones_incidentes.sql`
 
 ## Relaciones
 
@@ -95,6 +105,8 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[table--servicios-servicio-participantes|servicios.servicio_participantes]] `references` →
 - [[table--servicios-servicio-mensajes|servicios.servicio_mensajes]] `references` →
 - [[table--servicios-formulario-respuestas|servicios.formulario_respuestas]] `references` →
+- [[table--servicios-incidente-eventos|servicios.incidente_eventos]] `references` →
+- [[table--servicios-incidente-solicitudes|servicios.incidente_solicitudes]] `references` →
 - [[entity--servicio|Servicio]] `persisted_in` →
 - [[service--denuncias-denuncias|DenunciasService]] `reads` →
 - [[service--deposito-integracion-deposito|IntegracionDepositoService]] `reads` →

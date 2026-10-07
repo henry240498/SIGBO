@@ -31,6 +31,7 @@ Modulo funcional "Servicios". Habilitado en la navegacion.
 - [[entity--despacho|Despacho]] `belongs_to` →
 - [[entity--hidrante|Hidrante]] `belongs_to` →
 - [[entity--historial-servicio|HistorialServicio]] `belongs_to` →
+- [[entity--incidente|IncidenteEvento]] `belongs_to` →
 - [[entity--llamado|Llamado]] `belongs_to` →
 - [[entity--personal-servicio|PersonalServicio]] `belongs_to` →
 - [[entity--prueba-comunicacion-servicio|PruebaComunicacionServicio]] `belongs_to` →
@@ -69,6 +70,10 @@ Modulo funcional "Servicios". Habilitado en la navegacion.
 - [[table--servicios-formulario-definiciones|servicios.formulario_definiciones]] `belongs_to` →
 - [[table--servicios-formulario-respuestas|servicios.formulario_respuestas]] `belongs_to` →
 - [[table--servicios-formulario-historial|servicios.formulario_historial]] `belongs_to` →
+- [[table--servicios-incidente-eventos|servicios.incidente_eventos]] `belongs_to` →
+- [[table--servicios-condiciones-situacion|servicios.condiciones_situacion]] `belongs_to` →
+- [[table--servicios-tipos-recurso|servicios.tipos_recurso]] `belongs_to` →
+- [[table--servicios-incidente-solicitudes|servicios.incidente_solicitudes]] `belongs_to` →
 - [[component--modulo-alertas|alertas (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-app-movil|app-movil (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-campo|campo (modulo NestJS)]] `belongs_to` →
@@ -77,11 +82,6 @@ Modulo funcional "Servicios". Habilitado en la navegacion.
 - [[component--modulo-indicadores|indicadores (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-llamados|llamados (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-notificaciones|notificaciones (modulo NestJS)]] `belongs_to` →
-- [[component--modulo-prevencion|prevencion (modulo NestJS)]] `belongs_to` →
-- [[component--modulo-servicios|servicios (modulo NestJS)]] `belongs_to` →
-- [[service--alertas-alertas|AlertasService]] `belongs_to` →
-- [[service--app-movil-app-movil|AppMovilService]] `belongs_to` →
-- [[service--campo-adjuntos|AdjuntosService]] `belongs_to` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

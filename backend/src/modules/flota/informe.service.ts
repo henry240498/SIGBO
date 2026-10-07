@@ -35,7 +35,7 @@ export class InformeService {
 
     const tipo = await this.dataSource.getRepository(TipoServicio).findOne({ where: { id: servicio.tipoServicioId } });
     const llamado = await this.dataSource.getRepository(Llamado).findOne({ where: { servicioId } });
-    const despachos = await this.dataSource.getRepository(Despacho).find({ where: { servicioId }, order: { horaSalida: 'ASC' } });
+    const despachos = await this.dataSource.getRepository(Despacho).find({ where: { servicioId }, order: { horaDespacho: 'ASC' } });
     const historial = await this.dataSource
       .getRepository(HistorialServicio)
       .find({ where: { servicioId }, order: { timestampEvento: 'ASC' } });

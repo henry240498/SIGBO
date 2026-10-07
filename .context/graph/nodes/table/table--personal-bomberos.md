@@ -182,6 +182,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[table--finanzas-socios-protectores|finanzas.socios_protectores]] `references` →
 - [[table--personal-aptitudes|personal.aptitudes]] `references` →
 - [[table--operaciones-ausencias|operaciones.ausencias]] `references` →
+- [[table--vehiculos-tripulacion-movil|vehiculos.tripulacion_movil]] `references` →
 - [[entity--bombero|Bombero]] `persisted_in` →
 - [[service--academia-actividades-academicas|ActividadesAcademicasService]] `reads` →
 - [[service--academia-certificaciones-academia|CertificacionesAcademiaService]] `reads` →
@@ -196,7 +197,6 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[service--finanzas-socios-protectores|SociosProtectoresService]] `reads` →
 - [[service--guardias-bitacora|BitacoraService]] `reads` →
 - [[service--guardias-elegibilidad|ElegibilidadService]] `reads` →
-- [[service--guardias-generacion|GeneracionService]] `reads` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

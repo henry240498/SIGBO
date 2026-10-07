@@ -42,7 +42,9 @@ export type TipoParametro =
   | 'PERIODICIDAD_APORTE'
   | 'MEDIO_PAGO_FINANZAS'
   | 'TIPO_BENEFICIO_SOCIO'
-  | 'MOTIVO_NOTA_CREDITO_FINANZAS';
+  | 'MOTIVO_NOTA_CREDITO_FINANZAS'
+  | 'FUNCION_INCIDENTE'
+  | 'POLITICA_INCIDENTE';
 
 /** Catalogo generico de valores parametrizables administrados desde
  * Organizacion Institucional -> Parametros. `padreId` solo se usa en la

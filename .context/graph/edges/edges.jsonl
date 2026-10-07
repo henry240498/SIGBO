@@ -85,6 +85,7 @@
 {"from":"entity--importacion-marcador-fila","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"entity--importacion-marcador","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"entity--incidencia-deposito","tipo":"belongs_to","to":"domain--deposito"}
+{"from":"entity--incidente","tipo":"belongs_to","to":"domain--servicios"}
 {"from":"entity--inscripcion-actividad-academica","tipo":"belongs_to","to":"domain--academia"}
 {"from":"entity--inspeccion-estacion","tipo":"belongs_to","to":"domain--asistencia"}
 {"from":"entity--inspeccion-movil","tipo":"belongs_to","to":"domain--asistencia"}
@@ -145,6 +146,7 @@
 {"from":"entity--tipo-guardia","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"entity--tipo-servicio","tipo":"belongs_to","to":"domain--servicios"}
 {"from":"entity--tolerancia-asistencia","tipo":"belongs_to","to":"domain--asistencia"}
+{"from":"entity--tripulacion-movil","tipo":"belongs_to","to":"domain--vehiculos"}
 {"from":"entity--turno-caja","tipo":"belongs_to","to":"domain--finanzas"}
 {"from":"entity--turno","tipo":"belongs_to","to":"domain--organizacion"}
 {"from":"entity--ubicacion-deposito","tipo":"belongs_to","to":"domain--deposito"}
@@ -827,6 +829,25 @@
 {"from":"table--seguridad-navegacion-eventos","tipo":"belongs_to","to":"domain--seguridad"}
 {"from":"table--seguridad-navegacion-eventos","tipo":"references","to":"table--seguridad-usuarios"}
 {"from":"table--seguridad-navegacion-eventos","tipo":"references","to":"table--seguridad-pantallas"}
+{"from":"table--servicios-incidente-eventos","tipo":"defined_in","to":"file--093-centro-operaciones-incidentes"}
+{"from":"table--servicios-incidente-eventos","tipo":"belongs_to","to":"domain--servicios"}
+{"from":"table--servicios-incidente-eventos","tipo":"references","to":"table--servicios-servicios"}
+{"from":"table--servicios-incidente-eventos","tipo":"references","to":"table--seguridad-usuarios"}
+{"from":"table--servicios-incidente-eventos","tipo":"references","to":"table--vehiculos-vehiculos"}
+{"from":"table--servicios-condiciones-situacion","tipo":"defined_in","to":"file--093-centro-operaciones-incidentes"}
+{"from":"table--servicios-condiciones-situacion","tipo":"belongs_to","to":"domain--servicios"}
+{"from":"table--servicios-tipos-recurso","tipo":"defined_in","to":"file--093-centro-operaciones-incidentes"}
+{"from":"table--servicios-tipos-recurso","tipo":"belongs_to","to":"domain--servicios"}
+{"from":"table--servicios-incidente-solicitudes","tipo":"defined_in","to":"file--093-centro-operaciones-incidentes"}
+{"from":"table--servicios-incidente-solicitudes","tipo":"belongs_to","to":"domain--servicios"}
+{"from":"table--servicios-incidente-solicitudes","tipo":"references","to":"table--servicios-servicios"}
+{"from":"table--servicios-incidente-solicitudes","tipo":"references","to":"table--servicios-tipos-recurso"}
+{"from":"table--servicios-incidente-solicitudes","tipo":"references","to":"table--seguridad-usuarios"}
+{"from":"table--vehiculos-tripulacion-movil","tipo":"defined_in","to":"file--093-centro-operaciones-incidentes"}
+{"from":"table--vehiculos-tripulacion-movil","tipo":"belongs_to","to":"domain--vehiculos"}
+{"from":"table--vehiculos-tripulacion-movil","tipo":"references","to":"table--vehiculos-vehiculos"}
+{"from":"table--vehiculos-tripulacion-movil","tipo":"references","to":"table--personal-bomberos"}
+{"from":"table--vehiculos-tripulacion-movil","tipo":"references","to":"table--seguridad-usuarios"}
 {"from":"entity--actividad-academica","tipo":"persisted_in","to":"table--academia-actividades"}
 {"from":"entity--actividad-profesional","tipo":"persisted_in","to":"table--personal-actividad-profesional"}
 {"from":"entity--acuerdo-aporte","tipo":"persisted_in","to":"table--finanzas-acuerdos-aporte"}
@@ -914,6 +935,7 @@
 {"from":"entity--importacion-marcador-fila","tipo":"persisted_in","to":"table--operaciones-importaciones-marcador-filas"}
 {"from":"entity--importacion-marcador","tipo":"persisted_in","to":"table--operaciones-importaciones-marcador"}
 {"from":"entity--incidencia-deposito","tipo":"persisted_in","to":"table--deposito-incidencias"}
+{"from":"entity--incidente","tipo":"persisted_in","to":"table--servicios-incidente-eventos"}
 {"from":"entity--inscripcion-actividad-academica","tipo":"persisted_in","to":"table--academia-inscripciones"}
 {"from":"entity--inspeccion-estacion","tipo":"persisted_in","to":"table--operaciones-inspecciones-estacion"}
 {"from":"entity--inspeccion-movil","tipo":"persisted_in","to":"table--operaciones-inspecciones-movil"}
@@ -974,6 +996,7 @@
 {"from":"entity--tipo-guardia","tipo":"persisted_in","to":"table--organizacion-tipos-guardia"}
 {"from":"entity--tipo-servicio","tipo":"persisted_in","to":"table--servicios-tipos-servicio"}
 {"from":"entity--tolerancia-asistencia","tipo":"persisted_in","to":"table--operaciones-tolerancias-asistencia"}
+{"from":"entity--tripulacion-movil","tipo":"persisted_in","to":"table--vehiculos-tripulacion-movil"}
 {"from":"entity--turno-caja","tipo":"persisted_in","to":"table--finanzas-turnos-caja"}
 {"from":"entity--turno","tipo":"persisted_in","to":"table--organizacion-turnos"}
 {"from":"entity--ubicacion-deposito","tipo":"persisted_in","to":"table--deposito-ubicaciones"}

@@ -123,7 +123,8 @@ $ordenMigraciones = @(
     "089_convocatoria_historial_operativo.sql",
     "090_despacho_servicio_seguridad.sql",
     "091_pantallas_auditoria_movil.sql",
-    "092_despacho_chofer_habilitado.sql"
+    "092_despacho_chofer_habilitado.sql",
+    "093_centro_operaciones_incidentes.sql"
 )
 
 if (!(Test-Path -LiteralPath $migrationsDir)) {

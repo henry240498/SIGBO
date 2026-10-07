@@ -119,8 +119,8 @@ describe('DotacionService', () => {
 
   it('bitacora: kilometros recorridos solo cuando hay salida y regreso', async () => {
     await sembrar(base, Servicio, { id: 'S1', numeroServicio: 'SRV-1', direccion: 'Calle 1' });
-    await sembrar(base, Despacho, { vehiculoId: 'V1', servicioId: 'S1', estado: 'CERRADO', horaSalida: new Date('2026-01-01T10:00:00Z'), kmSalida: 1000, kmRegreso: 1012 });
-    await sembrar(base, Despacho, { vehiculoId: 'V1', servicioId: 'S1', estado: 'CANCELADO', horaSalida: new Date('2026-01-02T10:00:00Z'), kmSalida: 1012, kmRegreso: null });
+    await sembrar(base, Despacho, { vehiculoId: 'V1', servicioId: 'S1', estado: 'CERRADO', horaDespacho: new Date('2026-01-01T10:00:00Z'), horaSalida: new Date('2026-01-01T10:00:00Z'), kmSalida: 1000, kmRegreso: 1012 });
+    await sembrar(base, Despacho, { vehiculoId: 'V1', servicioId: 'S1', estado: 'CANCELADO', horaDespacho: new Date('2026-01-02T10:00:00Z'), horaSalida: new Date('2026-01-02T10:00:00Z'), kmSalida: 1012, kmRegreso: null });
     const b = await servicio.bitacora('V1');
     expect(b.map((x) => x.kmRecorridos)).toEqual([null, 12]); // el mas reciente primero
     expect(b[1]).toMatchObject({ numeroServicio: 'SRV-1', direccion: 'Calle 1' });

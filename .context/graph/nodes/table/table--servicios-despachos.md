@@ -4,25 +4,26 @@ tipo: TABLE
 nombre: servicios.despachos
 nivel: L2
 dominio: servicios
-resumen: Tabla servicios.despachos (16 columnas). Creada en 077_flota_estado_despacho.sql, modificada por 081_flota_dotacion_bitacora.sql.
+resumen: Tabla servicios.despachos (17 columnas). Creada en 077_flota_estado_despacho.sql, modificada por 081_flota_dotacion_bitacora.sql, 093_centro_operaciones_incidentes.sql.
 tabla: despachos
 archivos:
   - database/migrations/077_flota_estado_despacho.sql
   - database/migrations/081_flota_dotacion_bitacora.sql
+  - database/migrations/093_centro_operaciones_incidentes.sql
 edges:
   - [defined_in, file--077-flota-estado-despacho]
   - [belongs_to, domain--servicios]
   - [references, table--servicios-servicios]
   - [references, table--vehiculos-vehiculos]
   - [references, table--seguridad-usuarios]
-terminos: [servicios, despachos, servicio, vehiculo, conductor, estado, hora, salida, llegada, fin, regreso, observaciones, motivo, cancelacion, creado, actualizado]
+terminos: [servicios, despachos, servicio, vehiculo, conductor, estado, hora, salida, llegada, fin, regreso, observaciones, motivo, cancelacion, creado, actualizado, despacho]
 ---
 
 # servicios.despachos
 
-Tabla servicios.despachos (16 columnas). Creada en 077_flota_estado_despacho.sql, modificada por 081_flota_dotacion_bitacora.sql.
+Tabla servicios.despachos (17 columnas). Creada en 077_flota_estado_despacho.sql, modificada por 081_flota_dotacion_bitacora.sql, 093_centro_operaciones_incidentes.sql.
 
-- **Esquema:** servicios · **Columnas:** 16
+- **Esquema:** servicios · **Columnas:** 17
 
 ## Restricciones CHECK (reglas que la BD impone)
 
@@ -54,6 +55,7 @@ Tabla servicios.despachos (16 columnas). Creada en 077_flota_estado_despacho.sql
 | actualizado_en | DATETIMEOFFSET(3) |
 | km_salida | INT |
 | km_regreso | INT |
+| hora_despacho | DATETIMEOFFSET(3) |
 
 ## Donde se usa
 
@@ -64,6 +66,7 @@ preparada para una fase siguiente, o codigo muerto: verificar antes de asumir.
 
 - `database/migrations/077_flota_estado_despacho.sql`
 - `database/migrations/081_flota_dotacion_bitacora.sql`
+- `database/migrations/093_centro_operaciones_incidentes.sql`
 
 ## Relaciones
 

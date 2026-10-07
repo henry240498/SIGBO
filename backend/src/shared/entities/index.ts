@@ -142,6 +142,8 @@ export * from './nota-credito.entity';
 export * from './numeracion-comprobante.entity';
 export * from './alerta-emergencia.entity';
 export * from './despacho.entity';
+export * from './incidente.entity';
+export * from './tripulacion-movil.entity';
 export * from './despacho-operativo.entity';
 export * from './despacho-servicio.entity';
 export * from './movil-estado-historial.entity';

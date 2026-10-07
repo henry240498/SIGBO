@@ -125,7 +125,7 @@ export class DotacionService {
     await this.obtenerVehiculo(vehiculoId);
     const despachos = await this.dataSource.getRepository(Despacho).find({
       where: { vehiculoId },
-      order: { horaSalida: 'DESC' },
+      order: { horaDespacho: 'DESC' },
       take: Math.min(Math.max(limite || 100, 1), 500),
     });
     const servicios = await this.dataSource.getRepository(Servicio).find({});

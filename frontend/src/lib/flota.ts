@@ -16,7 +16,7 @@ export interface MovilTablero {
     id: string;
     servicioId: string;
     estado: string;
-    horaSalida: string;
+    horaSalida: string | null;
     numeroServicio: string | null;
     direccion: string | null;
   } | null;
@@ -186,7 +186,7 @@ export interface EntradaBitacora {
   numeroServicio: string | null;
   direccion: string | null;
   estado: string;
-  horaSalida: string;
+  horaSalida: string | null;
   horaRegreso: string | null;
   kmSalida: number | null;
   kmRegreso: number | null;

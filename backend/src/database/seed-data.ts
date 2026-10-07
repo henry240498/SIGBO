@@ -59,6 +59,8 @@ export const PERMISOS: PermisoSeed[] = [
   { nombre: 'servicios:eliminar', recurso: 'servicios', accion: 'eliminar', categoria: 'Servicios' },
   { nombre: 'servicios:despachar', recurso: 'servicios', accion: 'despachar', categoria: 'Servicios' },
   { nombre: 'servicios:finalizar', recurso: 'servicios', accion: 'finalizar', categoria: 'Servicios' },
+  { nombre: 'servicios:operar', recurso: 'servicios', accion: 'operar', categoria: 'Servicios' },
+  { nombre: 'servicios:comandar', recurso: 'servicios', accion: 'comandar', categoria: 'Servicios' },
   { nombre: 'servicios:convocar', recurso: 'servicios', accion: 'convocar', categoria: 'Servicios' },
   { nombre: 'servicios:ver_gps', recurso: 'servicios', accion: 'ver_gps', categoria: 'Servicios' },
   { nombre: 'servicios:exportar_informe', recurso: 'servicios', accion: 'exportar_informe', categoria: 'Servicios' },
@@ -85,6 +87,7 @@ export const PERMISOS: PermisoSeed[] = [
   { nombre: 'reservas:solicitar', recurso: 'reservas', accion: 'solicitar', categoria: 'Organizacion' },
   { nombre: 'reservas:decidir', recurso: 'reservas', accion: 'decidir', categoria: 'Organizacion' },
   { nombre: 'vehiculos:dotacion', recurso: 'vehiculos', accion: 'dotacion', categoria: 'Vehiculos' },
+  { nombre: 'vehiculos:tripulacion', recurso: 'vehiculos', accion: 'tripulacion', categoria: 'Vehiculos' },
   { nombre: 'vehiculos:ver_mapa', recurso: 'vehiculos', accion: 'ver_mapa', categoria: 'Vehiculos' },
   { nombre: 'vehiculos:posicion', recurso: 'vehiculos', accion: 'posicion', categoria: 'Vehiculos' },
   // EQUIPOS
@@ -176,7 +179,7 @@ export const ROLES: RolSeed[] = [
     esAdministrativo: false,
     permisos: [
       'personal:ver', 'personal:editar_estado', 'personal:editar_rango',
-      'servicios:ver', 'servicios:despachar', 'servicios:finalizar',
+      'servicios:ver', 'servicios:despachar', 'servicios:finalizar', 'servicios:operar', 'servicios:comandar', 'vehiculos:tripulacion',
       'guardias:ver', 'guardias:asignar', 'guardias:cambiar',
       'asistencia:ver', 'asistencia:ver_porcentaje', 'asistencia:generar_alertas',
       'vehiculos:ver', 'equipos:ver',
@@ -195,7 +198,7 @@ export const ROLES: RolSeed[] = [
     esAdministrativo: false,
     permisos: [
       'personal:ver',
-      'servicios:ver', 'servicios:crear', 'servicios:editar', 'servicios:despachar', 'servicios:finalizar',
+      'servicios:ver', 'servicios:crear', 'servicios:editar', 'servicios:despachar', 'servicios:finalizar', 'servicios:operar', 'servicios:comandar', 'vehiculos:tripulacion',
       'guardias:ver', 'guardias:calendario',
       'asistencia:marcar',
       'vehiculos:ver', 'equipos:ver',
@@ -229,7 +232,7 @@ export const ROLES: RolSeed[] = [
       'personal:ver',
       'asistencia:ver', 'asistencia:marcar', 'asistencia:ver_porcentaje',
       'guardias:ver',
-      'servicios:ver',
+      'servicios:ver', 'servicios:operar', 'adjuntos:subir',
       'documentos:ver',
     ],
   },

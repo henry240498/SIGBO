@@ -19,7 +19,7 @@ terminos: [servicio, servicios, gravedad, leve, moderada, grave, critica, estado
 Registro de cada servicio/intervencion (schema servicios).
 
 - **Tabla:** [[table--servicios-servicios|servicios.servicios]]
-- **Columnas mapeadas:** 27
+- **Columnas mapeadas:** 30
 
 ## Estados y enumeraciones
 

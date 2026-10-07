@@ -105,6 +105,8 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - [[table--vehiculos-posicion-actual|vehiculos.posicion_actual]] `references` →
 - [[table--vehiculos-dotacion-movil|vehiculos.dotacion_movil]] `references` →
 - [[table--servicios-solicitud-moviles|servicios.solicitud_moviles]] `references` →
+- [[table--servicios-incidente-eventos|servicios.incidente_eventos]] `references` →
+- [[table--vehiculos-tripulacion-movil|vehiculos.tripulacion_movil]] `references` →
 - [[entity--vehiculo|Vehiculo]] `persisted_in` →
 - [[service--denuncias-denuncias|DenunciasService]] `reads` →
 - [[service--deposito-integracion-deposito|IntegracionDepositoService]] `reads` →

@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn
 
 export type EntidadAdjunto = 'SERVICIO' | 'DESPACHO' | 'VEHICULO' | 'HIDRANTE' | 'PUNTO_RIESGO';
 export type TipoAdjunto = 'FOTO' | 'FIRMA';
+export type CategoriaFoto = 'DANO' | 'VICTIMA' | 'RIESGO' | 'VEHICULO' | 'ESTRUCTURA' | 'EQUIPAMIENTO' | 'EVIDENCIA' | 'OTRO';
 
 /** Foto o firma tomada con el celular (migracion 086). El archivo es privado: solo se sirve a usuarios autorizados. */
 @Entity({ name: 'adjuntos', schema: 'servicios' })
@@ -36,6 +37,16 @@ export class Adjunto {
   /** Cuando se tomo (en el celular), no cuando llego al servidor. */
   @Column({ type: 'datetimeoffset', precision: 3 })
   tomadoEn: Date;
+
+  @Column({ type: 'decimal', precision: 10, scale: 8, nullable: true })
+  latitud: number | null;
+
+  @Column({ type: 'decimal', precision: 11, scale: 8, nullable: true })
+  longitud: number | null;
+
+  @Column({ type: 'nvarchar', length: 12, nullable: true })
+  categoria: CategoriaFoto | null;
+
 
   @CreateDateColumn({ name: 'creado_en', type: 'datetimeoffset', precision: 3 })
   creadoEn: Date;

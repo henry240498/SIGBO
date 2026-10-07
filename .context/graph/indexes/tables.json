@@ -300,7 +300,7 @@
    "clase": "Servicio"
   },
   "migracion": "database/migrations/007_servicios.sql",
-  "columnas": 30,
+  "columnas": 33,
   "fks": []
  },
  "servicios.personal_servicio": {
@@ -311,7 +311,7 @@
    "clase": "PersonalServicio"
   },
   "migracion": "database/migrations/007_servicios.sql",
-  "columnas": 6,
+  "columnas": 10,
   "fks": []
  },
  "servicios.historial_servicios": {
@@ -2051,7 +2051,7 @@
    "clase": "Despacho"
   },
   "migracion": "database/migrations/077_flota_estado_despacho.sql",
-  "columnas": 16,
+  "columnas": 17,
   "fks": [
    "servicios.servicios",
    "vehiculos.vehiculos",
@@ -2256,7 +2256,7 @@
    "clase": "Adjunto"
   },
   "migracion": "database/migrations/086_campo_adjuntos_ausencias.sql",
-  "columnas": 11,
+  "columnas": 14,
   "fks": [
    "seguridad.usuarios"
   ]
@@ -2461,6 +2461,65 @@
   "fks": [
    "seguridad.usuarios",
    "seguridad.pantallas"
+  ]
+ },
+ "servicios.incidente_eventos": {
+  "id": "table--servicios-incidente-eventos",
+  "dominio": "servicios",
+  "entidad": {
+   "id": "entity--incidente",
+   "clase": "IncidenteEvento"
+  },
+  "migracion": "database/migrations/093_centro_operaciones_incidentes.sql",
+  "columnas": 22,
+  "fks": [
+   "servicios.servicios",
+   "seguridad.usuarios",
+   "vehiculos.vehiculos"
+  ]
+ },
+ "servicios.condiciones_situacion": {
+  "id": "table--servicios-condiciones-situacion",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/093_centro_operaciones_incidentes.sql",
+  "columnas": 8,
+  "fks": []
+ },
+ "servicios.tipos_recurso": {
+  "id": "table--servicios-tipos-recurso",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/093_centro_operaciones_incidentes.sql",
+  "columnas": 6,
+  "fks": []
+ },
+ "servicios.incidente_solicitudes": {
+  "id": "table--servicios-incidente-solicitudes",
+  "dominio": "servicios",
+  "entidad": null,
+  "migracion": "database/migrations/093_centro_operaciones_incidentes.sql",
+  "columnas": 13,
+  "fks": [
+   "servicios.servicios",
+   "servicios.tipos_recurso",
+   "seguridad.usuarios",
+   "seguridad.usuarios"
+  ]
+ },
+ "vehiculos.tripulacion_movil": {
+  "id": "table--vehiculos-tripulacion-movil",
+  "dominio": "vehiculos",
+  "entidad": {
+   "id": "entity--tripulacion-movil",
+   "clase": "TripulacionMovil"
+  },
+  "migracion": "database/migrations/093_centro_operaciones_incidentes.sql",
+  "columnas": 6,
+  "fks": [
+   "vehiculos.vehiculos",
+   "personal.bomberos",
+   "seguridad.usuarios"
   ]
  }
 }

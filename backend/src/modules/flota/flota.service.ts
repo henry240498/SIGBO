@@ -232,7 +232,7 @@ export class FlotaService {
     const qb = this.dataSource
       .getRepository(Despacho)
       .createQueryBuilder('d')
-      .orderBy('d.horaSalida', 'DESC')
+      .orderBy('d.horaDespacho', 'DESC')
       .take(Math.min(Math.max(filtros.limite || 100, 1), 500));
     if (filtros.servicioId) qb.andWhere('d.servicioId = :s', { s: filtros.servicioId });
     if (filtros.activos) qb.andWhere('d.estado IN (:...activos)', { activos: ESTADOS_ACTIVOS });
@@ -275,6 +275,7 @@ export class FlotaService {
             vehiculoId: vehiculo.id,
             conductorId: dto.conductorId ?? null,
             estado: 'DESPACHADO',
+            horaDespacho: ahora,
             horaSalida: ahora,
             kmSalida: dto.kmSalida ?? vehiculo.kilometrajeActual ?? null,
             observaciones: dto.observaciones?.trim() || null,
@@ -318,7 +319,7 @@ export class FlotaService {
         throw new ConflictException(`El despacho esta ${d.estado}; ${paso} solo aplica desde ${regla.desde}.`);
       }
       // El hito no puede quedar antes del anterior aunque el celular tenga el reloj atrasado.
-      const previo = paso === 'llegada' ? d.horaSalida : paso === 'fin' ? d.horaLlegada : d.horaFin;
+      const previo = paso === 'llegada' ? (d.horaSalida ?? d.horaDespacho) : paso === 'fin' ? d.horaLlegada : d.horaFin;
       const ahora = instanteDelHecho(extra.ocurridoEn, new Date(), previo);
       const estadoAntes = d.estado;
       d.estado = regla.hacia;

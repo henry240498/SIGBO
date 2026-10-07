@@ -204,7 +204,7 @@ describe('FlotaService', () => {
       const base0 = Date.now();
       const hace = (min: number) => new Date(base0 - min * 60_000).toISOString();
       const d = await servicio.despachar({ servicioId: 'S1', vehiculoId: 'V1', ocurridoEn: hace(30) }, ctx);
-      expect(new Date(d.horaSalida).toISOString()).toBe(hace(30));
+      expect(new Date(d.horaSalida!).toISOString()).toBe(hace(30));
       const llegada = await servicio.avanzar(d.id, 'llegada', ctx, { ocurridoEn: hace(20) });
       expect(new Date(llegada.horaLlegada!).toISOString()).toBe(hace(20));
       expect(llegada.tiempoRespuestaSegundos).toBe(600);
@@ -216,7 +216,7 @@ describe('FlotaService', () => {
     it('una hora futura se reemplaza por la del servidor', async () => {
       const futuro = new Date(Date.now() + 3_600_000).toISOString();
       const d = await servicio.despachar({ servicioId: 'S1', vehiculoId: 'V1', ocurridoEn: futuro }, ctx);
-      expect(new Date(d.horaSalida).getTime()).toBeLessThanOrEqual(Date.now());
+      expect(new Date(d.horaSalida!).getTime()).toBeLessThanOrEqual(Date.now());
     });
   });
 
