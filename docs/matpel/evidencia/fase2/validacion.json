@@ -1,0 +1,109 @@
+{
+  "tipo": "validacion_diseno_no_prueba_operacional",
+  "fecha": "2026-10-08",
+  "fase": 2,
+  "estado": "diseno_concluido",
+  "cobertura": {
+    "secciones": 42,
+    "paginas": 392,
+    "notas_pdf": [
+      31,
+      157,
+      293,
+      389
+    ],
+    "endpoints_propuestos": 30,
+    "capacidades": 10,
+    "permisos_propuestos": 4
+  },
+  "comprobaciones": {
+    "rutas_ids_sin_duplicados": true,
+    "capacidades_referenciadas": true,
+    "permisos_and_y_alternativas_or_explicitos": true,
+    "g_condicional_no_bloquea_consulta_geometria": true,
+    "candidatos_separados_de_consulta_operativa": true,
+    "cobertura_392_exacta": true,
+    "dto_sintaxis": {
+      "syntax": true,
+      "runtime": false,
+      "semanticValidation": false,
+      "typescriptVersion": "5.9.3"
+    },
+    "fuentes_fase1_71_huellas_conservadas": true,
+    "requisitos_originales_hash_conservado": true,
+    "enlaces_locales": 100,
+    "whitespace": true,
+    "git_diff_check": true
+  },
+  "grafo": {
+    "validacion_exit": 0,
+    "nodos": 1054,
+    "aristas": 3694,
+    "avisos": 8,
+    "avisos_previos_verificados": true,
+    "decision_indizada": "decision--matpel-catalogo-contexto-versionados",
+    "proceso": {
+      "respaldo_archivos": 1140,
+      "recuperacion_huellas_verificada": true,
+      "generacion_estandar": "EPERM en nodes; recuperado desde respaldo",
+      "generacion_temporal": "completada con mismo generador, salida aislada",
+      "instalacion_sin_borrados": true,
+      "archivos_actualizados": 10,
+      "nodos_anteriores_no_omitidos": true
+    }
+  },
+  "entregables": [
+    {
+      "ruta": "docs/matpel/FASE_2_ARQUITECTURA.md",
+      "sha256": "20bf5a29443f7c8b92c9df3e9204906459893d1e4912b3d386192a057dbef581",
+      "bytes": 22950
+    },
+    {
+      "ruta": "docs/matpel/FASE_2_CONTRATOS.md",
+      "sha256": "c61499ff8cc6e76746593168b5f2bd5dc4b56e6c33264d1b97b23c412cd87ca3",
+      "bytes": 22237
+    },
+    {
+      "ruta": "docs/matpel/FASE_2_EXPERIENCIA.md",
+      "sha256": "b0bb8145f6c4a86658097ea4fa84f083b4f324191e937b2c7febc2ee2a70252f",
+      "bytes": 14699
+    },
+    {
+      "ruta": "docs/matpel/FASE_2_MATRIZ_GRE.md",
+      "sha256": "ed364c01b16a925591b63a6cfab773c41bb36d6e78153d80369240697bb87b0d",
+      "bytes": 9825
+    },
+    {
+      "ruta": "docs/matpel/FASE_2_VALIDACION.md",
+      "sha256": "500495ab6fb6e291b924d705aea6447434b893ab1c19df408e394b30053242d6",
+      "bytes": 5425
+    },
+    {
+      "ruta": "docs/matpel/evidencia/fase2/contratos.json",
+      "sha256": "6b5cb397536188d6420b3be1a4c1b65b6950ba44b9488ae4ad757df9dcfeef76",
+      "bytes": 19003
+    },
+    {
+      "ruta": "docs/matpel/evidencia/fase2/matriz-gre.json",
+      "sha256": "2f21647f91f12357211fc7ebd8130e0af30486fc3db3536319bc86c10c59b94a",
+      "bytes": 19841
+    },
+    {
+      "ruta": ".context/graph/curated/decision/decision--matpel-catalogo-contexto-versionados.md",
+      "sha256": "5216beeaecacb7178cea76e9b170533454246b0a1abe3305681484d23f196430",
+      "bytes": 2595
+    }
+  ],
+  "tests_aplicacion": {
+    "ejecutados_en_fase2": false,
+    "linea_base_historica": "docs/matpel/FASE_1_VALIDACION.md",
+    "motivo": "sin cambios de codigo operativo"
+  },
+  "limites": [
+    "Contratos, entidades y pantallas son diseno, sin implementacion operacional.",
+    "Usabilidad y presupuesto de latencia no medidos.",
+    "Reglamento original no localizado; requerido antes de flujos de mando.",
+    "Nucleo de incidentes aun depende de integracion verificada.",
+    "Dos fallos previos de Despacho permanecen pendientes."
+  ]
+}

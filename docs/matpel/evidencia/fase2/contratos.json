@@ -1,0 +1,566 @@
+{
+  "tipo": "registro_de_diseno_no_api_implementada",
+  "version_contrato": 1,
+  "fecha": "2026-10-08",
+  "prefijo": "/api/v1",
+  "capacidades": {
+    "C": {
+      "nombre": "Consulta",
+      "requisito": "`matpel:consultar`, sesión vigente; versión validada accesible",
+      "uso": "Catálogo y fuente GRE; no acceso a incidentes ajenos"
+    },
+    "V": {
+      "nombre": "Ver incidente",
+      "requisito": "C **y** acceso al Servicio concedido por el núcleo/Pantallas, con redacción de datos sensibles",
+      "uso": "Panel/contexto y decisiones autorizadas"
+    },
+    "R": {
+      "nombre": "Registrar",
+      "requisito": "V **y** `servicios:operar`, capacidad vigente para registrar en ese Servicio; estado permite la acción",
+      "uso": "Identificación, parámetros y evaluaciones; sin convertir registro en decisión de mando"
+    },
+    "D": {
+      "nombre": "Decidir",
+      "requisito": "V **y** `servicios:comandar`, autoridad de mando/delegación acreditada por el núcleo para acción y hora del hecho",
+      "uso": "Registrar/rectificar decisión o cambiar edición; un administrador técnico no obtiene mando por administrar GRE"
+    },
+    "A": {
+      "nombre": "Administrar",
+      "requisito": "`matpel:administrar_gre`, sesión vigente",
+      "uso": "Seleccionar documento, solicitar importación, revisar reporte/comparación; no activar solo con este permiso"
+    },
+    "S": {
+      "nombre": "Validar contenido",
+      "requisito": "`matpel:validar_gre`, versión candidata y alcance de revisión",
+      "uso": "Registrar revisión humana con fundamento. La misma persona puede tener A/S si institución lo autoriza; no imponer doble aprobación inventada"
+    },
+    "P": {
+      "nombre": "Activar",
+      "requisito": "`matpel:activar_gre`, versión VALIDADA, controles críticos satisfechos y revisión esperada del puntero",
+      "uso": "Activación/recuperación auditada; no valida ni corrige contenido por sí sola"
+    },
+    "F": {
+      "nombre": "OCR/evidencia",
+      "requisito": "R **y** `adjuntos:subir`, autorización al adjunto/Servicio y tipo permitido",
+      "uso": "Captura y reconocimiento; lectura exige también autorización al adjunto y `adjuntos:ver`"
+    },
+    "E": {
+      "nombre": "Leer evidencia",
+      "requisito": "V **y** `adjuntos:ver`, evidencia/reconocimiento pertenecientes al Servicio y alcance vigente",
+      "uso": "Consultar foto/candidatos/historial autorizado, sin conceder subir o modificar"
+    },
+    "G": {
+      "nombre": "Posiciones",
+      "requisito": "V **y** permiso GPS/mapa y confidencialidad existentes para la información concreta",
+      "uso": "Posiciones de personas/móviles. Leer geometría GRE no concede G"
+    }
+  },
+  "permisos_nuevos_propuestos": [
+    "matpel:consultar",
+    "matpel:administrar_gre",
+    "matpel:validar_gre",
+    "matpel:activar_gre"
+  ],
+  "endpoints": [
+    {
+      "id": "API01",
+      "metodo": "GET",
+      "ruta": "/matpel/estado",
+      "entrada": "Sin parámetros",
+      "resultado": "Edición activa accesible o estado SIN_EDICION_ACTIVA",
+      "capacidades": [
+        "C"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "C",
+      "fase_implementacion": 4,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API02",
+      "metodo": "GET",
+      "ruta": "/matpel/buscar",
+      "entrada": "q, versionGreId?, tipo?, limite?, cursor?",
+      "resultado": "Coincidencias por entrada/guía, motivo y fuentes; no asociación automática al incidente",
+      "capacidades": [
+        "C"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "C",
+      "fase_implementacion": 4,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API03",
+      "metodo": "GET",
+      "ruta": "/matpel/materiales/:entradaId",
+      "entrada": "versionGreId obligatorio",
+      "resultado": "Ficha, referencias por campo, guía y relaciones; varios resultados por ONU se resuelven antes por API02",
+      "capacidades": [
+        "C"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "C",
+      "fase_implementacion": 4,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API04",
+      "metodo": "GET",
+      "ruta": "/matpel/guias/:numero",
+      "entrada": "versionGreId obligatorio",
+      "resultado": "Bloques originales ordenados, estado de contenido y fuentes",
+      "capacidades": [
+        "C"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "C",
+      "fase_implementacion": 4,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API05",
+      "metodo": "GET",
+      "ruta": "/matpel/secciones/:seccionId",
+      "entrada": "versionGreId obligatorio",
+      "resultado": "Contenido completo de instrucciones, glosario, anexos o figura, con fuente",
+      "capacidades": [
+        "C"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "C",
+      "fase_implementacion": 4,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API06",
+      "metodo": "GET",
+      "ruta": "/matpel/tablas/:tablaId",
+      "entrada": "versionGreId, filtros soportados, limite?, cursor?",
+      "resultado": "Filas/celdas/condiciones/notas paginadas; tabla íntegra navegable",
+      "capacidades": [
+        "C"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "C",
+      "fase_implementacion": 4,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API07",
+      "metodo": "GET",
+      "ruta": "/matpel/fuentes/:referenciaId",
+      "entrada": "versionGreId obligatorio",
+      "resultado": "Documento, página/etiqueta, fragmento y enlace autorizado a archivo",
+      "capacidades": [
+        "C"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "C",
+      "fase_implementacion": 4,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API08",
+      "metodo": "GET",
+      "ruta": "/matpel/versiones/:versionGreId/archivo",
+      "entrada": "Referencia exacta de versión",
+      "resultado": "PDF inline autorizado, con ETag/hash; descarga por opción explícita",
+      "capacidades": [
+        "C"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "C",
+      "fase_implementacion": 4,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API09",
+      "metodo": "POST",
+      "ruta": "/matpel/evaluaciones/consulta",
+      "entrada": "EvaluacionConsultaDto",
+      "resultado": "Selección/exposición de reglas sin crear incidente, snapshot operativo ni cronología",
+      "capacidades": [
+        "C"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "C",
+      "fase_implementacion": 4,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API10",
+      "metodo": "GET",
+      "ruta": "/servicios/:servicioId/matpel",
+      "entrada": "Sin parámetros",
+      "resultado": "Contexto y revisión, identificaciones, capacidades; CONTEXTO_NO_REGISTRADO si no existe",
+      "capacidades": [
+        "V"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "V",
+      "fase_implementacion": 6,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API11",
+      "metodo": "PUT",
+      "ruta": "/servicios/:servicioId/matpel/contexto",
+      "entrada": "GuardarContextoDto",
+      "resultado": "Contexto guardado, nueva revisión y evento",
+      "capacidades": [
+        "R"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "R",
+      "fase_implementacion": 6,
+      "efecto": "REGISTRO_O_TRABAJO",
+      "implementado": false
+    },
+    {
+      "id": "API12",
+      "metodo": "GET",
+      "ruta": "/servicios/:servicioId/matpel/panel",
+      "entrada": "revision?",
+      "resultado": "Guía pertinente, evaluación vigente o marcada desactualizada, advertencias, recursos permitidos y decisiones",
+      "capacidades": [
+        "V"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "V",
+      "fase_implementacion": 6,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API13",
+      "metodo": "POST",
+      "ruta": "/servicios/:servicioId/matpel/evaluaciones",
+      "entrada": "GuardarEvaluacionDto",
+      "resultado": "Snapshot persistido desde contexto de esa revisión; mismo motor que API09",
+      "capacidades": [
+        "R"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "R",
+      "fase_implementacion": 6,
+      "efecto": "REGISTRO_O_TRABAJO",
+      "implementado": false
+    },
+    {
+      "id": "API14",
+      "metodo": "GET",
+      "ruta": "/servicios/:servicioId/matpel/decisiones",
+      "entrada": "limite?, cursor?",
+      "resultado": "Decisiones y rectificaciones autorizadas, con evaluaciones históricas",
+      "capacidades": [
+        "V"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "V",
+      "fase_implementacion": 6,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API15",
+      "metodo": "POST",
+      "ruta": "/servicios/:servicioId/matpel/decisiones",
+      "entrada": "RegistrarDecisionDto",
+      "resultado": "Decisión inmutable, responsable acreditado y evento; sin ejecutar orden externa",
+      "capacidades": [
+        "D"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "D",
+      "fase_implementacion": 6,
+      "efecto": "REGISTRO_O_TRABAJO",
+      "implementado": false
+    },
+    {
+      "id": "API16",
+      "metodo": "POST",
+      "ruta": "/servicios/:servicioId/matpel/edicion",
+      "entrada": "CambiarEdicionDto",
+      "resultado": "Nueva revisión/contexto tras selección explícita de versión y entradas correspondientes; anterior conservado",
+      "capacidades": [
+        "D"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "D",
+      "fase_implementacion": 6,
+      "efecto": "REGISTRO_O_TRABAJO",
+      "implementado": false
+    },
+    {
+      "id": "API17",
+      "metodo": "GET",
+      "ruta": "/servicios/:servicioId/matpel/mapa",
+      "entrada": "evaluacionId",
+      "resultado": "Geometrías/versiones y estado; posiciones solo con G",
+      "capacidades": [
+        "V"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [
+        {
+          "capacidad": "G",
+          "cuando": "posiciones o datos protegidos"
+        }
+      ],
+      "nota_capacidad": "V, G solo para posiciones",
+      "fase_implementacion": 7,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API18",
+      "metodo": "POST",
+      "ruta": "/servicios/:servicioId/matpel/reconocimientos",
+      "entrada": "ReconocerFotoDto",
+      "resultado": "Candidatos y evidencia propia del Servicio; no altera identificación",
+      "capacidades": [
+        "F"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "F",
+      "fase_implementacion": 8,
+      "efecto": "REGISTRO_O_TRABAJO",
+      "implementado": false
+    },
+    {
+      "id": "API19",
+      "metodo": "GET",
+      "ruta": "/matpel/versiones/:versionGreId/paquete",
+      "entrada": "formato compatible de paquete",
+      "resultado": "Manifest/catálogo/PDF de versión validada; sin datos de incidentes",
+      "capacidades": [
+        "C"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "C",
+      "fase_implementacion": 9,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API20",
+      "metodo": "GET",
+      "ruta": "/matpel/administracion/documentos",
+      "entrada": "Sin rutas locales del cliente",
+      "resultado": "Fuentes detectadas mediante ids de selección, identidad y candidatos",
+      "capacidades": [
+        "A"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "A",
+      "fase_implementacion": 3,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API21",
+      "metodo": "POST",
+      "ruta": "/matpel/administracion/importaciones",
+      "entrada": "SolicitarImportacionDto",
+      "resultado": "202, id de trabajo existente/nuevo; worker procesa fuera del request",
+      "capacidades": [
+        "A"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "A",
+      "fase_implementacion": 3,
+      "efecto": "REGISTRO_O_TRABAJO",
+      "implementado": false
+    },
+    {
+      "id": "API22",
+      "metodo": "GET",
+      "ruta": "/matpel/administracion/importaciones/:importacionId",
+      "entrada": "Sin parámetros",
+      "resultado": "Estado, progreso, reporte y errores con página/parser",
+      "capacidades": [
+        "A"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "A",
+      "fase_implementacion": 3,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API23",
+      "metodo": "POST",
+      "ruta": "/matpel/administracion/versiones/:versionGreId/revisiones",
+      "entrada": "RegistrarRevisionDto",
+      "resultado": "Revisión/hallazgo con fundamento; no sobrescribe catálogo publicado",
+      "capacidades": [
+        "S"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "S",
+      "fase_implementacion": 3,
+      "efecto": "REGISTRO_O_TRABAJO",
+      "implementado": false
+    },
+    {
+      "id": "API24",
+      "metodo": "GET",
+      "ruta": "/matpel/administracion/comparacion",
+      "entrada": "versionAnteriorId, versionCandidataId",
+      "resultado": "Diferencias de texto, tablas, entradas y señales con fuente",
+      "capacidades": [
+        "A"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "A",
+      "fase_implementacion": 3,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API25",
+      "metodo": "POST",
+      "ruta": "/matpel/administracion/activacion",
+      "entrada": "ActivarVersionDto",
+      "resultado": "Puntero actualizado, nueva revisión y auditoría; admite recuperación de una versión validada previa",
+      "capacidades": [
+        "P"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "P",
+      "fase_implementacion": 3,
+      "efecto": "REGISTRO_O_TRABAJO",
+      "implementado": false
+    },
+    {
+      "id": "API26",
+      "metodo": "GET",
+      "ruta": "/servicios/:servicioId/matpel/reconocimientos/:reconocimientoId",
+      "entrada": "Sin parámetros",
+      "resultado": "Estado de trabajo OCR, candidatos y evidencia autorizada; misma versión consultada",
+      "capacidades": [
+        "E"
+      ],
+      "combinacion_capacidades": "AND",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "E",
+      "fase_implementacion": 8,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API27",
+      "metodo": "GET",
+      "ruta": "/matpel/administracion/versiones/:versionGreId/registros",
+      "entrada": "tipoRegistro, filtros soportados, limite?, cursor?",
+      "resultado": "Registros candidatos, hallazgos y referencias para revisar dato ↔ fuente",
+      "capacidades": [
+        "A",
+        "S"
+      ],
+      "combinacion_capacidades": "OR",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "A o S",
+      "fase_implementacion": 3,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API28",
+      "metodo": "GET",
+      "ruta": "/matpel/administracion/versiones/:versionGreId/fuentes/:referenciaId",
+      "entrada": "Sin parámetros",
+      "resultado": "Fuente/fragmento de candidato o versión conservada, sin publicación operacional",
+      "capacidades": [
+        "A",
+        "S"
+      ],
+      "combinacion_capacidades": "OR",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "A o S",
+      "fase_implementacion": 3,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API29",
+      "metodo": "GET",
+      "ruta": "/matpel/administracion/versiones/:versionGreId/archivo",
+      "entrada": "Sin parámetros",
+      "resultado": "PDF autorizado para revisión de la versión; nunca una ruta arbitraria",
+      "capacidades": [
+        "A",
+        "S"
+      ],
+      "combinacion_capacidades": "OR",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "A o S",
+      "fase_implementacion": 3,
+      "efecto": "CONSULTA",
+      "implementado": false
+    },
+    {
+      "id": "API30",
+      "metodo": "GET",
+      "ruta": "/matpel/administracion/versiones",
+      "entrada": "estado?, limite?, cursor?",
+      "resultado": "Versiones candidatas/conservadas y estado; lista para administrar, revisar o activar",
+      "capacidades": [
+        "A",
+        "S",
+        "P"
+      ],
+      "combinacion_capacidades": "OR",
+      "capacidades_condicionales": [],
+      "nota_capacidad": "A o S o P",
+      "fase_implementacion": 3,
+      "efecto": "CONSULTA",
+      "implementado": false
+    }
+  ],
+  "invariantes": {
+    "version_gre_unica_por_contexto": true,
+    "nueva_mutacion_incidente_exige_version_e_idempotencia": true,
+    "consulta_no_crea_incidente": true,
+    "permisos_compuestos_son_and": true,
+    "decision_exige_autoridad_del_nucleo": true,
+    "actor_no_se_acepta_desde_body": true,
+    "seleccion_ocr_exige_confirmacion_humana": true,
+    "origen_externo_se_verifica_en_servidor": true
+  }
+}

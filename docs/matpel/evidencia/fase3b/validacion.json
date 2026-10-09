@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "fecha": "2026-10-09",
+  "zonaHoraria": "America/Asuncion",
+  "fase": "3B",
+  "estado": "INDICES_Y_GUIAS_EXTRAIDOS_SIN_IMPORTAR",
+  "sesionRecuperada": {
+    "motivo": "La sesión anterior se interrumpió por límite de uso tras escribir extraer_gre.py sin ejecutarlo contra la fuente.",
+    "ultimoPedido": "termina esto"
+  },
+  "entorno": {
+    "tipo": "checkout local Windows",
+    "rama": "main",
+    "revisionBase": "686f8c7d9778c28d02555f00725d410f1fb24522",
+    "arbolConCambiosLocales": true,
+    "conexionSQL": false,
+    "python": "3.13.0",
+    "pymupdf": "1.28.2"
+  },
+  "correccionesAlRetomar": [
+    "Límite entre campos de índice con tolerancia por campo: nombre 4 pt, guía e identificador 1 pt (PDF 33 columna derecha; PDF 134).",
+    "Columna derecha vacía admitida solo sin texto (última página de cada índice, PDF 93 y 153).",
+    "Guion al fin de renglón une la palabra al normalizar (3324, BAE-II); el original conserva el salto.",
+    "Títulos de guía comparados normalizados entre sus dos páginas (espacios finales).",
+    "Apartados de guía por estructura fija y negrita en lugar de tamaño: con umbral por tamaño se fusionaban ROPA PROTECTORA (PDF 262) y DERRAME O FUGA / PRIMEROS AUXILIOS (8,7 pt) sin aviso, y 'Incendio' (PDF 200) se volvía subapartado.",
+    "Controles nuevos: verde sin fila, palabras de toda la página sin fila, texto en márgenes de guías, jerarquía de subapartados.",
+    "Valores alineados con CHECK de 094: metodo NATIVO/GEOMETRIA, estado INTENCIONALMENTE_VACIA."
+  ],
+  "pruebas": {
+    "python": {
+      "comando": "python -m unittest test_indices_guias_gre test_documento_gre",
+      "directorio": "scripts/matpel",
+      "codigoSalida": 0,
+      "duracionSegundos": 134.93,
+      "casos": 36,
+      "pasaron": 36,
+      "fallaron": 0,
+      "nuevos3B": 20
+    }
+  },
+  "artefacto": {
+    "comando": "python scripts/matpel/importar_gre.py --indices-guias",
+    "codigoSalida": 0,
+    "nombre": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af.indices-guias-1-busqueda-1-pymupdf1.28.2.json",
+    "ubicacion": "backend/private_uploads/gre (ignorada por Git)",
+    "sha256": "ea0e4d6f5ccadf11c3d7ae676f5dd7f3d6bb46b972aff4e5e3eb19dc0a31bb7b",
+    "bytes": 15547725,
+    "reintento": {"codigoSalida": 0, "artefactoNuevo": false, "mismoSha256": true},
+    "estadoCatalogo": "NO_IMPORTADA",
+    "aptoActivacion": false
+  },
+  "resumen": {
+    "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+    "paginasDocumentales": 392,
+    "secciones": 42,
+    "filasAmarillo": 2665,
+    "filasAzul": 2665,
+    "relacionesConciliadas": 2665,
+    "relacionesPendientes": 0,
+    "identificadoresDistintos": 1984,
+    "identificadoresConVariasEntradas": 442,
+    "entradasSinIdentificadorPorIndice": 4,
+    "polimerizablesPorIndice": 102,
+    "resaltadoVerdePorIndice": 415,
+    "guias": 64,
+    "guiasConContenido": 62,
+    "guiasIntencionalmenteVacias": ["121", "167"],
+    "guiasSinEntradas": ["111", "121", "167"],
+    "referencias": 27909,
+    "hallazgosCriticos": 0
+  },
+  "cotejoVisual": {
+    "paginaPdf": 35,
+    "filasVerdes": ["1092", "1093", "1098", "1135", "1143", "1143", "1162", "1163"],
+    "filasConP": ["1089", "1092", "1093", "1099", "1100", "1129", "1143", "1143", "1150"],
+    "coincide": true
+  },
+  "huellas": {
+    "scripts/matpel/extraer_gre.py": "4eddb266ac95937fe2f330c3090dc78eecb6774eefb0c8dfd2e8a99cc0f4e01b",
+    "scripts/matpel/importar_gre.py": "c560d665fe2fa03f807ea388e4f11dad83c7211637b85f8d5f6dcf6acb409756",
+    "scripts/matpel/inspeccionar_gre.py": "4bf0b86e257687d5a7dae884c51ba1bea82bc7a437a011ef42aaf1e5d7749fe3",
+    "scripts/matpel/test_indices_guias_gre.py": "9af2c360768362bb71eecf4eac0264c1e57fc6d91c9be798fba166f4da09d255",
+    "scripts/matpel/test_documento_gre.py": "502e54548de9cf61eba2b14c8403d53f1e61e670991ccad14d356bca1f8ae247"
+  },
+  "noRealizado": [
+    "Aplicación de la migración 094 o carga en SQL Server",
+    "Revisión humana dato ↔ fuente",
+    "Tablas 1–3 (fase 3C)",
+    "Commits, pushes o despliegues"
+  ]
+}

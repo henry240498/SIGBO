@@ -1,0 +1,363 @@
+{
+  "tipo": "huellas_de_fuentes_consultadas_no_certificacion_operativa",
+  "fecha_cierre": "2026-10-08",
+  "git_head": "686f8c7d9778c28d02555f00725d410f1fb24522",
+  "estado": "arbol_con_cambios_locales_previos_sin_commit",
+  "fuentes": [
+    {
+      "ruta": "backend/package.json",
+      "bytes": 2249,
+      "sha256": "926fca0dfe51e644b1dcd2bb66474ca5342f22c13e789a784b92b394adeb0aae"
+    },
+    {
+      "ruta": "frontend/package.json",
+      "bytes": 871,
+      "sha256": "85a1a6a00917e9711ccc2a9233c12f6304edf5f9466a924be6562934430d095e"
+    },
+    {
+      "ruta": ".movile/pubspec.yaml",
+      "bytes": 876,
+      "sha256": "f0c57a7050dc46c4b96809ef5cf2fa8fabed04eab0f4d745085a8a9d408877f0"
+    },
+    {
+      "ruta": "backend/src/app.module.ts",
+      "bytes": 3527,
+      "sha256": "b95bdcc7c443dc4e7305989c7c413ff303e2797eeafaf58e598f7ca4f62adef2"
+    },
+    {
+      "ruta": "backend/src/main.ts",
+      "bytes": 3897,
+      "sha256": "fa2c2e10f2862ec6766795506c8d59c6420b6c425e53c3b59d4355b26e0fdcc5"
+    },
+    {
+      "ruta": "backend/src/core/database/data-source-options.ts",
+      "bytes": 3059,
+      "sha256": "59d410d8caaf49d6948d1bef45d3b10022248457fc6029b60bc600df3f24d4b9"
+    },
+    {
+      "ruta": "backend/src/modules/auth/strategies/jwt.strategy.ts",
+      "bytes": 1933,
+      "sha256": "a8fe5f68f236f4794c3f8a45414f02eefee7d77be8554177d71fb275247e059a"
+    },
+    {
+      "ruta": "backend/src/modules/seguridad/guards/permissions.guard.ts",
+      "bytes": 1225,
+      "sha256": "73f867750cef88e298f4b8e09b7e3ccd0c2a1bb35e54e40024b168a84dd26bb0"
+    },
+    {
+      "ruta": "backend/src/modules/seguridad/auditoria.service.ts",
+      "bytes": 3219,
+      "sha256": "8271d3affda99425bbc45a43898cdb64eb879a0e98723e54f6eba845113510b8"
+    },
+    {
+      "ruta": "backend/src/modules/servicios/servicios.controller.ts",
+      "bytes": 4012,
+      "sha256": "9f56a42a4cd53d787eec6583ab3fc5340e08ec59b2f7ae690868768caeb854d4"
+    },
+    {
+      "ruta": "backend/src/modules/servicios/servicios.service.ts",
+      "bytes": 39005,
+      "sha256": "e0dea9a6f430403e503028b4790dad9ff1a3de396f5c412eaee552029b6314b2"
+    },
+    {
+      "ruta": "backend/src/modules/servicios/comunicacion-servicio.pdf.ts",
+      "bytes": 6335,
+      "sha256": "9cd4dce26198dabf302e085f4ed9b11552a4b891a399c393f244439bc8d856e2"
+    },
+    {
+      "ruta": "backend/src/modules/servicios/dto/guardar-comunicacion.dto.ts",
+      "bytes": 749,
+      "sha256": "90b67a0e0c65159004a953478d557630998be94026eedfb45141b2d3655bc00d"
+    },
+    {
+      "ruta": "backend/src/shared/entities/comunicacion-servicio.entity.ts",
+      "bytes": 1482,
+      "sha256": "2ac98cb5eba8ce41c198c459800585325b59367ff91fe0cde0b26636f4b06899"
+    },
+    {
+      "ruta": "backend/src/shared/entities/servicio.entity.ts",
+      "bytes": 3558,
+      "sha256": "a028a4c2ea3f01a12075144bb1f6c0d434bca62cedbb64af13ad4e8b71c86ebd"
+    },
+    {
+      "ruta": "backend/src/shared/entities/despacho-servicio.entity.ts",
+      "bytes": 8301,
+      "sha256": "74cd1d80b640b1efdb7765d4264ccf579bb57f11898c760edafebd50512fa0d9"
+    },
+    {
+      "ruta": "backend/src/shared/entities/incidente.entity.ts",
+      "bytes": 6388,
+      "sha256": "b7755e4bfab80d74dcac504171e2e10201f35cf60d889c2f523e0e94c196745c"
+    },
+    {
+      "ruta": "backend/src/modules/despacho/servicio-activo.controller.ts",
+      "bytes": 4225,
+      "sha256": "8d67c955cf13d287cc0c446acd12691ba2190e0893f6e9007ee6242e4c8a41a0"
+    },
+    {
+      "ruta": "backend/src/modules/despacho/servicio-activo.service.ts",
+      "bytes": 24940,
+      "sha256": "8548b5f8042d9f469478d69bd3effacab814ad32f054c0bfeea3ebd206cbe05c"
+    },
+    {
+      "ruta": "backend/src/modules/despacho/servicio-activo.spec.ts",
+      "bytes": 18907,
+      "sha256": "e0225649e13179d9e6b8e5b19d0797d614d2dad1838b135f3d69d9755adfcff4"
+    },
+    {
+      "ruta": "backend/src/modules/despacho/despacho-tiempo-real.service.ts",
+      "bytes": 2392,
+      "sha256": "278da812c99b8d3a2e4b9964d21898dea630bae926d99c382d2b5ee5b40270fd"
+    },
+    {
+      "ruta": "backend/src/modules/despacho/despacho.spec.ts",
+      "bytes": 25536,
+      "sha256": "7b7eb0591e4bbbdcb43255eca347e156473e44e574f33ff1e9cb532e4f60fff0"
+    },
+    {
+      "ruta": "backend/src/modules/incidente-nucleo/incidente-nucleo.module.ts",
+      "bytes": 427,
+      "sha256": "393fc1a2c01a10cc70c60a6e9721792144ebdd266b2b18e7a5a1dbf14f13f966"
+    },
+    {
+      "ruta": "backend/src/modules/incidente-nucleo/cronologia.service.ts",
+      "bytes": 6511,
+      "sha256": "d7ee355fd065bd680417c280991bd637714d9cafbdb1bb9e53560c25cb36c734"
+    },
+    {
+      "ruta": "backend/src/modules/incidente-nucleo/motor-fases.service.ts",
+      "bytes": 3461,
+      "sha256": "b3f25c154d289871b8f9fa37b6d1c1d0084226b31777682adda17ddf457e19bc"
+    },
+    {
+      "ruta": "backend/src/modules/incidente-nucleo/politicas.ts",
+      "bytes": 2445,
+      "sha256": "5616409793c022a3e5881239688a857176be01bd98be95fb0cb5cd81e650c67c"
+    },
+    {
+      "ruta": "backend/src/modules/incidente-nucleo/incidente-nucleo.spec.ts",
+      "bytes": 13986,
+      "sha256": "54107384c1d77a614cc807384cde80350238456695b69eea8f9f9af34ebb3882"
+    },
+    {
+      "ruta": "backend/src/modules/flota/flota.controller.ts",
+      "bytes": 7965,
+      "sha256": "b20877ef7b9d7fd2cf2cea97df06ec9de4fb0b9c23e79768843c494f46e88270"
+    },
+    {
+      "ruta": "backend/src/modules/flota/flota.service.ts",
+      "bytes": 21111,
+      "sha256": "d8f10377283b05169ad12bf41d2f6007c7e2d1a4ad3eca86a7e207ed9cdb86d5"
+    },
+    {
+      "ruta": "backend/src/modules/cartografia/cartografia.service.ts",
+      "bytes": 8472,
+      "sha256": "82b05188f83a557fac926f4f00bc48678a287f3c96ca3916b04d81c9f3dd8fc4"
+    },
+    {
+      "ruta": "backend/src/modules/cartografia/cartografia.service.spec.ts",
+      "bytes": 7105,
+      "sha256": "57757fab4800965dd8204ebd2a0d10c74fe75600b7b52168cf3d65fff2cc07d9"
+    },
+    {
+      "ruta": "backend/src/modules/servicios/seguimiento/seguimiento-geografico.controller.ts",
+      "bytes": 4967,
+      "sha256": "c6edad29b7ab9e2cdf9409d7e8e8a3eccd4dd7354650d2c9b5e09c39e5ab9034"
+    },
+    {
+      "ruta": "backend/src/modules/servicios/seguimiento/seguimiento-geografico.service.ts",
+      "bytes": 16068,
+      "sha256": "07d2a8770811ffbaae51864ccfc93a66162180d92468e4b7a31f9c6acfa467b7"
+    },
+    {
+      "ruta": "backend/src/modules/campo/campo.controller.ts",
+      "bytes": 4920,
+      "sha256": "8a6f439031c2e8f86a97db56da9b63809ae6460c91068c1fa280cfe4f7775c7c"
+    },
+    {
+      "ruta": "backend/src/modules/campo/adjuntos.service.ts",
+      "bytes": 4651,
+      "sha256": "71a78d388e173714e9582b96f391b6d5fc6692ef0982f7aef6d548b2526c1f50"
+    },
+    {
+      "ruta": "backend/src/shared/utils/almacenamiento.ts",
+      "bytes": 10187,
+      "sha256": "64e4945f8256b1b4103f243e344f4fef60ef9a7f8aefe3e9c6749786fae4a34c"
+    },
+    {
+      "ruta": "backend/src/shared/utils/almacenamiento.spec.ts",
+      "bytes": 3505,
+      "sha256": "47136e66145b88f90a3cba1f75cd2b93a64cf7a2647dd3200334f4d1d1ba131f"
+    },
+    {
+      "ruta": "backend/src/modules/documentos/documentos.controller.ts",
+      "bytes": 12719,
+      "sha256": "f8719e7655803e4839fc5b8d1bb653fda6fc176fa8c62e37cb5329e548fdb605"
+    },
+    {
+      "ruta": "backend/src/modules/documentos/documentos.service.ts",
+      "bytes": 32802,
+      "sha256": "4b99e03169e56894af249e342e40936d3ab0c36a3fcf4e02522b6527287182bd"
+    },
+    {
+      "ruta": "backend/src/modules/personal/especialidades-bombero.controller.ts",
+      "bytes": 1153,
+      "sha256": "472df07dae8c6f671b79389b437a821dc8401ceac73bc35ef7b5ab9275d44aa2"
+    },
+    {
+      "ruta": "backend/src/modules/personal/especialidades-bombero.service.ts",
+      "bytes": 2325,
+      "sha256": "21b1f6a2d6411759fee3e96c4d882fea413808ce877e2874afa741bdf66c4090"
+    },
+    {
+      "ruta": "backend/src/modules/academia/certificaciones-academia.controller.ts",
+      "bytes": 3316,
+      "sha256": "92d9d6feaebb972ccf73a2b5761a5b9131dff7152bc1d689f02eddb21004f692"
+    },
+    {
+      "ruta": "backend/src/modules/academia/certificaciones-academia.service.ts",
+      "bytes": 7591,
+      "sha256": "8e66997a5405b58d87554ac72d974ad7e017b5b3096b31060a0cd7252b918417"
+    },
+    {
+      "ruta": "backend/src/modules/guardias/guardias.controller.ts",
+      "bytes": 6535,
+      "sha256": "1b9022d21bcbc895fc173e6ed31b26fa13613a70b4d2fd9649f364f886871335"
+    },
+    {
+      "ruta": "backend/src/modules/guardias/guardias.service.ts",
+      "bytes": 22642,
+      "sha256": "0bc33e916f7f015085bf75b975d9ccc365202a47760c5a299c579edda62af6f4"
+    },
+    {
+      "ruta": "frontend/src/app/dashboard/servicios/nuevo/page.tsx",
+      "bytes": 77505,
+      "sha256": "6e7f9512882a8a2169db50494889faabfd07b9bb7884dcf973e215a8297ba9ae"
+    },
+    {
+      "ruta": "frontend/src/app/dashboard/servicios/despacho/page.tsx",
+      "bytes": 13424,
+      "sha256": "7ead06a8120cdea51f4f6818f5df668f5e3bb52b754de9f6776bdd3ad02d5028"
+    },
+    {
+      "ruta": "frontend/src/lib/api.ts",
+      "bytes": 5065,
+      "sha256": "ccc5a858866e0cfb593f6b497a24289788e105d8c3364e32d339e87300942863"
+    },
+    {
+      "ruta": "frontend/src/lib/despacho.ts",
+      "bytes": 3955,
+      "sha256": "86514cf2607cd8950cb74bb8d4f10fde105d17f53e142c2aa73ff07f469803cc"
+    },
+    {
+      "ruta": "frontend/src/lib/seguimiento-geografico.ts",
+      "bytes": 4869,
+      "sha256": "bb3ee106570b8441ce6a5dbc2424f83459872855f336eddf2f2cc446dfdd9ff3"
+    },
+    {
+      "ruta": "frontend/src/lib/documentos.ts",
+      "bytes": 22701,
+      "sha256": "f982171e60beeb41193383804ca60a3dfef1a98a8b224f471effd9b91ee97d03"
+    },
+    {
+      "ruta": "frontend/src/lib/personal.ts",
+      "bytes": 6758,
+      "sha256": "aece4e1396c71d3a2a6a0b94ed58bbb82ea0273464fd6534eecb8f1994020316"
+    },
+    {
+      "ruta": "frontend/src/lib/guardias.ts",
+      "bytes": 37113,
+      "sha256": "9d706cce06950b89f57c162547d03b3246be7a4bc2989846f5f7b3dfccdae9c1"
+    },
+    {
+      "ruta": "frontend/src/lib/flota.ts",
+      "bytes": 6890,
+      "sha256": "23afba12519d44197cf34714edde7e7acb39823f7d65b572cbc974612411e3bb"
+    },
+    {
+      "ruta": "frontend/src/components/VisorDocumento.tsx",
+      "bytes": 5841,
+      "sha256": "c84fe79b808050a6560c2bc64a151a6401a2b1aad6a9c5832f653919d9c84f05"
+    },
+    {
+      "ruta": "frontend/src/components/MapaSeguimiento.tsx",
+      "bytes": 6827,
+      "sha256": "553128a29b5383994d2c76248bfba6f14a29f487718bbc7afa1b69750941c593"
+    },
+    {
+      "ruta": "frontend/src/components/SeguimientoGeografico.tsx",
+      "bytes": 16671,
+      "sha256": "7b8f56bbe29c954d7add82ce0b57ddf81a8729036e39f1e743a98929ee67f350"
+    },
+    {
+      "ruta": "frontend/src/components/MapaServicioDespacho.tsx",
+      "bytes": 4075,
+      "sha256": "298cfcabae13088606e18d946226eee7782db323ba6f50198d57df7e6333a38a"
+    },
+    {
+      "ruta": "frontend/src/components/MapaFlota.tsx",
+      "bytes": 3278,
+      "sha256": "4458938d25f239c5eb53dd3d861bd927608b71023ff231b593a3e3cdac0f76ee"
+    },
+    {
+      "ruta": "frontend/src/components/MapaCartografia.tsx",
+      "bytes": 4419,
+      "sha256": "98cd4eaf4ea944f11f07d4792832e4a9a62ea18ecf4931a58173576be576c466"
+    },
+    {
+      "ruta": ".movile/lib/offline.dart",
+      "bytes": 14425,
+      "sha256": "540995c8954239267bc461183f4e49551ae0a5e618e40b4ee47aa57ed7e52387"
+    },
+    {
+      "ruta": ".movile/lib/api.dart",
+      "bytes": 17523,
+      "sha256": "fc32cd50eadfb96527275971121edbf80f8b22051556b01d2799b4dfe6e77571"
+    },
+    {
+      "ruta": ".movile/lib/terreno.dart",
+      "bytes": 17843,
+      "sha256": "ee0898e8a87512747adc20466c0d5a7b199bba00abe12b120bb8b6724fcbe0f6"
+    },
+    {
+      "ruta": ".movile/lib/servicio_activo.dart",
+      "bytes": 20759,
+      "sha256": "f415710114987200c360d3a9c84f3bda4c8f0ad8e45e8374182220291a3f7bee"
+    },
+    {
+      "ruta": ".movile/lib/mapa_servicio.dart",
+      "bytes": 6361,
+      "sha256": "2b9f25a13470de36f818e0232ddd545eddbbcee4290ee711fa92a222253208ab"
+    },
+    {
+      "ruta": "database/migrations/093_centro_operaciones_incidentes.sql",
+      "bytes": 24415,
+      "sha256": "a583eb6510a2b37705803ba1a13458e62a07de01fed99eec23cfed861fc3fd5b"
+    },
+    {
+      "ruta": ".context/INCIDENTES.md",
+      "bytes": 3147,
+      "sha256": "cce83621d52395e6b21e3c254380e65aac9bbbf9b4e30019d4896d728d41c8b0"
+    },
+    {
+      "ruta": "AGENTS.md",
+      "bytes": 2216,
+      "sha256": "676b54e9eda92a884ca6e14c341051595efb6b4c1904cf36575b1004ec9cd086"
+    },
+    {
+      "ruta": ".context/contexto.md",
+      "bytes": 3075,
+      "sha256": "b320498bdc03b95351dbbfe8499d5d90309238832c4c69fc6a8eafdc812ca8ac"
+    },
+    {
+      "ruta": ".context/reglas.md",
+      "bytes": 542,
+      "sha256": "cb19dedd1ea911bb335710a4688a46ba10e2e66883309b907bdaff201845bc17"
+    },
+    {
+      "ruta": "scripts/matpel/inspeccionar_gre.py",
+      "bytes": 11215,
+      "sha256": "4bf0b86e257687d5a7dae884c51ba1bea82bc7a437a011ef42aaf1e5d7749fe3"
+    }
+  ]
+}

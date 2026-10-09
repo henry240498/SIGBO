@@ -1,0 +1,502 @@
+{
+  "tipo": "cierre_diagnostico_no_aceptacion_operativa",
+  "fecha_cierre": "2026-10-08",
+  "fase": 1,
+  "estado": "diagnostico_concluido",
+  "backend": {
+    "comando": "npm test -- --json --outputFile=../logs/matpel/fase1/backend-tests.json",
+    "carpeta": "backend",
+    "salida": 1,
+    "suites_total": 38,
+    "suites_aprobadas": 37,
+    "suites_fallidas": 1,
+    "casos_total": 435,
+    "casos_aprobados": 433,
+    "casos_fallidos": 2,
+    "fallos_previos": [
+      {
+        "archivo": "backend/src/modules/despacho/despacho.spec.ts",
+        "caso": "DespachoService solicitar chofer: dice para qué móviles y separa por qué cada persona no lo recibió",
+        "causa": "Expectativa de auditoria con un argumento; llamada recibe un segundo undefined.",
+        "antecedente": ".context/INCIDENTES.md"
+      },
+      {
+        "archivo": "backend/src/modules/despacho/despacho.spec.ts",
+        "caso": "DespachoService en camino o en servicio no se puede cambiar la disponibilidad a mano",
+        "causa": "Expectativa de auditoria con un argumento; llamada recibe un segundo undefined.",
+        "antecedente": ".context/INCIDENTES.md"
+      }
+    ],
+    "detalle_suites": [
+      {
+        "archivo": "backend/src/modules/despacho/despacho.spec.ts",
+        "estado": "failed",
+        "casos": 44
+      },
+      {
+        "archivo": "backend/src/modules/incidente-nucleo/incidente-nucleo.spec.ts",
+        "estado": "passed",
+        "casos": 39
+      },
+      {
+        "archivo": "backend/src/modules/guardias/guardias-rutas-express5.spec.ts",
+        "estado": "passed",
+        "casos": 2
+      },
+      {
+        "archivo": "backend/src/modules/operaciones/importaciones.service.spec.ts",
+        "estado": "passed",
+        "casos": 2
+      },
+      {
+        "archivo": "backend/src/modules/auth/auth-cookies.spec.ts",
+        "estado": "passed",
+        "casos": 8
+      },
+      {
+        "archivo": "backend/src/modules/servicios/servicios.geolocalizacion.spec.ts",
+        "estado": "passed",
+        "casos": 3
+      },
+      {
+        "archivo": "backend/src/modules/auth/auth.controller.spec.ts",
+        "estado": "passed",
+        "casos": 2
+      },
+      {
+        "archivo": "backend/src/modules/indicadores/indicadores.spec.ts",
+        "estado": "passed",
+        "casos": 13
+      },
+      {
+        "archivo": "backend/src/modules/denuncias/denuncias.service.spec.ts",
+        "estado": "passed",
+        "casos": 6
+      },
+      {
+        "archivo": "backend/src/modules/despacho/servicio-activo.spec.ts",
+        "estado": "passed",
+        "casos": 22
+      },
+      {
+        "archivo": "backend/src/modules/cartografia/cartografia.service.spec.ts",
+        "estado": "passed",
+        "casos": 13
+      },
+      {
+        "archivo": "backend/src/modules/llamados/llamados.service.spec.ts",
+        "estado": "passed",
+        "casos": 15
+      },
+      {
+        "archivo": "backend/src/modules/control-personal/avisos-geocerca.spec.ts",
+        "estado": "passed",
+        "casos": 13
+      },
+      {
+        "archivo": "backend/src/modules/auth/auth-token-size.spec.ts",
+        "estado": "passed",
+        "casos": 1
+      },
+      {
+        "archivo": "backend/src/modules/flota/flota.service.spec.ts",
+        "estado": "passed",
+        "casos": 16
+      },
+      {
+        "archivo": "backend/src/modules/campo/campo.spec.ts",
+        "estado": "passed",
+        "casos": 19
+      },
+      {
+        "archivo": "backend/src/modules/auth/strategies/jwt.strategy.spec.ts",
+        "estado": "passed",
+        "casos": 4
+      },
+      {
+        "archivo": "backend/src/modules/flota/flota-extras.spec.ts",
+        "estado": "passed",
+        "casos": 13
+      },
+      {
+        "archivo": "backend/src/modules/reportes/reportes.spec.ts",
+        "estado": "passed",
+        "casos": 7
+      },
+      {
+        "archivo": "backend/src/modules/pantallas/pantallas.spec.ts",
+        "estado": "passed",
+        "casos": 21
+      },
+      {
+        "archivo": "backend/src/modules/reservas/reservas-prevencion.spec.ts",
+        "estado": "passed",
+        "casos": 15
+      },
+      {
+        "archivo": "backend/src/modules/seguridad/roles.service.spec.ts",
+        "estado": "passed",
+        "casos": 2
+      },
+      {
+        "archivo": "backend/src/modules/auth/auth-config.spec.ts",
+        "estado": "passed",
+        "casos": 2
+      },
+      {
+        "archivo": "backend/src/modules/control-personal/control-personal.spec.ts",
+        "estado": "passed",
+        "casos": 25
+      },
+      {
+        "archivo": "backend/src/modules/auth/dto/auth-input-limits.spec.ts",
+        "estado": "passed",
+        "casos": 2
+      },
+      {
+        "archivo": "backend/src/modules/publicaciones/publicaciones.service.spec.ts",
+        "estado": "passed",
+        "casos": 4
+      },
+      {
+        "archivo": "backend/src/modules/auth/csrf.middleware.spec.ts",
+        "estado": "passed",
+        "casos": 14
+      },
+      {
+        "archivo": "backend/src/core/database/data-source-options.spec.ts",
+        "estado": "passed",
+        "casos": 4
+      },
+      {
+        "archivo": "backend/src/modules/auth/auth-sesion.spec.ts",
+        "estado": "passed",
+        "casos": 7
+      },
+      {
+        "archivo": "backend/src/modules/denuncias/guards/rate-limit.guard.spec.ts",
+        "estado": "passed",
+        "casos": 8
+      },
+      {
+        "archivo": "backend/src/modules/notificaciones/telegram.service.spec.ts",
+        "estado": "passed",
+        "casos": 7
+      },
+      {
+        "archivo": "backend/src/modules/salud/salud.controller.spec.ts",
+        "estado": "passed",
+        "casos": 2
+      },
+      {
+        "archivo": "backend/src/shared/utils/almacenamiento.spec.ts",
+        "estado": "passed",
+        "casos": 12
+      },
+      {
+        "archivo": "backend/src/modules/app-movil/app-movil.service.spec.ts",
+        "estado": "passed",
+        "casos": 11
+      },
+      {
+        "archivo": "backend/src/modules/incidente-nucleo/incidente.logica.spec.ts",
+        "estado": "passed",
+        "casos": 31
+      },
+      {
+        "archivo": "backend/src/shared/utils/password-policy.spec.ts",
+        "estado": "passed",
+        "casos": 2
+      },
+      {
+        "archivo": "backend/src/modules/ia/tools/flota-tool.spec.ts",
+        "estado": "passed",
+        "casos": 19
+      },
+      {
+        "archivo": "backend/src/shared/utils/instante.spec.ts",
+        "estado": "passed",
+        "casos": 5
+      }
+    ]
+  },
+  "frontend": {
+    "comando": "npm test",
+    "carpeta": "frontend",
+    "salida": 0,
+    "casos_total": 9,
+    "casos_aprobados": 9,
+    "alcance": "seccion/URL, sin recorrido UI"
+  },
+  "movil": {
+    "comando": "flutter test --no-pub",
+    "carpeta": ".movile",
+    "salida": 0,
+    "casos_total": 48,
+    "casos_aprobados": 48,
+    "alcance": "pruebas existentes, sin paquete GRE"
+  },
+  "inspector": {
+    "identidad_pdf": true,
+    "cobertura_exacta_392": true,
+    "repeticion_json_identico": true,
+    "repeticion_mapa_identico": true,
+    "cabeceras_111_174_dos_paginas": true,
+    "guias_62_contenido_2_vacias": true,
+    "alerta_ejemplo_pdf154": true,
+    "nombre_distinto_mismo_contenido": true,
+    "multiples_archivos_seleccion_explicita": true,
+    "rechazo_seleccion_fuera_carpeta": true
+  },
+  "extractos": [
+    {
+      "regla": "R01",
+      "pagina_pdf": 344,
+      "extracto": "No reemplaza la capacitación en respuesta a emergencias",
+      "coincide": true
+    },
+    {
+      "regla": "R02",
+      "pagina_pdf": 3,
+      "extracto": "NO UTILICE ESTE DIAGRAMA DE FLUJO",
+      "coincide": true
+    },
+    {
+      "regla": "R05",
+      "pagina_pdf": 9,
+      "extracto": "USE ESTA TABLA SOLO CUANDO EL NÚMERO DE IDENTIFICACIÓN O EL NOMBRE",
+      "coincide": true
+    },
+    {
+      "regla": "R09",
+      "pagina_pdf": 154,
+      "extracto": "El peligro potencial primario se enumera primero.",
+      "coincide": true
+    },
+    {
+      "regla": "R10",
+      "pagina_pdf": 178,
+      "extracto": "No hay materiales que hagan referencia a esta guía.",
+      "coincide": true
+    },
+    {
+      "regla": "R13",
+      "pagina_pdf": 296,
+      "extracto": "Si no, la Tabla 1 no aplica;",
+      "coincide": true
+    },
+    {
+      "regla": "R18",
+      "pagina_pdf": 296,
+      "extracto": "con la mayor distancia protectora.",
+      "coincide": true
+    },
+    {
+      "regla": "R21",
+      "pagina_pdf": 334,
+      "extracto": "Los gases PTI indicados en la Tabla 2 son solo para fines informativos.",
+      "coincide": true
+    },
+    {
+      "regla": "R28",
+      "pagina_pdf": 297,
+      "extracto": "las distancias deben duplicarse.",
+      "coincide": true
+    },
+    {
+      "regla": "R34",
+      "pagina_pdf": 359,
+      "extracto": "Los datos provistos son aproximados y sólo deben ser utilizados con extremo cuidado.",
+      "coincide": true
+    }
+  ],
+  "documentacion": {
+    "reglas_distintas": 38,
+    "enlaces_locales_verificados": 51,
+    "fuentes_con_hash_verificado": 71,
+    "requisitos_sha256": "098cb9078c039db0d356f450ad4a8363b5944f2645115dfd5dc2ac4f7a22086d",
+    "requisitos_identicos_al_adjunto": true,
+    "sintaxis_python": true,
+    "whitespace_archivos_propios": true,
+    "git_diff_check": true
+  },
+  "logs_locales_no_versionados": [
+    {
+      "ruta": "logs/matpel/fase1/backend-tests.json",
+      "bytes": 168143,
+      "sha256": "96378ead45e8a7f16767da070da10718c028a9b5575ab521bde6b5b4fb6df258"
+    },
+    {
+      "ruta": "logs/matpel/fase1/backend-tests.log",
+      "bytes": 6883,
+      "sha256": "c2271553aaefac566552676f0fdb2fa7877cff13ca45c7528d6c77153d33f848"
+    },
+    {
+      "ruta": "logs/matpel/fase1/extractos-verificados.json",
+      "bytes": 1499,
+      "sha256": "29aa8dbf648d6ffaad38c47a33846067cd14eecd456f9d5bda7cd9900698b25d"
+    },
+    {
+      "ruta": "logs/matpel/fase1/flutter-tests.log",
+      "bytes": 6620,
+      "sha256": "e50d27c35f209b0d48d368f2f0e224559acaa98a23137d09951734c3be6d9225"
+    },
+    {
+      "ruta": "logs/matpel/fase1/frontend-tests.log",
+      "bytes": 1295,
+      "sha256": "867e1c78049ba9887ab2e4f8bea0cee1993eb8ea35263c10bd91956e7155dcee"
+    },
+    {
+      "ruta": "logs/matpel/fase1/gre-texto-por-pagina.json",
+      "bytes": 897676,
+      "sha256": "961d0a8c6b255a2881c183228abfeb7ff061bc75906e70472a638c0fcaffde65"
+    },
+    {
+      "ruta": "logs/matpel/fase1/inspector-verificado.json",
+      "bytes": 393,
+      "sha256": "60b27beff90fda93c3cd48e25de63143b9a793cbe6bf8b6a80747d99164da8ee"
+    }
+  ],
+  "revision_visual_local_no_versionada": [
+    {
+      "ruta": "logs/matpel/fase1/visual/contacto-001-049.png",
+      "bytes": 1142752,
+      "sha256": "9ebbba588e2aea9c260f45eb7e0094e372b9d6eeebbbd1f253462c9342066e58"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/contacto-050-098.png",
+      "bytes": 1127898,
+      "sha256": "1ff27d324014a8f37059f0a768e98a48ff2786855d529626da17effb5a3213d2"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/contacto-099-147.png",
+      "bytes": 1251037,
+      "sha256": "6f06532d13c0e364142bd81386e9f45dc66bd3d853d22eabda9b4ec508379af0"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/contacto-148-196.png",
+      "bytes": 987906,
+      "sha256": "6ed1fe4d39a6f0ddec41c78c2ee1acf0b94429bd4ec35f98500b3837350db78b"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/contacto-197-245.png",
+      "bytes": 959775,
+      "sha256": "dd98f8e7f923f66a4baf59ec03ea04d8309aefd4998bf58a103e1e5aefb7c0ac"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/contacto-246-294.png",
+      "bytes": 1014491,
+      "sha256": "c1bb4f1f9882515a1a146dacf38a6a338275b461172f35a9217cc97c7fa2c50e"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/contacto-295-343.png",
+      "bytes": 736133,
+      "sha256": "4e3e467d43912b2bbc3becef2835a6ea9f1b94c1f362ddc14c79c05a8f2ef7ab"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/contacto-344-392.png",
+      "bytes": 1211440,
+      "sha256": "6f60ce4136bc0b67d99f970bbcdf5e303e19653bceeb9d96051239c6b466a078"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-003.png",
+      "bytes": 91448,
+      "sha256": "5cb2148c5ec9e4250ffd2884f3fdfda440d2588735110f4ac531749e0fca55dd"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-010.png",
+      "bytes": 92938,
+      "sha256": "55f2097eefa916f3255e91c4fc32856063ad689cc56e144832d9dfd36a86b916"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-012.png",
+      "bytes": 106239,
+      "sha256": "5efc09905401ba34ebf6d58dcc3b853982a7ce201f7b3c7bad6433298108c09b"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-015.png",
+      "bytes": 100003,
+      "sha256": "3c0b55ab8686b6a53744b22142646194cc78824565d659373b3d8ba13be80893"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-019.png",
+      "bytes": 91642,
+      "sha256": "12d95489faec4dbad127f5dd252829547ca42fb9572ca38f3591849b78f67fde"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-033.png",
+      "bytes": 107808,
+      "sha256": "348bf3a3b58efc4b127e08d2618dc2ef733837ec42d8d11c3a45095992b47528"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-035.png",
+      "bytes": 101103,
+      "sha256": "bbabf727ca2e91b67a0c6c936a37dd17aa22a5914e511ab02d06389cfe87d834"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-095.png",
+      "bytes": 104394,
+      "sha256": "364eafe7b688d6549ae756d0e1c968102fe4f8d909366cd0967db61b60509cae"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-158.png",
+      "bytes": 78371,
+      "sha256": "764da269900f73ec79279cbc47c69516592094bfb7e9d2899e8732b6dc01cd1a"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-159.png",
+      "bytes": 74033,
+      "sha256": "3354bd812f05dafb6002998b73d693067463dcb6bd2c64bfa991247c5a55ba31"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-292.png",
+      "bytes": 51499,
+      "sha256": "0e9910d4f52e1450eba77fb41e62271f9e47ec87e0058cb38afd61ca1b77acff"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-296.png",
+      "bytes": 120105,
+      "sha256": "8f4ce96fc7f7b131378e46c4de2e5ad6e3cd598ec583fabd20cdf3abfabd8eee"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-297.png",
+      "bytes": 104638,
+      "sha256": "e9542c18feb4e248289174385c364d226e07a59418cda154fb6c9fa13f3dcf3e"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-298.png",
+      "bytes": 93872,
+      "sha256": "f113f8fc2ac3e093df495448c48e581c263b0ffc0ea5e3e28b60cbe111b3243a"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-300.png",
+      "bytes": 93779,
+      "sha256": "6c2b5611261e6c8a6ac5acfce38d106b8c4bf8d02bbc4c6df307e9602971ffb7"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-335.png",
+      "bytes": 84681,
+      "sha256": "9295a6e367927ac381b7041d5b706694a7962d2e19b0a086d91961b50a9a9727"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-340.png",
+      "bytes": 97636,
+      "sha256": "24e744ce9d6fda0b125f855d8feb2042955b7b9dcc09012066e21c6ecdf510bc"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-341.png",
+      "bytes": 98989,
+      "sha256": "6bee82bc0454702c30cfe3094ba9cd234c8b75628c79208aedbbba69ffd71b5b"
+    },
+    {
+      "ruta": "logs/matpel/fase1/visual/pagina-pdf-368.png",
+      "bytes": 92554,
+      "sha256": "a3d9b754f1554ef89fa6ac4d1db99cec803eef01ab41023f7bee28f94c4c351e"
+    }
+  ],
+  "limites": [
+    "Sin pruebas GRE funcionales, DB real, navegador, builds o medicion de latencia.",
+    "Cobertura y maquetacion no certifican todas las celdas.",
+    "Dos fallos previos de Despacho pendientes."
+  ]
+}

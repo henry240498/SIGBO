@@ -12,7 +12,8 @@
     "verificar:escrituras": "node scripts/verificar-escrituras.js",
     "test": "jest --runInBand",
     "test:ci": "jest --runInBand --ci",
-    "seed": "ts-node -r tsconfig-paths/register src/database/seed.ts"
+    "seed": "ts-node -r tsconfig-paths/register src/database/seed.ts",
+    "gre:procesar": "ts-node -r tsconfig-paths/register src/modules/gre/procesar-pendientes.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.2.1",

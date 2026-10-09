@@ -1,0 +1,41 @@
+{
+  "documento": {
+    "bytes": 8182725,
+    "edicion": "2024",
+    "identificacion": {
+      "metodo": "PORTADA_TEXTO_NATIVO",
+      "paginaPdf": 1,
+      "textoOriginal": "2024\nGUÍA DE RESPUESTA EN\nCASO DE EMERGENCIA\nUna guía destinada al uso de los primeros respondedores\ndurante la fase inicial de un incidente en el transporte\nque involucre materiales peligrosos/mercancías peligrosas\n"
+    },
+    "idioma": "es",
+    "paginas": 392,
+    "sha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+    "titulo": "2024 GUÍA DE RESPUESTA EN CASO DE EMERGENCIA"
+  },
+  "referenciaPrivada": "privado:gre:bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af.pdf",
+  "manifiesto": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af.documento-1-pymupdf1.28.2.json",
+  "copiaNueva": true,
+  "estadoCatalogo": "NO_IMPORTADA",
+  "reintentoSinDuplicacion": true,
+  "paginasInventariadas": 392,
+  "numeracionAmbiguaPdf": [
+    154
+  ],
+  "sistemaCoordenadas": "PYMUPDF_SIN_ROTAR_PT",
+  "etiquetasIniciales": [
+    {
+      "paginaPdf": 1,
+      "etiquetaPdf": "i"
+    },
+    {
+      "paginaPdf": 2,
+      "etiquetaPdf": "ii"
+    },
+    {
+      "paginaPdf": 3,
+      "etiquetaPdf": "1"
+    }
+  ],
+  "marcadores": 40,
+  "sha256Manifiesto": "67dad774f687a5fc0bbfa87e180c596d7493c551dbd321fb12ff5bd68fb6bb7e"
+}

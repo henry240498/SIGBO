@@ -1,0 +1,12 @@
+{
+  "iniciadoEn": "2026-10-09T19:02:01.714Z",
+  "entorno": "Docker local: sigbo-sqlserver",
+  "base": "sigbo_gre_prueba_5af84800ee9f0e2e",
+  "migraciones": [
+    "094_gre_base_documental.sql"
+  ],
+  "creada": true,
+  "eliminada": true,
+  "resultado": "APROBADO",
+  "finalizadoEn": "2026-10-09T19:08:27.058Z"
+}

@@ -1,0 +1,2 @@
+# Extracción documental local; no instala motores OCR ni servicios de red.
+PyMuPDF==1.28.2

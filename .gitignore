@@ -39,3 +39,7 @@ Thumbs.db
 
 # Respaldos locales de la base (contienen todos los datos)
 respaldos/
+
+# Python
+__pycache__/
+*.pyc

@@ -124,7 +124,9 @@ $ordenMigraciones = @(
     "090_despacho_servicio_seguridad.sql",
     "091_pantallas_auditoria_movil.sql",
     "092_despacho_chofer_habilitado.sql",
-    "093_centro_operaciones_incidentes.sql"
+    "093_centro_operaciones_incidentes.sql",
+    "094_gre_base_documental.sql",
+    "095_matpel_permisos.sql"
 )
 
 if (!(Test-Path -LiteralPath $migrationsDir)) {

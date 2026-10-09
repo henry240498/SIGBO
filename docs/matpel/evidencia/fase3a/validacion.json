@@ -1,0 +1,267 @@
+{
+  "schemaVersion": 1,
+  "fecha": "2026-10-09",
+  "zonaHoraria": "America/Asuncion",
+  "fase": "3A",
+  "estado": "BASE_DOCUMENTAL_Y_MODELO_PREPARADOS",
+  "sesionRecuperada": {
+    "titulo": "Planificar integración GRE por fases",
+    "id": "01a117e0-bc4a-7a30-8178-76ca44555c60",
+    "ultimoPedido": "continua"
+  },
+  "entorno": {
+    "tipo": "checkout local Windows",
+    "rama": "main",
+    "revisionBase": "686f8c7d9778c28d02555f00725d410f1fb24522",
+    "arbolConCambiosLocales": true,
+    "conexionSQL": false
+  },
+  "pruebas": {
+    "python": {
+      "comando": "python -m unittest discover -s scripts/matpel -p test_documento_gre.py -v",
+      "codigoSalida": 0,
+      "duracionSegundos": 493.195,
+      "casos": 16,
+      "pasaron": 16,
+      "fallaron": 0,
+      "omitidos": 0
+    },
+    "backendGRE": {
+      "comando": "npm test -- --runTestsByPath src/modules/gre/gre-modelo.spec.ts src/modules/gre/gre-fuentes.spec.ts src/modules/gre/gre-catalogo.spec.ts",
+      "directorio": "backend",
+      "codigoSalida": 0,
+      "suites": 3,
+      "aprobadas": 3,
+      "casos": 21,
+      "pasaron": 21,
+      "fallaron": 0,
+      "duracionSegundos": 267.802,
+      "origenResultado": "Resultado observado en la ejecución de esta recuperación; no es una repetición de la línea base."
+    },
+    "totalCasosRelevantes": 37,
+    "totalPasaron": 37,
+    "totalFallaron": 0
+  },
+  "compilacionBackend": {
+    "comando": "npm run build",
+    "directorio": "backend",
+    "codigoSalida": 0,
+    "origenResultado": "Resultado observado en la ejecución de esta recuperación; no es una repetición de la línea base."
+  },
+  "documento": {
+    "codigoSalida": 0,
+    "copiaNueva": false,
+    "reintentoSinCambios": true,
+    "paginas": 392,
+    "marcadores": 40,
+    "sha256Documento": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+    "sha256Manifiesto": "67dad774f687a5fc0bbfa87e180c596d7493c551dbd321fb12ff5bd68fb6bb7e",
+    "estadoCatalogo": "NO_IMPORTADA"
+  },
+  "migraciones": {
+    "comando": "database/run-migrations.ps1 -ValidateOnly",
+    "codigoSalida": 0,
+    "aplicadas": false,
+    "hash094": "054c067c6a86858184c303f51bffb51df7fe6bc336a96a84ef25781961f3b8ab"
+  },
+  "grafo": {
+    "generador": "node .context/graph/build-graph.mjs --quiet",
+    "codigoSalidaGenerador": 0,
+    "validador": "node .context/graph/validar.mjs",
+    "codigoSalidaValidador": 0,
+    "nodos": 1095,
+    "aristas": 3836,
+    "avisos": 8,
+    "generacion": "2026-10-09T13:40:55.301Z"
+  },
+  "respaldo": {
+    "rutaLocal": "logs/matpel/recuperacion-20261009/antes.zip",
+    "archivos": 1113,
+    "sha256": "431eb4d40e32e4d0c81309b2edf893cfc6c93b647258851c75037e872dd6c3e5"
+  },
+  "fuentes": [
+    {
+      "ruta": ".context/MATPEL.md",
+      "sha256": "debf7e9e2488e6c154158eceab17d02cc6e07ce3707483a5fc4b352158914471"
+    },
+    {
+      "ruta": ".context/graph/build-graph.mjs",
+      "sha256": "94e0ce8b3452e4c4c3224b96c17805a86ff17b898f43cac20748490f7033b174"
+    },
+    {
+      "ruta": ".context/graph/curated/decision/decision--matpel-catalogo-contexto-versionados.md",
+      "sha256": "d05d5903c441a43870ffcb0139d2e227458431a61932e3d518968b215e1a85da"
+    },
+    {
+      "ruta": "backend/package.json",
+      "sha256": "926fca0dfe51e644b1dcd2bb66474ca5342f22c13e789a784b92b394adeb0aae"
+    },
+    {
+      "ruta": "backend/src/app.module.ts",
+      "sha256": "b95bdcc7c443dc4e7305989c7c413ff303e2797eeafaf58e598f7ca4f62adef2"
+    },
+    {
+      "ruta": "backend/src/core/database/data-source-options.ts",
+      "sha256": "59d410d8caaf49d6948d1bef45d3b10022248457fc6029b60bc600df3f24d4b9"
+    },
+    {
+      "ruta": "backend/src/main.ts",
+      "sha256": "fa2c2e10f2862ec6766795506c8d59c6420b6c425e53c3b59d4355b26e0fdcc5"
+    },
+    {
+      "ruta": "backend/src/modules/gre/gre-catalogo.service.ts",
+      "sha256": "dee44c772a3cb039455de9abb5281c71e98f47c0c8a525a236a09692548d8ac6"
+    },
+    {
+      "ruta": "backend/src/modules/gre/gre-catalogo.spec.ts",
+      "sha256": "f93da73ef8e766ee9b25205976f8b1ab090aff4ef95f0330a4e3075ac7fd73b1"
+    },
+    {
+      "ruta": "backend/src/modules/gre/gre-fuentes.service.ts",
+      "sha256": "20e4990b3b750cfe13676372851fa72b60b2393d835b2ccae3962fb41011a4ca"
+    },
+    {
+      "ruta": "backend/src/modules/gre/gre-fuentes.spec.ts",
+      "sha256": "9c763f00c9946891631216ab09d01acedd91e5e0d6e0ae6f71561351b62dd948"
+    },
+    {
+      "ruta": "backend/src/modules/gre/gre-modelo.spec.ts",
+      "sha256": "3f2a0414aedaf6065cc4c0f32ac4a4ec35dd5e3a34f26ca5601522117f98fcfa"
+    },
+    {
+      "ruta": "backend/src/modules/gre/gre.module.ts",
+      "sha256": "461a7423c8e24ca05f797c832b120d2a7cdaec70521cca8958cef53d81dfb7d0"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-activacion-historial.entity.ts",
+      "sha256": "c01f58f9bae21de867cb5614f6e7a7c3b3e1a9898f2158edf829fed5d62edfa6"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-activacion.entity.ts",
+      "sha256": "8b27325c028d839f8aac517ca165bd43c9ff710dcaee211e91cfb46f69b66ce9"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-alias.entity.ts",
+      "sha256": "fa3079ec2c22e03a10e40893222ac51b9e6e03da2edfa430509f54ad2ec020d9"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-bloque.entity.ts",
+      "sha256": "7999a3913ac6f5116bed567a8b8f098279e339a1dba56a2b31fede1c2701e7eb"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-campo-fuente.entity.ts",
+      "sha256": "df7cb0ae5cfdd8df7755057b28638de611029c3af40b579505ff1b0417dab7d5"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-celda.entity.ts",
+      "sha256": "ed4556471003dc5b2fab7510cce1a0e288f962bc5993265d124295384950202d"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-documento.entity.ts",
+      "sha256": "768e0be10f5ec9a7e8b87e3189d1a21201bdb02d4246a8be95bd8f5de2399976"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-entrada.entity.ts",
+      "sha256": "2e2cdd17a64abff19cfa020ecf9e6665370f11c5eae85f4410f69d719034e3b5"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-fila.entity.ts",
+      "sha256": "1e9760cdbe0b5221b92457dd9406beb2da2473679982b275359c5852d6801eb9"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-guia.entity.ts",
+      "sha256": "60b0b9f6505be543eae8598a2cdc056e2669c8c96dab17004318a8eb0660de98"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-importacion.entity.ts",
+      "sha256": "1a208b97191c1460e831750954e3075440f3702cac63bd1b51d6d10331bbca8f"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-pagina.entity.ts",
+      "sha256": "772958783a59a40c795a79e9fbea5a56d5daede57f9e2b1a9fc0e127c8fdc5ff"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-referencia.entity.ts",
+      "sha256": "565ec367a65cc7bba0f06efefcd2e800dbbd9e567c7ac7844ffe8f5a217aef89"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-regla.entity.ts",
+      "sha256": "e1d259dbc9791ab02b8fa4465537d3b887d723f9b0dbcde5b7bcf0e34b5d0ebb"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-revision.entity.ts",
+      "sha256": "481f98256efb1f0db3e922336cacf28014a3a6b6a6c25120c5bcf974976c40d1"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-seccion.entity.ts",
+      "sha256": "ac7050f9538df70c5a5fc3a944fba9b024088caea9b47cdd3c9ae8dbe9ffc1d0"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-tabla.entity.ts",
+      "sha256": "d9e759d667534702a87770e7ef8d5697a13e6292af9681c16d3fd4da273f3d3e"
+    },
+    {
+      "ruta": "backend/src/shared/entities/gre-version.entity.ts",
+      "sha256": "59af652cccd3ab35255bc3ae5fca9387c5bf4ed155ba8015f6d929c03c65d337"
+    },
+    {
+      "ruta": "backend/src/shared/entities/index.ts",
+      "sha256": "646875fa8d8192d192ef0f980b6241b240d252df8875a0f856115146df4897f9"
+    },
+    {
+      "ruta": "database/migrations.sha256",
+      "sha256": "fafbea8240b376fe23f4694f86793fb88b55db7ddbaba0c6856bd1bca00e4797"
+    },
+    {
+      "ruta": "database/migrations/094_gre_base_documental.sql",
+      "sha256": "054c067c6a86858184c303f51bffb51df7fe6bc336a96a84ef25781961f3b8ab"
+    },
+    {
+      "ruta": "database/run-migrations.ps1",
+      "sha256": "9f8f3b758aafc10db772e6741ccfd5209f14b1b01ae43d6adcdb5caef7d3723f"
+    },
+    {
+      "ruta": "docs/matpel/FASE_3A_BASE_DOCUMENTAL.md",
+      "sha256": "af1a6fb43f865f45522762d1f81203e034beeb81b1fcd628bacfe4b0291f9ae0"
+    },
+    {
+      "ruta": "docs/matpel/FASE_3A_VALIDACION.md",
+      "sha256": "db60ac37a383838688f91e545661185e08bc96ee683937a28e359f3e1cd7a328"
+    },
+    {
+      "ruta": "docs/matpel/PLAN_POR_FASES.md",
+      "sha256": "e57f08dce64f6106839e46231ed7290097b8eabaec06de8ac5e67578c771050f"
+    },
+    {
+      "ruta": "docs/matpel/evidencia/fase3a/documento.json",
+      "sha256": "2cc282d7fdaef255e10b0ee7b75e3330cb4d55a9515e2856d1b2e41b86863884"
+    },
+    {
+      "ruta": "scripts/matpel/importar_gre.py",
+      "sha256": "594d5a96c22b27802a6221fd182c078847abd70ee64d7f8dd45d57a3fa96f6f7"
+    },
+    {
+      "ruta": "scripts/matpel/requirements.txt",
+      "sha256": "9739cca56b3ec56df90c41bb839ed7aeb1a69fee9624fe34c7eaafcc51dd5245"
+    },
+    {
+      "ruta": "scripts/matpel/test_documento_gre.py",
+      "sha256": "502e54548de9cf61eba2b14c8403d53f1e61e670991ccad14d356bca1f8ae247"
+    }
+  ],
+  "limites": [
+    "Sin aplicación SQL ni pruebas de constraints/triggers/transacciones/concurrencia SQL.",
+    "Sin catálogo estructurado, activación, API HTTP ni pantallas nuevas terminadas.",
+    "Suite completa backend y pruebas frontend/móvil no repetidas; línea base de fase 1 es histórica.",
+    "3B–D y las fases funcionales siguientes continúan pendientes."
+  ],
+  "siguienteEntrega": "3B: índices y guías",
+  "documentacion": {
+    "enlacesLocalesVerificados": 43,
+    "enlacesRotos": 0,
+    "whitespace": {
+      "comando": "git diff --check",
+      "codigoSalida": 0
+    }
+  }
+}
