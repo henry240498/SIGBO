@@ -7,14 +7,14 @@ dominio: inteligencia
 resumen: "Panel exclusivo de Seguridad -> Inteligencia Artificial (seccion 34 del pedido): ver conversaciones ajenas exige `inteligencia:ver_conversaciones`, distinto del permiso basico `inteligencia:usar` que solo da acceso a las propias (seccion 53, privacidad)."
 prefijo: /api/v1/ia/admin
 capa: backend
-permisos: [inteligencia:ver_conversaciones, inteligencia:ver_auditoria]
+permisos: [inteligencia:ver_conversaciones, inteligencia:eliminar_conversaciones, inteligencia:ver_auditoria]
 archivos:
   - backend/src/modules/ia/ia-admin-conversaciones.controller.ts
 edges:
   - [belongs_to, domain--inteligencia]
   - [exposes, service--ia-ia-conversaciones]
   - [exposes, service--seguridad-auditoria]
-terminos: [admin, conversaciones, inteligencia, ver, auditoria]
+terminos: [admin, conversaciones, inteligencia, ver, eliminar, auditoria]
 ---
 
 # IaAdminConversacionesController
@@ -29,6 +29,7 @@ Panel exclusivo de Seguridad -> Inteligencia Artificial (seccion 34 del pedido):
 |---|---|---|
 | GET | `/ia/admin/conversaciones` | `inteligencia:ver_conversaciones` |
 | GET | `/ia/admin/conversaciones/:id/ejecuciones` | `inteligencia:ver_conversaciones` |
+| DELETE | `/ia/admin/conversaciones/:id` | `inteligencia:eliminar_conversaciones` |
 | GET | `/ia/admin/auditoria` | `inteligencia:ver_auditoria` |
 
 ## Archivos

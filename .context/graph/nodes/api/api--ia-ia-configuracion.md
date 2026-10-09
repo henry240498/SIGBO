@@ -7,7 +7,7 @@ dominio: inteligencia
 resumen: Superficie HTTP de ia configuracion bajo /api/v1/ia/admin/config.
 prefijo: /api/v1/ia/admin/config
 capa: backend
-permisos: [inteligencia:configurar, inteligencia:desactivar]
+permisos: [inteligencia:configurar, inteligencia:eliminar, inteligencia:desactivar]
 archivos:
   - backend/src/modules/ia/ia-configuracion.controller.ts
 edges:
@@ -17,7 +17,7 @@ edges:
   - [exposes, service--ia-whisper]
   - [exposes, service--ia-piper]
   - [exposes, service--ia-ia-configuracion]
-terminos: [configuracion, admin, config, inteligencia, configurar, desactivar]
+terminos: [configuracion, admin, config, inteligencia, configurar, eliminar, desactivar]
 ---
 
 # IaConfiguracionController
@@ -33,11 +33,16 @@ Superficie HTTP de ia configuracion bajo /api/v1/ia/admin/config.
 | GET | `/ia/admin/config` | `inteligencia:configurar` |
 | GET | `/ia/admin/config/ollama/estado` | `inteligencia:configurar` |
 | POST | `/ia/admin/config/ollama/probar-conexion` | `inteligencia:configurar` |
+| POST | `/ia/admin/config/ollama/probar-generacion` | `inteligencia:configurar` |
 | GET | `/ia/admin/config/whisper/estado` | `inteligencia:configurar` |
 | GET | `/ia/admin/config/piper/estado` | `inteligencia:configurar` |
 | GET | `/ia/admin/config/piper/voces` | `inteligencia:configurar` |
+| POST | `/ia/admin/config/piper/probar` | `inteligencia:configurar` |
 | GET | `/ia/admin/config/historial` | `inteligencia:configurar` |
 | PATCH | `/ia/admin/config` | `inteligencia:configurar` |
+| POST | `/ia/admin/config/avatar` | `inteligencia:configurar` |
+| POST | `/ia/admin/config/avatar-predefinido` | `inteligencia:configurar` |
+| POST | `/ia/admin/config/eliminar-definitivamente` | `inteligencia:eliminar` |
 | PATCH | `/ia/admin/config` | `inteligencia:desactivar` |
 
 ## Archivos

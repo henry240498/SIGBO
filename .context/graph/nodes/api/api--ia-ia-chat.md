@@ -28,6 +28,7 @@ Superficie HTTP de ia chat bajo /api/v1/ia.
 
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
+| GET | `/ia/perfil` | `inteligencia:usar` |
 | POST | `/ia/chat` | `inteligencia:usar` |
 | GET | `/ia/conversaciones` | `inteligencia:usar` |
 | GET | `/ia/conversaciones/:id` | `inteligencia:usar` |

@@ -26,6 +26,7 @@ Voz alrededor de Snoopy (Etapa 2 del pedido): mismo permiso que el chat de texto
 
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
+| POST | `/ia/voz/transcribir` | `inteligencia:usar` |
 | POST | `/ia/voz/hablar` | `inteligencia:usar` |
 
 ## Archivos

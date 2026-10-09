@@ -28,6 +28,7 @@ Los controladores con subrutas literales se registran antes de éste en Guardias
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
 | GET | `/guardias` | `guardias:ver` |
+| GET | `/guardias/personal/:bomberoId` | `guardias:ver` |
 | POST | `/guardias/generar` | `guardias:crear` |
 | POST | `/guardias/planificacion/manual` | `guardias:editar` |
 | GET | `/guardias/:id` | `guardias:ver` |

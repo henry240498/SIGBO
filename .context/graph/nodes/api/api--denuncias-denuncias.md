@@ -7,13 +7,13 @@ dominio: denuncias
 resumen: Superficie HTTP de denuncias bajo /api/v1/denuncias.
 prefijo: /api/v1/denuncias
 capa: backend
-permisos: [denuncias:ver, denuncias:asignar, denuncias:configurar_categorias]
+permisos: [denuncias:ver, denuncias:asignar, denuncias:configurar_categorias, denuncias:gestionar, denuncias:cerrar]
 archivos:
   - backend/src/modules/denuncias/denuncias.controller.ts
 edges:
   - [belongs_to, domain--denuncias]
   - [exposes, service--denuncias-denuncias]
-terminos: [denuncias, ver, asignar, configurar, categorias]
+terminos: [denuncias, ver, asignar, configurar, categorias, gestionar, cerrar]
 ---
 
 # DenunciasController
@@ -32,7 +32,9 @@ Superficie HTTP de denuncias bajo /api/v1/denuncias.
 | GET | `/denuncias/categorias` | `denuncias:configurar_categorias` |
 | POST | `/denuncias/categorias` | `denuncias:configurar_categorias` |
 | PATCH | `/denuncias/categorias/:id` | `denuncias:configurar_categorias` |
+| GET | `/denuncias/:id/archivos/:archivoId` | `denuncias:ver` |
 | GET | `/denuncias/:id` | `denuncias:ver` |
+| PATCH | `/denuncias/:id/estado` | `denuncias:gestionar` o `denuncias:cerrar` |
 | POST | `/denuncias/:id/asignar` | `denuncias:asignar` |
 
 ## Archivos

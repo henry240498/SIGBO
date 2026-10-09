@@ -28,6 +28,7 @@ Superficie HTTP de apariencia bajo /api/v1/seguridad/apariencia.
 |---|---|---|
 | GET | `/seguridad/apariencia` | — |
 | PUT | `/seguridad/apariencia` | `seguridad:configurar_apariencia` |
+| PUT | `/seguridad/apariencia/imagen/:campo` | `seguridad:configurar_apariencia` |
 | PUT | `/seguridad/apariencia/politica-perfil` | `seguridad:configurar_politica_perfil` |
 
 ## Archivos

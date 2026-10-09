@@ -34,6 +34,8 @@ Superficie HTTP de bomberos bajo /api/v1/personal/bomberos.
 | PATCH | `/personal/bomberos/:id` | `personal:editar` |
 | PATCH | `/personal/bomberos/:id/baja` | `personal:eliminar` |
 | DELETE | `/personal/bomberos/:id` | `personal:eliminar_fisico` |
+| PUT | `/personal/bomberos/:id/firma-digital` | `personal:gestionar_firma_digital` |
+| GET | `/personal/bomberos/:id/firma-digital` | `personal:ver` |
 | DELETE | `/personal/bomberos/:id/firma-digital` | `personal:gestionar_firma_digital` |
 | PATCH | `/personal/bomberos/:id/autorizacion-firma` | `personal:gestionar_firma_digital` |
 

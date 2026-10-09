@@ -30,6 +30,7 @@ Cuadro de llamados del radio operador (2.1) y convocatorias al personal (2.2). L
 | GET | `/llamados/:id` | `servicios:ver` |
 | POST | `/llamados` | `servicios:crear` |
 | PATCH | `/llamados/:id/estado` | `servicios:editar` |
+| PATCH | `/llamados/:id/servicio` | `servicios:editar` |
 | GET | `/convocatorias/abiertas` | `servicios:ver` |
 | GET | `/convocatorias` | `servicios:convocar` |
 | GET | `/convocatorias/:id` | `servicios:convocar` |

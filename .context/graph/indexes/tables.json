@@ -2521,5 +2521,278 @@
    "personal.bomberos",
    "seguridad.usuarios"
   ]
+ },
+ "matpel.gre_documentos": {
+  "id": "table--matpel-gre-documentos",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-documento",
+   "clase": "GreDocumento"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 11,
+  "fks": [
+   "seguridad.usuarios"
+  ]
+ },
+ "matpel.gre_versiones": {
+  "id": "table--matpel-gre-versiones",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-version",
+   "clase": "GreVersion"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 13,
+  "fks": [
+   "matpel.gre_versiones",
+   "matpel.gre_documentos",
+   "seguridad.usuarios"
+  ]
+ },
+ "matpel.gre_paginas": {
+  "id": "table--matpel-gre-paginas",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-pagina",
+   "clase": "GrePagina"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 11,
+  "fks": [
+   "matpel.gre_versiones"
+  ]
+ },
+ "matpel.gre_secciones": {
+  "id": "table--matpel-gre-secciones",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-seccion",
+   "clase": "GreSeccion"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 7,
+  "fks": [
+   "matpel.gre_versiones",
+   "matpel.gre_paginas",
+   "matpel.gre_paginas"
+  ]
+ },
+ "matpel.gre_referencias": {
+  "id": "table--matpel-gre-referencias",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-referencia",
+   "clase": "GreReferencia"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 11,
+  "fks": [
+   "matpel.gre_versiones",
+   "matpel.gre_paginas",
+   "matpel.gre_secciones"
+  ]
+ },
+ "matpel.gre_guias": {
+  "id": "table--matpel-gre-guias",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-guia",
+   "clase": "GreGuia"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 6,
+  "fks": [
+   "matpel.gre_versiones",
+   "matpel.gre_referencias"
+  ]
+ },
+ "matpel.gre_entradas": {
+  "id": "table--matpel-gre-entradas",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-entrada",
+   "clase": "GreEntrada"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 10,
+  "fks": [
+   "matpel.gre_versiones",
+   "matpel.gre_guias",
+   "matpel.gre_referencias"
+  ]
+ },
+ "matpel.gre_aliases": {
+  "id": "table--matpel-gre-aliases",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-alias",
+   "clase": "GreAlias"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 6,
+  "fks": [
+   "matpel.gre_versiones",
+   "matpel.gre_entradas",
+   "matpel.gre_referencias"
+  ]
+ },
+ "matpel.gre_bloques": {
+  "id": "table--matpel-gre-bloques",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-bloque",
+   "clase": "GreBloque"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 9,
+  "fks": [
+   "matpel.gre_versiones",
+   "matpel.gre_secciones",
+   "matpel.gre_guias",
+   "matpel.gre_bloques",
+   "matpel.gre_referencias"
+  ]
+ },
+ "matpel.gre_tablas": {
+  "id": "table--matpel-gre-tablas",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-tabla",
+   "clase": "GreTabla"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 7,
+  "fks": [
+   "matpel.gre_versiones",
+   "matpel.gre_secciones",
+   "matpel.gre_referencias"
+  ]
+ },
+ "matpel.gre_filas": {
+  "id": "table--matpel-gre-filas",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-fila",
+   "clase": "GreFila"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 8,
+  "fks": [
+   "matpel.gre_versiones",
+   "matpel.gre_tablas",
+   "matpel.gre_entradas",
+   "matpel.gre_referencias"
+  ]
+ },
+ "matpel.gre_celdas": {
+  "id": "table--matpel-gre-celdas",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-celda",
+   "clase": "GreCelda"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 12,
+  "fks": [
+   "matpel.gre_versiones",
+   "matpel.gre_filas",
+   "matpel.gre_referencias"
+  ]
+ },
+ "matpel.gre_reglas": {
+  "id": "table--matpel-gre-reglas",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-regla",
+   "clase": "GreRegla"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 10,
+  "fks": [
+   "matpel.gre_versiones",
+   "matpel.gre_referencias"
+  ]
+ },
+ "matpel.gre_campos_fuente": {
+  "id": "table--matpel-gre-campos-fuente",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-campo-fuente",
+   "clase": "GreCampoFuente"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 13,
+  "fks": [
+   "matpel.gre_versiones",
+   "matpel.gre_referencias",
+   "matpel.gre_secciones",
+   "matpel.gre_entradas",
+   "matpel.gre_aliases",
+   "matpel.gre_guias",
+   "matpel.gre_bloques",
+   "matpel.gre_tablas",
+   "matpel.gre_filas",
+   "matpel.gre_celdas",
+   "matpel.gre_reglas"
+  ]
+ },
+ "matpel.gre_revisiones": {
+  "id": "table--matpel-gre-revisiones",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-revision",
+   "clase": "GreRevision"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 9,
+  "fks": [
+   "matpel.gre_versiones",
+   "matpel.gre_campos_fuente",
+   "seguridad.usuarios"
+  ]
+ },
+ "matpel.gre_importaciones": {
+  "id": "table--matpel-gre-importaciones",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-importacion",
+   "clase": "GreImportacion"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 13,
+  "fks": [
+   "matpel.gre_versiones",
+   "seguridad.usuarios"
+  ]
+ },
+ "matpel.gre_activaciones": {
+  "id": "table--matpel-gre-activaciones",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-activacion",
+   "clase": "GreActivacion"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 6,
+  "fks": [
+   "matpel.gre_versiones",
+   "seguridad.usuarios"
+  ]
+ },
+ "matpel.gre_activaciones_historial": {
+  "id": "table--matpel-gre-activaciones-historial",
+  "dominio": "matpel",
+  "entidad": {
+   "id": "entity--gre-activacion-historial",
+   "clase": "GreActivacionHistorial"
+  },
+  "migracion": "database/migrations/094_gre_base_documental.sql",
+  "columnas": 9,
+  "fks": [
+   "matpel.gre_versiones",
+   "matpel.gre_versiones",
+   "seguridad.usuarios"
+  ]
  }
 }

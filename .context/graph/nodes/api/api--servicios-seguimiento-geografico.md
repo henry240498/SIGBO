@@ -30,8 +30,10 @@ Seguimiento Geografico y Operativo del Servicio: ruta planificada, eventos del r
 | POST | `/servicios/:servicioId/seguimiento/ruta-planificada` | `servicios:despachar` |
 | DELETE | `/servicios/:servicioId/seguimiento/ruta-planificada` | `servicios:despachar` |
 | POST | `/servicios/:servicioId/seguimiento/eventos` | `servicios:despachar` |
+| PATCH | `/servicios/:servicioId/seguimiento/eventos/:eventoId` | `servicios:despachar` |
 | DELETE | `/servicios/:servicioId/seguimiento/eventos/:eventoId` | `servicios:despachar` |
 | POST | `/servicios/:servicioId/seguimiento/pruebas-comunicacion` | `servicios:despachar` |
+| PATCH | `/servicios/:servicioId/seguimiento/pruebas-comunicacion/:pruebaId` | `servicios:despachar` |
 | DELETE | `/servicios/:servicioId/seguimiento/pruebas-comunicacion/:pruebaId` | `servicios:despachar` |
 
 ## Archivos

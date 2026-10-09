@@ -7,13 +7,13 @@ dominio: servicios
 resumen: Superficie HTTP de servicios bajo /api/v1/servicios/comunicaciones.
 prefijo: /api/v1/servicios/comunicaciones
 capa: backend
-permisos: [servicios:ver, servicios:crear, servicios:editar, servicios:finalizar, servicios:eliminar]
+permisos: [servicios:ver, servicios:exportar_informe, servicios:crear, servicios:editar, servicios:finalizar, servicios:eliminar]
 archivos:
   - backend/src/modules/servicios/servicios.controller.ts
 edges:
   - [belongs_to, domain--servicios]
   - [exposes, service--servicios-servicios]
-terminos: [servicios, comunicaciones, ver, crear, editar, finalizar, eliminar]
+terminos: [servicios, comunicaciones, ver, exportar, informe, crear, editar, finalizar, eliminar]
 ---
 
 # ServiciosController
@@ -28,6 +28,7 @@ Superficie HTTP de servicios bajo /api/v1/servicios/comunicaciones.
 |---|---|---|
 | GET | `/servicios/comunicaciones` | `servicios:ver` |
 | GET | `/servicios/comunicaciones/catalogos` | `servicios:ver` |
+| GET | `/servicios/comunicaciones/:id/exportar/pdf` | `servicios:exportar_informe` |
 | GET | `/servicios/comunicaciones/:id` | `servicios:ver` |
 | POST | `/servicios/comunicaciones` | `servicios:crear` |
 | PATCH | `/servicios/comunicaciones/:id` | `servicios:editar` |

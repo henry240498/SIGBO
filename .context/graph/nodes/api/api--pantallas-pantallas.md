@@ -7,14 +7,14 @@ dominio: seguridad
 resumen: Permisos por pantalla (rol, usuario, rango, cargo). Configurarlos requiere seguridad:gestionar_pantallas.
 prefijo: /api/v1/pantallas
 capa: backend
-permisos: [navegacion:registrar, seguridad:gestionar_pantallas]
+permisos: [navegacion:registrar, seguridad:gestionar_pantallas, seguridad:ver_navegacion]
 archivos:
   - backend/src/modules/pantallas/pantallas.controller.ts
 edges:
   - [belongs_to, domain--seguridad]
   - [exposes, service--pantallas-pantallas]
   - [exposes, service--pantallas-navegacion]
-terminos: [pantallas, navegacion, registrar, seguridad, gestionar]
+terminos: [pantallas, navegacion, registrar, seguridad, gestionar, ver]
 ---
 
 # PantallasController
@@ -32,7 +32,9 @@ Permisos por pantalla (rol, usuario, rango, cargo). Configurarlos requiere segur
 | GET | `/pantallas/sujetos` | `seguridad:gestionar_pantallas` |
 | GET | `/pantallas/reglas` | `seguridad:gestionar_pantallas` |
 | PUT | `/pantallas/reglas` | `seguridad:gestionar_pantallas` |
+| DELETE | `/pantallas/reglas/:id` | `seguridad:gestionar_pantallas` |
 | POST | `/pantallas` | `navegacion:registrar` |
+| GET | `/pantallas/linea` | `seguridad:ver_navegacion` |
 
 ## Archivos
 

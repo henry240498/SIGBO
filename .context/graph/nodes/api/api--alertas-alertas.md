@@ -7,13 +7,13 @@ dominio: servicios
 resumen: "Alertas inmediatas de bomberos (apoyo / chofer) para la app movil. Reutiliza el login JWT existente (cabecera `Authorization: Bearer`, ya aceptada por `extraerAccessToken`) y los permisos de Servicios, sin crear un esquema de autorizacion paralelo. Prefijo global: /api/v1."
 prefijo: /api/v1/alertas
 capa: backend
-permisos: [servicios:ver, servicios:crear]
+permisos: [servicios:ver, servicios:crear, servicios:editar]
 archivos:
   - backend/src/modules/alertas/alertas.controller.ts
 edges:
   - [belongs_to, domain--servicios]
   - [exposes, service--alertas-alertas]
-terminos: [alertas, servicios, ver, crear]
+terminos: [alertas, servicios, ver, crear, editar]
 ---
 
 # AlertasController
@@ -29,6 +29,7 @@ Alertas inmediatas de bomberos (apoyo / chofer) para la app movil. Reutiliza el 
 | GET | `/alertas` | `servicios:ver` |
 | GET | `/alertas/:id` | `servicios:ver` |
 | POST | `/alertas` | `servicios:crear` |
+| PATCH | `/alertas/:id/estado` | `servicios:editar` |
 
 ## Archivos
 

@@ -30,8 +30,11 @@ Superficie HTTP de perfil bajo /api/v1/seguridad.
 | GET | `/seguridad/mi-inicio` | — |
 | GET | `/seguridad/mi-perfil/foto` | — |
 | PUT | `/seguridad/mi-perfil` | — |
+| PUT | `/seguridad/mi-perfil/foto` | — |
 | GET | `/seguridad/usuarios/:id/perfil` | `seguridad:ver_usuarios` |
+| GET | `/seguridad/usuarios/:id/perfil/foto` | `seguridad:ver_usuarios` |
 | PUT | `/seguridad/usuarios/:id/perfil` | `seguridad:editar_usuario` |
+| PUT | `/seguridad/usuarios/:id/perfil/foto` | `seguridad:editar_usuario` |
 
 ## Archivos
 

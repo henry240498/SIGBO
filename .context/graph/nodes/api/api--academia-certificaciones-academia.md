@@ -28,6 +28,7 @@ No todas las rutas usan @RequirePermission: la creacion/edicion/borrado permiten
 |---|---|---|
 | GET | `/personal/bomberos/:bomberoId/certificaciones` | `personal:ver` |
 | POST | `/academia/certificaciones` | — |
+| PATCH | `/academia/certificaciones/:id` | — |
 | DELETE | `/academia/certificaciones/:id` | — |
 
 ## Archivos

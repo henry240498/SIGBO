@@ -32,6 +32,7 @@ Las rutas literales preceden a :id y el módulo registra este controlador antes 
 | PUT | `/guardias/ordenes/configuracion` | `guardias:ordenes_configurar` |
 | POST | `/guardias/ordenes` | `guardias:ordenes_crear` |
 | GET | `/guardias/ordenes/:id` | `guardias:ordenes_ver` |
+| GET | `/guardias/ordenes/:id/archivos/:formato` | `guardias:ordenes_ver` |
 | POST | `/guardias/ordenes/:id/regenerar-preview` | `guardias:ordenes_editar` |
 | POST | `/guardias/ordenes/:id/generar-documentos` | `guardias:ordenes_editar` |
 | POST | `/guardias/ordenes/:id/revisar` | `guardias:ordenes_editar` |

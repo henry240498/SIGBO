@@ -26,6 +26,7 @@ Hidrantes, puntos de riesgo y pre-planes. Reutiliza servicios:ver / crear / edit
 
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
+| GET | `/cartografia/cercanos` | `servicios:ver` |
 | GET | `/cartografia/hidrantes` | `servicios:ver` |
 | POST | `/cartografia/hidrantes` | `servicios:crear` |
 | PATCH | `/cartografia/hidrantes/:id` | `servicios:editar` |

@@ -222,6 +222,60 @@
  "backend/src/shared/entities/foja-servicio.entity.ts": [
   "entity--foja-servicio"
  ],
+ "backend/src/shared/entities/gre-activacion-historial.entity.ts": [
+  "entity--gre-activacion-historial"
+ ],
+ "backend/src/shared/entities/gre-activacion.entity.ts": [
+  "entity--gre-activacion"
+ ],
+ "backend/src/shared/entities/gre-alias.entity.ts": [
+  "entity--gre-alias"
+ ],
+ "backend/src/shared/entities/gre-bloque.entity.ts": [
+  "entity--gre-bloque"
+ ],
+ "backend/src/shared/entities/gre-campo-fuente.entity.ts": [
+  "entity--gre-campo-fuente"
+ ],
+ "backend/src/shared/entities/gre-celda.entity.ts": [
+  "entity--gre-celda"
+ ],
+ "backend/src/shared/entities/gre-documento.entity.ts": [
+  "entity--gre-documento"
+ ],
+ "backend/src/shared/entities/gre-entrada.entity.ts": [
+  "entity--gre-entrada"
+ ],
+ "backend/src/shared/entities/gre-fila.entity.ts": [
+  "entity--gre-fila"
+ ],
+ "backend/src/shared/entities/gre-guia.entity.ts": [
+  "entity--gre-guia"
+ ],
+ "backend/src/shared/entities/gre-importacion.entity.ts": [
+  "entity--gre-importacion"
+ ],
+ "backend/src/shared/entities/gre-pagina.entity.ts": [
+  "entity--gre-pagina"
+ ],
+ "backend/src/shared/entities/gre-referencia.entity.ts": [
+  "entity--gre-referencia"
+ ],
+ "backend/src/shared/entities/gre-regla.entity.ts": [
+  "entity--gre-regla"
+ ],
+ "backend/src/shared/entities/gre-revision.entity.ts": [
+  "entity--gre-revision"
+ ],
+ "backend/src/shared/entities/gre-seccion.entity.ts": [
+  "entity--gre-seccion"
+ ],
+ "backend/src/shared/entities/gre-tabla.entity.ts": [
+  "entity--gre-tabla"
+ ],
+ "backend/src/shared/entities/gre-version.entity.ts": [
+  "entity--gre-version"
+ ],
  "backend/src/shared/entities/grupo-guardia-miembro.entity.ts": [
   "entity--grupo-guardia-miembro"
  ],
@@ -1112,6 +1166,32 @@
   "table--servicios-incidente-solicitudes",
   "table--vehiculos-tripulacion-movil"
  ],
+ "database/migrations/094_gre_base_documental.sql": [
+  "file--094-gre-base-documental",
+  "table--matpel-gre-documentos",
+  "table--matpel-gre-versiones",
+  "table--matpel-gre-paginas",
+  "table--matpel-gre-secciones",
+  "table--matpel-gre-referencias",
+  "table--matpel-gre-guias",
+  "table--matpel-gre-entradas",
+  "table--matpel-gre-aliases",
+  "table--matpel-gre-bloques",
+  "table--matpel-gre-tablas",
+  "table--matpel-gre-filas",
+  "table--matpel-gre-celdas",
+  "table--matpel-gre-reglas",
+  "table--matpel-gre-campos-fuente",
+  "table--matpel-gre-revisiones",
+  "table--matpel-gre-importaciones",
+  "table--matpel-gre-activaciones",
+  "table--matpel-gre-activaciones-historial",
+  "decision--matpel-catalogo-contexto-versionados"
+ ],
+ "database/migrations/095_matpel_permisos.sql": [
+  "file--095-matpel-permisos",
+  "decision--matpel-catalogo-contexto-versionados"
+ ],
  "backend/src/modules/academia/academia.module.ts": [
   "component--modulo-academia"
  ],
@@ -1157,11 +1237,18 @@
  "backend/src/modules/flota/flota.module.ts": [
   "component--modulo-flota"
  ],
+ "backend/src/modules/gre/gre.module.ts": [
+  "component--modulo-gre",
+  "decision--matpel-catalogo-contexto-versionados"
+ ],
  "backend/src/modules/guardias/guardias.module.ts": [
   "component--modulo-guardias"
  ],
  "backend/src/modules/ia/ia.module.ts": [
   "component--modulo-ia"
+ ],
+ "backend/src/modules/incidente-nucleo/incidente-nucleo.module.ts": [
+  "component--modulo-incidente-nucleo"
  ],
  "backend/src/modules/indicadores/indicadores.module.ts": [
   "component--modulo-indicadores"
@@ -1340,6 +1427,7 @@
  ],
  "backend/src/modules/despacho/servicio-activo.service.ts": [
   "service--despacho-servicio-activo",
+  "decision--matpel-catalogo-contexto-versionados",
   "rule--confidencial-lo-decide-la-matriz",
   "workflow--servicio-activo"
  ],
@@ -1439,6 +1527,32 @@
  "backend/src/modules/flota/informe.service.ts": [
   "service--flota-informe"
  ],
+ "backend/src/modules/gre/gre-activacion.service.ts": [
+  "service--gre-gre-activacion"
+ ],
+ "backend/src/modules/gre/gre-catalogo.service.ts": [
+  "service--gre-gre-catalogo",
+  "decision--matpel-catalogo-contexto-versionados"
+ ],
+ "backend/src/modules/gre/gre-comparacion.service.ts": [
+  "service--gre-gre-comparacion"
+ ],
+ "backend/src/modules/gre/gre-fuentes.service.ts": [
+  "service--gre-gre-fuentes",
+  "decision--matpel-catalogo-contexto-versionados"
+ ],
+ "backend/src/modules/gre/gre-importacion.service.ts": [
+  "service--gre-gre-importacion"
+ ],
+ "backend/src/modules/gre/gre-proceso.service.ts": [
+  "service--gre-gre-proceso"
+ ],
+ "backend/src/modules/gre/gre-revision.service.ts": [
+  "service--gre-gre-revision"
+ ],
+ "backend/src/modules/gre/gre-trabajador.service.ts": [
+  "service--gre-gre-trabajador"
+ ],
  "backend/src/modules/guardias/bitacora.service.ts": [
   "service--guardias-bitacora"
  ],
@@ -1515,6 +1629,13 @@
  ],
  "backend/src/modules/ia/whisper/whisper.service.ts": [
   "service--ia-whisper"
+ ],
+ "backend/src/modules/incidente-nucleo/cronologia.service.ts": [
+  "service--incidente-nucleo-cronologia",
+  "decision--matpel-catalogo-contexto-versionados"
+ ],
+ "backend/src/modules/incidente-nucleo/motor-fases.service.ts": [
+  "service--incidente-nucleo-motor-fases"
  ],
  "backend/src/modules/indicadores/indicadores.service.ts": [
   "service--indicadores-indicadores"
@@ -1888,6 +2009,9 @@
  ],
  "backend/src/modules/flota/flota.controller.ts": [
   "api--flota-flota"
+ ],
+ "backend/src/modules/gre/gre-admin.controller.ts": [
+  "api--gre-gre-admin"
  ],
  "backend/src/modules/guardias/bitacora.controller.ts": [
   "api--guardias-bitacora"
@@ -2701,6 +2825,39 @@
  ],
  "backend/src/modules/despacho": [
   "decision--despacho-extiende-lo-existente"
+ ],
+ "docs/matpel/FASE_2_ARQUITECTURA.md": [
+  "decision--matpel-catalogo-contexto-versionados"
+ ],
+ "docs/matpel/FASE_2_CONTRATOS.md": [
+  "decision--matpel-catalogo-contexto-versionados"
+ ],
+ "docs/matpel/FASE_2_EXPERIENCIA.md": [
+  "decision--matpel-catalogo-contexto-versionados"
+ ],
+ "docs/matpel/FASE_2_MATRIZ_GRE.md": [
+  "decision--matpel-catalogo-contexto-versionados"
+ ],
+ "docs/matpel/FASE_3A_BASE_DOCUMENTAL.md": [
+  "decision--matpel-catalogo-contexto-versionados"
+ ],
+ "docs/matpel/FASE_3A_VALIDACION.md": [
+  "decision--matpel-catalogo-contexto-versionados"
+ ],
+ "docs/matpel/FASE_3B_INDICES_GUIAS.md": [
+  "decision--matpel-catalogo-contexto-versionados"
+ ],
+ "docs/matpel/FASE_3C_TABLAS_CONDICIONES.md": [
+  "decision--matpel-catalogo-contexto-versionados"
+ ],
+ "docs/matpel/FASE_3D_ADMINISTRACION.md": [
+  "decision--matpel-catalogo-contexto-versionados"
+ ],
+ "scripts/matpel/importar_gre.py": [
+  "decision--matpel-catalogo-contexto-versionados"
+ ],
+ "scripts/matpel/extraer_gre.py": [
+  "decision--matpel-catalogo-contexto-versionados"
  ],
  "database/run-migrations.ps1": [
   "decision--migraciones-a-mano",

@@ -28,6 +28,7 @@ Superficie HTTP de identidad institucional bajo /api/v1/organizacion/identidad-i
 |---|---|---|
 | GET | `/organizacion/identidad-institucional` | `organizacion:documentos_ver` |
 | PUT | `/organizacion/identidad-institucional` | `organizacion:documentos_configurar` |
+| PUT | `/organizacion/identidad-institucional/logo/:lado` | `organizacion:documentos_configurar` |
 
 ## Archivos
 

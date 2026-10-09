@@ -29,6 +29,7 @@ Superficie HTTP de foja servicio bajo /api/v1/personal/bomberos.
 | POST | `/personal/bomberos/:id/foja-servicio` | `personal:generar_foja` |
 | GET | `/personal/bomberos/:id/foja-servicio` | `personal:ver` |
 | GET | `/personal/bomberos/:id/foja-servicio/:anio` | `personal:ver` |
+| GET | `/personal/bomberos/:id/foja-servicio/:anio/archivos/:formato` | `personal:ver` |
 
 ## Archivos
 

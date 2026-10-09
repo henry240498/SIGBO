@@ -7,14 +7,14 @@ dominio: documentos
 resumen: Superficie HTTP de documentos bajo /api/v1/documentos.
 prefijo: /api/v1/documentos
 capa: backend
-permisos: [organizacion:documentos_configurar, documentos:crear, documentos:ver, documentos:ver_auditoria, documentos:editar, documentos:aprobar, documentos:anular, documentos:administrar, documentos:eliminar]
+permisos: [documentos:ver, documentos:ver_auditoria, organizacion:documentos_configurar, documentos:crear, documentos:descargar, documentos:editar, documentos:subir, documentos:aprobar, documentos:anular, documentos:administrar, documentos:eliminar]
 archivos:
   - backend/src/modules/documentos/documentos.controller.ts
 edges:
   - [belongs_to, domain--documentos]
   - [exposes, service--documentos-documentos]
   - [exposes, service--seguridad-auditoria]
-terminos: [documentos, organizacion, configurar, crear, ver, auditoria, editar, aprobar, anular, administrar, eliminar]
+terminos: [documentos, ver, auditoria, organizacion, configurar, crear, descargar, editar, subir, aprobar, anular, administrar, eliminar]
 ---
 
 # DocumentosController
@@ -27,14 +27,21 @@ Superficie HTTP de documentos bajo /api/v1/documentos.
 
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
+| GET | `/documentos` | `documentos:ver` |
+| GET | `/documentos/relacionados/:modulo/:entidad/:registroId` | `documentos:ver` |
+| GET | `/documentos/auditoria` | `documentos:ver_auditoria` |
 | GET | `/documentos/numeraciones` | `organizacion:documentos_configurar` |
+| PUT | `/documentos/numeraciones` | `organizacion:documentos_configurar` |
 | GET | `/documentos/numeraciones/:tipoDocumentoId/siguiente` | `documentos:crear` |
 | GET | `/documentos/:id` | `documentos:ver` |
 | GET | `/documentos/:id/versiones` | `documentos:ver` |
 | GET | `/documentos/:id/relaciones` | `documentos:ver` |
 | GET | `/documentos/:id/auditoria` | `documentos:ver_auditoria` |
+| GET | `/documentos/:id/archivo` | `documentos:descargar` |
+| GET | `/documentos/:id/vista-previa` | `documentos:ver` |
 | POST | `/documentos` | `documentos:crear` |
 | PATCH | `/documentos/:id` | `documentos:editar` |
+| POST | `/documentos/:id/archivo` | `documentos:subir` |
 | PATCH | `/documentos/:id/estado` | `documentos:editar` |
 | POST | `/documentos/:id/aprobar` | `documentos:aprobar` |
 | POST | `/documentos/:id/publicar` | `documentos:aprobar` |

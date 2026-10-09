@@ -7,14 +7,14 @@ dominio: seguridad
 resumen: Superficie HTTP de sesiones bajo /api/v1/seguridad/sesiones.
 prefijo: /api/v1/seguridad/sesiones
 capa: backend
-permisos: [seguridad:ver_usuarios]
+permisos: [seguridad:ver_usuarios, seguridad:cerrar_sesion]
 archivos:
   - backend/src/modules/seguridad/sesiones.controller.ts
 edges:
   - [belongs_to, domain--seguridad]
   - [exposes, service--seguridad-sesiones]
   - [exposes, service--seguridad-auditoria]
-terminos: [sesiones, seguridad, ver, usuarios]
+terminos: [sesiones, seguridad, ver, usuarios, cerrar, sesion]
 ---
 
 # SesionesController
@@ -30,6 +30,8 @@ Superficie HTTP de sesiones bajo /api/v1/seguridad/sesiones.
 | GET | `/seguridad/sesiones` | `seguridad:ver_usuarios` |
 | GET | `/seguridad/sesiones/mias` | — |
 | DELETE | `/seguridad/sesiones/mias/:id` | — |
+| POST | `/seguridad/sesiones/mias/cerrar-todas` | — |
+| DELETE | `/seguridad/sesiones/:id` | `seguridad:cerrar_sesion` |
 
 ## Archivos
 

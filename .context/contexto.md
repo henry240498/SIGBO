@@ -48,6 +48,7 @@ No copiar versiones, estado de Git o resultados históricos como si fueran hecho
 
 - [DESPACHO.md](<DESPACHO.md>) — despacho y coordinación operativa (estado por fases)
 - [MOVIL.md](<MOVIL.md>) — app móvil, offline, APK, reportes y estado de pruebas
+- [MATPEL.md](<MATPEL.md>) — integración GRE/MATPEL/SCI, plan por fases y estado verificable
 - [arquitectura.md](<arquitectura.md>)
 - [testing.md](<testing.md>)
 - [base-datos.md](<base-datos.md>)

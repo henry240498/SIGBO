@@ -94,7 +94,7 @@ const DOMAIN_OF_SCHEMA = {
   operaciones: 'asistencia', servicios: 'servicios', vehiculos: 'vehiculos',
   equipos: 'equipos', academia: 'academia', finanzas: 'finanzas',
   deposito: 'deposito', documentos: 'documentos', contenido: 'publicaciones',
-  ia: 'inteligencia',
+  ia: 'inteligencia', matpel: 'matpel',
   // No hay esquema 'guardias': sus tablas viven en 'operaciones'. El modulo NestJS
   // guardias si es un dominio propio (ver DOMAIN_OF_MODULE y rule--guardias-vive-en-operaciones).
   // Mismo patron para 'ia': el esquema/carpeta de modulo se llaman 'ia', pero el
@@ -102,6 +102,8 @@ const DOMAIN_OF_SCHEMA = {
 };
 /** Carpeta de modulo NestJS -> slug de dominio. */
 const DOMAIN_OF_MODULE = {
+  // Catálogo GRE del dominio MATPEL; su preparación no habilita pantallas ni aplica SQL.
+  gre: 'matpel',
   auth: 'seguridad', seguridad: 'seguridad', personal: 'personal',
   pantallas: 'seguridad',
   organizacion: 'organizacion', operaciones: 'asistencia', servicios: 'servicios',
@@ -114,6 +116,7 @@ const DOMAIN_OF_MODULE = {
   // Modulos del despacho, la flota y la app movil (2026-10): comparten permisos y tablas de
   // Servicios, Vehiculos y Asistencia; ninguno es una entrada propia del menu.
   despacho: 'servicios', llamados: 'servicios', campo: 'servicios', cartografia: 'servicios',
+  'incidente-nucleo': 'servicios',
   prevencion: 'servicios', indicadores: 'servicios', notificaciones: 'servicios',
   'app-movil': 'servicios', flota: 'vehiculos', 'control-personal': 'asistencia',
   // El buzon de reportes es una herramienta del sistema, no de un area operativa.
@@ -475,7 +478,7 @@ function buildBackendCode() {
     const dominio = DOMAIN_OF_MODULE[mod] ?? slug(mod);
 
     const rutas = [];
-    const verbRe = /@(Get|Post|Put|Patch|Delete)\(\s*'?([^')]*)'?\s*\)([\s\S]{0,400}?)(?=@(?:Get|Post|Put|Patch|Delete)\(|\n\}\s*$)/g;
+    const verbRe = /@(Get|Post|Put|Patch|Delete)\(\s*'?([^')]*)'?\s*\)([\s\S]*?)(?=@(?:Get|Post|Put|Patch|Delete)\(|\n\}\s*$)/g;
     for (const m of src.matchAll(verbRe)) {
       const [, verbo, sub, tail] = m;
       const perms = [...tail.matchAll(/@RequirePermission\(([^)]*)\)/g)]

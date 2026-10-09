@@ -79,9 +79,9 @@ Modulo funcional "Servicios". Habilitado en la navegacion.
 - [[component--modulo-campo|campo (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-cartografia|cartografia (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-despacho|despacho (modulo NestJS)]] `belongs_to` →
+- [[component--modulo-incidente-nucleo|incidente-nucleo (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-indicadores|indicadores (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-llamados|llamados (modulo NestJS)]] `belongs_to` →
-- [[component--modulo-notificaciones|notificaciones (modulo NestJS)]] `belongs_to` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

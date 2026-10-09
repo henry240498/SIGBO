@@ -7,13 +7,13 @@ dominio: finanzas
 resumen: Superficie HTTP de aportes bajo /api/v1/finanzas/aportes.
 prefijo: /api/v1/finanzas/aportes
 capa: backend
-permisos: [finanzas:aportes_registrar, finanzas:socios_ver, finanzas:aportes_editar]
+permisos: [finanzas:socios_ver, finanzas:aportes_registrar, finanzas:aportes_editar]
 archivos:
   - backend/src/modules/finanzas/aportes.controller.ts
 edges:
   - [belongs_to, domain--finanzas]
   - [exposes, service--finanzas-aportes]
-terminos: [aportes, finanzas, registrar, socios, ver, editar]
+terminos: [aportes, finanzas, socios, ver, registrar, editar]
 ---
 
 # AportesController
@@ -26,7 +26,9 @@ Superficie HTTP de aportes bajo /api/v1/finanzas/aportes.
 
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
+| GET | `/finanzas/aportes` | `finanzas:socios_ver` |
 | POST | `/finanzas/aportes` | `finanzas:aportes_registrar` |
+| POST | `/finanzas/aportes/comprobante` | `finanzas:aportes_registrar` |
 | GET | `/finanzas/aportes/:id` | `finanzas:socios_ver` |
 | POST | `/finanzas/aportes/:id/anular` | `finanzas:aportes_editar` |
 

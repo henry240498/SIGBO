@@ -29,6 +29,7 @@ Reservas de instalaciones del cuartel (4.4).
 | GET | `/reservas/instalaciones` | `reservas:ver` |
 | POST | `/reservas/instalaciones` | `reservas:decidir` |
 | PATCH | `/reservas/instalaciones/:id` | `reservas:decidir` |
+| GET | `/reservas` | `reservas:ver` |
 | POST | `/reservas` | `reservas:solicitar` |
 | PATCH | `/reservas/:id/decision` | `reservas:decidir` |
 | PATCH | `/reservas/:id/cancelar` | `reservas:solicitar` |

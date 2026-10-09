@@ -7,13 +7,13 @@ dominio: deposito
 resumen: Superficie HTTP de movimientos deposito bajo /api/v1/deposito/movimientos.
 prefijo: /api/v1/deposito/movimientos
 capa: backend
-permisos: [deposito:movimiento, deposito:ver]
+permisos: [deposito:ver, deposito:movimiento]
 archivos:
   - backend/src/modules/deposito/movimientos-deposito.controller.ts
 edges:
   - [belongs_to, domain--deposito]
   - [exposes, service--deposito-movimientos-deposito]
-terminos: [movimientos, deposito, movimiento, ver]
+terminos: [movimientos, deposito, ver, movimiento]
 ---
 
 # MovimientosDepositoController
@@ -26,6 +26,7 @@ Superficie HTTP de movimientos deposito bajo /api/v1/deposito/movimientos.
 
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
+| GET | `/deposito/movimientos` | `deposito:ver` |
 | POST | `/deposito/movimientos` | `deposito:movimiento` |
 | GET | `/deposito/movimientos/tenencia-equipo/:equipoId` | `deposito:ver` |
 

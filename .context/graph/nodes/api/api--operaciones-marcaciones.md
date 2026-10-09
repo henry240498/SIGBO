@@ -28,6 +28,7 @@ Superficie HTTP de marcaciones bajo /api/v1/operaciones/marcaciones.
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
 | POST | `/operaciones/marcaciones` | `asistencia:asistencia_crear` |
+| GET | `/operaciones/marcaciones` | `asistencia:asistencia_ver` |
 | GET | `/operaciones/marcaciones/bombero/:bomberoId` | `asistencia:asistencia_ver` |
 | GET | `/operaciones/marcaciones/dia/:fecha` | `asistencia:asistencia_ver` |
 | GET | `/operaciones/marcaciones/solapamiento/:eventoId/:bomberoId` | `asistencia:asistencia_ver` |

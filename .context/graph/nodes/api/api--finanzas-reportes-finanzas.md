@@ -29,6 +29,9 @@ Superficie HTTP de reportes finanzas bajo /api/v1/finanzas/reportes.
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
 | GET | `/finanzas/reportes/movimientos/:id/comprobante.pdf` | `finanzas:reportes` |
+| GET | `/finanzas/reportes/movimientos/exportar/excel` | `finanzas:reportes` |
+| GET | `/finanzas/reportes/movimientos/exportar/pdf` | `finanzas:reportes` |
+| GET | `/finanzas/reportes/presupuestos/exportar/excel` | `finanzas:reportes` |
 
 ## Archivos
 

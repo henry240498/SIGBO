@@ -7,7 +7,7 @@ dominio: servicios
 resumen: Fotos y firmas de terreno, victimas por servicio y ausencias del personal.
 prefijo: /api/v1
 capa: backend
-permisos: [adjuntos:ver, servicios:ver, servicios:editar, ausencias:solicitar, ausencias:decidir]
+permisos: [adjuntos:subir, adjuntos:ver, servicios:ver, servicios:editar, ausencias:solicitar, ausencias:decidir]
 archivos:
   - backend/src/modules/campo/campo.controller.ts
 edges:
@@ -15,7 +15,7 @@ edges:
   - [exposes, service--campo-adjuntos]
   - [exposes, service--campo-victimas]
   - [exposes, service--campo-ausencias]
-terminos: [campo, adjuntos, ver, servicios, editar, ausencias, solicitar, decidir]
+terminos: [campo, adjuntos, subir, ver, servicios, editar, ausencias, solicitar, decidir]
 ---
 
 # CampoController
@@ -28,6 +28,7 @@ Fotos y firmas de terreno, victimas por servicio y ausencias del personal.
 
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
+| POST | `/adjuntos` | `adjuntos:subir` |
 | GET | `/adjuntos` | `adjuntos:ver` |
 | GET | `/adjuntos/:id/archivo` | `adjuntos:ver` |
 | GET | `/siniestros/victimas` | `servicios:ver` |

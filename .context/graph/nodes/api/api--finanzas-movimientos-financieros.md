@@ -26,6 +26,7 @@ Superficie HTTP de movimientos financieros bajo /api/v1/finanzas/movimientos.
 
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
+| GET | `/finanzas/movimientos` | `finanzas:ver` |
 | GET | `/finanzas/movimientos/:id` | `finanzas:ver` |
 | GET | `/finanzas/movimientos/:id/documento` | `finanzas:ver` |
 | POST | `/finanzas/movimientos` | `finanzas:crear` |

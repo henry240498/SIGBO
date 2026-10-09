@@ -26,6 +26,7 @@ Superficie HTTP de importaciones bajo /api/v1/operaciones/importaciones.
 
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
+| POST | `/operaciones/importaciones/analizar` | `asistencia:importar_marcador` |
 | GET | `/operaciones/importaciones` | `asistencia:importar_marcador` |
 | GET | `/operaciones/importaciones/:id` | `asistencia:importar_marcador` |
 | GET | `/operaciones/importaciones/:id/filas` | `asistencia:importar_marcador` |

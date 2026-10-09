@@ -7,12 +7,13 @@ dominio: seguridad
 resumen: Superficie HTTP de auditoria bajo /api/v1/seguridad/auditoria.
 prefijo: /api/v1/seguridad/auditoria
 capa: backend
+permisos: [seguridad:ver_logs]
 archivos:
   - backend/src/modules/seguridad/auditoria.controller.ts
 edges:
   - [belongs_to, domain--seguridad]
   - [exposes, service--seguridad-auditoria]
-terminos: [auditoria, seguridad]
+terminos: [auditoria, seguridad, ver, logs]
 ---
 
 # AuditoriaController
@@ -20,6 +21,12 @@ terminos: [auditoria, seguridad]
 Superficie HTTP de auditoria bajo /api/v1/seguridad/auditoria.
 
 - **Prefijo:** `/api/v1/seguridad/auditoria`
+
+## Rutas
+
+| Verbo | Ruta | Permiso exigido |
+|---|---|---|
+| GET | `/seguridad/auditoria` | `seguridad:ver_logs` |
 
 ## Archivos
 

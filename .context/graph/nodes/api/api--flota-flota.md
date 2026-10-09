@@ -7,7 +7,7 @@ dominio: vehiculos
 resumen: "Control de flota: tablero de moviles y despacho de unidades (migracion 077)."
 prefijo: /api/v1/flota
 capa: backend
-permisos: [vehiculos:ver, vehiculos:ver_mapa, vehiculos:posicion, servicios:ver, vehiculos:estado, servicios:despachar, vehiculos:dotacion]
+permisos: [vehiculos:ver, vehiculos:ver_mapa, vehiculos:posicion, servicios:ver, vehiculos:estado, servicios:despachar, vehiculos:dotacion, servicios:exportar_informe]
 archivos:
   - backend/src/modules/flota/flota.controller.ts
 edges:
@@ -16,7 +16,7 @@ edges:
   - [exposes, service--flota-dotacion]
   - [exposes, service--flota-disponibilidad]
   - [exposes, service--flota-informe]
-terminos: [flota, vehiculos, ver, mapa, posicion, servicios, estado, despachar, dotacion]
+terminos: [flota, vehiculos, ver, mapa, posicion, servicios, estado, despachar, dotacion, exportar, informe]
 ---
 
 # FlotaController
@@ -51,6 +51,7 @@ Control de flota: tablero de moviles y despacho de unidades (migracion 077).
 | POST | `/flota/moviles/:id/dotacion/control` | `vehiculos:dotacion` |
 | PATCH | `/flota/dotacion/:itemId` | `vehiculos:dotacion` |
 | GET | `/flota/moviles/:id/bitacora` | `vehiculos:ver` |
+| GET | `/flota/informe/:servicioId/pdf` | `servicios:exportar_informe` |
 
 ## Archivos
 

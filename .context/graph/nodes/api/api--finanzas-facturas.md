@@ -28,6 +28,7 @@ Superficie HTTP de facturas bajo /api/v1/finanzas/facturas.
 |---|---|---|
 | GET | `/finanzas/facturas` | `finanzas:facturacion_ver` |
 | POST | `/finanzas/facturas` | `finanzas:facturacion_crear` |
+| POST | `/finanzas/facturas/archivo` | `finanzas:facturacion_crear` |
 | GET | `/finanzas/facturas/:id` | `finanzas:facturacion_ver` |
 | POST | `/finanzas/facturas/:id/anular` | `finanzas:facturacion_anular` |
 

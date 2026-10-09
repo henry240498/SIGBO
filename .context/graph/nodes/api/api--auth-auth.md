@@ -25,6 +25,8 @@ Superficie HTTP de auth bajo /api/v1/auth.
 
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
+| POST | `/auth/login` | — |
+| POST | `/auth/refresh` | — |
 | POST | `/auth/logout` | — |
 
 ## Archivos

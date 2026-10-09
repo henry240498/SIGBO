@@ -64,6 +64,12 @@
    "api--academia-sesiones-academia"
   ]
  },
+ "adjuntos:subir": {
+  "modulo": "adjuntos",
+  "exigidoPor": [
+   "api--campo-campo"
+  ]
+ },
  "adjuntos:ver": {
   "modulo": "adjuntos",
   "exigidoPor": [
@@ -213,7 +219,19 @@
    "api--denuncias-denuncias"
   ]
  },
+ "denuncias:cerrar": {
+  "modulo": "denuncias",
+  "exigidoPor": [
+   "api--denuncias-denuncias"
+  ]
+ },
  "denuncias:configurar_categorias": {
+  "modulo": "denuncias",
+  "exigidoPor": [
+   "api--denuncias-denuncias"
+  ]
+ },
+ "denuncias:gestionar": {
   "modulo": "denuncias",
   "exigidoPor": [
    "api--denuncias-denuncias"
@@ -395,6 +413,7 @@
  "documentos:descargar": {
   "modulo": "documentos",
   "exigidoPor": [
+   "api--documentos-documentos",
    "screen--dashboard-documentos-id"
   ]
  },
@@ -424,6 +443,7 @@
  "documentos:subir": {
   "modulo": "documentos",
   "exigidoPor": [
+   "api--documentos-documentos",
    "screen--dashboard-documentos-id"
   ]
  },
@@ -811,12 +831,14 @@
  "inteligencia:eliminar": {
   "modulo": "inteligencia",
   "exigidoPor": [
+   "api--ia-ia-configuracion",
    "screen--dashboard-seguridad-inteligencia-artificial-configuracion"
   ]
  },
  "inteligencia:eliminar_conversaciones": {
   "modulo": "inteligencia",
   "exigidoPor": [
+   "api--ia-ia-admin-conversaciones",
    "screen--dashboard-seguridad-inteligencia-artificial-conversaciones"
   ]
  },
@@ -855,6 +877,24 @@
   "modulo": "inteligencia",
   "exigidoPor": [
    "api--ia-ia-dashboard"
+  ]
+ },
+ "matpel:activar_gre": {
+  "modulo": "matpel",
+  "exigidoPor": [
+   "api--gre-gre-admin"
+  ]
+ },
+ "matpel:administrar_gre": {
+  "modulo": "matpel",
+  "exigidoPor": [
+   "api--gre-gre-admin"
+  ]
+ },
+ "matpel:validar_gre": {
+  "modulo": "matpel",
+  "exigidoPor": [
+   "api--gre-gre-admin"
   ]
  },
  "navegacion:registrar": {
@@ -1233,6 +1273,7 @@
  "personal:editar": {
   "modulo": "personal",
   "exigidoPor": [
+   "api--control-personal-control-personal",
    "api--personal-actividad-profesional",
    "api--personal-bomberos",
    "api--personal-condicion",
@@ -1376,6 +1417,7 @@
  "seguridad:cerrar_sesion": {
   "modulo": "seguridad",
   "exigidoPor": [
+   "api--seguridad-sesiones",
    "api--seguridad-usuarios"
   ]
  },
@@ -1456,6 +1498,18 @@
    "api--pantallas-pantallas"
   ]
  },
+ "seguridad:ver_logs": {
+  "modulo": "seguridad",
+  "exigidoPor": [
+   "api--seguridad-auditoria"
+  ]
+ },
+ "seguridad:ver_navegacion": {
+  "modulo": "seguridad",
+  "exigidoPor": [
+   "api--pantallas-pantallas"
+  ]
+ },
  "seguridad:ver_usuarios": {
   "modulo": "seguridad",
   "exigidoPor": [
@@ -1498,6 +1552,7 @@
  "servicios:editar": {
   "modulo": "servicios",
   "exigidoPor": [
+   "api--alertas-alertas",
    "api--campo-campo",
    "api--cartografia-cartografia",
    "api--llamados-llamados",
@@ -1509,6 +1564,13 @@
  "servicios:eliminar": {
   "modulo": "servicios",
   "exigidoPor": [
+   "api--servicios-servicios"
+  ]
+ },
+ "servicios:exportar_informe": {
+  "modulo": "servicios",
+  "exigidoPor": [
+   "api--flota-flota",
    "api--servicios-servicios"
   ]
  },

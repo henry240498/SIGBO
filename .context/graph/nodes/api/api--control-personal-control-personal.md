@@ -7,7 +7,7 @@ dominio: asistencia
 resumen: "Control del personal: aptitudes y vencimientos (3.1), horas de servicio (3.3) y fichaje por QR (3.5). Reutiliza permisos existentes de personal, guardias y asistencia: el dato medico sigue protegido por personal:ver_medico / editar_medico."
 prefijo: /api/v1
 capa: backend
-permisos: [personal:ver, guardias:ver, guardias:editar, asistencia:ver, asistencia:editar, asistencia:marcar]
+permisos: [personal:ver, personal:editar, guardias:ver, guardias:editar, asistencia:ver, asistencia:editar, asistencia:marcar]
 archivos:
   - backend/src/modules/control-personal/control-personal.controller.ts
 edges:
@@ -15,7 +15,7 @@ edges:
   - [exposes, service--control-personal-vencimientos]
   - [exposes, service--control-personal-horas-servicio]
   - [exposes, service--control-personal-fichaje]
-terminos: [control, personal, ver, guardias, editar, asistencia, marcar]
+terminos: [control, personal, ver, editar, guardias, asistencia, marcar]
 ---
 
 # ControlPersonalController
@@ -30,6 +30,8 @@ Control del personal: aptitudes y vencimientos (3.1), horas de servicio (3.3) y 
 |---|---|---|
 | GET | `/aptitudes/vencimientos` | `personal:ver` |
 | GET | `/aptitudes/bombero/:bomberoId` | `personal:ver` |
+| POST | `/aptitudes` | `personal:editar` |
+| PATCH | `/aptitudes/:id` | `personal:editar` |
 | GET | `/horas-servicio` | `guardias:ver` |
 | GET | `/horas-servicio/limites` | `guardias:ver` |
 | PUT | `/horas-servicio/limites` | `guardias:editar` |
