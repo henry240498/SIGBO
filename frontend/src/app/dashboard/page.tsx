@@ -9,7 +9,7 @@ import { decisionDeRuta, moduloVisibleEnMenu } from '@/lib/permisos-pantalla';
 import { SystemIcon } from '@/app/components/SystemIcon';
 import { Cargando } from '@/app/components/Cargando';
 import { Aviso } from '@/app/components/Aviso';
-import { usePermisosPantalla } from '@/app/components/PermisosPantallaProvider';
+import { usePermisosPantalla, useRutasVisibles } from '@/app/components/PermisosPantallaProvider';
 import { useActualizacionPeriodica } from '@/app/components/useActualizacionPeriodica';
 
 interface InicioBombero {
@@ -28,14 +28,17 @@ function EstadoDelSistema({ permisos }: { permisos: string[] }) {
   const [salud, setSalud] = useState<'ok' | 'caido' | null>(null);
   const [resumen, setResumen] = useState<ResumenSistema | null>(null);
   const veSistema = permisos.includes('sistema:ver');
+  const visibles = useRutasVisibles();
   const cargar = useCallback(async () => {
     const res = await apiFetch('/salud').catch(() => null);
     const cuerpo = res ? await res.json().catch(() => ({})) : {};
     const ok = !!res && res.ok && (cuerpo as { estado?: string }).estado === 'disponible';
     setSalud(ok ? 'ok' : 'caido');
     if (ok && veSistema) {
-      const r = await apiFetch('/sistema/resumen');
-      if (r.ok) setResumen(await r.json());
+      const r = await apiFetch('/sistema/resumen').catch(() => null);
+      setResumen(r && r.ok ? await r.json() : null);
+    } else {
+      setResumen(null);
     }
     if (!ok) throw new Error('El servidor no responde.');
   }, [veSistema]);
@@ -44,7 +47,9 @@ function EstadoDelSistema({ permisos }: { permisos: string[] }) {
   return (
     <div className="hero-kicker" role="status">
       Estado del sistema · {texto}
-      {resumen && resumen.alertas.length > 0 && <> · <Link href="/dashboard/sistema" style={{ color: 'inherit' }}>{resumen.alertas.length} aviso(s)</Link></>}
+      {resumen && resumen.alertas.length > 0 && <> · {visibles.has('/dashboard/sistema')
+        ? <Link href="/dashboard/sistema" style={{ color: 'inherit' }}>{resumen.alertas.length} aviso(s)</Link>
+        : <span>{resumen.alertas.length} aviso(s)</span>}</>}
     </div>
   );
 }

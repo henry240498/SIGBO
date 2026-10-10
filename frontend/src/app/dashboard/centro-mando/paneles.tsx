@@ -70,7 +70,7 @@ export function PanelAlertas({ seccion, puedeAtender, alCambiar }: { seccion: Se
   const pedirMotivo = useEntradaConfirmada();
   const [error, setError] = useState('');
   const [exito, setExito] = useState('');
-  const [ocupada, setOcupada] = useState<string | null>(null);
+  const [ocupadas, setOcupadas] = useState<Set<string>>(new Set());
 
   async function cambiar(a: Alerta, estado: 'ATENDIDA' | 'CANCELADA') {
     let motivo: string | undefined;
@@ -82,7 +82,7 @@ export function PanelAlertas({ seccion, puedeAtender, alCambiar }: { seccion: Se
       if (m === null) return;
       motivo = m;
     }
-    setOcupada(a.id); setError(''); setExito('');
+    setOcupadas((previo) => new Set(previo).add(a.id)); setError(''); setExito('');
     try {
       const res = await apiFetch(`/alertas/${a.id}/estado`, { method: 'PATCH', body: JSON.stringify({ estado, ...(motivo ? { motivo } : {}) }) });
       const cuerpo = await res.json().catch(() => ({}));
@@ -90,7 +90,7 @@ export function PanelAlertas({ seccion, puedeAtender, alCambiar }: { seccion: Se
       setExito(estado === 'ATENDIDA' ? 'Alerta marcada como atendida.' : 'Alerta cancelada.');
       alCambiar();
     } catch (e) { setError(e instanceof Error ? e.message : 'No se pudo cambiar la alerta.'); }
-    finally { setOcupada(null); }
+    finally { setOcupadas((previo) => { const nuevo = new Set(previo); nuevo.delete(a.id); return nuevo; }); }
   }
 
   return (
@@ -105,8 +105,8 @@ export function PanelAlertas({ seccion, puedeAtender, alCambiar }: { seccion: Se
             <small>{haceCuanto(new Date(a.creadoEn), new Date())}{a.detalle ? ` · ${a.detalle}` : ''}</small>
           </span>
           {puedeAtender && <span className="cm-acciones">
-            <button type="button" className="btn-primary" disabled={ocupada === a.id} onClick={() => void cambiar(a, 'ATENDIDA')}>Atendida</button>
-            <button type="button" className="service-secondary" disabled={ocupada === a.id} onClick={() => void cambiar(a, 'CANCELADA')}>Cancelar</button>
+            <button type="button" className="btn-primary" aria-label={`Marcar atendida: ${a.solicitanteNombre}`} disabled={ocupadas.has(a.id)} onClick={() => void cambiar(a, 'ATENDIDA')}>Atendida</button>
+            <button type="button" className="service-secondary" aria-label={`Cancelar alerta de ${a.solicitanteNombre}`} disabled={ocupadas.has(a.id)} onClick={() => void cambiar(a, 'CANCELADA')}>Cancelar</button>
           </span>}
         </li>)}</ul>}
       </Contenido>
@@ -175,7 +175,7 @@ export function PanelConvocatorias({ seccion, visibles }: { seccion: Seccion<Con
 export function PanelPendientes({ seccion, visibles }: { seccion: Seccion<Pendiente[]>; visibles: Set<string> }) {
   return (
     <Marco id="pendientes" titulo="Pendientes de mi función">
-      <Contenido seccion={seccion}>{(items) => <ul className="cm-lista">{items.map((p) => <li key={p.clave}>
+      <Contenido seccion={seccion}>{(items) => items.length === 0 ? <p className="cm-vacio">No hay pendientes para tu función.</p> : <ul className="cm-lista">{items.map((p) => <li key={p.clave}>
         <span>
           <strong>{p.titulo}</strong>
           <small>{p.error ? `No se pudo consultar: ${p.error}` : p.detalle ?? ''}</small>

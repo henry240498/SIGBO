@@ -47,7 +47,7 @@ export default function CentroMandoPage() {
     </section>;
   }
 
-  const s = panel.secciones;
+  const s = panel.secciones ?? {};
   const nada = Object.keys(s).length === 0;
   return (
     <div style={{ display: 'grid', gap: 16 }}>
