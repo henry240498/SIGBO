@@ -1,0 +1,447 @@
+{
+  "llamadas": {
+    "/dashboard/academia": [
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/academia/certificaciones"
+      },
+      {
+        "metodos": [
+          "PATCH"
+        ],
+        "patron": "/academia/certificaciones/*"
+      }
+    ],
+    "/dashboard/academia/[id]": [
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/academia/certificaciones"
+      },
+      {
+        "metodos": [
+          "PATCH"
+        ],
+        "patron": "/academia/certificaciones/*"
+      }
+    ],
+    "/dashboard/academia/cursos-externos": [
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/academia/certificaciones"
+      },
+      {
+        "metodos": [
+          "PATCH"
+        ],
+        "patron": "/academia/certificaciones/*"
+      }
+    ],
+    "/dashboard/academia/instructores-externos": [
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/academia/certificaciones"
+      },
+      {
+        "metodos": [
+          "PATCH"
+        ],
+        "patron": "/academia/certificaciones/*"
+      }
+    ],
+    "/dashboard/deposito/ubicaciones": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/cuarteles"
+      }
+    ],
+    "/dashboard/documentos/[id]": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/cargos"
+      }
+    ],
+    "/dashboard/documentos/plantillas": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/cargos"
+      }
+    ],
+    "/dashboard/finanzas/beneficios": [
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/academia/certificaciones"
+      },
+      {
+        "metodos": [
+          "PATCH"
+        ],
+        "patron": "/academia/certificaciones/*"
+      }
+    ],
+    "/dashboard/guardias/ordenes/configuracion": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/cargos"
+      }
+    ],
+    "/dashboard/guardias/requisitos": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/cargos"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/rangos"
+      }
+    ],
+    "/dashboard/personal": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/cargos"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/rangos"
+      }
+    ],
+    "/dashboard/personal/[id]": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/personal/tipos-bombero"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/especialidades"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/companias"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/cuarteles"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/turnos"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/tipos-guardia"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/brigadas"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/departamentos"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/unidades"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/academia/certificaciones"
+      },
+      {
+        "metodos": [
+          "PATCH"
+        ],
+        "patron": "/academia/certificaciones/*"
+      }
+    ],
+    "/dashboard/personal/nuevo": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/personal/tipos-bombero"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/rangos"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/cargos"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/companias"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/cuarteles"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/turnos"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/tipos-guardia"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/brigadas"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/departamentos"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/organizacion/unidades"
+      }
+    ],
+    "/dashboard/publicaciones": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/publicaciones"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/publicaciones/publicas"
+      }
+    ],
+    "/dashboard/seguridad/configuracion": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/configuracion/admin/registro"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/configuracion/publica"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/configuracion/admin/versiones"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/configuracion/admin/exportar"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/configuracion/admin/borradores"
+      },
+      {
+        "metodos": [
+          "PUT"
+        ],
+        "patron": "/configuracion/admin/borradores/*"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/configuracion/admin/borradores/*/validar"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/configuracion/admin/borradores/*/publicar"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/configuracion/admin/versiones/*/restaurar"
+      }
+    ],
+    "/dashboard/servicios/despacho": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/despacho/solicitudes"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/despacho/solicitudes/*"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/despacho/solicitudes/*/linea"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/despacho/servicios/*/mapa"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/flota/disponibilidad"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/despacho/solicitudes"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/despacho/solicitudes/*/ampliar"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/despacho/solicitudes/*/cerrar"
+      }
+    ],
+    "/dashboard/servicios/nuevo": [
+      {
+        "metodos": [
+          "PATCH"
+        ],
+        "patron": "/servicios/comunicaciones/*"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/servicios/comunicaciones"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/servicios/*/seguimiento"
+      },
+      {
+        "metodos": [
+          "DELETE",
+          "POST"
+        ],
+        "patron": "/servicios/*/seguimiento/ruta-planificada"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/servicios/*/seguimiento/eventos"
+      },
+      {
+        "metodos": [
+          "DELETE"
+        ],
+        "patron": "/servicios/*/seguimiento/eventos/*"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/servicios/*/seguimiento/pruebas-comunicacion"
+      },
+      {
+        "metodos": [
+          "DELETE"
+        ],
+        "patron": "/servicios/*/seguimiento/pruebas-comunicacion/*"
+      }
+    ]
+  },
+  "acciones": [
+    {
+      "metodo": "POST",
+      "patron": "/finanzas/beneficios/simular",
+      "accion": "ver"
+    },
+    {
+      "metodo": "POST",
+      "patron": "/configuracion/admin/borradores/:id/validar",
+      "accion": "editar"
+    }
+  ]
+}

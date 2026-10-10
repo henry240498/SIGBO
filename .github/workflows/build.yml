@@ -28,6 +28,8 @@ jobs:
         run: npm run test:ci
       - if: matrix.proyecto == 'frontend'
         run: npm run audit:a11y
+      - if: matrix.proyecto == 'frontend'
+        run: npm run verificar:pantallas
   context:
     runs-on: ubuntu-latest
     steps:

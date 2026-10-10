@@ -9,7 +9,8 @@
     "audit:a11y": "node scripts/audit-accessibility.mjs",
     "audit:contraste": "node scripts/audit-contraste.mjs",
     "generar:pantallas": "node scripts/generar-pantallas.mjs",
-    "test": "node --test scripts/pruebas/seccion-url.test.mjs"
+    "verificar:pantallas": "node scripts/generar-pantallas.mjs --verificar",
+    "test": "node --test scripts/pruebas/*.test.mjs"
   },
   "dependencies": {
     "@types/qrcode": "^1.5.6",
