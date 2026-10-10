@@ -124,9 +124,29 @@ describe('decisión para la interfaz', () => {
   });
 
   it('una ruta abierta (sin permiso) no exige permiso, solo el prefijo', () => {
-    const p: PantallaCatalogo = { ...personal, codigo: '0xB009', llamadas: [{ metodos: ['GET'], patron: '/seguridad/mi-inicio' }] };
-    const rr = construirIndice([p], rutas).rutasPorPantalla.get('0xB009')!;
+    const abierta: RutaBackend = { metodo: 'GET', patron: '/personal/abierta', permisos: [] };
+    const p: PantallaCatalogo = { ...personal, codigo: '0xB009', llamadas: [{ metodos: ['GET'], patron: '/personal/abierta' }, { metodos: ['GET'], patron: '/personal/bomberos' }] };
+    const rr = construirIndice([p], [...rutas, abierta]).rutasPorPantalla.get('0xB009')!;
     expect(decidirUi(baseDePantalla(p, rr, 'ver', []), 'ver', ['personal:editar'], [], sujeto)).toBe(true);
+  });
+
+  it('las rutas exentas no cuentan para el permiso base: no lo vacían', () => {
+    const sistema: RutaBackend[] = [
+      { metodo: 'GET', patron: '/sistema/registros', permisos: ['sistema:ver_registros'] },
+      { metodo: 'GET', patron: '/pantallas/mis-permisos-web', permisos: [] },
+      { metodo: 'GET', patron: '/centro-mando/acceso', permisos: [] },
+    ];
+    const p: PantallaCatalogo = {
+      codigo: '0xC014', ruta: '/dashboard/sistema/registros', nombre: 'Registros', modulo: 'sistema', prefijo: 'sistema:',
+      llamadas: [{ metodos: ['GET'], patron: '/sistema/registros' }, { metodos: ['GET'], patron: '/pantallas/mis-permisos-web' }, { metodos: ['GET'], patron: '/centro-mando/acceso' }],
+    };
+    const base = baseDePantalla(p, construirIndice([p], sistema).rutasPorPantalla.get('0xC014')!, 'ver', []);
+    expect(base.algunoDe).toEqual(['sistema:ver_registros']);
+    expect(decidirUi(base, 'ver', ['sistema:ver'], [], sujeto)).toBe(false);
+    expect(decidirUi(base, 'ver', ['sistema:ver_registros'], [], sujeto)).toBe(true);
+    // una pantalla cuyas unicas rutas son exentas (el Centro de mando) solo exige el prefijo
+    const solo = baseDePantalla({ prefijo: null }, sistema.slice(1), 'ver', []);
+    expect(decidirUi(solo, 'ver', [], [], sujeto)).toBe(true);
   });
 
   it('las reglas restringen e informan el origen', () => {

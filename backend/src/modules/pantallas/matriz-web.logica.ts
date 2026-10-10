@@ -175,11 +175,13 @@ const METODOS_DE: Record<AccionUi, MetodoHttp[]> = { ver: ['GET'], crear: ['POST
 /**
  * Permiso base de una accion de una pantalla: "ver" exige el prefijo del modulo y alguno de
  * los permisos de sus GET; crear/editar/eliminar, alguno de los permisos de las rutas de
- * esa accion. Una ruta sin permiso (abierta) no exige permiso.
+ * esa accion. Una ruta sin permiso (abierta) no exige permiso. Las rutas exentas (la
+ * propia matriz, la sesion, el acceso al Centro de mando) no cuentan: las llama el marco
+ * de cada pantalla, no la pantalla, y como son abiertas vaciarian el permiso exigido.
  */
 export function baseDePantalla(p: Pick<PantallaCatalogo, 'prefijo'>, rutas: RutaBackend[], accion: AccionUi, forzadas: AccionForzada[]): BaseUi {
-  const propias = rutas.filter((r) => accionDe(r.metodo, r.patron, forzadas) === accion
-    || (accionDe(r.metodo, r.patron, forzadas) === null && METODOS_DE[accion].includes(r.metodo)));
+  const propias = rutas.filter((r) => !esExenta(r.patron) && (accionDe(r.metodo, r.patron, forzadas) === accion
+    || (accionDe(r.metodo, r.patron, forzadas) === null && METODOS_DE[accion].includes(r.metodo))));
   if (accion !== 'ver' && propias.length === 0) return { siempre: false, nunca: true, algunoDe: [], prefijo: null };
   const abierta = propias.some((r) => r.permisos.length === 0);
   return {

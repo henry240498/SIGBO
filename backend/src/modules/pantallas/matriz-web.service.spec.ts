@@ -4,7 +4,11 @@ import { Pantalla, PantallaPermiso } from '../../shared/entities';
 import { BaseFalsa } from '../../shared/testing/base-falsa';
 import { RequirePermission } from '../seguridad/decorators/require-permission.decorator';
 import { PermissionsGuard } from '../seguridad/guards/permissions.guard';
+import { CentroMandoController } from '../centro-mando/centro-mando.controller';
+import { SistemaController } from '../sistema/sistema.controller';
+import { PANTALLAS_WEB } from './catalogo-web.generado';
 import { CatalogoWeb, MatrizWebService } from './matriz-web.service';
+import { PantallasController } from './pantallas.controller';
 
 @Controller('demo')
 @RequirePermission('demo:ver')
@@ -157,6 +161,26 @@ describe('MatrizWebService', () => {
     const b2 = new BaseFalsa();
     await regla(b2, { pantallaCodigo: '0xC001', crear: true });
     await expect((await nueva(b2)).reglaNiegaVer('u1', '0xC001')).resolves.toBe(true);
+  });
+});
+
+describe('MatrizWebService con el catálogo generado y los controladores reales del área Sistema', () => {
+  it('Registros exige sistema:ver_registros; Estado, Tareas, Datos y App móvil exigen sistema:ver (las rutas exentas no abren la pantalla)', async () => {
+    const controladores = [SistemaController, PantallasController, CentroMandoController];
+    const descubrimiento = { getControllers: () => controladores.map((C) => ({ instance: Object.create(C.prototype), metatype: C })) };
+    const sistema: CatalogoWeb = { pantallas: PANTALLAS_WEB.filter((p) => p.modulo === 'sistema'), forzadas: [], sinResolver: 0 };
+    const s = new MatrizWebService(descubrimiento as never, new MetadataScanner(), moduleRef as never, new BaseFalsa() as never, sistema);
+    await s.onApplicationBootstrap();
+    const ver = async (permisos: string[]) => Object.fromEntries((await s.misPermisosWeb({ id: 'u1', permisos })).pantallas.map((p) => [p.ruta, p.ver]));
+    expect(await ver(['sistema:ver_registros'])).toEqual({
+      '/dashboard/sistema': false, '/dashboard/sistema/app-movil': false, '/dashboard/sistema/datos': false,
+      '/dashboard/sistema/registros': true, '/dashboard/sistema/tareas': false,
+    });
+    expect(await ver(['sistema:ver'])).toEqual({
+      '/dashboard/sistema': true, '/dashboard/sistema/app-movil': true, '/dashboard/sistema/datos': true,
+      '/dashboard/sistema/registros': false, '/dashboard/sistema/tareas': true,
+    });
+    expect(Object.values(await ver(['sistema:operar'])).some(Boolean)).toBe(false);
   });
 });
 
