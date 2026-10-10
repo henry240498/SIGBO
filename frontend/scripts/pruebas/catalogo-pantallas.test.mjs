@@ -37,6 +37,17 @@ test('método condicional o en una variable', () => {
   assert.deepEqual(una("apiFetch('/x', opciones)"), [{ metodos: ['DELETE', 'GET', 'PATCH', 'POST', 'PUT'], patron: '/x' }]);
 });
 
+test('método abreviado { headers, method } es una variable', () => {
+  assert.deepEqual(una("apiFetch('/x', { headers: h, method })"), [{ metodos: ['DELETE', 'GET', 'PATCH', 'POST', 'PUT'], patron: '/x' }]);
+  assert.deepEqual(una("apiFetch('/x', { headers: h, body })"), [{ metodos: ['GET'], patron: '/x' }]);
+});
+
+test('una declaración de función no es una llamada ni queda sin resolver', () => {
+  const r = extraerLlamadas('export function descargarArchivo(ruta: string, nombre: string) {} export async function f(ruta: string) {}');
+  assert.deepEqual(r.llamadas, []);
+  assert.deepEqual(r.sinResolver, []);
+});
+
 test('una ruta en una variable se informa como no resuelta', () => {
   const r = extraerLlamadas('apiFetch(url)');
   assert.deepEqual(r.llamadas, []);

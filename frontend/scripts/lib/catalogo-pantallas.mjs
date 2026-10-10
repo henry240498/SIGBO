@@ -150,7 +150,8 @@ function metodosDe(funcion, opciones) {
   if (funcion === 'descargarArchivo' || !opciones) return ['GET'];
   if (!opciones.startsWith('{')) return [...METODOS];
   const m = opciones.match(/\bmethod\s*:\s*([^,}]+)/);
-  if (!m) return ['GET'];
+  // `{ headers, method }`: el método viaja en una variable
+  if (!m) return /\bmethod\s*[,}]|\bmethod\s*$/.test(opciones) ? [...METODOS] : ['GET'];
   const encontrados = [...m[1].matchAll(/['"`](GET|POST|PUT|PATCH|DELETE)['"`]/g)].map((x) => x[1]);
   return encontrados.length ? [...new Set(encontrados)].sort() : [...METODOS];
 }
@@ -161,10 +162,14 @@ export function extraerLlamadas(fuente) {
   const re = /\b(apiFetch|descargarArchivo|fetch)\s*\(/g;
   let m;
   while ((m = re.exec(fuente))) {
+    // una declaración (`function descargarArchivo(ruta: string, …)`) no es una llamada
+    if (/function\s*\*?\s*$/.test(fuente.slice(Math.max(0, m.index - 20), m.index))) continue;
     const args = argumentosDesde(fuente, m.index + m[0].length);
     if (args === null) continue;
     const partes = dividirArgumentos(args);
     if (!partes.length) continue;
+    // primer argumento con forma de parámetro tipado (`ruta: string`): es una firma
+    if (/^[\w$]+\??\s*:\s*[\w$[\]<>|'"]/.test(partes[0])) continue;
     const contenido = contenidoLiteral(partes[0]);
     if (contenido === null) {
       if (m[1] !== 'fetch') sinResolver.push(partes[0].slice(0, 120));

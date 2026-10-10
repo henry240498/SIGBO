@@ -1,4 +1,16 @@
 {
+  "archivosCubiertos": [
+    "src/app/dashboard/personal/[id]/expediente.tsx",
+    "src/app/dashboard/personal/nuevo/page.tsx",
+    "src/app/dashboard/seguridad/configuracion/page.tsx",
+    "src/app/dashboard/servicios/nuevo/page.tsx",
+    "src/lib/academia.ts",
+    "src/lib/despacho.ts",
+    "src/lib/exportar.ts",
+    "src/lib/personal.ts",
+    "src/lib/publicaciones.ts",
+    "src/lib/seguimiento-geografico.ts"
+  ],
   "llamadas": {
     "/dashboard/academia": [
       {

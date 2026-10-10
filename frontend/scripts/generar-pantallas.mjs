@@ -135,6 +135,8 @@ async function llamadasDePagina(archivo) {
 const etiquetas = await etiquetasDeLosSubmenus(RAIZ);
 const prefijos = prefijosDeModulos(await readFile(join(SRC, 'lib', 'modulos.ts'), 'utf8'));
 const extra = JSON.parse(await readFile(EXTRA, 'utf8'));
+/** Archivos cuyas llamadas con ruta variable (helpers) ya están declaradas en `llamadas` de api-extra. */
+const cubiertos = new Set(extra.archivosCubiertos ?? []);
 const previos = JSON.parse(await readFile(CODIGOS, 'utf8'));
 
 const pantallas = [];
@@ -155,7 +157,14 @@ for (const p of enMatriz) {
   const { llamadas, sinResolver: propias } = await llamadasDePagina(p.archivo);
   const extras = extra.llamadas?.[p.ruta] ?? [];
   catalogo.push({ codigo: codigos[p.ruta], ruta: p.ruta, nombre: p.nombre, modulo: p.modulo, prefijo: prefijos[p.modulo] ?? null, llamadas: [...llamadas, ...extras] });
-  for (const texto of propias) sinResolver.push({ codigo: codigos[p.ruta], ruta: p.ruta, texto });
+  // sin duplicados, y sin lo que ya declara pantallas-api-extra.json (archivosCubiertos)
+  const vistos = new Set();
+  for (const texto of propias) {
+    const archivo = texto.slice(0, texto.indexOf(': '));
+    if (cubiertos.has(archivo) || vistos.has(texto)) continue;
+    vistos.add(texto);
+    sinResolver.push({ codigo: codigos[p.ruta], ruta: p.ruta, texto });
+  }
 }
 
 const salidaFront = `// GENERADO por scripts/generar-pantallas.mjs — no editar a mano.
