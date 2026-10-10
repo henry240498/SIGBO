@@ -11,7 +11,7 @@
 import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
-import { asignarCodigos, extraerLlamadas, FUERA_DE_LA_MATRIZ, importsLocales, prefijosDeModulos } from './lib/catalogo-pantallas.mjs';
+import { asignarCodigos, extraerLlamadas, FUERA_DE_LA_MATRIZ, prefijosDeModulos, recortarModulo } from './lib/catalogo-pantallas.mjs';
 
 const VERIFICAR = process.argv.includes('--verificar');
 const FRONT = process.cwd();
@@ -104,29 +104,58 @@ function resolverImport(desde, especificador) {
 }
 
 const posix = (p) => relative(FRONT, p).split(sep).join('/');
+const LIB = join(SRC, 'lib') + sep;
+const fuentes = new Map();
+const leer = async (archivo) => {
+  if (!fuentes.has(archivo)) fuentes.set(archivo, await readFile(archivo, 'utf8'));
+  return fuentes.get(archivo);
+};
 
-/** Llamadas de una página y de todo lo que importa dentro de src/ (componentes, lib). */
+/**
+ * Llamadas de una página y de lo que importa dentro de src/. Los componentes (src/app,
+ * src/components) cuentan completos; de src/lib solo cuentan las funciones importadas por
+ * nombre y lo que esas usan (`import *` o default: el archivo completo). Si no, importar
+ * una función de lib/personal.ts le atribuía a la pantalla todas las del archivo.
+ */
 async function llamadasDePagina(archivo) {
-  const visitados = new Set();
-  const pendientes = [archivo];
+  /** archivo -> nombres pedidos (Set) o null (completo) */
+  const pedidos = new Map();
+  /** archivo -> lo que aporta con lo pedido hasta ahora (se recalcula si se piden más nombres) */
+  const aportes = new Map();
+  const pendientes = [[archivo, null]];
+  while (pendientes.length) {
+    const [actual, nombres] = pendientes.pop();
+    if (NO_RECORRER.has(actual)) continue;
+    const previo = pedidos.get(actual);
+    if (previo === null) continue;
+    let pedido = null;
+    if (nombres !== null && actual.startsWith(LIB)) {
+      pedido = new Set(previo ?? []);
+      const antes = pedido.size;
+      nombres.forEach((n) => pedido.add(n));
+      if (previo !== undefined && pedido.size === antes) continue;
+    }
+    pedidos.set(actual, pedido);
+    const fuente = await leer(actual);
+    const recorte = recortarModulo(fuente, pedido === null ? null : [...pedido]);
+    const r = extraerLlamadas(recorte.texto);
+    const porFuncion = extra.llamadasPorFuncion?.[posix(actual)] ?? {};
+    const extras = Object.entries(porFuncion).filter(([f]) => recorte.incluidos.has(f)).flatMap(([, ll]) => ll);
+    aportes.set(actual, { llamadas: [...r.llamadas, ...extras], sinResolver: r.sinResolver });
+    for (const dep of recorte.dependencias) {
+      const destino = resolverImport(actual, dep.especificador);
+      if (destino && destino.startsWith(SRC)) pendientes.push([destino, dep.nombres]);
+    }
+  }
   const porPatron = new Map();
   const sinResolver = [];
-  while (pendientes.length) {
-    const actual = pendientes.pop();
-    if (visitados.has(actual) || NO_RECORRER.has(actual)) continue;
-    visitados.add(actual);
-    const fuente = await readFile(actual, 'utf8');
-    const r = extraerLlamadas(fuente);
+  for (const [actual, r] of aportes) {
     for (const ll of r.llamadas) {
       const s = porPatron.get(ll.patron) ?? new Set();
       ll.metodos.forEach((m) => s.add(m));
       porPatron.set(ll.patron, s);
     }
     for (const texto of r.sinResolver) sinResolver.push(`${posix(actual)}: ${texto}`);
-    for (const imp of importsLocales(fuente)) {
-      const destino = resolverImport(actual, imp);
-      if (destino && destino.startsWith(SRC)) pendientes.push(destino);
-    }
   }
   const llamadas = [...porPatron].map(([patron, s]) => ({ metodos: [...s].sort(), patron })).sort((a, b) => a.patron.localeCompare(b.patron));
   return { llamadas, sinResolver };

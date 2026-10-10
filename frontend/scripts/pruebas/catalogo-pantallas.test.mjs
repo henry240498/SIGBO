@@ -4,7 +4,9 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { FUERA_DE_LA_MATRIZ, asignarCodigos, extraerLlamadas, importsLocales, prefijosDeModulos } from '../lib/catalogo-pantallas.mjs';
+import {
+  FUERA_DE_LA_MATRIZ, asignarCodigos, extraerLlamadas, importsConNombres, importsLocales, prefijosDeModulos, recortarModulo, trozosDeNivelSuperior,
+} from '../lib/catalogo-pantallas.mjs';
 
 const una = (fuente) => extraerLlamadas(fuente).llamadas;
 
@@ -81,4 +83,108 @@ test('imports locales, sin los de tipos ni los de paquetes', () => {
 
 test('administrar la matriz nunca queda bajo la matriz', () => {
   assert.ok(FUERA_DE_LA_MATRIZ.has('/dashboard/seguridad/pantallas'));
+});
+
+// ---------------------------------------------------------------- atribución por función (src/lib)
+
+const LIB_PERSONAL = `import { apiFetch } from './api';
+import { cargarParametros } from './parametros';
+import * as todo from './otro';
+
+/** Orden institucional. */
+export async function cargarBomberos() {
+  const res = await apiFetch('/personal/bomberos');
+  return ordenar(await res.json());
+}
+
+function ordenar(lista: string[]) {
+  return [...lista].sort((a, b) => (a < b ? -1 : 1));
+}
+
+async function mensajeError(res: Response) {
+  return (await res.json()).message;
+}
+
+export async function eliminarFirma(id: string) {
+  const res = await apiFetch(\`/personal/bomberos/\${id}/firma-digital\`, { method: 'DELETE' });
+  if (!res.ok) throw new Error(await mensajeError(res));
+}
+
+export const cargarTipos = () => cargarParametros('TIPO');
+
+export function usarTodo() {
+  return todo.x();
+}
+`;
+
+const patrones = (texto) => extraerLlamadas(texto).llamadas.map((l) => `${l.metodos.join('|')} ${l.patron}`);
+
+test('import con nombre de src/lib: solo las llamadas de esa función', () => {
+  const r = recortarModulo(LIB_PERSONAL, ['cargarBomberos']);
+  assert.deepEqual(patrones(r.texto), ['GET /personal/bomberos']);
+  assert.ok(r.incluidos.has('cargarBomberos'));
+});
+
+test('un helper interno que la función referencia se incluye (cierre transitivo)', () => {
+  const r = recortarModulo(LIB_PERSONAL, ['cargarBomberos']);
+  assert.ok(r.incluidos.has('ordenar'));
+  const firma = recortarModulo(LIB_PERSONAL, ['eliminarFirma']);
+  assert.ok(firma.incluidos.has('mensajeError'));
+  assert.deepEqual(patrones(firma.texto), ['DELETE /personal/bomberos/*/firma-digital']);
+});
+
+test('una función que no se importa no se atribuye', () => {
+  const r = recortarModulo(LIB_PERSONAL, ['cargarBomberos']);
+  assert.equal(r.incluidos.has('eliminarFirma'), false);
+  assert.equal(patrones(r.texto).some((p) => p.includes('firma-digital')), false);
+  // y sus imports tampoco se siguen
+  assert.deepEqual(r.dependencias.map((d) => d.especificador), ['./api']);
+});
+
+test('los imports que usa la parte recortada se siguen con sus nombres', () => {
+  const r = recortarModulo(LIB_PERSONAL, ['cargarTipos']);
+  assert.deepEqual(r.dependencias, [{ especificador: './parametros', nombres: ['cargarParametros'] }]);
+  const ns = recortarModulo(LIB_PERSONAL, ['usarTodo']);
+  assert.deepEqual(ns.dependencias, [{ especificador: './otro', nombres: null }]);
+});
+
+test('archivo completo (import * o default): todas las llamadas y todos los imports', () => {
+  const r = recortarModulo(LIB_PERSONAL, null);
+  assert.deepEqual(patrones(r.texto).sort(), ['DELETE /personal/bomberos/*/firma-digital', 'GET /personal/bomberos']);
+  assert.deepEqual(r.dependencias.map((d) => [d.especificador, d.nombres]), [['./api', ['apiFetch']], ['./parametros', ['cargarParametros']], ['./otro', null]]);
+  assert.ok(r.incluidos.has('eliminarFirma'));
+});
+
+test('imports con nombre, alias, default, namespace y solo de tipos', () => {
+  const fuente = "import Def, { a, b as c, type T } from '@/lib/x';\nimport * as ns from './y';\nimport { type Solo } from './z';\nimport './efectos';\nimport type { U } from './u';";
+  assert.deepEqual(importsConNombres(fuente), [
+    { especificador: '@/lib/x', enlaces: [{ local: 'Def', original: 'default' }, { local: 'a', original: 'a' }, { local: 'c', original: 'b' }] },
+    { especificador: './y', enlaces: [{ local: 'ns', original: '*' }] },
+    { especificador: './z', enlaces: [] },
+    { especificador: './efectos', enlaces: null },
+  ]);
+  // un componente que importa default o namespace sigue el archivo completo; con nombre, solo esos
+  const r = recortarModulo(fuente, null);
+  assert.deepEqual(r.dependencias, [
+    { especificador: '@/lib/x', nombres: null }, { especificador: './y', nombres: null }, { especificador: './efectos', nombres: null },
+  ]);
+});
+
+test('el corte por declaraciones no se confunde con llaves en cadenas, plantillas, comentarios ni expresiones regulares', () => {
+  const fuente = [
+    "export const A = '{';",
+    'export const B = `',
+    'const falso = 1;',
+    '`;',
+    '/* { */',
+    "export function C() { return /[{]/.test('}') ? apiFetch('/c') : null; }",
+    "export function D() { return apiFetch('/d'); }",
+  ].join('\n');
+  assert.deepEqual(trozosDeNivelSuperior(fuente).map((t) => t.nombres.join(',')), ['A', 'B', 'C', 'D']);
+  assert.deepEqual(patrones(recortarModulo(fuente, ['D']).texto), ['GET /d']);
+});
+
+test('una lista export { a as b } y el código suelto de nivel superior', () => {
+  const fuente = "const INTERNO = () => apiFetch('/interno');\nexport { INTERNO as publico };\nregistrar(() => apiFetch('/al-importar'));\nexport function otra() { return apiFetch('/otra'); }\n";
+  assert.deepEqual(patrones(recortarModulo(fuente, ['publico']).texto).sort(), ['GET /al-importar', 'GET /interno']);
 });

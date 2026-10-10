@@ -12,62 +12,6 @@
     "src/lib/seguimiento-geografico.ts"
   ],
   "llamadas": {
-    "/dashboard/academia": [
-      {
-        "metodos": [
-          "POST"
-        ],
-        "patron": "/academia/certificaciones"
-      },
-      {
-        "metodos": [
-          "PATCH"
-        ],
-        "patron": "/academia/certificaciones/*"
-      }
-    ],
-    "/dashboard/academia/[id]": [
-      {
-        "metodos": [
-          "POST"
-        ],
-        "patron": "/academia/certificaciones"
-      },
-      {
-        "metodos": [
-          "PATCH"
-        ],
-        "patron": "/academia/certificaciones/*"
-      }
-    ],
-    "/dashboard/academia/cursos-externos": [
-      {
-        "metodos": [
-          "POST"
-        ],
-        "patron": "/academia/certificaciones"
-      },
-      {
-        "metodos": [
-          "PATCH"
-        ],
-        "patron": "/academia/certificaciones/*"
-      }
-    ],
-    "/dashboard/academia/instructores-externos": [
-      {
-        "metodos": [
-          "POST"
-        ],
-        "patron": "/academia/certificaciones"
-      },
-      {
-        "metodos": [
-          "PATCH"
-        ],
-        "patron": "/academia/certificaciones/*"
-      }
-    ],
     "/dashboard/deposito/ubicaciones": [
       {
         "metodos": [
@@ -90,20 +34,6 @@
           "GET"
         ],
         "patron": "/organizacion/cargos"
-      }
-    ],
-    "/dashboard/finanzas/beneficios": [
-      {
-        "metodos": [
-          "POST"
-        ],
-        "patron": "/academia/certificaciones"
-      },
-      {
-        "metodos": [
-          "PATCH"
-        ],
-        "patron": "/academia/certificaciones/*"
       }
     ],
     "/dashboard/guardias/ordenes/configuracion": [
@@ -196,18 +126,6 @@
           "GET"
         ],
         "patron": "/organizacion/unidades"
-      },
-      {
-        "metodos": [
-          "POST"
-        ],
-        "patron": "/academia/certificaciones"
-      },
-      {
-        "metodos": [
-          "PATCH"
-        ],
-        "patron": "/academia/certificaciones/*"
       }
     ],
     "/dashboard/personal/nuevo": [
@@ -443,6 +361,26 @@
         "patron": "/servicios/*/seguimiento/pruebas-comunicacion/*"
       }
     ]
+  },
+  "llamadasPorFuncion": {
+    "src/lib/academia.ts": {
+      "crearCertificacion": [
+        {
+          "metodos": [
+            "POST"
+          ],
+          "patron": "/academia/certificaciones"
+        }
+      ],
+      "actualizarCertificacion": [
+        {
+          "metodos": [
+            "PATCH"
+          ],
+          "patron": "/academia/certificaciones/*"
+        }
+      ]
+    }
   },
   "acciones": [
     {
