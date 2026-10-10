@@ -3,7 +3,7 @@ import { BadRequestException } from '@nestjs/common';
 import { BaseFalsa } from '../../shared/testing/base-falsa';
 import { ServicioActivoService } from '../despacho/servicio-activo.service';
 import { decidirAcceso, esSupervisor } from './centro-mando.logica';
-import { CentroMandoService } from './centro-mando.service';
+import { CentroMandoService, MOTIVO_REGLA_CENTRO_MANDO } from './centro-mando.service';
 
 const sembrar = (base: BaseFalsa, clase: new () => object, datos: Record<string, unknown>) =>
   base.getRepository(clase as never).save(Object.assign(new clase(), datos) as never);
@@ -84,10 +84,10 @@ describe('auditoría confidencial acotada del Centro de mando', () => {
 });
 
 describe('CentroMandoService', () => {
-  function nuevo(base: BaseFalsa, o: { secciones?: string[]; alertasFalla?: boolean } = {}) {
+  function nuevo(base: BaseFalsa, o: { secciones?: string[]; alertasFalla?: boolean; reglaNiega?: boolean } = {}) {
     const visibles = new Set(o.secciones ?? ['emergencias', 'alertas', 'mi_actividad', 'pendientes']);
     const deps = {
-      matriz: { evaluadorSecciones: jest.fn().mockResolvedValue((c: string) => visibles.has(c)) },
+      matriz: { evaluadorSecciones: jest.fn().mockResolvedValue((c: string) => visibles.has(c)), reglaNiegaVer: jest.fn().mockResolvedValue(o.reglaNiega ?? false) },
       configuracion: { valorGlobal: jest.fn().mockResolvedValue(['ACTIVO']) },
       servicioActivo: { activosParaCentroMando: jest.fn().mockResolvedValue({ supervisor: false, servicios: [] }) },
       despacho: { listar: jest.fn().mockResolvedValue([{}, {}]) },
@@ -175,6 +175,28 @@ describe('CentroMandoService', () => {
     const pendientes = (r.secciones.pendientes as { datos: Array<{ clave: string; cantidad: number }> }).datos;
     expect(pendientes).toEqual([expect.objectContaining({ clave: 'denuncias', cantidad: 3 })]);
     expect(deps.despacho.listar).not.toHaveBeenCalled();
+  });
+
+  it('una regla de Permisos por pantalla sobre el Centro de mando (0xC001) niega el acceso, también sin ficha de bombero, y el panel la hereda', async () => {
+    const base = new BaseFalsa();
+    await sembrar(base, Usuario, { id: 'u1', bomberoId: 'b1' });
+    await sembrar(base, Bombero, { id: 'b1', estado: 'ACTIVO' });
+    await sembrar(base, Usuario, { id: 'admin', bomberoId: null });
+    const { s, deps } = nuevo(base, { reglaNiega: true });
+    await expect(s.acceso({ id: 'u1' })).resolves.toEqual({ acceso: false, motivo: MOTIVO_REGLA_CENTRO_MANDO, bomberoId: 'b1' });
+    expect(deps.matriz.reglaNiegaVer).toHaveBeenCalledWith('u1', '0xC001');
+    await expect(s.acceso({ id: 'admin' })).resolves.toMatchObject({ acceso: false, motivo: MOTIVO_REGLA_CENTRO_MANDO });
+    await expect(s.panel({ id: 'u1', permisos: ['servicios:ver'] } as never)).resolves.toMatchObject({ acceso: 'SIN_ACCESO', motivo: MOTIVO_REGLA_CENTRO_MANDO, secciones: {} });
+    expect(deps.matriz.evaluadorSecciones).not.toHaveBeenCalled();
+  });
+
+  it('el estado del bombero se decide antes que la regla', async () => {
+    const base = new BaseFalsa();
+    await sembrar(base, Usuario, { id: 'u1', bomberoId: 'b1' });
+    await sembrar(base, Bombero, { id: 'b1', estado: 'LICENCIA' });
+    const { s, deps } = nuevo(base, { reglaNiega: true });
+    await expect(s.acceso({ id: 'u1' })).resolves.toMatchObject({ acceso: false, motivo: expect.stringContaining('Licencia') });
+    expect(deps.matriz.reglaNiegaVer).not.toHaveBeenCalled();
   });
 
   it('sin ningún pendiente permitido, la sección no aparece', async () => {

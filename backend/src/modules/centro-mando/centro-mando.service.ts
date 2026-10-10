@@ -12,7 +12,7 @@ import { estadoEfectivo } from '../despacho/despacho.logica';
 import { ServicioActivoService } from '../despacho/servicio-activo.service';
 import { DisponibilidadService } from '../flota/disponibilidad.service';
 import { FlotaService } from '../flota/flota.service';
-import { ClaveSeccion, SECCIONES_CENTRO_MANDO } from '../pantallas/catalogo-secciones';
+import { ClaveSeccion, CODIGO_CENTRO_MANDO, SECCIONES_CENTRO_MANDO } from '../pantallas/catalogo-secciones';
 import { MatrizWebService } from '../pantallas/matriz-web.service';
 import { ReservasService } from '../reservas/reservas.service';
 import { PerfilService } from '../seguridad/perfil.service';
@@ -32,6 +32,7 @@ export interface ItemPendiente {
 type SeccionRespuesta = { estado: 'ok'; datos: unknown } | { estado: 'error'; error: string };
 
 const ERROR_INTERNO = 'No disponible: error interno';
+export const MOTIVO_REGLA_CENTRO_MANDO = 'Una regla de Seguridad › Permisos por pantalla te restringe el Centro de mando.';
 
 /** Al cliente solo llegan los mensajes pensados para el (HttpException); el resto queda en el registro del servidor. */
 const mensajePublico = (e: unknown) => (e instanceof HttpException ? e.message : ERROR_INTERNO);
@@ -57,13 +58,25 @@ export class CentroMandoService {
     private readonly sistema: SistemaService,
   ) {}
 
+  /**
+   * Primero el estado del bombero (si la cuenta tiene ficha); despues las reglas de
+   * Seguridad › Permisos por pantalla sobre el Centro de mando (0xC001). Su ruta de API
+   * esta exenta de la matriz, asi que la regla se aplica aca y panel() la hereda.
+   */
   async acceso(user: Pick<AuthenticatedUser, 'id'>): Promise<{ acceso: boolean; motivo: string | null; bomberoId: string | null }> {
     const usuario = await this.dataSource.getRepository(Usuario).findOne({ where: { id: user.id } });
     if (!usuario) return { acceso: false, motivo: 'Cuenta no encontrada.', bomberoId: null };
-    if (!usuario.bomberoId) return { acceso: true, motivo: null, bomberoId: null };
-    const bombero = await this.dataSource.getRepository(Bombero).findOne({ where: { id: usuario.bomberoId } });
-    const permitidos = await this.configuracion.valorGlobal<string[]>('operations.commandCenterStates');
-    return { ...decidirAcceso(bombero?.estado ?? null, permitidos), bomberoId: usuario.bomberoId };
+    const bomberoId = usuario.bomberoId ?? null;
+    if (bomberoId) {
+      const bombero = await this.dataSource.getRepository(Bombero).findOne({ where: { id: bomberoId } });
+      const permitidos = await this.configuracion.valorGlobal<string[]>('operations.commandCenterStates');
+      const porEstado = decidirAcceso(bombero?.estado ?? null, permitidos);
+      if (!porEstado.acceso) return { ...porEstado, bomberoId };
+    }
+    if (await this.matriz.reglaNiegaVer(user.id, CODIGO_CENTRO_MANDO)) {
+      return { acceso: false, motivo: MOTIVO_REGLA_CENTRO_MANDO, bomberoId };
+    }
+    return { acceso: true, motivo: null, bomberoId };
   }
 
   async panel(user: AuthenticatedUser) {

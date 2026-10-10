@@ -234,6 +234,24 @@ export class MatrizWebService implements OnApplicationBootstrap {
     };
   }
 
+  /**
+   * ¿Una regla le niega "ver" de esta pantalla a la persona? Para pantallas cuya ruta de
+   * API está exenta (p. ej. el Centro de mando): el servicio lo consulta y decide. Falla
+   * abierta, como el resto de la matriz: si no se pueden leer las reglas o resolver a la
+   * persona, no restringe.
+   */
+  async reglaNiegaVer(usuarioId: string, codigo: string): Promise<boolean> {
+    try {
+      const reglas = (await this.reglas()).filter((r) => r.pantallaCodigo === codigo);
+      if (!reglas.length) return false;
+      const sujeto = await resolverSujeto(this.dataSource, usuarioId);
+      return !decidirUi({ siempre: true, nunca: false, algunoDe: [], prefijo: null }, 'ver', [], reglas, sujeto);
+    } catch (e) {
+      this.log.warn(`No se pudo evaluar la regla de la pantalla ${codigo}; no se restringe: ${mensaje(e)}`);
+      return false;
+    }
+  }
+
   /** Qué vería y podría hacer una persona en cada pantalla, y por qué (rol o regla). */
   async vistaPrevia(usuarioId: string) {
     const permisos = await this.moduleRef.get(PolicyEngineService, { strict: false }).getPermisosEfectivos(usuarioId);

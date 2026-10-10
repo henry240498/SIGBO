@@ -3,6 +3,9 @@
  * matriz: se puede restringir por usuario, rol, rango o cargo como cualquier otra.
  * base: los permisos por rol que hacen falta (alguno), o SIEMPRE.
  */
+/** La pantalla del Centro de mando (/dashboard/centro-mando): una regla sobre ella niega el acceso completo. */
+export const CODIGO_CENTRO_MANDO = '0xC001';
+
 export type ClaveSeccion =
   | 'accesos' | 'emergencias' | 'alertas' | 'moviles' | 'personal'
   | 'guardia' | 'convocatorias' | 'mi_actividad' | 'pendientes' | 'sistema';

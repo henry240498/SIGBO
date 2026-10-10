@@ -139,6 +139,25 @@ describe('MatrizWebService', () => {
     s.invalidar();
     expect((await s.evaluadorSecciones({ id: 'u1', permisos: ['servicios:ver'] }))('alertas')).toBe(false);
   });
+
+  it('una regla sobre el Centro de mando (0xC001) niega su acceso: denegar, o reglas que no conceden ver', async () => {
+    const s = await nueva(base);
+    await expect(s.reglaNiegaVer('u1', '0xC001')).resolves.toBe(false);
+    await regla(base, { pantallaCodigo: '0xC001', denegar: true });
+    s.invalidar();
+    await expect(s.reglaNiegaVer('u1', '0xC001')).resolves.toBe(true);
+    await expect(s.reglaNiegaVer('otro', '0xC001')).resolves.toBe(false);
+    await expect(s.reglaNiegaVer('u1', '0xB101')).resolves.toBe(false);
+  });
+
+  it('una regla que concede ver no niega el Centro de mando; una que no lo concede, sí', async () => {
+    await regla(base, { pantallaCodigo: '0xC001', ver: true });
+    const s = await nueva(base);
+    await expect(s.reglaNiegaVer('u1', '0xC001')).resolves.toBe(false);
+    const b2 = new BaseFalsa();
+    await regla(b2, { pantallaCodigo: '0xC001', crear: true });
+    await expect((await nueva(b2)).reglaNiegaVer('u1', '0xC001')).resolves.toBe(true);
+  });
 });
 
 /** Hace fallar las lecturas de una entidad, sin tocar las demás. */
@@ -175,6 +194,14 @@ describe('MatrizWebService ante fallas', () => {
     const s = await nueva(base);
     falla.on = true;
     await expect(s.exigirEnRuta(user, 'DELETE', '/api/v1/demo/:id')).resolves.toBeUndefined();
+  });
+
+  it('si no se pueden leer las reglas, el Centro de mando no queda negado (falla abierta)', async () => {
+    const falla = { on: false };
+    fallar(base, PantallaPermiso, falla);
+    const s = await nueva(base);
+    falla.on = true;
+    await expect(s.reglaNiegaVer('u1', '0xC001')).resolves.toBe(false);
   });
 
   it('si no se pueden leer las reglas pero hay unas previas, se usan', async () => {
