@@ -30,6 +30,8 @@ export function fechaDeRespaldo(nombre: string): string | null {
   const m = nombre.match(NOMBRE_RESPALDO);
   if (!m) return null;
   const [a, me, d, h, mi, s] = m.slice(1);
+  const n = (x: string) => Number(x);
+  if (n(me) < 1 || n(me) > 12 || n(d) < 1 || n(d) > 31 || n(h) > 23 || n(mi) > 59 || n(s) > 59) return null;
   return `${a}-${me}-${d}T${h}:${mi}:${s}`;
 }
 

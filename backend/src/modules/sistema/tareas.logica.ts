@@ -21,7 +21,13 @@ export const SCRIPT_CONSULTA_TAREAS = [
   'ConvertTo-Json -InputObject $salida -Compress -Depth 3',
 ].join('\n');
 
+/** Lista blanca en runtime: el tipo TS no impide interpolar un texto cualquiera en PowerShell. */
+export function esTareaWindows(x: unknown): x is NombreTarea {
+  return typeof x === 'string' && (TAREAS_WINDOWS as readonly string[]).includes(x);
+}
+
 export function scriptIniciarTarea(nombre: NombreTarea): string {
+  if (!esTareaWindows(nombre)) throw new Error('Tarea no permitida');
   return `Start-ScheduledTask -TaskName '${nombre}'`;
 }
 

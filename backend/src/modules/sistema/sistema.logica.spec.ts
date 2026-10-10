@@ -2,7 +2,7 @@ import { compararMigraciones, parsearManifiesto } from './migraciones.logica';
 import { contenidoQrConexion, direccionesDeRed } from './red.logica';
 import { esClaveRegistro, nivelDeLinea, ocultarSecretos, ultimasLineas } from './registros.logica';
 import { alertasRespaldo, fechaDeRespaldo, parsearRegistro, validarNombreRespaldo } from './respaldos.logica';
-import { describirResultado, parsearTareas, SCRIPT_CONSULTA_TAREAS, scriptIniciarTarea } from './tareas.logica';
+import { describirResultado, esTareaWindows, parsearTareas, SCRIPT_CONSULTA_TAREAS, scriptIniciarTarea } from './tareas.logica';
 
 const REGISTRO = [
   '[1/5] Respaldando sigbo_cbvc ...',
@@ -46,6 +46,16 @@ describe('respaldos', () => {
     expect(fechaDeRespaldo('x.bak')).toBeNull();
   });
 
+  it('devuelve null para fechas imposibles', () => {
+    expect(fechaDeRespaldo('sigbo_cbvc-20269901-000000.bak')).toBeNull();
+    expect(fechaDeRespaldo('sigbo_cbvc-20261000-082934.bak')).toBeNull();
+    expect(fechaDeRespaldo('sigbo_cbvc-20261009-002934.bak')).not.toBeNull();
+    expect(fechaDeRespaldo('sigbo_cbvc-20261032-082934.bak')).toBeNull();
+    expect(fechaDeRespaldo('sigbo_cbvc-20261009-242934.bak')).toBeNull();
+    expect(fechaDeRespaldo('sigbo_cbvc-20261009-086034.bak')).toBeNull();
+    expect(fechaDeRespaldo('sigbo_cbvc-20261009-082960.bak')).toBeNull();
+  });
+
   it('alerta si no hay respaldo en 24 h, si la última corrida falló, si nunca se probó restaurar y si falta un .sha256', () => {
     const archivos = [
       { nombre: 'sigbo_cbvc-20261008-081341.bak', fecha: '2026-10-08T08:13:41', tamanioBytes: 1, tieneSha256: true },
@@ -85,6 +95,51 @@ describe('registros', () => {
     expect(ultimasLineas('\u001b[32mLOG\u001b[39m listo', 5)).toEqual(['LOG listo']);
   });
 
+  it('con max <= 0 no devuelve ninguna línea', () => {
+    expect(ultimasLineas('a\nb\nc', 0)).toEqual([]);
+    expect(ultimasLineas('a\nb\nc', -1)).toEqual([]);
+    expect(ultimasLineas('a\nb\nc', Number.NaN)).toEqual([]);
+  });
+
+  it('oculta claves compuestas: JWT_SECRET, client_secret, DB_SECRET, *_token, csrf_token y JSON', () => {
+    expect(ocultarSecretos('JWT_SECRET=abc123')).toBe('JWT_SECRET=[oculto]');
+    expect(ocultarSecretos('client_secret=x')).toBe('client_secret=[oculto]');
+    expect(ocultarSecretos('DB_SECRET=x')).toBe('DB_SECRET=[oculto]');
+    expect(ocultarSecretos('access_token=x')).toBe('access_token=[oculto]');
+    expect(ocultarSecretos('refresh_token=x')).toBe('refresh_token=[oculto]');
+    expect(ocultarSecretos('csrf_token=x')).toBe('csrf_token=[oculto]');
+    expect(ocultarSecretos('{"access_token":"zzz"}')).toBe('{"access_token":"[oculto]"}');
+  });
+
+  it('oculta el base64 de Authorization: Basic', () => {
+    const r = ocultarSecretos('Authorization: Basic dXNlcjpwYXNz');
+    expect(r).not.toContain('dXNlcjpwYXNz');
+    expect(r).toBe('Authorization: [oculto]');
+  });
+
+  it('oculta todas las cookies de una cabecera Cookie:', () => {
+    const r = ocultarSecretos('cookie: sid=abc; csrf=def');
+    expect(r).not.toContain('abc');
+    expect(r).not.toContain('def');
+    expect(r).toBe('cookie: [oculto]');
+  });
+
+  it('oculta la contraseña de una URL de conexión', () => {
+    expect(ocultarSecretos('mssql://sa:Pw123@host/db')).toBe('mssql://sa:[oculto]@host/db');
+  });
+
+  it('oculta un valor con espacios hasta el fin de la línea', () => {
+    expect(ocultarSecretos('password: my long pass')).toBe('password: [oculto]');
+  });
+
+  it('quita los colores ANSI antes de buscar la clave, para que no partan clave y valor', () => {
+    expect(ocultarSecretos('password\u001b[39m=abc')).toBe('password=[oculto]');
+  });
+
+  it('sigue ocultando Password=... en una cadena de conexión', () => {
+    expect(ocultarSecretos('Server=x;Password=abc;Database=y')).toBe('Server=x;Password=[oculto];Database=y');
+  });
+
   it('reconoce el nivel de una línea de Nest', () => {
     expect(nivelDeLinea('[Nest] 1 - 09/10/2026 ERROR [ExceptionsHandler] x')).toBe('ERROR');
     expect(nivelDeLinea('[Nest] 1 - 09/10/2026 WARN [MatrizWeb] y')).toBe('WARN');
@@ -115,6 +170,13 @@ describe('migraciones', () => {
     ]);
     expect(e).toMatchObject({ total: 3, aplicadas: 2, pendientes: ['094_gre_base_documental.sql'], alteradas: ['096_sistema_permisos.sql'], desconocidas: ['050_vieja_borrada.sql'] });
     expect(e.ultimaAplicada).toEqual({ nombre: '096_sistema_permisos.sql', aplicadaEn: '2026-10-09T10:00:00.000Z' });
+  });
+
+  it('una fila sin hash no lanza y cuenta como alterada si el manifiesto tiene hash', () => {
+    const e = compararMigraciones(manifiesto, [
+      { nombre: '093_centro_operaciones_incidentes.sql', hash: null as unknown as string, aplicadaEn: '2026-10-07T10:00:00Z' },
+    ]);
+    expect(e.alteradas).toEqual(['093_centro_operaciones_incidentes.sql']);
   });
 });
 
@@ -151,6 +213,13 @@ describe('tareas de Windows', () => {
     expect(t[1]).toMatchObject({ existe: false, estado: null, ultimaEjecucion: null });
     const una = parsearTareas('{"nombre":"SIGBO-Respaldo-Diario","existe":true,"estado":"Running","ultimaEjecucion":"\\/Date(943920000000)\\/","ultimoResultado":267009}');
     expect(una[0]).toMatchObject({ estado: 'EN_EJECUCION', ultimaEjecucion: null, descripcionResultado: 'En ejecución' });
+  });
+
+  it('acepta solo nombres de tarea de la lista blanca', () => {
+    expect(esTareaWindows('SIGBO-Respaldo-Diario')).toBe(true);
+    expect(esTareaWindows('constructor')).toBe(false);
+    expect(esTareaWindows("x'; calc; '")).toBe(false);
+    expect(() => scriptIniciarTarea("x'; calc; '" as never)).toThrow('Tarea no permitida');
   });
 
   it('describe los códigos de resultado', () => {

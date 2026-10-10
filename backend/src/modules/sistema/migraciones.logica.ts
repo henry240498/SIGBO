@@ -27,7 +27,7 @@ export function compararMigraciones(manifiesto: Array<{ nombre: string; hash: st
   const porNombre = new Map(aplicadas.map((a) => [a.nombre, a]));
   const pendientes = esperadas.filter((m) => !porNombre.has(m.nombre)).map((m) => m.nombre);
   const alteradas = esperadas
-    .filter((m) => porNombre.has(m.nombre) && porNombre.get(m.nombre)!.hash.trim().toUpperCase() !== m.hash)
+    .filter((m) => porNombre.has(m.nombre) && String(porNombre.get(m.nombre)!.hash ?? '').trim().toUpperCase() !== m.hash)
     .map((m) => m.nombre);
   const nombres = new Set(esperadas.map((m) => m.nombre));
   const desconocidas = aplicadas.filter((a) => a.nombre !== CREACION && !nombres.has(a.nombre)).map((a) => a.nombre);
