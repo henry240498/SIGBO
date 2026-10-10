@@ -2,6 +2,8 @@ import { CanActivate, ExecutionContext, ForbiddenException, Injectable, Optional
 import { Reflector } from '@nestjs/core';
 import { PERMISSION_KEY } from '../decorators/require-permission.decorator';
 import { AuthenticatedUser } from '../../auth/types/authenticated-user';
+import { leerAccessCookie, leerRefreshCookie } from '../../auth/auth-cookies';
+import { esClienteNativo } from '../../auth/csrf.middleware';
 import { MatrizWebService } from '../../pantallas/matriz-web.service';
 
 @Injectable()
@@ -34,6 +36,10 @@ export class PermissionsGuard implements CanActivate {
 
     // Despues del rol, la matriz por pantalla: solo restringe, y sin reglas no cambia nada.
     if (!this.matriz || !user) return true;
+    // La app movil tiene su propia matriz (0xA): las reglas de pantallas web gobiernan solo la web.
+    // Se la reconoce igual que el middleware CSRF (cabecera de dispositivo, sin cookies ni Origin).
+    const usaCookies = Boolean(leerAccessCookie(request) || leerRefreshCookie(request));
+    if (esClienteNativo(request, usaCookies)) return true;
     return this.matriz.exigirEnRuta(user, request.method, request.route?.path).then(() => true);
   }
 }

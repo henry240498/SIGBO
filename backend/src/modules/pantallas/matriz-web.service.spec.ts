@@ -135,11 +135,73 @@ describe('MatrizWebService', () => {
   });
 });
 
+/** Hace fallar las lecturas de una entidad, sin tocar las demás. */
+function fallar(base: BaseFalsa, entidad: unknown, activo: { on: boolean }) {
+  const original = base.getRepository.bind(base);
+  jest.spyOn(base, 'getRepository').mockImplementation(((e: unknown) => {
+    if (e === entidad && activo.on) {
+      return { find: async () => { throw new Error('base caída'); }, save: async () => { throw new Error('base caída'); } } as never;
+    }
+    return original(e as never);
+  }) as never);
+}
+
+describe('MatrizWebService ante fallas', () => {
+  let base: BaseFalsa;
+  beforeEach(() => { base = new BaseFalsa(); auditoria.registrar.mockClear(); jest.restoreAllMocks(); });
+
+  it('si la sincronización falla, la matriz no bloquea a nadie, y una sincronización posterior la reactiva', async () => {
+    await regla(base, { denegar: true });
+    const falla = { on: true };
+    fallar(base, Pantalla, falla);
+    const s = await nueva(base);
+    expect(s.estaSincronizada()).toBe(false);
+    await expect(s.exigirEnRuta(user, 'DELETE', '/api/v1/demo/:id')).resolves.toBeUndefined();
+    falla.on = false;
+    await s.sincronizar();
+    expect(s.estaSincronizada()).toBe(true);
+    await expect(s.exigirEnRuta(user, 'DELETE', '/api/v1/demo/:id')).rejects.toBeInstanceOf(ForbiddenException);
+  });
+
+  it('si no se pueden leer las reglas y nunca se leyeron, el pedido pasa', async () => {
+    const falla = { on: false };
+    fallar(base, PantallaPermiso, falla);
+    const s = await nueva(base);
+    falla.on = true;
+    await expect(s.exigirEnRuta(user, 'DELETE', '/api/v1/demo/:id')).resolves.toBeUndefined();
+  });
+
+  it('si no se pueden leer las reglas pero hay unas previas, se usan', async () => {
+    await regla(base, { denegar: true });
+    const falla = { on: false };
+    fallar(base, PantallaPermiso, falla);
+    const s = await nueva(base);
+    await expect(s.exigirEnRuta(user, 'DELETE', '/api/v1/demo/:id')).rejects.toBeInstanceOf(ForbiddenException);
+    s.invalidar();
+    falla.on = true;
+    await expect(s.exigirEnRuta(user, 'DELETE', '/api/v1/demo/:id')).rejects.toBeInstanceOf(ForbiddenException);
+  });
+});
+
 describe('PermissionsGuard con la matriz', () => {
-  const contexto = (permisos: string[]) => ({
+  const contexto = (permisos: string[], cabeceras: Record<string, string> = {}) => ({
     getHandler: () => DemoController.prototype.borrar,
     getClass: () => DemoController,
-    switchToHttp: () => ({ getRequest: () => ({ user: { id: 'u1', permisos }, method: 'DELETE', route: { path: '/api/v1/demo/:id' } }) }),
+    switchToHttp: () => ({
+      getRequest: () => ({
+        user: { id: 'u1', permisos }, method: 'DELETE', route: { path: '/api/v1/demo/:id' },
+        headers: cabeceras, get: (n: string) => cabeceras[n.toLowerCase()],
+      }),
+    }),
+  });
+
+  it('la app móvil (cabecera de dispositivo, sin cookies ni Origin) no queda bajo las reglas web', async () => {
+    const b = new BaseFalsa();
+    await regla(b, { ver: true });
+    const guard = new PermissionsGuard(new Reflector(), await nueva(b));
+    const movil = { 'x-sigbo-dispositivo': 'movil' };
+    expect(guard.canActivate(contexto(['demo:ver', 'demo:eliminar'], movil) as never)).toBe(true);
+    await expect(guard.canActivate(contexto(['demo:ver', 'demo:eliminar'], { ...movil, origin: 'http://localhost:3000' }) as never)).rejects.toBeInstanceOf(ForbiddenException);
   });
 
   it('primero exige el permiso por rol (síncrono, como antes)', async () => {

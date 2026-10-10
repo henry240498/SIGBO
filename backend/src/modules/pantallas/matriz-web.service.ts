@@ -52,6 +52,8 @@ export class MatrizWebService implements OnApplicationBootstrap {
   private sincronizada = false;
   private errorSincronizacion: string | null = null;
   private reglasCache: { cargadas: number; reglas: PantallaPermiso[] } | null = null;
+  private ultimasReglas: PantallaPermiso[] | null = null;
+  private ultimoReintento = 0;
   private readonly ultimasDenegaciones = new Map<string, number>();
 
   constructor(
@@ -138,15 +140,33 @@ export class MatrizWebService implements OnApplicationBootstrap {
     this.reglasCache = null;
   }
 
+  /** Reintenta la sincronizacion si fallo, a lo sumo una vez por minuto. */
+  private async reintentarSincronizacion(): Promise<void> {
+    if (this.sincronizada || Date.now() - this.ultimoReintento < VIGENCIA_REGLAS_MS) return;
+    this.ultimoReintento = Date.now();
+    await this.sincronizar();
+  }
+
+  /** Si la consulta falla, se usan las ultimas reglas leidas; si nunca hubo, se propaga el error. */
   private async reglas(): Promise<PantallaPermiso[]> {
     if (this.reglasCache && Date.now() - this.reglasCache.cargadas < VIGENCIA_REGLAS_MS) return this.reglasCache.reglas;
-    const reglas = await this.dataSource.getRepository(PantallaPermiso).find({});
-    this.reglasCache = { cargadas: Date.now(), reglas };
-    return reglas;
+    try {
+      const reglas = await this.dataSource.getRepository(PantallaPermiso).find({});
+      this.reglasCache = { cargadas: Date.now(), reglas };
+      this.ultimasReglas = reglas;
+      return reglas;
+    } catch (e) {
+      if (this.ultimasReglas) {
+        this.log.warn(`No se pudieron leer las reglas de pantalla; se usan las últimas conocidas: ${mensaje(e)}`);
+        return this.ultimasReglas;
+      }
+      throw e;
+    }
   }
 
   async exigirEnRuta(user: UsuarioMatriz, metodo: string, rutaExpress: string | undefined): Promise<void> {
-    if (!this.activa || !rutaExpress) return;
+    // Solo restringe si el indice esta armado Y el catalogo sincronizado: ante la duda, no bloquea a nadie.
+    if (!this.activa || !this.sincronizada || !rutaExpress) return;
     const patron = sinPrefijo(rutaExpress);
     if (esExenta(patron)) return;
     const m = metodo.toUpperCase() === 'HEAD' ? 'GET' : metodo.toUpperCase();
@@ -154,9 +174,15 @@ export class MatrizWebService implements OnApplicationBootstrap {
     if (!codigos.length) return;
     const accion = accionDe(m, patron, this.catalogo.forzadas);
     if (!accion) return;
-    const reglas = (await this.reglas()).filter((r) => codigos.includes(r.pantallaCodigo));
-    if (!reglas.length) return;
-    const decision = decidirApi(codigos, accion, reglas, await resolverSujeto(this.dataSource, user.id));
+    let decision: ReturnType<typeof decidirApi>;
+    try {
+      const reglas = (await this.reglas()).filter((r) => codigos.includes(r.pantallaCodigo));
+      if (!reglas.length) return;
+      decision = decidirApi(codigos, accion, reglas, await resolverSujeto(this.dataSource, user.id));
+    } catch (e) {
+      this.log.warn(`No se pudo evaluar la matriz de pantallas; se permite el pedido: ${mensaje(e)}`);
+      return;
+    }
     if (decision.permitido) return;
     const codigo = decision.codigoDenegado as string;
     const nombre = this.catalogo.pantallas.find((p) => p.codigo === codigo)?.nombre ?? codigo;
@@ -184,6 +210,7 @@ export class MatrizWebService implements OnApplicationBootstrap {
   }
 
   async misPermisosWeb(user: UsuarioMatriz) {
+    await this.reintentarSincronizacion();
     const reglas = await this.reglas();
     const sujeto = reglas.some((r) => /^0x[BC]/.test(r.pantallaCodigo)) ? await resolverSujeto(this.dataSource, user.id) : sujetoVacio(user.id);
     const pantallas = this.catalogo.pantallas.map((p) => {

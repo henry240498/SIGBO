@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable, NotFoundException, Optional } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException, Optional } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { Cargo, Pantalla, PantallaPermiso, Rango, Rol, Usuario } from '../../shared/entities';
@@ -106,6 +106,7 @@ export class PantallasService {
   async guardarRegla(dto: GuardarReglaPantallaDto, ctx: ContextoPantallas, ahora = new Date()) {
     const pantalla = await this.dataSource.getRepository(Pantalla).findOne({ where: { codigo: dto.pantallaCodigo } });
     if (!pantalla) throw new NotFoundException('La pantalla no existe.');
+    if (!pantalla.activa) throw new BadRequestException('Esta pantalla no admite reglas.');
     if (dto.confidencial && !pantalla.confidencialAplica) {
       // no se rechaza: queda como estaba, pero se avisa en el nombre de la accion auditada
     }

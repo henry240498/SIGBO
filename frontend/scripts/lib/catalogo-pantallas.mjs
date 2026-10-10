@@ -10,7 +10,9 @@
 export const METODOS = ['DELETE', 'GET', 'PATCH', 'POST', 'PUT'];
 
 /** Rutas web que no entran a la matriz: son de cada persona o no son destinos. */
+// administrar la matriz nunca queda bajo la matriz (su código 0xB068 sigue reservado).
 export const FUERA_DE_LA_MATRIZ = new Set([
+  '/dashboard/seguridad/pantallas',
   '/dashboard', '/dashboard/mi-perfil', '/dashboard/mi-perfil/preferencias', '/dashboard/mi-perfil/seguridad', '/dashboard/reportar',
 ]);
 

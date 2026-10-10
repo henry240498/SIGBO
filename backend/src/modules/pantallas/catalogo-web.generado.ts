@@ -21441,40 +21441,6 @@ export const PANTALLAS_WEB: PantallaCatalogo[] = [
     ]
   },
   {
-    "codigo": "0xB068",
-    "ruta": "/dashboard/seguridad/pantallas",
-    "nombre": "Permisos por pantalla",
-    "modulo": "seguridad",
-    "prefijo": "seguridad:",
-    "llamadas": [
-      {
-        "metodos": [
-          "GET"
-        ],
-        "patron": "/pantallas"
-      },
-      {
-        "metodos": [
-          "GET",
-          "PUT"
-        ],
-        "patron": "/pantallas/reglas"
-      },
-      {
-        "metodos": [
-          "DELETE"
-        ],
-        "patron": "/pantallas/reglas/*"
-      },
-      {
-        "metodos": [
-          "GET"
-        ],
-        "patron": "/pantallas/sujetos"
-      }
-    ]
-  },
-  {
     "codigo": "0xB069",
     "ruta": "/dashboard/seguridad/permisos",
     "nombre": "Permisos",

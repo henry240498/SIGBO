@@ -127,6 +127,11 @@ describe('PantallasService', () => {
     await expect(servicio.guardarRegla({ pantallaCodigo: '0xA999', sujetoTipo: 'ROL', sujetoId: 'x', ver: true, crear: false, editar: false, eliminar: false, confidencial: false, denegar: false }, admin)).rejects.toThrow();
   });
 
+  it('no se puede configurar una pantalla inactiva', async () => {
+    await sembrar(base, Pantalla, { codigo: '0xB900', nombre: 'Vieja', descripcion: null, confidencialAplica: false, activa: false });
+    await expect(servicio.guardarRegla({ pantallaCodigo: '0xB900', sujetoTipo: 'ROL', sujetoId: 'x', ver: true, crear: false, editar: false, eliminar: false, confidencial: false, denegar: false }, admin)).rejects.toThrow(/no admite reglas/);
+  });
+
   it('"mis permisos" resume qué puede hacer la persona en cada pantalla', async () => {
     const mis = await servicio.misPermisos(user('despacho:servicio', 'despacho:confidencial'));
     const a006 = mis.find((p) => p.codigo === '0xA006')!;

@@ -4,7 +4,7 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { asignarCodigos, extraerLlamadas, importsLocales, prefijosDeModulos } from '../lib/catalogo-pantallas.mjs';
+import { FUERA_DE_LA_MATRIZ, asignarCodigos, extraerLlamadas, importsLocales, prefijosDeModulos } from '../lib/catalogo-pantallas.mjs';
 
 const una = (fuente) => extraerLlamadas(fuente).llamadas;
 
@@ -77,4 +77,8 @@ test('prefijos de permisos por módulo', () => {
 test('imports locales, sin los de tipos ni los de paquetes', () => {
   const fuente = "import { a } from './a';\nimport type { T } from './t';\nimport {\n  b,\n  c,\n} from '@/lib/b';\nimport React from 'react';\nimport './estilos.css';";
   assert.deepEqual(importsLocales(fuente), ['./a', '@/lib/b', './estilos.css']);
+});
+
+test('administrar la matriz nunca queda bajo la matriz', () => {
+  assert.ok(FUERA_DE_LA_MATRIZ.has('/dashboard/seguridad/pantallas'));
 });
