@@ -140,6 +140,28 @@ describe('registros', () => {
     expect(ocultarSecretos('Server=x;Password=abc;Database=y')).toBe('Server=x;Password=[oculto];Database=y');
   });
 
+  it('no tarda con una línea enorme de caracteres de palabra (sin backtracking cuadrático)', () => {
+    const inicio = performance.now();
+    const r = ocultarSecretos('a'.repeat(200_000));
+    expect(performance.now() - inicio).toBeLessThan(200);
+    expect(r.length).toBeLessThanOrEqual(4001);
+  });
+
+  it('el prefijo acotado sigue cubriendo claves compuestas largas', () => {
+    const r = ocultarSecretos('x'.repeat(50) + '_SECRET=abc');
+    expect(r).not.toContain('abc');
+    expect(r).toContain('[oculto]');
+  });
+
+  it('el tope de 4000 caracteres corta antes de un password= al final de una línea enorme', () => {
+    const r = ocultarSecretos('a'.repeat(5000) + ' password=zzz');
+    expect(r).not.toContain('zzz');
+  });
+
+  it('password: x conserva el espacio tras los dos puntos', () => {
+    expect(ocultarSecretos('password: x')).toBe('password: [oculto]');
+  });
+
   it('reconoce el nivel de una línea de Nest', () => {
     expect(nivelDeLinea('[Nest] 1 - 09/10/2026 ERROR [ExceptionsHandler] x')).toBe('ERROR');
     expect(nivelDeLinea('[Nest] 1 - 09/10/2026 WARN [MatrizWeb] y')).toBe('WARN');

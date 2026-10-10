@@ -18,7 +18,11 @@ const ANSI = /\u001b\[[0-9;]*[A-Za-z]/g;
  * Clave que contiene una palabra sensible, aunque tenga prefijo o sufijo (JWT_SECRET, access_token,
  * DB_PASSWORD). Sin \b: el guion bajo cuenta como letra para \b y dejaba pasar "JWT_SECRET=abc".
  */
-const CLAVE = '[A-Za-z0-9_-]*(?:password|passwd|pwd|secret|token|api[_-]?key|contrase(?:ñ|n)a)[A-Za-z0-9_-]*';
+/**
+ * Prefijo y sufijo acotados (64) y prefijo anclado a un límite: sin cuantificadores ilimitados
+ * delante de una palabra obligatoria, una línea larga de caracteres de palabra no provoca O(n²).
+ */
+const CLAVE = '(?<![A-Za-z0-9_-])[A-Za-z0-9_-]{0,64}(?:password|passwd|pwd|secret|token|api[_-]?key|contrase(?:ñ|n)a)[A-Za-z0-9_-]{0,64}';
 const VALOR_IGUAL = `"[^"]*"|'[^']*'|[^\\s,;&]+`;
 /** Con ":" el valor sin comillas llega hasta el fin de la línea, ";", "," o una llave. */
 const VALOR_DOS_PUNTOS = `"[^"]*"|'[^']*'|[^,;\\r\\n"'}]+`;
@@ -31,12 +35,16 @@ const CABECERAS: Array<[RegExp, string]> = [
   [/((?:set-)?cookie\s*:)[^\r\n]*/gi, '$1 [oculto]'],
   [/\b(Bearer|Basic)\s+[A-Za-z0-9\-._~+/]+=*/gi, '$1 [oculto]'],
   [/(sigbo_(?:access|refresh)=)[^;\s]+/gi, '$1[oculto]'],
-  [/\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}/g, '[jwt oculto]'],
-  [/([a-z][a-z0-9+.-]*:\/\/)([^\s:/@]+):([^\s@/]+)@/gi, '$1$2:[oculto]@'],
+  [/\beyJ[A-Za-z0-9_-]{8,512}\.[A-Za-z0-9_-]{8,512}\.[A-Za-z0-9_-]{8,512}/g, '[jwt oculto]'],
+  [/([a-z][a-z0-9+.-]{0,30}:\/\/)([^\s:/@]{1,255}):([^\s@/]{1,255})@/gi, '$1$2:[oculto]@'],
 ];
 
+/** Tope de una línea antes de cualquier expresión regular: el costo queda acotado aunque la línea sea enorme. */
+export const MAX_LARGO_LINEA = 4000;
+
 export function ocultarSecretos(linea: string): string {
-  const sinColores = linea.replace(ANSI, '');
+  const acotada = linea.length > MAX_LARGO_LINEA ? `${linea.slice(0, MAX_LARGO_LINEA)}…` : linea;
+  const sinColores = acotada.replace(ANSI, '');
   const sinCabeceras = CABECERAS.reduce((t, [re, reemplazo]) => t.replace(re, reemplazo), sinColores);
   const sinIgual = sinCabeceras.replace(ASIGNACION_IGUAL, (_m: string, clave: string, valor: string) => {
     const comilla = valor.startsWith('"') ? '"' : valor.startsWith("'") ? "'" : '';
