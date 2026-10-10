@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { apiFetch } from '@/lib/api';
 import { PANTALLAS } from '@/lib/pantallas.generado';
@@ -25,17 +25,34 @@ export function PermisosPantallaProvider({ children }: { children: React.ReactNo
   const [matriz, setMatriz] = useState<MatrizWeb | null>(null);
   const [centroMando, setCentroMando] = useState<AccesoCentroMando | null>(null);
 
+  // Solo la ultima llamada aplica su resultado: una respuesta lenta y vieja no pisa una nueva.
+  const ultima = useRef(0);
+  const montado = useRef(true);
+  useEffect(() => {
+    montado.current = true;
+    return () => { montado.current = false; };
+  }, []);
+
   const cargar = useCallback(async () => {
+    const mia = ++ultima.current;
+    const vigente = () => montado.current && mia === ultima.current;
     const [pantallas, acceso] = await Promise.allSettled([apiFetch('/pantallas/mis-permisos-web'), apiFetch('/centro-mando/acceso')]);
+    let datos: { pantallas: PermisoPantalla[] } | null = null;
     if (pantallas.status === 'fulfilled' && pantallas.value.ok) {
-      const datos = (await pantallas.value.json()) as { pantallas: PermisoPantalla[] };
+      datos = (await pantallas.value.json().catch(() => null)) as { pantallas: PermisoPantalla[] } | null;
+    }
+    const accesoCm = acceso.status === 'fulfilled' && acceso.value.ok
+      ? ((await acceso.value.json().catch(() => null)) as AccesoCentroMando | null)
+      : null;
+    if (!vigente()) return;
+    if (datos) {
       setMatriz(indexarPorRuta(datos.pantallas));
       setEstado('listo');
     } else {
       // Se conserva lo ultimo que se cargo bien; si nunca se cargo, la web vuelve al prefijo.
       setEstado((previo) => (previo === 'listo' ? 'listo' : 'sin_datos'));
     }
-    if (acceso.status === 'fulfilled' && acceso.value.ok) setCentroMando((await acceso.value.json()) as AccesoCentroMando);
+    if (accesoCm) setCentroMando(accesoCm);
   }, []);
 
   useEffect(() => {

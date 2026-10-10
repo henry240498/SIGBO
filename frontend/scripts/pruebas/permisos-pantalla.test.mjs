@@ -68,3 +68,17 @@ test('buscador y accesos: sin detalles, Inicio siempre, el resto según la matri
   assert.deepEqual(pantallasVisibles(PANTALLAS, [], matriz, MODULOS).map((p) => p.ruta), ['/dashboard', '/dashboard/personal']);
   assert.deepEqual(pantallasVisibles(PANTALLAS, ['personal:ver'], null, MODULOS).map((p) => p.ruta), ['/dashboard', '/dashboard/personal', '/dashboard/personal/control', '/dashboard/personal/nuevo']);
 });
+
+test('pantalla sin codigo de un modulo que no es Inicio/Mi perfil/Reportar sigue el prefijo del modulo', () => {
+  const MODS = [...MODULOS, { slug: 'seguridad', nombre: 'Seguridad', icono: 'shield', permisoPrefijo: 'seguridad:', disponible: true, grupo: 'sistema', descripcion: '' }];
+  const PANT = [
+    ...PANTALLAS,
+    { ruta: '/dashboard/seguridad/pantallas', nombre: 'Permisos por pantalla', modulo: 'seguridad', codigo: null, detalle: false },
+  ];
+  const rutas = (permisos, matriz) => pantallasVisibles(PANT, permisos, matriz, MODS).map((p) => p.ruta);
+  for (const matriz of [indexarPorRuta([]), null]) {
+    assert.equal(rutas([], matriz).includes('/dashboard/seguridad/pantallas'), false);
+    assert.equal(rutas(['seguridad:ver_usuarios'], matriz).includes('/dashboard/seguridad/pantallas'), true);
+    assert.equal(rutas([], matriz).includes('/dashboard'), true);
+  }
+});

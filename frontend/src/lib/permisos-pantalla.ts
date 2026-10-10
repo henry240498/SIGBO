@@ -70,12 +70,16 @@ export function tabsVisibles<T extends { href: string }>(tabs: T[], pantallas: P
   return tabs.filter((t) => decisionDeRuta(t.href, pantallas, matriz)?.ver ?? true);
 }
 
+const SIEMPRE_VISIBLES = new Set(['inicio', 'mi-perfil', 'reportar']);
+
 /** Pantallas para el buscador y los accesos rapidos (sin las de detalle). */
 export function pantallasVisibles(pantallas: PantallaRegistrada[], permisos: string[], matriz: MatrizWeb | null, modulos: ModuloConfig[]): PantallaRegistrada[] {
   return pantallas.filter((p) => !p.detalle).filter((p) => {
-    if (!p.codigo) return true;
-    if (matriz) return matriz.get(p.ruta)?.ver === true;
+    // Solo estas pantallas son siempre visibles; otra sin codigo (p. ej. Seguridad > Pantallas)
+    // sigue el prefijo de su modulo.
     const m = modulos.find((x) => x.slug === p.modulo);
+    if (!p.codigo) return SIEMPRE_VISIBLES.has(p.modulo) || (m ? porPrefijo(m, permisos) : false);
+    if (matriz) return matriz.get(p.ruta)?.ver === true;
     return m ? porPrefijo(m, permisos) : false;
   });
 }

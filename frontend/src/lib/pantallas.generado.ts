@@ -775,7 +775,7 @@ export const PANTALLAS: PantallaRegistrada[] = [
     "ruta": "/dashboard/seguridad/pantallas",
     "nombre": "Permisos por pantalla",
     "modulo": "seguridad",
-    "codigo": "0xB068",
+    "codigo": null,
     "detalle": false
   },
   {

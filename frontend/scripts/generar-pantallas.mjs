@@ -183,7 +183,7 @@ export interface PantallaRegistrada {
   detalle: boolean;
 }
 
-export const PANTALLAS: PantallaRegistrada[] = ${JSON.stringify(pantallas.map((p) => ({ ruta: p.ruta, nombre: p.nombre, modulo: p.modulo, codigo: codigos[p.ruta] ?? null, detalle: p.detalle })), null, 2)};
+export const PANTALLAS: PantallaRegistrada[] = ${JSON.stringify(pantallas.map((p) => ({ ruta: p.ruta, nombre: p.nombre, modulo: p.modulo, codigo: FUERA_DE_LA_MATRIZ.has(p.ruta) ? null : (codigos[p.ruta] ?? null), detalle: p.detalle })), null, 2)};
 `;
 
 const salidaBack = `// GENERADO por frontend/scripts/generar-pantallas.mjs — no editar a mano.
