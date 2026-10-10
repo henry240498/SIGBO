@@ -15,7 +15,10 @@ tiene un tope de 30 segundos para que un pedido colgado no congele el panel.
   LICENCIA, BAJA y FALLECIDO. Se cambia en Seguridad › Configuración global, "Estados con acceso al
   Centro de mando"; la lista no puede quedar vacía ("Elegí al menos un estado."). Las cuentas sin
   ficha de bombero (administración) se rigen por sus roles. Si la cuenta ya no existe, no hay acceso
-  ("Cuenta no encontrada.").
+  ("Cuenta no encontrada."). Además, una regla de Seguridad › Permisos por pantalla sobre la pantalla
+  "Centro de mando" (0xC001) que no conceda Ver deja sin acceso a esa persona, tenga o no ficha: el
+  servidor no devuelve el panel y dice "Una regla de Seguridad › Permisos por pantalla te restringe el
+  Centro de mando." El estado del bombero se evalúa primero.
 - **Qué ve cada uno.** Cada sección exige su permiso por rol y, además, se puede restringir por
   usuario, rol, rango o cargo en Seguridad › Permisos por pantalla (grupo "Centro de mando"):
 
@@ -51,19 +54,31 @@ secciones del Centro de mando y las pantallas de la app móvil.
 - Las reglas **restringen** lo que el rol permite: nunca dan más. Para dar más, se asigna el permiso
   en Roles. **Denegar gana siempre.**
 - El servidor las exige en cada pantalla, en menos de un minuto desde que se guardan. El menú, las
-  pestañas y el buscador ocultan lo que no se puede ver; una URL escrita a mano muestra "Sin acceso".
+  pestañas, las migas de pan y el buscador ocultan lo que no se puede ver; una URL escrita a mano
+  muestra "Sin acceso", que dice la causa ("Tu rol no incluye permiso para esta pantalla." o que la
+  restringe una regla) y ofrece las otras pantallas visibles del mismo módulo. Si la portada de un
+  módulo está denegada, el menú y las tarjetas del Inicio llevan a su primera pantalla visible.
+  Mientras se cargan los permisos, la pantalla muestra "Comprobando tus permisos…" y no pide datos.
 - Sin reglas configuradas, todo funciona exactamente como antes.
-- Si una ruta la usan varias pantallas (por ejemplo, la lista de bomberos de los combos), denegar una
-  pantalla no la bloquea mientras otra pantalla permitida la use.
+- **Alcance exacto de "Denegar".** Cada ruta de la API pertenece a las pantallas que la llaman, y
+  pasa si **alguna** de ellas lo permite. De los archivos compartidos de la web (`src/lib`) cada
+  pantalla cuenta solo las funciones que usa, así que casi todas las rutas son de una sola pantalla:
+  hoy, 9 de 337 rutas de escritura son compartidas (5 entre módulos: por ejemplo la prueba de
+  Ollama y el estado de Snoopy, que usan Sistema y Configuración de IA) y 69 de 259 de lectura
+  (combos y catálogos, como la lista de bomberos). En esas, denegar una pantalla no bloquea la ruta
+  mientras otra pantalla permitida la use. La tabla de rutas de cada pantalla las marca: "compartida
+  con N pantallas — denegar esta no la bloquea si otra permitida la usa".
 - **Vista previa:** elegir un usuario y ver qué pantallas ve y qué puede hacer, y si lo decide su rol
   o una regla.
 - La administración de las reglas nunca queda bloqueada por una regla (para no dejar a nadie sin
-  forma de deshacerla). Tampoco el inicio de sesión, el perfil propio ni el Centro de mando, que
-  tienen su propia regla de acceso.
+  forma de deshacerla), y tampoco el inicio de sesión ni el perfil propio. Las rutas del Centro de
+  mando no pasan por la matriz de rutas, pero su acceso sí respeta las reglas sobre su pantalla
+  (0xC001) y cada sección, las suyas.
 
 ## Área Sistema
 
-Menú › Sistema › **Sistema** (permisos sistema:ver, sistema:operar y sistema:ver_registros).
+Menú › Sistema › **Sistema** (permisos sistema:ver, sistema:operar y sistema:ver_registros). La pestaña
+Registros exige sistema:ver_registros; las demás, sistema:ver.
 
 | Pestaña | Qué muestra | Qué se puede hacer |
 |---|---|---|
@@ -77,7 +92,13 @@ Menú › Sistema › **Sistema** (permisos sistema:ver, sistema:operar y sistem
   (con el nombre del archivo). La web no ejecuta comandos libres: solo tareas con nombre fijo.
 - Si falta algo de lo que la operación necesita (Programador de tareas de Windows, Telegram, disco),
   la web lo dice con el motivo en lugar de fallar en silencio. Si ya hay una operación en curso, no
-  deja lanzar otra igual; "Respaldar ahora" no se puede lanzar dos veces a la vez.
+  deja lanzar otra igual; "Respaldar ahora" no se puede lanzar dos veces a la vez, y aparece
+  deshabilitado con el motivo si la tarea no está programada, está deshabilitada o el Programador de
+  tareas no responde. Un registro que existe pero no se puede leer (el de arranque automático, el
+  `registro.log` de respaldos) se informa con el motivo, no como "sin registro".
+- Si una actualización falla, la marca de la pantalla dice "Sin conexión con el servidor" solo cuando
+  no hubo respuesta; un rechazo del servidor (403, 500) dice "No se pudo actualizar" y el aviso de la
+  pantalla trae el mensaje.
 - Los registros se muestran con los secretos ocultos y cada línea se corta a 4000 caracteres.
 - El resumen del Inicio y del Centro de mando no consulta el Programador de tareas; la pestaña
   Tareas lo consulta con una caché de 15 segundos.
@@ -94,9 +115,18 @@ está en la web.
   regla los prohíbe: el servidor los rechaza con un mensaje claro. Se van ocultando pantalla por
   pantalla.
 - Las secciones internas de una pantalla (por ejemplo, las del legajo) no tienen reglas propias.
-- La **app móvil no pasa por las reglas de pantallas web**: tiene su propio conjunto (códigos 0xA…).
-  Un cliente que se hiciera pasar por la app móvil evitaría las restricciones por pantalla de la web
-  (no los permisos por rol, que siguen rigiendo). Es un riesgo aceptado a confirmar por el cuartel.
+- La **app móvil no pasa por las reglas de pantallas web en las rutas que ella usa**: tiene su propio
+  conjunto (códigos 0xA…). Son despacho, alertas, convocatorias, flota, llamados, cartografía,
+  prevención, reservas, ausencias, adjuntos, la actualización de la app y unas pocas rutas sueltas (la
+  lista está en `backend/src/modules/seguridad/guards/rutas-app-movil.ts`, sacada de `.movile/lib`).
+  Un cliente que se hiciera pasar por la app evitaría las restricciones por pantalla de la web solo
+  en esas rutas (no los permisos por rol, que siguen rigiendo); en el resto de la API pasa por la
+  matriz web como cualquiera. Es un riesgo aceptado a confirmar por el cuartel.
+- La matriz **falla abierta**: si el servidor no puede leer las reglas (y nunca las leyó desde que
+  arrancó) o no puede resolver los roles, el rango o el cargo de la persona, deja pasar el pedido, y
+  mientras dure la falla no rige ninguna regla (tampoco la del Centro de mando). Si ya las había
+  leído, sigue usando las últimas conocidas. Lo mismo si el catálogo de pantallas no se pudo
+  sincronizar con la base: la matriz no bloquea a nadie hasta que se sincronice.
 - Centro de mando: "Alertas activas" muestra solicitante y detalle de todas las alertas pendientes a
   quien tenga servicios:ver, y "Guardia de turno" muestra nombres. Solo "Emergencias" se filtra por
   participación.
@@ -104,8 +134,11 @@ está en la web.
 - Los pendientes del Centro de mando consultan el permiso por rol, no las reglas por pantalla.
 - El contador que limita la auditoría de direcciones a una vez cada 10 minutos vive en memoria: se
   reinicia al reiniciar el servidor. La app móvil audita cada consulta, como antes.
-- Sistema › Tareas › "Procesar cola GRE" responde 403 en esta base: las migraciones 094 y 095
-  (GRE/MATPEL) no están aplicadas a propósito y esperan autorización de la institución.
+- Sistema › Tareas › "Procesar una importación" (GRE) no aparece para nadie en esta base: lo exige el
+  permiso matpel:administrar_gre, que siembra la migración 095, y las migraciones 094 y 095
+  (GRE/MATPEL) no están aplicadas a propósito: esperan autorización de la institución. Con la 095
+  aplicada y la 094 no, el botón aparece deshabilitado con el motivo ("Las migraciones 094 y 095 (GRE)
+  no están aplicadas.").
 - Las tareas programadas solo se pueden consultar y lanzar en Windows; en otro sistema la pestaña
   muestra "No disponible" con el motivo.
 - El registro de respaldos no escribe la fecha de cada corrida: la fecha sale del nombre del archivo.
@@ -123,5 +156,16 @@ está en la web.
 - Pantalla nueva ⇒ `cd frontend; npm run generar:pantallas`. Asigna su código (nunca renumera),
   registra a qué rutas de la API llama y actualiza el catálogo del backend. CI corre
   `npm run verificar:pantallas`.
-- Lo que el generador no puede deducir va en `frontend/scripts/pantallas-api-extra.json`.
+- Qué llamadas se le atribuyen a una pantalla: las de su `page.tsx` y de los componentes que importa
+  (`src/app`, `src/components`), completos; de `src/lib`, solo las funciones importadas por nombre y
+  los helpers del mismo archivo que esas usan. `import * as x` o un import por defecto de `src/lib`
+  cuenta el archivo completo. Una función de `src/lib` que ninguna pantalla importa no le asigna su
+  ruta a nadie (la matriz no la restringe; el permiso por rol sí).
+- Lo que el generador no puede deducir va en `frontend/scripts/pantallas-api-extra.json`: `llamadas`
+  por pantalla, `llamadasPorFuncion` por función de `src/lib` (cuenta solo para las pantallas que
+  usan esa función) y `acciones` (una ruta cuya acción no es la de su método).
+- Cuidado con `archivosCubiertos` de ese archivo: silencia las llamadas no resueltas (ruta en una
+  variable) de esos archivos, porque ya están declaradas a mano. Una llamada **nueva** con ruta
+  variable en uno de ellos tampoco aparecerá en "Llamadas sin resolver": hay que declararla en
+  `llamadas` o `llamadasPorFuncion`, o la matriz no la conocerá.
 - Especificación: `docs/superpowers/specs/2026-10-09-centro-de-mando-design.md`.
