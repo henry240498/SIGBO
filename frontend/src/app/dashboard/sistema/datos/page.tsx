@@ -15,6 +15,7 @@ export default function SistemaDatosPage() {
   const [permisos, setPermisos] = useState<string[]>([]);
   const [respaldos, setRespaldos] = useState<Respaldos | null>(null);
   const [migraciones, setMigraciones] = useState<Migraciones | null>(null);
+  const [errorMigraciones, setErrorMigraciones] = useState('');
   const [verificaciones, setVerificaciones] = useState<Record<string, { coincide: boolean | null; sha256: string }>>({});
   const [ocupado, setOcupado] = useState<string | null>(null);
   const [error, setError] = useState('');
@@ -23,10 +24,15 @@ export default function SistemaDatosPage() {
   useEffect(() => { setPermisos(obtenerSesion()?.usuario.permisos ?? []); }, []);
 
   const cargar = useCallback(async () => {
-    const [r, m] = await Promise.all([apiFetch('/sistema/respaldos'), apiFetch('/sistema/migraciones')]);
+    const [r, m] = await Promise.all([apiFetch('/sistema/respaldos'), apiFetch('/sistema/migraciones').catch((e: unknown) => e as Error)]);
     if (!r.ok) { const c = await r.json().catch(() => ({})); throw new Error(c.message ?? 'No se pudieron consultar los respaldos.'); }
     setRespaldos(await r.json());
-    if (m.ok) setMigraciones(await m.json());
+    if (m instanceof Error) setErrorMigraciones(m.message || 'No se pudo consultar el servidor.');
+    else if (m.ok) { setMigraciones(await m.json()); setErrorMigraciones(''); }
+    else {
+      const c = await m.json().catch(() => ({}));
+      setErrorMigraciones(c.message ?? `El servidor respondió ${m.status}.`);
+    }
   }, []);
   const actualizacion = useActualizacionPeriodica(cargar, 15_000);
   const puedeOperar = permisos.includes('sistema:operar') && puede('crear');
@@ -107,7 +113,8 @@ export default function SistemaDatosPage() {
 
       <section className="cm-panel" aria-labelledby="d-migraciones">
         <h2 id="d-migraciones">Migraciones de la base</h2>
-        {!migraciones ? <p className="cm-vacio">Consultando…</p> : !migraciones.disponible ? <p className="cm-vacio">No disponible: {migraciones.motivo}</p> : <>
+        {errorMigraciones && <Aviso tipo="error" texto={`No se pudo consultar las migraciones: ${errorMigraciones}`} fontSize={12} />}
+        {!migraciones ? (errorMigraciones ? null : <p className="cm-vacio">Consultando…</p>) : !migraciones.disponible ? <p className="cm-vacio">No disponible: {migraciones.motivo}</p> : <>
           <div className="cm-cifras">
             <div className="cm-cifra"><strong>{migraciones.aplicadas}/{migraciones.total}</strong><span>Aplicadas</span></div>
             <div className="cm-cifra"><strong>{migraciones.pendientes.length}</strong><span>Pendientes</span></div>

@@ -69,6 +69,7 @@ export const ESTADO_TAREA: Record<string, { texto: string; fondo: string }> = {
 };
 
 export function duracion(segundos: number): string {
+  if (!Number.isFinite(segundos) || segundos < 0) return '—';
   const d = Math.floor(segundos / 86_400);
   const h = Math.floor((segundos % 86_400) / 3_600);
   const m = Math.floor((segundos % 3_600) / 60);
@@ -78,6 +79,9 @@ export function duracion(segundos: number): string {
 }
 
 export function tamanio(bytes: number): string {
+  if (!Number.isFinite(bytes) || bytes < 0) return '—';
+  if (bytes === 0) return '0 B';
+  if (bytes >= 1_073_741_824) return `${(bytes / 1_073_741_824).toFixed(1)} GB`;
   return bytes >= 1_048_576 ? `${(bytes / 1_048_576).toFixed(1)} MB` : `${Math.max(1, Math.round(bytes / 1024))} KB`;
 }
 

@@ -36,6 +36,7 @@ export default function SistemaEstadoPage() {
   const [permisos, setPermisos] = useState<string[]>([]);
   const [estado, setEstado] = useState<EstadoSistema | null>(null);
   const [resumen, setResumen] = useState<ResumenSistema | null>(null);
+  const [errorResumen, setErrorResumen] = useState('');
   const [error, setError] = useState('');
   const [exito, setExito] = useState('');
   const [enCurso, setEnCurso] = useState<'snoopy' | 'ollama' | null>(null);
@@ -50,7 +51,11 @@ export default function SistemaEstadoPage() {
       throw new Error(cuerpo.message ?? 'No se pudo consultar el estado del sistema.');
     }
     setEstado(await e.json());
-    if (r.ok) setResumen(await r.json());
+    if (r.ok) { setResumen(await r.json()); setErrorResumen(''); }
+    else {
+      const cuerpo = await r.json().catch(() => ({}));
+      setErrorResumen(cuerpo.message ?? `El servidor respondió ${r.status}.`);
+    }
   }, []);
   const actualizacion = useActualizacionPeriodica(cargar, 15_000);
 
@@ -106,6 +111,7 @@ export default function SistemaEstadoPage() {
       {error && <Aviso tipo="error" texto={error} />}
       {exito && <Aviso tipo="exito" texto={exito} />}
 
+      {errorResumen && <Aviso tipo="error" texto={`No se pudo obtener el resumen: ${errorResumen}`} />}
       {resumen && <section className="cm-panel" aria-labelledby="sis-resumen">
         <h2 id="sis-resumen"><span>Resumen</span><span className={`semaforo semaforo-${resumen.nivel}`}>{ETIQUETA_NIVEL[resumen.nivel]}</span></h2>
         {resumen.alertas.length === 0 ? <p className="cm-vacio">Sin alertas.</p> : <ul className="cm-lista">

@@ -12,3 +12,11 @@ test('tamaño legible', () => {
   assert.equal(tamanio(500), '1 KB');
   assert.equal(tamanio(18_862_080), '18.0 MB');
 });
+
+test('bordes de duración y tamaño', () => {
+  assert.equal(duracion(0), '0 min');
+  for (const x of [-1, NaN, Infinity]) { assert.equal(duracion(x), '—'); assert.equal(tamanio(x), '—'); }
+  assert.equal(tamanio(0), '0 B');
+  assert.equal(tamanio(1_610_612_736), '1.5 GB');
+  assert.equal(tamanio(1_073_741_823), '1024.0 MB');
+});

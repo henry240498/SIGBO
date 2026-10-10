@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import QRCode from 'qrcode';
 import { apiFetch } from '@/lib/api';
 import { Aviso } from '@/app/components/Aviso';
@@ -27,10 +27,13 @@ export default function SistemaAppMovilPage() {
   const actualizacion = useActualizacionPeriodica(cargar, 30_000);
 
   // Los QR se generan aqui, en el navegador: ningun servicio externo ve las direcciones del cuartel.
+  // Clave estable: los QR se rehacen solo si cambian las direcciones, no en cada refresco de 30 s.
+  const claveQr = useMemo(() => (conexion ? JSON.stringify(conexion.direcciones.map((d) => ({ ip: d.ip, qrConectar: d.qrConectar, urlInstalar: d.urlInstalar }))) : ''), [conexion]);
   useEffect(() => {
-    if (!conexion) return;
+    if (!claveQr) return;
+    const direcciones = JSON.parse(claveQr) as Array<{ ip: string; qrConectar: string; urlInstalar: string }>;
     let vigente = true;
-    void Promise.all(conexion.direcciones.map(async (d) => [d.ip, {
+    void Promise.all(direcciones.map(async (d) => [d.ip, {
       conectar: await QRCode.toDataURL(d.qrConectar, { width: 220, margin: 2 }),
       instalar: await QRCode.toDataURL(d.urlInstalar, { width: 220, margin: 2 }),
     }] as const)).then((pares) => {
@@ -39,7 +42,7 @@ export default function SistemaAppMovilPage() {
       setErrorQr('');
     }).catch(() => { if (vigente) setErrorQr('No se pudieron generar los códigos QR. Las direcciones se muestran debajo de cada tarjeta.'); });
     return () => { vigente = false; };
-  }, [conexion]);
+  }, [claveQr]);
 
   if (!app || !conexion) return actualizacion.error ? <Aviso tipo="error" texto={actualizacion.error} /> : <Cargando texto="Consultando la app móvil…" />;
 

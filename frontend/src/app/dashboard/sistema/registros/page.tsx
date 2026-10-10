@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { apiFetch } from '@/lib/api';
 import { Aviso } from '@/app/components/Aviso';
+import { Cargando } from '@/app/components/Cargando';
 import { useRutasVisibles } from '@/app/components/PermisosPantallaProvider';
 import { MarcaActualizacion, useActualizacionPeriodica } from '@/app/components/useActualizacionPeriodica';
 import { fechaLegible, Registro } from '../tipos';
@@ -29,18 +30,36 @@ export default function SistemaRegistrosPage() {
   const [registro, setRegistro] = useState<Registro | null>(null);
   const [error, setError] = useState('');
 
+  // La seleccion vigente: una respuesta de otra seleccion (cambio rapido) se descarta.
+  const seleccion = useRef({ archivo, lineas });
+  seleccion.current = { archivo, lineas };
+
   const cargar = useCallback(async () => {
+    const pedido = { archivo, lineas };
+    const vigente = () => seleccion.current.archivo === pedido.archivo && seleccion.current.lineas === pedido.lineas;
     const res = await apiFetch(`/sistema/registros?archivo=${encodeURIComponent(archivo)}&lineas=${lineas}`);
     const c = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(c.message ?? 'No se pudo leer el registro.');
+    if (!vigente()) return;
+    if (!res.ok) {
+      setRegistro(null); // no dejar lineas de otro momento bajo el error
+      throw new Error(c.message ?? 'No se pudo leer el registro.');
+    }
+    if (c.clave !== archivo) return;
     setRegistro(c);
   }, [archivo, lineas]);
   const actualizacion = useActualizacionPeriodica(cargar, 5_000, seguir);
 
+  // Al cambiar de archivo o de cantidad: se vacia lo mostrado y, si se sigue en vivo, se lee enseguida.
+  useEffect(() => {
+    setRegistro(null);
+    setError('');
+    if (seguir) actualizacion.refrescar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [archivo, lineas]);
+
   // Sin "seguir en vivo", se lee una vez por cada cambio de archivo o de cantidad.
   useEffect(() => {
     if (seguir) return;
-    setError('');
     cargar().catch((e: Error) => setError(e.message));
   }, [cargar, seguir]);
 
@@ -75,6 +94,7 @@ export default function SistemaRegistrosPage() {
         </div>
       </section>
 
+      {!registro && !error && !(seguir && actualizacion.error) && <Cargando texto="Leyendo el registro…" />}
       {registro && !registro.disponible && <p className="cm-vacio">No disponible: {registro.motivo}</p>}
       {registro?.disponible && <section className="cm-panel" aria-labelledby="r-visor">
         <h2 id="r-visor"><span>{registro.archivo}</span><span className="cm-vacio">modificado {fechaLegible(registro.actualizadoEn)} · {visiblesLineas.length} línea(s)</span></h2>
