@@ -48,6 +48,9 @@ export default function PermisosPantallaPage() {
   const [soloRestringidas, setSoloRestringidas] = useState(true);
   /** Solo aplica la respuesta del ultimo pedido de reglas: elegir otra pantalla descarta las anteriores. */
   const pedidoReglas = useRef(0);
+  /** La pantalla elegida ahora: al terminar un guardado o una baja se recargan sus reglas, no las de la pantalla de cuando empezó. */
+  const codigoActual = useRef(codigo);
+  codigoActual.current = codigo;
 
   const grupos = useMemo(() => agruparPantallas(filas, catalogo, NOMBRES_MODULO), [filas, catalogo]);
   const visibles = useMemo(() => filtrarGrupos(grupos, busqueda), [grupos, busqueda]);
@@ -71,7 +74,7 @@ export default function PermisosPantallaPage() {
     finally { setCargando(false); }
   }
 
-  async function cargarReglas(paraCodigo = codigo) {
+  async function cargarReglas(paraCodigo = codigoActual.current) {
     const mio = ++pedidoReglas.current;
     if (!paraCodigo) { setReglas([]); return; }
     try {

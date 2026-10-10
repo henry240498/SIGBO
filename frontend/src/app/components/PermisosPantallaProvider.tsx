@@ -3,6 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { apiFetch, obtenerSesion } from '@/lib/api';
+import { conTope, MENSAJE_TOPE_INTENTO, TOPE_INTENTO_MS } from '@/lib/actualizacion';
 import { MODULOS } from '@/lib/modulos';
 import { PANTALLAS } from '@/lib/pantallas.generado';
 import { AccionUi, EstadoPermisos, MatrizWeb, matrizDeRespuesta, pantallasVisibles, PermisoPantalla, puede, tabsVisibles } from '@/lib/permisos-pantalla';
@@ -37,7 +38,12 @@ export function PermisosPantallaProvider({ children }: { children: React.ReactNo
   const cargar = useCallback(async () => {
     const mia = ++ultima.current;
     const vigente = () => montado.current && mia === ultima.current;
-    const [pantallas, acceso] = await Promise.allSettled([apiFetch('/pantallas/mis-permisos-web'), apiFetch('/centro-mando/acceso')]);
+    // Con tope: un pedido colgado no deja las pantallas en "Comprobando tus permisos…" (pasa a sin_datos;
+    // el servidor sigue exigiendo la matriz igual).
+    const [pantallas, acceso] = await Promise.allSettled([
+      conTope(apiFetch('/pantallas/mis-permisos-web'), TOPE_INTENTO_MS, MENSAJE_TOPE_INTENTO),
+      conTope(apiFetch('/centro-mando/acceso'), TOPE_INTENTO_MS, MENSAJE_TOPE_INTENTO),
+    ]);
     let datos: { activa?: boolean; pantallas?: PermisoPantalla[] } | null = null;
     if (pantallas.status === 'fulfilled' && pantallas.value.ok) {
       datos = (await pantallas.value.json().catch(() => null)) as { activa?: boolean; pantallas?: PermisoPantalla[] } | null;

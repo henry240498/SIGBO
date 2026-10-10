@@ -125,8 +125,9 @@ está en la web.
 - La matriz **falla abierta**: si el servidor no puede leer las reglas (y nunca las leyó desde que
   arrancó) o no puede resolver los roles, el rango o el cargo de la persona, deja pasar el pedido, y
   mientras dure la falla no rige ninguna regla (tampoco la del Centro de mando). Si ya las había
-  leído, sigue usando las últimas conocidas. Lo mismo si el catálogo de pantallas no se pudo
-  sincronizar con la base: la matriz no bloquea a nadie hasta que se sincronice.
+  leído, sigue usando las últimas conocidas. Si el catálogo de pantallas no se pudo sincronizar con
+  la base, las reglas sobre pantallas web no rigen hasta que se sincronice; las del Centro de mando
+  (la pantalla y sus secciones) siguen rigiendo con las reglas ya guardadas.
 - Centro de mando: "Alertas activas" muestra solicitante y detalle de todas las alertas pendientes a
   quien tenga servicios:ver, y "Guardia de turno" muestra nombres. Solo "Emergencias" se filtra por
   participación.
@@ -160,7 +161,9 @@ está en la web.
   (`src/app`, `src/components`), completos; de `src/lib`, solo las funciones importadas por nombre y
   los helpers del mismo archivo que esas usan. `import * as x` o un import por defecto de `src/lib`
   cuenta el archivo completo. Una función de `src/lib` que ninguna pantalla importa no le asigna su
-  ruta a nadie (la matriz no la restringe; el permiso por rol sí).
+  ruta a nadie (la matriz no la restringe; el permiso por rol sí). Un archivo de `src/lib` que
+  reexporta algo que importó (`import { a } from './y'; export { a };`) no lleva la dependencia: hoy
+  no pasa, pero si se hace, la ruta queda sin pantalla. Importar desde el archivo original.
 - Lo que el generador no puede deducir va en `frontend/scripts/pantallas-api-extra.json`: `llamadas`
   por pantalla, `llamadasPorFuncion` por función de `src/lib` (cuenta solo para las pantallas que
   usan esa función) y `acciones` (una ruta cuya acción no es la de su método).
