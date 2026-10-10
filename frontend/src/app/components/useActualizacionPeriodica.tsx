@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { haceCuanto, siguienteEspera } from '@/lib/actualizacion';
+import { conTope, haceCuanto, MENSAJE_TOPE_INTENTO, siguienteEspera, TOPE_INTENTO_MS } from '@/lib/actualizacion';
 
 export interface EstadoActualizacion {
   actualizadoEn: Date | null;
@@ -59,11 +59,13 @@ export function useActualizacionPeriodica(cargar: () => Promise<void>, intervalo
     if (manual || !tieneDato.current) setCargando(true);
     let mensaje: string | null = null;
     try {
-      await cargarRef.current();
+      // Un pedido colgado cuenta como fallo: sin tope, enCurso bloquearia el panel para siempre.
+      await conTope(cargarRef.current(), TOPE_INTENTO_MS, MENSAJE_TOPE_INTENTO);
     } catch (e) {
       mensaje = e instanceof Error ? e.message : 'No se pudo actualizar.';
+    } finally {
+      enCurso.current = false;
     }
-    enCurso.current = false;
     if (montado.current) setCargando(false);
     if (!montado.current) return;
     if (generacionInicial !== generacion.current) {
@@ -123,7 +125,7 @@ export function MarcaActualizacion({ actualizadoEn, error, cargando, refrescar }
     <div className="marca-actualizacion">
       <span className={`punto-vivo${error ? ' caido' : ''}`} aria-hidden="true" />
       <span role="status">{error ? 'Sin conexión con el servidor' : ''}</span>
-      <span>{error ? `último dato ${haceCuanto(actualizadoEn, ahora)}` : `Actualizado ${haceCuanto(actualizadoEn, ahora)}`}</span>
+      <span>{error ? `· último dato ${haceCuanto(actualizadoEn, ahora)}` : `Actualizado ${haceCuanto(actualizadoEn, ahora)}`}</span>
       <button type="button" className="service-secondary" onClick={refrescar} disabled={cargando}>{cargando ? 'Actualizando…' : 'Actualizar'}</button>
     </div>
   );
