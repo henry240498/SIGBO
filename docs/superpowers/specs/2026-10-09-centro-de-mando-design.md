@@ -444,3 +444,34 @@ Suite completa del backend al final (las 2 fallas previas de Despacho se informa
 5. Centro de mando (backend + pantalla) e Inicio.
 6. Pantallas del área Sistema.
 7. Documentación, grafo, verificación completa y recorrido real.
+
+## 15. Ajustes al escribir el plan (2026-10-09)
+
+Plan: `docs/superpowers/plans/2026-10-09-centro-de-mando.md`. Lo que cambió respecto de las
+secciones anteriores, y por qué:
+
+1. **§4.4** La web usa un endpoint nuevo, `GET /pantallas/mis-permisos-web`. `GET /pantallas/mis-permisos`
+   queda como está: la app móvil lo usa y cambiar su forma la rompía.
+2. **§5.2** Se agrega `GET /centro-mando/acceso` (para ocultar el ítem del menú a quien no tiene
+   acceso). Los accesos rápidos se arman en la web con el catálogo y la matriz: no hay
+   `GET /centro-mando/accesos`.
+3. **§6.3–6.4** Las tareas de Windows se consultan y lanzan con un script fijo de PowerShell
+   (`Get-ScheduledTask`/`Start-ScheduledTask`) en lugar de `schtasks /FO CSV`: da fechas exactas y un
+   estado que no depende del idioma de Windows. Sigue sin aceptar texto del cliente.
+4. **§5.4** No existe un endpoint de "documentos por vencer": el pendiente es "Vencimientos del
+   personal" (`personal:ver`, sin datos médicos).
+5. **§4.3** Rutas exentas de la matriz (anti-bloqueo): `/pantallas/*`, `/auth/*`, `/salud`,
+   `/centro-mando*`, el perfil propio, la configuración pública y las preferencias propias.
+6. **§4.4** Base de "ver" para la interfaz: el prefijo del módulo **y** alguno de los permisos de
+   sus GET (o una ruta abierta).
+7. **§4.3** `MatrizWebService` vive en un módulo `@Global`; `PermissionsGuard` lo recibe como
+   dependencia opcional y sigue siendo síncrono cuando no hay matriz (una prueba existente lo exige).
+8. **§4.3 y §6.5** Las denegaciones por pantalla y las lecturas de registros se auditan una vez cada
+   10 minutos por persona (las pantallas consultan cada pocos segundos).
+9. **§6.4** "Procesar ahora" de la GRE corre en segundo plano: una importación puede tardar minutos.
+10. **§5.4** El panel de alertas permite marcarlas atendidas o cancelarlas con el endpoint existente
+    (`PATCH /alertas/:id/estado`, `servicios:editar`): ninguna pantalla web las mostraba.
+11. **§4.1** Inicio, Mi perfil y Reportar quedan fuera de la matriz; las pantallas de detalle `[id]`
+    entran.
+12. **§5.6** Un único hook `useActualizacionPeriodica` y el indicador "Actualizado hace N s" para todas
+    las pantallas en vivo.
