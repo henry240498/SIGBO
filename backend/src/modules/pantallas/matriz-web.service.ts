@@ -246,6 +246,11 @@ export class MatrizWebService implements OnApplicationBootstrap {
     });
   }
 
+  /**
+   * Pantallas y secciones con las rutas de API de cada una. `compartidaCon` cuenta las OTRAS
+   * pantallas que usan la misma ruta: como una ruta pasa si alguna pantalla la permite,
+   * denegar esta pantalla no bloquea esa ruta mientras otra permitida la use.
+   */
   catalogoParaAdministrar() {
     return {
       activa: this.activa,
@@ -253,11 +258,14 @@ export class MatrizWebService implements OnApplicationBootstrap {
       pantallas: [
         ...this.catalogo.pantallas.map((p) => ({
           codigo: p.codigo, nombre: p.nombre, ruta: p.ruta, modulo: p.modulo, tipo: 'WEB' as const,
-          rutasApi: (this.indice.rutasPorPantalla.get(p.codigo) ?? []).map((r) => ({ metodo: r.metodo, patron: r.patron, permisos: r.permisos, exenta: esExenta(r.patron) })),
+          rutasApi: (this.indice.rutasPorPantalla.get(p.codigo) ?? []).map((r) => ({
+            metodo: r.metodo, patron: r.patron, permisos: r.permisos, exenta: esExenta(r.patron),
+            compartidaCon: (this.indice.pantallasPorRuta.get(claveRuta(r.metodo, r.patron)) ?? []).filter((c) => c !== p.codigo).length,
+          })),
         })),
         ...SECCIONES_CENTRO_MANDO.map((s) => ({
           codigo: s.codigo, nombre: `Centro de mando › ${s.nombre}`, ruta: '/dashboard/centro-mando', modulo: 'centro-mando', tipo: 'SECCION' as const,
-          rutasApi: [] as Array<{ metodo: MetodoHttp; patron: string; permisos: string[]; exenta: boolean }>,
+          rutasApi: [] as Array<{ metodo: MetodoHttp; patron: string; permisos: string[]; exenta: boolean; compartidaCon: number }>,
         })),
       ],
     };

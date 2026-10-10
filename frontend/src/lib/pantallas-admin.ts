@@ -1,7 +1,8 @@
 /** Agrupacion y busqueda de la administracion de reglas por pantalla (Seguridad › Pantallas). */
 
 export interface FilaPantalla { codigo: string; nombre: string; descripcion: string | null; confidencialAplica: boolean; activa: boolean }
-export interface RutaApiAdmin { metodo: string; patron: string; permisos: string[]; exenta: boolean }
+/** compartidaCon: cuantas OTRAS pantallas usan la misma ruta (0 si es exenta). */
+export interface RutaApiAdmin { metodo: string; patron: string; permisos: string[]; exenta: boolean; compartidaCon?: number }
 export interface PantallaCatalogoAdmin { codigo: string; nombre: string; ruta: string; modulo: string; tipo: 'WEB' | 'SECCION'; rutasApi: RutaApiAdmin[] }
 export interface PantallaAdmin extends FilaPantalla { ruta: string | null; rutasApi: RutaApiAdmin[]; tipo: 'WEB' | 'SECCION' | 'MOVIL' }
 export interface GrupoAdmin { clave: string; titulo: string; pantallas: PantallaAdmin[] }
@@ -26,6 +27,23 @@ export function agruparPantallas(filas: FilaPantalla[], catalogo: PantallaCatalo
   // Al final: las sin catalogo y, ultima, la app movil (otro canal, con sus propias pantallas).
   const rango = (g: GrupoAdmin) => (g.clave === 'app-movil' ? 2 : g.clave === 'sin-catalogo' ? 1 : 0);
   return lista.sort((a, b) => rango(a) - rango(b) || a.titulo.localeCompare(b.titulo, 'es'));
+}
+
+/**
+ * Como se lee la columna "Matriz" de una ruta: una ruta pasa si ALGUNA pantalla la permite,
+ * asi que en una compartida denegar esta pantalla no la bloquea mientras otra permitida la use.
+ */
+export function efectoDeLaMatriz(r: RutaApiAdmin): { texto: string; fondo: string; detalle: string | null } {
+  if (r.exenta) return { texto: 'exenta', fondo: 'var(--neutral-fill)', detalle: null };
+  const otras = r.compartidaCon ?? 0;
+  if (otras > 0) {
+    return {
+      texto: `compartida con ${otras} ${otras === 1 ? 'pantalla' : 'pantallas'}`,
+      fondo: 'var(--warn-fill)',
+      detalle: 'denegar esta no la bloquea si otra permitida la usa',
+    };
+  }
+  return { texto: 'aplica', fondo: 'var(--info-fill)', detalle: null };
 }
 
 export function filtrarGrupos(grupos: GrupoAdmin[], texto: string): GrupoAdmin[] {

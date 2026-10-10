@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { agruparPantallas, filtrarGrupos } from '../../src/lib/pantallas-admin.ts';
+import { agruparPantallas, efectoDeLaMatriz, filtrarGrupos } from '../../src/lib/pantallas-admin.ts';
 
 const filas = [
   { codigo: '0xA001', nombre: 'Alertas (app)', descripcion: null, confidencialAplica: false, activa: true },
@@ -38,4 +38,15 @@ test('una pantalla web ausente del catálogo va a "Sin catálogo", no a la app m
   assert.deepEqual(g.find((x) => x.titulo === 'App móvil').pantallas.map((p) => p.codigo), ['0xA001']);
   const vacio = agruparPantallas(extra, [], nombres);
   assert.deepEqual(vacio.map((x) => x.titulo), ['Sin catálogo', 'App móvil']);
+});
+
+test('una ruta compartida con otras pantallas no dice "aplica": avisa que denegar esta no la bloquea', () => {
+  const ruta = { metodo: 'DELETE', patron: '/x/:id', permisos: ['x:eliminar'], exenta: false };
+  assert.deepEqual(efectoDeLaMatriz({ ...ruta, compartidaCon: 0 }), { texto: 'aplica', fondo: 'var(--info-fill)', detalle: null });
+  assert.equal(efectoDeLaMatriz(ruta).texto, 'aplica');
+  const una = efectoDeLaMatriz({ ...ruta, compartidaCon: 1 });
+  assert.equal(una.texto, 'compartida con 1 pantalla');
+  assert.equal(una.detalle, 'denegar esta no la bloquea si otra permitida la usa');
+  assert.equal(efectoDeLaMatriz({ ...ruta, compartidaCon: 3 }).texto, 'compartida con 3 pantallas');
+  assert.equal(efectoDeLaMatriz({ ...ruta, exenta: true, compartidaCon: 0 }).texto, 'exenta');
 });

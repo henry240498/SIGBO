@@ -56,11 +56,17 @@ describe('MatrizWebService', () => {
     const s = await nueva(base);
     const demo = s.catalogoParaAdministrar().pantallas.find((p) => p.codigo === '0xB101')!;
     expect(demo.rutasApi).toEqual(expect.arrayContaining([
-      { metodo: 'GET', patron: '/demo', permisos: ['demo:ver'], exenta: false },
-      { metodo: 'DELETE', patron: '/demo/:id', permisos: ['demo:eliminar'], exenta: false },
-      { metodo: 'GET', patron: '/pantallas/reglas', permisos: [], exenta: true },
+      { metodo: 'GET', patron: '/demo', permisos: ['demo:ver'], exenta: false, compartidaCon: 1 },
+      { metodo: 'DELETE', patron: '/demo/:id', permisos: ['demo:eliminar'], exenta: false, compartidaCon: 0 },
+      { metodo: 'GET', patron: '/pantallas/reglas', permisos: [], exenta: true, compartidaCon: 0 },
     ]));
     expect(s.estado()).toMatchObject({ activa: true, sincronizada: true, rutasBackend: 4 });
+  });
+
+  it('informa con cuántas otras pantallas comparte cada ruta (denegar esta no la bloquea si otra la permite)', async () => {
+    const s = await nueva(base);
+    const otra = s.catalogoParaAdministrar().pantallas.find((p) => p.codigo === '0xB102')!;
+    expect(otra.rutasApi).toEqual([{ metodo: 'GET', patron: '/demo', permisos: ['demo:ver'], exenta: false, compartidaCon: 1 }]);
   });
 
   it('sin reglas configuradas no cambia nada', async () => {

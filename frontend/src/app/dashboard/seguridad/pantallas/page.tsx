@@ -6,7 +6,7 @@ import { MODULOS } from '@/lib/modulos';
 import { Aviso } from '@/app/components/Aviso';
 import { Cargando } from '@/app/components/Cargando';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
-import { agruparPantallas, FilaPantalla, filtrarGrupos, PantallaAdmin, PantallaCatalogoAdmin } from '@/lib/pantallas-admin';
+import { agruparPantallas, efectoDeLaMatriz, FilaPantalla, filtrarGrupos, PantallaAdmin, PantallaCatalogoAdmin } from '@/lib/pantallas-admin';
 
 type TipoSujeto = 'ROL' | 'USUARIO' | 'RANGO' | 'CARGO';
 type Accion = 'ver' | 'crear' | 'editar' | 'eliminar' | 'confidencial' | 'denegar';
@@ -173,7 +173,11 @@ export default function PermisosPantallaPage() {
                 <tbody>{pantalla.rutasApi.map((r) => <tr key={`${r.metodo} ${r.patron}`}>
                   <td><code>{r.metodo}</code></td><td><code>{r.patron}</code></td>
                   <td>{r.permisos.length ? r.permisos.join(' o ') : 'cualquier usuario'}</td>
-                  <td>{r.exenta ? <span className="badge" style={{ background: 'var(--neutral-fill)' }}>exenta</span> : <span className="badge" style={{ background: 'var(--info-fill)' }}>aplica</span>}</td>
+                  <td>{(() => {
+                    const e = efectoDeLaMatriz(r);
+                    return <><span className="badge" style={{ background: e.fondo }}>{e.texto}</span>
+                      {e.detalle && <small style={{ display: 'block', color: 'var(--muted)', marginTop: 2 }}>{e.detalle}</small>}</>;
+                  })()}</td>
                 </tr>)}</tbody>
               </table>
             </div>}
