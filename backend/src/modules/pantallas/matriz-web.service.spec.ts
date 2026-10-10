@@ -1,4 +1,4 @@
-import { Controller, Delete, ForbiddenException, Get } from '@nestjs/common';
+import { Controller, Delete, ForbiddenException, Get, Patch } from '@nestjs/common';
 import { MetadataScanner, Reflector } from '@nestjs/core';
 import { Pantalla, PantallaPermiso } from '../../shared/entities';
 import { BaseFalsa } from '../../shared/testing/base-falsa';
@@ -252,13 +252,35 @@ describe('PermissionsGuard con la matriz', () => {
     }),
   });
 
-  it('la app móvil (cabecera de dispositivo, sin cookies ni Origin) no queda bajo las reglas web', async () => {
+  it('la app móvil (cabecera de dispositivo, sin cookies ni Origin) no queda bajo las reglas web en las rutas que ella usa', async () => {
+    @Controller('alertas')
+    class AlertasDemo { @Patch(':id/estado') @RequirePermission('demo:ver') cambiar() { return {}; } }
+    const b = new BaseFalsa();
+    await regla(b, { pantallaCodigo: '0xB201', ver: true });
+    const s = new MatrizWebService(
+      { getControllers: () => [{ instance: new AlertasDemo(), metatype: AlertasDemo }] } as never, new MetadataScanner(), moduleRef as never, b as never,
+      { pantallas: [{ codigo: '0xB201', ruta: '/dashboard/x', nombre: 'X', modulo: 'x', prefijo: null, llamadas: [{ metodos: ['PATCH'], patron: '/alertas/*/estado' }] }], forzadas: [], sinResolver: 0 },
+    );
+    await s.onApplicationBootstrap();
+    const guard = new PermissionsGuard(new Reflector(), s);
+    const pedido = (cabeceras: Record<string, string>) => ({
+      getHandler: () => AlertasDemo.prototype.cambiar, getClass: () => AlertasDemo,
+      switchToHttp: () => ({ getRequest: () => ({ user: { id: 'u1', permisos: ['demo:ver'] }, method: 'PATCH', route: { path: '/api/v1/alertas/:id/estado' }, headers: cabeceras, get: (n: string) => cabeceras[n.toLowerCase()] }) }),
+    });
+    const movil = { 'x-sigbo-dispositivo': 'movil' };
+    expect(guard.canActivate(pedido(movil) as never)).toBe(true);
+    await expect(guard.canActivate(pedido({ ...movil, origin: 'http://localhost:3000' }) as never)).rejects.toBeInstanceOf(ForbiddenException);
+  });
+
+  it('fuera de las rutas de la app, el cliente nativo pasa por la matriz web como cualquiera', async () => {
     const b = new BaseFalsa();
     await regla(b, { ver: true });
     const guard = new PermissionsGuard(new Reflector(), await nueva(b));
     const movil = { 'x-sigbo-dispositivo': 'movil' };
-    expect(guard.canActivate(contexto(['demo:ver', 'demo:eliminar'], movil) as never)).toBe(true);
-    await expect(guard.canActivate(contexto(['demo:ver', 'demo:eliminar'], { ...movil, origin: 'http://localhost:3000' }) as never)).rejects.toBeInstanceOf(ForbiddenException);
+    await expect(guard.canActivate(contexto(['demo:ver', 'demo:eliminar'], movil) as never)).rejects.toBeInstanceOf(ForbiddenException);
+    // sin reglas configuradas no cambia nada
+    const libre = new PermissionsGuard(new Reflector(), await nueva(new BaseFalsa()));
+    await expect(libre.canActivate(contexto(['demo:ver', 'demo:eliminar'], movil) as never)).resolves.toBe(true);
   });
 
   it('primero exige el permiso por rol (síncrono, como antes)', async () => {

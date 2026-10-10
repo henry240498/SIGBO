@@ -4,7 +4,9 @@ import { PERMISSION_KEY } from '../decorators/require-permission.decorator';
 import { AuthenticatedUser } from '../../auth/types/authenticated-user';
 import { leerAccessCookie, leerRefreshCookie } from '../../auth/auth-cookies';
 import { esClienteNativo } from '../../auth/csrf.middleware';
+import { sinPrefijo } from '../../pantallas/matriz-web.logica';
 import { MatrizWebService } from '../../pantallas/matriz-web.service';
+import { esRutaDeAppMovil } from './rutas-app-movil';
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {
@@ -36,10 +38,12 @@ export class PermissionsGuard implements CanActivate {
 
     // Despues del rol, la matriz por pantalla: solo restringe, y sin reglas no cambia nada.
     if (!this.matriz || !user) return true;
-    // La app movil tiene su propia matriz (0xA): las reglas de pantallas web gobiernan solo la web.
-    // Se la reconoce igual que el middleware CSRF (cabecera de dispositivo, sin cookies ni Origin).
+    // La app movil tiene su propia matriz (0xA): en las rutas que ella usa, las reglas de
+    // pantallas web no la gobiernan. Se la reconoce igual que el middleware CSRF (cabecera de
+    // dispositivo, sin cookies ni Origin). Fuera de esas rutas pasa por la matriz web.
     const usaCookies = Boolean(leerAccessCookie(request) || leerRefreshCookie(request));
-    if (esClienteNativo(request, usaCookies)) return true;
-    return this.matriz.exigirEnRuta(user, request.method, request.route?.path).then(() => true);
+    const ruta: string | undefined = request.route?.path;
+    if (ruta && esClienteNativo(request, usaCookies) && esRutaDeAppMovil(request.method, sinPrefijo(ruta))) return true;
+    return this.matriz.exigirEnRuta(user, request.method, ruta).then(() => true);
   }
 }
