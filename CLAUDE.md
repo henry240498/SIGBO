@@ -57,7 +57,8 @@ Las críticas, en corto. El detalle está en `.context/RULES.md`.
 3. **Todo endpoint declara `@RequirePermission('modulo:accion')`** con `JwtAuthGuard` +
    `PermissionsGuard`. Un permiso nuevo son **dos** pasos: usarlo *y* sembrarlo en
    `seguridad.permisos`. Si falta el segundo, nadie puede usar el endpoint nunca (403 sin
-   explicación).
+   explicación). Además, la matriz por pantalla (Seguridad › Permisos por pantalla) puede
+   restringir cualquier endpoint usado por una pantalla web; ver `docs/CENTRO-DE-MANDO.md`.
 4. **El frontend oculta, el backend autoriza.** Los chequeos en React son cosmética: la
    lista de permisos vive en `localStorage`.
 5. **Permiso efectivo** = roles vigentes + directos concedidos − directos denegados. La
@@ -91,8 +92,9 @@ Las críticas, en corto. El detalle está en `.context/RULES.md`.
     texto de la etiqueta es dinámico. Un `<label>` suelto no nombra el campo ni permite
     enfocarlo con un clic. Los `<th>` llevan `scope="col"`.
     `npm run audit:a11y` falla si vuelve a aparecer alguno sin asociar.
-11. **Pantalla nueva ⇒ `npm run generar:pantallas`.** `src/lib/pantallas.generado.ts`
-    alimenta las migas de pan y el buscador (Ctrl+K); si no se regenera, la pantalla
+11. **Pantalla nueva ⇒ `npm run generar:pantallas`.** Alimenta las migas, el buscador
+    (Ctrl+K) **y la matriz de permisos por pantalla** (código estable y rutas de API); CI lo
+    verifica con `npm run verificar:pantallas`. Si no se regenera, la pantalla
     existe pero nadie la encuentra. El nombre legible sale del array `TABS` del
     `layout.tsx` del módulo, así que conviene agregarla ahí primero.
 
@@ -120,6 +122,10 @@ vive en el módulo cuyo permiso gobierna sus endpoints — ver
 `.context/graph/curated/decision/decision--pantalla-vive-donde-su-permiso.md`.
 
 ## Cómo correrlo
+
+`iniciar-sigbo.bat -Rebuild` (o `iniciar-sigbo.ps1`) levanta SQL Server en Docker, Ollama, el
+backend (3001) y el frontend (**3002**); `start-sigbo.ps1` es el iniciador anterior (frontend en
+3000).
 
 ```powershell
 cd backend;  npm run start:dev    # http://localhost:3001/api/v1  · Swagger en /api/docs

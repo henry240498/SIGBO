@@ -46,6 +46,7 @@ No copiar versiones, estado de Git o resultados históricos como si fueran hecho
 <!-- BEGIN ECOSYSTEM DETAILS -->
 ## Documentos por tarea
 
+- [CENTRO-DE-MANDO.md](<../docs/CENTRO-DE-MANDO.md>) — Centro de mando, permisos por pantalla en toda la web y área Sistema
 - [DESPACHO.md](<DESPACHO.md>) — despacho y coordinación operativa (estado por fases)
 - [MOVIL.md](<MOVIL.md>) — app móvil, offline, APK, reportes y estado de pruebas
 - [MATPEL.md](<MATPEL.md>) — integración GRE/MATPEL/SCI, plan por fases y estado verificable
