@@ -5,5 +5,6 @@ import { AppMovilService } from './app-movil.service';
 @Module({
   controllers: [AppMovilController],
   providers: [AppMovilService],
+  exports: [AppMovilService],
 })
 export class AppMovilModule {}

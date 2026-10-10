@@ -60,4 +60,15 @@ export class DespachoTiempoReal {
   ultimaActividad(usuarioId: string): Date | null {
     return this.actividad.get(usuarioId) ?? null;
   }
+
+  /** Streams abiertos en total (Sistema › Estado). */
+  totalConexiones(): number {
+    let total = 0;
+    for (const n of this.conexiones.values()) total += n;
+    return total;
+  }
+
+  personasConectadas(): number {
+    return this.conexiones.size;
+  }
 }

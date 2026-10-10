@@ -1,4 +1,4 @@
-import { Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { ConflictException, Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { AvisoVencimiento } from '../../shared/entities';
@@ -39,6 +39,8 @@ export class AvisosVencimientoService implements OnModuleInit, OnModuleDestroy {
   private readonly log = new Logger('AvisosVencimiento');
   private temporizador: NodeJS.Timeout | null = null;
   private inicial: NodeJS.Timeout | null = null;
+  private ocupado = false;
+  private ultima: { en: Date; enviados: number; motivo: string | null; error: string | null } | null = null;
 
   constructor(
     @InjectDataSource() private readonly dataSource: DataSource,
@@ -60,11 +62,48 @@ export class AvisosVencimientoService implements OnModuleInit, OnModuleDestroy {
   }
 
   private async ejecutarSeguro() {
+    if (this.ocupado) return;
+    this.ocupado = true;
     try {
       const r = await this.ejecutar();
+      this.ultima = { en: new Date(), enviados: r.enviados, motivo: r.motivo ?? null, error: null };
       if (r.enviados > 0) this.log.log(`Aviso de vencimientos enviado (${r.enviados}).`);
     } catch (error) {
-      this.log.warn(`No se pudo revisar los vencimientos: ${error instanceof Error ? error.message : 'error'}`);
+      const mensaje = error instanceof Error ? error.message : 'error';
+      this.ultima = { en: new Date(), enviados: 0, motivo: null, error: mensaje };
+      this.log.warn(`No se pudo revisar los vencimientos: ${mensaje}`);
+    } finally {
+      this.ocupado = false;
+    }
+  }
+
+  /** Lo que muestra Sistema › Tareas. */
+  estado() {
+    return {
+      programado: this.temporizador !== null,
+      intervaloHoras: INTERVALO_MS / 3_600_000,
+      ocupado: this.ocupado,
+      telegramConfigurado: this.telegram.habilitado(),
+      ultimaEjecucion: this.ultima?.en ?? null,
+      ultimosEnviados: this.ultima?.enviados ?? null,
+      ultimoMotivo: this.ultima?.motivo ?? null,
+      ultimoError: this.ultima?.error ?? null,
+    };
+  }
+
+  /** "Ejecutar ahora" desde Sistema › Tareas. */
+  async ejecutarAhora(): Promise<{ enviados: number; motivo?: string }> {
+    if (this.ocupado) throw new ConflictException('La revisión de vencimientos ya está corriendo.');
+    this.ocupado = true;
+    try {
+      const r = await this.ejecutar();
+      this.ultima = { en: new Date(), enviados: r.enviados, motivo: r.motivo ?? null, error: null };
+      return r;
+    } catch (error) {
+      this.ultima = { en: new Date(), enviados: 0, motivo: null, error: error instanceof Error ? error.message : 'error' };
+      throw error;
+    } finally {
+      this.ocupado = false;
     }
   }
 

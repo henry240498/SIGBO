@@ -32,7 +32,7 @@ export class AlertasController {
   @Sse('stream')
   @RequirePermission('servicios:ver')
   stream(): Observable<{ data: unknown }> {
-    return this.alertasService.observarEventos().pipe(
+    return this.alertasService.flujo().pipe(
       map((alerta) => ({
         data: {
           id: alerta.id,

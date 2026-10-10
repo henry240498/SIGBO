@@ -41,6 +41,16 @@ export class AppMovilService {
     return process.env.APP_MOVIL_DIR || join(process.cwd(), 'storage', 'app-movil');
   }
 
+  /** Huella del certificado de firma publicada junto al APK (certificado.sha256), si existe. */
+  huellaCertificado(): string | null {
+    try {
+      const texto = readFileSync(join(this.directorio(), 'certificado.sha256'), 'utf8').trim();
+      return texto.split(/\s+/)[0] || null;
+    } catch {
+      return null;
+    }
+  }
+
   private rutaApk(): string {
     return join(this.directorio(), 'sigbo-alertas.apk');
   }

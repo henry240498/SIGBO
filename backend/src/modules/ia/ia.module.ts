@@ -107,5 +107,6 @@ import { IaDashboardController } from './ia-dashboard.controller';
     IaDashboardService,
     IaRateLimitGuard,
   ],
+  exports: [IaConfiguracionService, OllamaService, WhisperService, PiperService],
 })
 export class IaModule {}

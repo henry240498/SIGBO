@@ -1,5 +1,5 @@
 import {
-  Body, Controller, Get, NotFoundException, Param, ParseIntPipe, ParseUUIDPipe, Post, Query, Req, Res, UseGuards,
+  Body, ConflictException, Controller, Get, NotFoundException, Param, ParseIntPipe, ParseUUIDPipe, Post, Query, Req, Res, UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
@@ -10,6 +10,7 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import type { AuthenticatedUser } from '../auth/types/authenticated-user';
 import { RequirePermission } from '../seguridad/decorators/require-permission.decorator';
+import { AuditoriaService } from '../seguridad/auditoria.service';
 import { PermissionsGuard } from '../seguridad/guards/permissions.guard';
 import {
   ActivarVersionDto, CompararVersionesDto, ReferenciasGreDto, RegistrarRevisionDto, SolicitarImportacionDto, ValidarVersionDto,
@@ -19,6 +20,7 @@ import { GreComparacionService } from './gre-comparacion.service';
 import { GreFuentesService } from './gre-fuentes.service';
 import { ContextoGre, GreImportacionService } from './gre-importacion.service';
 import { GreRevisionService } from './gre-revision.service';
+import { GreTrabajadorService } from './gre-trabajador.service';
 
 /**
  * Administración de la GRE (fase 3D): fuentes, importación, revisión dato ↔ fuente,
@@ -40,6 +42,8 @@ export class GreAdminController {
     private readonly activacion: GreActivacionService,
     private readonly fuentes: GreFuentesService,
     @InjectDataSource() private readonly ds: DataSource,
+    private readonly trabajador: GreTrabajadorService,
+    private readonly auditoria: AuditoriaService,
   ) {}
 
   private ctx(user: AuthenticatedUser, req: Request): ContextoGre {
@@ -50,6 +54,17 @@ export class GreAdminController {
   @RequirePermission('matpel:administrar_gre')
   documentos() {
     return this.importacion.documentos();
+  }
+
+  /** Procesa ya una importacion pendiente (el trabajador automatico puede estar apagado). */
+  @Post('importaciones/procesar')
+  @RequirePermission('matpel:administrar_gre')
+  async procesarPendiente(@CurrentUser() user: AuthenticatedUser, @Req() req: Request) {
+    const [fila] = await this.ds.query(`SELECT OBJECT_ID(N'matpel.gre_importaciones', N'U') AS id`);
+    if (!fila?.id) throw new ConflictException('La base no tiene las tablas del GRE: las migraciones 094 y 095 no están aplicadas (decisión de la institución).');
+    const resultado = this.trabajador.iniciarProcesamiento();
+    await this.auditoria.registrar({ usuarioId: user.id, accion: 'GRE_PROCESAMIENTO_SOLICITADO', recurso: 'matpel.gre_importaciones', ip: req.ip ?? null, userAgent: req.headers['user-agent'] ?? null });
+    return resultado;
   }
 
   @Post('importaciones')

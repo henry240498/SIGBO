@@ -1,7 +1,7 @@
 import { ConflictException, Injectable, NotFoundException, Optional } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MoreThan, Repository } from 'typeorm';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import {
   AlertaEmergencia,
   EstadoAlertaEmergencia,
@@ -39,8 +39,26 @@ export class AlertasService {
     @Optional() private readonly telegram?: TelegramService,
   ) {}
 
+  private suscriptores = 0;
+
   observarEventos(): Subject<AlertaEmergencia> {
     return this.eventos$;
+  }
+
+  /** Flujo del SSE de alertas que ademas cuenta cuantos lo escuchan (Sistema › Estado). */
+  flujo(): Observable<AlertaEmergencia> {
+    return new Observable<AlertaEmergencia>((destino) => {
+      this.suscriptores++;
+      const s = this.eventos$.subscribe(destino);
+      return () => {
+        this.suscriptores--;
+        s.unsubscribe();
+      };
+    });
+  }
+
+  suscriptoresActivos(): number {
+    return this.suscriptores;
   }
 
   async crear(

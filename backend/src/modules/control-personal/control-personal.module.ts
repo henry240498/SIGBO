@@ -10,5 +10,6 @@ import { VencimientosService } from './vencimientos.service';
   imports: [SeguridadModule],
   controllers: [ControlPersonalController],
   providers: [VencimientosService, HorasServicioService, FichajeService, AvisosVencimientoService],
+  exports: [AvisosVencimientoService, VencimientosService],
 })
 export class ControlPersonalModule {}

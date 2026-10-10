@@ -34,6 +34,6 @@ import { GreTrabajadorService } from './gre-trabajador.service';
     GreComparacionService, GreActivacionService, GreTrabajadorService,
     { provide: GRE_RAIZ_PRIVADA, useFactory: () => join(process.cwd(), 'private_uploads', 'gre') },
   ],
-  exports: [GreCatalogoService, GreFuentesService],
+  exports: [GreCatalogoService, GreFuentesService, GreTrabajadorService],
 })
 export class GreModule {}
