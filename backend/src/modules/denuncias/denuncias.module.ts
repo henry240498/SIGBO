@@ -12,5 +12,6 @@ import { RateLimitGuard } from './guards/rate-limit.guard';
   imports: [TypeOrmModule.forFeature([Denuncia, CategoriaDenuncia, HistorialEstadoDenuncia, EvidenciaDenuncia, Servicio, TipoServicio, Vehiculo, ComunicacionServicio, Usuario]), SeguridadModule],
   controllers: [DenunciasPublicasController, DenunciasController],
   providers: [DenunciasService, OptionalJwtAuthGuard, RateLimitGuard],
+  exports: [DenunciasService],
 })
 export class DenunciasModule {}

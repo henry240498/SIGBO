@@ -116,7 +116,8 @@ export class ConfiguracionService {
       if(def.tipo==='texto'&&(typeof value!=='string'||value.length>2000))errors.push(`${key} debe ser texto válido`);
       if(def.tipo==='numero'&&(typeof value!=='number'||(def.min!==undefined&&value<def.min)||(def.max!==undefined&&value>def.max)))errors.push(`${key} está fuera de rango`);
       if(def.tipo==='color'&&(typeof value!=='string'||!/^#[0-9a-f]{6}$/i.test(value)))errors.push(`${key} debe ser color hexadecimal`);
-      if(def.allowed&&!def.allowed.includes(value))errors.push(`${key} contiene un valor no permitido`);
+      if(def.tipo==='lista'&&(!Array.isArray(value)||value.some(v=>!def.allowed?.includes(v))))errors.push(`${key} debe ser una lista de valores permitidos`);
+      if(def.allowed&&def.tipo!=='lista'&&!def.allowed.includes(value))errors.push(`${key} contiene un valor no permitido`);
     }
     if(errors.length)throw new BadRequestException(errors);
   }
@@ -129,4 +130,12 @@ export class ConfiguracionService {
     const ratio=this.contrast(bg,text);return ratio<4.5?[{key:'tokens.text',critical:true,ratio:Number(ratio.toFixed(2)),message:`El contraste texto/fondo es ${ratio.toFixed(2)}:1; WCAG AA requiere 4.5:1.`}]:[];
   }
   private contrast(a:string,b:string){const lum=(hex:string)=>{const rgb=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255).map(v=>v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4));return .2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2]};const [x,y]=[lum(a),lum(b)].sort((m,n)=>n-m);return(x+.05)/(y+.05);}
+
+  /** Valor GLOBAL publicado de una clave (o su valor por defecto). Para que otros modulos lean la configuracion. */
+  async valorGlobal<T>(clave: string): Promise<T> {
+    const def = CONFIG_BY_KEY.get(clave);
+    if (!def) throw new Error(`Clave de configuración desconocida: ${clave}`);
+    const fila = await this.valoresRepo.findOne({ where: { alcance: 'GLOBAL', clave } });
+    return (fila ? JSON.parse(fila.valorJson) : def.defaultValue) as T;
+  }
 }

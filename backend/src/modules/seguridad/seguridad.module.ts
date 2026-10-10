@@ -82,6 +82,6 @@ import { PerfilController } from './perfil.controller';
     AparienciaService,
     PerfilService,
   ],
-  exports: [PolicyEngineService, AuditoriaService],
+  exports: [PolicyEngineService, AuditoriaService, PerfilService],
 })
 export class SeguridadModule {}

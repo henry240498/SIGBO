@@ -3,7 +3,7 @@ import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource, In, IsNull } from 'typeorm';
 import {
   Despacho, DisponibilidadPersonal, FormularioDefinicion, FormularioHistorial,
-  FormularioRespuesta, PosicionMovil, Servicio, ServicioMensaje, ServicioParticipante, TipoServicio, Vehiculo,
+  FormularioRespuesta, PersonalServicio, PosicionMovil, Servicio, ServicioMensaje, ServicioParticipante, TipoServicio, Vehiculo,
 } from '../../shared/entities';
 import { instanteDelHecho } from '../../shared/utils/instante';
 import { AuditoriaService } from '../seguridad/auditoria.service';
@@ -48,7 +48,37 @@ export class ServicioActivoService {
 
   async activos(user: AuthenticatedUser) {
     await this.exigirPantalla(user, '0xA006', 'ver');
-    const servicios = await this.dataSource.getRepository(Servicio).find({ where: { estado: In([...ESTADOS_ACTIVOS]) }, order: { fechaHoraAviso: 'DESC' }, take: 100 });
+    return this.resumirActivos(await this.serviciosActivos(), user);
+  }
+
+  /**
+   * Emergencias en curso para el Centro de mando (spec 2026-10-09 §5.5): quien supervisa
+   * (central, comandancia) ve todas; el resto, solo las que integra: participante vigente
+   * del servicio o integrante del personal del servicio con su ficha de bombero.
+   */
+  async activosParaCentroMando(user: AuthenticatedUser, opciones: { supervisor: boolean; bomberoId: string | null }) {
+    let servicios = await this.serviciosActivos();
+    if (!opciones.supervisor && servicios.length) {
+      const ids = servicios.map((s) => s.id);
+      const participa = new Set(
+        (await this.dataSource.getRepository(ServicioParticipante).find({ where: { servicioId: In(ids), usuarioId: user.id } }))
+          .filter((p) => !p.hasta && p.estado !== 'RETIRADO')
+          .map((p) => p.servicioId),
+      );
+      if (opciones.bomberoId) {
+        const personal = await this.dataSource.getRepository(PersonalServicio).find({ where: { servicioId: In(ids), bomberoId: opciones.bomberoId } });
+        for (const p of personal) participa.add(p.servicioId);
+      }
+      servicios = servicios.filter((s) => participa.has(s.id));
+    }
+    return { supervisor: opciones.supervisor, servicios: await this.resumirActivos(servicios, user) };
+  }
+
+  private serviciosActivos() {
+    return this.dataSource.getRepository(Servicio).find({ where: { estado: In([...ESTADOS_ACTIVOS]) }, order: { fechaHoraAviso: 'DESC' }, take: 100 });
+  }
+
+  private async resumirActivos(servicios: Servicio[], user: AuthenticatedUser) {
     const tipos = await this.dataSource.getRepository(TipoServicio).find({ where: { id: In([...new Set(servicios.map((s) => s.tipoServicioId))]) } });
     const participantes = servicios.length ? await this.dataSource.getRepository(ServicioParticipante).find({ where: { servicioId: In(servicios.map((s) => s.id)) } }) : [];
     const moviles = servicios.length ? await this.dataSource.getRepository(Despacho).find({ where: { servicioId: In(servicios.map((s) => s.id)), estado: In(['DESPACHADO', 'EN_SERVICIO', 'REGRESANDO']) } }) : [];
@@ -56,6 +86,7 @@ export class ServicioActivoService {
     const conf = await this.puedeConfidencial(user, '0xA006');
     const salida = servicios.map((s) => ({
       id: s.id, numeroServicio: s.numeroServicio, tipo: tipoPorId.get(s.tipoServicioId) ?? 'Servicio', estado: s.estado,
+      gravedad: s.gravedad ?? null,
       fechaHoraAviso: s.fechaHoraAviso, personal: participantes.filter((p) => p.servicioId === s.id && !p.hasta && p.estado !== 'RETIRADO').length,
       enCamino: participantes.filter((p) => p.servicioId === s.id && !p.hasta && p.estado === 'EN_CAMINO').length,
       moviles: moviles.filter((m) => m.servicioId === s.id).length,

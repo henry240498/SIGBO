@@ -7,5 +7,6 @@ import { ReservasService } from './reservas.service';
   imports: [SeguridadModule],
   controllers: [ReservasController],
   providers: [ReservasService],
+  exports: [ReservasService],
 })
 export class ReservasModule {}

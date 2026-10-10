@@ -10,5 +10,6 @@ import { InformeService } from './informe.service';
   imports: [SeguridadModule],
   controllers: [FlotaController],
   providers: [FlotaService, DotacionService, DisponibilidadService, InformeService],
+  exports: [FlotaService, DisponibilidadService],
 })
 export class FlotaModule {}

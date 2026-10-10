@@ -38,6 +38,7 @@ import { ReservasModule } from './modules/reservas/reservas.module';
 import { PrevencionModule } from './modules/prevencion/prevencion.module';
 import { GreModule } from './modules/gre/gre.module';
 import { SistemaModule } from './modules/sistema/sistema.module';
+import { CentroMandoModule } from './modules/centro-mando/centro-mando.module';
 
 @Module({
   imports: [
@@ -78,6 +79,7 @@ import { SistemaModule } from './modules/sistema/sistema.module';
     PrevencionModule,
     GreModule,
     SistemaModule,
+    CentroMandoModule,
   ],
 })
 export class AppModule implements NestModule {
