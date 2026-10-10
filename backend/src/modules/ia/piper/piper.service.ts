@@ -5,6 +5,7 @@ import { mkdtemp, readFile, rm } from 'fs/promises';
 import { tmpdir } from 'os';
 import { dirname, join } from 'path';
 import { ConfiguracionIa } from '../../../shared/entities';
+import { carpetaPermitidaPiper, validarRutasPiper } from './piper-rutas';
 
 export interface EstadoPiper {
   disponible: boolean;
@@ -50,6 +51,8 @@ export class PiperService {
   estado(config: ConfiguracionIa): EstadoPiper {
     const rutaBinario = config.piperRutaBinario;
     const rutaVoz = config.piperRutaVoz;
+    const motivo = validarRutasPiper(rutaBinario, rutaVoz, carpetaPermitidaPiper(rutaBinario));
+    if (motivo) return { disponible: false, rutaBinario, rutaVoz, error: motivo };
     if (!rutaBinario || !existsSync(rutaBinario)) {
       return { disponible: false, rutaBinario, rutaVoz, error: 'No se encontró el ejecutable de Piper en la ruta configurada.' };
     }

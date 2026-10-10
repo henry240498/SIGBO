@@ -5,6 +5,7 @@ import { ConfiguracionIa, ConversacionIa, EjecucionHerramientaIa, EstadoConfigur
 import { borrarImagenSiExiste, guardarImagen } from '../../shared/utils/almacenamiento';
 import { AuditoriaService } from '../seguridad/auditoria.service';
 import { CambiarEstadoIaDto, EliminarIaDto, SeleccionarAvatarPredefinidoDto, UpdateConfiguracionIaDto } from './dto/configuracion-ia.dto';
+import { carpetaPermitidaPiper, validarRutasPiper } from './piper/piper-rutas';
 
 export const CARPETA_AVATAR_IA = 'ia-avatar';
 
@@ -73,6 +74,12 @@ export class IaConfiguracionService {
 
   async actualizar(dto: UpdateConfiguracionIaDto, actorId: string, ip: string | null): Promise<ConfiguracionIa> {
     const actual = await this.obtener();
+    if (dto.piperRutaBinario !== undefined || dto.piperRutaVoz !== undefined) {
+      const binario = dto.piperRutaBinario ?? actual.piperRutaBinario;
+      const voz = dto.piperRutaVoz ?? actual.piperRutaVoz;
+      const motivo = validarRutasPiper(binario || null, voz || null, carpetaPermitidaPiper(actual.piperRutaBinario));
+      if (motivo) throw new BadRequestException(motivo);
+    }
     await this.repo.update(actual.id, {
       ...(dto.nombre !== undefined ? { nombre: dto.nombre } : {}),
       ...(dto.personaje !== undefined ? { personaje: dto.personaje } : {}),
