@@ -5,7 +5,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  decisionDeRuta, destinoDeModulo, esperarPermisos, indexarPorRuta, moduloVisibleEnMenu, motivoSinAcceso, pantallaDeRuta, pantallasVisibles,
+  decisionDeRuta, destinoDeModulo, esperarPermisos, filtrarMigas, indexarPorRuta, matrizDeRespuesta, moduloVisibleEnMenu, motivoSinAcceso, pantallaDeRuta, pantallasVisibles,
   pantallasVisiblesDelModulo, puede, tabsVisibles,
 } from '../../src/lib/permisos-pantalla.ts';
 
@@ -112,4 +112,19 @@ test('el menú y el Inicio llevan a la primera pantalla visible del módulo si l
 test('"Sin acceso" ofrece las otras pantallas visibles del mismo módulo (sin las de detalle)', () => {
   const matriz = indexarPorRuta([permiso('/dashboard/personal', { ver: false }), permiso('/dashboard/personal/control'), permiso('/dashboard/personal/[id]'), permiso('/dashboard/personal/nuevo', { ver: false })]);
   assert.deepEqual(pantallasVisiblesDelModulo('personal', PANTALLAS, [], matriz, MODULOS).map((p) => p.ruta), ['/dashboard/personal/control']);
+});
+
+test('migas de pan: un tramo cuya pantalla no se puede ver queda sin enlace; sin datos, todas', () => {
+  const migas = [{ nombre: 'Inicio', href: '/dashboard' }, { nombre: 'Personal', href: '/dashboard/personal' }, { nombre: 'Control' }];
+  const matriz = indexarPorRuta([permiso('/dashboard/personal', { ver: false }), permiso('/dashboard/personal/control')]);
+  assert.deepEqual(filtrarMigas(migas, PANTALLAS, matriz), [{ nombre: 'Inicio', href: '/dashboard' }, { nombre: 'Personal' }, { nombre: 'Control' }]);
+  assert.deepEqual(filtrarMigas(migas, PANTALLAS, null), migas);
+});
+
+test('con activa:false (el servidor no armó su índice) la web no oculta nada por la matriz', () => {
+  const pantallas = [permiso('/dashboard/personal', { crear: false, editar: false, eliminar: false })];
+  assert.equal(matrizDeRespuesta({ activa: false, pantallas }), null);
+  assert.equal(matrizDeRespuesta(null), null);
+  assert.equal(matrizDeRespuesta({ activa: true, pantallas }).get('/dashboard/personal').crear, false);
+  assert.equal(puede('/dashboard/personal', PANTALLAS, matrizDeRespuesta({ activa: false, pantallas }), 'crear'), true);
 });

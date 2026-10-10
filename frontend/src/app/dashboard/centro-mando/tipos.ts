@@ -1,4 +1,6 @@
 /** Forma de GET /centro-mando (backend: CentroMandoService.panel). */
+import type { ResumenSistema } from '../sistema/tipos';
+
 export type Seccion<T> = { estado: 'ok'; datos: T } | { estado: 'error'; error: string };
 
 export interface Emergencia {
@@ -28,8 +30,6 @@ export interface Pendiente {
   clave: string; titulo: string; cantidad: number | null; detalle: string | null; enlace: string;
   nivel: 'normal' | 'atencion' | 'critico'; error: string | null;
 }
-export interface ResumenSistema { nivel: 'normal' | 'atencion' | 'critico'; alertas: Array<{ nivel: 'critica' | 'advertencia' | 'info'; mensaje: string }> }
-
 export interface PanelCentroMando {
   generadoEn: string;
   acceso: 'PERMITIDO' | 'SIN_ACCESO';
@@ -48,4 +48,3 @@ export interface PanelCentroMando {
   }>;
 }
 
-export const ETIQUETA_NIVEL: Record<ResumenSistema['nivel'], string> = { normal: 'Normal', atencion: 'Requiere atención', critico: 'Crítico' };

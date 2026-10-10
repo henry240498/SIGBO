@@ -1,13 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useCallback, useEffect, useState } from 'react';
-import { apiFetch, obtenerSesion } from '@/lib/api';
+import { useCallback, useState } from 'react';
+import { apiFetch } from '@/lib/api';
 import { Aviso } from '@/app/components/Aviso';
 import { Cargando } from '@/app/components/Cargando';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { useEntradaConfirmada } from '@/app/components/InputProvider';
-import { useRutasVisibles } from '@/app/components/PermisosPantallaProvider';
+import { usePermisosSesion, usePuede, useRutasVisibles } from '@/app/components/PermisosPantallaProvider';
 import { MarcaActualizacion, useActualizacionPeriodica } from '@/app/components/useActualizacionPeriodica';
 import { duracion, EstadoSistema, ETIQUETA_NIVEL, FONDO_ALERTA, ResumenSistema } from './tipos';
 
@@ -33,7 +33,8 @@ export default function SistemaEstadoPage() {
   const confirmar = useConfirmacion();
   const pedir = useEntradaConfirmada();
   const visibles = useRutasVisibles();
-  const [permisos, setPermisos] = useState<string[]>([]);
+  const puede = usePuede();
+  const permisos = usePermisosSesion();
   const [estado, setEstado] = useState<EstadoSistema | null>(null);
   const [resumen, setResumen] = useState<ResumenSistema | null>(null);
   const [errorResumen, setErrorResumen] = useState('');
@@ -41,8 +42,6 @@ export default function SistemaEstadoPage() {
   const [exito, setExito] = useState('');
   const [enCurso, setEnCurso] = useState<'snoopy' | 'ollama' | null>(null);
   const [prueba, setPrueba] = useState<{ conectado: boolean; version: string | null; error: string | null } | null>(null);
-
-  useEffect(() => { setPermisos(obtenerSesion()?.usuario.permisos ?? []); }, []);
 
   const cargar = useCallback(async () => {
     const [e, r] = await Promise.all([apiFetch('/sistema/estado'), apiFetch('/sistema/resumen')]);
@@ -98,7 +97,9 @@ export default function SistemaEstadoPage() {
 
   if (!estado) return actualizacion.error ? <Aviso tipo="error" texto={actualizacion.error} /> : <Cargando texto="Consultando el estado del sistema…" filas={4} />;
   const ia = estado.inteligencia;
-  const puedeCambiarSnoopy = permisos.includes('inteligencia:desactivar');
+  // el rol y, ademas, la matriz de esta pantalla (spec §4.5): cambiar el estado es "editar", probar Ollama "crear"
+  const puedeCambiarSnoopy = permisos.includes('inteligencia:desactivar') && puede('editar');
+  const puedeProbarOllama = permisos.includes('inteligencia:configurar') && puede('crear');
   const estadoSnoopy = ia.estado ? ESTADO_SNOOPY[ia.estado] : undefined;
 
   return (
@@ -148,7 +149,7 @@ export default function SistemaEstadoPage() {
           </ul>}
           {prueba && <p className="cm-vacio">Prueba de Ollama: {prueba.conectado ? `conectado (versión ${prueba.version ?? '?'})` : `sin conexión: ${prueba.error ?? 'sin detalle'}`}</p>}
           <div className="cm-acciones">
-            {permisos.includes('inteligencia:configurar') && <button type="button" className="service-secondary" disabled={enCurso !== null} onClick={() => void probarOllama()}>{enCurso === 'ollama' ? 'Probando…' : 'Probar Ollama'}</button>}
+            {puedeProbarOllama && <button type="button" className="service-secondary" disabled={enCurso !== null} onClick={() => void probarOllama()}>{enCurso === 'ollama' ? 'Probando…' : 'Probar Ollama'}</button>}
             {puedeCambiarSnoopy && ia.estado !== 'MANTENIMIENTO' && <button type="button" className="service-secondary" disabled={enCurso !== null} onClick={() => void cambiarSnoopy('MANTENIMIENTO')}>Mantenimiento</button>}
             {puedeCambiarSnoopy && ia.estado !== 'ACTIVA' && <button type="button" className="btn-primary" disabled={enCurso !== null} onClick={() => void cambiarSnoopy('ACTIVA')}>Reactivar</button>}
             {puedeCambiarSnoopy && ia.estado !== 'INACTIVA' && <button type="button" className="service-secondary" disabled={enCurso !== null} onClick={() => void cambiarSnoopy('INACTIVA')}>Apagar</button>}

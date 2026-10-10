@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { agruparPantallas, efectoDeLaMatriz, filtrarGrupos } from '../../src/lib/pantallas-admin.ts';
+import { agruparPantallas, efectoDeLaMatriz, filtrarGrupos, reglasDeLaPantalla } from '../../src/lib/pantallas-admin.ts';
 
 const filas = [
   { codigo: '0xA001', nombre: 'Alertas (app)', descripcion: null, confidencialAplica: false, activa: true },
@@ -49,4 +49,10 @@ test('una ruta compartida con otras pantallas no dice "aplica": avisa que denega
   assert.equal(una.detalle, 'denegar esta no la bloquea si otra permitida la usa');
   assert.equal(efectoDeLaMatriz({ ...ruta, compartidaCon: 3 }).texto, 'compartida con 3 pantallas');
   assert.equal(efectoDeLaMatriz({ ...ruta, exenta: true, compartidaCon: 0 }).texto, 'exenta');
+});
+
+test('una respuesta de reglas de otra pantalla no se muestra (ni se puede quitar desde la actual)', () => {
+  const reglas = [{ id: '1', pantallaCodigo: '0xB001' }, { id: '2', pantallaCodigo: '0xB002' }];
+  assert.deepEqual(reglasDeLaPantalla(reglas, '0xB002').map((r) => r.id), ['2']);
+  assert.deepEqual(reglasDeLaPantalla(reglas, ''), []);
 });

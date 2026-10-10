@@ -12,8 +12,9 @@ import { Aviso } from '@/app/components/Aviso';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
 import { useEntradaConfirmada } from '@/app/components/InputProvider';
 import {
-  Alerta, Convocatoria, Emergencia, ETIQUETA_NIVEL, GuardiaVigente, MiActividad, Moviles, Pendiente, PersonalDisponible, ResumenSistema, Seccion,
+  Alerta, Convocatoria, Emergencia, GuardiaVigente, MiActividad, Moviles, Pendiente, PersonalDisponible, Seccion,
 } from './tipos';
+import { ETIQUETA_NIVEL, ResumenSistema } from '../sistema/tipos';
 
 const GRAVEDAD: Record<string, { texto: string; fondo: string }> = {
   LEVE: { texto: 'Baja', fondo: 'var(--info-fill)' },

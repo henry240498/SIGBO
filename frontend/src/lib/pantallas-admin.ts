@@ -46,6 +46,15 @@ export function efectoDeLaMatriz(r: RutaApiAdmin): { texto: string; fondo: strin
   return { texto: 'aplica', fondo: 'var(--info-fill)', detalle: null };
 }
 
+/**
+ * Las reglas a mostrar para la pantalla elegida. Si la persona cambia de pantalla mientras
+ * llega la respuesta, una respuesta de otra pantalla no se muestra: "Quitar" borraria la
+ * regla de otra pantalla mientras el dialogo nombra la actual.
+ */
+export function reglasDeLaPantalla<T extends { pantallaCodigo: string }>(reglas: T[], codigo: string): T[] {
+  return codigo ? reglas.filter((r) => r.pantallaCodigo === codigo) : [];
+}
+
 export function filtrarGrupos(grupos: GrupoAdmin[], texto: string): GrupoAdmin[] {
   const t = sinAcentos(texto.trim());
   if (!t) return grupos;

@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { apiFetch } from '@/lib/api';
 import { MODULOS } from '@/lib/modulos';
 import { Aviso } from '@/app/components/Aviso';
 import { Cargando } from '@/app/components/Cargando';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
-import { agruparPantallas, efectoDeLaMatriz, FilaPantalla, filtrarGrupos, PantallaAdmin, PantallaCatalogoAdmin } from '@/lib/pantallas-admin';
+import { agruparPantallas, efectoDeLaMatriz, FilaPantalla, filtrarGrupos, PantallaAdmin, PantallaCatalogoAdmin, reglasDeLaPantalla } from '@/lib/pantallas-admin';
 
 type TipoSujeto = 'ROL' | 'USUARIO' | 'RANGO' | 'CARGO';
 type Accion = 'ver' | 'crear' | 'editar' | 'eliminar' | 'confidencial' | 'denegar';
@@ -46,6 +46,8 @@ export default function PermisosPantallaPage() {
   const [usuarioPrevia, setUsuarioPrevia] = useState('');
   const [previa, setPrevia] = useState<FilaVistaPrevia[] | null>(null);
   const [soloRestringidas, setSoloRestringidas] = useState(true);
+  /** Solo aplica la respuesta del ultimo pedido de reglas: elegir otra pantalla descarta las anteriores. */
+  const pedidoReglas = useRef(0);
 
   const grupos = useMemo(() => agruparPantallas(filas, catalogo, NOMBRES_MODULO), [filas, catalogo]);
   const visibles = useMemo(() => filtrarGrupos(grupos, busqueda), [grupos, busqueda]);
@@ -69,17 +71,23 @@ export default function PermisosPantallaPage() {
     finally { setCargando(false); }
   }
 
-  async function cargarReglas() {
-    if (!codigo) { setReglas([]); return; }
+  async function cargarReglas(paraCodigo = codigo) {
+    const mio = ++pedidoReglas.current;
+    if (!paraCodigo) { setReglas([]); return; }
     try {
-      const res = await apiFetch(`/pantallas/reglas?codigo=${encodeURIComponent(codigo)}`);
+      const res = await apiFetch(`/pantallas/reglas?codigo=${encodeURIComponent(paraCodigo)}`);
       if (!res.ok) throw new Error('No se pudieron cargar las reglas.');
-      setReglas(await res.json());
-    } catch (e) { setError(e instanceof Error ? e.message : 'No se pudieron cargar las reglas.'); }
+      const datos = (await res.json()) as Regla[];
+      if (mio !== pedidoReglas.current) return; // llego tarde: ya se eligio otra pantalla
+      setReglas(reglasDeLaPantalla(datos, paraCodigo));
+    } catch (e) {
+      if (mio === pedidoReglas.current) setError(e instanceof Error ? e.message : 'No se pudieron cargar las reglas.');
+    }
   }
 
   useEffect(() => { void cargarBase(); }, []);
-  useEffect(() => { void cargarReglas(); setEditando(null); setForm(VACIA); setSujetoId(''); }, [codigo]);
+  // al cambiar de pantalla, las reglas de la anterior se retiran ya, antes de que llegue la respuesta
+  useEffect(() => { setReglas([]); void cargarReglas(codigo); setEditando(null); setForm(VACIA); setSujetoId(''); }, [codigo]);
 
   function cargarEnEditor(r: Regla) {
     setTipo(r.sujetoTipo); setSujetoId(r.sujetoId); setEditando(r.id);
@@ -101,6 +109,7 @@ export default function PermisosPantallaPage() {
   }
 
   async function quitar(r: Regla) {
+    if (r.pantallaCodigo !== codigo) return; // nunca se quita la regla de otra pantalla desde esta
     const ok = await confirmar({ titulo: 'Quitar regla', mensaje: `Se quita la regla de ${r.sujetoTipo.toLowerCase()} «${nombreSujeto(r)}» sobre «${pantalla?.nombre ?? r.pantallaCodigo}».`, confirmar: 'Quitar', peligro: true });
     if (!ok) return;
     setError(''); setAviso('');

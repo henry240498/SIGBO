@@ -108,7 +108,7 @@ function Marco({ children }: { children: React.ReactNode }) {
     [sesion, matriz, centroMando],
   );
 
-  const migas = migasDePan(pathname);
+  const migas = migasDePan(pathname, matriz);
   const pantallaActual = pantallaDeRuta(pathname, PANTALLAS);
   const titulo = pantallaActual?.nombre
     ?? migas[migas.length - 1]?.nombre

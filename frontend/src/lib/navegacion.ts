@@ -1,6 +1,6 @@
 import { MODULOS, ModuloConfig } from './modulos';
 import { PANTALLAS, PantallaRegistrada } from './pantallas.generado';
-import { MatrizWeb, pantallasVisibles } from './permisos-pantalla';
+import { filtrarMigas, MatrizWeb, pantallasVisibles } from './permisos-pantalla';
 import { coincideBusqueda } from './texto';
 
 export interface Miga {
@@ -16,9 +16,10 @@ const porRuta = new Map(PANTALLAS.map((p) => [p.ruta, p]));
 /**
  * Migas de pan a partir del pathname. Antes la barra superior solo decia el nombre del
  * modulo, asi que en `/dashboard/deposito/articulos/<id>` no habia forma de saber donde
- * estabas ni de volver un nivel.
+ * estabas ni de volver un nivel. Con la matriz cargada, un tramo que no se puede ver queda
+ * sin enlace, igual que el menu lo oculta.
  */
-export function migasDePan(pathname: string): Miga[] {
+export function migasDePan(pathname: string, matriz: MatrizWeb | null = null): Miga[] {
   const segmentos = pathname.split('/').filter(Boolean);
   if (segmentos[0] !== 'dashboard') return [];
 
@@ -43,7 +44,7 @@ export function migasDePan(pathname: string): Miga[] {
   // El ultimo tramo es la pagina actual: se muestra sin enlace.
   const ultima = migas[migas.length - 1];
   if (ultima) delete ultima.href;
-  return migas;
+  return filtrarMigas(migas, PANTALLAS, matriz);
 }
 
 function titulizar(slug: string): string {

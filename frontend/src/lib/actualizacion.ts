@@ -35,3 +35,50 @@ export function conTope<T>(p: Promise<T>, ms: number, mensaje: string): Promise<
   });
   return Promise.race([p, tope]).finally(() => clearTimeout(reloj));
 }
+
+/**
+ * ¿La falla es de conexion (el pedido no llego o no volvio) y no una respuesta del
+ * servidor como 403 o 500? fetch rechaza con TypeError cuando no hay red; el tope de 30 s
+ * tambien es "sin respuesta". El resto lo lanza la pantalla con el mensaje del servidor.
+ */
+export function esFallaDeConexion(e: unknown): boolean {
+  return e instanceof TypeError || (e instanceof Error && e.message === MENSAJE_TOPE_INTENTO);
+}
+
+/** Lo que anuncia la marca de actualizacion ante una falla. */
+export function textoDeFalla(sinConexion: boolean): string {
+  return sinConexion ? 'Sin conexión con el servidor' : 'No se pudo actualizar';
+}
+
+/**
+ * Nunca dos cargas en vuelo. Un pedido manual (p. ej. despues de marcar una alerta como
+ * atendida) que llega con una carga en vuelo no se descarta: deja UNA carga de seguimiento
+ * para cuando termine, asi la pantalla no muestra el dato viejo hasta el proximo ciclo.
+ */
+export class ControlDeCargas {
+  private enVuelo = false;
+  private seguimiento = false;
+
+  /** true: puede arrancar ya. false: hay una en vuelo (si era manual, queda una de seguimiento). */
+  pedir(manual: boolean): boolean {
+    if (!this.enVuelo) {
+      this.enVuelo = true;
+      return true;
+    }
+    if (manual) this.seguimiento = true;
+    return false;
+  }
+
+  /** Termina la carga en vuelo; true si hay que hacer la de seguimiento (y la consume). */
+  terminar(): boolean {
+    this.enVuelo = false;
+    const seguir = this.seguimiento;
+    this.seguimiento = false;
+    return seguir;
+  }
+
+  /** Al desactivar la actualizacion, se olvida un seguimiento pendiente. */
+  olvidar(): void {
+    this.seguimiento = false;
+  }
+}

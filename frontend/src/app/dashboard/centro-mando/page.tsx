@@ -1,10 +1,10 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import { apiFetch, obtenerSesion } from '@/lib/api';
+import { useCallback, useState } from 'react';
+import { apiFetch } from '@/lib/api';
 import { Aviso } from '@/app/components/Aviso';
 import { Cargando } from '@/app/components/Cargando';
-import { usePermisosPantalla, usePuede, useRutasVisibles } from '@/app/components/PermisosPantallaProvider';
+import { usePermisosPantalla, usePermisosSesion, usePuede, useRutasVisibles } from '@/app/components/PermisosPantallaProvider';
 import { MarcaActualizacion, useActualizacionPeriodica } from '@/app/components/useActualizacionPeriodica';
 import {
   PanelAccesos, PanelAlertas, PanelConvocatorias, PanelEmergencias, PanelGuardia, PanelMiActividad, PanelMoviles, PanelPendientes, PanelPersonal, PanelSistema,
@@ -21,10 +21,8 @@ const INTERVALO_MS = 10_000;
 export default function CentroMandoPage() {
   const { matriz } = usePermisosPantalla();
   const puede = usePuede();
-  const [permisos, setPermisos] = useState<string[]>([]);
+  const permisos = usePermisosSesion();
   const [panel, setPanel] = useState<PanelCentroMando | null>(null);
-
-  useEffect(() => { setPermisos(obtenerSesion()?.usuario.permisos ?? []); }, []);
 
   const cargar = useCallback(async () => {
     const res = await apiFetch('/centro-mando');

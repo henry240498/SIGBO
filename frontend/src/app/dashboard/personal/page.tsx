@@ -319,7 +319,8 @@ export default function PersonalPage() {
                     >
                       Ver expediente
                     </button>
-                    {puedeEliminar && b.estado !== 'BAJA' && (
+                    {/* una baja no se repite, y FALLECIDO no se pisa con BAJA (el servidor tambien lo rechaza) */}
+                    {puedeEliminar && b.estado !== 'BAJA' && b.estado !== 'FALLECIDO' && (
                       <button type="button"
                         className="btn-primary"
                         style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}

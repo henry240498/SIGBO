@@ -1,18 +1,18 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import { apiFetch, obtenerSesion } from '@/lib/api';
+import { useCallback, useState } from 'react';
+import { apiFetch } from '@/lib/api';
 import { Aviso } from '@/app/components/Aviso';
 import { Cargando } from '@/app/components/Cargando';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
-import { usePuede } from '@/app/components/PermisosPantallaProvider';
+import { usePermisosSesion, usePuede } from '@/app/components/PermisosPantallaProvider';
 import { MarcaActualizacion, useActualizacionPeriodica } from '@/app/components/useActualizacionPeriodica';
-import { ESTADO_TAREA, fechaLegible, FONDO_ALERTA, Migraciones, Respaldos, tamanio } from '../tipos';
+import { ESTADO_TAREA, fechaLegible, FONDO_ALERTA, Migraciones, motivoSinRespaldo, Respaldos, tamanio } from '../tipos';
 
 export default function SistemaDatosPage() {
   const confirmar = useConfirmacion();
   const puede = usePuede();
-  const [permisos, setPermisos] = useState<string[]>([]);
+  const permisos = usePermisosSesion();
   const [respaldos, setRespaldos] = useState<Respaldos | null>(null);
   const [migraciones, setMigraciones] = useState<Migraciones | null>(null);
   const [errorMigraciones, setErrorMigraciones] = useState('');
@@ -20,8 +20,6 @@ export default function SistemaDatosPage() {
   const [ocupado, setOcupado] = useState<string | null>(null);
   const [error, setError] = useState('');
   const [exito, setExito] = useState('');
-
-  useEffect(() => { setPermisos(obtenerSesion()?.usuario.permisos ?? []); }, []);
 
   const cargar = useCallback(async () => {
     const [r, m] = await Promise.all([apiFetch('/sistema/respaldos'), apiFetch('/sistema/migraciones').catch((e: unknown) => e as Error)]);
@@ -64,6 +62,8 @@ export default function SistemaDatosPage() {
   if (!respaldos) return actualizacion.error ? <Aviso tipo="error" texto={actualizacion.error} /> : <Cargando texto="Consultando respaldos…" />;
   const tarea = respaldos.tarea && 'nombre' in respaldos.tarea ? respaldos.tarea : null;
   const motivoTarea = respaldos.tarea && 'motivo' in respaldos.tarea ? respaldos.tarea.motivo : null;
+  // sin tarea o sin Programador, el servidor responderia siempre 409/503: el boton no se ofrece activo
+  const sinRespaldo = respaldos.disponible ? motivoSinRespaldo(respaldos.tarea) : null;
 
   return (
     <div style={{ display: 'grid', gap: 16 }}>
@@ -81,9 +81,10 @@ export default function SistemaDatosPage() {
         {motivoTarea && <p className="cm-vacio">Tarea programada no disponible: {motivoTarea}</p>}
         {respaldos.alertas.length > 0 && <ul className="cm-lista">{respaldos.alertas.map((a, i) => <li key={i}><span>{a.mensaje}</span><span className="badge" style={{ background: FONDO_ALERTA[a.nivel] }}>{a.nivel}</span></li>)}</ul>}
         {puedeOperar && <div className="cm-acciones">
-          <button type="button" className="btn-primary" disabled={ocupado === 'respaldo' || tarea?.estado === 'EN_EJECUCION'} onClick={() => void respaldar()}>
+          <button type="button" className="btn-primary" disabled={ocupado === 'respaldo' || tarea?.estado === 'EN_EJECUCION' || sinRespaldo !== null} aria-describedby={sinRespaldo ? 'd-sin-respaldo' : undefined} onClick={() => void respaldar()}>
             {ocupado === 'respaldo' ? 'Iniciando…' : tarea?.estado === 'EN_EJECUCION' ? 'Respaldo en curso…' : 'Respaldar ahora'}
           </button>
+          {sinRespaldo && <p id="d-sin-respaldo" className="cm-vacio">No se puede respaldar ahora: {sinRespaldo}</p>}
         </div>}
         {respaldos.archivos.length > 0 && <div style={{ overflowX: 'auto' }}><table className="tabla-compacta">
           <thead><tr><th scope="col">Fecha</th><th scope="col">Archivo</th><th scope="col">Tamaño</th><th scope="col">Integridad</th></tr></thead>
@@ -102,6 +103,7 @@ export default function SistemaDatosPage() {
             </tr>;
           })}</tbody>
         </table></div>}
+        {respaldos.motivoRegistro && <p className="cm-vacio">Últimas corridas no disponibles: {respaldos.motivoRegistro}</p>}
         {respaldos.corridas.length > 0 && <>
           <h3 className="grupo-titulo">Últimas corridas registradas</h3>
           <ul className="cm-lista">{respaldos.corridas.map((c, i) => <li key={i}>

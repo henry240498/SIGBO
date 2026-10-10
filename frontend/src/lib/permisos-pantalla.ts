@@ -30,6 +30,16 @@ export function indexarPorRuta(lista: PermisoPantalla[]): MatrizWeb {
   return new Map(lista.map((p) => [p.ruta, p]));
 }
 
+/**
+ * La matriz que trae GET /pantallas/mis-permisos-web, o null = "sin datos". Con activa:false
+ * el servidor no pudo armar su indice de rutas: sus crear/editar/eliminar vienen todos en
+ * false aunque el backend los permita, asi que la web no oculta nada por la matriz.
+ */
+export function matrizDeRespuesta(datos: { activa?: boolean; pantallas?: PermisoPantalla[] } | null): MatrizWeb | null {
+  if (!datos || datos.activa === false || !Array.isArray(datos.pantallas)) return null;
+  return indexarPorRuta(datos.pantallas);
+}
+
 const tramos = (ruta: string) => ruta.split('?')[0].split('/').filter(Boolean);
 
 /** ¿La ruta registrada (con [parametro]) corresponde a este pathname? */
@@ -67,6 +77,20 @@ export function moduloVisibleEnMenu(m: ModuloConfig, permisos: string[], pantall
   const propias = pantallas.filter((p) => p.modulo === m.slug && p.codigo && !p.detalle);
   if (!propias.length) return porPrefijo(m, permisos);
   return propias.some((p) => matriz.get(p.ruta)?.ver === true);
+}
+
+/**
+ * Migas de pan filtradas como el menu (spec §4.5): un tramo cuya pantalla no se puede ver
+ * queda como texto, sin enlace, para no llevar a un "Sin acceso". Sin datos, todas.
+ */
+export function filtrarMigas<T extends { href?: string }>(migas: T[], pantallas: PantallaRegistrada[], matriz: MatrizWeb | null): T[] {
+  if (!matriz) return migas;
+  return migas.map((m) => {
+    if (!m.href || decisionDeRuta(m.href, pantallas, matriz)?.ver !== false) return m;
+    const sinEnlace = { ...m };
+    delete sinEnlace.href;
+    return sinEnlace;
+  });
 }
 
 /** Pestanas de un modulo que la persona puede abrir; sin datos, todas (como antes). */

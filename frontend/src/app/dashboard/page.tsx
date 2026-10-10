@@ -11,22 +11,22 @@ import { Cargando } from '@/app/components/Cargando';
 import { Aviso } from '@/app/components/Aviso';
 import { usePermisosPantalla, useRutasVisibles } from '@/app/components/PermisosPantallaProvider';
 import { useActualizacionPeriodica } from '@/app/components/useActualizacionPeriodica';
+import { ETIQUETA_NIVEL, ResumenSistema } from './sistema/tipos';
 
 interface InicioBombero {
   tienePerfilBombero: boolean;
   proximasGuardias: Array<{ id: string; fecha: string; horaInicio: string; horaFin: string; turno: string; estado: string; rol: string | null }>;
   ultimosServicios: Array<{ id: string; numeroServicio: string; fechaHoraAviso: string; estado: string; tipo: string | null; rol: string | null; horasServicio: number | null }>;
 }
-interface ResumenSistema { nivel: 'normal' | 'atencion' | 'critico'; alertas: Array<{ nivel: string; mensaje: string }> }
 
 const fechaCorta = (fecha: string) => new Intl.DateTimeFormat('es-PY', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(`${fecha}T12:00:00`));
 const fechaHoraCorta = (fecha: string) => new Intl.DateTimeFormat('es-PY', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(fecha));
-const NIVEL: Record<ResumenSistema['nivel'], string> = { normal: 'Operativo', atencion: 'Requiere atención', critico: 'Crítico' };
 
 /** Antes decia "Estado del sistema · Operativo" fijo en el codigo: ahora lo que realmente responde el servidor. */
 function EstadoDelSistema({ permisos }: { permisos: string[] }) {
   const [salud, setSalud] = useState<'ok' | 'caido' | null>(null);
   const [resumen, setResumen] = useState<ResumenSistema | null>(null);
+  const [resumenFallo, setResumenFallo] = useState(false);
   const veSistema = permisos.includes('sistema:ver');
   const visibles = useRutasVisibles();
   const cargar = useCallback(async () => {
@@ -35,15 +35,22 @@ function EstadoDelSistema({ permisos }: { permisos: string[] }) {
     const ok = !!res && res.ok && (cuerpo as { estado?: string }).estado === 'disponible';
     setSalud(ok ? 'ok' : 'caido');
     if (ok && veSistema) {
+      // Si el resumen falla, se dice: "Servidor operativo" a secas ocultaria que no se pudo leer.
       const r = await apiFetch('/sistema/resumen').catch(() => null);
-      setResumen(r && r.ok ? await r.json() : null);
+      const datos = r && r.ok ? ((await r.json().catch(() => null)) as ResumenSistema | null) : null;
+      setResumen(datos);
+      setResumenFallo(!datos);
     } else {
       setResumen(null);
+      setResumenFallo(false);
     }
     if (!ok) throw new Error('El servidor no responde.');
   }, [veSistema]);
   useActualizacionPeriodica(cargar, 30_000);
-  const texto = salud === null ? 'comprobando…' : salud === 'caido' ? 'Sin respuesta del servidor' : resumen ? NIVEL[resumen.nivel] : 'Servidor operativo';
+  const texto = salud === null ? 'comprobando…'
+    : salud === 'caido' ? 'Sin respuesta del servidor'
+      : resumen ? ETIQUETA_NIVEL[resumen.nivel]
+        : resumenFallo ? 'Servidor operativo · no se pudo leer el resumen del sistema' : 'Servidor operativo';
   return (
     <div className="hero-kicker" role="status">
       Estado del sistema · {texto}

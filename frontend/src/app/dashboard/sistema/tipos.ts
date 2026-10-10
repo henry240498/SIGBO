@@ -36,7 +36,8 @@ export interface TareaProgramada {
   ultimaEjecucion: string | null; ultimoResultado: number | null; descripcionResultado: string | null; proximaEjecucion: string | null;
 }
 export interface LineaRegistro { texto: string; nivel: 'ERROR' | 'WARN' | 'LOG' | 'OTRO' }
-export interface TareasYTrabajos { tareas: TareaProgramada[] | null; motivoTareas: string | null; arranque: LineaRegistro[]; trabajos: { gre: TrabajoGre; avisos: TrabajoAvisos } }
+/** motivoArranque: por que no hay lineas del arranque automatico (no existe el archivo, o no se pudo leer). */
+export interface TareasYTrabajos { tareas: TareaProgramada[] | null; motivoTareas: string | null; arranque: LineaRegistro[]; motivoArranque?: string | null; trabajos: { gre: TrabajoGre; avisos: TrabajoAvisos } }
 
 export interface RespaldoArchivo { nombre: string; fecha: string; tamanioBytes: number; tieneSha256: boolean }
 export interface CorridaRespaldo {
@@ -45,6 +46,8 @@ export interface CorridaRespaldo {
 }
 export interface Respaldos {
   disponible: boolean; motivo: string | null; carpeta: string; archivos: RespaldoArchivo[]; corridas: CorridaRespaldo[];
+  /** registro.log existe pero no se pudo leer: las corridas no se conocen. */
+  motivoRegistro?: string | null;
   alertas: AlertaSistema[]; tarea: TareaProgramada | { disponible: false; motivo: string } | null;
 }
 export type Migraciones =
@@ -67,6 +70,20 @@ export const ESTADO_TAREA: Record<string, { texto: string; fondo: string }> = {
   DESHABILITADA: { texto: 'Deshabilitada', fondo: 'var(--bad-fill)' },
   DESCONOCIDO: { texto: 'Desconocido', fondo: 'var(--neutral-fill)' },
 };
+
+/**
+ * Por que "Respaldar ahora" no se puede lanzar en este momento (null = se puede). El
+ * servidor igual lo rechazaria (409/503): se dice antes, en vez de ofrecer un boton que falla.
+ */
+const SIN_TAREA_RESPALDO = 'La tarea SIGBO-Respaldo-Diario no está programada en este servidor (se programa con workflows\\scripts\\programar-respaldo.ps1).';
+
+export function motivoSinRespaldo(tarea: Respaldos['tarea']): string | null {
+  if (tarea === null) return SIN_TAREA_RESPALDO;
+  if ('motivo' in tarea) return `No se puede consultar el Programador de tareas: ${tarea.motivo}`;
+  if (!tarea.existe) return SIN_TAREA_RESPALDO;
+  if (tarea.estado === 'DESHABILITADA') return 'La tarea de respaldo está deshabilitada en Windows.';
+  return null;
+}
 
 export function duracion(segundos: number): string {
   if (!Number.isFinite(segundos) || segundos < 0) return '—';

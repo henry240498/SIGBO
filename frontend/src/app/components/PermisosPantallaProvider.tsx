@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { apiFetch, obtenerSesion } from '@/lib/api';
 import { MODULOS } from '@/lib/modulos';
 import { PANTALLAS } from '@/lib/pantallas.generado';
-import { AccionUi, EstadoPermisos, indexarPorRuta, MatrizWeb, pantallasVisibles, PermisoPantalla, puede, tabsVisibles } from '@/lib/permisos-pantalla';
+import { AccionUi, EstadoPermisos, MatrizWeb, matrizDeRespuesta, pantallasVisibles, PermisoPantalla, puede, tabsVisibles } from '@/lib/permisos-pantalla';
 
 /** Las reglas pueden cambiar mientras la persona trabaja; igual el backend ya las exige al instante. */
 const RECARGA_MS = 5 * 60_000;
@@ -38,17 +38,22 @@ export function PermisosPantallaProvider({ children }: { children: React.ReactNo
     const mia = ++ultima.current;
     const vigente = () => montado.current && mia === ultima.current;
     const [pantallas, acceso] = await Promise.allSettled([apiFetch('/pantallas/mis-permisos-web'), apiFetch('/centro-mando/acceso')]);
-    let datos: { pantallas: PermisoPantalla[] } | null = null;
+    let datos: { activa?: boolean; pantallas?: PermisoPantalla[] } | null = null;
     if (pantallas.status === 'fulfilled' && pantallas.value.ok) {
-      datos = (await pantallas.value.json().catch(() => null)) as { pantallas: PermisoPantalla[] } | null;
+      datos = (await pantallas.value.json().catch(() => null)) as { activa?: boolean; pantallas?: PermisoPantalla[] } | null;
     }
     const accesoCm = acceso.status === 'fulfilled' && acceso.value.ok
       ? ((await acceso.value.json().catch(() => null)) as AccesoCentroMando | null)
       : null;
     if (!vigente()) return;
-    if (datos) {
-      setMatriz(indexarPorRuta(datos.pantallas));
+    const nueva = matrizDeRespuesta(datos);
+    if (nueva) {
+      setMatriz(nueva);
       setEstado('listo');
+    } else if (datos?.activa === false) {
+      // El servidor no aplica la matriz (no armo su indice): la web tampoco oculta por ella.
+      setMatriz(null);
+      setEstado('sin_datos');
     } else {
       // Se conserva lo ultimo que se cargo bien; si nunca se cargo, la web vuelve al prefijo.
       setEstado((previo) => (previo === 'listo' ? 'listo' : 'sin_datos'));
@@ -83,10 +88,19 @@ export function useTabsVisibles<T extends { href: string }>(tabs: T[]): T[] {
   return useMemo(() => tabsVisibles(tabs, PANTALLAS, matriz), [tabs, matriz]);
 }
 
+/**
+ * Permisos de la sesion. Se leen despues de montar: localStorage no existe al renderizar
+ * en el servidor, y leerlo antes desacoplaria el HTML del servidor y el del navegador.
+ */
+export function usePermisosSesion(): string[] {
+  const [permisos, setPermisos] = useState<string[]>([]);
+  useEffect(() => { setPermisos(obtenerSesion()?.usuario.permisos ?? []); }, []);
+  return permisos;
+}
+
 /** Rutas que la persona puede abrir: para no ofrecer enlaces que terminen en "Sin acceso". */
 export function useRutasVisibles(): Set<string> {
   const { matriz } = usePermisosPantalla();
-  const [permisos, setPermisos] = useState<string[]>([]);
-  useEffect(() => { setPermisos(obtenerSesion()?.usuario.permisos ?? []); }, []);
+  const permisos = usePermisosSesion();
   return useMemo(() => new Set(pantallasVisibles(PANTALLAS, permisos, matriz, MODULOS).map((p) => p.ruta)), [permisos, matriz]);
 }

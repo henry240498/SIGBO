@@ -1,24 +1,22 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import { apiFetch, obtenerSesion } from '@/lib/api';
+import { useCallback, useState } from 'react';
+import { apiFetch } from '@/lib/api';
 import { Aviso } from '@/app/components/Aviso';
 import { Cargando } from '@/app/components/Cargando';
 import { useConfirmacion } from '@/app/components/ConfirmProvider';
-import { usePuede } from '@/app/components/PermisosPantallaProvider';
+import { usePermisosSesion, usePuede } from '@/app/components/PermisosPantallaProvider';
 import { MarcaActualizacion, useActualizacionPeriodica } from '@/app/components/useActualizacionPeriodica';
 import { ESTADO_TAREA, fechaLegible, TareasYTrabajos } from '../tipos';
 
 export default function SistemaTareasPage() {
   const confirmar = useConfirmacion();
   const puede = usePuede();
-  const [permisos, setPermisos] = useState<string[]>([]);
+  const permisos = usePermisosSesion();
   const [datos, setDatos] = useState<TareasYTrabajos | null>(null);
   const [error, setError] = useState('');
   const [exito, setExito] = useState('');
   const [enCurso, setEnCurso] = useState<string | null>(null);
-
-  useEffect(() => { setPermisos(obtenerSesion()?.usuario.permisos ?? []); }, []);
 
   const cargar = useCallback(async () => {
     const res = await apiFetch('/sistema/tareas');
@@ -97,7 +95,7 @@ export default function SistemaTareasPage() {
 
         <section className="cm-panel cm-panel-ancho" aria-labelledby="t-arranque">
           <h2 id="t-arranque">Arranque automático (últimas líneas)</h2>
-          {datos.arranque.length === 0 ? <p className="cm-vacio">Sin registro de arranque automático.</p>
+          {datos.arranque.length === 0 ? <p className="cm-vacio">{datos.motivoArranque ? `No disponible: ${datos.motivoArranque}` : 'Sin líneas en el registro de arranque automático.'}</p>
             : <div className="registro-visor">{datos.arranque.map((l, i) => <div key={i} className={`registro-linea ${l.nivel === 'ERROR' ? 'error' : l.nivel === 'WARN' ? 'warn' : ''}`}>{l.texto}</div>)}</div>}
         </section>
       </div>
