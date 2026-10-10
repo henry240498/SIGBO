@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTabsVisibles } from '@/app/components/PermisosPantallaProvider';
 
 const TABS = [
   { href: '/dashboard/personal', label: 'Personal', exact: true },
@@ -9,6 +10,7 @@ const TABS = [
 ];
 
 export default function PersonalLayout({ children }: { children: React.ReactNode }) {
+  const tabs = useTabsVisibles(TABS);
   const pathname = usePathname();
   // Solo el listado y el control llevan pestañas; la ficha y el alta ocupan toda la pantalla.
   if (!TABS.some((t) => pathname === t.href)) return <>{children}</>;
@@ -25,7 +27,7 @@ export default function PersonalLayout({ children }: { children: React.ReactNode
           paddingBottom: 0,
         }}
       >
-        {TABS.map((tab) => {
+        {tabs.map((tab) => {
           const activo = pathname === tab.href;
           return (
             <Link

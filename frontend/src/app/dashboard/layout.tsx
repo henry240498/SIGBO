@@ -11,11 +11,14 @@ import {
   obtenerSesion,
   Sesion,
 } from '@/lib/api';
-import { MODULOS, agruparModulos, moduloVisible, GrupoModulo, IconoModulo } from '@/lib/modulos';
+import { MODULOS, agruparModulos, GrupoModulo, IconoModulo } from '@/lib/modulos';
 import { migasDePan } from '@/lib/navegacion';
 import { PANTALLAS } from '@/lib/pantallas.generado';
+import { decisionDeRuta, moduloVisibleEnMenu, pantallaDeRuta } from '@/lib/permisos-pantalla';
 import { SystemIcon } from '@/app/components/SystemIcon';
 import { BuscadorPantallas } from '@/app/components/BuscadorPantallas';
+import { PermisosPantallaProvider, usePermisosPantalla } from '@/app/components/PermisosPantallaProvider';
+import { SinAcceso } from '@/app/components/SinAcceso';
 
 interface Apariencia { nombreSistemaMenu: string | null; subtituloMenu: string | null; logoMenu: string | null; }
 
@@ -32,8 +35,13 @@ function leerPlegados(): GrupoModulo[] {
 }
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  return <PermisosPantallaProvider><Marco>{children}</Marco></PermisosPantallaProvider>;
+}
+
+function Marco({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
+  const { estado: estadoPermisos, matriz, centroMando } = usePermisosPantalla();
   const [sesion, setSesion] = useState<Sesion | null>(null);
   const [apariencia, setApariencia] = useState<Apariencia | null>(null);
   const [plegados, setPlegados] = useState<GrupoModulo[]>([]);
@@ -89,20 +97,25 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   async function onLogout() { await logout(); router.push('/login'); }
 
+  const permisos = sesion?.usuario.permisos ?? [];
   const slugActual = pathname.split('/')[2];
   const moduloActual = MODULOS.find((m) => m.slug === slugActual);
   const grupos = useMemo(
-    () => agruparModulos(MODULOS.filter((m) => moduloVisible(m, sesion?.usuario.permisos ?? []))),
-    [sesion],
+    () => agruparModulos(MODULOS.filter((m) =>
+      (m.slug !== 'centro-mando' || centroMando?.acceso !== false) && moduloVisibleEnMenu(m, permisos, PANTALLAS, matriz))),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [sesion, matriz, centroMando],
   );
 
   const migas = migasDePan(pathname);
-  const pantallaActual = PANTALLAS.find((p) => p.ruta === pathname);
+  const pantallaActual = pantallaDeRuta(pathname, PANTALLAS);
   const titulo = pantallaActual?.nombre
     ?? migas[migas.length - 1]?.nombre
     ?? 'Panel de mando';
   // En la portada de un modulo se explica el modulo; mas adentro, la ruta ya ubica.
   const descripcion = pathname === `/dashboard/${slugActual}` ? moduloActual?.descripcion : undefined;
+  const decision = decisionDeRuta(pathname, PANTALLAS, matriz);
+  const bloqueada = decision !== null && !decision.ver;
 
   // La pestana decia "SIGBO-CBVC" en las 97 pantallas: con varias abiertas no habia
   // forma de distinguirlas, y el historial y los favoritos quedaban todos iguales.
@@ -189,10 +202,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </div>
           </div>
         </header>
-        <div className="page-content">{children}</div>
+        <div className="page-content">
+          {estadoPermisos === 'sin_datos' && (
+            <p className="aviso aviso-error" role="status">
+              No se pudieron cargar tus permisos por pantalla. El menú muestra lo que permite tu rol; el servidor sigue aplicando las restricciones.
+            </p>
+          )}
+          {bloqueada ? <SinAcceso nombre={pantallaActual?.nombre ?? titulo} /> : children}
+        </div>
       </main>
 
-      <BuscadorPantallas permisos={sesion.usuario.permisos} abierto={buscadorAbierto} onCerrar={() => setBuscadorAbierto(false)} />
+      <BuscadorPantallas permisos={permisos} matriz={matriz} abierto={buscadorAbierto} onCerrar={() => setBuscadorAbierto(false)} />
     </div>
   );
 }

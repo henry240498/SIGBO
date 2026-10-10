@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTabsVisibles } from '@/app/components/PermisosPantallaProvider';
 
 const TABS = [
   { href: '/dashboard/organizacion', label: 'Resumen', exact: true },
@@ -25,12 +26,13 @@ const TABS = [
 ];
 
 export default function OrganizacionLayout({ children }: { children: React.ReactNode }) {
+  const tabs = useTabsVisibles(TABS);
   const pathname = usePathname();
 
   return (
     <div>
       <nav className="subnav" aria-label="Secciones de organización">
-        {TABS.map((tab) => {
+        {tabs.map((tab) => {
           const activo = tab.exact ? pathname === tab.href : pathname.startsWith(tab.href);
           return (
             <Link key={tab.href} href={tab.href} className={`subnav-link${activo ? ' active' : ''}`} aria-current={activo ? 'page' : undefined}>

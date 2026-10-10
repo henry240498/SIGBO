@@ -1,5 +1,6 @@
 import { MODULOS, ModuloConfig } from './modulos';
 import { PANTALLAS, PantallaRegistrada } from './pantallas.generado';
+import { MatrizWeb, pantallasVisibles } from './permisos-pantalla';
 import { coincideBusqueda } from './texto';
 
 export interface Miga {
@@ -61,18 +62,12 @@ export interface ResultadoBusqueda extends PantallaRegistrada {
 }
 
 /**
- * Pantallas que el usuario puede abrir, filtradas por permiso y por texto.
- * Sin argumento de busqueda devuelve todas, que es lo que ve al abrir el buscador.
+ * Pantallas que el usuario puede abrir, filtradas por la matriz de permisos (o, si no se
+ * pudo cargar, por prefijo) y por texto. Sin busqueda devuelve todas.
  */
-export function buscarPantallas(consulta: string, permisos: string[]): ResultadoBusqueda[] {
-  const visibles = new Set(
-    MODULOS.filter((m) => permisos.some((p) => p.startsWith(m.permisoPrefijo))).map((m) => m.slug),
-  );
+export function buscarPantallas(consulta: string, permisos: string[], matriz: MatrizWeb | null = null): ResultadoBusqueda[] {
   const termino = consulta.trim();
-
-  return PANTALLAS
-    .filter((p) => !p.detalle)
-    .filter((p) => p.modulo === 'inicio' || p.modulo === 'mi-perfil' || p.modulo === 'reportar' || visibles.has(p.modulo))
+  return pantallasVisibles(PANTALLAS, permisos, matriz, MODULOS)
     .map((p) => ({
       ...p,
       contexto: MODULOS.find((m) => m.slug === p.modulo)?.nombre ?? 'General',

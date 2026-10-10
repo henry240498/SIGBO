@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTabsVisibles } from '@/app/components/PermisosPantallaProvider';
 
 const TABS = [
   { href: '/dashboard/finanzas', label: 'Resumen', exact: true },
@@ -19,6 +20,7 @@ const TABS = [
 ];
 
 export default function FinanzasLayout({ children }: { children: React.ReactNode }) {
+  const tabs = useTabsVisibles(TABS);
   const pathname = usePathname();
 
   return (
@@ -33,7 +35,7 @@ export default function FinanzasLayout({ children }: { children: React.ReactNode
           paddingBottom: 0,
         }}
       >
-        {TABS.map((tab) => {
+        {tabs.map((tab) => {
           const activo = tab.exact ? pathname === tab.href : pathname.startsWith(tab.href);
           return (
             <Link

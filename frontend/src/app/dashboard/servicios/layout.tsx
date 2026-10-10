@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTabsVisibles } from '@/app/components/PermisosPantallaProvider';
 
 const TABS = [
   { href: '/dashboard/servicios', label: 'Comunicaciones', exact: true },
@@ -14,6 +15,7 @@ const TABS = [
 ];
 
 export default function ServiciosLayout({ children }: { children: React.ReactNode }) {
+  const tabs = useTabsVisibles(TABS);
   const pathname = usePathname();
   // El formulario de carga ocupa toda la pantalla: sin pestañas.
   if (pathname.startsWith('/dashboard/servicios/nuevo')) return <>{children}</>;
@@ -30,7 +32,7 @@ export default function ServiciosLayout({ children }: { children: React.ReactNod
           paddingBottom: 0,
         }}
       >
-        {TABS.map((tab) => {
+        {tabs.map((tab) => {
           const activo = tab.exact ? pathname === tab.href : pathname.startsWith(tab.href);
           return (
             <Link

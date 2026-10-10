@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { buscarPantallas, ResultadoBusqueda } from '@/lib/navegacion';
+import { MatrizWeb } from '@/lib/permisos-pantalla';
 
 /**
  * Buscador de pantallas. Con 15 modulos y ~97 pantallas, el menu lateral solo llega al
@@ -12,7 +13,7 @@ import { buscarPantallas, ResultadoBusqueda } from '@/lib/navegacion';
  * Se abre con Ctrl+K o con el boton de la barra superior -- el boton existe porque un
  * atajo que nadie conoce no sirve de nada.
  */
-export function BuscadorPantallas({ permisos, abierto, onCerrar }: { permisos: string[]; abierto: boolean; onCerrar: () => void }) {
+export function BuscadorPantallas({ permisos, matriz, abierto, onCerrar }: { permisos: string[]; matriz: MatrizWeb | null; abierto: boolean; onCerrar: () => void }) {
   const router = useRouter();
   const [consulta, setConsulta] = useState('');
   const [indice, setIndice] = useState(0);
@@ -20,7 +21,7 @@ export function BuscadorPantallas({ permisos, abierto, onCerrar }: { permisos: s
   const listaRef = useRef<HTMLDivElement>(null);
   const focoPrevio = useRef<HTMLElement | null>(null);
 
-  const resultados = useMemo(() => buscarPantallas(consulta, permisos), [consulta, permisos]);
+  const resultados = useMemo(() => buscarPantallas(consulta, permisos, matriz), [consulta, permisos, matriz]);
 
   useEffect(() => {
     if (!abierto) return;
