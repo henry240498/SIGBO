@@ -7,6 +7,7 @@ import type { AuthenticatedUser } from '../auth/types/authenticated-user';
 import { RequirePermission } from '../seguridad/decorators/require-permission.decorator';
 import { PermissionsGuard } from '../seguridad/guards/permissions.guard';
 import { GuardarReglaPantallaDto, RegistrarNavegacionDto } from './dto/pantallas.dto';
+import { MatrizWebService } from './matriz-web.service';
 import { NavegacionService } from './navegacion.service';
 import { PantallasService } from './pantallas.service';
 
@@ -16,13 +17,36 @@ import { PantallasService } from './pantallas.service';
 @UseGuards(JwtAuthGuard, PermissionsGuard)
 @Controller('pantallas')
 export class PantallasController {
-  constructor(private readonly pantallas: PantallasService) {}
+  constructor(
+    private readonly pantallas: PantallasService,
+    private readonly matriz: MatrizWebService,
+  ) {}
 
   /** Lo que la persona puede hacer en cada pantalla: la app lo usa para ocultar; el backend igual lo exige. */
   @Get('mis-permisos')
   @RequirePermission('navegacion:registrar')
   misPermisos(@CurrentUser() user: AuthenticatedUser) {
     return this.pantallas.misPermisos(user);
+  }
+
+  /** Lo que la persona puede hacer en cada pantalla web: la web lo usa para ocultar; el backend igual lo exige. */
+  @Get('mis-permisos-web')
+  misPermisosWeb(@CurrentUser() user: AuthenticatedUser) {
+    return this.matriz.misPermisosWeb(user);
+  }
+
+  /** Qué vería una persona y por qué (rol o regla): para configurar sin adivinar. */
+  @Get('vista-previa')
+  @RequirePermission('seguridad:gestionar_pantallas')
+  vistaPrevia(@Query('usuarioId', new ParseUUIDPipe()) usuarioId: string) {
+    return this.matriz.vistaPrevia(usuarioId);
+  }
+
+  /** Pantallas web y secciones del Centro de mando, con las rutas de API que cubre cada una. */
+  @Get('catalogo-web')
+  @RequirePermission('seguridad:gestionar_pantallas')
+  catalogoWeb() {
+    return this.matriz.catalogoParaAdministrar();
   }
 
   @Get()

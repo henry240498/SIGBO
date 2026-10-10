@@ -1,10 +1,12 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException, Optional } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { AsignacionRol, Bombero, Cargo, Pantalla, PantallaPermiso, Rango, Rol, Usuario } from '../../shared/entities';
+import { Cargo, Pantalla, PantallaPermiso, Rango, Rol, Usuario } from '../../shared/entities';
 import { AuditoriaService } from '../seguridad/auditoria.service';
 import { ACCIONES_PANTALLA, AccionPantalla, BASE_RBAC, decidir, SujetoUsuario } from './pantallas.logica';
 import { GuardarReglaPantallaDto } from './dto/pantallas.dto';
+import { MatrizWebService } from './matriz-web.service';
+import { resolverSujeto } from './sujeto';
 
 export interface UsuarioConPermisos {
   id: string;
@@ -26,21 +28,12 @@ export class PantallasService {
   constructor(
     @InjectDataSource() private readonly dataSource: DataSource,
     private readonly auditoria: AuditoriaService,
+    @Optional() private readonly matriz?: MatrizWebService,
   ) {}
 
   /** Roles vigentes, rango y cargo de una persona: lo que las reglas de la matriz pueden nombrar. */
   async sujeto(usuarioId: string, ahora = new Date()): Promise<SujetoUsuario> {
-    const asignaciones = await this.dataSource.getRepository(AsignacionRol).find({ where: { usuarioId } });
-    const rolIds = asignaciones.filter((a) => !a.fechaExpiracion || new Date(a.fechaExpiracion).getTime() > ahora.getTime()).map((a) => a.rolId);
-    const usuario = await this.dataSource.getRepository(Usuario).findOne({ where: { id: usuarioId } });
-    let rangoId: string | null = null;
-    let cargo: string | null = null;
-    if (usuario?.bomberoId) {
-      const b = await this.dataSource.getRepository(Bombero).findOne({ where: { id: usuario.bomberoId } });
-      rangoId = b?.rangoId ?? null;
-      cargo = b?.cargo ?? null;
-    }
-    return { usuarioId, rolIds, rangoId, cargo };
+    return resolverSujeto(this.dataSource, usuarioId, ahora);
   }
 
   async reglas(codigo?: string): Promise<PantallaPermiso[]> {
@@ -80,6 +73,7 @@ export class PantallasService {
   // ------------------------------------------------------------ administracion
 
   async listarPantallas() {
+    if (this.matriz && !this.matriz.estaSincronizada()) await this.matriz.sincronizar();
     return (await this.dataSource.getRepository(Pantalla).find({ order: { codigo: 'ASC' } })).map((p) => ({
       codigo: p.codigo,
       nombre: p.nombre,
@@ -137,6 +131,7 @@ export class PantallasService {
       ip: ctx.ip ?? null,
       userAgent: ctx.userAgent ?? null,
     });
+    this.matriz?.invalidar();
     return guardada;
   }
 
@@ -154,6 +149,7 @@ export class PantallasService {
       ip: ctx.ip ?? null,
       userAgent: ctx.userAgent ?? null,
     });
+    this.matriz?.invalidar();
     return { ok: true };
   }
 }

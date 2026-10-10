@@ -31,6 +31,7 @@ import { IndicadoresModule } from './modules/indicadores/indicadores.module';
 import { CampoModule } from './modules/campo/campo.module';
 import { ReportesModule } from './modules/reportes/reportes.module';
 import { DespachoModule } from './modules/despacho/despacho.module';
+import { MatrizWebModule } from './modules/pantallas/matriz-web.module';
 import { PantallasModule } from './modules/pantallas/pantallas.module';
 import { NotificacionesModule } from './modules/notificaciones/notificaciones.module';
 import { ReservasModule } from './modules/reservas/reservas.module';
@@ -70,6 +71,7 @@ import { GreModule } from './modules/gre/gre.module';
     CampoModule,
     ReportesModule,
     DespachoModule,
+    MatrizWebModule,
     PantallasModule,
     ReservasModule,
     PrevencionModule,
