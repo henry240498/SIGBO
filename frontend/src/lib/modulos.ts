@@ -49,6 +49,7 @@ export const MODULOS: ModuloConfig[] = [
 
   { slug: 'seguridad', nombre: 'Seguridad', icono: 'lock', permisoPrefijo: 'seguridad:', disponible: true, grupo: 'sistema', descripcion: 'Usuarios, roles y permisos del sistema.' },
   { slug: 'inteligencia', nombre: 'Inteligencia Artificial', icono: 'chart', permisoPrefijo: 'inteligencia:', disponible: true, grupo: 'sistema', descripcion: 'Asistente de IA y propuestas de mejora del sistema.' },
+  { slug: 'sistema', nombre: 'Sistema', icono: 'server', permisoPrefijo: 'sistema:', disponible: true, grupo: 'sistema', descripcion: 'Estado de servicios, tareas, respaldos, registros y app móvil.' },
 ];
 
 export function moduloVisible(modulo: ModuloConfig, permisos: string[]): boolean {

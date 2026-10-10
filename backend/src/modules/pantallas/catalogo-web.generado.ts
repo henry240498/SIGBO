@@ -22655,6 +22655,183 @@ export const PANTALLAS_WEB: PantallaCatalogo[] = [
     ]
   },
   {
+    "codigo": "0xC010",
+    "ruta": "/dashboard/sistema",
+    "nombre": "Estado",
+    "modulo": "sistema",
+    "prefijo": "sistema:",
+    "llamadas": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/centro-mando/acceso"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/ia/admin/config/ollama/probar-conexion"
+      },
+      {
+        "metodos": [
+          "PATCH"
+        ],
+        "patron": "/ia/admin/estado"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/pantallas/mis-permisos-web"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/sistema/estado"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/sistema/resumen"
+      }
+    ]
+  },
+  {
+    "codigo": "0xC013",
+    "ruta": "/dashboard/sistema/app-movil",
+    "nombre": "App móvil",
+    "modulo": "sistema",
+    "prefijo": "sistema:",
+    "llamadas": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/sistema/app-movil"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/sistema/conexion-movil"
+      }
+    ]
+  },
+  {
+    "codigo": "0xC012",
+    "ruta": "/dashboard/sistema/datos",
+    "nombre": "Respaldos y base de datos",
+    "modulo": "sistema",
+    "prefijo": "sistema:",
+    "llamadas": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/centro-mando/acceso"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/pantallas/mis-permisos-web"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/sistema/migraciones"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/sistema/respaldos"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/sistema/respaldos/*/verificar"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/sistema/respaldos/ejecutar"
+      }
+    ]
+  },
+  {
+    "codigo": "0xC014",
+    "ruta": "/dashboard/sistema/registros",
+    "nombre": "Registros",
+    "modulo": "sistema",
+    "prefijo": "sistema:",
+    "llamadas": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/centro-mando/acceso"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/pantallas/mis-permisos-web"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/sistema/registros"
+      }
+    ]
+  },
+  {
+    "codigo": "0xC011",
+    "ruta": "/dashboard/sistema/tareas",
+    "nombre": "Tareas",
+    "modulo": "sistema",
+    "prefijo": "sistema:",
+    "llamadas": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/centro-mando/acceso"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/matpel/administracion/importaciones/procesar"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/pantallas/mis-permisos-web"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/sistema/tareas"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/sistema/tareas/avisos-vencimiento/ejecutar"
+      }
+    ]
+  },
+  {
     "codigo": "0xB076",
     "ruta": "/dashboard/vehiculos",
     "nombre": "Vehículos",

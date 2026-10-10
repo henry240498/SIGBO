@@ -877,6 +877,41 @@ export const PANTALLAS: PantallaRegistrada[] = [
     "detalle": false
   },
   {
+    "ruta": "/dashboard/sistema",
+    "nombre": "Estado",
+    "modulo": "sistema",
+    "codigo": "0xC010",
+    "detalle": false
+  },
+  {
+    "ruta": "/dashboard/sistema/app-movil",
+    "nombre": "App móvil",
+    "modulo": "sistema",
+    "codigo": "0xC013",
+    "detalle": false
+  },
+  {
+    "ruta": "/dashboard/sistema/datos",
+    "nombre": "Respaldos y base de datos",
+    "modulo": "sistema",
+    "codigo": "0xC012",
+    "detalle": false
+  },
+  {
+    "ruta": "/dashboard/sistema/registros",
+    "nombre": "Registros",
+    "modulo": "sistema",
+    "codigo": "0xC014",
+    "detalle": false
+  },
+  {
+    "ruta": "/dashboard/sistema/tareas",
+    "nombre": "Tareas",
+    "modulo": "sistema",
+    "codigo": "0xC011",
+    "detalle": false
+  },
+  {
     "ruta": "/dashboard/vehiculos",
     "nombre": "Vehículos",
     "modulo": "vehiculos",
