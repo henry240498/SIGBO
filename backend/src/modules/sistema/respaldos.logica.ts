@@ -83,7 +83,12 @@ const legible = (fechaLocal: string) => {
   return `${d}/${m}/${a} ${h.slice(0, 5)}`;
 };
 
-export function alertasRespaldo(archivos: RespaldoArchivo[], corridas: CorridaRespaldo[], ahora: Date): AlertaSistema[] {
+/**
+ * motivoRegistro: el registro.log existe pero no se pudo leer. Entonces no se sabe cómo
+ * terminaron las corridas: se dice eso, en vez de concluir de un registro vacío que nunca
+ * se probó restaurar.
+ */
+export function alertasRespaldo(archivos: RespaldoArchivo[], corridas: CorridaRespaldo[], ahora: Date, motivoRegistro: string | null = null): AlertaSistema[] {
   const alertas: AlertaSistema[] = [];
   const ultimo = [...archivos].sort((a, b) => b.fecha.localeCompare(a.fecha))[0];
   if (!ultimo) {
@@ -91,11 +96,15 @@ export function alertasRespaldo(archivos: RespaldoArchivo[], corridas: CorridaRe
   } else if (ahora.getTime() - new Date(ultimo.fecha).getTime() > 24 * 3_600_000) {
     alertas.push({ nivel: 'critica', mensaje: `El último respaldo es del ${legible(ultimo.fecha)}: pasaron más de 24 horas.` });
   }
-  const ultima = corridas[corridas.length - 1];
-  if (ultima?.resultado === 'FALLO') alertas.push({ nivel: 'critica', mensaje: 'La última corrida del respaldo terminó con FALLO. Revisar el registro.' });
-  if (ultima?.resultado === 'INCOMPLETA') alertas.push({ nivel: 'advertencia', mensaje: 'La última corrida del respaldo no terminó (no hay RESULTADO en el registro).' });
-  if (!corridas.some((c) => c.pruebaRestauracion === 'OK')) {
-    alertas.push({ nivel: 'advertencia', mensaje: 'Nunca se probó restaurar un respaldo. La tarea lo hace los domingos (-ProbarRestauracion).' });
+  if (motivoRegistro) {
+    alertas.push({ nivel: 'advertencia', mensaje: `${motivoRegistro}. No se puede saber cómo terminaron las corridas ni si se probó restaurar.` });
+  } else {
+    const ultima = corridas[corridas.length - 1];
+    if (ultima?.resultado === 'FALLO') alertas.push({ nivel: 'critica', mensaje: 'La última corrida del respaldo terminó con FALLO. Revisar el registro.' });
+    if (ultima?.resultado === 'INCOMPLETA') alertas.push({ nivel: 'advertencia', mensaje: 'La última corrida del respaldo no terminó (no hay RESULTADO en el registro).' });
+    if (!corridas.some((c) => c.pruebaRestauracion === 'OK')) {
+      alertas.push({ nivel: 'advertencia', mensaje: 'Nunca se probó restaurar un respaldo. La tarea lo hace los domingos (-ProbarRestauracion).' });
+    }
   }
   const sinHash = archivos.filter((a) => !a.tieneSha256);
   if (sinHash.length) alertas.push({ nivel: 'advertencia', mensaje: `${sinHash.length} respaldo(s) sin su archivo .sha256: no se puede verificar su integridad.` });

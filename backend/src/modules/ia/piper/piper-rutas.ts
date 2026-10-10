@@ -23,10 +23,13 @@ export function validarRutasPiper(rutaBinario: string | null, rutaVoz: string | 
   if (!rutaBinario && !rutaVoz) return null;
   if (!carpetaPermitida) return 'No hay carpeta permitida para Piper: definir IA_PIPER_DIR en el .env del backend.';
   if (rutaBinario) {
+    // Una ruta relativa ("piper.exe" suelto) se resolveria contra la carpeta de trabajo y spawn la buscaria en el PATH.
+    if (!isAbsolute(rutaBinario)) return 'La ruta del ejecutable de Piper debe ser absoluta (por ejemplo C:\\Herramientas\\piper\\piper.exe).';
     if (!NOMBRES_BINARIO.has(basename(rutaBinario).toLowerCase())) return 'El ejecutable debe llamarse piper o piper.exe.';
     if (!dentroDe(carpetaPermitida, rutaBinario)) return `El ejecutable de Piper debe estar dentro de la carpeta permitida (${carpetaPermitida}).`;
   }
   if (rutaVoz) {
+    if (!isAbsolute(rutaVoz)) return 'La ruta de la voz debe ser absoluta.';
     if (extname(rutaVoz).toLowerCase() !== '.onnx') return 'La voz debe ser un archivo .onnx.';
     if (!dentroDe(carpetaPermitida, rutaVoz)) return `La voz debe estar dentro de la carpeta permitida (${carpetaPermitida}).`;
   }

@@ -17,6 +17,7 @@ import { WhisperService } from '../ia/whisper/whisper.service';
 import { TelegramService } from '../notificaciones/telegram.service';
 import { MatrizWebService } from '../pantallas/matriz-web.service';
 import { AuditoriaService } from '../seguridad/auditoria.service';
+import { LimitadorPorClave } from '../../shared/utils/limitador-por-clave';
 import { conDependencia, directoriosSistema, leerCola } from './entorno';
 import { contenidoQrConexion, direccionesDeRed } from './red.logica';
 import { ARCHIVOS_REGISTRO, esClaveRegistro, nivelDeLinea, ocultarSecretos, ultimasLineas } from './registros.logica';
@@ -48,7 +49,7 @@ async function responde(api: string): Promise<boolean> {
 @Injectable()
 export class SistemaService {
   private readonly version = leerVersion();
-  private readonly lecturasRegistro = new Map<string, number>();
+  private readonly lecturasAuditadas = new LimitadorPorClave(SILENCIO_AUDITORIA_MS);
 
   constructor(
     @InjectDataSource() private readonly dataSource: DataSource,
@@ -159,11 +160,20 @@ export class SistemaService {
     } catch (e) {
       motivoTareas = mensaje(e);
     }
-    const arranque = await this.registros('arranque-automatico', 30).catch(() => null);
+    // Un registro que no se pudo leer no es "sin registro": se dice el motivo.
+    let arranque: Awaited<ReturnType<SistemaService['registros']>> | null = null;
+    let motivoArranque: string | null = null;
+    try {
+      arranque = await this.registros('arranque-automatico', 30);
+      if (!arranque.disponible) motivoArranque = arranque.motivo;
+    } catch (e) {
+      motivoArranque = `No se pudo leer el registro de arranque automático: ${mensaje(e)}`;
+    }
     return {
       tareas,
       motivoTareas,
       arranque: arranque?.disponible ? arranque.lineas : [],
+      motivoArranque,
       trabajos: { gre: { ...this.gre.estado(), cola: await this.colaGre() }, avisos: this.avisos.estado() },
     };
   }
@@ -198,10 +208,10 @@ export class SistemaService {
   /** Leer registros queda auditado, una vez cada 10 minutos por persona y archivo (se consultan cada 5 s). */
   private async auditarLectura(ctx: ContextoSistema, clave: string) {
     const llave = `${ctx.usuarioId}|${clave}`;
-    if (Date.now() - (this.lecturasRegistro.get(llave) ?? 0) < SILENCIO_AUDITORIA_MS) return;
+    if (!this.lecturasAuditadas.debeRegistrar(llave)) return;
     // recursoId es uniqueidentifier: el nombre del archivo va en metadata.
     await this.auditoria.registrar({ usuarioId: ctx.usuarioId, accion: 'REGISTROS_LEIDOS', recurso: 'sistema.registros', metadata: { archivo: clave }, ip: ctx.ip, userAgent: ctx.userAgent });
-    this.lecturasRegistro.set(llave, Date.now());
+    this.lecturasAuditadas.marcar(llave);
   }
 
   appMovil() {

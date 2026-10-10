@@ -1,6 +1,6 @@
 import { BadRequestException, ConflictException, ServiceUnavailableException } from '@nestjs/common';
 import { createHash } from 'crypto';
-import { mkdtempSync, rmSync, writeFileSync } from 'fs';
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { AvisosVencimientoService } from '../control-personal/avisos-vencimiento.service';
@@ -149,6 +149,24 @@ describe('RespaldosService', () => {
     expect(r.alertas.some((a) => a.mensaje.includes('.sha256'))).toBe(true);
   });
 
+  it('un registro.log que no se puede leer no se confunde con "sin corridas": se dice el motivo', async () => {
+    writeFileSync(join(respaldos, 'sigbo_cbvc-20261008-081341.bak'), 'x');
+    mkdirSync(join(respaldos, 'registro.log'));
+    const s = new RespaldosService({ query: jest.fn() } as never, auditoria as never, jest.fn());
+    const r = await s.respaldos({ incluirTarea: false });
+    expect(r.motivoRegistro).toMatch(/^No se pudo leer el registro de respaldos \(registro\.log\): /);
+    expect(r.alertas.some((a) => a.nivel === 'advertencia' && a.mensaje.startsWith('No se pudo leer el registro de respaldos'))).toBe(true);
+    expect(r.alertas.some((a) => a.mensaje.includes('Nunca se probó restaurar'))).toBe(false);
+  });
+
+  it('sin registro.log todavía no hubo corridas: no es un error de lectura', async () => {
+    writeFileSync(join(respaldos, 'sigbo_cbvc-20261008-081341.bak'), 'x');
+    const s = new RespaldosService({ query: jest.fn() } as never, auditoria as never, jest.fn());
+    const r = await s.respaldos({ incluirTarea: false });
+    expect(r.motivoRegistro).toBeNull();
+    expect(r.alertas.some((a) => a.mensaje.includes('Nunca se probó restaurar'))).toBe(true);
+  });
+
   it('migraciones: manifiesto contra la tabla de historial', async () => {
     const db = carpetaTemporal();
     process.env.SIGBO_DATABASE_DIR = db;
@@ -214,6 +232,27 @@ describe('SistemaService', () => {
     const llamada = auditoria.registrar.mock.calls.at(-1)?.[0];
     expect(llamada).toMatchObject({ accion: 'REGISTROS_LEIDOS', metadata: { archivo: 'backend-err' } });
     expect(llamada.recursoId).toBeUndefined();
+    } finally {
+      delete process.env.SIGBO_LOGS_DIR;
+    }
+  });
+
+  it('tareas: un registro de arranque que no se puede leer muestra el motivo, no "sin registro"', async () => {
+    const s = nuevo();
+    jest.spyOn(s, 'registros').mockRejectedValueOnce(new Error('EACCES: permiso denegado'));
+    const r = await s.tareasYTrabajos();
+    expect(r.arranque).toEqual([]);
+    expect(r.motivoArranque).toBe('No se pudo leer el registro de arranque automático: EACCES: permiso denegado');
+  });
+
+  it('tareas: sin archivo de arranque, el motivo lo dice; con archivo, las líneas y sin motivo', async () => {
+    const logs = carpetaTemporal();
+    process.env.SIGBO_LOGS_DIR = logs;
+    try {
+      const s = nuevo();
+      await expect(s.tareasYTrabajos()).resolves.toMatchObject({ arranque: [], motivoArranque: 'No existe arranque-automatico.log en la carpeta de registros.' });
+      writeFileSync(join(logs, 'arranque-automatico.log'), 'SIGBO iniciado\n');
+      await expect(s.tareasYTrabajos()).resolves.toMatchObject({ arranque: [{ texto: 'SIGBO iniciado' }], motivoArranque: null });
     } finally {
       delete process.env.SIGBO_LOGS_DIR;
     }

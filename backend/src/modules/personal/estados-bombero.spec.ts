@@ -1,8 +1,11 @@
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import { ESTADOS_BOMBERO } from '../../shared/entities/bombero.entity';
-import { ESTADO_BOMBERO_SINONIMOS, resolverSinonimo } from '../ia/tools/ia-nlu.util';
-import { tipoMovimientoPorEstado } from './bomberos.service';
+import { BadRequestException } from '@nestjs/common';
+import { Bombero, HistorialCodigo, HistorialInstitucional } from '../../shared/entities';
+import { BaseFalsa } from '../../shared/testing/base-falsa';
+import { ESTADO_BOMBERO_SINONIMOS, PATRON_PERSONAL_POR_ESTADO, resolverSinonimo } from '../ia/tools/ia-nlu.util';
+import { BomberosService, tipoMovimientoPorEstado } from './bomberos.service';
 import { CreateBomberoDto } from './dto/create-bombero.dto';
 
 describe('estados del bombero', () => {
@@ -32,5 +35,26 @@ describe('estados del bombero', () => {
     expect(resolverSinonimo('listame los retirados', ESTADO_BOMBERO_SINONIMOS)).toBe('BAJA');
     expect(resolverSinonimo('los fallecidos', ESTADO_BOMBERO_SINONIMOS)).toBe('FALLECIDO');
     expect(Object.values(ESTADO_BOMBERO_SINONIMOS)).not.toContain('ASPIRANTE');
+  });
+
+  it('Snoopy reconoce la intención de listar bomberos de baja o fallecidos', () => {
+    for (const frase of ['bomberos de baja', 'bomberos dados de baja', 'bomberos fallecidos', 'bombero fallecido', 'bomberos activos', 'bomberos de licencia']) {
+      expect(PATRON_PERSONAL_POR_ESTADO.test(frase)).toBe(true);
+    }
+    expect(PATRON_PERSONAL_POR_ESTADO.test('bomberos con guardia')).toBe(false);
+  });
+
+  it('dar de baja a quien ya está de baja o fallecido se rechaza sin tocar nada', async () => {
+    const base = new BaseFalsa();
+    const auditoria = { registrar: jest.fn() };
+    const s = new BomberosService(base.getRepository(Bombero) as never, base.getRepository(HistorialCodigo) as never, base.getRepository(HistorialInstitucional) as never, auditoria as never);
+    await base.getRepository(Bombero).save(Object.assign(new Bombero(), { id: 'b1', estado: 'BAJA' }) as never);
+    await base.getRepository(Bombero).save(Object.assign(new Bombero(), { id: 'b2', estado: 'FALLECIDO' }) as never);
+    await expect(s.darBaja('b1', 'motivo', 'u1')).rejects.toThrow('El bombero ya está dado de baja.');
+    await expect(s.darBaja('b2', 'motivo', 'u1')).rejects.toBeInstanceOf(BadRequestException);
+    const fallecido = await base.getRepository(Bombero).findOne({ where: { id: 'b2' } }) as { estado: string };
+    expect(fallecido.estado).toBe('FALLECIDO');
+    expect(base.tabla('HistorialInstitucional')).toHaveLength(0);
+    expect(auditoria.registrar).not.toHaveBeenCalled();
   });
 });

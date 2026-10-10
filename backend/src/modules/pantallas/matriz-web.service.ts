@@ -4,6 +4,7 @@ import { DiscoveryService, MetadataScanner, ModuleRef } from '@nestjs/core';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { Pantalla, PantallaPermiso } from '../../shared/entities';
+import { LimitadorPorClave } from '../../shared/utils/limitador-por-clave';
 import { AuditoriaService } from '../seguridad/auditoria.service';
 import { PERMISSION_KEY } from '../seguridad/decorators/require-permission.decorator';
 import { PolicyEngineService } from '../seguridad/policy-engine.service';
@@ -54,7 +55,8 @@ export class MatrizWebService implements OnApplicationBootstrap {
   private reglasCache: { cargadas: number; reglas: PantallaPermiso[] } | null = null;
   private ultimasReglas: PantallaPermiso[] | null = null;
   private ultimoReintento = 0;
-  private readonly ultimasDenegaciones = new Map<string, number>();
+  /** Una auditoria de denegacion por persona, pantalla y accion cada 10 minutos. */
+  private readonly denegacionesAuditadas = new LimitadorPorClave(SILENCIO_AUDITORIA_MS);
 
   constructor(
     private readonly discovery: DiscoveryService,
@@ -192,14 +194,14 @@ export class MatrizWebService implements OnApplicationBootstrap {
 
   private async auditarDenegacion(usuarioId: string, codigo: string, accion: string, ruta: string) {
     const clave = `${usuarioId}|${codigo}|${accion}`;
-    const ahora = Date.now();
-    if (ahora - (this.ultimasDenegaciones.get(clave) ?? 0) < SILENCIO_AUDITORIA_MS) return;
-    this.ultimasDenegaciones.set(clave, ahora);
+    if (!this.denegacionesAuditadas.debeRegistrar(clave)) return;
     try {
       await this.moduleRef.get(AuditoriaService, { strict: false }).registrar({
         usuarioId, accion: 'DENEGADO_POR_PANTALLA', recurso: 'seguridad.pantalla_permisos', recursoId: null,
         datosDespues: { pantalla: codigo, accion, ruta },
       });
+      // se marca despues de escribir: si la auditoria falla, el proximo rechazo vuelve a intentarlo
+      this.denegacionesAuditadas.marcar(clave);
     } catch (e) {
       this.log.warn(`No se pudo auditar una denegación por pantalla: ${mensaje(e)}`);
     }

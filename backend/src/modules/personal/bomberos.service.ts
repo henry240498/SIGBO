@@ -223,6 +223,9 @@ export class BomberosService {
 
   async darBaja(id: string, motivo: string, actualizadoPor: string, ip?: string) {
     const anterior = await this.findOne(id);
+    // Ya dado de baja: no se duplica el RETIRO. Fallecido: BAJA no puede pisar ese estado.
+    if (anterior.estado === 'BAJA') throw new BadRequestException('El bombero ya está dado de baja.');
+    if (anterior.estado === 'FALLECIDO') throw new BadRequestException('No se puede dar de baja a un bombero registrado como fallecido.');
     await this.bomberoRepo.update(id, {
       estado: 'BAJA',
       fechaBaja: new Date().toISOString().slice(0, 10),

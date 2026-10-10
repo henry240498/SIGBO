@@ -1,7 +1,8 @@
-import { join } from 'path';
+import { join, resolve, sep } from 'path';
 import { carpetaPermitidaPiper, validarRutasPiper } from './piper-rutas';
 
-const raiz = join('C:', 'Herramientas', 'piper');
+// absoluta en cualquier sistema (en Windows, la unidad actual)
+const raiz = resolve(sep, 'Herramientas', 'piper');
 
 describe('rutas de Piper', () => {
   it('acepta piper(.exe) y una voz .onnx dentro de la carpeta permitida', () => {
@@ -15,13 +16,20 @@ describe('rutas de Piper', () => {
   });
 
   it('rechaza rutas fuera de la carpeta, incluso con ..', () => {
-    expect(validarRutasPiper(join('C:', 'Windows', 'System32', 'piper.exe'), null, raiz)).toMatch(/carpeta/);
+    expect(validarRutasPiper(resolve(sep, 'Windows', 'System32', 'piper.exe'), null, raiz)).toMatch(/carpeta/);
     expect(validarRutasPiper(join(raiz, '..', '..', 'Windows', 'piper.exe'), null, raiz)).toMatch(/carpeta/);
   });
 
   it('la voz debe ser .onnx y estar en la carpeta', () => {
     expect(validarRutasPiper(join(raiz, 'piper.exe'), join(raiz, 'voz.txt'), raiz)).toMatch(/onnx/);
-    expect(validarRutasPiper(join(raiz, 'piper.exe'), join('D:', 'otra', 'voz.onnx'), raiz)).toMatch(/carpeta/);
+    expect(validarRutasPiper(join(raiz, 'piper.exe'), resolve(sep, 'otra', 'voz.onnx'), raiz)).toMatch(/carpeta/);
+  });
+
+  it('exige rutas absolutas: un piper.exe suelto se buscaría en el PATH', () => {
+    // aunque la carpeta permitida sea la de trabajo (donde resolve() la ubicaria), una ruta relativa no se acepta
+    expect(validarRutasPiper('piper.exe', null, process.cwd())).toMatch(/absoluta/);
+    expect(validarRutasPiper(join('piper', 'piper.exe'), null, raiz)).toMatch(/absoluta/);
+    expect(validarRutasPiper(join(raiz, 'piper.exe'), 'voz.onnx', raiz)).toMatch(/absoluta/);
   });
 
   it('sin carpeta permitida no se acepta ninguna ruta nueva', () => {

@@ -6,6 +6,7 @@ import {
   FormularioRespuesta, PersonalServicio, PosicionMovil, Servicio, ServicioMensaje, ServicioParticipante, TipoServicio, Vehiculo,
 } from '../../shared/entities';
 import { instanteDelHecho } from '../../shared/utils/instante';
+import { LimitadorPorClave } from '../../shared/utils/limitador-por-clave';
 import { AuditoriaService } from '../seguridad/auditoria.service';
 import { PantallasService } from '../pantallas/pantallas.service';
 import { DespachoTiempoReal } from './despacho-tiempo-real.service';
@@ -50,7 +51,7 @@ export class ServicioActivoService {
   }
 
   /** Ultima auditoria confidencial del Centro de mando por persona (en memoria; se reinicia con el proceso). */
-  private readonly ultimaAuditoriaCentro = new Map<string, number>();
+  private readonly auditoriaCentro = new LimitadorPorClave(VENTANA_AUDITORIA_CENTRO_MS);
 
   async activos(user: AuthenticatedUser) {
     await this.exigirPantalla(user, '0xA006', 'ver');
@@ -100,10 +101,9 @@ export class ServicioActivoService {
       direccion: conf ? s.direccion : null,
     }));
     if (conf && servicios.length) {
-      const previa = ahora ? this.ultimaAuditoriaCentro.get(user.id) : undefined;
-      if (!ahora || previa === undefined || ahora.getTime() - previa >= VENTANA_AUDITORIA_CENTRO_MS) {
+      if (!ahora || this.auditoriaCentro.debeRegistrar(user.id, ahora)) {
         await this.auditar(user, 'ACCESO_CONFIDENCIAL', servicios[0].id, null, { campos: ['direccion'], servicios: servicios.length });
-        if (ahora) this.ultimaAuditoriaCentro.set(user.id, ahora.getTime());
+        if (ahora) this.auditoriaCentro.marcar(user.id, ahora);
       }
     }
     return salida;

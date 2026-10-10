@@ -32,6 +32,7 @@ import {
   ESTADO_BOMBERO_SINONIMOS,
   ESTADO_EQUIPO_SINONIMOS,
   ESTADO_VEHICULO_SINONIMOS,
+  PATRON_PERSONAL_POR_ESTADO,
   resolverFechaRelativa,
   resolverSinonimo,
   resolverTipoBombero,
@@ -250,7 +251,7 @@ export class IaToolsService {
       patrones: [
         /quien es\b/, /datos de\b/, /buscar? (bombero|personal)/, /numero de bombero/, /informacion de(l)? bombero/,
         /cuant[oa]s (bomberos?|combatientes?|incorporados?|voluntarios?|fundadores?|honorarios?)/,
-        /(bomberos?|combatientes?|incorporados?|fundadores?) (activos?|suspendidos?|retirados?|de licencia)/,
+        PATRON_PERSONAL_POR_ESTADO,
         /hac(e|en) guardias?/,
         // Codigos de tipo de bombero sueltos (seccion 12 del pedido: "¿Cuantos
         // BC tenemos?" debe reconocerse igual que "combatientes", sin la

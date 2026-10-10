@@ -87,6 +87,16 @@ describe('MatrizWebService', () => {
     await expect(s.exigirEnRuta(user, 'GET', '/api/v1/demo/:id')).resolves.toBeUndefined();
   });
 
+  it('si la auditoría de una denegación falla, no se silencia: el próximo rechazo vuelve a anotarla', async () => {
+    await regla(base, { ver: true });
+    const s = await nueva(base);
+    auditoria.registrar.mockRejectedValueOnce(new Error('sin base'));
+    await expect(s.exigirEnRuta(user, 'DELETE', '/api/v1/demo/:id')).rejects.toBeInstanceOf(ForbiddenException);
+    await expect(s.exigirEnRuta(user, 'DELETE', '/api/v1/demo/:id')).rejects.toBeInstanceOf(ForbiddenException);
+    await expect(s.exigirEnRuta(user, 'DELETE', '/api/v1/demo/:id')).rejects.toBeInstanceOf(ForbiddenException);
+    expect(auditoria.registrar).toHaveBeenCalledTimes(2);
+  });
+
   it('una ruta compartida sigue disponible si otra pantalla la permite', async () => {
     await regla(base, { denegar: true });
     const s = await nueva(base);

@@ -106,6 +106,10 @@ export const ESTADO_BOMBERO_SINONIMOS: Record<string, string> = {
   fallecidos: 'FALLECIDO', fallecido: 'FALLECIDO',
 };
 
+/** "bomberos activos", "bomberos de baja", "bomberos fallecidos": la intencion de listar personal por estado (mensaje ya normalizado). */
+export const PATRON_PERSONAL_POR_ESTADO =
+  /(bomberos?|combatientes?|incorporados?|fundadores?) (activos?|suspendidos?|retirados?|de licencia|(dados? )?de baja|fallecidos?)/;
+
 export const ESTADO_VEHICULO_SINONIMOS: Record<string, string> = {
   disponibles: 'OPERATIVO', disponible: 'OPERATIVO', operativos: 'OPERATIVO', operativo: 'OPERATIVO',
   'fuera de servicio': 'FUERA_SERVICIO',

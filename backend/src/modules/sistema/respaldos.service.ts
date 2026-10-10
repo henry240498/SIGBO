@@ -72,7 +72,7 @@ export class RespaldosService {
     const incluirTarea = opciones.incluirTarea ?? true;
     const { respaldos: carpeta } = directoriosSistema();
     if (!existsSync(carpeta)) {
-      return { disponible: false, motivo: `No existe la carpeta de respaldos (${carpeta}).`, carpeta, archivos: [] as RespaldoArchivo[], corridas: [], alertas: alertasRespaldo([], [], new Date()), tarea: null };
+      return { disponible: false, motivo: `No existe la carpeta de respaldos (${carpeta}).`, carpeta, archivos: [] as RespaldoArchivo[], corridas: [], motivoRegistro: null, alertas: alertasRespaldo([], [], new Date()), tarea: null };
     }
     const nombres = await readdir(carpeta);
     const archivos: RespaldoArchivo[] = [];
@@ -83,7 +83,16 @@ export class RespaldosService {
       archivos.push({ nombre, fecha, tamanioBytes: info.size, tieneSha256: nombres.includes(`${nombre}.sha256`) });
     }
     archivos.sort((a, b) => b.fecha.localeCompare(a.fecha));
-    const registro = await readFile(join(carpeta, 'registro.log'), 'utf8').catch(() => '');
+    // Sin registro.log todavia no hubo corridas; uno que no se puede leer es otra cosa: se dice el motivo.
+    let motivoRegistro: string | null = null;
+    let registro = '';
+    try {
+      registro = await readFile(join(carpeta, 'registro.log'), 'utf8');
+    } catch (e) {
+      if ((e as NodeJS.ErrnoException)?.code !== 'ENOENT') {
+        motivoRegistro = `No se pudo leer el registro de respaldos (registro.log): ${e instanceof Error ? e.message : String(e)}`;
+      }
+    }
     const corridas = parsearRegistro(registro);
     let tarea: TareaProgramada | { disponible: false; motivo: string } | null = null;
     if (incluirTarea) {
@@ -99,7 +108,8 @@ export class RespaldosService {
       carpeta,
       archivos,
       corridas: corridas.slice(-10).reverse(),
-      alertas: alertasRespaldo(archivos, corridas, new Date()),
+      motivoRegistro,
+      alertas: alertasRespaldo(archivos, corridas, new Date(), motivoRegistro),
       tarea,
     };
   }
