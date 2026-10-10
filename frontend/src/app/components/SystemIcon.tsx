@@ -18,6 +18,8 @@ const paths: Record<IconoModulo | 'home' | 'user' | 'flame' | 'buscar', React.Re
   document: <><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"/></>,
   lock: <><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></>,
   chart: <><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></>,
+  radar: <><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12 18.4 5.6"/><circle cx="12" cy="12" r="1"/></>,
+  server: <><rect x="4" y="4" width="16" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="16" height="6.5" rx="1.5"/><path d="M8 7.25h.01M8 16.75h.01M12 7.25h4M12 16.75h4"/></>,
 };
 
 export function SystemIcon({ name, size = 20 }: { name: keyof typeof paths; size?: number }) {

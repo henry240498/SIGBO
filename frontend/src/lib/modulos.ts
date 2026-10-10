@@ -1,4 +1,4 @@
-export type IconoModulo = 'building' | 'people' | 'clock' | 'shield' | 'alert' | 'truck' | 'tools' | 'academy' | 'finance' | 'box' | 'document' | 'lock' | 'chart';
+export type IconoModulo = 'building' | 'people' | 'clock' | 'shield' | 'alert' | 'truck' | 'tools' | 'academy' | 'finance' | 'box' | 'document' | 'lock' | 'chart' | 'radar' | 'server';
 
 /**
  * Los 15 modulos en una sola lista plana obligaban a leerla entera para encontrar uno.

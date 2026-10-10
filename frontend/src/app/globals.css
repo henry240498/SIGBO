@@ -486,3 +486,36 @@ html.config-reduced-motion *,html.config-reduced-motion *::before,html.config-re
 .tabla-compacta th { text-align: left; padding: 6px 8px; color: var(--muted); font-size: 11px; border-bottom: 1px solid var(--line); }
 .tabla-compacta td { padding: 7px 8px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
 @media (max-width: 860px) { .pantallas-admin { grid-template-columns: 1fr; } .pantallas-lista { position: static; max-height: 360px; } }
+
+/* Centro de mando y área Sistema (spec 2026-10-09). .card fuerza su padding con !important:
+   los paneles densos usan clases propias. */
+.cm-cabecera { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
+.cm-cabecera p { color: var(--muted); font-size: 13px; }
+.marca-actualizacion { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
+.punto-vivo { width: 8px; height: 8px; border-radius: 50%; background: var(--success); box-shadow: 0 0 0 3px var(--ok-fill); }
+.punto-vivo.caido { background: var(--danger); box-shadow: 0 0 0 3px var(--bad-fill); }
+.cm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; align-items: start; }
+.cm-panel { display: grid; gap: 10px; align-content: start; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
+.cm-panel > h2 { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 15px; }
+.cm-panel-ancho { grid-column: 1 / -1; }
+.cm-cifras { display: grid; grid-template-columns: repeat(auto-fit, minmax(92px, 1fr)); gap: 8px; }
+.cm-cifra { padding: 10px; border-radius: 10px; background: var(--surface-soft); }
+.cm-cifra strong { display: block; color: var(--ink); font: 700 22px 'Space Mono', monospace; }
+.cm-cifra span { color: var(--muted); font-size: 11px; }
+.cm-lista { list-style: none; display: grid; }
+.cm-lista > li { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; padding: 8px 0; border-top: 1px solid var(--line-soft); font-size: 13px; }
+.cm-lista small { display: block; color: var(--muted); }
+.cm-vacio { color: var(--muted); font-size: 13px; }
+.cm-acciones { display: flex; flex-wrap: wrap; gap: 6px; }
+.semaforo { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; color: var(--ink); border-radius: 999px; font-size: 12px; font-weight: 700; }
+.semaforo-normal { background: var(--ok-fill); }
+.semaforo-atencion { background: var(--warn-fill); }
+.semaforo-critico { background: var(--bad-fill); }
+.qr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.qr-tarjeta { display: grid; gap: 8px; justify-items: center; padding: 14px; text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.qr-tarjeta code { font-size: 11px; word-break: break-all; }
+.registro-visor { max-height: 60vh; overflow: auto; padding: 10px 12px; color: var(--ink); background: var(--surface-soft); border: 1px solid var(--line); border-radius: 10px; font: 12px/1.55 'Space Mono', monospace; white-space: pre-wrap; word-break: break-word; }
+.registro-linea.error { color: var(--danger); font-weight: 700; }
+.registro-linea.warn { color: var(--warning); }
+.config-lista { display: flex; flex-wrap: wrap; gap: 8px 16px; border: 0; }
+.config-lista label { display: inline-flex; align-items: center; gap: 6px; }
