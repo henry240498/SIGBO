@@ -474,3 +474,15 @@ html.config-reduced-motion *,html.config-reduced-motion *::before,html.config-re
   .service-table-wrap table { min-width: 0; width: 100%; }
   input, textarea, select { color: #10263f !important; border-color: #c8d6da !important; background: white !important; }
 }
+
+/* Seguridad › Pantallas: lista agrupada + detalle */
+.pantallas-admin { display: grid; grid-template-columns: minmax(240px, 320px) 1fr; gap: 16px; align-items: start; }
+.pantallas-lista { position: sticky; top: 12px; max-height: calc(100vh - 140px); overflow-y: auto; }
+.pantallas-opcion { width: 100%; display: flex; justify-content: space-between; gap: 8px; padding: 6px 8px; color: var(--ink); background: transparent; border: 0; border-radius: 7px; text-align: left; font-size: 13px; cursor: pointer; }
+.pantallas-opcion small { color: var(--muted); font: 10px 'Space Mono', monospace; }
+.pantallas-opcion:hover { background: var(--surface-soft); }
+.pantallas-opcion.activa { background: var(--info-fill); font-weight: 700; }
+.tabla-compacta { width: 100%; border-collapse: collapse; font-size: 13px; }
+.tabla-compacta th { text-align: left; padding: 6px 8px; color: var(--muted); font-size: 11px; border-bottom: 1px solid var(--line); }
+.tabla-compacta td { padding: 7px 8px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+@media (max-width: 860px) { .pantallas-admin { grid-template-columns: 1fr; } .pantallas-lista { position: static; max-height: 360px; } }
