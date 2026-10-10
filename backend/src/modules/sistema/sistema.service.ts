@@ -17,7 +17,7 @@ import { WhisperService } from '../ia/whisper/whisper.service';
 import { TelegramService } from '../notificaciones/telegram.service';
 import { MatrizWebService } from '../pantallas/matriz-web.service';
 import { AuditoriaService } from '../seguridad/auditoria.service';
-import { directoriosSistema, leerCola } from './entorno';
+import { conDependencia, directoriosSistema, leerCola } from './entorno';
 import { contenidoQrConexion, direccionesDeRed } from './red.logica';
 import { ARCHIVOS_REGISTRO, esClaveRegistro, nivelDeLinea, ocultarSecretos, ultimasLineas } from './registros.logica';
 import { AlertaSistema } from './respaldos.logica';
@@ -131,7 +131,7 @@ export class SistemaService {
   async resumen(): Promise<{ generadoEn: Date; nivel: 'normal' | 'atencion' | 'critico'; alertas: AlertaSistema[] }> {
     const [estado, respaldos, migraciones] = await Promise.all([
       this.estado(),
-      this.respaldos.respaldos().catch((e: unknown) => ({ alertas: [{ nivel: 'advertencia' as const, mensaje: `No se pudieron leer los respaldos: ${mensaje(e)}` }] })),
+      this.respaldos.respaldos({ incluirTarea: false }).catch((e: unknown) => ({ alertas: [{ nivel: 'advertencia' as const, mensaje: `No se pudieron leer los respaldos: ${mensaje(e)}` }] })),
       this.respaldos.migraciones(),
     ]);
     const alertas: AlertaSistema[] = [];
@@ -139,6 +139,8 @@ export class SistemaService {
     alertas.push(...respaldos.alertas);
     if (migraciones.disponible && migraciones.alteradas.length) alertas.push({ nivel: 'critica', mensaje: `Migraciones alteradas después de aplicarse: ${migraciones.alteradas.join(', ')}.` });
     if (migraciones.disponible && migraciones.pendientes.length) alertas.push({ nivel: 'info', mensaje: `${migraciones.pendientes.length} migración(es) pendiente(s): ${migraciones.pendientes.join(', ')}.` });
+    if (!migraciones.disponible) alertas.push({ nivel: 'advertencia', mensaje: `No se pudo determinar el estado de las migraciones: ${migraciones.motivo}` });
+    if (!estado.inteligencia.disponible) alertas.push({ nivel: 'advertencia', mensaje: `No se pudo determinar el estado de la inteligencia artificial: ${estado.inteligencia.motivo}` });
     const ollama = estado.inteligencia.ollama as { conectado?: boolean } | null;
     if (ollama && ollama.conectado === false) alertas.push({ nivel: 'advertencia', mensaje: 'Ollama no responde: Snoopy contesta con su motor local.' });
     if (!estado.matriz.sincronizada) alertas.push({ nivel: 'advertencia', mensaje: 'El catálogo de pantallas no se pudo sincronizar con la base.' });
@@ -167,7 +169,7 @@ export class SistemaService {
   }
 
   async ejecutarAvisos(ctx: ContextoSistema) {
-    const r = await this.avisos.ejecutarAhora();
+    const r = await conDependencia(() => this.avisos.ejecutarAhora());
     await this.auditoria.registrar({ usuarioId: ctx.usuarioId, accion: 'AVISOS_VENCIMIENTO_EJECUTADOS', recurso: 'sistema.tareas', datosDespues: r, ip: ctx.ip, userAgent: ctx.userAgent });
     return r;
   }

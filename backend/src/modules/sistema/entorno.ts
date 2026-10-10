@@ -1,3 +1,4 @@
+import { HttpException, ServiceUnavailableException } from '@nestjs/common';
 import { execFile } from 'child_process';
 import { open, stat } from 'fs/promises';
 import { join, resolve } from 'path';
@@ -30,7 +31,12 @@ export const ejecutarPowerShell: EjecutorPowerShell = (script, timeoutMs = 20_00
       ['-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-Command', script],
       { timeout: timeoutMs, windowsHide: true, maxBuffer: 1024 * 1024 },
       (error, stdout, stderr) => {
-        if (error) return rechazar(new Error(String(stderr || error.message).trim().slice(0, 500)));
+        if (error) {
+          // Nunca se devuelve error.message: trae la linea de comando completa con el script.
+          if (error.killed || error.signal) return rechazar(new NoDisponible(`El Programador de tareas de Windows no respondió en ${Math.round(timeoutMs / 1000)} s.`));
+          const detalle = String(stderr || '').trim().slice(0, 500);
+          return rechazar(new Error(detalle || `PowerShell terminó con error${typeof error.code === 'number' ? ` (código ${error.code})` : ''}.`));
+        }
         resolver(String(stdout));
       },
     );
@@ -44,13 +50,27 @@ export async function leerCola(ruta: string, bytes: number): Promise<string> {
   const largo = info.size - desde;
   const archivo = await open(ruta, 'r');
   try {
-    const buffer = Buffer.alloc(largo);
+    let buffer = Buffer.alloc(largo);
     await archivo.read(buffer, 0, largo, desde);
+    // Si se corto en el medio de una linea, se descarta ese pedazo ANTES de decodificar:
+    // un corte dentro de un caracter multibyte no debe estropear toda la cola.
+    if (desde > 0) {
+      const salto = buffer.indexOf(0x0a);
+      buffer = salto < 0 ? Buffer.alloc(0) : buffer.subarray(salto + 1);
+    }
     const utf8 = buffer.toString('utf8');
-    const texto = utf8.includes('�') ? buffer.toString('latin1') : utf8;
-    // Si se corto en el medio de una linea, se descarta ese pedazo.
-    return desde > 0 ? texto.slice(texto.indexOf('\n') + 1) : texto;
+    return utf8.includes(String.fromCharCode(0xfffd)) ? buffer.toString('latin1') : utf8;
   } finally {
     await archivo.close();
+  }
+}
+
+/** Una dependencia externa que falla en una operacion se informa como 503 con el motivo; los 4xx pasan igual. */
+export async function conDependencia<T>(operacion: () => Promise<T>): Promise<T> {
+  try {
+    return await operacion();
+  } catch (e) {
+    if (e instanceof HttpException) throw e;
+    throw new ServiceUnavailableException(e instanceof Error && e.message ? e.message : 'Dependencia no disponible.');
   }
 }
