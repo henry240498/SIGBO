@@ -7,11 +7,12 @@ import { AuditoriaService } from '../seguridad/auditoria.service';
 import { CreateBomberoDto } from './dto/create-bombero.dto';
 import { UpdateBomberoDto } from './dto/update-bombero.dto';
 
-/** Traduce un cambio de `estado` al tipo de movimiento mas especifico posible. */
-function tipoMovimientoPorEstado(estadoNuevo: string): string {
+/** Traduce un cambio de `estado` al tipo de movimiento mas especifico posible.
+ * BAJA sigue registrando RETIRO: el historial institucional no se reescribe (mig. 097). */
+export function tipoMovimientoPorEstado(estadoNuevo: string): string {
   if (estadoNuevo === 'LICENCIA') return 'LICENCIA';
   if (estadoNuevo === 'SUSPENDIDO') return 'SUSPENSION';
-  if (estadoNuevo === 'RETIRADO') return 'RETIRO';
+  if (estadoNuevo === 'BAJA') return 'RETIRO';
   return 'CAMBIO_CONDICION';
 }
 
@@ -223,7 +224,7 @@ export class BomberosService {
   async darBaja(id: string, motivo: string, actualizadoPor: string, ip?: string) {
     const anterior = await this.findOne(id);
     await this.bomberoRepo.update(id, {
-      estado: 'RETIRADO',
+      estado: 'BAJA',
       fechaBaja: new Date().toISOString().slice(0, 10),
       motivoBaja: motivo,
       actualizadoPor,

@@ -1,3 +1,4 @@
+import type React from 'react';
 import { apiFetch, API_ORIGIN } from './api';
 
 /**
@@ -40,19 +41,16 @@ export interface BomberoResumen {
   cargoPrincipalId: string | null;
 }
 
-/** Estados de ciclo de vida de un bombero. Es una maquina de estados fija
- * (impuesta por CHECK constraint + DTO en el backend), no un catalogo
- * administrable — por eso vive aqui como constante compartida y no en
- * organizacion.parametros. */
-export const ESTADOS_BOMBERO = [
-  'ASPIRANTE',
-  'ACTIVO',
-  'SUSPENDIDO',
-  'LICENCIA',
-  'RETIRADO',
-  'FALLECIDO',
-  'HONORARIO',
-];
+/** Estados de ciclo de vida de un bombero (mig. 097). Maquina de estados fija
+ * (CHECK + DTO en el backend), no un catalogo administrable. */
+export const ESTADOS_BOMBERO = ['ACTIVO', 'SUSPENDIDO', 'LICENCIA', 'BAJA', 'FALLECIDO'];
+
+/** Chip del estado: ACTIVO verde, LICENCIA ambar, el resto rojo (tinte claro: .badge fija el texto). */
+export function estiloEstadoBombero(estado: string): React.CSSProperties {
+  if (estado === 'ACTIVO') return { background: 'var(--ok-fill)' };
+  if (estado === 'LICENCIA') return { background: 'var(--warn-fill)' };
+  return { background: 'var(--bad-fill)' };
+}
 
 export async function cargarTiposBombero(): Promise<TipoBombero[]> {
   const res = await apiFetch('/personal/tipos-bombero?estado=ACTIVO');

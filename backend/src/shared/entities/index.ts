@@ -6,7 +6,9 @@ export * from './asignacion-permiso-rol.entity';
 export * from './asignacion-permiso-directo.entity';
 export * from './sesion.entity';
 export * from './log-auditoria.entity';
-export * from './bombero.entity';
+// ESTADOS_BOMBERO no se reexporta: el DataSource hace Object.values(entities) y una constante no es entidad.
+export { Bombero } from './bombero.entity';
+export type { EstadoBombero, CondicionInstitucional } from './bombero.entity';
 export * from './historial-contrasena.entity';
 export * from './rango.entity';
 export * from './cargo.entity';

@@ -7,6 +7,7 @@ import { apiFetch, API_ORIGIN, obtenerSesion } from '@/lib/api';
 import { Cargando } from '@/app/components/Cargando';
 import { Aviso } from '@/app/components/Aviso';
 import { seccionPedida, urlConSeccion } from '@/lib/seccion-url';
+import { estiloEstadoBombero } from '@/lib/personal';
 import { Bombero, Catalogo, cargarCatalogo } from './expediente';
 import { TabResumen } from './secciones/TabResumen';
 import { TabDatosPersonales } from './secciones/TabDatosPersonales';
@@ -134,7 +135,7 @@ export default function ExpedienteBomberoPage() {
             </h2>
             <div style={{ display: 'flex', gap: 8, marginTop: 6, flexWrap: 'wrap' }}>
               <span className="badge">{bombero.numeroBombero}</span>
-              <span className="badge" style={{ background: bombero.estado === 'ACTIVO' ? 'var(--ok-fill)' : 'var(--bad-fill)' }}>
+              <span className="badge" style={estiloEstadoBombero(bombero.estado)}>
                 {bombero.estado}
               </span>
               {tipoActual && <span className="badge">{tipoActual.prefijo}</span>}

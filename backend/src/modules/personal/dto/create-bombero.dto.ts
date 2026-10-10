@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsIn, IsInt, IsNotEmpty, IsOptional, IsString, Matches } from 'class-validator';
+import { ESTADOS_BOMBERO } from '../../../shared/entities/bombero.entity';
 import { GUID_REGEX, GUID_REGEX_MENSAJE } from '../../../shared/utils/guid';
 
 const DIAS_SEMANA = ['NINGUNA', 'LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO'];
@@ -43,12 +44,9 @@ export class CreateBomberoDto {
 
   @ApiProperty() @IsString() @IsNotEmpty() fechaIngreso: string;
 
-  @ApiProperty({
-    enum: ['ASPIRANTE', 'ACTIVO', 'SUSPENDIDO', 'LICENCIA', 'RETIRADO', 'FALLECIDO', 'HONORARIO'],
-    default: 'ACTIVO',
-  })
+  @ApiProperty({ enum: ESTADOS_BOMBERO, default: 'ACTIVO' })
   @IsOptional()
-  @IsIn(['ASPIRANTE', 'ACTIVO', 'SUSPENDIDO', 'LICENCIA', 'RETIRADO', 'FALLECIDO', 'HONORARIO'])
+  @IsIn([...ESTADOS_BOMBERO])
   estado?: string;
 
   @ApiProperty({

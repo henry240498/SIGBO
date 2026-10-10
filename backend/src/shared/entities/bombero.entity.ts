@@ -1,13 +1,9 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-export type EstadoBombero =
-  | 'ASPIRANTE'
-  | 'ACTIVO'
-  | 'SUSPENDIDO'
-  | 'LICENCIA'
-  | 'RETIRADO'
-  | 'FALLECIDO'
-  | 'HONORARIO';
+/** Estados reales del bombero (decisión del cuartel, 2026-10-09). Los impone el CHECK
+ * CK_bomberos_estado (mig. 097) y el DTO; no es un catálogo administrable. */
+export const ESTADOS_BOMBERO = ['ACTIVO', 'SUSPENDIDO', 'LICENCIA', 'BAJA', 'FALLECIDO'] as const;
+export type EstadoBombero = (typeof ESTADOS_BOMBERO)[number];
 
 export type CondicionInstitucional = 'INCORPORADO' | 'COMBATIENTE' | 'APOYO_ECONOMICO' | 'HONORARIO';
 

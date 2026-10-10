@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { apiFetch } from '@/lib/api';
 import { Aviso } from '@/app/components/Aviso';
+import { ESTADOS_BOMBERO } from '@/lib/personal';
 import { Bombero, Catalogo, cargarCatalogo, campoTexto } from '../expediente';
 
 export function TabInstitucional({
@@ -157,7 +158,7 @@ export function TabInstitucional({
         <div>
           <label htmlFor="estado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
           <select id="estado" className="input-field" value={form.estado} onChange={(e) => setForm({ ...form, estado: e.target.value })}>
-            {ESTADOS.map((e) => (
+            {ESTADOS_BOMBERO.map((e) => (
               <option key={e} value={e}>
                 {e}
               </option>
@@ -272,7 +273,6 @@ export function TabInstitucional({
 
 
 
-const ESTADOS = ['ASPIRANTE', 'ACTIVO', 'SUSPENDIDO', 'LICENCIA', 'RETIRADO', 'FALLECIDO', 'HONORARIO'];
 
 
 const DIAS_SEMANA_PREFERENCIA = ['NINGUNA', 'LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO'];

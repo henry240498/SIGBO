@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { apiFetch } from '@/lib/api';
 import { cargarParametros, Parametro } from '@/lib/parametros';
 import { Aviso } from '@/app/components/Aviso';
+import { ESTADOS_BOMBERO } from '@/lib/personal';
 
 interface Catalogo {
   id: string;
@@ -13,7 +14,6 @@ interface Catalogo {
   prefijo?: string;
 }
 
-const ESTADOS = ['ASPIRANTE', 'ACTIVO', 'SUSPENDIDO', 'LICENCIA', 'RETIRADO', 'FALLECIDO', 'HONORARIO'];
 const CONDICIONES = ['INCORPORADO', 'COMBATIENTE', 'APOYO_ECONOMICO', 'HONORARIO'];
 const DIAS_SEMANA_PREFERENCIA = ['NINGUNA', 'LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO'];
 
@@ -415,7 +415,7 @@ export default function NuevoBomberoPage() {
             <div>
               <label htmlFor="estado" style={{ fontSize: 12, display: 'block', marginBottom: 4 }}>Estado</label>
               <select id="estado" className="input-field" value={estado} onChange={(e) => setEstado(e.target.value)}>
-                {ESTADOS.map((e) => (
+                {ESTADOS_BOMBERO.map((e) => (
                   <option key={e} value={e}>
                     {e}
                   </option>

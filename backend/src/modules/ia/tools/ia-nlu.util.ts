@@ -101,9 +101,9 @@ export function resolverSinonimo(mensajeNormalizado: string, sinonimos: Record<s
 export const ESTADO_BOMBERO_SINONIMOS: Record<string, string> = {
   activos: 'ACTIVO', activo: 'ACTIVO', activas: 'ACTIVO', activa: 'ACTIVO', vigentes: 'ACTIVO', vigente: 'ACTIVO',
   suspendidos: 'SUSPENDIDO', suspendido: 'SUSPENDIDO',
-  licencia: 'LICENCIA',
-  retirados: 'RETIRADO', retirado: 'RETIRADO',
-  aspirantes: 'ASPIRANTE', aspirante: 'ASPIRANTE',
+  licencia: 'LICENCIA', licencias: 'LICENCIA',
+  'dados de baja': 'BAJA', 'de baja': 'BAJA', bajas: 'BAJA', baja: 'BAJA', retirados: 'BAJA', retirado: 'BAJA',
+  fallecidos: 'FALLECIDO', fallecido: 'FALLECIDO',
 };
 
 export const ESTADO_VEHICULO_SINONIMOS: Record<string, string> = {

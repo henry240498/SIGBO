@@ -19,6 +19,7 @@ import {
   cargarTiposBombero,
   compararBomberosInstitucional,
   construirTipoPorId,
+  estiloEstadoBombero,
 } from '@/lib/personal';
 import { Aviso } from '@/app/components/Aviso';
 
@@ -305,7 +306,7 @@ export default function PersonalPage() {
                   <td style={{ padding: '6px 4px' }}>{b.rango}</td>
                   <td style={{ padding: '6px 4px' }}>{b.cargo ?? ''}</td>
                   <td style={{ padding: '6px 4px' }}>
-                    <span className="badge">{b.estado}</span>
+                    <span className="badge" style={estiloEstadoBombero(b.estado)}>{b.estado}</span>
                   </td>
                   <td style={{ padding: '6px 4px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                     <button type="button"
@@ -318,7 +319,7 @@ export default function PersonalPage() {
                     >
                       Ver expediente
                     </button>
-                    {puedeEliminar && b.estado !== 'RETIRADO' && (
+                    {puedeEliminar && b.estado !== 'BAJA' && (
                       <button type="button"
                         className="btn-primary"
                         style={{ padding: '4px 8px', fontSize: 12, background: '#7f1d1d' }}
