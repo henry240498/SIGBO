@@ -13,17 +13,19 @@ export function agruparPantallas(filas: FilaPantalla[], catalogo: PantallaCatalo
   const grupos = new Map<string, GrupoAdmin>();
   for (const f of filas.filter((x) => x.activa)) {
     const c = porCodigo.get(f.codigo);
-    const tipo: PantallaAdmin['tipo'] = c ? c.tipo : 'MOVIL';
-    const clave = tipo === 'MOVIL' ? 'app-movil' : c!.modulo;
-    const titulo = tipo === 'MOVIL' ? 'App móvil' : clave === 'centro-mando' ? 'Centro de mando' : nombresModulo[clave] ?? clave;
+    // Solo las 0xA son de la app movil; una web ausente del catalogo va aparte, no a "App movil".
+    const tipo: PantallaAdmin['tipo'] = c ? c.tipo : f.codigo.startsWith('0xA') ? 'MOVIL' : 'WEB';
+    const clave = c ? c.modulo : tipo === 'MOVIL' ? 'app-movil' : 'sin-catalogo';
+    const titulo = !c ? (tipo === 'MOVIL' ? 'App móvil' : 'Sin catálogo') : clave === 'centro-mando' ? 'Centro de mando' : nombresModulo[clave] ?? clave;
     const grupo = grupos.get(clave) ?? { clave, titulo, pantallas: [] };
     grupo.pantallas.push({ ...f, ruta: c?.ruta ?? null, rutasApi: c?.rutasApi ?? [], tipo });
     grupos.set(clave, grupo);
   }
   const lista = [...grupos.values()];
   for (const g of lista) g.pantallas.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
-  // La app movil al final: es otro canal, con sus propias pantallas.
-  return lista.sort((a, b) => (a.clave === 'app-movil' ? 1 : b.clave === 'app-movil' ? -1 : a.titulo.localeCompare(b.titulo, 'es')));
+  // Al final: las sin catalogo y, ultima, la app movil (otro canal, con sus propias pantallas).
+  const rango = (g: GrupoAdmin) => (g.clave === 'app-movil' ? 2 : g.clave === 'sin-catalogo' ? 1 : 0);
+  return lista.sort((a, b) => rango(a) - rango(b) || a.titulo.localeCompare(b.titulo, 'es'));
 }
 
 export function filtrarGrupos(grupos: GrupoAdmin[], texto: string): GrupoAdmin[] {

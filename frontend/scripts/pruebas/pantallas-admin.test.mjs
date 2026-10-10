@@ -29,3 +29,13 @@ test('busca por nombre, ruta o código sin distinguir acentos', () => {
   assert.deepEqual(filtrarGrupos(g, '0xa001').flatMap((x) => x.pantallas).map((p) => p.codigo), ['0xA001']);
   assert.equal(filtrarGrupos(g, '').length, 4);
 });
+
+test('una pantalla web ausente del catálogo va a "Sin catálogo", no a la app móvil', () => {
+  const extra = [...filas, { codigo: '0xB777', nombre: 'Huérfana', descripcion: null, confidencialAplica: false, activa: true }];
+  const g = agruparPantallas(extra, catalogo, nombres);
+  assert.deepEqual(g.map((x) => x.titulo), ['Centro de mando', 'Depósito', 'Personal', 'Sin catálogo', 'App móvil']);
+  assert.deepEqual(g.find((x) => x.titulo === 'Sin catálogo').pantallas.map((p) => [p.codigo, p.tipo, p.ruta]), [['0xB777', 'WEB', null]]);
+  assert.deepEqual(g.find((x) => x.titulo === 'App móvil').pantallas.map((p) => p.codigo), ['0xA001']);
+  const vacio = agruparPantallas(extra, [], nombres);
+  assert.deepEqual(vacio.map((x) => x.titulo), ['Sin catálogo', 'App móvil']);
+});

@@ -55,11 +55,16 @@ export default function PermisosPantallaPage() {
   async function cargarBase() {
     setCargando(true); setError('');
     try {
-      const [pRes, cRes, sRes] = await Promise.all([apiFetch('/pantallas'), apiFetch('/pantallas/catalogo-web'), apiFetch('/pantallas/sujetos')]);
-      if (!pRes.ok || !cRes.ok || !sRes.ok) throw new Error('Tu usuario no tiene permiso para administrar reglas por pantalla.');
+      const [pRes, cRes, sRes] = await Promise.all([apiFetch('/pantallas'), apiFetch('/pantallas/catalogo-web').catch(() => null), apiFetch('/pantallas/sujetos')]);
+      if (!pRes.ok || !sRes.ok) throw new Error('Tu usuario no tiene permiso para administrar reglas por pantalla.');
       setFilas(await pRes.json());
-      setCatalogo(((await cRes.json()) as { pantallas: PantallaCatalogoAdmin[] }).pantallas);
       setSujetos(await sRes.json());
+      let pantallasWeb: PantallaCatalogoAdmin[] = [];
+      try {
+        if (!cRes || !cRes.ok) throw new Error('catalogo');
+        pantallasWeb = ((await cRes.json()) as { pantallas?: PantallaCatalogoAdmin[] }).pantallas ?? [];
+      } catch { setError('No se pudo cargar el catálogo de rutas: las reglas se pueden editar igual, sin la lista de rutas de cada pantalla.'); }
+      setCatalogo(pantallasWeb);
     } catch (e) { setError(e instanceof Error ? e.message : 'No se pudo cargar la configuración.'); }
     finally { setCargando(false); }
   }
