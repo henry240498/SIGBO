@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { apiFetch, obtenerSesion, Sesion } from '@/lib/api';
 import { MODULOS, agruparModulos } from '@/lib/modulos';
 import { PANTALLAS } from '@/lib/pantallas.generado';
-import { decisionDeRuta, moduloVisibleEnMenu } from '@/lib/permisos-pantalla';
+import { decisionDeRuta, destinoDeModulo, moduloVisibleEnMenu } from '@/lib/permisos-pantalla';
 import { SystemIcon } from '@/app/components/SystemIcon';
 import { Cargando } from '@/app/components/Cargando';
 import { Aviso } from '@/app/components/Aviso';
@@ -120,7 +120,7 @@ export default function InicioPage() {
     {agruparModulos(modulos).map((grupo) => <section key={grupo.id} style={{ marginBottom: 22 }}>
       <h3 className="grupo-titulo">{grupo.nombre}</h3>
       <div className="module-grid">
-        {grupo.modulos.map((m) => <Link key={m.slug} href={`/dashboard/${m.slug}`} className="card module-card" style={{ textDecoration: 'none', color: 'inherit' }}>
+        {grupo.modulos.map((m) => <Link key={m.slug} href={destinoDeModulo(m.slug, PANTALLAS, permisos, matriz, MODULOS)} className="card module-card" style={{ textDecoration: 'none', color: 'inherit' }}>
           <div className="module-icon"><SystemIcon name={m.icono} size={20} /></div>
           <div>
             <div className="module-name">{m.nombre}</div>

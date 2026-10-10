@@ -215,8 +215,9 @@ export class MatrizWebService implements OnApplicationBootstrap {
     const sujeto = reglas.some((r) => /^0x[BC]/.test(r.pantallaCodigo)) ? await resolverSujeto(this.dataSource, user.id) : sujetoVacio(user.id);
     const pantallas = this.catalogo.pantallas.map((p) => {
       const propias = reglas.filter((r) => r.pantallaCodigo === p.codigo);
-      const [ver, crear, editar, eliminar] = ACCIONES_UI.map((a) => decidirUi(this.base(p, a), a, user.permisos, propias, sujeto));
-      return { codigo: p.codigo, ruta: p.ruta, ver, crear, editar, eliminar };
+      const [ver, crear, editar, eliminar] = ACCIONES_UI.map((a) => decidirUiDetalle(this.base(p, a), a, user.permisos, propias, sujeto));
+      // origenVer: si no se puede ver, la web explica si es por el rol o por una regla
+      return { codigo: p.codigo, ruta: p.ruta, ver: ver.permitido, crear: crear.permitido, editar: editar.permitido, eliminar: eliminar.permitido, origenVer: ver.origen };
     });
     return { generadoEn: new Date(), activa: this.activa, pantallas };
   }

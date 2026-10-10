@@ -8,6 +8,8 @@ import type { PantallaRegistrada } from './pantallas.generado';
  */
 
 export type AccionUi = 'ver' | 'crear' | 'editar' | 'eliminar';
+/** Quien decide "ver": el permiso por rol o una regla de Seguridad › Permisos por pantalla. */
+export type OrigenVer = 'ROL' | 'REGLA';
 
 export interface PermisoPantalla {
   codigo: string;
@@ -16,7 +18,10 @@ export interface PermisoPantalla {
   crear: boolean;
   editar: boolean;
   eliminar: boolean;
+  origenVer?: OrigenVer;
 }
+
+export type EstadoPermisos = 'cargando' | 'listo' | 'sin_datos';
 
 /** Decisiones de la matriz indexadas por ruta registrada ('/dashboard/personal/[id]'). */
 export type MatrizWeb = Map<string, PermisoPantalla>;
@@ -70,6 +75,25 @@ export function tabsVisibles<T extends { href: string }>(tabs: T[], pantallas: P
   return tabs.filter((t) => decisionDeRuta(t.href, pantallas, matriz)?.ver ?? true);
 }
 
+/**
+ * Mientras se cargan los permisos, una pantalla de la matriz espera: asi no se monta (ni
+ * pide datos, ni deja auditorias de denegacion) una que despues resulta bloqueada.
+ */
+export function esperarPermisos(estado: EstadoPermisos, pathname: string, pantallas: PantallaRegistrada[]): boolean {
+  return estado === 'cargando' && !!pantallaDeRuta(pathname, pantallas)?.codigo;
+}
+
+export const MOTIVO_SIN_ACCESO: Record<OrigenVer | 'DESCONOCIDO', string> = {
+  ROL: 'Tu rol no incluye permiso para esta pantalla.',
+  REGLA: 'Una regla de Seguridad › Permisos por pantalla te restringe esta pantalla.',
+  DESCONOCIDO: 'No tenés permiso para abrir esta pantalla.',
+};
+
+/** Por que no se puede ver: lo dice el servidor (rol o regla); sin ese dato, sin culpar a nadie. */
+export function motivoSinAcceso(decision: PermisoPantalla | null): string {
+  return MOTIVO_SIN_ACCESO[decision?.origenVer ?? 'DESCONOCIDO'];
+}
+
 const SIEMPRE_VISIBLES = new Set(['inicio', 'mi-perfil', 'reportar']);
 
 /** Pantallas para el buscador y los accesos rapidos (sin las de detalle). */
@@ -82,4 +106,21 @@ export function pantallasVisibles(pantallas: PantallaRegistrada[], permisos: str
     if (matriz) return matriz.get(p.ruta)?.ver === true;
     return m ? porPrefijo(m, permisos) : false;
   });
+}
+
+/** Pantallas de un modulo que la persona puede abrir (sin las de detalle), en el orden del registro. */
+export function pantallasVisiblesDelModulo(slug: string, pantallas: PantallaRegistrada[], permisos: string[], matriz: MatrizWeb | null, modulos: ModuloConfig[]): PantallaRegistrada[] {
+  return pantallasVisibles(pantallas, permisos, matriz, modulos).filter((p) => p.modulo === slug);
+}
+
+/**
+ * A donde lleva el menu (o la tarjeta del Inicio) de un modulo: su portada si se puede ver;
+ * si una regla la niega, la primera pantalla visible del modulo, para no dejar a la persona
+ * en un "Sin acceso" sin salida. Sin datos de la matriz, la portada como siempre.
+ */
+export function destinoDeModulo(slug: string, pantallas: PantallaRegistrada[], permisos: string[], matriz: MatrizWeb | null, modulos: ModuloConfig[]): string {
+  const portada = `/dashboard/${slug}`;
+  if (!matriz) return portada;
+  const visibles = pantallasVisiblesDelModulo(slug, pantallas, permisos, matriz, modulos);
+  return visibles.some((p) => p.ruta === portada) ? portada : visibles[0]?.ruta ?? portada;
 }

@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { apiFetch, obtenerSesion } from '@/lib/api';
 import { MODULOS } from '@/lib/modulos';
 import { PANTALLAS } from '@/lib/pantallas.generado';
-import { AccionUi, indexarPorRuta, MatrizWeb, pantallasVisibles, PermisoPantalla, puede, tabsVisibles } from '@/lib/permisos-pantalla';
+import { AccionUi, EstadoPermisos, indexarPorRuta, MatrizWeb, pantallasVisibles, PermisoPantalla, puede, tabsVisibles } from '@/lib/permisos-pantalla';
 
 /** Las reglas pueden cambiar mientras la persona trabaja; igual el backend ya las exige al instante. */
 const RECARGA_MS = 5 * 60_000;
@@ -13,7 +13,7 @@ const RECARGA_MS = 5 * 60_000;
 export interface AccesoCentroMando { acceso: boolean; motivo: string | null }
 
 interface ValorPermisos {
-  estado: 'cargando' | 'listo' | 'sin_datos';
+  estado: EstadoPermisos;
   matriz: MatrizWeb | null;
   centroMando: AccesoCentroMando | null;
   recargar: () => void;

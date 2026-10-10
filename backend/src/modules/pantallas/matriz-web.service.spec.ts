@@ -133,6 +133,17 @@ describe('MatrizWebService', () => {
     expect(negada.pantallas.find((p) => p.codigo === '0xB102')!.ver).toBe(true);
   });
 
+  it('dice por qué no se puede ver una pantalla: por el rol o por una regla', async () => {
+    const s = await nueva(base);
+    const sinRol = await s.misPermisosWeb({ id: 'u1', permisos: ['otro:ver'] });
+    expect(sinRol.pantallas.find((p) => p.codigo === '0xB101')).toMatchObject({ ver: false, origenVer: 'ROL' });
+    await regla(base, { denegar: true });
+    s.invalidar();
+    const porRegla = await s.misPermisosWeb({ id: 'u1', permisos: ['demo:ver'] });
+    expect(porRegla.pantallas.find((p) => p.codigo === '0xB101')).toMatchObject({ ver: false, origenVer: 'REGLA' });
+    expect(porRegla.pantallas.find((p) => p.codigo === '0xB102')).toMatchObject({ ver: true, origenVer: 'ROL' });
+  });
+
   it('evalúa las secciones del Centro de mando con su permiso base y las reglas', async () => {
     const s = await nueva(base);
     const puede = await s.evaluadorSecciones({ id: 'u1', permisos: ['servicios:ver'] });

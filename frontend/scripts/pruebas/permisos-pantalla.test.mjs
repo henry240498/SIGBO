@@ -5,7 +5,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  decisionDeRuta, indexarPorRuta, moduloVisibleEnMenu, pantallaDeRuta, pantallasVisibles, puede, tabsVisibles,
+  decisionDeRuta, destinoDeModulo, esperarPermisos, indexarPorRuta, moduloVisibleEnMenu, motivoSinAcceso, pantallaDeRuta, pantallasVisibles,
+  pantallasVisiblesDelModulo, puede, tabsVisibles,
 } from '../../src/lib/permisos-pantalla.ts';
 
 const PANTALLAS = [
@@ -81,4 +82,34 @@ test('pantalla sin codigo de un modulo que no es Inicio/Mi perfil/Reportar sigue
     assert.equal(rutas(['seguridad:ver_usuarios'], matriz).includes('/dashboard/seguridad/pantallas'), true);
     assert.equal(rutas([], matriz).includes('/dashboard'), true);
   }
+});
+
+test('mientras cargan los permisos, una pantalla de la matriz espera; Inicio y Mi perfil no', () => {
+  assert.equal(esperarPermisos('cargando', '/dashboard/personal', PANTALLAS), true);
+  assert.equal(esperarPermisos('cargando', '/dashboard/personal/3f2a9c1e-0000-4000-8000-000000000000', PANTALLAS), true);
+  assert.equal(esperarPermisos('cargando', '/dashboard', PANTALLAS), false);
+  assert.equal(esperarPermisos('listo', '/dashboard/personal', PANTALLAS), false);
+  // si no se pudieron cargar, no se bloquea nada: decide el backend
+  assert.equal(esperarPermisos('sin_datos', '/dashboard/personal', PANTALLAS), false);
+});
+
+test('"Sin acceso" dice la causa real: el rol o una regla', () => {
+  assert.equal(motivoSinAcceso(permiso('/dashboard/personal', { ver: false, origenVer: 'ROL' })), 'Tu rol no incluye permiso para esta pantalla.');
+  assert.equal(motivoSinAcceso(permiso('/dashboard/personal', { ver: false, origenVer: 'REGLA' })), 'Una regla de Seguridad › Permisos por pantalla te restringe esta pantalla.');
+  assert.equal(motivoSinAcceso(permiso('/dashboard/personal', { ver: false })), 'No tenés permiso para abrir esta pantalla.');
+});
+
+test('el menú y el Inicio llevan a la primera pantalla visible del módulo si la portada está denegada', () => {
+  const sinPortada = indexarPorRuta([permiso('/dashboard/personal', { ver: false }), permiso('/dashboard/personal/control'), permiso('/dashboard/personal/nuevo')]);
+  assert.equal(destinoDeModulo('personal', PANTALLAS, [], sinPortada, MODULOS), '/dashboard/personal/control');
+  const conPortada = indexarPorRuta([permiso('/dashboard/personal'), permiso('/dashboard/personal/control')]);
+  assert.equal(destinoDeModulo('personal', PANTALLAS, [], conPortada, MODULOS), '/dashboard/personal');
+  // sin datos de la matriz, o sin ninguna visible, la portada como siempre
+  assert.equal(destinoDeModulo('personal', PANTALLAS, ['personal:ver'], null, MODULOS), '/dashboard/personal');
+  assert.equal(destinoDeModulo('personal', PANTALLAS, [], indexarPorRuta([]), MODULOS), '/dashboard/personal');
+});
+
+test('"Sin acceso" ofrece las otras pantallas visibles del mismo módulo (sin las de detalle)', () => {
+  const matriz = indexarPorRuta([permiso('/dashboard/personal', { ver: false }), permiso('/dashboard/personal/control'), permiso('/dashboard/personal/[id]'), permiso('/dashboard/personal/nuevo', { ver: false })]);
+  assert.deepEqual(pantallasVisiblesDelModulo('personal', PANTALLAS, [], matriz, MODULOS).map((p) => p.ruta), ['/dashboard/personal/control']);
 });

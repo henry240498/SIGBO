@@ -14,11 +14,12 @@ import {
 import { MODULOS, agruparModulos, GrupoModulo, IconoModulo } from '@/lib/modulos';
 import { migasDePan } from '@/lib/navegacion';
 import { PANTALLAS } from '@/lib/pantallas.generado';
-import { decisionDeRuta, moduloVisibleEnMenu, pantallaDeRuta } from '@/lib/permisos-pantalla';
+import { decisionDeRuta, destinoDeModulo, esperarPermisos, moduloVisibleEnMenu, motivoSinAcceso, pantallaDeRuta, pantallasVisiblesDelModulo } from '@/lib/permisos-pantalla';
 import { SystemIcon } from '@/app/components/SystemIcon';
 import { BuscadorPantallas } from '@/app/components/BuscadorPantallas';
 import { PermisosPantallaProvider, usePermisosPantalla } from '@/app/components/PermisosPantallaProvider';
 import { SinAcceso } from '@/app/components/SinAcceso';
+import { Cargando } from '@/app/components/Cargando';
 
 interface Apariencia { nombreSistemaMenu: string | null; subtituloMenu: string | null; logoMenu: string | null; }
 
@@ -116,6 +117,8 @@ function Marco({ children }: { children: React.ReactNode }) {
   const descripcion = pathname === `/dashboard/${slugActual}` ? moduloActual?.descripcion : undefined;
   const decision = decisionDeRuta(pathname, PANTALLAS, matriz);
   const bloqueada = decision !== null && !decision.ver;
+  // Hasta saber si se puede ver, una pantalla de la matriz no se monta: no pide datos ni deja auditorias de denegacion.
+  const esperando = esperarPermisos(estadoPermisos, pathname, PANTALLAS);
 
   // La pestana decia "SIGBO-CBVC" en las 97 pantallas: con varias abiertas no habia
   // forma de distinguirlas, y el historial y los favoritos quedaban todos iguales.
@@ -159,7 +162,7 @@ function Marco({ children }: { children: React.ReactNode }) {
                 </button>
                 <div id={idLista} className="side-group-items" hidden={!abierto}>
                   {grupo.modulos.map((m) => (
-                    <MenuLink key={m.slug} href={`/dashboard/${m.slug}`} icono={m.icono} nombre={m.nombre} activo={slugActual === m.slug} proximamente={!m.disponible} />
+                    <MenuLink key={m.slug} href={destinoDeModulo(m.slug, PANTALLAS, permisos, matriz, MODULOS)} icono={m.icono} nombre={m.nombre} activo={slugActual === m.slug} proximamente={!m.disponible} />
                   ))}
                 </div>
               </div>
@@ -208,7 +211,15 @@ function Marco({ children }: { children: React.ReactNode }) {
               No se pudieron cargar tus permisos por pantalla. El menú muestra lo que permite tu rol; el servidor sigue aplicando las restricciones.
             </p>
           )}
-          {bloqueada ? <SinAcceso nombre={pantallaActual?.nombre ?? titulo} /> : children}
+          {esperando
+            ? <Cargando texto="Comprobando tus permisos para esta pantalla…" />
+            : bloqueada
+              ? <SinAcceso
+                  nombre={pantallaActual?.nombre ?? titulo}
+                  motivo={motivoSinAcceso(decision)}
+                  alternativas={pantallasVisiblesDelModulo(slugActual, PANTALLAS, permisos, matriz, MODULOS).filter((p) => p.ruta !== pantallaActual?.ruta)}
+                />
+              : children}
         </div>
       </main>
 
