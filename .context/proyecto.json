@@ -25,10 +25,10 @@
   ],
   "LAST_CONTEXT_UPDATE": "2026-10-09",
   "LAST_VALIDATION": {
-    "date": "2026-10-09",
-    "revision": "686f8c7d9778c28d02555f00725d410f1fb24522 + cambios locales",
-    "command": "Python GRE; Jest GRE; SQL aislado; npm run build; build-graph.mjs/validar.mjs. Ver docs/matpel/evidencia/fase3cd/validacion.json",
-    "result": "46/46 Python, 43/43 backend GRE, 9/9 SQL aislado, build/grafo aprobados. Regresión previa: 473 aprobados y 2 fallos previos Despacho. Cotejo institucional pendiente."
+    "date": "2026-10-10",
+    "revision": "c1fdd8b4b53a9fbcfaed14f1acea8336c29bb3f9 + cambios locales",
+    "command": "Centro de mando (plan 2026-10-09, tarea 16): backend npm test; frontend npm test, tsc --noEmit, audit:contraste, audit:a11y, verificar:pantallas; scripts/verificar-endpoints.mjs; run-migrations.ps1 -ValidateOnly; iniciar-sigbo.ps1 -Rebuild; recorrido por API con admin y bombero; regla de prueba creada y borrada; respaldo real; recorrido en navegador con Playwright. Informe: .superpowers/sdd/2026-10-09-centro-de-mando/task-16-report.md",
+    "result": "Backend 589 aprobados, 9 omitidos, 2 fallos previos de despacho.spec.ts (CREAR_SOLICITUD y CAMBIAR_DISPONIBILIDAD). Frontend 45/45, tsc limpio, auditorias en linea base, catalogo al dia (134 pantallas, 128 en la matriz), manifiesto de migraciones valido. verificar-endpoints: 12 llamadas sin ruta, todas previas. API: todos los codigos esperados; regla de prueba con 403 'No tenes permiso para ver en Comunicaciones' y borrada; respaldo real OK y segundo lanzamiento 409; avisos de vencimiento: Telegram no configurado; procesar importacion GRE: 403 (no 409) por permiso. Navegador: Inicio, Centro de mando, las 5 pestanas de Sistema y Permisos por pantalla funcionan; no se probaron en navegador Atendida/Cancelar (bloqueado por el clasificador de permisos). Hallazgos menores en task-16-report.md."
   },
   "LAST_DEPLOY": "NO DETERMINADO",
   "EXTERNAL_DEPENDENCIES": "Node, SQL Server; SDK móvil y firma para distribución.",
