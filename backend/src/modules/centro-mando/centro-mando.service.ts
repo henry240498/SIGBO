@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable, Logger } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { Bombero, DisponibilidadPersonal, Usuario } from '../../shared/entities';
@@ -8,6 +8,7 @@ import { ConfiguracionService } from '../configuracion/configuracion.service';
 import { VencimientosService } from '../control-personal/vencimientos.service';
 import { DenunciasService } from '../denuncias/denuncias.service';
 import { DespachoService } from '../despacho/despacho.service';
+import { estadoEfectivo } from '../despacho/despacho.logica';
 import { ServicioActivoService } from '../despacho/servicio-activo.service';
 import { DisponibilidadService } from '../flota/disponibilidad.service';
 import { FlotaService } from '../flota/flota.service';
@@ -30,11 +31,16 @@ export interface ItemPendiente {
 
 type SeccionRespuesta = { estado: 'ok'; datos: unknown } | { estado: 'error'; error: string };
 
-const mensaje = (e: unknown) => (e instanceof Error ? e.message : String(e));
+const ERROR_INTERNO = 'No disponible: error interno';
+
+/** Al cliente solo llegan los mensajes pensados para el (HttpException); el resto queda en el registro del servidor. */
+const mensajePublico = (e: unknown) => (e instanceof HttpException ? e.message : ERROR_INTERNO);
 
 /** Centro de mando (spec 2026-10-09 §5): solo las secciones que la persona puede ver, cada una por su lado. */
 @Injectable()
 export class CentroMandoService {
+  private readonly logger = new Logger(CentroMandoService.name);
+
   constructor(
     @InjectDataSource() private readonly dataSource: DataSource,
     private readonly matriz: MatrizWebService,
@@ -53,7 +59,8 @@ export class CentroMandoService {
 
   async acceso(user: Pick<AuthenticatedUser, 'id'>): Promise<{ acceso: boolean; motivo: string | null; bomberoId: string | null }> {
     const usuario = await this.dataSource.getRepository(Usuario).findOne({ where: { id: user.id } });
-    if (!usuario?.bomberoId) return { acceso: true, motivo: null, bomberoId: null };
+    if (!usuario) return { acceso: false, motivo: 'Cuenta no encontrada.', bomberoId: null };
+    if (!usuario.bomberoId) return { acceso: true, motivo: null, bomberoId: null };
     const bombero = await this.dataSource.getRepository(Bombero).findOne({ where: { id: usuario.bomberoId } });
     const permitidos = await this.configuracion.valorGlobal<string[]>('operations.commandCenterStates');
     return { ...decidirAcceso(bombero?.estado ?? null, permitidos), bomberoId: usuario.bomberoId };
@@ -85,24 +92,24 @@ export class CentroMandoService {
 
     const resultados = await Promise.allSettled(claves.map((c) => cargadores[c]()));
     const secciones: Partial<Record<ClaveSeccion, SeccionRespuesta>> = {};
-    claves.forEach((clave, i) => {
-      const r = resultados[i];
-      secciones[clave] = r.status === 'fulfilled' ? { estado: 'ok', datos: r.value } : { estado: 'error', error: mensaje(r.reason) };
-    });
+    claves.forEach((clave, i) => { secciones[clave] = this.resolver(`sección ${clave}`, resultados[i]); });
     const pendientes = secciones.pendientes;
     if (pendientes?.estado === 'ok' && Array.isArray(pendientes.datos) && pendientes.datos.length === 0) delete secciones.pendientes;
     return { generadoEn: new Date(), acceso: 'PERMITIDO' as const, motivo: null, secciones };
   }
 
-  /** Bomberos por disponibilidad, con el estado mas reciente de cada persona. */
+  /** Resultado de una carga: lo bueno tal cual; el fallo se registra completo y al cliente solo va un mensaje seguro. */
+  private resolver(que: string, r: PromiseSettledResult<unknown>): SeccionRespuesta {
+    if (r.status === 'fulfilled') return { estado: 'ok', datos: r.value };
+    this.logger.error(`Centro de mando, ${que}: ${r.reason instanceof Error ? r.reason.message : String(r.reason)}`, r.reason instanceof Error ? r.reason.stack : undefined);
+    return { estado: 'error', error: mensajePublico(r.reason) };
+  }
+
+  /** Bomberos por disponibilidad (una fila por persona); un temporal vencido cuenta como no disponible. */
   private async disponibilidadPersonal() {
+    const ahora = new Date();
     const filas = await this.dataSource.getRepository(DisponibilidadPersonal).find({});
-    const ultima = new Map<string, DisponibilidadPersonal>();
-    for (const f of filas) {
-      const previa = ultima.get(f.usuarioId);
-      if (!previa || new Date(f.desde).getTime() > new Date(previa.desde).getTime()) ultima.set(f.usuarioId, f);
-    }
-    const estados = [...ultima.values()].map((f) => f.estado);
+    const estados = filas.map((f) => estadoEfectivo(f.estado, f.temporalHasta, ahora));
     const cuenta = (e: string) => estados.filter((x) => x === e).length;
     return { alLlamado: cuenta('AL_LLAMADO'), enBase: cuenta('EN_BASE'), enCamino: cuenta('EN_CAMINO'), enServicio: cuenta('EN_SERVICIO'), noDisponible: cuenta('NO_DISPONIBLE'), total: estados.length };
   }
@@ -116,9 +123,9 @@ export class CentroMandoService {
       cargar: async () => { const n = (await this.despacho.listar(true)).length; return { cantidad: n, detalle: null, nivel: nivelPorCantidad(n) }; },
     });
     if (tiene('denuncias:ver')) definiciones.push({
-      clave: 'denuncias', titulo: 'Denuncias sin resolver', enlace: '/dashboard/denuncias',
+      clave: 'denuncias', titulo: 'Denuncias sin atender', enlace: '/dashboard/denuncias',
       cargar: async () => {
-        const r = await this.denuncias.resumen() as Record<string, number>;
+        const r: Record<string, number> = await this.denuncias.resumen();
         const nuevas = r['NUEVA'] ?? 0;
         const enRevision = r['EN_REVISION'] ?? 0;
         return { cantidad: nuevas + enRevision, detalle: `${nuevas} nueva(s), ${enRevision} en revisión`, nivel: nivelPorCantidad(nuevas + enRevision) };
@@ -126,7 +133,7 @@ export class CentroMandoService {
     });
     if (tiene('reservas:decidir')) definiciones.push({
       clave: 'reservas', titulo: 'Reservas por decidir', enlace: '/dashboard/reservas',
-      cargar: async () => { const n = (await this.reservas.listar({ estado: 'SOLICITADA' }) as unknown[]).length; return { cantidad: n, detalle: null, nivel: nivelPorCantidad(n) }; },
+      cargar: async () => { const n = (await this.reservas.listar({ estado: 'SOLICITADA' })).length; return { cantidad: n, detalle: null, nivel: nivelPorCantidad(n) }; },
     });
     if (tiene('vehiculos:ver')) definiciones.push({
       clave: 'flota', titulo: 'Vencimientos de móviles (30 días)', enlace: '/dashboard/vehiculos/flota',
@@ -147,9 +154,9 @@ export class CentroMandoService {
     const resultados = await Promise.allSettled(definiciones.map((d) => d.cargar()));
     return definiciones.map((d, i) => {
       const r = resultados[i];
-      return r.status === 'fulfilled'
-        ? { clave: d.clave, titulo: d.titulo, enlace: d.enlace, error: null, ...r.value }
-        : { clave: d.clave, titulo: d.titulo, enlace: d.enlace, cantidad: null, detalle: null, nivel: 'normal' as const, error: mensaje(r.reason) };
+      if (r.status === 'fulfilled') return { clave: d.clave, titulo: d.titulo, enlace: d.enlace, error: null, ...r.value };
+      const falla = this.resolver(`pendiente ${d.clave}`, r);
+      return { clave: d.clave, titulo: d.titulo, enlace: d.enlace, cantidad: null, detalle: null, nivel: 'normal' as const, error: falla.estado === 'error' ? falla.error : ERROR_INTERNO };
     });
   }
 }

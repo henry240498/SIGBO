@@ -1,4 +1,5 @@
-import { Bombero, PersonalServicio, Servicio, ServicioParticipante, TipoServicio, Usuario } from '../../shared/entities';
+import { Bombero, DisponibilidadPersonal, PersonalServicio, Servicio, ServicioParticipante, TipoServicio, Usuario } from '../../shared/entities';
+import { BadRequestException } from '@nestjs/common';
 import { BaseFalsa } from '../../shared/testing/base-falsa';
 import { ServicioActivoService } from '../despacho/servicio-activo.service';
 import { decidirAcceso, esSupervisor } from './centro-mando.logica';
@@ -6,6 +7,21 @@ import { CentroMandoService } from './centro-mando.service';
 
 const sembrar = (base: BaseFalsa, clase: new () => object, datos: Record<string, unknown>) =>
   base.getRepository(clase as never).save(Object.assign(new clase(), datos) as never);
+
+async function preparar(confidencial = false) {
+  const base = new BaseFalsa();
+  await sembrar(base, TipoServicio, { id: 't1', nombre: 'Incendio' });
+  for (const id of ['s1', 's2', 's3']) {
+    await sembrar(base, Servicio, { id, numeroServicio: `CS-2026-0000${id[1]}`, tipoServicioId: 't1', estado: 'EN_CURSO', gravedad: 'GRAVE', fechaHoraAviso: new Date(), direccion: 'Calle 1' });
+  }
+  await sembrar(base, Servicio, { id: 's4', numeroServicio: 'CS-2026-00004', tipoServicioId: 't1', estado: 'FINALIZADO', fechaHoraAviso: new Date(), direccion: 'x' });
+  await sembrar(base, ServicioParticipante, { servicioId: 's1', usuarioId: 'u1', estado: 'EN_CAMINO', hasta: null });
+  await sembrar(base, ServicioParticipante, { servicioId: 's3', usuarioId: 'u1', estado: 'RETIRADO', hasta: new Date() });
+  await sembrar(base, PersonalServicio, { servicioId: 's2', bomberoId: 'b1', rol: 'Bombero', horasServicio: 0 });
+  const pantallas = { permite: jest.fn().mockResolvedValue(confidencial), exigir: jest.fn() };
+  const auditoria = { registrar: jest.fn().mockResolvedValue(undefined) };
+  return { servicio: new ServicioActivoService(base as never, auditoria as never, pantallas as never, {} as never), auditoria };
+}
 
 describe('reglas del Centro de mando', () => {
   it('solo los estados configurados tienen acceso', () => {
@@ -23,31 +39,47 @@ describe('reglas del Centro de mando', () => {
 });
 
 describe('emergencias en curso por participación', () => {
-  async function preparar() {
-    const base = new BaseFalsa();
-    await sembrar(base, TipoServicio, { id: 't1', nombre: 'Incendio' });
-    for (const id of ['s1', 's2', 's3']) {
-      await sembrar(base, Servicio, { id, numeroServicio: `CS-2026-0000${id[1]}`, tipoServicioId: 't1', estado: 'EN_CURSO', gravedad: 'GRAVE', fechaHoraAviso: new Date(), direccion: 'Calle 1' });
-    }
-    await sembrar(base, Servicio, { id: 's4', numeroServicio: 'CS-2026-00004', tipoServicioId: 't1', estado: 'FINALIZADO', fechaHoraAviso: new Date(), direccion: 'x' });
-    await sembrar(base, ServicioParticipante, { servicioId: 's1', usuarioId: 'u1', estado: 'EN_CAMINO', hasta: null });
-    await sembrar(base, ServicioParticipante, { servicioId: 's3', usuarioId: 'u1', estado: 'RETIRADO', hasta: new Date() });
-    await sembrar(base, PersonalServicio, { servicioId: 's2', bomberoId: 'b1', rol: 'Bombero', horasServicio: 0 });
-    const pantallas = { permite: jest.fn().mockResolvedValue(false), exigir: jest.fn() };
-    return new ServicioActivoService(base as never, { registrar: jest.fn() } as never, pantallas as never, {} as never);
-  }
-
   it('sin supervisión, solo las que la persona integra (participante vigente o personal del servicio)', async () => {
-    const s = await preparar();
+    const { servicio: s } = await preparar();
     const r = await s.activosParaCentroMando({ id: 'u1', permisos: [] } as never, { supervisor: false, bomberoId: 'b1' });
     expect(r.servicios.map((x) => x.id).sort()).toEqual(['s1', 's2']);
     expect(r.servicios[0]).toMatchObject({ tipo: 'Incendio', gravedad: 'GRAVE', direccion: null });
   });
 
   it('con supervisión, todas las activas', async () => {
-    const s = await preparar();
+    const { servicio: s } = await preparar();
     const r = await s.activosParaCentroMando({ id: 'u9', permisos: [] } as never, { supervisor: true, bomberoId: null });
     expect(r.servicios.map((x) => x.id).sort()).toEqual(['s1', 's2', 's3']);
+  });
+});
+
+describe('auditoría confidencial acotada del Centro de mando', () => {
+  const user = { id: 'u9', permisos: [] } as never;
+  const opciones = { supervisor: true, bomberoId: null };
+  const t0 = new Date('2026-10-10T10:00:00Z');
+
+  it('dos consultas dentro de 10 minutos anotan una sola auditoría; pasada la ventana, otra', async () => {
+    const { servicio, auditoria } = await preparar(true);
+    await servicio.activosParaCentroMando(user, opciones, t0);
+    await servicio.activosParaCentroMando(user, opciones, new Date(t0.getTime() + 60_000));
+    expect(auditoria.registrar).toHaveBeenCalledTimes(1);
+    await servicio.activosParaCentroMando(user, opciones, new Date(t0.getTime() + 11 * 60_000));
+    expect(auditoria.registrar).toHaveBeenCalledTimes(2);
+  });
+
+  it('si la auditoría falla no se marca la ventana: el siguiente intento vuelve a anotar', async () => {
+    const { servicio, auditoria } = await preparar(true);
+    auditoria.registrar.mockRejectedValueOnce(new Error('sin base'));
+    await expect(servicio.activosParaCentroMando(user, opciones, t0)).rejects.toThrow('sin base');
+    await servicio.activosParaCentroMando(user, opciones, new Date(t0.getTime() + 1000));
+    expect(auditoria.registrar).toHaveBeenCalledTimes(2);
+  });
+
+  it('activos() (app móvil y despacho) no se acota: cada consulta anota', async () => {
+    const { servicio, auditoria } = await preparar(true);
+    await servicio.activos(user);
+    await servicio.activos(user);
+    expect(auditoria.registrar).toHaveBeenCalledTimes(2);
   });
 });
 
@@ -84,6 +116,45 @@ describe('CentroMandoService', () => {
     expect(deps.servicioActivo.activosParaCentroMando).not.toHaveBeenCalled();
   });
 
+  it('una cuenta que no existe no tiene acceso', async () => {
+    const { s } = nuevo(new BaseFalsa());
+    await expect(s.acceso({ id: 'fantasma' })).resolves.toMatchObject({ acceso: false, motivo: 'Cuenta no encontrada.' });
+  });
+
+  it('el detalle interno de un fallo no llega al cliente; las HttpException sí', async () => {
+    const base = new BaseFalsa();
+    await sembrar(base, Usuario, { id: 'u1', bomberoId: null });
+    const { s, deps } = nuevo(base);
+    deps.alertas.listar.mockRejectedValue(new Error('Invalid object name x'));
+    deps.perfil.obtenerInicioPropio.mockRejectedValue(new BadRequestException('Pedido inválido'));
+    const r = await s.panel({ id: 'u1', permisos: [] } as never);
+    expect(r.secciones.alertas).toEqual({ estado: 'error', error: 'No disponible: error interno' });
+    expect(r.secciones.mi_actividad).toEqual({ estado: 'error', error: 'Pedido inválido' });
+  });
+
+  it('un pendiente que falla no filtra el detalle interno', async () => {
+    const base = new BaseFalsa();
+    await sembrar(base, Usuario, { id: 'u1', bomberoId: null });
+    const { s, deps } = nuevo(base);
+    deps.denuncias.resumen.mockRejectedValue(new Error('Failed to connect to db'));
+    const r = await s.panel({ id: 'u1', permisos: ['denuncias:ver'] } as never);
+    const datos = (r.secciones.pendientes as { datos: Array<{ error: string | null }> }).datos;
+    expect(datos[0].error).toBe('No disponible: error interno');
+  });
+
+  it('personal: un temporal vencido cuenta como no disponible', async () => {
+    const base = new BaseFalsa();
+    await sembrar(base, Usuario, { id: 'u1', bomberoId: null });
+    const pasado = new Date(Date.now() - 3600_000);
+    const futuro = new Date(Date.now() + 3600_000);
+    await sembrar(base, DisponibilidadPersonal, { usuarioId: 'a', estado: 'AL_LLAMADO', desde: new Date(), temporalHasta: pasado });
+    await sembrar(base, DisponibilidadPersonal, { usuarioId: 'b', estado: 'AL_LLAMADO', desde: new Date(), temporalHasta: futuro });
+    await sembrar(base, DisponibilidadPersonal, { usuarioId: 'c', estado: 'AL_LLAMADO', desde: new Date(), temporalHasta: null });
+    const { s } = nuevo(base, { secciones: ['personal'] });
+    const r = await s.panel({ id: 'u1', permisos: [] } as never);
+    expect(r.secciones.personal).toEqual({ estado: 'ok', datos: { alLlamado: 2, enBase: 0, enCamino: 0, enServicio: 0, noDisponible: 1, total: 3 } });
+  });
+
   it('una cuenta sin ficha de bombero se rige por sus roles', async () => {
     const base = new BaseFalsa();
     await sembrar(base, Usuario, { id: 'admin', bomberoId: null });
@@ -98,7 +169,7 @@ describe('CentroMandoService', () => {
     const { s, deps } = nuevo(base, { alertasFalla: true });
     const r = await s.panel({ id: 'u1', permisos: ['servicios:ver', 'denuncias:ver'] } as never);
     expect(r.acceso).toBe('PERMITIDO');
-    expect(r.secciones.alertas).toEqual({ estado: 'error', error: 'se cayó' });
+    expect(r.secciones.alertas).toEqual({ estado: 'error', error: 'No disponible: error interno' });
     expect(r.secciones.emergencias).toMatchObject({ estado: 'ok' });
     expect(deps.servicioActivo.activosParaCentroMando).toHaveBeenCalledWith(expect.anything(), { supervisor: false, bomberoId: 'b1' });
     const pendientes = (r.secciones.pendientes as { datos: Array<{ clave: string; cantidad: number }> }).datos;

@@ -15,6 +15,9 @@ import type { AuthenticatedUser } from '../auth/types/authenticated-user';
 
 const ESTADOS_ACTIVOS = ['REGISTRADO', 'DESPACHADO', 'EN_CURSO'] as const;
 
+/** Pantallas que se consultan en ciclo (spec §15.8): la auditoria confidencial se anota a lo sumo cada 10 minutos por persona. */
+export const VENTANA_AUDITORIA_CENTRO_MS = 10 * 60_000;
+
 @Injectable()
 export class ServicioActivoService {
   constructor(
@@ -46,6 +49,9 @@ export class ServicioActivoService {
     return this.pantallas.permite(user, codigo, 'confidencial');
   }
 
+  /** Ultima auditoria confidencial del Centro de mando por persona (en memoria; se reinicia con el proceso). */
+  private readonly ultimaAuditoriaCentro = new Map<string, number>();
+
   async activos(user: AuthenticatedUser) {
     await this.exigirPantalla(user, '0xA006', 'ver');
     return this.resumirActivos(await this.serviciosActivos(), user);
@@ -56,7 +62,7 @@ export class ServicioActivoService {
    * (central, comandancia) ve todas; el resto, solo las que integra: participante vigente
    * del servicio o integrante del personal del servicio con su ficha de bombero.
    */
-  async activosParaCentroMando(user: AuthenticatedUser, opciones: { supervisor: boolean; bomberoId: string | null }) {
+  async activosParaCentroMando(user: AuthenticatedUser, opciones: { supervisor: boolean; bomberoId: string | null }, ahora: Date = new Date()) {
     let servicios = await this.serviciosActivos();
     if (!opciones.supervisor && servicios.length) {
       const ids = servicios.map((s) => s.id);
@@ -71,14 +77,15 @@ export class ServicioActivoService {
       }
       servicios = servicios.filter((s) => participa.has(s.id));
     }
-    return { supervisor: opciones.supervisor, servicios: await this.resumirActivos(servicios, user) };
+    return { supervisor: opciones.supervisor, servicios: await this.resumirActivos(servicios, user, ahora) };
   }
 
   private serviciosActivos() {
     return this.dataSource.getRepository(Servicio).find({ where: { estado: In([...ESTADOS_ACTIVOS]) }, order: { fechaHoraAviso: 'DESC' }, take: 100 });
   }
 
-  private async resumirActivos(servicios: Servicio[], user: AuthenticatedUser) {
+  /** Con `ahora` (Centro de mando) la auditoria confidencial se acota a una por ventana y persona; sin el, se anota siempre. */
+  private async resumirActivos(servicios: Servicio[], user: AuthenticatedUser, ahora?: Date) {
     const tipos = await this.dataSource.getRepository(TipoServicio).find({ where: { id: In([...new Set(servicios.map((s) => s.tipoServicioId))]) } });
     const participantes = servicios.length ? await this.dataSource.getRepository(ServicioParticipante).find({ where: { servicioId: In(servicios.map((s) => s.id)) } }) : [];
     const moviles = servicios.length ? await this.dataSource.getRepository(Despacho).find({ where: { servicioId: In(servicios.map((s) => s.id)), estado: In(['DESPACHADO', 'EN_SERVICIO', 'REGRESANDO']) } }) : [];
@@ -92,7 +99,13 @@ export class ServicioActivoService {
       moviles: moviles.filter((m) => m.servicioId === s.id).length,
       direccion: conf ? s.direccion : null,
     }));
-    if (conf && servicios.length) await this.auditar(user, 'ACCESO_CONFIDENCIAL', servicios[0].id, null, { campos: ['direccion'], servicios: servicios.length });
+    if (conf && servicios.length) {
+      const previa = ahora ? this.ultimaAuditoriaCentro.get(user.id) : undefined;
+      if (!ahora || previa === undefined || ahora.getTime() - previa >= VENTANA_AUDITORIA_CENTRO_MS) {
+        await this.auditar(user, 'ACCESO_CONFIDENCIAL', servicios[0].id, null, { campos: ['direccion'], servicios: servicios.length });
+        if (ahora) this.ultimaAuditoriaCentro.set(user.id, ahora.getTime());
+      }
+    }
     return salida;
   }
 

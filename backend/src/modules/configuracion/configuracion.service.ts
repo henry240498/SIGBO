@@ -116,7 +116,10 @@ export class ConfiguracionService {
       if(def.tipo==='texto'&&(typeof value!=='string'||value.length>2000))errors.push(`${key} debe ser texto válido`);
       if(def.tipo==='numero'&&(typeof value!=='number'||(def.min!==undefined&&value<def.min)||(def.max!==undefined&&value>def.max)))errors.push(`${key} está fuera de rango`);
       if(def.tipo==='color'&&(typeof value!=='string'||!/^#[0-9a-f]{6}$/i.test(value)))errors.push(`${key} debe ser color hexadecimal`);
-      if(def.tipo==='lista'&&(!Array.isArray(value)||value.some(v=>!def.allowed?.includes(v))))errors.push(`${key} debe ser una lista de valores permitidos`);
+      if(def.tipo==='lista'){
+        if(!Array.isArray(value)||value.some(v=>!def.allowed?.includes(v)))errors.push(`${key} debe ser una lista de valores permitidos`);
+        else if(value.length===0)errors.push(`${key}: Elegí al menos un estado.`);
+      }
       if(def.allowed&&def.tipo!=='lista'&&!def.allowed.includes(value))errors.push(`${key} contiene un valor no permitido`);
     }
     if(errors.length)throw new BadRequestException(errors);
