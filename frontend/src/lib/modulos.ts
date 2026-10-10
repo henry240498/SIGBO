@@ -28,6 +28,7 @@ export const GRUPOS: Array<{ id: GrupoModulo; nombre: string }> = [
 ];
 
 export const MODULOS: ModuloConfig[] = [
+  { slug: 'centro-mando', nombre: 'Centro de mando', icono: 'radar', permisoPrefijo: '', disponible: true, grupo: 'operaciones', descripcion: 'Lo que está pasando ahora y lo que te toca, según tu rol.' },
   { slug: 'servicios', nombre: 'Servicios', icono: 'alert', permisoPrefijo: 'servicios:', disponible: true, grupo: 'operaciones', descripcion: 'Intervenciones atendidas: incendios, rescates y emergencias.' },
   { slug: 'denuncias', nombre: 'Denuncias', icono: 'alert', permisoPrefijo: 'denuncias:', disponible: true, grupo: 'operaciones', descripcion: 'Avisos que llegan desde la ciudadanía y su seguimiento.' },
   { slug: 'guardias', nombre: 'Guardias', icono: 'shield', permisoPrefijo: 'guardias:', disponible: true, grupo: 'operaciones', descripcion: 'Turnos, grupos, sorteos y órdenes de guardia.' },

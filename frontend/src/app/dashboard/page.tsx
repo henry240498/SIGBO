@@ -1,23 +1,56 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { apiFetch, obtenerSesion, Sesion } from '@/lib/api';
-import { MODULOS, agruparModulos, moduloVisible } from '@/lib/modulos';
+import { MODULOS, agruparModulos } from '@/lib/modulos';
+import { PANTALLAS } from '@/lib/pantallas.generado';
+import { decisionDeRuta, moduloVisibleEnMenu } from '@/lib/permisos-pantalla';
 import { SystemIcon } from '@/app/components/SystemIcon';
 import { Cargando } from '@/app/components/Cargando';
 import { Aviso } from '@/app/components/Aviso';
+import { usePermisosPantalla } from '@/app/components/PermisosPantallaProvider';
+import { useActualizacionPeriodica } from '@/app/components/useActualizacionPeriodica';
 
 interface InicioBombero {
   tienePerfilBombero: boolean;
   proximasGuardias: Array<{ id: string; fecha: string; horaInicio: string; horaFin: string; turno: string; estado: string; rol: string | null }>;
   ultimosServicios: Array<{ id: string; numeroServicio: string; fechaHoraAviso: string; estado: string; tipo: string | null; rol: string | null; horasServicio: number | null }>;
 }
+interface ResumenSistema { nivel: 'normal' | 'atencion' | 'critico'; alertas: Array<{ nivel: string; mensaje: string }> }
 
 const fechaCorta = (fecha: string) => new Intl.DateTimeFormat('es-PY', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(`${fecha}T12:00:00`));
 const fechaHoraCorta = (fecha: string) => new Intl.DateTimeFormat('es-PY', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(fecha));
+const NIVEL: Record<ResumenSistema['nivel'], string> = { normal: 'Operativo', atencion: 'Requiere atención', critico: 'Crítico' };
+
+/** Antes decia "Estado del sistema · Operativo" fijo en el codigo: ahora lo que realmente responde el servidor. */
+function EstadoDelSistema({ permisos }: { permisos: string[] }) {
+  const [salud, setSalud] = useState<'ok' | 'caido' | null>(null);
+  const [resumen, setResumen] = useState<ResumenSistema | null>(null);
+  const veSistema = permisos.includes('sistema:ver');
+  const cargar = useCallback(async () => {
+    const res = await apiFetch('/salud').catch(() => null);
+    const cuerpo = res ? await res.json().catch(() => ({})) : {};
+    const ok = !!res && res.ok && (cuerpo as { estado?: string }).estado === 'disponible';
+    setSalud(ok ? 'ok' : 'caido');
+    if (ok && veSistema) {
+      const r = await apiFetch('/sistema/resumen');
+      if (r.ok) setResumen(await r.json());
+    }
+    if (!ok) throw new Error('El servidor no responde.');
+  }, [veSistema]);
+  useActualizacionPeriodica(cargar, 30_000);
+  const texto = salud === null ? 'comprobando…' : salud === 'caido' ? 'Sin respuesta del servidor' : resumen ? NIVEL[resumen.nivel] : 'Servidor operativo';
+  return (
+    <div className="hero-kicker" role="status">
+      Estado del sistema · {texto}
+      {resumen && resumen.alertas.length > 0 && <> · <Link href="/dashboard/sistema" style={{ color: 'inherit' }}>{resumen.alertas.length} aviso(s)</Link></>}
+    </div>
+  );
+}
 
 export default function InicioPage() {
+  const { matriz, centroMando } = usePermisosPantalla();
   const [sesion, setSesion] = useState<Sesion | null>(null);
   const [ahora, setAhora] = useState<Date | null>(null);
   const [inicioBombero, setInicioBombero] = useState<InicioBombero | null>(null);
@@ -25,15 +58,19 @@ export default function InicioPage() {
   useEffect(() => {
     setSesion(obtenerSesion());
     setAhora(new Date());
+    const reloj = window.setInterval(() => setAhora(new Date()), 30_000);
     apiFetch('/seguridad/mi-inicio')
       .then(async (res) => {
         if (!res.ok) throw new Error('No se pudo cargar tu resumen operativo.');
         setInicioBombero(await res.json());
       })
       .catch((error: Error) => setErrorInicio(error.message));
+    return () => window.clearInterval(reloj);
   }, []);
   if (!sesion) return null;
-  const modulos = MODULOS.filter((m) => moduloVisible(m, sesion.usuario.permisos));
+  const permisos = sesion.usuario.permisos;
+  const modulos = MODULOS.filter((m) => m.slug !== 'centro-mando' && moduloVisibleEnMenu(m, permisos, PANTALLAS, matriz));
+  const centroVisible = centroMando?.acceso !== false && (decisionDeRuta('/dashboard/centro-mando', PANTALLAS, matriz)?.ver ?? true);
   const hora = ahora?.toLocaleTimeString('es-PY', { hour: '2-digit', minute: '2-digit' }) || '--:--';
   const fecha = ahora?.toLocaleDateString('es-PY', { weekday: 'long', day: '2-digit', month: 'long' }) || '';
 
@@ -43,9 +80,10 @@ export default function InicioPage() {
     </section>}
     <section className="dashboard-hero">
       <div>
-        <div className="hero-kicker">Estado del sistema · Operativo</div>
+        <EstadoDelSistema permisos={permisos} />
         <h2>Todo el cuerpo,<br />en un solo mapa.</h2>
         <p>Personal, unidades y recursos organizados para tomar decisiones con información clara y confiable.</p>
+        {centroVisible && <p style={{ marginTop: 14 }}><Link href="/dashboard/centro-mando" className="btn-primary" style={{ display: 'inline-block', textDecoration: 'none' }}>Abrir el Centro de mando</Link></p>}
       </div>
       <div className="hero-stamp"><div className="hero-time">{hora}</div><div className="hero-date">{fecha}</div></div>
     </section>
@@ -81,7 +119,6 @@ export default function InicioPage() {
           <div className="module-icon"><SystemIcon name={m.icono} size={20} /></div>
           <div>
             <div className="module-name">{m.nombre}</div>
-            {/* Antes decia solo "Disponible", que no ayudaba a elegir a donde entrar. */}
             <p className="module-desc">{m.descripcion}</p>
             {!m.disponible && <div className="module-status soon">Próximamente</div>}
           </div>

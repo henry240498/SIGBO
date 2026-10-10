@@ -2,9 +2,10 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { apiFetch } from '@/lib/api';
+import { apiFetch, obtenerSesion } from '@/lib/api';
+import { MODULOS } from '@/lib/modulos';
 import { PANTALLAS } from '@/lib/pantallas.generado';
-import { AccionUi, indexarPorRuta, MatrizWeb, PermisoPantalla, puede, tabsVisibles } from '@/lib/permisos-pantalla';
+import { AccionUi, indexarPorRuta, MatrizWeb, pantallasVisibles, PermisoPantalla, puede, tabsVisibles } from '@/lib/permisos-pantalla';
 
 /** Las reglas pueden cambiar mientras la persona trabaja; igual el backend ya las exige al instante. */
 const RECARGA_MS = 5 * 60_000;
@@ -80,4 +81,12 @@ export function usePuede(): (accion: AccionUi) => boolean {
 export function useTabsVisibles<T extends { href: string }>(tabs: T[]): T[] {
   const { matriz } = usePermisosPantalla();
   return useMemo(() => tabsVisibles(tabs, PANTALLAS, matriz), [tabs, matriz]);
+}
+
+/** Rutas que la persona puede abrir: para no ofrecer enlaces que terminen en "Sin acceso". */
+export function useRutasVisibles(): Set<string> {
+  const { matriz } = usePermisosPantalla();
+  const [permisos, setPermisos] = useState<string[]>([]);
+  useEffect(() => { setPermisos(obtenerSesion()?.usuario.permisos ?? []); }, []);
+  return useMemo(() => new Set(pantallasVisibles(PANTALLAS, permisos, matriz, MODULOS).map((p) => p.ruta)), [permisos, matriz]);
 }

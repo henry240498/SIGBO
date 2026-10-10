@@ -2172,6 +2172,39 @@ export const PANTALLAS_WEB: PantallaCatalogo[] = [
     ]
   },
   {
+    "codigo": "0xC001",
+    "ruta": "/dashboard/centro-mando",
+    "nombre": "Centro de mando",
+    "modulo": "centro-mando",
+    "prefijo": null,
+    "llamadas": [
+      {
+        "metodos": [
+          "PATCH"
+        ],
+        "patron": "/alertas/*/estado"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/centro-mando"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/centro-mando/acceso"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/pantallas/mis-permisos-web"
+      }
+    ]
+  },
+  {
     "codigo": "0xB00D",
     "ruta": "/dashboard/denuncias",
     "nombre": "Denuncias",

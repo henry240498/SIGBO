@@ -107,6 +107,13 @@ export const PANTALLAS: PantallaRegistrada[] = [
     "detalle": false
   },
   {
+    "ruta": "/dashboard/centro-mando",
+    "nombre": "Centro de mando",
+    "modulo": "centro-mando",
+    "codigo": "0xC001",
+    "detalle": false
+  },
+  {
     "ruta": "/dashboard/denuncias",
     "nombre": "Denuncias",
     "modulo": "denuncias",

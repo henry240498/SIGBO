@@ -519,3 +519,6 @@ html.config-reduced-motion *,html.config-reduced-motion *::before,html.config-re
 .registro-linea.warn { color: var(--warning); }
 .config-lista { display: flex; flex-wrap: wrap; gap: 8px 16px; border: 0; }
 .config-lista label { display: inline-flex; align-items: center; gap: 6px; }
+.cm-accesos { display: grid; gap: 12px; }
+.cm-acceso { display: inline-block; padding: 5px 9px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 7px; text-decoration: none; font-size: 12px; font-weight: 600; }
+.cm-acceso:hover { background: var(--surface-soft); }
