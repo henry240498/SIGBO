@@ -26,6 +26,7 @@ Helper de frontend "Cargando" (1 exportaciones).
 - [[screen--dashboard-asistencia-ausencias|/dashboard/asistencia/ausencias]] `uses` →
 - [[screen--dashboard-asistencia-eventos-id|/dashboard/asistencia/eventos/[id]]] `uses` →
 - [[screen--dashboard-asistencia|/dashboard/asistencia]] `uses` →
+- [[screen--dashboard-centro-mando|/dashboard/centro-mando]] `uses` →
 - [[screen--dashboard-denuncias|/dashboard/denuncias]] `uses` →
 - [[screen--dashboard-denuncias-id|/dashboard/denuncias/[id]]] `uses` →
 - [[screen--dashboard-deposito-articulos-id|/dashboard/deposito/articulos/[id]]] `uses` →
@@ -57,6 +58,7 @@ Helper de frontend "Cargando" (1 exportaciones).
 - [[screen--dashboard-seguridad-inteligencia-artificial-conversaciones|/dashboard/seguridad/inteligencia-artificial/conversaciones]] `uses` →
 - [[screen--dashboard-seguridad-inteligencia-artificial|/dashboard/seguridad/inteligencia-artificial]] `uses` →
 - [[screen--dashboard-seguridad|/dashboard/seguridad]] `uses` →
+- [[screen--dashboard-seguridad-pantallas|/dashboard/seguridad/pantallas]] `uses` →
 - [[screen--dashboard-seguridad-usuarios-id|/dashboard/seguridad/usuarios/[id]]] `uses` →
 - [[screen--dashboard-servicios-cartografia|/dashboard/servicios/cartografia]] `uses` →
 - [[screen--dashboard-servicios-convocatorias|/dashboard/servicios/convocatorias]] `uses` →
@@ -64,6 +66,11 @@ Helper de frontend "Cargando" (1 exportaciones).
 - [[screen--dashboard-servicios-indicadores|/dashboard/servicios/indicadores]] `uses` →
 - [[screen--dashboard-servicios-llamados|/dashboard/servicios/llamados]] `uses` →
 - [[screen--dashboard-servicios-prevencion|/dashboard/servicios/prevencion]] `uses` →
+- [[screen--dashboard-sistema-app-movil|/dashboard/sistema/app-movil]] `uses` →
+- [[screen--dashboard-sistema-datos|/dashboard/sistema/datos]] `uses` →
+- [[screen--dashboard-sistema|/dashboard/sistema]] `uses` →
+- [[screen--dashboard-sistema-registros|/dashboard/sistema/registros]] `uses` →
+- [[screen--dashboard-sistema-tareas|/dashboard/sistema/tareas]] `uses` →
 - [[screen--dashboard-vehiculos-dotacion|/dashboard/vehiculos/dotacion]] `uses` →
 - [[screen--dashboard-vehiculos-flota|/dashboard/vehiculos/flota]] `uses` →
 - [[screen--dashboard-vehiculos-id|/dashboard/vehiculos/[id]]] `uses` →

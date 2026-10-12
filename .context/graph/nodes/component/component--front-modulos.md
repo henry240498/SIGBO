@@ -22,6 +22,7 @@ Helper de frontend "modulos" (7 exportaciones).
 ## Referenciado por
 
 - [[screen--dashboard|/dashboard]] `uses` →
+- [[screen--dashboard-seguridad-pantallas|/dashboard/seguridad/pantallas]] `uses` →
 - [[screen--dashboard-modulo|/dashboard/[modulo]]] `uses` →
 - [[decision--pantalla-vive-donde-su-permiso|Una pantalla vive en el modulo cuyo permiso gobierna sus endpoints]] `affects` →
 - [[rule--etiqueta-nombra-su-control|Toda etiqueta nombra a su control, y todo th declara su scope]] `affects` →

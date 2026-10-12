@@ -11,7 +11,7 @@ archivos:
 edges:
   - [belongs_to, domain--personal]
   - [persisted_in, table--personal-bomberos]
-terminos: [bombero, bomberos, personal, estado, aspirante, activo, suspendido, licencia, retirado, fallecido, honorario, condicion, institucional, incorporado, combatiente, apoyo, economico]
+terminos: [bombero, bomberos, personal, condicion, institucional, incorporado, combatiente, apoyo, economico, honorario]
 ---
 
 # Bombero
@@ -23,7 +23,6 @@ Entidad Bombero, persistida en personal.bomberos.
 
 ## Estados y enumeraciones
 
-- `EstadoBombero`: `ASPIRANTE` · `ACTIVO` · `SUSPENDIDO` · `LICENCIA` · `RETIRADO` · `FALLECIDO` · `HONORARIO`
 - `CondicionInstitucional`: `INCORPORADO` · `COMBATIENTE` · `APOYO_ECONOMICO` · `HONORARIO`
 
 ## Donde se usa

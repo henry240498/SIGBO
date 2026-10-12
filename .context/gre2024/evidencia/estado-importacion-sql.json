@@ -1,0 +1,29 @@
+{
+  "fechaUtc": "2026-10-09T23:29:06.131Z",
+  "entorno": "Docker local sigbo-sqlserver",
+  "modo": "SELECT_SOLO_LECTURA",
+  "listado": {
+    "status": 0,
+    "output": "name\n----\nsigbo_cbvc\nsigbo_gre_prueba\n",
+    "error": null
+  },
+  "resultados": [
+    {
+      "base": "sigbo_cbvc",
+      "status": 0,
+      "output": "esquema tabla\n------- -----\n",
+      "error": null
+    },
+    {
+      "base": "sigbo_gre_prueba",
+      "status": 0,
+      "output": "esquema tabla\n------- -----\nmatpel gre_activaciones\nmatpel gre_activaciones_historial\nmatpel gre_aliases\nmatpel gre_bloques\nmatpel gre_campos_fuente\nmatpel gre_celdas\nmatpel gre_documentos\nmatpel gre_entradas\nmatpel gre_filas\nmatpel gre_guias\nmatpel gre_importaciones\nmatpel gre_paginas\nmatpel gre_referencias\nmatpel gre_reglas\nmatpel gre_revisiones\nmatpel gre_secciones\nmatpel gre_tablas\nmatpel gre_versiones\nestado cantidad\n------ --------\nREQUIERE_REVISION 1\nVALIDADA 1\nestado cantidad\n------ --------\nCOMPLETADA 1\nentradas\n--------\n5330\nceldas\n------\n11066\n",
+      "error": null
+    }
+  ],
+  "cambiosSQL": false,
+  "limites": [
+    "No verifica decisiones institucionales ni activa catálogo.",
+    "No accede a usuarios, comunicaciones o información de incidentes."
+  ]
+}

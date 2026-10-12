@@ -69,6 +69,7 @@
   "/dashboard/guardias/sorteos": "0xB043",
   "/dashboard/guardias/sorteos/[id]": "0xB044",
   "/dashboard/inteligencia": "0xB045",
+  "/dashboard/matpel": "0xB07C",
   "/dashboard/organizacion": "0xB046",
   "/dashboard/organizacion/ascensos": "0xB047",
   "/dashboard/organizacion/brigadas": "0xB048",

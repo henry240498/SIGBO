@@ -2,6 +2,19 @@
 
 Fecha de revisión estructural: 2026-09-14. Identificador: sigbo.
 
+## Pendiente de Jonás para Henry
+
+Pedido del2026-10-12: el usuario no dispone del Reglamento original vigente y
+solicita pedírselo a Henry para completar la tarea pendiente de Jonás:
+GRE/MATPEL↔SCI y fotos vinculadas a servicios.
+Al retomar con Henry, mostrar la consulta de [PENDIENTES_PARA_HENRY.md](PENDIENTES_PARA_HENRY.md)
+si sigue pendiente. No atribuir envío externo ni recepción: el mensaje queda
+registrado en este chat y en el contexto del proyecto.
+El usuario pidió expresamente el2026-10-12 «sube todo al main», actualizando
+su autorización anterior condicionada al cierre. Publicar los cambios actuales
+verificados a `origin/main` y conservar los pendientes institucionales abiertos.
+[Autorización y destino](PENDIENTES_PARA_HENRY.md).
+
 ## Producto y alcance
 Sistema institucional con grafo documental amplio.
 
@@ -47,9 +60,14 @@ No copiar versiones, estado de Git o resultados históricos como si fueran hecho
 ## Documentos por tarea
 
 - [CENTRO-DE-MANDO.md](<../docs/CENTRO-DE-MANDO.md>) — Centro de mando, permisos por pantalla en toda la web y área Sistema
+- [gre2024/index.md](gre2024/index.md) — conocimiento GRE2024, matriz de cobertura,
+  cotejo contra fuente, reglas y límites; obligatorio para GRE/MATPEL/SCI.
+
 - [DESPACHO.md](<DESPACHO.md>) — despacho y coordinación operativa (estado por fases)
 - [MOVIL.md](<MOVIL.md>) — app móvil, offline, APK, reportes y estado de pruebas
 - [MATPEL.md](<MATPEL.md>) — integración GRE/MATPEL/SCI, plan por fases y estado verificable
+- [SCI.md](<SCI.md>) — Sistema de Comando de Incidentes: estado real, defectos verificados, brechas P0–P3 y cómo continuar
+- [INCIDENTES.md](<INCIDENTES.md>) — ejecución del plan del centro de operaciones e incidentes (núcleo 093)
 - [arquitectura.md](<arquitectura.md>)
 - [testing.md](<testing.md>)
 - [base-datos.md](<base-datos.md>)

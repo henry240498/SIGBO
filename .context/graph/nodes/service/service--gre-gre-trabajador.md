@@ -22,7 +22,7 @@ Trabajador local de importaciones GRE. Apagado salvo GRE_TRABAJADOR=activo: arra
 
 ## Metodos
 
-`onApplicationBootstrap()` · `onApplicationShutdown()`
+`onApplicationBootstrap()` · `onApplicationShutdown()` · `estado()` · `iniciarProcesamiento()`
 
 ## Archivos
 
@@ -30,9 +30,14 @@ Trabajador local de importaciones GRE. Apagado salvo GRE_TRABAJADOR=activo: arra
 
 ## Relaciones
 
-- `belongs_to` → [[domain--matpel|matpel]]
+- `belongs_to` → [[domain--matpel|MATPEL]]
 - `uses` → [[component--modulo-gre|gre (modulo NestJS)]]
 - `uses` → [[service--gre-gre-importacion|GreImportacionService]]
+
+## Referenciado por
+
+- [[service--sistema-sistema|SistemaService]] `uses` →
+- [[api--gre-gre-admin|GreAdminController]] `exposes` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

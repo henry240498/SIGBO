@@ -513,6 +513,13 @@ export const PANTALLAS: PantallaRegistrada[] = [
     "detalle": false
   },
   {
+    "ruta": "/dashboard/matpel",
+    "nombre": "Matpel",
+    "modulo": "matpel",
+    "codigo": "0xB07C",
+    "detalle": false
+  },
+  {
     "ruta": "/dashboard/mi-perfil",
     "nombre": "Mi perfil",
     "modulo": "mi-perfil",

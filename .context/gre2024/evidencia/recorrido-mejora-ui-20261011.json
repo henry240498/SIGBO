@@ -1,0 +1,89 @@
+{
+  "alcance": "NAVEGADOR_AISLADO_API_INTERCEPTADA_FUENTE_REAL_NO_BASE_INSTITUCIONAL",
+  "resultados": [
+    {
+      "nombre": "Sin catálogo activo no aparecen materiales ni cifras inventadas",
+      "aprobado": true
+    },
+    {
+      "nombre": "Descarga manual verifica huella y entrega archivo HTML de consulta local",
+      "aprobado": true
+    },
+    {
+      "nombre": "Índice ofrece todas las42 secciones de la edición",
+      "aprobado": true
+    },
+    {
+      "nombre": "ONU3171 ofrece varias identidades y no selecciona la primera",
+      "aprobado": true
+    },
+    {
+      "nombre": "Guía125 conserva todos los bloques literales",
+      "aprobado": true
+    },
+    {
+      "nombre": "Consulta inicial pide incendio y volumen; periodo todavía no aparece",
+      "aprobado": true
+    },
+    {
+      "nombre": "Con volumen liberado el siguiente dato solicitado es periodo",
+      "aprobado": true
+    },
+    {
+      "nombre": "Cantidad decimal textual y calidad no confirmada llegan sin alteración al motor",
+      "aprobado": true
+    },
+    {
+      "nombre": "Muestra30m y0.1km de la fuente, con condición provisional",
+      "aprobado": true
+    },
+    {
+      "nombre": "Contexto conserva identificación provisional y ámbito desconocido",
+      "aprobado": true
+    },
+    {
+      "nombre": "Traza muestra selección de volumen y versión de interpretación",
+      "aprobado": true
+    },
+    {
+      "nombre": "Mapa relativo representa geometría del mismo motor sin proveedor externo",
+      "aprobado": true
+    },
+    {
+      "nombre": "Fuente muestra numeración PDF e impresa separadas",
+      "aprobado": true
+    },
+    {
+      "nombre": "Escape cierra fuente y conserva ficha/consulta",
+      "aprobado": true
+    },
+    {
+      "nombre": "Cambio de parámetros retira evaluación anterior",
+      "aprobado": true
+    },
+    {
+      "nombre": "Cantidad desconocida se conserva null; no se vuelve cero",
+      "aprobado": true
+    },
+    {
+      "nombre": "Consulta móvil sin desborde horizontal",
+      "aprobado": true
+    },
+    {
+      "nombre": "Entrada no verde remite distancias a guía154 sin declarar ausencia de aislamiento",
+      "aprobado": true
+    },
+    {
+      "nombre": "Un403 comunica error y no lo convierte en lista vacía",
+      "aprobado": true
+    },
+    {
+      "nombre": "Sin errores JavaScript de la página",
+      "aprobado": true
+    }
+  ],
+  "fuentesVistas": [
+    33
+  ],
+  "errores": []
+}

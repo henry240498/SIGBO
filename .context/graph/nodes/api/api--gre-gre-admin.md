@@ -17,6 +17,8 @@ edges:
   - [exposes, service--gre-gre-comparacion]
   - [exposes, service--gre-gre-activacion]
   - [exposes, service--gre-gre-fuentes]
+  - [exposes, service--gre-gre-trabajador]
+  - [exposes, service--seguridad-auditoria]
 terminos: [gre, admin, matpel, administracion, administrar, validar, activar]
 ---
 
@@ -31,6 +33,7 @@ Administración de la GRE (fase 3D): fuentes, importación, revisión dato ↔ f
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
 | GET | `/matpel/administracion/documentos` | `matpel:administrar_gre` |
+| POST | `/matpel/administracion/importaciones/procesar` | `matpel:administrar_gre` |
 | POST | `/matpel/administracion/importaciones` | `matpel:administrar_gre` |
 | GET | `/matpel/administracion/importaciones/:importacionId` | `matpel:administrar_gre` |
 | GET | `/matpel/administracion/versiones` | `matpel:administrar_gre` o `matpel:validar_gre` o `matpel:activar_gre` |
@@ -51,12 +54,18 @@ Administración de la GRE (fase 3D): fuentes, importación, revisión dato ↔ f
 
 ## Relaciones
 
-- `belongs_to` → [[domain--matpel|matpel]]
+- `belongs_to` → [[domain--matpel|MATPEL]]
 - `exposes` → [[service--gre-gre-importacion|GreImportacionService]]
 - `exposes` → [[service--gre-gre-revision|GreRevisionService]]
 - `exposes` → [[service--gre-gre-comparacion|GreComparacionService]]
 - `exposes` → [[service--gre-gre-activacion|GreActivacionService]]
 - `exposes` → [[service--gre-gre-fuentes|GreFuentesService]]
+- `exposes` → [[service--gre-gre-trabajador|GreTrabajadorService]]
+- `exposes` → [[service--seguridad-auditoria|AuditoriaService]]
+
+## Referenciado por
+
+- [[screen--dashboard-sistema-tareas|/dashboard/sistema/tareas]] `calls` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

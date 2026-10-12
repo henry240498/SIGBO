@@ -6,6 +6,10 @@ on:
   push:
     paths:
       - ".movile/**"
+      - "backend/src/modules/gre/**"
+      - "scripts/matpel/compilar_motor_local.cjs"
+      - "scripts/matpel/motor_local_runtime.js"
+      - ".github/workflows/sigbo-movil-apk.yml"
   workflow_dispatch:
     inputs:
       api_url:
@@ -30,18 +34,30 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version: "3.32.0"
+          flutter-version: "3.47.3"
 
-      - name: Andamiaje nativo Android
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Verificar motor GRE compartido
+        working-directory: .
+        run: |
+          npm ci --prefix backend
+          node scripts/matpel/compilar_motor_local.cjs --check
+
+      - name: Preparar wrapper Android
         run: |
           flutter create --org org.cbvc.sigbo --project-name sigbo_alertas \
-            --platforms android --android-language kotlin /tmp/sigbo-base
-          cp -R /tmp/sigbo-base/android ./android
-          mkdir -p android/app/src/main/kotlin/org/cbvc/sigbo android/app/src/main/res/values
-          cp android_app_src/AndroidManifest.xml android/app/src/main/AndroidManifest.xml
-          cp android_app_src/MainActivity.kt android/app/src/main/kotlin/org/cbvc/sigbo/MainActivity.kt
-          cp android_app_src/build.gradle android/app/build.gradle
-          cp android_app_src/styles.xml android/app/src/main/res/values/styles.xml
+            --platforms android --android-language kotlin --no-pub /tmp/sigbo-base
+          # El proyecto Android versionado contiene el motor GRE y el OCR local.
+          # Recuperar solo los binarios/scripts del wrapper ignorados por Git.
+          cp /tmp/sigbo-base/android/gradlew android/gradlew
+          cp /tmp/sigbo-base/android/gradlew.bat android/gradlew.bat
+          cp /tmp/sigbo-base/android/gradle/wrapper/gradle-wrapper.jar android/gradle/wrapper/gradle-wrapper.jar
+          chmod +x android/gradlew
 
       - name: Dependencias y analisis
         run: |
@@ -49,10 +65,14 @@ jobs:
           flutter analyze
 
       - name: Compilar APK depuracion
+        env:
+          SIGBO_API_URL: ${{ inputs.api_url }}
         run: |
-          DEFINE=""
-          if [ -n "${{ inputs.api_url }}" ]; then DEFINE="--dart-define=SIGBO_API_URL=${{ inputs.api_url }}"; fi
-          flutter build apk --debug $DEFINE
+          if [ -n "$SIGBO_API_URL" ]; then
+            flutter build apk --debug "--dart-define=SIGBO_API_URL=$SIGBO_API_URL"
+          else
+            flutter build apk --debug
+          fi
 
       - name: Publicar APK
         uses: actions/upload-artifact@v4

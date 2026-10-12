@@ -1,0 +1,626 @@
+{
+  "tipo": "ANOTACIONES_DEL_LECTOR_NO_MOTOR",
+  "fuente": "docs/Manuales/GRE2024-Spa-Web-a.pdf",
+  "guias": [
+    {
+      "guia": 131,
+      "observaciones": [
+        "Salud precede incendio. Metanol UN1230 puede arder con llama invisible: ausencia de llama visible no descarta fuego; la advertencia se repite en peligros y respuesta. Cloroacetato de metilo UN2295 conserva el efecto lacrimógeno.",
+        "Aislamiento inmediato50m; resaltados remitenTabla1 y otros aumentan según necesidad sin cifra; incendio de tanque/vagón/autotanque800m, con consideración de evacuación separada. Agentes pequeños/grandes no eliminan la advertencia de rocío posiblemente ineficaz. Fuga distingue absorción pequeña, dique grande y vapor que no garantiza prevenir ignición en confinados.",
+        "Protección química recomendada solo cuando no exista riesgo de incendio. Auxilios generales más específicos y ERAP canadiense se mantienen separados."
+      ],
+      "condicionClave": "Guía131 seleccionada y material identificado como metanol UN1230, durante detección o evaluación de fuego.",
+      "fragmentosClave": [
+        "Metanol (UN1230) arderá con llama invisible"
+      ],
+      "limite": "No inferir ausencia de incendio por inspección visual; los métodos citados no certifican equipo disponible."
+    },
+    {
+      "guia": 132,
+      "observaciones": [
+        "Incendio precede salud. Materiales corrosivos pueden reaccionar violentamente con agua; el enfriamiento exterior no autoriza introducirla en contenedores. Distancias50m, Tabla1 para resaltados/otros aumento sin cifra,800m para recipiente en fuego.",
+        "Para hidrazina el absorbente es arena SECA o inerte; no presentar la lista general de absorbentes sin esa condición. PolimerizaciónP y calor/incendio no se convierten en certeza de reacción. Fuga grande conserva límite del rocío en confinados.",
+        "Auxilios de corrosivos conservan al menos30min y posible lavado adicional como literal documental, sin protocolo médico nuevo. ERAP es nota canadiense."
+      ],
+      "condicionClave": "Guía132, derrame o fuga de hidrazina y selección de absorbente.",
+      "fragmentosClave": [
+        "Para la hidrazina, absorba con arena SECA"
+      ],
+      "limite": "Identidad desconocida no permite aplicar automáticamente un absorbente general; condición seca/inerte explícita."
+    },
+    {
+      "guia": 133,
+      "observaciones": [
+        "Sólidos inflamables: fricción, polvo/virutas y sustancia fundida sobre punto de inflamación; posible reignición. Aislamiento25m; derrame grande considerar100m a favor del viento; recipiente en fuego800m.",
+        "Pigmentos/pastas metálicas tienen apartado propio: pasta de aluminio se trata como metal combustible, con agentes secos/claseD y remisión170. No copiar sin contexto la lista de agua/espuma del fuego ordinario. Derrame seco pequeño usa contenedor limpio/seco y cubierta holgada; grande humedecimiento/dique no debe anular el apartado metálico.",
+        "Retirada/signos del tanque y límites de incendio masivo persisten. Remover material fundido solidificado en piel requiere asistencia médica; ERAP canadiense separado."
+      ],
+      "condicionClave": "Guía133, incendio que involucra pigmento o pasta metálica, en particular pasta de aluminio.",
+      "fragmentosClave": [
+        "Los incendios de Pasta de Aluminio deben tratarse"
+      ],
+      "limite": "Resolver remisión170 y conservar tipo de material; agentes del incendio ordinario no resuelven esta rama."
+    },
+    {
+      "guia": 134,
+      "observaciones": [
+        "Sólidos inflamables tóxicos/corrosivos, incendio primero; contacto con metales puede producir hidrógeno.25m inmediato,100m considerado para derrame grande y800m en incendio de recipiente.",
+        "Fuego pequeño/grande conserva espuma resistente al alcohol y límites de chorros/no agua dentro del contenedor. En fuga no tocar material o envase dañado salvo protección adecuada; herramientas sin chispas y envase forrado de plástico, sin trasladar humedecimiento de133.",
+        "La condición de riesgo de incendio limita ropa química recomendada. Auxilios de corrosivos30min/más lavado posible y remisión general son documentación; ERAP no es requisito local."
+      ],
+      "condicionClave": "Guía134, derrame o fuga y contacto con contenedor dañado o sustancia derramada.",
+      "fragmentosClave": [
+        "No tocar los contenedores dañados o el material derramado"
+      ],
+      "limite": "La excepción exige ropa protectora adecuada; no atribuir suficiencia al equipo estructural ni autorizar intervención."
+    },
+    {
+      "guia": 135,
+      "observaciones": [
+        "Combustión espontánea, humedad, reacción con agua, descomposición y reignición; pentaborano UN1380 altamente tóxico. Líquido50m/sólido25m; resaltadosTabla1/otros aumento;800m para recipiente en incendio.",
+        "Prohibición general de agua/CO2/espuma SOBRE MATERIAL tiene excepciones explícitas para UN3342,1384,1923,1929 en fuegos pequeños y grandes: agua abundante, no sofocamiento. Listas secas excluyen esos mismos ONU. UN3342 inundado sigue liberando disulfuro de carbono inflamable. Mantener separados enfriamiento exterior, entrada/contacto de agua y material del incendio.",
+        "En derrame pequeño de esas identidades aparece disolver con5partes de agua y recolectar; no inventar unidad/base de la proporción ni extenderla al incendio. Fuente contiene advertencia específica frente a cubierta seca/plástica general: conservar ambas, sin precedencia global automática. Auxilios generales y ERAP."
+      ],
+      "condicionClave": "Guía135 y xantatos UN3342 o ditionitos UN1384/1923/1929; distinguir fuego pequeño/grande de derrame pequeño.",
+      "fragmentosClave": [
+        "NO USAR AGUA, CO2 O ESPUMA SOBRE EL MATERIAL",
+        "Para incendios PEQUEÑOS y GRANDES de Xantatos",
+        "disolver con 5 partes de agua",
+        "seguirá desprendiendo vapores inflamables"
+      ],
+      "limite": "Excepción por identidad y escenario;5partes no tiene base operacional determinada aquí. No silenciar riesgo residual de UN3342 ni imponer precedencia universal."
+    },
+    {
+      "guia": 136,
+      "observaciones": [
+        "Reactiva con aire, incendio primero; puede venir fundida y reignitar. Líquido50m/sólido25m, Tabla1 si resaltado,800m en fuego de recipiente. FósforoUN1381 con posible contacto directo requiere ropa especial aluminizada; no extenderla sin condición.",
+        "A diferencia de135, fuego pequeño usa agua/arena o tierra húmeda; grande rocío/niebla y prohíbe dispersar con chorros de alta presión. Fuga pequeña conserva material bajo agua en recipiente metálico; grande cubrir húmedo y dique.",
+        "Piel expuesta se mantiene húmeda hasta atención, material fundido requiere médico y ropa/calzado contaminados en metal lleno de agua por peligro al secar. Literales clínicos se conservan, no se convierten en automatismo. ERAP separado."
+      ],
+      "condicionClave": "Guía136 y fósforo UN1381 con posible contacto directo con la sustancia.",
+      "fragmentosClave": [
+        "Para Fósforo UN1381",
+        "conservar el material bajo el agua",
+        "Existe peligro de incendio si se deja secar"
+      ],
+      "limite": "No transferir prohibición de agua de135; distinguir equipo condicionado, fuga y atención médica."
+    },
+    {
+      "guia": 137,
+      "observaciones": [
+        "Corrosivos reactivos con agua, salud primero. Anhidrido acéticoUN1715 es excepción inflamable; calor/gases/hidrógeno, contaminación con agua y material fundido conservados. Líquido50m/sólido25m, Tabla1 si resaltado y800m en recipiente incendiado.",
+        "Si MATERIAL NO involucrado en incendio, no usar agua sobre él. Pequeño: seco/CO2; grande: agua abundante/niebla y retirada si suministro insuficiente. No introducir agua en contenedor y no aplicarla directamente a fuga/derrame; rocío sobre vapor no equivale a esos usos.",
+        "Absorción seca, cubierta plástica, herramientas y prevención de vías; no copiar134. Auxilios de corrosivos30min y remoción fundida médica más generales; ERAP separado."
+      ],
+      "condicionClave": "Guía137; estado de involucramiento del material en incendio, tamaño del fuego y suficiencia de suministro de agua conocidos.",
+      "fragmentosClave": [
+        "Cuando el material no está involucrado en un incendio",
+        "Si el suministro de agua es insuficiente"
+      ],
+      "limite": "Uso de agua depende de escenario y destino; desconocido no equivale a material incendiado ni suministro suficiente."
+    },
+    {
+      "guia": 138,
+      "observaciones": [
+        "Emite gases inflamables con agua/humedad, reignición y posibles líquidos portadores inflamables. Líquido50m/sólido25m, derrame grande considerar300m a favor del viento, recipiente en fuego800m.",
+        "No agua/espuma para fuego. Metales/polvos tienen agentes secos/claseD, alternativas específicas de litio y remisión170. Enfriamiento exterior no autoriza agua dentro; rocío para vapor requiere evitar contacto de flujos con derrame.",
+        "Derrame pequeño seco/plástico y no agua salvo indicación; polvo permanece seco y limpieza/disposición solo con supervisión de especialista. Auxilio conserva quitar material antes de enjuagar20min, más generales; no trasladar agentes de138 a baterías de ion litio147. ERAP separado."
+      ],
+      "condicionClave": "Guía138, derrame de polvo y propuesta de limpieza o disposición.",
+      "fragmentosClave": [
+        "NO LO LIMPIE O DESECHE, EXCEPTO BAJO LA SUPERVISION",
+        "También vea la GUÍA 170"
+      ],
+      "limite": "Se requiere supervisión de especialista y mantener seco; no automatizar manejo ni sustituir identidad del material."
+    },
+    {
+      "guia": 139,
+      "observaciones": [
+        "Emite gases inflamables Y tóxicos al contacto con agua; incendio primero y toxicidad no sustituible por138. Líquido50m/sólido25m, resaltadosTabla1/otros aumento sin cifra,800m en recipiente incendiado.",
+        "Clorosilanos exceptúan espuma de la prohibición general: para la rama de incendio grande, espuma resistente al alcohol, no agua/polvos secos/cal/carbonato por hidrógeno explosivo. La nota general remite a esa rama; no extender automáticamente su ubicación a todo tamaño sin conservar fuente. Fuga de clorosilanos también espuma para vapores; flujos de agua no contactan material.",
+        "Polvo seco/plástico y limpieza solo especialista. Auxilio conserva remoción previa y20min más generales; ERAP canadiense."
+      ],
+      "condicionClave": "Guía139 e identidad clorosilano; distinguir incendio grande, nota general y reducción de vapores del derrame.",
+      "fragmentosClave": [
+        "LA ESPUMA PUEDE UTILIZARSE PARA CLOROSILANOS",
+        "PARA CLOROSILANOS NO USE AGUA",
+        "PARA CLOROSILANOS, use espuma"
+      ],
+      "limite": "Excepción de espuma no elimina prohibición de agua ni agentes que producen hidrógeno; preservar localización y alcance."
+    },
+    {
+      "guia": 140,
+      "observaciones": [
+        "Oxidantes: nitrato de amonio en fuego/contaminado o caliente-fundido-contenido remite112 como explosivo. Líquido50m/sólido25m; derrame grande considerar100m. Recipiente genérico incendiado800m, pero nitrato de amonio dentro de tanque/vagón/remolque incendiado1600m con INICIAR evacuación incluyendo respondedores.",
+        "Pequeño agua, no seco/espuma; CO2/Halon control limitado. Grande agua a distancia, no mover carga/vehículo expuestos a calor. Nitrato de amonio en apartado de tanques: no combatir carga, retirarse/evacuar/aislar al menos1600m,112 y no ingreso24h O hasta asesoramiento experto; no convertirlo en permiso automático al cumplir un reloj.",
+        "Fuga seca pequeña vs líquida pequeña vs grande se conserva; no agua dentro de envases. Ropa contaminada peligrosa al secarse, auxilios generales y ERAP separado."
+      ],
+      "condicionClave": "Guía140, productos de nitrato de amonio y escenario de fuego o contaminación/caliente-fundido-contenido indicado en cada cláusula.",
+      "fragmentosClave": [
+        "Los productos de nitrato de amonio pueden explotar",
+        "Si hay productos de nitrato de amonio dentro",
+        "Para productos de nitrato de amonio: No combata"
+      ],
+      "limite": "1600m y evacuación de respondedores no se reducen al caso genérico800m; conservar24h o experto sin automatizar reingreso."
+    },
+    {
+      "guia": 141,
+      "observaciones": [
+        "Oxidantes tóxicos, incendio primero; toxicidad por ingestión/polvo y riesgo por calor/contaminación. Líquido50m/sólido25m, derrame grande considerar100m a favor del viento, recipiente incendiado800m; no copiar la excepción de nitrato de amonio de140 sin selección pertinente.",
+        "Fuego pequeño agua, no polvo seco ni espuma, CO2/Halon control limitado; grande agua a distancia y no mover carga/vehículo expuestos a calor. Fuga seca pequeña cubierta holgada y grande dique; no importar la absorción líquida de142.",
+        "Ropa contaminada puede arder al secarse; auxilios generales y ERAP canadiense, no protocolo ni requisito local nuevo."
+      ],
+      "condicionClave": "Guía141 y selección de agentes para incendio pequeño.",
+      "fragmentosClave": [
+        "Usar agua. No usar polvos químicos secos o espuma"
+      ],
+      "limite": "Control limitado de CO2/Halon no equivale a preferencia ni autorización para cualquier escenario."
+    },
+    {
+      "guia": 142,
+      "observaciones": [
+        "Oxidantes tóxicos líquidos: humos tóxicos/inflamables en confinados.50m inmediato; resaltadosTabla1/otros aumento sin cifra;800m si tanque/vagón/autotanque incendiado.",
+        "Agentes pequeños/grandes y carga expuesta conservan las restricciones de oxidante. En fuga rocío reduce/desvía vapores, pero no introducir agua en envases. Pequeño líquido se absorbe con material no combustible; grande dique.",
+        "Ventilación de espacios exige capacitación/equipo. Protección química recomendada solo sin riesgo de incendio; ropa contaminada peligrosa al secarse. Auxilios generales/ERAP separados."
+      ],
+      "condicionClave": "Guía142, derrame o fuga; diferenciar reducción de vapores y entrada de agua al contenedor.",
+      "fragmentosClave": [
+        "Usar rocío de agua para reducir los vapores",
+        "No introducir agua en los contenedores"
+      ],
+      "limite": "Rocío para vapor no autoriza inundar el contenedor; preservar escenario y destino de aplicación."
+    },
+    {
+      "guia": 143,
+      "observaciones": [
+        "Oxidantes inestables: fricción, calor o contaminación, toxicidad y polvo en confinados. Líquido50m/sólido25m, Tabla1 para resaltados y800m si recipiente en fuego.",
+        "Incendio pequeño agua/no seco o espuma, grande agua a distancia y no agua dentro por reacción violenta; no mover carga calentada. Fuga pequeña indica inundar área; grande exige especialista para limpieza/disposición. No trasladar inundación pequeña al grande ni a envase.",
+        "Dique para escurrimientos del fuego; alejamiento de tanques en llamas, incendio masivo condicionado a monitores. Ropa contaminada al secarse, auxilios generales/ERAP."
+      ],
+      "condicionClave": "Guía143, derrame grande y propuesta de limpieza o disposición.",
+      "fragmentosClave": [
+        "NO LO LIMPIE O DESECHE, EXCEPTO BAJO LA SUPERVISION",
+        "No introducir agua en los contenedores"
+      ],
+      "limite": "Exigir especialista; permiso documental de agua al área pequeña no habilita envase ni derrame grande."
+    },
+    {
+      "guia": 144,
+      "observaciones": [
+        "Oxidantes reactivos con agua producen sustancias tóxicas/corrosivas y posibles gases inflamables/hidrógeno. Líquido50m/sólido25m, resaltadosTabla1/otros aumento y800m en recipiente incendiado.",
+        "No agua/espuma para fuego, agentes secos en pequeño/grande, alternativa de retirada. Enfriamiento exterior se conserva sin convertirlo en contacto con sustancia; fuga rocío solo evitando flujos al material y prohibición explícita de agua sobre sustancia o dentro.",
+        "Pequeño seco/plástico y grande limpieza/disposición solo especialista. No copiar el agua del oxidante ordinario141–143. Ropa contaminada al secarse, auxilios generales/ERAP."
+      ],
+      "condicionClave": "Guía144 y fuego o aplicación de agua al derrame/contenedor.",
+      "fragmentosClave": [
+        "NO USAR AGUA O ESPUMA",
+        "NO DERRAMAR AGUA sobre la sustancia",
+        "Evite que flujos de agua entren en contacto"
+      ],
+      "limite": "Distinguir enfriamiento exterior, vapor y contacto directo; desconocimiento del destino no autoriza aplicar agua."
+    },
+    {
+      "guia": 145,
+      "observaciones": [
+        "Peróxidos sensibles al calor/contaminación, incendio primero. Líquido50m/sólido25m; derrame grande considerar250m A LA REDONDA, no100/300m a favor del viento;800m para recipiente incendiado.",
+        "Pequeño prefiere rocío/niebla; seco/CO2/espuma regular solo si no hay agua disponible. Grande agua a distancia, sin chorros directos, sin mover carga/vehículo calentados. Fuga mantener húmedo; absorbente inerte húmedo/no combustible, cubierta holgada/plástica; grande humedecer/dique y especialista.",
+        "Ropa contaminada puede arder al secar y auxilios generales. No aparece nota ERAP en estas páginas; no copiarla por semejanza con146."
+      ],
+      "condicionClave": "Guía145, incendio pequeño y disponibilidad de agua determinada.",
+      "fragmentosClave": [
+        "si no hay agua disponible utilice polvo químico seco"
+      ],
+      "limite": "Los agentes alternativos dependen de falta de agua; disponibilidad desconocida no equivale a ausencia."
+    },
+    {
+      "guia": 146,
+      "observaciones": [
+        "Peróxidos sensibles además a choque/fricción; no eliminar esa diferencia respecto145. Líquido50m/sólido25m,250m considerado a la redonda en derrame grande y800m en fuego de recipiente.",
+        "Pequeño agua preferida y alternativas solo sin agua; grande agua a distancia sin chorros/carga calentada. Mantener humedad, absorbente inerte húmedo/no combustible y cubierta holgada, grande especialista para limpieza/disposición.",
+        "Ropa contaminada al secar y auxilios generales; a diferencia de145 sí figura nota ERAP canadiense."
+      ],
+      "condicionClave": "Guía146, derrame grande y propuesta de limpieza o disposición.",
+      "fragmentosClave": [
+        "NO LO LIMPIE O DESECHE, EXCEPTO BAJO LA SUPERVISION"
+      ],
+      "limite": "Humectación y contención no sustituyen supervisión de especialista; no automatizar ejecución."
+    },
+    {
+      "guia": 147,
+      "observaciones": [
+        "Baterías de IÓN litio/sodio, no litio/sodio metálico. Electrolito inflamable puede liberarse/arder por temperatura>150°C O daño/abuso;150°C no es umbral universal de seguridad. HF en batería incendiada remite125.25m inmediato, aumento de derrame según necesidad sin cifra; carro/remolque incendiado500m y evacuación de respondedores iniciada.",
+        "Reignición hasta semanas, monitoreo térmico si disponible y agua salada no recomendada. Vehículo: consultar fabricante antes de desconectar,12V solo seguro; nunca cortarHV/MV ni tocar dañados/sumergidos; no perforar/cortar/desmontar para acceder. Agua abundante de bateríaHV si disponible y aplicación directa si posible, pequeña cantidad puede liberar gases.",
+        "Si batería fuera de vehículo, remisión al apartado pequeño. Pequeño/batería pequeña solo agua abundante, no seco/CO2/Halon; grande/grandes/múltiples dejar consumir/proteger entorno/agua a cercanas. Derrame absorción no combustible y metal para batería fugada/absorbente. Auxilios generales, sinERAP local."
+      ],
+      "condicionClave": "Guía147, incendio de batería ion litio/sodio; distinguir conexión a vehículo, pequeño o batería pequeña, grande o grandes/múltiples, y riesgosHV/MV.",
+      "fragmentosClave": [
+        "Nunca corte el cable de alta tensión",
+        "NO perfore, corte, haga palanca",
+        "Sólo rocíe agua (en grandes cantidades)",
+        "Permita que el fuego de la batería se consuma",
+        "agua salada",
+        "hasta semanas después"
+      ],
+      "limite": "Las ramas de tamaño/vehículo no se fusionan; no inferir seguridad de temperatura ni finalizar vigilancia al desaparecer la llama. Resolver fabricante125."
+    },
+    {
+      "guia": 148,
+      "observaciones": [
+        "Peróxidos a temperatura controlada: pérdida de control puede iniciar descomposición violenta. Líquido50m/sólido25m,250m considerado circular para derrame grande y800m para recipiente incendiado.",
+        "Mantener a temperatura igual o inferior a la de control específica; no hay valor en estas páginas. Pequeño agua preferida/alternativas sin agua; grande conserva restricciones de chorros/carga expuesta. Tanques advertencia de posible explosión.",
+        "En fuga no permitir calentamiento, refrigerante y guantes térmicos; si imposible o no disponible, evacuar inmediatamente. Pequeño absorbente húmedo y grande especialista; ropa peligrosa al secar, generales yERAP. Conservar errores editoriales del título/literal original sin corregir fuente."
+      ],
+      "condicionClave": "Guía148, control térmico de la sustancia y fuga; conocer temperatura de control del producto y posibilidad/disponibilidad de refrigerante.",
+      "fragmentosClave": [
+        "temperatura igual o más baja",
+        "Si esto no es posible o no pueden obtenerse"
+      ],
+      "limite": "No inventar temperatura de control ni declarar refrigeración suficiente con datos ausentes; evacuar es indicación documental para decisión competente."
+    },
+    {
+      "guia": 149,
+      "observaciones": [
+        "Autorreactivos: descomposición/polimerización/ignición por calor, reacción, fricción/impacto;P condicionado y mezclas de vapor/polvo. Líquido50m/sólido25m,250m considerado circular en derrame grande y800m si recipiente en fuego.",
+        "Pequeño seco/CO2/rocío/espuma regular sin copiar preferencia de peróxidos; grande agua a distancia. Tanques posible explosión, máxima distancia, enfriamiento y signos de retirada. Fuga pequeña absorbente inerte húmedo/no combustible, herramientas sin chispas y tapas holgadas/plástico.",
+        "No añadir temperatura de control de150 a149 por similitud. Auxilios generales yERAP, sin auxilios específicos nuevos."
+      ],
+      "condicionClave": "Guía149, fuego que involucra tanque/vagón/autotanque y evaluación del contenedor.",
+      "fragmentosClave": [
+        "TENGA CUIDADO DE LA POSIBLE EXPLOSIÓN DEL CONTENEDOR",
+        "Retírese inmediatamente si sale un sonido creciente"
+      ],
+      "limite": "No asumir estabilidad después de extinguir; conservar advertencia de explosión y signos sin automatizar intervención."
+    },
+    {
+      "guia": 150,
+      "observaciones": [
+        "Autorreactivos a temperatura controlada: descomposición autoacelerada por pérdida del control específico; no fusionar149. Líquido50m/sólido25m,250m considerado circular y800m en fuego de recipiente.",
+        "Sustancia a temperatura igual o menor que control, sin valor en la guía; pequeño agentes listados, grande agua a distancia, tanques explosión/retirada. Fuga no calentamiento, refrigerante y guantes; imposible/no disponible implica evacuación inmediata.",
+        "Absorbente inerte húmedo/no combustible y cubierta holgada/plástica; limpieza/disposición del apartado pequeño solo con especialista. No copiar localización grande de148. Auxilios generales/ERAP, conservar gramática original en literal."
+      ],
+      "condicionClave": "Guía150, fuga y posibilidad/disponibilidad de refrigerante, con temperatura de control específica del producto.",
+      "fragmentosClave": [
+        "temperatura igual o más baja",
+        "Si esto no es posible o no pueden obtenerse",
+        "NO LO LIMPIE O DESECHE, EXCEPTO BAJO LA SUPERVISION"
+      ],
+      "limite": "Temperatura desconocida no es conforme; localización de supervisión es derrame pequeño y no se cambia por plantilla."
+    },
+    {
+      "guia": 151,
+      "observaciones": [
+        "Tóxicos no combustibles, salud primero; no combustión espontánea no elimina descomposición tóxica ni explosión de envases por calor. Líquido50m/sólido25m, resaltadosTabla1/otros aumento según necesidad y800m en fuego de recipiente.",
+        "Pequeño seco/CO2/rocío; grande rocío/niebla/espuma regular sin chorros directos. Enfriamiento exterior separado de prohibición de agua dentro, que reaparece en fuga. Fuga cubierta plástica y absorbente seco/no combustible; para sólidos evitar nube e inhalación de polvo.",
+        "Contacto solo con protección adecuada, ropa química recomendada solo sin fuego. Auxilios generales yERAP, sin copiar auxilios fundidos de152."
+      ],
+      "condicionClave": "Guía151, fuga de material sólido y prevención de dispersión/inhalación de polvo.",
+      "fragmentosClave": [
+        "Para sólidos, prevenga la nube de polvo",
+        "NO INTRODUCIR AGUA EN LOS CONTENEDORES"
+      ],
+      "limite": "Estado sólido requerido para la cláusula de polvo; no inferir ausencia de toxicidad por no combustibilidad."
+    },
+    {
+      "guia": 152,
+      "observaciones": [
+        "Tóxicos combustibles, salud primero; material fundido yP con calor/fuego conservados. Líquido50m/sólido25m,Tabla1 si resaltado y800m en incendio de recipiente.",
+        "Pequeño seco/CO2/rocío; grande rocío/niebla/regular, dique/sin chorros. Fuga además elimina ignición; cubierta plástica/absorbente seco, sin agua dentro. No afirmar que no se enciende fácilmente equivale a incombustible.",
+        "Material fundido solidificado en piel requiere asistencia médica, más remisión a auxilios generales;ERAP separado."
+      ],
+      "condicionClave": "Guía152, material fundido solidificado sobre la piel y propuesta de remoción.",
+      "fragmentosClave": [
+        "La remoción de material fundido solidificado en la piel requiere asistencia médica"
+      ],
+      "limite": "Reservar remoción a asistencia médica; no convertir cláusula en tratamiento autónomo."
+    },
+    {
+      "guia": 153,
+      "observaciones": [
+        "Tóxicos/corrosivos combustibles, salud primero; bromoacetato de metiloUN2643 lacrimógeno, fundido yP conservados. Líquido50m/sólido25m,Tabla1 si resaltado y800m para recipiente en fuego.",
+        "Incendio grande incluye seco/CO2/rocío/espuma resistente al alcohol; no copiar lista de152 con espuma regular. Tanques no agua dentro/enfriamiento/signos de retirada; fuga absorbente seco/no combustible y contacto condicionado a equipo adecuado.",
+        "Corrosivos al menos30min/más lavado posible y remoción de fundido médica, siempre con generales;ERAP exterior."
+      ],
+      "condicionClave": "Guía153 y selección de agentes para incendio grande.",
+      "fragmentosClave": [
+        "Usar polvo químico seco, CO2, rocío de agua o espuma resistente al alcohol"
+      ],
+      "limite": "Conservar tamaño y agente exacto; equivalencia con guías parecidas no está demostrada."
+    },
+    {
+      "guia": 154,
+      "observaciones": [
+        "Tóxicos/corrosivos no combustibles, salud primero; algunos oxidantes e hidrógeno con metal. Vehículos/equipo eléctrico consultan ADICIONALMENTE147 si ion litio/sodio o138 si sodio: no sustituir por cualquier batería. Líquido50m/sólido25m,Tabla1 si resaltado y800m en fuego de recipiente.",
+        "Pequeño seco/CO2/rocío; grande seco/CO2/rocío/espuma resistente al alcohol. Fuga elimina ignición pese título no combustible; absorbente seco/no combustible, no agua dentro y límites de capacitación/contacto.",
+        "Auxilios de corrosivos30min más generales; no añadir remoción de fundido porque153 la contiene.ERAP canadiense separado."
+      ],
+      "condicionClave": "Guía154 y vehículo o equipo eléctrico con tipo de batería identificado.",
+      "fragmentosClave": [
+        "Para vehículos o equipo eléctrico, la GUÍA 147"
+      ],
+      "limite": "147/138 son remisiones adicionales condicionadas por química; batería desconocida no se selecciona por similitud."
+    },
+    {
+      "guia": 155,
+      "observaciones": [
+        "Inflamables susceptibles al agua, incendio primero; reacción, gases, retroceso, hidrógeno/P y lacrimógenos preservados. Líquido50m/sólido25m,Tabla1 si resaltado y800m recipiente incendiado.",
+        "Nota de la mayoría de espumas reactiva no desaparece al listar espuma resistente al alcohol. Cloruro de acetiloUN1717 únicamenteCO2 o seco, advertencia previa a tamaños. Clorosilanos en grande no agua/espuma resistente al alcohol y en fuga espuma para vapor. No trasladar automáticamente advertencia seca/cal de139 si155 no la dice.",
+        "Fuga no agua sobre material/envase; rocío para vapor evitando contacto, puesta a tierra, cubierta seca/plástica y herramientas sin chispas. Corrosivos30min/generales yERAP."
+      ],
+      "condicionClave": "Guía155 y cloruro de acetilo UN1717 durante selección de agente extintor; conservar además rama de clorosilanos si identidad pertinente.",
+      "fragmentosClave": [
+        "Para el Cloruro de Acetilo (UN1717)",
+        "PARA CLOROSILANOS, NO USE AGUA",
+        "La mayoría de las espumas reaccionan"
+      ],
+      "limite": "Restricción únicamenteCO2/seco es específica; no sustituirla por lista genérica ni generalizar a todo155."
+    },
+    {
+      "guia": 156,
+      "observaciones": [
+        "Combustibles susceptibles al agua, incendio primero; reacción, fundido, calor/gases/P no se colapsan con155. Líquido50m/sólido25m,Tabla1 si resaltado y800m recipiente incendiado.",
+        "Bromuro de acetiloUN1716 únicamenteCO2 o seco, distinto de cloruroUN1717. Nota de espumas reactiva y clorosilanos con no agua/espuma resistente al alcohol permanecen. Fuga vapor separado de agua sobre sustancia/contenedor y flujo sin contacto.",
+        "Cubierta seca/plástica, herramientas sin chispas/envase forrado; auxilios corrosivos30min y remoción de material fundido médica, más generales yERAP."
+      ],
+      "condicionClave": "Guía156 y bromuro de acetilo UN1716 durante selección de agente extintor.",
+      "fragmentosClave": [
+        "Para el Bromuro de acetilo (UN1716)",
+        "PARA CLOROSILANOS, NO USE AGUA"
+      ],
+      "limite": "No confundir UN1716/1717 ni omitir únicamente; agentes genéricos no anulan advertencia específica."
+    },
+    {
+      "guia": 157,
+      "observaciones": [
+        "No combustibles susceptibles al agua, salud primero. Remisión140: UN1802/2032/3084/3093;UN1796 y1826 MÁS DEL50%;UN2031 MÁS DEL65%. No convertir a>= ni inferir composición desconocida. Líquido50m/sólido25m,Tabla1 si resaltado y800m en fuego de recipiente.",
+        "PequeñoCO2 EXCEPTO cianuros/seco/arena seca/espuma resistente al alcohol; nota de algunas espumas reactiva. Grande rocío/niebla/espuma conservando prohibición de agua dentro y flujos sin contacto. Fuga cubierta seca/plástica y herramientas sin chispas.",
+        "Corrosivos30min y caso cutáneoHFUN1790 con ramas según disponibilidad de gel:5min ygel si disponible, enjuague hasta tratamiento si no. No copiar identidadUN1052 de125 ni convertir literal en protocolo médico. Generales/ERAP."
+      ],
+      "condicionClave": "Guía157; identidad y concentración conocidas para remisión140, o cianuro identificado al evaluarCO2 en incendio pequeño.",
+      "fragmentosClave": [
+        "UN1802, UN2032, UN3084, UN3093",
+        "CO2 (excepto para cianuros)"
+      ],
+      "limite": "Umbrales estrictos>50/>65 y composición desconocida pendientes; excepción deCO2 persiste independientemente de no combustibilidad."
+    },
+    {
+      "guia": 158,
+      "observaciones": [
+        "Infecciosas, salud primero: categoríaA2814/2900/3549 se distingue deB3373 y desechos3291; condensación/hielo seco en embalaje dañado puede estar contaminado.25m inmediato; esta guía no da una distancia800m de tanque ni derrame grande250m, no agregarlas por plantilla.",
+        "Protección requiere criterio por cantidad/vía;N95 con prueba de ajuste o alternativas apropiadas, guantes contra corte si punzantes y térmicos sobre resistentes a líquidos si hielo seco. Descontaminación con químico COMPATIBLE o tecnología/proceso VALIDADO antes de limpieza/eliminación;10% de blanqueador=0,5% hipoclorito es ejemplo literal, no fórmula universal para cualquier producto.",
+        "Incendio grande agente del fuego circundante/sin chorros que dispersen. Derrame absorbente/desinfectante húmedo y limpieza/disposición solo especialista. Víctima puede contaminar, traslado solo seguro, efectos retardados y consulta médica; generales/ERAP."
+      ],
+      "condicionClave": "Guía158, descontaminación y limpieza/disposición; conocer compatibilidad o proceso validado y disponer de supervisión especialista.",
+      "fragmentosClave": [
+        "con un desinfectante químico compatible",
+        "NO LO LIMPIE O DESECHE, EXCEPTO BAJO LA SUPERVISION",
+        "La víctima puede ser una fuente de contaminación"
+      ],
+      "limite": "Ejemplos de equipo/desinfectante no certifican adecuación; no automatizar mezcla, limpieza ni tratamiento."
+    },
+    {
+      "guia": 159,
+      "observaciones": [
+        "Irritantes, salud primero; efectos breves de minutos no eliminan daño severo en confinados ni gases del fuego. Líquido50m/sólido25m, derrame grande considerar100m a favor del viento, recipiente en fuego800m.",
+        "Ventilar solo con capacitación/equipo; pequeño seco/CO2/rocío/regular y grande rocío/niebla/regular. Tanques máxima distancia, no agua dentro, enfriamiento y signos de retirada; incendio masivo monitores o retirada.",
+        "Fuga pequeña absorbente no combustible y grande dique/proteger vías; no copiar cubierta/plástico de151. Auxilios generales yERAP, sin específicos."
+      ],
+      "condicionClave": "Guía159, propuesta de ingreso a espacio cerrado que requiere ventilación.",
+      "fragmentosClave": [
+        "Ventile los espacios cerrados antes de ingresar, pero solo si está adecuadamente capacitado y equipado"
+      ],
+      "limite": "Ventilación no acredita atmósfera segura ni habilita ingreso de personal sin capacitación/equipo."
+    },
+    {
+      "guia": 160,
+      "observaciones": [
+        "Solventes halogenados, salud primero; asfixia/mareos en confinados y mezclas aire/vapor explosivas.50m inmediato, derrame grande considerar100m a favor del viento, recipiente en fuego800m.",
+        "Protección química recomendada solo sin fuego y ventilación solo capacitación/equipo. Pequeño seco/CO2/rocío; grande seco/CO2/rocío/espuma resistente al alcohol, no copiar regular de159. Tanques enfriamiento/signos de retirada; fuga elimina ignición y pequeña absorción no combustible/grande dique.",
+        "Auxilios generales más agua/jabón en piel. No aparece notaERAP aquí ni prohibición de agua dentro en estas páginas; conservar alcance sin inferir que otros contextos la permiten."
+      ],
+      "condicionClave": "Guía160 y evaluación de agentes para incendio grande.",
+      "fragmentosClave": [
+        "Usar polvo químico seco, CO2, rocío de agua o espuma resistente al alcohol"
+      ],
+      "limite": "Agentes dependen de guía/tamaño; no añadir ni eliminar restricciones por similitud con159."
+    },
+    {
+      "guia": 161,
+      "observaciones": [
+        "Radiación baja, salud primero; ausencia de etiquetasI/II/III o detección por instrumento común no descarta material.25m inmediato, derrame grande considerar100m a favor del viento; gran cantidad en incendio mayor considerar300m circular, no800m de tanque.",
+        "Rescate/vidas/auxilios/otros peligros preceden medir radiación; notificar autoridad radiológica, que decide consecuencias y cierre. Personas sin lesión/equipo sospechosos de contaminación aislados, sin iniciar descontaminación/limpieza hasta instrucciones. RopaERA/estructural indicada para este alcance, no copiar suficiencia a163–166.",
+        "No mover embalajes dañados; agentes según fuego, líquido absorbente no combustible/polvo cubierto. Urgencias médicas y traslado prioritarios, generales; noERAP aquí."
+      ],
+      "condicionClave": "Guía161 y propuesta de descontaminación o limpieza de personas sin lesiones/equipo sospechosos de contaminación.",
+      "fragmentosClave": [
+        "No inicie labores de descontaminación y limpieza hasta recibir instrucciones"
+      ],
+      "limite": "Requiere instrucciones de autoridad radiológica; no automatizar cierre, retrasar urgencias ni interpretar falta de detección como ausencia."
+    },
+    {
+      "guia": 162,
+      "observaciones": [
+        "Nivel bajo/moderado: daño/liberación cambian exposición, según tipo/cantidad/superficie. Peligro secundario etiquetado requiere ambas guías. Uranio/torio granulado/recortes expuestos al aire remiten136 y nitratos141. Instrumentos comunes pueden no detectar.25m,100m considerado a favor del viento para grande y300m considerado circular si gran cantidad/incendio mayor.",
+        "Vidas antes de medir y autoridad para descontaminación/cierre. No mover dañados; absorbente líquido/dique grande y cubierta de polvo, escurrimientos controlados. No deducir peligro químico desde solo etiquetaRADIACTIVO.",
+        "Auxilios generales, prioridad médica/no demora y quitar material/enjuagar20min documentados;ERAP sí figura, distinto de161."
+      ],
+      "condicionClave": "Guía162, etiquetaRADIACTIVO y etiqueta de peligro secundario, o material identificado como uranio/torio en gránulos/recortes o nitrato.",
+      "fragmentosClave": [
+        "siga las guías de estos dos peligros",
+        "El Uranio y el Torio en gránulos",
+        "Los nitratos son oxidantes"
+      ],
+      "limite": "Conservar ambas guías y condiciones físicas/químicas; la prioridad general del segundo peligro no descarta riesgo radiológico."
+    },
+    {
+      "guia": 163,
+      "observaciones": [
+        "Nivel bajo/alto: tiposA/B/C y acuerdos especiales, daño/liberación y severidad. EtiquetaI<0,005mSv/h=0,5mrem/h fuera de embalaje simple/no dañado/aislado; TI máximo a1m solo mismas condiciones.800°C/30min es criterio de diseño/evaluaciónTipoB, no garantía del accidente ni permiso de espera.",
+        "25m,100m considerado para derrame grande a favor del viento,300m considerado circular si gran cantidad/incendio mayor. Vidas antes de medir, autoridad para limpieza/cierre;ERA/estructural protege exposición INTERNA pero NO EXTERNA. Instrumento común puede no detectar.",
+        "No mover/tocar dañados, aspecto exterior húmedo/leve daño no prueba falla ni integridad; absorbente no combustible, control escurrimiento. Urgencia/no demora y auxilios generales, sinERAP en páginas."
+      ],
+      "condicionClave": "Guía163 y evaluación de protección contra radiación interna frente a externa, con tipo/estado de embalaje conocidos.",
+      "fragmentosClave": [
+        "pero no para la exposición de radiación externa",
+        "El índice de transporte (TI) en la etiqueta"
+      ],
+      "limite": "No declarar protección externa porERA/ropa;TI/etiqueta/diseño no equivalen a medición actual de embalaje dañado."
+    },
+    {
+      "guia": 164,
+      "observaciones": [
+        "Forma especial, radiación externa baja/alta; contaminación interna no esperada NO imposible. TiposA/B/C, etiquetaI/TI bajo condiciones del embalaje y800°C/30min de diseño, sin garantía en campo.25m,100m considerado a favor del viento si grande,300m circular considerado para gran cantidad/incendio mayor.",
+        "Vidas antes de medir, autoridad decide cierre/limpieza final;ERA/estructural no protege exposición externa. Si fuente fuera del embalajeNO tocar, alejarse y esperar instrucciones. Habitual detectabilidad de cápsula no elimina límites del instrumento.",
+        "No mover dañados; humedad exterior rara vez indica falla, no certifica seguro. Agentes del fuego, urgencias/no demora/generales; sinERAP aquí."
+      ],
+      "condicionClave": "Guía164 y fuente radiactiva identificada fuera del embalaje.",
+      "fragmentosClave": [
+        "Si se identifica que la fuente está fuera del embalaje NO LO TOQUE",
+        "pero no para la exposición de radiación externa"
+      ],
+      "limite": "Esperar autoridad radiológica y no manipular; falta de contaminación probable no elimina radiación externa."
+    },
+    {
+      "guia": 165,
+      "observaciones": [
+        "Fisionables, nivel bajo/alto: tiposAF/IF frenteB(U)F/B(M)F/CF y acuerdosAF/BF/CF. TI PODRÍA NO indicar radiación a1m, puede reflejar controles por fisión;IC/etiquetaFISIONABLE distinto deTI. No copiar equivalencia de163/164.800°C/30min diseño y detector común limitado.",
+        "25m,100m considerado a favor del viento si grande,300m circular para gran cantidad/incendio mayor. Autoridad para descontaminación/cierre, vidas prioritarias yERA/estructural sin protección externa.",
+        "No mover/tocar dañados; líquidos raros/probablemente bajo nivel no significan contaminación nula. Agentes ordinarios, urgencia/no demora/generales;ERAP sí figura."
+      ],
+      "condicionClave": "Guía165, material fisionable y lectura del índiceTI oIC en etiqueta/documento.",
+      "fragmentosClave": [
+        "podría no indicar el nivel",
+        "Índice de Seguridad con respecto a Criticidad"
+      ],
+      "limite": "No convertirTI de fisionable en tasa de radiación por plantilla; conservarIC y controles de transporte sin decisión automática."
+    },
+    {
+      "guia": 166,
+      "observaciones": [
+        "Hexafluoruro de uranio/reactivo con agua; peligro químico muy superior al radiológico, formaHF/ácido/residuo. Diferenciar envases protegidos y cilindroUN2978 sin revestimiento lleno vs vacíoEXCEPTOresiduos.800°C/30min diseño no certifica integridad.",
+        "25m inmediato, derrame remiteTabla1 sin limitarlo a resaltado y gran cantidad en incendio mayor considerar300m circular. No agua/espuma SOBREmaterial; en grande solo agua si envases sin daño, sin agua sobre sustancia/dentro. Rocío para vapor debe evitar flujos al derrame; dique de escurrimiento y autosellado posible no certifican fuga detenida.",
+        "Autoridad para limpieza/cierre, vidas/urgencias primero; ropa química solo sin fuego. Contacto cutáneoHFgas/ácido con ramas gel5min o enjuaguehasta médico, sin protocolo nuevo. Generales/ERAP."
+      ],
+      "condicionClave": "Guía166, incendio grande y propuesta de agua; estado de daño del contenedor y destino de aplicación conocidos.",
+      "fragmentosClave": [
+        "Solo utilice agua si los contenedores no tienen daños",
+        "NO USAR AGUA O ESPUMA SOBRE EL MATERIAL",
+        "Evite que flujos de agua entren en contacto"
+      ],
+      "limite": "Contenedor no dañado es requisito; no autoriza contacto con material/entrada al envase. Daño desconocido no es sin daño."
+    },
+    {
+      "guia": 167,
+      "observaciones": [
+        "Las dos páginas originales declaran intencionalmente en blanco y sin materiales referidos. No crear peligro, distancia, agente ni respuesta para este número. Se conserva numeración y texto; título y bloques/cláusulas vacíos."
+      ],
+      "condicionClave": "Número167 encontrado durante consulta del inventario.",
+      "fragmentosClave": [],
+      "limite": "No es guía operativa utilizable ni documento perdido; no se crea regla de respuesta."
+    },
+    {
+      "guia": 168,
+      "observaciones": [
+        "Monóxido de carbono líquido refrigerado, salud primero; inodoro y llama posiblemente invisible, toxicidad y criogenia.100m inmediato,Tabla1 para derrame y800m en fuego de recipiente; no copiar grandes derrames500m de gases ordinarios.",
+        "No extinguir fuego de fuga de gas salvo que pueda detenerse; capacidad desconocida no habilita. Pequeño seco/CO2/rocío, grande rocío/niebla/regular, agua no directa a fuente/dispositivo por congelación; vapor rocío sin flujo sobre derrame. Fase gas si posible, aislamiento hasta dispersión.",
+        "ERA, protección térmica de criogénico y límites química/estructural. Solo médico intenta descongelar partes heladas, más generales. SinERAP aquí; conservar gramática original de llama."
+      ],
+      "condicionClave": "Guía168, fuego de fuga de gas y posibilidad de detener la fuga.",
+      "fragmentosClave": [
+        "NO EXTINGA UN INCENDIO DE FUGA DE GAS A MENOS QUE LA FUGA PUEDA SER DETENIDA",
+        "sólo el personal médico debe intentar descongelar"
+      ],
+      "limite": "No ausencia de llama/olor como seguridad ni extinción autorizada por capacidad desconocida; atención congelada reservada."
+    },
+    {
+      "guia": 169,
+      "observaciones": [
+        "Aluminio fundido sobre705°C: agua, oxidantes, herramientas frías/húmedas/sucias y concreto pueden causar explosión/astillamiento.50m inmediato; no hay aquí800m ni evacuación grande genéricos. Protección térmica estructural limitada.",
+        "Agua prohibida salvo situación de vida en peligro y SOLOrocío fino; no halogenados/espuma. Incendio circundante agente apropiado sin contacto con fundido. NO intentar detener fuga ni con pala/objeto; contención con arena seca, solidificación natural si posible.",
+        "Material sólido puede seguir caliente y apariencia no distingue; contacto solo frío conocido, limpiezaexperto después de solidificar. Remoción en piel médica/generales; sinERAP."
+      ],
+      "condicionClave": "Guía169 y propuesta de agua en fuego; situación que pone vida en peligro y forma de aplicación verificadas, o propuesta de detener/limpiar fuga fundida.",
+      "fragmentosClave": [
+        "No usar agua, excepto en situaciones que ponen la vida en peligro",
+        "No tratar de detener la fuga",
+        "Limpiar solamente bajo la supervisión de un experto"
+      ],
+      "limite": "Excepción no elimina requisitos ni se evalúa automáticamente; solidificado no significa frío; no copiar detener si seguro de otra guía."
+    },
+    {
+      "guia": 170,
+      "observaciones": [
+        "Metales polvo/virutas/etc., incendio primero; líquidos portadores/reacción con agua/reignición y óxidos peligrosos. Líquido50m/sólido25m, derrame grande considerar50m a favor del viento(160pies), recipiente en fuego800m; no copiar100/300m.",
+        "NOagua/espuma/CO2; hidrógeno por mojado agrava confinados. Agentes arenaSECA/grafito/cloruro de sodio seco/claseD, preferencia confinar/sofocar. En tanques extinción imposible=>proteger alrededores/dejar consumir, sin lista general de enfriamiento con agua de138.",
+        "Fuga eliminar ignición/no tocar, detener solo sin riesgo y proteger vías. Auxilios generales/ERAP. Esta guía resuelve remisiones metálicas133/138, con identidad y escenario conservados."
+      ],
+      "condicionClave": "Guía170 seleccionada para fuego de metales/polvos y evaluación de agua, espuma oCO2.",
+      "fragmentosClave": [
+        "NO USAR AGUA, ESPUMA O CO2",
+        "Al mojar los fuegos metálicos con agua se genera hidrógeno"
+      ],
+      "limite": "Agentes secos/claseD no se sustituyen por listas ordinarias; no confundir metal con bateríaiónlitio147."
+    },
+    {
+      "guia": 171,
+      "observaciones": [
+        "Peligro bajo/moderado no inocuidad: UN3508 cargado/cortocircuito,UN2211 vapores y asbesto pulmonar. Líquido50m/sólido25m,Tabla1 si resaltado/otros aumento y800m recipiente incendiado.",
+        "UN3268/3559 en fuego pueden activarse tardíamente/proyectiles: distancia segura sin cifra específica. Pequeño seco/CO2/rocío/regular, grande no dispersar con chorros. Asbesto evitar inhalación/cubierta plástica y limpieza/disposición SOLOespecialista; no lista genérica de pala/absorción sin esta rama.",
+        "Fugas pequeña seca, pequeña y grande separadas; límites de retirada por tanque, auxilios generales. SinERAP aquí."
+      ],
+      "condicionClave": "Guía171, asbesto en derrame y propuesta de limpieza/disposición, o dispositivosUN3268/3559 en fuego.",
+      "fragmentosClave": [
+        "Para el asbesto, evite la inhalación de polvo",
+        "Dispositivos de seguridad (UN3268)"
+      ],
+      "limite": "Supervisión especialista y riesgo tardío se conservan; distancia segura de dispositivos no tiene número inventado."
+    },
+    {
+      "guia": 172,
+      "observaciones": [
+        "Galio/mercurio no combustibles con humos/contaminación; salud primero.50m inmediato, derrame grande considerar100m a favor del viento y contenedorGRANDEen fuego considerar500m circular; no es aislamiento obligatorio800m.",
+        "Agente del fuego circundante y NOagua directa a metal calentado. Fuga no equipos/herramientas de acero/aluminio, cubrir no combustible/plástico; mercurio kit específico y tratamiento posterior de área con sulfuro de calcio/tiosulfato citado como posibilidad, no proceso certificado.",
+        "Detener solo seguro/equipo adecuado para contacto; auxilios generales, sinERAP ni protección química recomendada añadida."
+      ],
+      "condicionClave": "Guía172, fuga y selección de equipo/herramientas, con mercurio identificado si se propone kit específico.",
+      "fragmentosClave": [
+        "No usar equipo o herramientas de acero o aluminio",
+        "Para mercurio, use un equipo para derrame de mercurio",
+        "No ponga agua directamente al metal calentado"
+      ],
+      "limite": "No trasladar herramientas genéricas ni convertir posibilidad de tratamiento posterior en ejecución automática."
+    },
+    {
+      "guia": 173,
+      "observaciones": [
+        "Gases ADSORBIDOS tóxicos; asterisco conserva que algunos también inflamables/corrosivos/oxidantes.100m inmediato,Tabla1 para derrame; VARIOSembalajes pequeños dentro de ferrocarril/remolque en fuego1600m aislamiento+consideración evacuación todasdirecciones, no800m de tanque genérico.",
+        "No extinguir fuga de gas salvo detenible. PequeñoUN3515/3518/3520 SOLOagua/no secoCO2Halon, excepción sobre lista general. Grande no agua dentro/cilindros dañados solo especialista; agua no fuente/dispositivos. Fuga puesta tierra PARAinflamables y combustibles apartados PARAoxidantes; no decidir propiedad desde título solamente.",
+        "Rocío vapor sin contacto/agua directa, aislamiento hasta dispersión; auxilios quemaduras/generales yERAP. Dos viñetas en línea de salud se conservan juntas, sin perder irritación."
+      ],
+      "condicionClave": "Guía173, incendio pequeño y material identificado como UN3515/3518/3520, además de condición de fuga detenible si es fuego de fuga.",
+      "fragmentosClave": [
+        "Para UN3515, UN3518, UN3520",
+        "NO EXTINGA UN INCENDIO DE FUGA DE GAS",
+        "Los cilindros dañados deberán ser manipulados solamente por especialistas"
+      ],
+      "limite": "Excepciónagua no autoriza introducirla/directa a fuga; gases desconocidos no excluyen propiedades secundarias ni habilitan manipulación."
+    },
+    {
+      "guia": 174,
+      "observaciones": [
+        "Adsorbidos inflamables u oxidantes, incendio primero; características no idénticas de todos gases.100m inmediato, derrame grande considerar800m a favor del viento; varios embalajes pequeños en ferrocarril/remolque1600m todasdirecciones y evacuación considerada.",
+        "No extinguir fuga de gas salvo detenible; agente del fuego circundante, pequeño seco/CO2 y grande rocío/niebla; cilindros dañados solo especialista. No copiar excepciónUN3515 de173 a174. Fuente/dispositivos sin agua directa, masivo monitores o retirada.",
+        "Fuga distingue eliminación de ignición PARAinflamables y separación de combustibles PARAoxidantes; puesta a tierra de todo equipo aparece sin el condicionante de173. Evitar expansión por alcantarillas/ventilación/confinados, ventilar con límites de ingreso y aislamiento hasta dispersión. Quemaduras/generales yERAP."
+      ],
+      "condicionClave": "Guía174, evaluación de derrame grande frente a incendio de varios embalajes pequeños en ferrocarril/remolque, con propiedades del gas y fuga detenible conocidas.",
+      "fragmentosClave": [
+        "Considere la evacuación inicial a favor del viento de por lo menos 800 metros",
+        "Si varios embalajes pequeños",
+        "NO EXTINGA UN INCENDIO DE FUGA DE GAS"
+      ],
+      "limite": "800m a favor del viento y1600m todasdirecciones son escenarios/finalidades distintos; no unificar ni sustituir autoridad por evacuación automática."
+    }
+  ],
+  "fechaUtc": "2026-10-10T17:11:42.642687+00:00",
+  "revisor": "agente principal /root",
+  "revisionIndependiente": "PENDIENTE"
+}

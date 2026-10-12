@@ -1,0 +1,172 @@
+{
+  "tipo": "IMPLEMENTACION_LOCAL_GRE_NO_ACEPTACION_OPERACIONAL",
+  "fechaUtc": "2026-10-11T05:48:17.829589+00:00",
+  "revision": "3f123cdb73ed1b7df80f55f4ead41e570a0572e1",
+  "cambiosLocalesSinCommit": true,
+  "versionMotor": "gre2024-matpel-2",
+  "versionInterpretacion": "gre2024-condiciones-2",
+  "fuentes": {
+    "pdfSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+    "candidatoCongeladoSha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543",
+    "recorteSha256": "1b4c96e79744ae461ba29fe96da376b00e8909ecba2b1729f08624e75444170c",
+    "modificadas": false
+  },
+  "codigosSha256": {
+    "backend/src/modules/gre/matpel-consulta.controller.ts": "bb952fd0faa4a4090d9ddca74aa1fac0dd6a090372f689e9ce8e8a2789685f00",
+    "backend/src/modules/gre/matpel-consulta.service.ts": "0b60e8bf2abf23fdac8ddec56d2f6b6e2625cc167a541bbfb4a447fecb82fd18",
+    "backend/src/modules/gre/matpel-consulta.spec.ts": "b25755ef42a54bb0519d1753af6e755e78d7415446006b1104eba1453424c717",
+    "backend/src/modules/gre/matpel-geometria.ts": "63e100e139c18fe296e74107ce4ccd9daa8af0bb2083a62fa1d510c8c9d908dd",
+    "backend/src/modules/gre/matpel-modelo.ts": "9353881c6af495fd00b4a0b552881955ff1ed92c64cbc38a98b4fde6e42244cb",
+    "backend/src/modules/gre/matpel-paquete.spec.ts": "206cd81972bed8b00011605eb27e74f4bc725120fa74e059887633ba549b1e57",
+    "backend/src/modules/gre/matpel-paquete.ts": "941cdebc1d59f57c2166acf48ec39917876e6df842ed37d7cd8be2d56805a668",
+    "backend/src/modules/gre/matpel-perfil.ts": "440fd02bbc62ee33cbb60a87229a0870b35d06fdb77765e72a52965a5f8d6029",
+    "backend/src/modules/gre/matpel-recorrido.ts": "e39daee6f2132b0bd345395fa4b5d3afe2b4d5f1f91f5a8b268a86773aaa3782",
+    "backend/src/modules/gre/motor-matpel.service.ts": "6bcb60516cfc5acc6e4e1af520fd9df3ab1c7fef09420a22caf788a11c9e5f27",
+    "backend/src/modules/gre/dto/matpel-consulta.dto.ts": "05f824e25a6e056c090ab41fd64a890d8fed23d14e8a8e03b2f373d8a7f2ede2",
+    "backend/src/modules/gre/fuentes/gre2024-definiciones.json": "79c4bc9ca398bf6e98d544748bc941b8d43cbfb0842aa9fe330504617051766d",
+    "frontend/src/app/dashboard/matpel/page.tsx": "f616a7d3d9dd3091c078b0df16580952bf03207211904fcab707dea885f36d24",
+    "frontend/src/lib/matpel.ts": "43da917b2b9fbf702d8c6f471d1bf0670172fe184a5d13add4ba1fc1b7bffbf9",
+    ".movile/lib/matpel.dart": "e1ba1201e60a77ef79804ea48b1229a7380e5df0f53f5e1a1ad3f54c8445364d",
+    ".movile/lib/matpel_documento.dart": "504b88e97c0ce8e6cbf5fb3fc36ad77a76e335232ca123f454f087b799c3f86d",
+    ".movile/lib/api.dart": "c9afb489b9b52c7a607607c274ee19e405cc5d7b272cc8fcaa526f94e84c29c3",
+    ".movile/test/matpel_test.dart": "3145780f2919a6fbbc5e5f54301bad6585331dc1364ef566ec77703453bf9144",
+    "scripts/matpel/preparar_definiciones_motor.py": "ddc24e76722026b0ec1b29092ff5efbf3a0911edf14b322da76e17697e59eaa7",
+    "scripts/matpel/recorrido_ui.cjs": "f5daa2ef1fa5d6e96141d90392573d0df909efcad3b4379a36005093f5518848",
+    "scripts/matpel/medir_mejora.cjs": "8aa076b4e89e877377e6c03fdd51b38a989667e6cc81e5f450bc7103b254e7d5",
+    "backend/src/modules/gre/motor-matpel.spec.ts": "fb52b762910b5aaae41650d4848f55cf8f99b9c4c90f4c9d75b694142db0599e",
+    "backend/src/modules/pantallas/catalogo-web.generado.ts": "4b9307781ac22af540c2c54a46401b43d30ea28d131e42a78469c2247bcf2bb0",
+    "frontend/src/lib/pantallas.generado.ts": "fea7265d6594127f8c85f2578ad2c45cc4fbbdd9798fa43748f6856d3271a1e0",
+    "frontend/scripts/pantallas-api-extra.json": "f402f7dd212ddf1e57573a18e1018196dd91b23659ee4b69d32c1dc60a5d1ac0"
+  },
+  "implementado": [
+    "RESULTADOS_POR_FINALIDAD_Y_FUENTE",
+    "T3_CANTIDADES_NOMINALES_ESTRUCTURADAS",
+    "54_REGLAS_DOCUMENTALES_SIN_PROMOCION_AUTOMATICA",
+    "IDENTIFICACION_CALIDAD_METODO_OBSERVACION",
+    "AMBITO_Y_TRAZA",
+    "CAPTURA_GUIADA",
+    "BIBLIOTECA_FLUTTER_PARTES_HASHES_ISOLATE_INDICES_HISTORIAL"
+  ],
+  "pruebas": {
+    "backendCompleto": {
+      "aprobadas": 664,
+      "omitidasSQL": 9,
+      "suitesAprobadas": 56,
+      "suitesOmitidas": 1
+    },
+    "backendPosteriorInmutabilidadYAutorizacion": {
+      "aprobadas": 48,
+      "suites": 3
+    },
+    "frontend": {
+      "aprobadas": 66,
+      "build": true,
+      "paginas": 125
+    },
+    "python": {
+      "aprobadas": 88,
+      "integridadErrores": 0,
+      "perfilReproducido": true
+    },
+    "navegador": {
+      "aprobadas": 20,
+      "errores": [],
+      "apiInterceptada": true,
+      "motorYPdfReales": true,
+      "sqlInstitucional": false,
+      "evidencia": "recorrido-mejora-ui-20261011.json"
+    },
+    "flutter": {
+      "corridaAnterior": {
+        "aprobadas": 58,
+        "matpel": 10
+      },
+      "corridaFinal": {
+        "aprobadas": 59,
+        "omitidas": 0,
+        "matpel": 11,
+        "catalogoCompletoFormato2": true,
+        "protocoloDescargaWidget": true,
+        "corrupcionYPartePerdida": true
+      },
+      "analisisSinIncidencias": true,
+      "apkDebugCompilado": true,
+      "apkSha256": "f6f4dea278d4ce2b6af849d69ea9a369894f7fa1298523d7a1c9b1984bdf0f14",
+      "apkBytes": 191359580,
+      "apkInstalado": false,
+      "telefonoFisicoProbado": false
+    },
+    "matrizWeb": {
+      "pantallas": 135,
+      "enMatriz": 129,
+      "generadorAlDia": true
+    },
+    "verificadorEndpoints": {
+      "matpelSinRuta": 0,
+      "globalSinRuta": 12,
+      "globalAprobado": false,
+      "limite": "12 referencias preexistentes fuera de MATPEL; ver informe"
+    },
+    "grafo": {
+      "nodos": 1135,
+      "aristas": 3985,
+      "errores": 0,
+      "avisosOrfanos": 10,
+      "avisosGenerador": 2
+    },
+    "comandos": {
+      "backend": [
+        "npm run build",
+        "npx jest --runInBand",
+        "npx jest --runInBand src/modules/gre/motor-matpel.spec.ts src/modules/gre/matpel-consulta.spec.ts src/modules/gre/matpel-paquete.spec.ts"
+      ],
+      "frontend": [
+        "npm test",
+        "npm run build",
+        "npm run verificar:pantallas"
+      ],
+      "flutter": [
+        "flutter analyze --no-pub lib/matpel_documento.dart lib/matpel.dart lib/api.dart test/matpel_test.dart",
+        "flutter test --no-pub",
+        "flutter build apk --debug"
+      ],
+      "python": [
+        "python -X utf8 -m unittest discover -s scripts/matpel -p test_*.py",
+        "python -X utf8 scripts/matpel/preparar_definiciones_motor.py --verificar",
+        "python -X utf8 scripts/matpel/validar_conocimiento.py"
+      ],
+      "grafo": [
+        "node .context/graph/build-graph.mjs",
+        "node .context/graph/validar.mjs"
+      ],
+      "navegador": "scripts/matpel/recorrido_ui.cjs con servidor_prueba_ui.cjs en loopback; todas las API interceptadas",
+      "medicion": "node scripts/matpel/medir_mejora.cjs",
+      "endpoints": [
+        "node scripts/verificar-endpoints.mjs --seccion matpel",
+        "node scripts/verificar-endpoints.mjs (sale1 por12 previas fuera de MATPEL)"
+      ]
+    }
+  },
+  "medicion": "medicion-mejora-20261011.json",
+  "incidenciasDePrueba": [
+    "Adaptador inicial de navegador incompleto: campos de procedencia y nombres de parametros; corregido sin cambiar reglas del motor.",
+    "Init de sesion de navegador sobre marco PDF: restringido al marco principal; corrida final20/20 sin errores.",
+    "Widget de descarga: espera runAsync sobre Completer del reloj simulado no drenaba callbacks; adaptador captura partes y usa pumpAndSettle. Hashing/E/S real probado por separado."
+  ],
+  "pendientes": [
+    "COTEJO_INDEPENDIENTE_INTEGRAL_Y_ACEPTACION_INSTITUCIONAL",
+    "TELEFONO_FISICO_Y_RENDIMIENTO_DE_CAMPO",
+    "MOTOR_OFFLINE_TRAS_CONFORMIDAD_TS_DART",
+    "SCI_OCR_INCIDENTE_AUTORIDAD_REQUIEREN_REGLAMENTO_CBVC_ORIGINAL"
+  ],
+  "limites": {
+    "sqlEjecutado": false,
+    "catalogoActivado": false,
+    "commitPushDeploy": false,
+    "decisionAutoridadAutomatizada": false,
+    "dominioIntegralDemostrado": false,
+    "normaInstitucionalOriginalDisponible": false,
+    "otrosCambiosLocalesConservados": true
+  },
+  "fechaCierreUtc": "2026-10-11T05:48:49.961400+00:00"
+}

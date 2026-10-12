@@ -17,6 +17,18 @@ personal, recursos del cuartel y gestión e informes. Las pantallas de flota,
 llamados y fichaje destacan el siguiente paso y separan los estados de las
 acciones disponibles.
 
+Con `matpel:consultar`, las herramientas incluyen [Consulta GRE · MATPEL](docs/MATPEL.md):
+descarga documental verificada, búsqueda, guías, fuentes, secciones, las tres tablas
+verdes y condiciones documentadas sin conexión. También ofrece consulta guiada del
+motor del servidor con identificación, certeza de datos, solicitudes de faltantes,
+resultados por finalidad y zonas relativas. La consulta en servidor requiere conexión,
+permiso y edición activa. En APK1.7.0, **Consultar sin conexión** ejecuta el mismo
+motor con una edición compatible guardada; **Leer placa por foto** procesa texto
+localmente y permite buscar candidatos sin confirmar identidad ni adjuntar evidencia
+al servicio. La lectura documental conserva ediciones anteriores.
+[Entrega técnica y límites](docs/GRE_CIERRE_20261012.md): SCI, catálogo autorizado,
+validación integral y prueba física siguen pendientes.
+
 ## Analisis previo (que existe / que se reutiliza / que es nuevo)
 
 | Necesidad | Estado en SIGBO | Decision |
@@ -38,12 +50,12 @@ acciones disponibles.
     siren.dart  background.dart
   pubspec.yaml          # Dependencias (http, notificaciones, 2do plano...)
   .env.example          # URL inicial (valor por defecto, se cambia en la app)
-  android_app_src/      # Personalizacion Android (manifest, MainActivity,
-                        #  build.gradle, estilos) aplicada por el bootstrap
+  android_app_src/      # Plantilla anterior conservada como antecedente
   ios_config/           # Overlay iOS (Info.plist, AppDelegate.swift)
-  android/  ios/        # Generadas por bootstrap (no se versionan completas)
+  android/             # Proyecto Android versionado: canales GRE y OCR local
+  ios/                 # Generado por bootstrap con overlay iOS
   scripts/
-    bootstrap-flutter.ps1  # Genera android/ (+ios) con Flutter (una vez)
+    bootstrap-flutter.ps1  # Recupera wrapper Android y genera ios/ (una vez)
     compilar-apk.ps1       # flutter build apk --debug (PC de Henry)
     bootstrap-ios.sh       # Genera ios/ en Mac
     red-local.ps1          # IP LAN + firewall

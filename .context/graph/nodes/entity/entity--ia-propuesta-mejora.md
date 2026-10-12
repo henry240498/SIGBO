@@ -28,7 +28,7 @@ Propuesta de mejora de comportamiento del asistente (secciones 36-39 del pedido)
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/inteligencia`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`
+- **Pantallas:** `/dashboard/inteligencia`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`, `/dashboard/sistema`
 - **Endpoints:** IaChatController, IaConfiguracionController, IaPropuestasMejoraController
 - **Servicios:** IaConfiguracionService, IaPropuestasMejoraService
 

@@ -55,13 +55,18 @@ Modulo funcional "Seguridad". Habilitado en la navegacion.
 - [[table--seguridad-pantalla-permisos|seguridad.pantalla_permisos]] `belongs_to` →
 - [[table--seguridad-navegacion-eventos|seguridad.navegacion_eventos]] `belongs_to` →
 - [[component--modulo-auth|auth (modulo NestJS)]] `belongs_to` →
+- [[component--modulo-centro-mando|centro-mando (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-configuracion|configuracion (modulo NestJS)]] `belongs_to` →
+- [[component--modulo-pantallas|pantallas (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-pantallas|pantallas (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-reportes|reportes (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-salud|salud (modulo NestJS)]] `belongs_to` →
 - [[component--modulo-seguridad|seguridad (modulo NestJS)]] `belongs_to` →
+- [[component--modulo-sistema|sistema (modulo NestJS)]] `belongs_to` →
 - [[service--auth-auth|AuthService]] `belongs_to` →
+- [[service--centro-mando-centro-mando|CentroMandoService]] `belongs_to` →
 - [[service--configuracion-configuracion|ConfiguracionService]] `belongs_to` →
+- [[service--pantallas-matriz-web|MatrizWebService]] `belongs_to` →
 - [[service--pantallas-navegacion|NavegacionService]] `belongs_to` →
 - [[service--pantallas-pantallas|PantallasService]] `belongs_to` →
 - [[service--reportes-reportes|ReportesService]] `belongs_to` →
@@ -74,14 +79,9 @@ Modulo funcional "Seguridad". Habilitado en la navegacion.
 - [[service--seguridad-roles|RolesService]] `belongs_to` →
 - [[service--seguridad-sesiones|SesionesService]] `belongs_to` →
 - [[service--seguridad-usuarios|UsuariosService]] `belongs_to` →
+- [[service--sistema-respaldos|RespaldosService]] `belongs_to` →
+- [[service--sistema-sistema|SistemaService]] `belongs_to` →
 - [[api--auth-auth|AuthController]] `belongs_to` →
-- [[api--configuracion-configuracion|ConfiguracionController]] `belongs_to` →
-- [[api--pantallas-pantallas|PantallasController]] `belongs_to` →
-- [[api--reportes-reportes|ReportesController]] `belongs_to` →
-- [[api--salud-salud|SaludController]] `belongs_to` →
-- [[api--seguridad-apariencia|AparienciaController]] `belongs_to` →
-- [[api--seguridad-auditoria|AuditoriaController]] `belongs_to` →
-- [[api--seguridad-dashboard|DashboardController]] `belongs_to` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

@@ -1,0 +1,138 @@
+{
+  "fechaUtc": "2026-10-10T15:45:36.379675+00:00",
+  "fechaTrabajoLocal": "2026-10-10",
+  "tipo": "CONTINUACION_DOCUMENTAL_GUIAS_NO_VALIDACION_OPERATIVA",
+  "revisionGitInicial": "aeabca7",
+  "revisionGit": "c1fdd8b4b53a9fbcfaed14f1acea8336c29bb3f9",
+  "avanceConcurrenteConservado": true,
+  "commitsRealizadosPorEsteAgente": false,
+  "respaldo": "C:/Users/jemc2/AppData/Local/Temp/sigbo-gre-guias121-130-gd8lkt4a",
+  "entorno": {
+    "python": "3.13.0",
+    "pymupdf": "1.28.2",
+    "sql": "NO_UTILIZADO"
+  },
+  "fuente": {
+    "path": "docs/Manuales/GRE2024-Spa-Web-a.pdf",
+    "sha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af"
+  },
+  "catalogo": {
+    "path": "backend/private_uploads/gre/bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af.catalogo-1-busqueda-1-pymupdf1.28.2.json",
+    "sha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543"
+  },
+  "huellasSinCambios": {
+    "pdf": true,
+    "candidato": true
+  },
+  "herramienta": {
+    "generador": "scripts/matpel/documentar_guias.py",
+    "sha256": "5e440209261b19f86322c33d63f76d74c85e474e969677f786e25202543bdb1a",
+    "agrupador": ".context/gre2024/response-guides/auditar111_120.py",
+    "agrupadorSha256": "267b6d8ac2a86794611ec6a4180200c20953aa576b39f789085476b26311d253"
+  },
+  "validadorSha256": "de82dd30eb208f625dcf2d0aba85f6903b6afa761975388c214c5b8c34661dc0",
+  "lote": {
+    "guias": 10,
+    "guiasConContenido": 9,
+    "guiasSinMateriales": 1,
+    "paginas": 20,
+    "bloques": 90,
+    "clausulas": 414,
+    "diferenciasTextoNativo": 0,
+    "discrepanciasDetectadas": 0,
+    "lineasEstructurales": 156,
+    "paginasPdf": [
+      178,
+      197
+    ],
+    "paginasImpresas": [
+      176,
+      195
+    ],
+    "inspeccionVisualNueva": "20 paginas individuales por agente principal; registro por pagina, imagen y PDF",
+    "revisionIndependiente": "PENDIENTE",
+    "casosComprensionPropuestos": 8,
+    "casosComprensionIndependienteEjecutados": 0,
+    "pruebasMotorEjecutadas": 0
+  },
+  "consultaCandidatoTabla1Guia124": {
+    "filas": 55,
+    "filasConDerrameEnAgua": 0,
+    "alcance": "Consulta del artefacto; no demuestra ausencia de interacciones en escenarios externos ni precedencia operacional."
+  },
+  "verificaciones": [
+    {
+      "comando": "python -m unittest test_validar_conocimiento test_documentar_guias -v",
+      "directorio": "scripts/matpel",
+      "exitCode": 0,
+      "aprobadas": 14,
+      "total": 14,
+      "duracionSegundos": 3.682,
+      "desglose": {
+        "integridadYCantidades": 10,
+        "preparacionDocumental": 4
+      }
+    },
+    {
+      "comando": "python scripts/matpel/validar_conocimiento.py",
+      "exitCode": 0,
+      "evidencia": ".context/gre2024/evidencia/integridad-contexto.json",
+      "resultado": {
+        "tipo": "INTEGRIDAD_CONTEXTO_NO_VALIDACION_OPERATIVA",
+        "documentos": 19,
+        "reglasDocumentadas": 11,
+        "imagenesRevisadas": 27,
+        "lotesGuias": 2,
+        "clausulasDocumentadas": 817,
+        "paginasRevisionIndependienteRegistradas": 5,
+        "paginasVisualesRegistradas": 48,
+        "errores": [],
+        "dominioIntegralDemostrado": false
+      }
+    },
+    {
+      "comando": "node .context/graph/build-graph.mjs",
+      "exitCode": 0,
+      "nodos": 1130,
+      "aristas": 3969,
+      "advertenciasGenerador": 2
+    },
+    {
+      "comando": "node .context/graph/validar.mjs",
+      "exitCode": 0,
+      "errores": 0,
+      "avisos": 10
+    },
+    {
+      "comando": "git -c core.safecrlf=false diff --check",
+      "exitCode": 0
+    }
+  ],
+  "auditorAnteriorNoRepetido": {
+    "evidencia": ".context/gre2024/evidencia/validacion-reanudacion-20261010.json",
+    "referencias": 38810,
+    "discrepancias": 0,
+    "codigoSinCambiosEnEsteLote": true
+  },
+  "limites": [
+    "43 guias con contenido pendientes de lectura especifica",
+    "Remisiones y resto de secciones pendientes",
+    "Ocho reglas nuevas son formalizacion documental no ejecutable",
+    "Revision independiente nueva pendiente",
+    "Motor/API/SCI y aceptacion institucional pendientes"
+  ],
+  "sqlUtilizado": false,
+  "aplicacionModificada": false,
+  "migracionesAplicadas": false,
+  "catalogoActivado": false,
+  "dominioIntegralDemostrado": false,
+  "cierreUtc": "2026-10-10T15:46:13.813854+00:00",
+  "artefactosDerivadosSha256": {
+    ".context/gre2024/response-guides/lectura121-130.json": "36dc7a310d83bd906ed4ab3bb2bafaaf90a4429d05e44d423364101b480575b8",
+    ".context/gre2024/response-guides/lectura121-130.md": "58b4522e1d6b26cc3a2cc3a4101f650545566ee3b77a0fddf78b24c4314af4fa",
+    ".context/gre2024/reglas-operativas.json": "6260f9b65f0b935a596aa180791d34bbc1ea68b9a197b586725415a14ceac8cf",
+    ".context/gre2024/test-cases/casos-guias121-130.json": "08f24d3e15882a9fd3888fef2957d86b735de28a243c15df8cff6fbaa0c41b1a",
+    "scripts/matpel/test_documentar_guias.py": "e8740341d1de766e1cb3ccfd6faff58f44565633d073876f2509ce0b3d257411",
+    "scripts/matpel/test_validar_conocimiento.py": "1a5ea26444be8850500e1274678008c4875d7363d080990d99557762e589b6eb"
+  }
+}

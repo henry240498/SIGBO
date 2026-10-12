@@ -56,10 +56,14 @@ Helper de frontend "ConfirmProvider" (2 exportaciones).
 - [[screen--dashboard-publicaciones|/dashboard/publicaciones]] `uses` →
 - [[screen--dashboard-seguridad-configuracion|/dashboard/seguridad/configuracion]] `uses` →
 - [[screen--dashboard-seguridad-inteligencia-artificial-conversaciones|/dashboard/seguridad/inteligencia-artificial/conversaciones]] `uses` →
+- [[screen--dashboard-seguridad-pantallas|/dashboard/seguridad/pantallas]] `uses` →
 - [[screen--dashboard-seguridad-permisos|/dashboard/seguridad/permisos]] `uses` →
 - [[screen--dashboard-seguridad-roles|/dashboard/seguridad/roles]] `uses` →
 - [[screen--dashboard-seguridad-sesiones|/dashboard/seguridad/sesiones]] `uses` →
 - [[screen--dashboard-servicios-nuevo|/dashboard/servicios/nuevo]] `uses` →
+- [[screen--dashboard-sistema-datos|/dashboard/sistema/datos]] `uses` →
+- [[screen--dashboard-sistema|/dashboard/sistema]] `uses` →
+- [[screen--dashboard-sistema-tareas|/dashboard/sistema/tareas]] `uses` →
 - [[screen--dashboard-vehiculos-checklist-items|/dashboard/vehiculos/checklist-items]] `uses` →
 - [[screen--dashboard-vehiculos-id|/dashboard/vehiculos/[id]]] `uses` →
 

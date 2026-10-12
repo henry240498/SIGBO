@@ -21,7 +21,7 @@ Distribucion propia del APK (sin tiendas ni servicios de terceros). El administr
 
 ## Metodos
 
-`obtenerVersion()` · `abrirApk()`
+`huellaCertificado()` · `obtenerVersion()` · `abrirApk()`
 
 ## Archivos
 
@@ -34,6 +34,7 @@ Distribucion propia del APK (sin tiendas ni servicios de terceros). El administr
 
 ## Referenciado por
 
+- [[service--sistema-sistema|SistemaService]] `uses` →
 - [[api--app-movil-app-movil|AppMovilController]] `exposes` →
 
 ---

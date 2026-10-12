@@ -9,6 +9,7 @@ import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 import 'api.dart';
 import 'geo.dart';
 import 'gestion.dart';
+import 'matpel.dart';
 import 'offline.dart';
 import 'store.dart';
 import 'terreno.dart';
@@ -254,6 +255,10 @@ class _OperacionState extends State<PantallaOperacion> {
     }
 
     grupo('Respuesta y terreno', const Color(0xFF1767A8), [
+      if (p.contains('matpel:consultar'))
+        acceso(Icons.warning_amber, 'Consulta GRE · MATPEL',
+            'Consulta guiada, zonas y lectura sin conexión',
+            const Color(0xFF1767A8), () => const PantallaMatpel()),
       if (p.contains('vehiculos:ver'))
         acceso(
             Icons.local_shipping,

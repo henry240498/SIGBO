@@ -7,8 +7,9 @@ dominio: seguridad
 resumen: Modulo NestJS que cablea controladores, servicios y repositorios de pantallas.
 capa: backend
 archivos:
-  - backend/src/modules/pantallas/pantallas.module.ts
+  - backend/src/modules/pantallas/matriz-web.module.ts
 edges:
+  - [belongs_to, domain--seguridad]
   - [belongs_to, domain--seguridad]
 terminos: [pantallas, modulo]
 ---
@@ -20,14 +21,16 @@ Modulo NestJS que cablea controladores, servicios y repositorios de pantallas.
 
 ## Archivos
 
-- `backend/src/modules/pantallas/pantallas.module.ts`
+- `backend/src/modules/pantallas/matriz-web.module.ts`
 
 ## Relaciones
 
 - `belongs_to` → [[domain--seguridad|Seguridad]]
+- `belongs_to` → [[domain--seguridad|Seguridad]]
 
 ## Referenciado por
 
+- [[service--pantallas-matriz-web|MatrizWebService]] `uses` →
 - [[service--pantallas-navegacion|NavegacionService]] `uses` →
 - [[service--pantallas-pantallas|PantallasService]] `uses` →
 

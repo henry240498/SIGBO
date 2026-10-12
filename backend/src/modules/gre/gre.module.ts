@@ -16,6 +16,9 @@ import { GreImportacionService } from './gre-importacion.service';
 import { GreProcesoService } from './gre-proceso.service';
 import { GreRevisionService } from './gre-revision.service';
 import { GreTrabajadorService } from './gre-trabajador.service';
+import { MatpelConsultaController } from './matpel-consulta.controller';
+import { MatpelConsultaService } from './matpel-consulta.service';
+import { MotorMatpelService } from './motor-matpel.service';
 
 /** Catálogo GRE: fuente privada, importación controlada, revisión, validación y
  * activación (fases 3A–3D). El trabajador de importación arranca solo con
@@ -29,11 +32,11 @@ import { GreTrabajadorService } from './gre-trabajador.service';
       GreCampoFuente, GreRevision, GreImportacion, GreActivacion, GreActivacionHistorial,
     ]),
   ],
-  controllers: [GreAdminController],
+  controllers: [GreAdminController, MatpelConsultaController],
   providers: [GreCatalogoService, GreFuentesService, GreProcesoService, GreImportacionService, GreRevisionService,
-    GreComparacionService, GreActivacionService, GreTrabajadorService,
+    GreComparacionService, GreActivacionService, GreTrabajadorService, MatpelConsultaService, MotorMatpelService,
     { provide: GRE_RAIZ_PRIVADA, useFactory: () => join(process.cwd(), 'private_uploads', 'gre') },
   ],
-  exports: [GreCatalogoService, GreFuentesService, GreTrabajadorService],
+  exports: [GreCatalogoService, GreFuentesService, GreTrabajadorService, MatpelConsultaService, MotorMatpelService],
 })
 export class GreModule {}

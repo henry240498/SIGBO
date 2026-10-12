@@ -3,6 +3,15 @@
 Fecha: 2026-10-09. Estado: implementación backend en validación.
 Fuente estructurada de fase 3C; catálogo institucional pendiente de cotejo humano.
 
+Actualización2026-10-12:094/095 instaladas en desarrollo local como parte del pedido
+de completarGRE, con respaldoCOPY_ONLY/CHECKSUM verificado e historial registrado.
+Candidato original importado: COMPLETADA / REQUIERE_REVISION; sin validación ni
+activación institucional. El progreso conserva snapshot confirmado durante la
+transacción del trabajador y clasifica timeouts externos como503.
+Ver [.movile/docs/GRE_CIERRE_20261012.md](../../.movile/docs/GRE_CIERRE_20261012.md)
+y [.context/gre2024/evidencia/instalacion-local-20261012.json](../../.context/gre2024/evidencia/instalacion-local-20261012.json).
+Las restricciones sobre aplicación de scripts que siguen describen la fase histórica.
+
 ## Implementación
 
 `GreModule` está registrado en `AppModule`. El controlador administrativo en

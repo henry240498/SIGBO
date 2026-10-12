@@ -31,7 +31,7 @@ Importación controlada: la petición HTTP solo encola. Un trabajador local recl
 
 ## Relaciones
 
-- `belongs_to` → [[domain--matpel|matpel]]
+- `belongs_to` → [[domain--matpel|MATPEL]]
 - `uses` → [[component--modulo-gre|gre (modulo NestJS)]]
 - `uses` → [[service--gre-gre-proceso|GreProcesoService]]
 - `uses` → [[service--seguridad-auditoria|AuditoriaService]]

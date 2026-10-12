@@ -38,7 +38,7 @@ Lectura interna por versión explícita. No activa candidatos ni cambia edicione
 
 ## Relaciones
 
-- `belongs_to` → [[domain--matpel|matpel]]
+- `belongs_to` → [[domain--matpel|MATPEL]]
 - `uses` → [[component--modulo-gre|gre (modulo NestJS)]]
 - `uses` → [[entity--gre-version|GreVersion]]
 - `reads` → [[table--matpel-gre-versiones|matpel.gre_versiones]]
@@ -49,6 +49,10 @@ Lectura interna por versión explícita. No activa candidatos ni cambia edicione
 - `uses` → [[entity--gre-pagina|GrePagina]]
 - `reads` → [[table--matpel-gre-paginas|matpel.gre_paginas]]
 - `uses` → [[service--gre-gre-fuentes|GreFuentesService]]
+
+## Referenciado por
+
+- [[service--gre-matpel-consulta|MatpelConsultaService]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

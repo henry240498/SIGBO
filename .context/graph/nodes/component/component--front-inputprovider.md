@@ -33,6 +33,7 @@ Helper de frontend "InputProvider" (2 exportaciones).
 - [[screen--dashboard-seguridad-roles|/dashboard/seguridad/roles]] `uses` →
 - [[screen--dashboard-seguridad-usuarios|/dashboard/seguridad/usuarios]] `uses` →
 - [[screen--dashboard-servicios-llamados|/dashboard/servicios/llamados]] `uses` →
+- [[screen--dashboard-sistema|/dashboard/sistema]] `uses` →
 - [[screen--dashboard-vehiculos-flota|/dashboard/vehiculos/flota]] `uses` →
 
 ---

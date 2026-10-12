@@ -64,6 +64,20 @@ class SigboApi implements ClienteSigbo {
           {Map<String, dynamic>? body}) =>
       _authed(metodo, ruta, body: body);
 
+  /// Descarga documental GRE; conserva autenticación/refresh y permite el tamaño de la edición.
+  Future<http.Response> paqueteGre(String versionId) => _authed(
+      'GET', '/matpel/versiones/$versionId/paquete',
+      limiteTiempo: const Duration(seconds: 120));
+
+  Future<http.Response> parteGre(String versionId, String parte) {
+    if (!['manifest', 'catalogo', 'pdf', 'interpretacion'].contains(parte)) {
+      throw ArgumentError.value(parte, 'parte');
+    }
+    final ruta = parte == 'manifest' ? 'manifest' : 'partes/$parte';
+    return _authed('GET', '/matpel/versiones/$versionId/paquete/$ruta',
+        limiteTiempo: const Duration(seconds: 120));
+  }
+
   /// Envía las visitas de pantalla acumuladas por el observador de navegación.
   /// El servidor deduplica cada evento por su clave de idempotencia.
   Future<void> registrarNavegacion(List<Map<String, dynamic>> eventos,
@@ -394,7 +408,8 @@ class SigboApi implements ClienteSigbo {
   // ---- HTTP interno con refresh automatico ----
 
   Future<http.Response> _authed(String metodo, String ruta,
-      {Map<String, dynamic>? body}) async {
+      {Map<String, dynamic>? body,
+      Duration limiteTiempo = const Duration(seconds: 20)}) async {
     final base = await SigboConfig.baseUrl();
     Future<http.Response> llamada(String? token) {
       final h = {
@@ -413,7 +428,7 @@ class SigboApi implements ClienteSigbo {
               .patch(uri, headers: h, body: jsonEncode(body ?? {}))
               .timeout(const Duration(seconds: 20));
         default:
-          return http.get(uri, headers: h).timeout(const Duration(seconds: 20));
+          return http.get(uri, headers: h).timeout(limiteTiempo);
       }
     }
 

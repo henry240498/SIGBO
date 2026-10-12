@@ -35,6 +35,7 @@ Cliente de Piper TTS LOCAL para la "voz" de Snoopy (Etapa 2, seccion 4 del pedid
 ## Referenciado por
 
 - [[service--ia-ia-voz|IaVozService]] `uses` →
+- [[service--sistema-sistema|SistemaService]] `uses` →
 - [[api--ia-ia-configuracion|IaConfiguracionController]] `exposes` →
 
 ---

@@ -29,7 +29,7 @@ Diferencias entre dos versiones cargadas: entradas, guías, filas/celdas y regla
 
 ## Relaciones
 
-- `belongs_to` → [[domain--matpel|matpel]]
+- `belongs_to` → [[domain--matpel|MATPEL]]
 - `uses` → [[component--modulo-gre|gre (modulo NestJS)]]
 
 ## Referenciado por

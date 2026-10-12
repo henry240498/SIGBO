@@ -818,14 +818,16 @@
  "inteligencia:configurar": {
   "modulo": "inteligencia",
   "exigidoPor": [
-   "api--ia-ia-configuracion"
+   "api--ia-ia-configuracion",
+   "screen--dashboard-sistema"
   ]
  },
  "inteligencia:desactivar": {
   "modulo": "inteligencia",
   "exigidoPor": [
    "api--ia-ia-configuracion",
-   "screen--dashboard-seguridad-inteligencia-artificial-configuracion"
+   "screen--dashboard-seguridad-inteligencia-artificial-configuracion",
+   "screen--dashboard-sistema"
   ]
  },
  "inteligencia:eliminar": {
@@ -888,7 +890,8 @@
  "matpel:administrar_gre": {
   "modulo": "matpel",
   "exigidoPor": [
-   "api--gre-gre-admin"
+   "api--gre-gre-admin",
+   "screen--dashboard-sistema-tareas"
   ]
  },
  "matpel:validar_gre": {
@@ -1557,6 +1560,7 @@
    "api--cartografia-cartografia",
    "api--llamados-llamados",
    "api--servicios-servicios",
+   "screen--dashboard-centro-mando",
    "screen--dashboard-servicios-cartografia",
    "screen--dashboard-servicios-llamados"
   ]
@@ -1597,6 +1601,27 @@
   "modulo": "servicios",
   "exigidoPor": [
    "api--servicios-seguimiento-geografico"
+  ]
+ },
+ "sistema:operar": {
+  "modulo": "sistema",
+  "exigidoPor": [
+   "api--sistema-sistema",
+   "screen--dashboard-sistema-datos",
+   "screen--dashboard-sistema-tareas"
+  ]
+ },
+ "sistema:ver": {
+  "modulo": "sistema",
+  "exigidoPor": [
+   "api--sistema-sistema",
+   "screen--dashboard"
+  ]
+ },
+ "sistema:ver_registros": {
+  "modulo": "sistema",
+  "exigidoPor": [
+   "api--sistema-sistema"
   ]
  },
  "vehiculos:combustible": {

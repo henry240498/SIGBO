@@ -1,10 +1,51 @@
 # MATPEL / GRE / SCI
 
-Actualizado: 2026-10-09.
+Entrega técnica2026-10-12: APK1.7.0+14 firmado con motor compartido sin conexión
+y lectura local de placas. Desarrollo local:094/095 instaladas con respaldo
+verificado; importación del original COMPLETADA / REQUIERE_REVISION. Sin validación
+ni activación institucional. SCI espera Reglamento original. [Detalle y evidencia](../.movile/docs/GRE_CIERRE_20261012.md).
+Los conteos/resultados anteriores se conservan como antecedentes.
+
+Actualizado: 2026-10-10.
+
+Estado documental vigente: [inspección de392/392 páginas](gre2024/paginas/README.md),
+con146 antecedentes y246 registros nuevos. Cero páginas pendientes de inspección.
+La lectura no certifica cotejo independiente de cada celda/nombre, inventario
+exhaustivo de reglas, funcionamiento del motor ni integraciónSCI. Los acumulados
+de entregas anteriores se conservan debajo como historial.
+
+Misión de dominio integral: [conocimiento GRE2024](gre2024/index.md),
+[validación y aceptación](gre2024/validation-report.md). La auditoría inicial
+automatizada cotejó páginas/referencias nativas y relaciones; no acredita dominio
+operativo integral. Consulta/motor/geometría y lectura documental web/Flutter sin conexión están incorporados y probados;
+SCI y aceptación integral siguen pendientes. Ver [entrega local](../docs/matpel/FASE_4_5_CONSULTA_MOTOR.md).
+
+Reanudación2026-10-10: lectura111–120 integrada (10guías/20páginas/403grupos de
+cláusulas), estudio deTabla3 y cotejo con fuente propia de cinco cantidades.
+Auditor e integridad documental:11/11 pruebas; cero discrepancias técnicas del
+catálogo. Grafo regenerado/validado tras corregir referencias de dominios recientes;
+1.120nodos/3.912aristas,12avisos. Ver [informe vigente](gre2024/validation-report.md).
+Sin cambios del candidato, SQL, catálogo activado ni motor/API/SCI nuevos.
+
+Continuación121–130: [estudio](gre2024/response-guides/lectura121-130.md) de20 páginas
+cotejadas, nueve guías con contenido y una vacía,414 grupos de cláusulas y ocho
+condiciones específicas documentadas. Pruebas afectadas14/14 aprobadas; ocho casos
+de comprensión propuestos siguen pendientes de revisión independiente y motor.
+Acumulado de esa entrega:19 de62 guías con contenido,48 páginas visuales distintas.
+
+Cierre de la lectura de guías2026-10-10: las43 restantes quedaron cotejadas en
+texto y visualmente. [Inventario completo](gre2024/response-guides/inventario-guias.md):
+62 guías con contenido,121/167 vacías,128 páginas,620 bloques y2531 cláusulas.
+Hay54 reglas documentales,87 casos propuestos nuevos y146 páginas visuales
+distintas registradas. Las dependencias de auxilios/BLEVE/glosario/ERAP están
+documentadas. Se corrigieron subapartados de metales y baterías en el preparador;
+se conservó la versión anterior para verificar procedencia.
+Motor, integraciónSCI, revisión independiente y aceptación institucional siguen
+pendientes. [Informe vigente](gre2024/validation-report.md).
 
 ## Alcance y estado
 
-Implementación organizada por diez fases verificables. **Fases 1–2 concluidas como diagnóstico/diseño; 3A–3C como base y extracción candidata completa; 3D backend de administración en validación**. El cotejo institucional del catálogo sigue pendiente. No hay catálogo institucional activado ni pantallas MATPEL nuevas declaradas terminadas.
+Implementación organizada por diez fases verificables. **Fases1–2 diagnóstico/diseño; 3A–3C base/extracción candidata; 3D administración en validación; 4–5 consulta/motor locales probados**. Hay geometría de consulta relativa y navegación de las42secciones. El cotejo institucional del catálogo y las fasesSCI/OCR/offline siguen pendientes. No hay catálogo institucional activado.
 
 - [Plan, aceptación por fase y registro de ejecución](../docs/matpel/PLAN_POR_FASES.md).
 - [Requisitos originales del usuario](../docs/matpel/REQUISITOS_ORIGINALES.md).
@@ -84,3 +125,11 @@ Las secciones siguientes conservan el alcance histórico de las entregas 3A/3B; 
 - Toda la GRE mapeada: 42 secciones/392 páginas, incluidas notas y anexos. Criterios UX01–UX10 definidos, aún sin medición con operadores.
 - Reglamento original no localizado en repositorio/adjuntos consultados: localizar/consultar artículos antes de cambios de mando/elegibilidad, validar vigencia institucional. Consulta y catálogo pueden avanzar sin imponer autoridad nueva.
 - Grafo regenerado y validado: 1.054 nodos, 3.694 aristas, salida 0 y ocho avisos. Comando estándar tuvo EPERM; restauración verificada y generación temporal instaladas sin borrar directorios. Ver informe de fase 2.
+
+## Mejora de consulta2026-10-11
+
+[Implementación](../docs/matpel/IMPLEMENTACION_MEJORA_20261011.md): resultados por
+fuente/finalidad, definición nominal estructurada de Tabla3, calidad de identificación,
+ámbito observado, solicitudes de datos y traza. Biblioteca móvil por partes con
+verificación fuera del hilo de interfaz e historial. SCI/autoridad y aceptación
+operacional siguen pendientes; motor offline deshabilitado. No activa catálogo.

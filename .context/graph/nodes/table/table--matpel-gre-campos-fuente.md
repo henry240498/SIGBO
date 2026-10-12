@@ -76,7 +76,7 @@ preparada para una fase siguiente, o codigo muerto: verificar antes de asumir.
 ## Relaciones
 
 - `defined_in` → [[file--094-gre-base-documental|094_gre_base_documental.sql]]
-- `belongs_to` → [[domain--matpel|matpel]]
+- `belongs_to` → [[domain--matpel|MATPEL]]
 - `references` → [[table--matpel-gre-versiones|matpel.gre_versiones]]
 - `references` → [[table--matpel-gre-referencias|matpel.gre_referencias]]
 - `references` → [[table--matpel-gre-secciones|matpel.gre_secciones]]

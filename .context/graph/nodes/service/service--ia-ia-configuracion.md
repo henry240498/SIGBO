@@ -62,6 +62,7 @@ Configuracion del asistente (fila unica, patron ya usado por AparienciaService/O
 
 - [[service--ia-ia-chat|IaChatService]] `uses` →
 - [[service--ia-ia-voz|IaVozService]] `uses` →
+- [[service--sistema-sistema|SistemaService]] `uses` →
 - [[api--ia-ia-chat|IaChatController]] `exposes` →
 - [[api--ia-ia-configuracion|IaConfiguracionController]] `exposes` →
 - [[api--ia-ia-configuracion|IaConfiguracionController]] `exposes` →

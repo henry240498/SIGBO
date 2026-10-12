@@ -62,7 +62,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 ## Relaciones
 
 - `defined_in` → [[file--094-gre-base-documental|094_gre_base_documental.sql]]
-- `belongs_to` → [[domain--matpel|matpel]]
+- `belongs_to` → [[domain--matpel|MATPEL]]
 - `references` → [[table--matpel-gre-versiones|matpel.gre_versiones]]
 - `references` → [[table--matpel-gre-paginas|matpel.gre_paginas]]
 - `references` → [[table--matpel-gre-secciones|matpel.gre_secciones]]

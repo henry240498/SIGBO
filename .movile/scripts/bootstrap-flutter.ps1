@@ -1,7 +1,7 @@
-<# Genera las carpetas android/ e ios/ con Flutter y aplica la personalizacion SIGBO.
+<# Recupera el wrapper Android y genera ios/ con Flutter.
 Requiere: Flutter SDK instalado (https://docs.flutter.dev/get-started/install/windows).
 Uso: .\.movile\scripts\bootstrap-flutter.ps1
-No toca lib/, pubspec.yaml ni la logica: solo andamiaje nativo + overlay iOS.
+Conserva el proyecto Android versionado, incluido el motor GRE y el OCR local.
 #>
 $ErrorActionPreference = 'Stop'
 $movile = Split-Path -Parent $PSScriptRoot
@@ -14,23 +14,17 @@ if (-not (Get-Command flutter -ErrorAction SilentlyContinue)) {
 flutter --version
 flutter pub get
 
-$tmp = Join-Path ([IO.Path]::GetTempPath()) 'sigbo-flutter-base'
-if (Test-Path -LiteralPath $tmp) { Remove-Item -Recurse -Force -LiteralPath $tmp }
+$tempRoot = [IO.Path]::GetFullPath([IO.Path]::GetTempPath())
+$tmp = Join-Path $tempRoot ('sigbo-flutter-base-' + [guid]::NewGuid().ToString('N'))
 flutter create --org org.cbvc.sigbo --project-name sigbo_alertas `
-  --platforms android,ios --android-language kotlin --ios-language swift $tmp
+  --platforms android,ios --android-language kotlin --ios-language swift --no-pub $tmp
+if ($LASTEXITCODE -ne 0) { throw 'No se pudo generar el wrapper de Flutter.' }
 
-# android/ generada (gradle wrapper incluido) + personalizacion SIGBO encima.
-Copy-Item -Recurse -Force (Join-Path $tmp 'android\*') (Join-Path $movile 'android\')
-Copy-Item -Force (Join-Path $movile 'android_app_src\AndroidManifest.xml') `
-  (Join-Path $movile 'android\app\src\main\AndroidManifest.xml')
-Copy-Item -Force (Join-Path $movile 'android_app_src\MainActivity.kt') `
-  (Join-Path $movile 'android\app\src\main\kotlin\org\cbvc\sigbo\MainActivity.kt')
-Copy-Item -Force (Join-Path $movile 'android_app_src\build.gradle') `
-  (Join-Path $movile 'android\app\build.gradle')
-New-Item -ItemType Directory -Force `
-  -Path (Join-Path $movile 'android\app\src\main\res\values') | Out-Null
-Copy-Item -Force (Join-Path $movile 'android_app_src\styles.xml') `
-  (Join-Path $movile 'android\app\src\main\res\values\styles.xml')
+# Solo recuperar archivos ignorados; no reemplazar fuentes ni configuracion.
+foreach ($wrapperFile in @('gradlew', 'gradlew.bat', 'gradle\wrapper\gradle-wrapper.jar')) {
+  Copy-Item -LiteralPath (Join-Path $tmp ('android\' + $wrapperFile)) `
+    -Destination (Join-Path $movile ('android\' + $wrapperFile)) -Force
+}
 
 # ios/ generada + overlay SIGBO (permisos, fondo, nombre).
 New-Item -ItemType Directory -Force -Path (Join-Path $movile 'ios') | Out-Null
@@ -40,6 +34,11 @@ Copy-Item -Force (Join-Path $movile 'ios_config\Info.plist') `
 Copy-Item -Force (Join-Path $movile 'ios_config\AppDelegate.swift') `
   (Join-Path $movile 'ios\Runner\AppDelegate.swift')
 
-Remove-Item -Recurse -Force -LiteralPath $tmp
+$resolvedTemp = [IO.Path]::GetFullPath($tmp)
+if (-not $resolvedTemp.StartsWith($tempRoot, [StringComparison]::OrdinalIgnoreCase) -or
+    (Split-Path -Leaf $resolvedTemp) -notmatch '^sigbo-flutter-base-[a-f0-9]{32}$') {
+  throw 'Ruta temporal inesperada; no se eliminara.'
+}
+Remove-Item -Recurse -Force -LiteralPath $resolvedTemp
 Write-Output ''
 Write-Output 'Listo. Ahora compile: .\.movile\scripts\compilar-apk.ps1'

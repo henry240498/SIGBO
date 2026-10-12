@@ -1,0 +1,39 @@
+{
+  "fechaUtc": "2026-10-12T12:27:02.159Z",
+  "entorno": "development",
+  "servidor": "127.0.0.1",
+  "puerto": 14330,
+  "base": "sigbo_cbvc",
+  "tablas": {
+    "versiones": true,
+    "activaciones": true
+  },
+  "historialMigracionesInstalado": true,
+  "permisosRegistrados": [
+    "matpel:activar_gre",
+    "matpel:administrar_gre",
+    "matpel:consultar",
+    "matpel:validar_gre"
+  ],
+  "migracionesRegistradas": [
+    {
+      "nombre": "094_gre_base_documental.sql",
+      "hash_sha256": "054c067c6a86858184c303f51bffb51df7fe6bc336a96a84ef25781961f3b8ab"
+    },
+    {
+      "nombre": "095_matpel_permisos.sql",
+      "hash_sha256": "22484d0a436edcd582894ea54435ad32e0dd981c64fdb51eded6eb9e193699da"
+    }
+  ],
+  "escriturasSQLDirectas": false,
+  "loginPuedeRegistrarSesionYAuditoria": true,
+  "loginHttp": 201,
+  "estadoGreAutenticadoHttp": 200,
+  "estadoGre": {
+    "versionContrato": 1,
+    "estado": "SIN_EDICION_ACTIVA",
+    "versionGreId": null
+  },
+  "rutaGreRegistrada": true,
+  "catalogoActivadoPorEstaTarea": false
+}

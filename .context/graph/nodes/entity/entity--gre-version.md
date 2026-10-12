@@ -40,7 +40,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 
 ## Relaciones
 
-- `belongs_to` → [[domain--matpel|matpel]]
+- `belongs_to` → [[domain--matpel|MATPEL]]
 - `persisted_in` → [[table--matpel-gre-versiones|matpel.gre_versiones]]
 
 ## Referenciado por

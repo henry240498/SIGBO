@@ -1,0 +1,291 @@
+{
+  "fecha": "2026-10-12",
+  "fechaUtc": "2026-10-12T12:27:08.624Z",
+  "estado": "MOTOR_LOCAL_OCR_TRANSITORIO_Y_BACKEND_LOCAL_ENTREGADOS_NO_INTEGRACION_INSTITUCIONAL_COMPLETA",
+  "apk": {
+    "version": "1.7.0+14",
+    "paquete": "org.cbvc.sigbo",
+    "archivo": ".movile/SIGBO.apk",
+    "tamanioBytes": 217348627,
+    "sha256": "b666ddf2dddb42f23eed952d3efaeaf4c4a4a3d862fd52b501611555636d8467",
+    "certificadoSha256": "2c254cd261022325bde577e6fa9e1aa161c1adc03beefe5e7d42e68130339416",
+    "certificadoCoincideConVersionPublicada": true,
+    "tipo": "DEBUG_FIRMADO_CON_CLAVE_EXISTENTE",
+    "publicadoAutomaticamente": false,
+    "instaladoFisicamente": false
+  },
+  "motorCompartido": {
+    "schemaVersion": 1,
+    "versionMotor": "gre2024-matpel-2",
+    "versionInterpretacion": "gre2024-condiciones-2",
+    "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+    "bundleSha256": "01cad9cb983227c6ae7fe12aae633630b8f6b66842abed05306300d50810afee",
+    "bundleBytes": 164541,
+    "fuentes": {
+      "backend/src/modules/gre/motor-matpel.service.ts": "6bcb60516cfc5acc6e4e1af520fd9df3ab1c7fef09420a22caf788a11c9e5f27",
+      "backend/src/modules/gre/matpel-modelo.ts": "9353881c6af495fd00b4a0b552881955ff1ed92c64cbc38a98b4fde6e42244cb",
+      "backend/src/modules/gre/matpel-perfil.ts": "440fd02bbc62ee33cbb60a87229a0870b35d06fdb77765e72a52965a5f8d6029",
+      "backend/src/modules/gre/matpel-recorrido.ts": "e39daee6f2132b0bd345395fa4b5d3afe2b4d5f1f91f5a8b268a86773aaa3782",
+      "backend/src/modules/gre/matpel-geometria.ts": "63e100e139c18fe296e74107ce4ccd9daa8af0bb2083a62fa1d510c8c9d908dd",
+      "backend/src/modules/gre/dto/matpel-consulta.dto.ts": "05f824e25a6e056c090ab41fd64a890d8fed23d14e8a8e03b2f373d8a7f2ede2",
+      "backend/src/modules/gre/fuentes/gre2024-definiciones.json": "79c4bc9ca398bf6e98d544748bc941b8d43cbfb0842aa9fe330504617051766d",
+      "scripts/matpel/motor_local_runtime.js": "976994076b5d7a1b56db740966574a7a7f07e351355984e4a0c57c78b8347664"
+    }
+  },
+  "alcance": [
+    "Motor único TypeScript compilado para Android sin red",
+    "Consulta con una edición modular descargada y verificada",
+    "Mismo contrato de captura, incertidumbre, fuentes, resultados y geometría",
+    "OCR Tesseract local: texto y candidatos explícitos, sin confirmar identidad ni subir fotos",
+    "Backend local recompilado/reiniciado: ruta GRE registrada",
+    "094/095 instaladas en desarrollo con respaldo verificado e historial",
+    "Original GRE importado a candidato REQUIERE_REVISION, sin validación ni activación",
+    "Consulta de progreso sin bloquearse por la transacción de carga"
+  ],
+  "validacion": {
+    "analisisFlutter": "SIN_INCIDENCIAS",
+    "pruebasFlutterAprobadas": 80,
+    "pruebasFlutterOmitidas": 0,
+    "pruebasMotorLocalFlutterRepetidasTrasEndurecimiento": 6,
+    "pruebasBackendGRE": 74,
+    "suitesBackend": 6,
+    "nuevasRegresionesProgresoImportacion": 3,
+    "paridad": {
+      "entradasLiterales": 44,
+      "escenariosPorEntrada": 18,
+      "comparaciones": 792,
+      "plataforma": "BUNDLE_ANDROID_EN_VM_Y_ADAPTADOR_FLUTTER"
+    },
+    "backendCompilado": true,
+    "apkCompilado": true,
+    "firmaVerificada": true,
+    "motorEmpaquetadoComparadoConFuente": true,
+    "modelosYLicenciaOcrPresentesEnApk": true,
+    "manifiestoMigracionesValidadoSinAplicar": true,
+    "grafo": {
+      "nodos": 1136,
+      "aristas": 3988,
+      "errores": 0,
+      "avisosOrfanos": 10,
+      "avisosGenerador": 2
+    },
+    "ejecutadoEnAndroidRealOEmulado": false,
+    "fotosRepresentativasEvaluadas": false
+  },
+  "fuente": {
+    "originalModificado": false,
+    "paginaPdfGeometria": 297,
+    "paginaImpresaGeometria": 295,
+    "nuevasReglasGREIntroducidas": false,
+    "sha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af"
+  },
+  "ocr": {
+    "biblioteca": "Tesseract4Android4.9.0",
+    "modelos": "tessdata_fast4.1.0",
+    "idiomas": [
+      "eng",
+      "spa"
+    ],
+    "fuentes": [
+      "https://github.com/adaptech-cz/Tesseract4Android/blob/master/README.md",
+      "https://github.com/tesseract-ocr/tessdata_fast/tree/4.1.0"
+    ],
+    "fotoSubida": false,
+    "adjuntoServicioRegistrado": false,
+    "identificacionAutomatica": false
+  },
+  "hashesArchivos": {
+    ".movile/lib/matpel_motor_local.dart": "db0a4ff68450fd52b152ffe95652f290bf6bae3be0d8d519fa262be78ded0000",
+    ".movile/lib/matpel_foto.dart": "5620b851a82b110856b9c12f235519298bb47ec3cf32512320a11d81bf89e4bf",
+    ".movile/lib/matpel_consulta.dart": "55a31ffee25d7d5e431ccdea5986c6da00f98bffa9f74bed69cffed258bc9bbf",
+    ".movile/android/app/src/main/kotlin/org/cbvc/sigbo/MotorGreLocal.kt": "a3cdb620421c3d8c742e378b27ece6f2e63ddc083b880ba491dbe39d9ed93ab0",
+    ".movile/android/app/src/main/kotlin/org/cbvc/sigbo/OcrGreLocal.kt": "4faf844b5675276375d7091a36a419224072ab9f18bc36945dd3704b502a952a",
+    ".movile/android/app/src/main/assets/ocr/eng.traineddata": "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2",
+    ".movile/android/app/src/main/assets/ocr/spa.traineddata": "6f2e04d02774a18f01bed44b1111f2cd7f3ba7ac9dc4373cd3f898a40ea6b464",
+    ".movile/android/app/src/main/assets/ocr/LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "backend/src/modules/gre/gre-importacion.service.ts": "8999f80c6fb7e91a0d69a32c7f186f3f634bf8c141b9c4f37aad99b8e30c4196",
+    "backend/src/modules/gre/gre-importacion-estado.spec.ts": "0816dac1b0c046ebbba56e7f3f6ba8f3992c3b3904c673191aaaf4c85c98b3e2",
+    "docs/Manuales/GRE2024-Spa-Web-a.pdf": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af"
+  },
+  "servidor": {
+    "fechaUtc": "2026-10-12T12:27:02.159Z",
+    "entorno": "development",
+    "servidor": "127.0.0.1",
+    "puerto": 14330,
+    "base": "sigbo_cbvc",
+    "tablas": {
+      "versiones": true,
+      "activaciones": true
+    },
+    "historialMigracionesInstalado": true,
+    "permisosRegistrados": [
+      "matpel:activar_gre",
+      "matpel:administrar_gre",
+      "matpel:consultar",
+      "matpel:validar_gre"
+    ],
+    "migracionesRegistradas": [
+      {
+        "nombre": "094_gre_base_documental.sql",
+        "hash_sha256": "054c067c6a86858184c303f51bffb51df7fe6bc336a96a84ef25781961f3b8ab"
+      },
+      {
+        "nombre": "095_matpel_permisos.sql",
+        "hash_sha256": "22484d0a436edcd582894ea54435ad32e0dd981c64fdb51eded6eb9e193699da"
+      }
+    ],
+    "escriturasSQLDirectas": false,
+    "loginPuedeRegistrarSesionYAuditoria": true,
+    "loginHttp": 201,
+    "estadoGreAutenticadoHttp": 200,
+    "estadoGre": {
+      "versionContrato": 1,
+      "estado": "SIN_EDICION_ACTIVA",
+      "versionGreId": null
+    },
+    "rutaGreRegistrada": true,
+    "catalogoActivadoPorEstaTarea": false
+  },
+  "instalacionLocal": {
+    "fecha": "2026-10-12",
+    "fechaUtc": "2026-10-12T12:09:04.665Z",
+    "entorno": "development",
+    "base": "sigbo_cbvc",
+    "autorizacion": "Pedido explícito del usuario: terminalo entonces, tras informar preparación del servidor pendiente. Instalación técnica local, no validación institucional.",
+    "respaldo": {
+      "archivo": "/var/opt/mssql/backup/sigbo_pre_gre_20261012_4e586d6436544304a3f58424c7e8742b.bak",
+      "copyOnly": true,
+      "checksum": true,
+      "verificacionRestore": true
+    },
+    "migracionesAplicadas": [
+      {
+        "nombre": "094_gre_base_documental.sql",
+        "sha256": "054c067c6a86858184c303f51bffb51df7fe6bc336a96a84ef25781961f3b8ab"
+      },
+      {
+        "nombre": "095_matpel_permisos.sql",
+        "sha256": "22484d0a436edcd582894ea54435ad32e0dd981c64fdb51eded6eb9e193699da"
+      }
+    ],
+    "permisosRegistrados": 4,
+    "versiones": 0,
+    "activaciones": 0,
+    "catalogoImportado": false,
+    "catalogoValidado": false,
+    "catalogoActivado": false,
+    "otrosScriptsEjecutados": false
+  },
+  "importacionLocal": {
+    "fecha": "2026-10-12",
+    "fechaUtc": "2026-10-12T12:11:23.553Z",
+    "fuenteSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+    "solicitud": {
+      "importacionId": "1c1835cc-de86-482e-9abc-97636da09782",
+      "versionGreId": "D7EA7DB3-7C5F-40D6-998A-BE0038DC0A65",
+      "estado": "IMPORTANDO",
+      "existente": false
+    },
+    "procesamiento": {
+      "iniciado": true
+    },
+    "validacionInstitucionalRealizada": false,
+    "catalogoActivado": false,
+    "datosDeEjemploIntroducidos": false,
+    "estadoFinalObservado": {
+      "importacionId": "1C1835CC-DE86-482E-9ABC-97636DA09782",
+      "estado": "COMPLETADA",
+      "etapa": "COMPLETADA",
+      "paginasProcesadas": 392,
+      "intento": 1,
+      "heartbeatEn": "2026-10-12T12:11:58.492Z",
+      "creadoEn": "2026-10-12T12:11:23.282Z",
+      "finalizadaEn": "2026-10-12T12:14:00.754Z",
+      "errores": null,
+      "version": {
+        "id": "D7EA7DB3-7C5F-40D6-998A-BE0038DC0A65",
+        "estado": "REQUIERE_REVISION",
+        "versionParser": "catalogo-1/pymupdf-1.28.2",
+        "resumen": {
+          "bloquesDeTexto": 100,
+          "celdas": 5533,
+          "filasAmarillo": 2665,
+          "filasAzul": 2665,
+          "filasTabla1": 427,
+          "filasTabla2": 101,
+          "filasTabla3": 22,
+          "filasVinculadas": {
+            "TABLA_1": 427,
+            "TABLA_2": 101
+          },
+          "guias": 64,
+          "guiasConContenido": 62,
+          "guiasIntencionalmenteVacias": [
+            "121",
+            "167"
+          ],
+          "guiasSinEntradas": [
+            "111",
+            "121",
+            "167"
+          ],
+          "hallazgosCriticos": 0,
+          "materialesTabla3": 6,
+          "paginasComoTexto": 100,
+          "paginasDocumentales": 392,
+          "paginasEstructuradas": 292,
+          "referencias": 38810,
+          "reglas": 26,
+          "reglasEjecutables": [
+            "R06",
+            "R13",
+            "R14",
+            "R15",
+            "R16",
+            "R17",
+            "R18",
+            "R19",
+            "R20",
+            "R23",
+            "R24"
+          ],
+          "relacionesConciliadas": 2665,
+          "relacionesPendientes": 0,
+          "remisionesTabla3": [
+            "1005",
+            "1017",
+            "1040",
+            "1050",
+            "1052",
+            "1079",
+            "2186"
+          ],
+          "secciones": 42,
+          "tabla2SinFilaAguaEnTabla1": []
+        },
+        "hallazgos": 0
+      }
+    },
+    "consultadoEn": "2026-10-12T12:27:07.714Z"
+  },
+  "pendientes": [
+    "Revisión humana, validación y activación del candidato GRE importado",
+    "Reglamento General original vigente para modificar flujos de Servicios/mandoSCI",
+    "Reconocimientos operativos API18/API26 con autorizaciónF/E y evidencia del Servicio",
+    "Formalización/cotejo semántico integral e independiente de reglas y condiciones",
+    "Aceptación operacional y pruebas nativas con fotos representativas en teléfono"
+  ],
+  "migracionesAplicadasEnDesarrollo": [
+    "094_gre_base_documental.sql",
+    "095_matpel_permisos.sql"
+  ],
+  "permisosAplicadosSegun095": true,
+  "catalogoImportado": true,
+  "catalogoActivado": false,
+  "fuenteNormativaSustituidaPorResumen": false,
+  "decisionesAutoridadAutomatizadas": false,
+  "publicadoAutomaticamente": false,
+  "aceptacionInstitucional": false,
+  "commitOPush": false,
+  "documentacion": ".movile/docs/GRE_CIERRE_20261012.md"
+}

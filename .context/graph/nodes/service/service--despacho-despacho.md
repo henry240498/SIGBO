@@ -38,6 +38,7 @@ Logica de negocio de despacho (modulo despacho).
 
 ## Referenciado por
 
+- [[service--centro-mando-centro-mando|CentroMandoService]] `uses` →
 - [[api--despacho-despacho|DespachoController]] `exposes` →
 
 ---

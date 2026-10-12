@@ -1,0 +1,33 @@
+{
+  "tipo": "CONSULTA_FUENTES_PRIMARIAS_NO_VIGENCIA_UNIVERSAL",
+  "fechaUtc": "2026-10-10T23:46:58.497Z",
+  "phmsa": {
+    "pagina": "https://www.phmsa.dot.gov/training/hazmat/erg/gre2024-pdf-accesible-espanol",
+    "pdf": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2024-04/GRE2024-Spa-Web-a.pdf",
+    "nombrePublicado": "GRE2024-Spa-Web-a.pdf",
+    "fechaEfectivaPublicada": "2024-04-04",
+    "lecturaWebPdf": {
+      "paginas": 392,
+      "alcance": "Documento accesible al proveedor web; no es cotejo de bytes en el workspace"
+    },
+    "cotejoBytesWorkspace": {
+      "fechaUtc": "2026-10-10T23:36:09.701466+00:00",
+      "httpStatus": 403,
+      "sha256Remoto": null,
+      "coincide": null,
+      "sha256Local": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af"
+    }
+  },
+  "transportCanada": {
+    "pagina": "https://tc.canada.ca/en/dangerous-goods/canutec/emergency-response-guidebook/corrections",
+    "seccion": "Corrections to the ERG2024",
+    "observacion": "La sección consultada no enumera correcciones de ERG2024.",
+    "fechaModificacionMostrada": "2016-09-12",
+    "limite": "El pie de fecha mostrado no se interpreta como fecha de actualización de la sección2024; no prueba inexistencia universal de errores."
+  },
+  "contactosLocales": "NO_VERIFICADOS_NO_SUSTITUIR_POR_NUMEROS_DE_EJEMPLO",
+  "reglamentoInstitucional": {
+    "estado": "ORIGINAL_NO_DISPONIBLE",
+    "confirmacionUsuario": "no tengo conmigo aun"
+  }
+}

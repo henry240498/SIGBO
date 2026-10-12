@@ -34,5 +34,9 @@ Superficie HTTP de salud bajo /api/v1/salud.
 
 - `belongs_to` → [[domain--seguridad|Seguridad]]
 
+## Referenciado por
+
+- [[screen--dashboard|/dashboard]] `calls` →
+
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

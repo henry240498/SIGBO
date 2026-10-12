@@ -1,0 +1,52 @@
+{
+  "fecha": "2026-10-11T00:03:33.570Z",
+  "alcance": "NAVEGADOR_DESDE_DISCO_OFFLINE_DESDE_INICIO_CANDIDATO_REAL_COMPLETO_NO_ACTIVACION_INSTITUCIONAL",
+  "resultados": [
+    {
+      "nombre": "Primera apertura desde disco sin red verifica hashes del catálogo completo y PDF original",
+      "aprobado": true
+    },
+    {
+      "nombre": "Varias identidades de ONU3171 exigen selección explícita",
+      "aprobado": true
+    },
+    {
+      "nombre": "Guía125 conserva todos los bloques de la edición, sin conexión",
+      "aprobado": true
+    },
+    {
+      "nombre": "Tabla documental conserva unidades originales y exige lectura manual",
+      "aprobado": true
+    },
+    {
+      "nombre": "PDF incluido se abre con etiquetas PDF e impresa separadas",
+      "aprobado": true
+    },
+    {
+      "nombre": "Todas las42 secciones están accesibles en la consulta local",
+      "aprobado": true
+    },
+    {
+      "nombre": "Vista de390px sin desborde horizontal",
+      "aprobado": true
+    },
+    {
+      "nombre": "No se solicitan recursos externos",
+      "aprobado": true
+    },
+    {
+      "nombre": "Catálogo alterado queda bloqueado antes de consultar",
+      "aprobado": true
+    },
+    {
+      "nombre": "PDF alterado queda bloqueado antes de consultar",
+      "aprobado": true
+    },
+    {
+      "nombre": "Sin errores JavaScript",
+      "aprobado": true
+    }
+  ],
+  "errores": [],
+  "peticionesExternas": []
+}

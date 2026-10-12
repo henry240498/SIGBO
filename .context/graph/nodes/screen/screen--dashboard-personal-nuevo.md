@@ -14,6 +14,7 @@ edges:
   - [uses, component--front-api]
   - [uses, component--front-parametros]
   - [uses, component--front-aviso]
+  - [uses, component--front-personal]
   - [calls, api--equipos-equipamiento-bombero]
 terminos: [personal, nuevo]
 ---
@@ -38,6 +39,7 @@ Pantalla /dashboard/personal/nuevo, consume 1 endpoint(s).
 - `uses` → [[component--front-api|api]]
 - `uses` → [[component--front-parametros|parametros]]
 - `uses` → [[component--front-aviso|Aviso]]
+- `uses` → [[component--front-personal|personal]]
 - `calls` → [[api--equipos-equipamiento-bombero|EquipamientoBomberoController]]
 
 ---

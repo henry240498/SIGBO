@@ -1,0 +1,200 @@
+{
+  "fuenteSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+  "tipo": "PRUEBA_COMPRENSION_DOCUMENTAL_MANUAL_AGENTE_DISTINTO",
+  "motorEjecutado": false,
+  "casos": [
+    {
+      "id": "GRE24-INDEPENDENT-1689-WATER",
+      "inputs": {
+        "identificador": "1689",
+        "nombre": "Cianuro de sodio, sólido",
+        "cantidadL": 209,
+        "periodo": "NOCHE",
+        "derrameEn": "AGUA",
+        "incendio": false
+      },
+      "expected": {
+        "guia": "157",
+        "aislamientoM": "60",
+        "proteccionKm": "0.9",
+        "gasTabla2": "HCN",
+        "gasNoSustituyeMaterial": true
+      },
+      "fuentes": [
+        {
+          "paginaPdf": 303,
+          "impresa": "301"
+        },
+        {
+          "paginaPdf": 334,
+          "impresa": "332"
+        }
+      ],
+      "observado": "COINCIDE_LECTURA_VISUAL_FILA_Y_NOTA"
+    },
+    {
+      "id": "GRE24-INDEPENDENT-1689-DRY",
+      "inputs": {
+        "identificador": "1689",
+        "nombre": "Cianuro de sodio, sólido",
+        "derrameEn": "TIERRA"
+      },
+      "expected": {
+        "guia": "157",
+        "tablas1y2": "NO_APLICAN"
+      },
+      "fuentes": [
+        {
+          "paginaPdf": 334,
+          "impresa": "332"
+        }
+      ],
+      "observado": "COINCIDE_LECTURA_NOTA2"
+    },
+    {
+      "id": "GRE24-INDEPENDENT-1746-MEDIUM-UNKNOWN",
+      "inputs": {
+        "identificador": "1746",
+        "nombre": "Trifluoruro de bromo",
+        "cantidadL": 209,
+        "periodo": "NOCHE",
+        "derrameEn": "DESCONOCIDO",
+        "incendio": false
+      },
+      "expected": {
+        "guia": "144",
+        "proteccionMayorKm": "2.8",
+        "proteccionTierraKm": "0.5"
+      },
+      "fuentes": [
+        {
+          "paginaPdf": 304,
+          "impresa": "302"
+        },
+        {
+          "paginaPdf": 287,
+          "impresa": "285"
+        }
+      ],
+      "observado": "COINCIDE_LECTURA_VISUAL_2FILAS_Y_REGLA"
+    },
+    {
+      "id": "GRE24-INDEPENDENT-1017-WIND-10",
+      "inputs": {
+        "identificador": "1017",
+        "nombre": "Cloro",
+        "cantidadL": 209,
+        "periodo": "NOCHE",
+        "contenedor": "Autotanque o remolque",
+        "vientoKmh": 10,
+        "incendio": false
+      },
+      "expected": {
+        "guia": "124",
+        "viento": "MODERADO",
+        "aislamientoM": "600",
+        "proteccionKm": "5.0"
+      },
+      "fuentes": [
+        {
+          "paginaPdf": 340,
+          "impresa": "338"
+        },
+        {
+          "paginaPdf": 341,
+          "impresa": "339"
+        },
+        {
+          "paginaPdf": 298,
+          "impresa": "296"
+        }
+      ],
+      "observado": "COINCIDE_LECTURA_VISUAL_TABLA3_Y_CABECERA"
+    },
+    {
+      "id": "GRE24-INDEPENDENT-1017-WIND-20",
+      "inputs": {
+        "identificador": "1017",
+        "cantidadL": 209,
+        "periodo": "NOCHE",
+        "contenedor": "Autotanque o remolque",
+        "vientoKmh": 20,
+        "incendio": false
+      },
+      "expected": {
+        "viento": "MODERADO",
+        "aislamientoM": "600",
+        "proteccionKm": "5.0"
+      },
+      "fuentes": [
+        {
+          "paginaPdf": 340,
+          "impresa": "338"
+        },
+        {
+          "paginaPdf": 341,
+          "impresa": "339"
+        }
+      ],
+      "observado": "COINCIDE_LIMITE_INCLUSIVO"
+    },
+    {
+      "id": "GRE24-INDEPENDENT-1017-WIND-20-01",
+      "inputs": {
+        "identificador": "1017",
+        "cantidadL": 209,
+        "periodo": "NOCHE",
+        "contenedor": "Autotanque o remolque",
+        "vientoKmh": 20.01,
+        "incendio": false
+      },
+      "expected": {
+        "viento": "FUERTE",
+        "aislamientoM": "600",
+        "proteccionKm": "4.1"
+      },
+      "fuentes": [
+        {
+          "paginaPdf": 340,
+          "impresa": "338"
+        },
+        {
+          "paginaPdf": 341,
+          "impresa": "339"
+        }
+      ],
+      "observado": "COINCIDE_LIMITE_SUPERIOR_EXCLUIDO"
+    },
+    {
+      "id": "GRE24-INDEPENDENT-1017-WIND-UNKNOWN",
+      "inputs": {
+        "identificador": "1017",
+        "cantidadL": 209,
+        "periodo": "NOCHE",
+        "contenedor": "Autotanque o remolque",
+        "vientoKmh": null
+      },
+      "expected": {
+        "proteccionFinal": "INDETERMINADA",
+        "datoFaltante": "velocidad o categoría de viento"
+      },
+      "fuentes": [
+        {
+          "paginaPdf": 340,
+          "impresa": "338"
+        },
+        {
+          "paginaPdf": 341,
+          "impresa": "339"
+        }
+      ],
+      "observado": "NO_HAY_COLUMNA_UNICA_SIN_VIENTO",
+      "capa": "INTERPRETACION_SOFTWARE_DE_ABSTENCION_NO_LITERAL_GRE"
+    }
+  ],
+  "limites": [
+    "Cobertura de casos limitada, no dominio integral.",
+    "Consulta directa del PDF con contexto; no acredita motor.",
+    "No activa catálogo ni decide acciones de mando."
+  ]
+}

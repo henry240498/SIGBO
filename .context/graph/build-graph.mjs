@@ -121,6 +121,9 @@ const DOMAIN_OF_MODULE = {
   'app-movil': 'servicios', flota: 'vehiculos', 'control-personal': 'asistencia',
   // El buzon de reportes es una herramienta del sistema, no de un area operativa.
   reportes: 'seguridad',
+  // Centro de mando agrega el inicio autenticado; Sistema administra la plataforma.
+  // No son entradas propias de MODULOS. Sus dependencias conservan sus dominios.
+  'centro-mando': 'seguridad', sistema: 'seguridad',
 };
 /** Raiz de ruta del frontend que no coincide con el slug de un modulo. */
 const DOMAIN_OF_ROUTE = {

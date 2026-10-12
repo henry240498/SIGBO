@@ -1,0 +1,84 @@
+{
+  "fecha": "2026-10-11",
+  "estado": "APK_COMPILADO_FIRMADO_LOCALMENTE_NO_ACTIVACION_GRE_NI_ACEPTACION_INSTITUCIONAL",
+  "version": "1.6.0+13",
+  "alcance": [
+    "Consulta guiada por API al motor unico del servidor",
+    "Identificacion explicita, ambito y certeza por dato",
+    "Solicitudes, resultados por finalidad, fuentes y trazabilidad",
+    "Representacion de geometria recibida sin proveedor de teselas",
+    "Tablas verdes completas y condiciones documentadas en biblioteca local"
+  ],
+  "fuente": {
+    "archivo": "docs/Manuales/GRE2024-Spa-Web-a.pdf",
+    "sha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+    "paginasPdfConsultadas": [
+      297,
+      340,
+      349
+    ],
+    "paginasImpresasConsultadas": [
+      295,
+      338,
+      347
+    ],
+    "paginaPdfInspeccionVisual": 297,
+    "publicacionConsultada": "https://www.phmsa.dot.gov/training/hazmat/erg/gre2024-pdf-accesible-espanol",
+    "bytesRemotosVerificados": false,
+    "originalModificado": false
+  },
+  "validacion": {
+    "analisisFlutter": "SIN_INCIDENCIAS",
+    "analisisComando": "flutter analyze --no-pub lib test",
+    "pruebasComando": "flutter test --no-pub --reporter expanded",
+    "compilacionComando": "flutter build apk --debug --no-pub",
+    "adaptadorMotor": "scripts/matpel/evaluacion_prueba_movil.cjs",
+    "pruebasSinSQL": true,
+    "pruebasAprobadas": 70,
+    "pruebasOmitidas": 0,
+    "nuevasPruebasConsulta": 10,
+    "pruebasBiblioteca": 12,
+    "compilacionAprobada": true,
+    "firmaVerificada": true,
+    "grafo": {
+      "nodos": 1136,
+      "aristas": 3988,
+      "errores": 0,
+      "avisosOrfanos": 10,
+      "avisosGenerador": 2
+    },
+    "avisosCompilacion": [
+      "Avisos de compatibilidad futura de Gradle, AGP y Kotlin",
+      "Herramientas SDK XML version 3/4"
+    ]
+  },
+  "servidorLocalObservado": {
+    "rutaEstadoGreHttp": 404,
+    "permisoMatpelUsuarioLocal": false,
+    "datosGREHabilitadosPorEstaTarea": false
+  },
+  "limites": [
+    "El servidor actual requiere preparar GRE, permisos y una edicion autorizada para consultar o descargar",
+    "La lectura sin red requiere descarga previa autorizada",
+    "No se implementa motor offline ni OCR operativo o decisiones SCI",
+    "No hay dispositivo fisico conectado",
+    "Sin migraciones, importacion, activacion de catalogo, publicacion productiva, commit o push"
+  ],
+  "publicacionAutomatica": false,
+  "instalacionFisica": false,
+  "aceptacionInstitucional": false,
+  "fechaUtc": "2026-10-11T18:16:19.622Z",
+  "revision": "3f123cd + cambios locales",
+  "apk": {
+    "version": "1.6.0+13",
+    "paquete": "org.cbvc.sigbo",
+    "archivo": ".movile/SIGBO.apk",
+    "tamanioBytes": 167413041,
+    "sha256": "ede2c7b62d108177ae3730a90b59ff3c7520c5305b7882323f83897468fc096f",
+    "certificadoSha256": "2c254cd261022325bde577e6fa9e1aa161c1adc03beefe5e7d42e68130339416",
+    "certificadoCoincideConVersionPublicada": true,
+    "tipo": "DEBUG_FIRMADO_CON_CLAVE_EXISTENTE",
+    "publicadoAutomaticamente": false,
+    "instaladoFisicamente": false
+  }
+}

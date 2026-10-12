@@ -44,6 +44,7 @@ Logica de negocio de configuracion (modulo configuracion).
 
 ## Referenciado por
 
+- [[service--centro-mando-centro-mando|CentroMandoService]] `uses` →
 - [[api--configuracion-configuracion|ConfiguracionController]] `exposes` →
 
 ---

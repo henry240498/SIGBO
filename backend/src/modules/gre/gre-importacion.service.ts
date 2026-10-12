@@ -1,4 +1,4 @@
-import { BadRequestException, Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, Logger, NotFoundException, ServiceUnavailableException } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { createHash, randomUUID } from 'crypto';
 import { promises as fs } from 'fs';
@@ -26,6 +26,7 @@ export interface TrabajoReclamado { id: string; versionId: string; token: string
 @Injectable()
 export class GreImportacionService {
   private readonly log = new Logger('GreImportacion');
+  private readonly cargas = new Map<string, Awaited<ReturnType<GreImportacionService['leerEstado']>> & { consultaDuranteCarga?: boolean }>();
 
   constructor(
     @InjectDataSource() private readonly ds: DataSource,
@@ -112,6 +113,20 @@ export class GreImportacionService {
   }
 
   async estado(importacionId: string) {
+    // La transacción de carga retiene la fila durante minutos. Exponer el último
+    // estado ya confirmado por ESTE trabajador evita esperar ese lock y dar500.
+    // No muestra contenido sin commit ni afirma un porcentaje no observado.
+    try {
+      return this.cargas.get(importacionId.toLowerCase()) ?? await this.leerEstado(importacionId);
+    } catch (error) {
+      if (((error as any)?.driverError?.code ?? (error as any)?.code) === 'ETIMEOUT') {
+        throw new ServiceUnavailableException({ codigo: 'GRE_CONSULTA_OCUPADA', message: 'La consulta de la importación no respondió a tiempo. Reintentá; su contenido no se considera vacío ni fallido por este timeout.' });
+      }
+      throw error;
+    }
+  }
+
+  private async leerEstado(importacionId: string) {
     const importacion = await this.ds.getRepository(GreImportacion).findOneBy({ id: importacionId });
     if (!importacion) throw new NotFoundException('La importación no existe.');
     const version = await this.ds.getRepository(GreVersion).findOneByOrFail({ id: importacion.versionId });
@@ -188,32 +203,38 @@ export class GreImportacionService {
         throw new Error('Los metadatos del artefacto no corresponden al documento registrado.');
       }
       await etapa('CARGANDO');
-      const conteo = await this.ds.transaction(async (m) => {
-        const vigente = await m.createQueryBuilder().update(GreImportacion).set({ heartbeatEn: () => 'SYSDATETIMEOFFSET()' })
-          .where('id = :id AND lease_token = :token AND estado = :estado AND lease_hasta > SYSDATETIMEOFFSET()',
-            { id: t.id, token: t.token, estado: 'EN_PROCESO' })
-          .updateEntity(false).execute();
-        if (vigente.affected !== 1) throw new Error('El lease del trabajo venció; otro trabajador lo retomó.');
-        if (await m.getRepository(GreReferencia).count({ where: { versionId: version.id } })) {
-          throw new Error('La versión ya tiene contenido: no se carga dos veces.');
-        }
-        const resultadoCarga = await ejecutarPlan(m, planDeCarga(artefacto, version.id));
-        const reporte = { artefacto: resultado.artefacto, artefactoSha256: resultado.artefactoSha256,
-          herramienta: artefacto.herramienta, resumen: artefacto.resumen, hallazgos: artefacto.hallazgos,
-          pendientes: artefacto.pendientes, carga: resultadoCarga };
-        await m.createQueryBuilder().update(GreVersion)
-          .set({ estado: 'REQUIERE_REVISION', sha256Contenido: resultado.artefactoSha256, reporteJson: JSON.stringify(reporte) })
-          .where('id = :id', { id: version.id }).updateEntity(false).execute();
-        await m.createQueryBuilder().update(GreImportacion)
-          .set({ estado: 'COMPLETADA', etapa: 'COMPLETADA', paginasProcesadas: artefacto.paginas.length,
-            finalizadaEn: () => 'SYSDATETIMEOFFSET()', leaseToken: null, leaseHasta: null })
-          .where('id = :id', { id: t.id }).updateEntity(false).execute();
-        await this.auditoria.registrar({ usuarioId: null, accion: 'GRE_IMPORTACION_COMPLETADA',
-          recurso: 'matpel.gre_versiones', recursoId: version.id,
-          datosDespues: { estado: 'REQUIERE_REVISION', artefactoSha256: resultado.artefactoSha256, conteo: resultadoCarga,
-            hallazgos: artefacto.hallazgos.length } }, m);
-        return resultadoCarga;
-      });
+      this.cargas.set(t.id.toLowerCase(), { ...await this.leerEstado(t.id), consultaDuranteCarga: true });
+      let conteo: Awaited<ReturnType<typeof ejecutarPlan>>;
+      try {
+        conteo = await this.ds.transaction(async (m) => {
+          const vigente = await m.createQueryBuilder().update(GreImportacion).set({ heartbeatEn: () => 'SYSDATETIMEOFFSET()' })
+            .where('id = :id AND lease_token = :token AND estado = :estado AND lease_hasta > SYSDATETIMEOFFSET()',
+              { id: t.id, token: t.token, estado: 'EN_PROCESO' })
+            .updateEntity(false).execute();
+          if (vigente.affected !== 1) throw new Error('El lease del trabajo venció; otro trabajador lo retomó.');
+          if (await m.getRepository(GreReferencia).count({ where: { versionId: version.id } })) {
+            throw new Error('La versión ya tiene contenido: no se carga dos veces.');
+          }
+          const resultadoCarga = await ejecutarPlan(m, planDeCarga(artefacto, version.id));
+          const reporte = { artefacto: resultado.artefacto, artefactoSha256: resultado.artefactoSha256,
+            herramienta: artefacto.herramienta, resumen: artefacto.resumen, hallazgos: artefacto.hallazgos,
+            pendientes: artefacto.pendientes, carga: resultadoCarga };
+          await m.createQueryBuilder().update(GreVersion)
+            .set({ estado: 'REQUIERE_REVISION', sha256Contenido: resultado.artefactoSha256, reporteJson: JSON.stringify(reporte) })
+            .where('id = :id', { id: version.id }).updateEntity(false).execute();
+          await m.createQueryBuilder().update(GreImportacion)
+            .set({ estado: 'COMPLETADA', etapa: 'COMPLETADA', paginasProcesadas: artefacto.paginas.length,
+              finalizadaEn: () => 'SYSDATETIMEOFFSET()', leaseToken: null, leaseHasta: null })
+            .where('id = :id', { id: t.id }).updateEntity(false).execute();
+          await this.auditoria.registrar({ usuarioId: null, accion: 'GRE_IMPORTACION_COMPLETADA',
+            recurso: 'matpel.gre_versiones', recursoId: version.id,
+            datosDespues: { estado: 'REQUIERE_REVISION', artefactoSha256: resultado.artefactoSha256, conteo: resultadoCarga,
+              hallazgos: artefacto.hallazgos.length } }, m);
+          return resultadoCarga;
+        });
+      } finally {
+        this.cargas.delete(t.id.toLowerCase());
+      }
       this.log.log(`Importación ${t.id}: candidato ${version.id} cargado (${JSON.stringify(conteo)}).`);
     } catch (error) {
       await this.fallar(t, error);

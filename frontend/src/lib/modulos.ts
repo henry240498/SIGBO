@@ -28,6 +28,7 @@ export const GRUPOS: Array<{ id: GrupoModulo; nombre: string }> = [
 ];
 
 export const MODULOS: ModuloConfig[] = [
+  { slug: 'matpel', nombre: 'MATPEL', icono: 'alert', permisoPrefijo: 'matpel:', disponible: true, grupo: 'operaciones', descripcion: 'Consulta GRE de materiales peligrosos, condiciones y fuente original.' },
   { slug: 'centro-mando', nombre: 'Centro de mando', icono: 'radar', permisoPrefijo: '', disponible: true, grupo: 'operaciones', descripcion: 'Lo que está pasando ahora y lo que te toca, según tu rol.' },
   { slug: 'servicios', nombre: 'Servicios', icono: 'alert', permisoPrefijo: 'servicios:', disponible: true, grupo: 'operaciones', descripcion: 'Intervenciones atendidas: incendios, rescates y emergencias.' },
   { slug: 'denuncias', nombre: 'Denuncias', icono: 'alert', permisoPrefijo: 'denuncias:', disponible: true, grupo: 'operaciones', descripcion: 'Avisos que llegan desde la ciudadanía y su seguimiento.' },

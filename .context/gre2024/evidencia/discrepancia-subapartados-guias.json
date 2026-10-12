@@ -1,0 +1,582 @@
+{
+  "id": "GRE24-ISSUE-GUIDE-HEADINGS",
+  "fechaUtc": "2026-10-10T17:25:28.733241+00:00",
+  "estado": "CORREGIDO_PREPARADOR_V3_CON_REGRESION",
+  "fuenteSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+  "artefactoSha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543",
+  "problema": "Títulos plurales incorporados a indicación anterior y título continuado de147 tratado como cláusula; subapartados incorrectos aunque texto y referencias fueran conservados.",
+  "alcance": "Preparación de lecturas nuevas; sin modificación del PDF/candidato ni motor.",
+  "correccion": "Títulos estructurales completos y límites de agrupación; control separado por negrita/caja/orden original.",
+  "detalles": [
+    {
+      "guia": "133",
+      "paginaPdf": 203,
+      "paginaImpresa": 201,
+      "obtenidoAntes": [
+        {
+          "id": "GRE24-G133-B08-C03",
+          "seccion": "FUEGO",
+          "subseccion": "Incendio Grande",
+          "tipo": "INDICACION_DOCUMENTAL",
+          "literalFuente": "•\t Si se puede hacer de manera segura, aleje los contenedores no dañados del área alrededor del fuego.\nIncendios Involucrando Pigmentos o Pastas Metálicas (ej. “Pasta de Aluminio”)",
+          "literalBreve": " Si se puede hacer de manera segura, aleje los contenedores no dañados del área alrededor del fuego. Incendios Involucrando Pigmentos o Pastas Metálicas (ej. “P",
+          "interpretacion": "Indicación para la sección y subsección citadas, sujeta a las restricciones de seguridad del texto; no autoriza intervención automática.",
+          "condicionesActivacion": {
+            "guiaSeleccionada": "133",
+            "seccion": "FUEGO",
+            "subseccion": "Incendio Grande",
+            "condicionesYExcepcionesLiteral": "•\t Si se puede hacer de manera segura, aleje los contenedores no dañados del área alrededor del fuego.\nIncendios Involucrando Pigmentos o Pastas Metálicas (ej. “Pasta de Aluminio”)",
+            "limite": "Clasificación y lectura contextual documental; no predicado de motor validado."
+          },
+          "reglasRelacionadas": [],
+          "fuente": {
+            "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+            "paginasPdf": [
+              203
+            ],
+            "paginasImpresas": [
+              201
+            ],
+            "referenciasCatalogo": [
+              "ref-024733",
+              "ref-024734"
+            ],
+            "bloqueCatalogo": "guia-133-bloque-008",
+            "cajasPt": [
+              [
+                35.776798248291016,
+                118.17440795898438,
+                362.5155029296875,
+                128.1024169921875
+              ],
+              [
+                35.776798248291016,
+                129.16590881347656,
+                299.1834411621094,
+                139.1024169921875
+              ]
+            ]
+          },
+          "evidencia": {
+            "lineasFuenteLocalizadasEnPdf": true,
+            "paginaVisualLeida": false
+          },
+          "implementacion": {
+            "estado": "NO_IMPLEMENTADA",
+            "motorOperativo": "PENDIENTE"
+          },
+          "pruebas": {
+            "unitariaMotor": "PENDIENTE",
+            "integracionMotor": "PENDIENTE",
+            "comprensionIndependiente": "PENDIENTE"
+          },
+          "estadoValidacion": "DOCUMENTAL_SIN_VALIDACION_OPERATIVA"
+        },
+        {
+          "id": "GRE24-G133-B08-C04",
+          "seccion": "FUEGO",
+          "subseccion": "Incendio Grande",
+          "tipo": "REMISION",
+          "literalFuente": "•\t Los incendios de Pasta de Aluminio deben tratarse como incendios de metales combustibles. Use arena \nSECA, polvo de grafito, extintores secos a base de cloruro de sodio o extintores de clase D. También, \nvea la GUÍA 170.",
+          "literalBreve": " Los incendios de Pasta de Aluminio deben tratarse como incendios de metales combustibles. Use arena SECA, polvo de grafito, extintores secos a base de cloruro ",
+          "interpretacion": "La cláusula remite a otra fuente/sección: la guía naranja por sí sola no contiene toda la respuesta. Conservar y resolver la remisión antes de concluir.",
+          "condicionesActivacion": {
+            "guiaSeleccionada": "133",
+            "seccion": "FUEGO",
+            "subseccion": "Incendio Grande",
+            "condicionesYExcepcionesLiteral": "•\t Los incendios de Pasta de Aluminio deben tratarse como incendios de metales combustibles. Use arena \nSECA, polvo de grafito, extintores secos a base de cloruro de sodio o extintores de clase D. También, \nvea la GUÍA 170.",
+            "limite": "Clasificación y lectura contextual documental; no predicado de motor validado."
+          },
+          "reglasRelacionadas": [
+            "GRE24-GUIA-170"
+          ],
+          "fuente": {
+            "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+            "paginasPdf": [
+              203
+            ],
+            "paginasImpresas": [
+              201
+            ],
+            "referenciasCatalogo": [
+              "ref-024735",
+              "ref-024736",
+              "ref-024737"
+            ],
+            "bloqueCatalogo": "guia-133-bloque-008",
+            "cajasPt": [
+              [
+                35.776798248291016,
+                139.17440795898438,
+                368.703369140625,
+                149.1024169921875
+              ],
+              [
+                44.776798248291016,
+                148.17440795898438,
+                368.6864318847656,
+                158.1024169921875
+              ],
+              [
+                44.776798248291016,
+                157.17440795898438,
+                97.85929870605469,
+                167.1024169921875
+              ]
+            ]
+          },
+          "evidencia": {
+            "lineasFuenteLocalizadasEnPdf": true,
+            "paginaVisualLeida": false
+          },
+          "implementacion": {
+            "estado": "NO_IMPLEMENTADA",
+            "motorOperativo": "PENDIENTE"
+          },
+          "pruebas": {
+            "unitariaMotor": "PENDIENTE",
+            "integracionMotor": "PENDIENTE",
+            "comprensionIndependiente": "PENDIENTE"
+          },
+          "estadoValidacion": "DOCUMENTAL_SIN_VALIDACION_OPERATIVA"
+        }
+      ],
+      "esperadoYObtenidoDespues": [
+        {
+          "id": "GRE24-G133-B08-C04",
+          "seccion": "FUEGO",
+          "subseccion": "Incendios Involucrando Pigmentos o Pastas Metálicas (ej. “Pasta de Aluminio”)",
+          "tipo": "REMISION",
+          "literalFuente": "•\t Los incendios de Pasta de Aluminio deben tratarse como incendios de metales combustibles. Use arena \nSECA, polvo de grafito, extintores secos a base de cloruro de sodio o extintores de clase D. También, \nvea la GUÍA 170.",
+          "literalBreve": " Los incendios de Pasta de Aluminio deben tratarse como incendios de metales combustibles. Use arena SECA, polvo de grafito, extintores secos a base de cloruro ",
+          "interpretacion": "La cláusula remite a otra fuente/sección: la guía naranja por sí sola no contiene toda la respuesta. Conservar y resolver la remisión antes de concluir.",
+          "condicionesActivacion": {
+            "guiaSeleccionada": "133",
+            "seccion": "FUEGO",
+            "subseccion": "Incendios Involucrando Pigmentos o Pastas Metálicas (ej. “Pasta de Aluminio”)",
+            "condicionesYExcepcionesLiteral": "•\t Los incendios de Pasta de Aluminio deben tratarse como incendios de metales combustibles. Use arena \nSECA, polvo de grafito, extintores secos a base de cloruro de sodio o extintores de clase D. También, \nvea la GUÍA 170.",
+            "limite": "Clasificación y lectura contextual documental; no predicado de motor validado."
+          },
+          "reglasRelacionadas": [
+            "GRE24-GUIA-170"
+          ],
+          "fuente": {
+            "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+            "paginasPdf": [
+              203
+            ],
+            "paginasImpresas": [
+              201
+            ],
+            "referenciasCatalogo": [
+              "ref-024735",
+              "ref-024736",
+              "ref-024737"
+            ],
+            "bloqueCatalogo": "guia-133-bloque-008",
+            "cajasPt": [
+              [
+                35.776798248291016,
+                139.17440795898438,
+                368.703369140625,
+                149.1024169921875
+              ],
+              [
+                44.776798248291016,
+                148.17440795898438,
+                368.6864318847656,
+                158.1024169921875
+              ],
+              [
+                44.776798248291016,
+                157.17440795898438,
+                97.85929870605469,
+                167.1024169921875
+              ]
+            ]
+          },
+          "evidencia": {
+            "lineasFuenteLocalizadasEnPdf": true,
+            "paginaVisualLeida": true
+          },
+          "implementacion": {
+            "estado": "NO_IMPLEMENTADA",
+            "motorOperativo": "PENDIENTE"
+          },
+          "pruebas": {
+            "unitariaMotor": "PENDIENTE",
+            "integracionMotor": "PENDIENTE",
+            "comprensionIndependiente": "PENDIENTE"
+          },
+          "estadoValidacion": "DOCUMENTAL_SIN_VALIDACION_OPERATIVA"
+        }
+      ]
+    },
+    {
+      "guia": "138",
+      "paginaPdf": 213,
+      "paginaImpresa": 211,
+      "obtenidoAntes": [
+        {
+          "id": "GRE24-G138-B08-C04",
+          "seccion": "FUEGO",
+          "subseccion": "Incendio Grande",
+          "tipo": "INDICACION_DOCUMENTAL",
+          "literalFuente": "•\t Si se puede hacer de manera segura, aleje los contenedores no dañados del área alrededor del fuego.\nIncendios Involucrando Metales o Polvos  (Aluminio, Litio, Magnesio, etc.)",
+          "literalBreve": " Si se puede hacer de manera segura, aleje los contenedores no dañados del área alrededor del fuego. Incendios Involucrando Metales o Polvos (Aluminio, Litio, M",
+          "interpretacion": "Indicación para la sección y subsección citadas, sujeta a las restricciones de seguridad del texto; no autoriza intervención automática.",
+          "condicionesActivacion": {
+            "guiaSeleccionada": "138",
+            "seccion": "FUEGO",
+            "subseccion": "Incendio Grande",
+            "condicionesYExcepcionesLiteral": "•\t Si se puede hacer de manera segura, aleje los contenedores no dañados del área alrededor del fuego.\nIncendios Involucrando Metales o Polvos  (Aluminio, Litio, Magnesio, etc.)",
+            "limite": "Clasificación y lectura contextual documental; no predicado de motor validado."
+          },
+          "reglasRelacionadas": [],
+          "fuente": {
+            "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+            "paginasPdf": [
+              213
+            ],
+            "paginasImpresas": [
+              211
+            ],
+            "referenciasCatalogo": [
+              "ref-025138",
+              "ref-025139"
+            ],
+            "bloqueCatalogo": "guia-138-bloque-008",
+            "cajasPt": [
+              [
+                35.776798248291016,
+                129.17440795898438,
+                362.5155029296875,
+                139.1024169921875
+              ],
+              [
+                35.776798248291016,
+                140.16590881347656,
+                281.3503723144531,
+                150.1024169921875
+              ]
+            ]
+          },
+          "evidencia": {
+            "lineasFuenteLocalizadasEnPdf": true,
+            "paginaVisualLeida": false
+          },
+          "implementacion": {
+            "estado": "NO_IMPLEMENTADA",
+            "motorOperativo": "PENDIENTE"
+          },
+          "pruebas": {
+            "unitariaMotor": "PENDIENTE",
+            "integracionMotor": "PENDIENTE",
+            "comprensionIndependiente": "PENDIENTE"
+          },
+          "estadoValidacion": "DOCUMENTAL_SIN_VALIDACION_OPERATIVA"
+        },
+        {
+          "id": "GRE24-G138-B08-C05",
+          "seccion": "FUEGO",
+          "subseccion": "Incendio Grande",
+          "tipo": "REMISION",
+          "literalFuente": "•\t Use polvo químico seco, arena SECA, Cloruro de Sodio en polvo, polvo de grafito o extintores de clase D; \nAdemás, para Litio puede usar polvo Lith-X® o polvo de cobre. También vea la GUÍA 170.",
+          "literalBreve": " Use polvo químico seco, arena SECA, Cloruro de Sodio en polvo, polvo de grafito o extintores de clase D; Además, para Litio puede usar polvo Lith-X® o polvo de",
+          "interpretacion": "La cláusula remite a otra fuente/sección: la guía naranja por sí sola no contiene toda la respuesta. Conservar y resolver la remisión antes de concluir.",
+          "condicionesActivacion": {
+            "guiaSeleccionada": "138",
+            "seccion": "FUEGO",
+            "subseccion": "Incendio Grande",
+            "condicionesYExcepcionesLiteral": "•\t Use polvo químico seco, arena SECA, Cloruro de Sodio en polvo, polvo de grafito o extintores de clase D; \nAdemás, para Litio puede usar polvo Lith-X® o polvo de cobre. También vea la GUÍA 170.",
+            "limite": "Clasificación y lectura contextual documental; no predicado de motor validado."
+          },
+          "reglasRelacionadas": [
+            "GRE24-GUIA-170"
+          ],
+          "fuente": {
+            "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+            "paginasPdf": [
+              213
+            ],
+            "paginasImpresas": [
+              211
+            ],
+            "referenciasCatalogo": [
+              "ref-025140",
+              "ref-025141"
+            ],
+            "bloqueCatalogo": "guia-138-bloque-008",
+            "cajasPt": [
+              [
+                35.776798248291016,
+                150.17440795898438,
+                368.7459411621094,
+                160.1024169921875
+              ],
+              [
+                44.776798248291016,
+                159.17440795898438,
+                323.0669250488281,
+                169.1024169921875
+              ]
+            ]
+          },
+          "evidencia": {
+            "lineasFuenteLocalizadasEnPdf": true,
+            "paginaVisualLeida": false
+          },
+          "implementacion": {
+            "estado": "NO_IMPLEMENTADA",
+            "motorOperativo": "PENDIENTE"
+          },
+          "pruebas": {
+            "unitariaMotor": "PENDIENTE",
+            "integracionMotor": "PENDIENTE",
+            "comprensionIndependiente": "PENDIENTE"
+          },
+          "estadoValidacion": "DOCUMENTAL_SIN_VALIDACION_OPERATIVA"
+        }
+      ],
+      "esperadoYObtenidoDespues": [
+        {
+          "id": "GRE24-G138-B08-C05",
+          "seccion": "FUEGO",
+          "subseccion": "Incendios Involucrando Metales o Polvos  (Aluminio, Litio, Magnesio, etc.)",
+          "tipo": "REMISION",
+          "literalFuente": "•\t Use polvo químico seco, arena SECA, Cloruro de Sodio en polvo, polvo de grafito o extintores de clase D; \nAdemás, para Litio puede usar polvo Lith-X® o polvo de cobre. También vea la GUÍA 170.",
+          "literalBreve": " Use polvo químico seco, arena SECA, Cloruro de Sodio en polvo, polvo de grafito o extintores de clase D; Además, para Litio puede usar polvo Lith-X® o polvo de",
+          "interpretacion": "La cláusula remite a otra fuente/sección: la guía naranja por sí sola no contiene toda la respuesta. Conservar y resolver la remisión antes de concluir.",
+          "condicionesActivacion": {
+            "guiaSeleccionada": "138",
+            "seccion": "FUEGO",
+            "subseccion": "Incendios Involucrando Metales o Polvos  (Aluminio, Litio, Magnesio, etc.)",
+            "condicionesYExcepcionesLiteral": "•\t Use polvo químico seco, arena SECA, Cloruro de Sodio en polvo, polvo de grafito o extintores de clase D; \nAdemás, para Litio puede usar polvo Lith-X® o polvo de cobre. También vea la GUÍA 170.",
+            "limite": "Clasificación y lectura contextual documental; no predicado de motor validado."
+          },
+          "reglasRelacionadas": [
+            "GRE24-GUIA-170"
+          ],
+          "fuente": {
+            "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+            "paginasPdf": [
+              213
+            ],
+            "paginasImpresas": [
+              211
+            ],
+            "referenciasCatalogo": [
+              "ref-025140",
+              "ref-025141"
+            ],
+            "bloqueCatalogo": "guia-138-bloque-008",
+            "cajasPt": [
+              [
+                35.776798248291016,
+                150.17440795898438,
+                368.7459411621094,
+                160.1024169921875
+              ],
+              [
+                44.776798248291016,
+                159.17440795898438,
+                323.0669250488281,
+                169.1024169921875
+              ]
+            ]
+          },
+          "evidencia": {
+            "lineasFuenteLocalizadasEnPdf": true,
+            "paginaVisualLeida": true
+          },
+          "implementacion": {
+            "estado": "NO_IMPLEMENTADA",
+            "motorOperativo": "PENDIENTE"
+          },
+          "pruebas": {
+            "unitariaMotor": "PENDIENTE",
+            "integracionMotor": "PENDIENTE",
+            "comprensionIndependiente": "PENDIENTE"
+          },
+          "estadoValidacion": "DOCUMENTAL_SIN_VALIDACION_OPERATIVA"
+        }
+      ]
+    },
+    {
+      "guia": "147",
+      "paginaPdf": 231,
+      "paginaImpresa": 229,
+      "obtenidoAntes": [
+        {
+          "id": "GRE24-G147-B08-C13",
+          "seccion": "FUEGO",
+          "subseccion": "Incendio pequeño o Incendio con una batería pequeña (p. ej., dispositivos electrónicos personales,",
+          "tipo": "INDICACION_DOCUMENTAL",
+          "literalFuente": "bicicletas eléctricas, etc.)",
+          "literalBreve": "bicicletas eléctricas, etc.)",
+          "interpretacion": "Indicación para la sección y subsección citadas, sujeta a las restricciones de seguridad del texto; no autoriza intervención automática.",
+          "condicionesActivacion": {
+            "guiaSeleccionada": "147",
+            "seccion": "FUEGO",
+            "subseccion": "Incendio pequeño o Incendio con una batería pequeña (p. ej., dispositivos electrónicos personales,",
+            "condicionesYExcepcionesLiteral": "bicicletas eléctricas, etc.)",
+            "limite": "Clasificación y lectura contextual documental; no predicado de motor validado."
+          },
+          "reglasRelacionadas": [],
+          "fuente": {
+            "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+            "paginasPdf": [
+              231
+            ],
+            "paginasImpresas": [
+              229
+            ],
+            "referenciasCatalogo": [
+              "ref-025867"
+            ],
+            "bloqueCatalogo": "guia-147-bloque-008",
+            "cajasPt": [
+              [
+                35.776798248291016,
+                280.2682189941406,
+                119.85882568359375,
+                290.2047119140625
+              ]
+            ]
+          },
+          "evidencia": {
+            "lineasFuenteLocalizadasEnPdf": true,
+            "paginaVisualLeida": false
+          },
+          "implementacion": {
+            "estado": "NO_IMPLEMENTADA",
+            "motorOperativo": "PENDIENTE"
+          },
+          "pruebas": {
+            "unitariaMotor": "PENDIENTE",
+            "integracionMotor": "PENDIENTE",
+            "comprensionIndependiente": "PENDIENTE"
+          },
+          "estadoValidacion": "DOCUMENTAL_SIN_VALIDACION_OPERATIVA"
+        },
+        {
+          "id": "GRE24-G147-B08-C14",
+          "seccion": "FUEGO",
+          "subseccion": "Incendio pequeño o Incendio con una batería pequeña (p. ej., dispositivos electrónicos personales,",
+          "tipo": "INDICACION_DOCUMENTAL",
+          "literalFuente": "•\t Sólo rocíe agua (en grandes cantidades); no utilice productos químicos secos, CO2 o Halon®.",
+          "literalBreve": " Sólo rocíe agua (en grandes cantidades); no utilice productos químicos secos, CO2 o Halon®.",
+          "interpretacion": "Indicación para la sección y subsección citadas, sujeta a las restricciones de seguridad del texto; no autoriza intervención automática.",
+          "condicionesActivacion": {
+            "guiaSeleccionada": "147",
+            "seccion": "FUEGO",
+            "subseccion": "Incendio pequeño o Incendio con una batería pequeña (p. ej., dispositivos electrónicos personales,",
+            "condicionesYExcepcionesLiteral": "•\t Sólo rocíe agua (en grandes cantidades); no utilice productos químicos secos, CO2 o Halon®.",
+            "limite": "Clasificación y lectura contextual documental; no predicado de motor validado."
+          },
+          "reglasRelacionadas": [],
+          "fuente": {
+            "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+            "paginasPdf": [
+              231
+            ],
+            "paginasImpresas": [
+              229
+            ],
+            "referenciasCatalogo": [
+              "ref-025868"
+            ],
+            "bloqueCatalogo": "guia-147-bloque-008",
+            "cajasPt": [
+              [
+                35.776798248291016,
+                290.2767028808594,
+                334.6510925292969,
+                301.3309326171875
+              ]
+            ]
+          },
+          "evidencia": {
+            "lineasFuenteLocalizadasEnPdf": true,
+            "paginaVisualLeida": false
+          },
+          "implementacion": {
+            "estado": "NO_IMPLEMENTADA",
+            "motorOperativo": "PENDIENTE"
+          },
+          "pruebas": {
+            "unitariaMotor": "PENDIENTE",
+            "integracionMotor": "PENDIENTE",
+            "comprensionIndependiente": "PENDIENTE"
+          },
+          "estadoValidacion": "DOCUMENTAL_SIN_VALIDACION_OPERATIVA"
+        }
+      ],
+      "esperadoYObtenidoDespues": [
+        {
+          "id": "GRE24-G147-B08-C13",
+          "seccion": "FUEGO",
+          "subseccion": "Incendio pequeño o Incendio con una batería pequeña (p. ej., dispositivos electrónicos personales,\nbicicletas eléctricas, etc.)",
+          "tipo": "INDICACION_DOCUMENTAL",
+          "literalFuente": "•\t Sólo rocíe agua (en grandes cantidades); no utilice productos químicos secos, CO2 o Halon®.",
+          "literalBreve": " Sólo rocíe agua (en grandes cantidades); no utilice productos químicos secos, CO2 o Halon®.",
+          "interpretacion": "Indicación para la sección y subsección citadas, sujeta a las restricciones de seguridad del texto; no autoriza intervención automática.",
+          "condicionesActivacion": {
+            "guiaSeleccionada": "147",
+            "seccion": "FUEGO",
+            "subseccion": "Incendio pequeño o Incendio con una batería pequeña (p. ej., dispositivos electrónicos personales,\nbicicletas eléctricas, etc.)",
+            "condicionesYExcepcionesLiteral": "•\t Sólo rocíe agua (en grandes cantidades); no utilice productos químicos secos, CO2 o Halon®.",
+            "limite": "Clasificación y lectura contextual documental; no predicado de motor validado."
+          },
+          "reglasRelacionadas": [],
+          "fuente": {
+            "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+            "paginasPdf": [
+              231
+            ],
+            "paginasImpresas": [
+              229
+            ],
+            "referenciasCatalogo": [
+              "ref-025868"
+            ],
+            "bloqueCatalogo": "guia-147-bloque-008",
+            "cajasPt": [
+              [
+                35.776798248291016,
+                290.2767028808594,
+                334.6510925292969,
+                301.3309326171875
+              ]
+            ]
+          },
+          "evidencia": {
+            "lineasFuenteLocalizadasEnPdf": true,
+            "paginaVisualLeida": true
+          },
+          "implementacion": {
+            "estado": "NO_IMPLEMENTADA",
+            "motorOperativo": "PENDIENTE"
+          },
+          "pruebas": {
+            "unitariaMotor": "PENDIENTE",
+            "integracionMotor": "PENDIENTE",
+            "comprensionIndependiente": "PENDIENTE"
+          },
+          "estadoValidacion": "DOCUMENTAL_SIN_VALIDACION_OPERATIVA"
+        }
+      ]
+    }
+  ],
+  "procedencia121_130": {
+    "sha256LecturaAnterior": "36dc7a310d83bd906ed4ab3bb2bafaaf90a4429d05e44d423364101b480575b8",
+    "sha256LecturaActual": "18a75c640b9f330a2f3ba7d8e302d976a0401dd1ab62a71556ad8edb955f021a",
+    "contenidoGuiasYPaginasConservado": true,
+    "generadorVersion2Congelado": "scripts/matpel/documentar_guias_v2.py",
+    "sha256GeneradorVersion2": "5e440209261b19f86322c33d63f76d74c85e474e969677f786e25202543bdb1a",
+    "cambioUnico": "herramienta.generador: ruta al archivo versionado; SHA y contenido conservados."
+  },
+  "limites": [
+    "No demuestra aplicabilidad ni comprensión independiente de todas las cláusulas."
+  ]
+}

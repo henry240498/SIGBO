@@ -44,6 +44,7 @@ Panel exclusivo de Seguridad -> Inteligencia Artificial (seccion 34 del pedido):
 
 ## Referenciado por
 
+- [[screen--dashboard-sistema|/dashboard/sistema]] `calls` →
 - [[component--front-ia|ia]] `calls` →
 - [[component--front-ia|ia]] `calls` →
 - [[component--front-ia|ia]] `calls` →

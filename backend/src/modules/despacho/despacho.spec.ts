@@ -215,7 +215,7 @@ describe('DespachoService', () => {
     expect(s.grupos.noRecibieron.enServicio).toHaveLength(1);
     // solo a quien se le pudo enviar le llega el aviso en tiempo real
     expect(eventos).toHaveLength(1);
-    expect(audit.registrar).toHaveBeenCalledWith(expect.objectContaining({ accion: 'CREAR_SOLICITUD' }));
+    expect(audit.registrar).toHaveBeenCalledWith(expect.objectContaining({ accion: 'CREAR_SOLICITUD' }), undefined);
   });
 
   it('solicitar chofer: quien no está habilitado para esos móviles no lo recibe, y queda anotado por qué', async () => {
@@ -337,7 +337,7 @@ describe('DespachoService', () => {
     await persona('beto', 'NO_DISPONIBLE');
     const r = await servicio.cambiarDisponibilidad({ estado: 'AL_LLAMADO' }, ctx('beto'), ahora);
     expect(r.estado).toBe('AL_LLAMADO');
-    expect(audit.registrar).toHaveBeenCalledWith(expect.objectContaining({ accion: 'CAMBIAR_DISPONIBILIDAD' }));
+    expect(audit.registrar).toHaveBeenCalledWith(expect.objectContaining({ accion: 'CAMBIAR_DISPONIBILIDAD' }), undefined);
   });
 
   it('buscar personal adicional: avisa a los no disponibles en línea y se suman de forma temporal', async () => {

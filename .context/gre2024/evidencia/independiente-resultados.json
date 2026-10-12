@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "revisor": "/root/auditoria_independiente",
+  "fechaUtc": "2026-10-09T23:38:12.504738+00:00",
+  "alcance": "DOS_PAYLOADS_CORRUPCION_Y_SIETE_CASOS_MANUALES_NO_MOTOR",
+  "resultados": [
+    {
+      "id": "CELDA_TEXTO_UNIDAD",
+      "payloadSha256": "286dc48f092d122c130509a3291d979989764a53104e2999b60b90cd90f189fd",
+      "auditorAnteriorSha256": "1c4efce2625be56ac61fc0f72a88542de668632f0dca417296afea2d1fd4f25e",
+      "auditorCorregidoSha256": "95294ed9fee0f423c39f730d456620c9480c69fe6a5429ff298ada61ed054c6d",
+      "hallazgosAntes": 0,
+      "hallazgosDespues": [
+        {
+          "codigo": "CELDA_TEXTO_CONTRADICE_FUENTE",
+          "filaId": "t1-0298-01-01",
+          "columna": "PEQUENO_AISLAR_M"
+        },
+        {
+          "codigo": "CELDA_UNIDAD_CONTRADICE_COLUMNA",
+          "filaId": "t1-0298-01-01",
+          "columna": "PEQUENO_AISLAR_M"
+        },
+        {
+          "codigo": "CELDA_UNIDAD_CONTRADICE_TEXTO",
+          "filaId": "t1-0298-01-01",
+          "columna": "PEQUENO_AISLAR_M"
+        }
+      ],
+      "reproducibleEn": "scripts/matpel/test_auditar_conocimiento.py",
+      "fuenteSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af"
+    },
+    {
+      "id": "INDICES_NOMBRE_GUIA_VERDE",
+      "payloadSha256": "1fbb2e39f6d3df2863ff88a05c541870a154275f61e6f3d28f399027c4b2e419",
+      "auditorAnteriorSha256": "1c4efce2625be56ac61fc0f72a88542de668632f0dca417296afea2d1fd4f25e",
+      "auditorCorregidoSha256": "95294ed9fee0f423c39f730d456620c9480c69fe6a5429ff298ada61ed054c6d",
+      "hallazgosAntes": 0,
+      "hallazgosDespues": [
+        {
+          "codigo": "INDICE_CAMPO_CONTRADICE_FUENTE",
+          "entradaId": "amarillo-0033-1-008",
+          "campo": "guia"
+        },
+        {
+          "codigo": "INDICE_CAMPO_CONTRADICE_FUENTE",
+          "entradaId": "amarillo-0033-1-008",
+          "campo": "nombre"
+        },
+        {
+          "codigo": "INDICE_VERDE_CONTRADICE_FONDO",
+          "entradaId": "amarillo-0033-1-008"
+        },
+        {
+          "codigo": "INDICE_CAMPO_CONTRADICE_FUENTE",
+          "entradaId": "azul-0100-1-004",
+          "campo": "guia"
+        },
+        {
+          "codigo": "INDICE_CAMPO_CONTRADICE_FUENTE",
+          "entradaId": "azul-0100-1-004",
+          "campo": "nombre"
+        },
+        {
+          "codigo": "INDICE_VERDE_CONTRADICE_FONDO",
+          "entradaId": "azul-0100-1-004"
+        }
+      ],
+      "reproducibleEn": "scripts/matpel/test_auditar_conocimiento.py",
+      "fuenteSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af"
+    }
+  ],
+  "casos": "../test-cases/casos-independientes-iniciales.json",
+  "motorEjecutado": false,
+  "dominioIntegralDemostrado": false,
+  "limitesPendientes": [
+    "Nombre normalizado frente a original.",
+    "GuiaNumero y P de filas frente a original.",
+    "Semantica de unidades y condiciones Tabla3 frente a cabeceras."
+  ]
+}

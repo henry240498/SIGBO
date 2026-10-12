@@ -83,6 +83,22 @@ Login: `POST /auth/login` con `usernameOrEmail` y `password`.
 
 ## 6. Distribución del APK
 
+Entrega local2026-10-12: APK1.7.0+14 incorpora motorGRE compartido sin conexión y
+lectura de placas por foto procesada localmente. [Detalle y límites](../.movile/docs/GRE_CIERRE_20261012.md).
+80pruebasFlutter aprobadas. La edición debe descargarse desde un servidor autorizado;
+el backend local tiene rutasGRE y094/095 instaladas con respaldo verificado e
+historial existente. Candidato original importado para revisión; sin catálogo activo.
+Sin publicación automática, aceptación institucional ni prueba física.
+
+Actualización local2026-10-11: APK1.6.0+13 compilado y firmado con consulta guiada GRE del
+motor del servidor, zonas relativas, tres tablas verdes y condiciones documentadas
+en la biblioteca sin red. [Detalle](../.movile/docs/MATPEL.md) y
+[evidencia](gre2024/evidencia/apk-gre-20261011.json). No inferir distribución
+automática ni instalación física por compilar el APK nuevo. El cálculo exige
+edición activa/autorizada y no habilita catálogo, SCI ni OCR.
+Análisis limpio y70pruebas aprobadas. En el servidor local observado faltan ruta
+GRE (`/matpel/estado`:404), permiso de consulta y preparación de edición autorizada.
+
 Es un APK de **depuración** firmado con la clave del cuartel, no un release. Ver
 [[decision--apk-depuracion-firmado-con-clave-propia]] y el procedimiento paso a paso en
 [[workflow--apk-compilar-firmar-publicar]].

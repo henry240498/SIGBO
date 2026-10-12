@@ -27,7 +27,7 @@ Una sesion de chat con el asistente (seccion 6 del pedido): contenedor de Mensaj
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/inteligencia`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`
+- **Pantallas:** `/dashboard/inteligencia`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`, `/dashboard/sistema`
 - **Endpoints:** IaAdminConversacionesController, IaChatController, IaConfiguracionController, IaDashboardController, IaVozController
 - **Servicios:** IaChatService, IaConfiguracionService, IaConversacionesService, IaDashboardService, IaVozService
 

@@ -1,0 +1,142 @@
+{
+  "id": "GRE24-VALIDACION-PAGINAS-RESTANTES-20261010",
+  "fechaUtc": "2026-10-10T18:19:42.676298+00:00",
+  "estado": "INSPECCION_DOCUMENTAL_392_PAGINAS_NO_VALIDACION_OPERATIVA",
+  "fuente": {
+    "path": "docs/Manuales/GRE2024-Spa-Web-a.pdf",
+    "sha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af"
+  },
+  "catalogo": {
+    "path": "backend/private_uploads/gre/bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af.catalogo-1-busqueda-1-pymupdf1.28.2.json",
+    "sha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543"
+  },
+  "entorno": {
+    "python": "3.13.0",
+    "pymupdf": "1.28.2",
+    "sistema": "Windows-11-10.0.26200-SP0"
+  },
+  "git": {
+    "revisionInicio": "b8c89a708eab18e5885f75309896d836d77a6274",
+    "revisionCierre": "b8c89a708eab18e5885f75309896d836d77a6274",
+    "commitRealizadoPorEsteAgente": false,
+    "cambiosConcurrentesConservados": true
+  },
+  "respaldoPrevio": "C:/Users/jemc2/AppData/Local/Temp/sigbo-gre-paginas-restantes-7alz_hz8",
+  "cobertura": {
+    "paginasPDF": 392,
+    "antecedentesConservados": 146,
+    "inspeccionesNuevas": 246,
+    "paginasVisualesDistintasRegistradas": 392,
+    "paginasPendientesInspeccion": 0,
+    "registrosVisualesPrincipales": 371,
+    "imagenesNuevas": 247,
+    "renderAdicionalOrientado": "PDF305; aclaración de trióxido de azufre",
+    "cotejoIndependienteDeCadaNombreYCelda": false
+  },
+  "preservacion": {
+    "PDFYCandidatoSinCambios": true,
+    "registrosVisualesPreviosIdenticos": 125,
+    "artefactosHistoricosComparadosConRespaldoIdenticos": 11,
+    "reglasDocumentadas": 54,
+    "clausulasGuiasConservadas": 2531
+  },
+  "pruebas": {
+    "comando": "python -m unittest test_validar_conocimiento test_documentar_guias test_validar_paginas -v",
+    "directorio": "scripts/matpel",
+    "codigoSalida": 0,
+    "aprobadas": 32,
+    "total": 32,
+    "duracionSegundos": 19.362,
+    "detalle": {
+      "integridadCantidadesCondiciones": 17,
+      "preparadorGuias": 6,
+      "paginasHallazgos": 9
+    }
+  },
+  "preparadorRepetido": {
+    "comando": "python scripts/matpel/documentar_paginas.py",
+    "codigoSalida": 0,
+    "antecedentesVisuales": 146,
+    "inspeccionesNuevas": 246,
+    "pendientesVisuales": 0
+  },
+  "integridad": {
+    "comando": "python scripts/matpel/validar_conocimiento.py",
+    "codigoSalida": 0,
+    "resultado": {
+      "tipo": "INTEGRIDAD_CONTEXTO_NO_VALIDACION_OPERATIVA",
+      "documentos": 27,
+      "reglasDocumentadas": 54,
+      "imagenesRevisadas": 371,
+      "lotesGuias": 6,
+      "clausulasDocumentadas": 2531,
+      "paginasRevisionIndependienteRegistradas": 5,
+      "paginasVisualesRegistradas": 392,
+      "paginasInventariadas": 392,
+      "paginasConInspeccionNueva": 246,
+      "paginasPendientesInspeccion": 0,
+      "errores": [],
+      "dominioIntegralDemostrado": false
+    }
+  },
+  "grafo": {
+    "generador": "node .context/graph/build-graph.mjs",
+    "validador": "node .context/graph/validar.mjs",
+    "generadorCodigoSalida": 0,
+    "validadorCodigoSalida": 0,
+    "nodos": 1130,
+    "aristas": 3969,
+    "avisosValidador": 10,
+    "advertenciasGenerador": [
+      "tabla renombrada: seguridad.configuracion_apariencia -> seguridad.configuracion_sistema (014_configuracion_sistema.sql)",
+      "nodo duplicado: component--modulo-pantallas"
+    ]
+  },
+  "diffCheck": {
+    "comando": "git -c core.safecrlf=false diff --check",
+    "codigoSalida": 0
+  },
+  "alcance": [
+    "Se inspeccionaron individualmente las246 páginas que carecían de evidencia visual; se conservaron146 antecedentes.",
+    "Índices/tablas: estructura, condiciones, continuidad y entradas relevantes; no cotejo semántico independiente de cada nombre/celda.",
+    "El auditor sin cambios no se repitió; no se atribuyen sus resultados históricos a esta ejecución.",
+    "Las pruebas verifican integridad documental y regresiones de herramientas, no aplicación operativa."
+  ],
+  "pendientes": [
+    "Cotejo independiente de cada nombre, color, condición y celda.",
+    "Inventario exhaustivo de reglas y predicados/precedencia.",
+    "Comprensión independiente integral, motor MATPEL y consumo SCI/mapa.",
+    "Vigencia/erratas externas, contactos y aceptación institucional."
+  ],
+  "accionesNoRealizadas": [
+    "Activación de catálogo",
+    "Migraciones o cambios de SQL",
+    "Cambios de aplicación/productivos",
+    "Commits o pushes"
+  ],
+  "archivosSha256": {
+    ".context/gre2024/paginas/README.md": "e6efbc8911bcd77d4de7da7ab5e41aa5b109bd83bb697c053fa17f3445f4fb78",
+    ".context/gre2024/paginas/cobertura.md": "4ce8a3b467a4d3845089cded07f8f8b0fb1720eb67f60d5069d7dd796fb14d94",
+    ".context/gre2024/paginas/inventario.json": "2dde77de2031b12af5582f32247496d574830d4c1e5dea0194ce06f5c43a8c56",
+    ".context/gre2024/paginas/notas.json": "3cb5ebcbfaa70f6cd6e3aff86286889da611b9e4126e9b49c45350e127a7940e",
+    ".context/gre2024/paginas/hallazgos.json": "7d39cf655780102845212bf70327713554b57e435f27903a5fdbfa8d4db4affa",
+    ".context/gre2024/index.md": "f84490267869a8fdfb4c488e5af2e2ac91629884ae82f911d75bda7153c09d25",
+    ".context/gre2024/document-structure.md": "91145b7dc448ab737c6f007a22b0d24cca613993bd745d90a23a6f130276947f",
+    ".context/gre2024/estudio-guia-usuario.md": "a95086ec36fd99cffae7826db5ec3c44d27e2f7e4a3037f7956ed8016451675c",
+    ".context/gre2024/validation-report.md": "e01551a7b330bf708ac0fcb3d4a8cfc3b0551c1a33768f2c68e60398f524a88a",
+    ".context/gre2024/open-issues.md": "2c1552d07cc7d0e38448145ab9182cb425ea1808f2425e6f82249686ba990e06",
+    ".context/gre2024/operational-rules.md": "554e66f90cc72e2ed5fc14b4f2432777c32236eea8e537f2245218db741abeee",
+    ".context/gre2024/test-cases.md": "a8829816ebc698baa12ac02aad53b3e2798454ec2bbc03bf2500f22ebfe96308",
+    ".context/gre2024/engine-implementation.md": "a1c600c200d01fdbd3f5736e2faeb653474bc5d7fe4d5e944d4318747841299f",
+    ".context/gre2024/evidencia/revision-visual.json": "01b688b4a01d7b250ce9c37d32b7c735837cacb7db5ae2c00d00af437bdd55d8",
+    ".context/gre2024/evidencia/integridad-contexto.json": "e47f1a767f887798a8a33cfd6c2b6fdaeeb76c823f0cb2619e3820f1a8598a37",
+    "scripts/matpel/documentar_paginas.py": "e4f36f37a841981d0fa1a2b2684cf844556077044114782a8b7969aca8d2663e",
+    "scripts/matpel/registrar_paginas_leidas.py": "de1d540598f26bb3bfef0e0af60b200adf68b0ad08dbcb66801c7138696feb8f",
+    "scripts/matpel/validar_paginas.py": "64bd744fb25f567601b38bfca424f586446e2d8cb72e6342c6823983d136fdd1",
+    "scripts/matpel/test_validar_paginas.py": "3e086789723385932b6fdbc1a12d22aeebd123b05223c6b8f68280fe6dd86453",
+    "scripts/matpel/validar_conocimiento.py": "a9fab4ed94bb715983c8e9286843743e762fd2a755cf2546a8981ff290c1ed7d",
+    ".context/proyecto.json": "dcc2f07a82b592cceeb89b171561273354e65af34feb2082c2f59ac780918c60",
+    ".context/MATPEL.md": "a8e5a03fcd2006f970fa42a6e1faa26f5d15d7558a65c1a6068819b73efd3e6f",
+    ".context/graph/curated/rule/rule--gre2024-fuente-conocimiento-operativo.md": "475153ec5367c28361ca1b7d8a64eb738edda91f36eab99fc3a55535ed873bc1"
+  }
+}

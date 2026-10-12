@@ -1,0 +1,2482 @@
+{
+  "tipo": "ANOTACIONES_MANUALES_TRAS_LECTURA_NATIVA_E_INSPECCION_VISUAL",
+  "fuenteSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+  "paginas": [
+    {
+      "paginaPdf": 1,
+      "observaciones": [
+        "Portada: edición2024, uso por primeros respondedores durante fase inicial de incidente en transporte; logos institucionales y carteles ilustrativos de clases4/7/8 no identifican un incidente concreto."
+      ],
+      "limite": "Sin número impreso de página; no extender alcance a certificación o mando.",
+      "fragmentosFuente": [
+        "Una guía destinada al uso de los primeros respondedores"
+      ]
+    },
+    {
+      "paginaPdf": 2,
+      "observaciones": [
+        "Interior de portada: documentos/papeles son sinónimos. Ubicación depende de modo: cabina, tripulación, piloto/empleados, puente. ONU/NA cuatro dígitos y denominación remiten a índices distintos; clase/división, GE y contactos son campos separados.",
+        "Flechas del dibujo asignan cada campo del embarque; teléfono y contrato son ejemplos impresos, no contactos válidos. Placa numerada y placa con panel naranja son alternativas. Notas regulatorias marcadas se refieren a Estados Unidos."
+      ],
+      "limite": "No insertar el ejemplo del original como dato operacional ni completar contactos; sin número impreso.",
+      "fragmentosFuente": [
+        "Carretera – se encuentra en la cabina del vehículo",
+        "En los Estados Unidos"
+      ]
+    },
+    {
+      "paginaPdf": 4,
+      "observaciones": [
+        "Impresa2: formulario en blanco de asistencia local, con contratistas, ferrocarriles, agencias y otros. Líneas vacías son contenido previsto, no teléfonos omitidos por extractor."
+      ],
+      "limite": "No inventar números ni tratar formulario como directorio institucional vigente.",
+      "fragmentosFuente": [
+        "Por favor complete esta sección"
+      ]
+    },
+    {
+      "paginaPdf": 5,
+      "observaciones": [
+        "Impresa3: índice general. Referencias son páginas impresas, no posiciones PDF; portada interior se referencia por ubicación. Naranja empieza impresa156, tablas1/2/3 en294/332/338, ERAP385. Índice visual conserva entradas partidas y tabulaciones."
+      ],
+      "limite": "Resolver la página original antes de enlazar; no usar suma universal de desplazamiento.",
+      "fragmentosFuente": [
+        "Interior portada frontal",
+        "Tabla 2 - Materiales Reactivos con el Agua"
+      ]
+    },
+    {
+      "paginaPdf": 6,
+      "observaciones": [
+        "Impresa4: aproximación, asegurar, identificar, evaluar, pedir ayuda y responder son etapas distintas. Ingreso condicionado a protección apropiada; reevaluación continua y puesto de comando no transfieren autoridad al software.",
+        "Ausencia de olor no permite concluir inocuidad; envase vacío conserva peligro hasta limpieza/purga. Dirección de aproximación depende de viento, pendiente y corriente, sin ruta calculada aquí."
+      ],
+      "limite": "Evaluaciones y recursos requieren evidencia y responsable; no imponer intervención automática.",
+      "fragmentosFuente": [
+        "Ingrese solamente cuando esté utilizando el equipo de protección apropiado",
+        "No asuma que los gases o vapores son inofensivos"
+      ]
+    },
+    {
+      "paginaPdf": 7,
+      "observaciones": [
+        "Impresa5: secuencia general subordinada a procedimientos de organización/plan local: organismo propio, contacto del embarque, asistencia nacional. Embarque no disponible activa alternativa; cantidad transportada y liberada son datos diferentes.",
+        "Lista de información incluye material, contenedor, lesiones, clima/terreno y receptores cercanos; desconocidos permanecen explícitos. Esta lectura no ejecuta notificaciones."
+      ],
+      "limite": "No enviar mensajes ni convertir contactos extranjeros en obligación local.",
+      "fragmentosFuente": [
+        "Siga los pasos descritos en los procedimientos estándar de su organización",
+        "Cantidad de material transportado / liberado"
+      ]
+    },
+    {
+      "paginaPdf": 8,
+      "observaciones": [
+        "Impresa6: nueve clases y divisiones1.1–1.6,2.1–2.3,4.1–4.3,5.1–5.2,6.1–6.2; distinguir masa/proyección/incendio, gas inflamable/tóxico y reacción espontánea/agua. División1.5 conserva explosión en masa pese a insensibilidad.",
+        "Vértice inferior identifica clase/división; peligro secundario puede aparecer entre paréntesis en embarque. Texto del cartel tiene contexto estadounidense y excepción clase7; no inferir peligro ausente por texto faltante."
+      ],
+      "limite": "Clasificación de transporte no equivale a identidad química ni selección operacional completa.",
+      "fragmentosFuente": [
+        "División 1.5",
+        "El texto es utilizado solamente en los Estados Unidos"
+      ]
+    },
+    {
+      "paginaPdf": 9,
+      "observaciones": [
+        "Impresa7: tabla de carteles solo si falta ONU/nombre apropiado. Guía inicial temporal; reemplazar por específica al conocer identidad. Varios carteles requieren mayores acciones de protección según fuente; no calcular selección solo con máxima cifra aislada.",
+        "Asterisco identifica letra de compatibilidad; doble identifica división. Remite a glosario.111 cubre peligro/unknown/cartel no observable,127 clase3 y153 corrosivo como asociaciones iniciales."
+      ],
+      "limite": "No confundir clasificación provisional con identificación confirmada; mayor protección exige evaluación contextual.",
+      "fragmentosFuente": [
+        "USE ESTA TABLA SOLO CUANDO",
+        "inicialmente utilice la guía más"
+      ]
+    },
+    {
+      "paginaPdf": 10,
+      "observaciones": [
+        "Impresa8: asociaciones visuales de círculo negro y familia de carteles:111 peligro/desconocido;112 explosivos1.1/1.2/1.3/1.5;114 divisiones1.4/1.6;118 gas inflamable;120 no inflamable;123 tóxico;122 oxígeno;127 inflamableclase3;125 amoniaco1005;128 marcas calor/fuel/gasolina. Restricciones aéreo/otros modos y estrellas pertenecen a símbolos concretos.",
+        "La cabecera continúa en página siguiente; orden de texto nativo por sí solo no establece qué cartel apunta a cada círculo."
+      ],
+      "limite": "No inferir asociación pictograma→guía desde proximidad textual ni reconocimiento automático no validado.",
+      "fragmentosFuente": [
+        "Para las",
+        "Todos los"
+      ]
+    },
+    {
+      "paginaPdf": 11,
+      "observaciones": [
+        "Impresa9: continuación de tabla:134 sólido inflamable,136 espontáneo,139 peligroso húmedo,143 oxidante,148 peróxido,153 tóxico/corrosivo,158 infeccioso,163 radiactivo,171 varios. Fuente visual separa metal litio3090/3091→138 de ion litio3480/3481→147.",
+        "La restricción de cabecera incluye documento de embarque, placa numerada y panel naranja; no tratar ausencia de nombre como único criterio si hay número disponible."
+      ],
+      "limite": "Asociaciones provisionales dentro del alcance dePDF9; ion sodio no figura en esta marca ilustrada y no se agrega por analogía.",
+      "fragmentosFuente": [
+        "Baterías de metal litio",
+        "Baterías de ión litio"
+      ]
+    },
+    {
+      "paginaPdf": 12,
+      "observaciones": [
+        "Último recurso si no se identifica producto por embarque/manifiesto/despacho;117 presurizado y131 general/baja presión. Carcasa, fijaciones y presiones usuales son pistas con variaciones, no identificación confirmada. Dibujo de válvulas separa cada modelo."
+      ],
+      "limite": "Inspección documental de página y asociaciones visibles; no algoritmo de reconocimiento, identificación química ni autorización de intervención.",
+      "fragmentosFuente": [
+        "antes de iniciar las acciones de respuesta"
+      ]
+    },
+    {
+      "paginaPdf": 13,
+      "observaciones": [
+        "128 TC117/DOT117 líquidos inflamables frente a115 carro criogénico aislado al vacío;10–75psi es rango de este tipo ilustrado, no umbral universal de respuesta."
+      ],
+      "limite": "Inspección documental de página y asociaciones visibles; no algoritmo de reconocimiento, identificación química ni autorización de intervención.",
+      "fragmentosFuente": [
+        "TC117, DOT117"
+      ]
+    },
+    {
+      "paginaPdf": 14,
+      "observaciones": [
+        "111 carro cerrado y140 tolva, con descarga por gravedad condicionada a compuertas abiertas. Diagrama inferior distingue capacidad, peso vacío, reporte/número, especificaciones y producto; no inferir carga actual de capacidad nominal."
+      ],
+      "limite": "Inspección documental de página y asociaciones visibles; no algoritmo de reconocimiento, identificación química ni autorización de intervención.",
+      "fragmentosFuente": [
+        "peso del carro vacío"
+      ]
+    },
+    {
+      "paginaPdf": 15,
+      "observaciones": [
+        "Siluetas de remolques solo último recurso; encamisado puede ocultar anillos/corte.117 MC331 gases comprimidos y117 MC338/TC341 criogénicos;137 DOT407 circular. Presión diseño, PTMA y contenido son conceptos separados."
+      ],
+      "limite": "Inspección documental de página y asociaciones visibles; no algoritmo de reconocimiento, identificación química ni autorización de intervención.",
+      "fragmentosFuente": [
+        "el último recurso"
+      ]
+    },
+    {
+      "paginaPdf": 16,
+      "observaciones": [
+        "131 DOT406 elíptico con PTMA3–5psi EEUU/México y3–15 Canadá;137 DOT412 circular corrosivo≥15psi;112 TC423 emulsiones5–15psi;117 tubos gases. Asociación visual y jurisdicción impiden usar umbral global."
+      ],
+      "limite": "Inspección documental de página y asociaciones visibles; no algoritmo de reconocimiento, identificación química ni autorización de intervención.",
+      "fragmentosFuente": [
+        "PTMA entre 3-15 psi"
+      ]
+    },
+    {
+      "paginaPdf": 17,
+      "observaciones": [
+        "134 granel seco tolva,137 vacío,111 carga mixta/contenedor y117 tanque intermodal. Contenedor de carga y tanque intermodal no son equivalentes;20–500psi y200–45000L corresponden al tanque ilustrado."
+      ],
+      "limite": "Inspección documental de página y asociaciones visibles; no algoritmo de reconocimiento, identificación química ni autorización de intervención.",
+      "fragmentosFuente": [
+        "Tanque intermodal"
+      ]
+    },
+    {
+      "paginaPdf": 18,
+      "observaciones": [
+        "SGA marco rojo/fondo blanco/símbolo negro y cinco campos de etiqueta; embalaje exterior, envase primario y único se ilustran por separado. Transporte puede prevalecer para mismo peligro físico; coexistencia no duplica identidad."
+      ],
+      "limite": "Inspección documental de página y asociaciones visibles; no algoritmo de reconocimiento, identificación química ni autorización de intervención.",
+      "fragmentosFuente": [
+        "tendrán precedencia las etiquetas para el transporte"
+      ]
+    },
+    {
+      "paginaPdf": 19,
+      "observaciones": [
+        "Nueve símbolosSGA con categorías físicas/salud/ambiente; corrosión se usa en dos columnas con significado contextual. Signo exclamación nocivo no equivale a calavera grave; no mapear pictogramaSGA directamente a guía de transporte."
+      ],
+      "limite": "Inspección documental de página y asociaciones visibles; no algoritmo de reconocimiento, identificación química ni autorización de intervención.",
+      "fragmentosFuente": [
+        "Toxicidad aguda (grave)"
+      ]
+    },
+    {
+      "paginaPdf": 20,
+      "observaciones": [
+        "Panel naranja: peligro dos/tres dígitos ARRIBA y ONU cuatro ABAJO. Duplicación intensifica, cero completa único, X señala reacción violenta con agua; clase1 usa división/grupo.9 incluye descomposición/polimerización condicionadas."
+      ],
+      "limite": "Inspección documental de página y asociaciones visibles; no algoritmo de reconocimiento, identificación química ni autorización de intervención.",
+      "fragmentosFuente": [
+        "El número duplicado indica una intensificación"
+      ]
+    },
+    {
+      "paginaPdf": 21,
+      "observaciones": [
+        "Códigos de identificación del riesgo: 30 y 36 incluyen los límites 23°C y 60°C; 33 usa punto de inflamación inferior a 23°C. Los códigos 323/X323 distinguen condiciones de reacción; 333 indica materia líquida pirofórica. Conservar definiciones completas y contexto, sin componer una decisión por dígitos."
+      ],
+      "limite": "Inspección documental de página y asociaciones visibles; no algoritmo de reconocimiento, identificación química ni autorización de intervención.",
+      "fragmentosFuente": [
+        "incluidos los valores límites"
+      ]
+    },
+    {
+      "paginaPdf": 22,
+      "observaciones": [
+        "Lista38–558:40 incluye sólido autorreactivo/autocalentamiento/polimeriza;X462 gases TÓXICOS frente a462 INFLAMABLES yX482 CORROSIVOS frente a482 INFLAMABLES. PrefijoX no conserva necesariamente el mismo gas producido."
+      ],
+      "limite": "Inspección documental de página y asociaciones visibles; no algoritmo de reconocimiento, identificación química ni autorización de intervención.",
+      "fragmentosFuente": [
+        "gases corrosivos"
+      ]
+    },
+    {
+      "paginaPdf": 23,
+      "observaciones": [
+        "Lista559–83:toxicos/oxidantes/radiactivos/corrosivos;639/663 usan≤60°C mientras63 incluye23–60.668/X668 distinguen reacción con agua.20gas asfixiante y70radiactivo no ofrecen sustancia específica."
+      ],
+      "limite": "Inspección documental de página y asociaciones visibles; no algoritmo de reconocimiento, identificación química ni autorización de intervención.",
+      "fragmentosFuente": [
+        "igual o inferior a 60°C"
+      ]
+    },
+    {
+      "paginaPdf": 24,
+      "observaciones": [
+        "ListaX83–99: X839 añade reacción agua a reacción espontánea;X88/X886 yotros mantienen categorías completas.90 ambiental/diversos y99diversos calientes no son númerosONU ni guías."
+      ],
+      "limite": "Inspección documental de página y asociaciones visibles; no algoritmo de reconocimiento, identificación química ni autorización de intervención.",
+      "fragmentosFuente": [
+        "Materias peligrosas diversas transportadas en caliente"
+      ]
+    },
+    {
+      "paginaPdf": 25,
+      "observaciones": [
+        "Tuberías transporte/distribución/recolección difieren en presión, olor y contaminaciónH2S. Gas no olorizado conserva peligro aunque no haya olor; datos deNorteamérica son contexto, no inventario de ductos locales."
+      ],
+      "limite": "Condiciones documentales y contexto preservados; no criterio ejecutable de mando, equipo, ruta o intervención.",
+      "fragmentosFuente": [
+        "no están olorizadas"
+      ]
+    },
+    {
+      "paginaPdf": 26,
+      "observaciones": [
+        "Lotes alternados impiden atribuir siempre mismo producto al ducto. LAV vapor>276kPa a37.8°C; signos indican presencia/operador, no ubicación exacta. Dibujos de marcadores tienen teléfonos ficticios impresos."
+      ],
+      "limite": "Condiciones documentales y contexto preservados; no criterio ejecutable de mando, equipo, ruta o intervención.",
+      "fragmentosFuente": [
+        "no indican la ubicación exacta"
+      ]
+    },
+    {
+      "paginaPdf": 27,
+      "observaciones": [
+        "Distribución sin marcas y recolección frecuentemente sin marcas: ausencia de señales no descarta ducto. Estructuras e indicios visuales/auditivos/vegetación no aseguran identidad ni detección completa."
+      ],
+      "limite": "Condiciones documentales y contexto preservados; no criterio ejecutable de mando, equipo, ruta o intervención.",
+      "fragmentosFuente": [
+        "no están marcadas con señales"
+      ]
+    },
+    {
+      "paginaPdf": 28,
+      "observaciones": [
+        "Nunca operar válvula salvo coordinación con operador; nunca extinguir fuego antes de cerrar suministro. No atravesar nube ni aproximar vehículos antes de aislamiento; protección, monitoreo y avisar operador son condiciones diferenciadas."
+      ],
+      "limite": "Condiciones documentales y contexto preservados; no criterio ejecutable de mando, equipo, ruta o intervención.",
+      "fragmentosFuente": [
+        "excepto en coordinación con el operador"
+      ]
+    },
+    {
+      "paginaPdf": 29,
+      "observaciones": [
+        "Comando de incidente si necesario y eventual unificado; no se automatiza mando. Distancias dependen de producto, presión/diámetro, cierre, disipación, monitoreo, clima, población y edificios. Cerrar válvula no equivale a disipación inmediata."
+      ],
+      "limite": "Condiciones documentales y contexto preservados; no criterio ejecutable de mando, equipo, ruta o intervención.",
+      "fragmentosFuente": [
+        "Tiempo de disipación del producto"
+      ]
+    },
+    {
+      "paginaPdf": 30,
+      "observaciones": [
+        "RecursosNPMS estadounidenses yCanadá. Fuente describeubicaciones generales dentro500pies y excluye recolección/distribución; no usar mapa como posición exacta ni confirmar acceso/vigencia actual de enlaces."
+      ],
+      "limite": "Condiciones documentales y contexto preservados; no criterio ejecutable de mando, equipo, ruta o intervención.",
+      "fragmentosFuente": [
+        "no contiene tuberías"
+      ]
+    },
+    {
+      "paginaPdf": 31,
+      "observaciones": [
+        "PáginaNOTAS intencionalmente vacía, impresa29; no es pérdida del contenido."
+      ],
+      "limite": "Condiciones documentales y contexto preservados; no criterio ejecutable de mando, equipo, ruta o intervención.",
+      "fragmentosFuente": [
+        "NOTAS"
+      ]
+    },
+    {
+      "paginaPdf": 32,
+      "observaciones": [
+        "Instrucciones del índice amarillo: verde sin fuego consulta Tabla 1 y guía; con fuego evacuación de guía más residual Tabla 1. Explosivos por división 112/114, no identificación ONU; preservar excepción agua."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "ÍNDICE DE NÚMEROS DE IDENTIFICACIÓN"
+      ]
+    },
+    {
+      "paginaPdf": 33,
+      "observaciones": [
+        "Inicio de índice numérico en dos columnas; cuatro entradas sin ONU aparecen antes de 1001. 1040 P y verde son marcas independientes. 1043 continúa en página siguiente."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 34,
+      "observaciones": [
+        "Continúa 1043 y llega 1087; 1057 contiene guías 128 y 115 según tipo, por lo que ONU no basta para respuesta única. 1075 tiene varios alias GLP."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 35,
+      "observaciones": [
+        "ONU 1088–1163. Acetona y gasolina no se identifican por semejanza del nombre; marcas verdes de acroleína/acrilonitrilo y P coinciden sólo en sus filas."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 36,
+      "observaciones": [
+        "ONU 1164–1206. Etanol 1170 múltiples alias; gasolina 1203 frente a gasóleo 1202 comparten 128 pero son identidades diferentes; nitroglicerina 1204 limitada a máximo 1%."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 37,
+      "observaciones": [
+        "ONU 1207–1268; 1259 níquel carbonilo verde. Nombres genéricos de petróleo y pinturas no habilitan reducir toda la familia a una entrada."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 38,
+      "observaciones": [
+        "ONU 1270–1324. Verde 1305 incluye P; picratos húmedos incorporan mínimos de agua y guías diferentes. No omitir humedad ni porcentaje del nombre."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 39,
+      "observaciones": [
+        "ONU 1325–1352. Fosfuros/sulfuros y fósforo formas diferentes; verde 1340 excluye fósforo amarillo/blanco. Preservar calificadores y filas multilínea."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 40,
+      "observaciones": [
+        "ONU 1353–1384; fósforo amarillo/blanco 1381 no usa la guía de fósforo rojo de página anterior. Tres alias verdes 1384; porcentajes de humedad pertenecen al nombre."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 41,
+      "observaciones": [
+        "ONU 1385–1432; litio metálico 1415 guía 138 y sin verde, no equivale a baterías ion-litio. Fosfuros verdes difieren de hidruros vecinos; conservar aleaciones y estado."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 42,
+      "observaciones": [
+        "ONU 1433–1488; cinc/zinc múltiples alias con ONU y guía. Sin resaltados verdes visibles; peróxidos inorgánicos no equivalen a orgánicos."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 43,
+      "observaciones": [
+        "ONU 1489–1562; transición oxidantes/tóxicos; 1541 verde estabilizada y arsénico líquido/sólido nombres próximos con guías 154/152/151/157."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 44,
+      "observaciones": [
+        "ONU 1564–1612; cloropicrina mezclada con metilo cambia guía 119/123/154. Último alias 1612 continúa en página siguiente."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 45,
+      "observaciones": [
+        "Continúa 1612; 1613 menos del 5% no está verde, máximo20% sí: sensibilidad a nombre/concentración demostrada en imagen. No resolver verde únicamente por ONU."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 46,
+      "observaciones": [
+        "ONU 1665–1726; cianuros potasio/sodio sólidos verdes no se sustituyen por gas HCN. Silanos estabilizados verdes no muestran P automáticamente."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 47,
+      "observaciones": [
+        "ONU 1727–1762. Bromo en solución 1744 incluye condiciones de zona de peligro A/B resaltadas en verde. Ácido clorosulfónico 1754 dice con o sin trióxido de azufre, consistente con Tabla 1 y Tabla 2. Los sinónimos pueden compartir guía y condición."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 48,
+      "observaciones": [
+        "ONU1763–1804: silanos verdes; ácido clorhídrico solución guía157 no es cloruro hidrógeno anhidro guía125. Concentraciones y estado se conservan."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 49,
+      "observaciones": [
+        "ONU1805–1837: 1830 ácido sulfúrico no verde; 1831 fumante sí. Nombres ácido mixto múltiples concentraciones mantienenidentificador sin demostrar igualdad operativa."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 50,
+      "observaciones": [
+        "ONU1838–1895: verde tetrafluoruro de silicio y etildicloroarsina; hielo seco no equivale a líquido criogénico. Nitrato mercúrico continúa en51."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 51,
+      "observaciones": [
+        "Continúa1895, 1952 mezcla óxidoetileno/CO2 no más9% frente a otros límites1041; verde1931 cinc/zinc conguía171. Nombres no se fusionan por ortografía normalizada."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 52,
+      "observaciones": [
+        "ONU1953–1969: varias zonas tóxicas y alias fósforo/fosfato1955 verdes. Color ocupa toda altura de nombre multilínea; no trasladarlo a siguiente fila."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 53,
+      "observaciones": [
+        "ONU1970–2004: gasnatural comprimido y criogénico comparten115 pero diferentes estados; 1975mezclas verdes y 1994hierropentacarbonilo136."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 54,
+      "observaciones": [
+        "ONU2006–2047: peróxidohidrógeno2014/2015 cambia guía140/143 por concentración; 2032 ácido nítrico fumante rojo verde y2031no. Municionesnoexplosivas mantienencalificadores."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 55,
+      "observaciones": [
+        "ONU2048–2208: 2186líquido refrigerado remite125; fosfina2199tresalias verdes. AcrilamidaP y otros estabilizados sinP no se equiparan."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 56,
+      "observaciones": [
+        "ONU2209–2264; cloroacetaldehído/2-cloroetanal verdes y formaldehído corrosivo noverde. 2264 continúa en siguiente página; dos columnas orden numérico."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 57,
+      "observaciones": [
+        "ONU2264–2317; 2308 ácido nitrosilsulfúrico líquido verde, estado no equiparable a sólido3456. Rango50–70% etilamina en nombre."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 58,
+      "observaciones": [
+        "ONU2318–2372; alilamina2334 verde; hidrosulfuro sódico2318 con menos25% distinto de1384. P en acrilatos y éteres específico por entrada."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 59,
+      "observaciones": [
+        "ONU2373–2432; dimetilhidrazina simétrica2382 distinta de asimétrica1163. Gases PTI2417/2418/2420/2421 verdes; conservarnombre y guía."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 60,
+      "observaciones": [
+        "ONU2433–2491; isocianato metilo2477 guía131 sinP frente a metilo2480 guía155P. 2478 genérico verde tiene alias multilínea; 2491 continúa."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 61,
+      "observaciones": [
+        "ONU2491–2561; 2495 verde agua; nitrocelulosa cambia guías según mezcla/humedad. P y estabilizado no se infieren por pertenencia a familia."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 62,
+      "observaciones": [
+        "ONU2564–2611; solución vs sólido y máximo5% en ácidos; verde2605/2606, las mezclas refrigerantes mantienenporcentajes específicos."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 63,
+      "observaciones": [
+        "ONU2612–2687; 2672 amoníaco10–35% guía154 no verde, no coincidecon2073/1005. Verdes estibina y yoduro de metilo independientes."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 64,
+      "observaciones": [
+        "ONU2688–2751; cloroformiatos verdes2740/2742/2743, aminas guías según peligro y estado. No todos los nombres que comienzan cloroformiato están verdes."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 65,
+      "observaciones": [
+        "ONU2752–2796: plaguicidas sólidos vs líquidos inflamables guías151/131 y otras; ácido acético2789>80% frente a2790 rango10–80%."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 66,
+      "observaciones": [
+        "ONU2797–2845; nitruro litio2806verde pero hidruro2805no. Sustancia infecciosa2814 guía158, sin verde; no confundir infeccioso y PTI."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 67,
+      "observaciones": [
+        "ONU2846–2905; sustancias infecciosas sólo animales2900. Hipoclorito hidratado incluye intervaloagua5.5–16%; clorurobromo2901verde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 68,
+      "observaciones": [
+        "ONU2907–2930; radioactivos tiposbultoBAE/OCS/exceptuados guías161–163. 2927 tiene dos nombres verdes y genérico noverde bajo mismoONU."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 69,
+      "observaciones": [
+        "ONU2931–2989; UF6 radiactivo fisionable y exceptuado verde guía166, distintos deguíasradio generales. Clorosilanos2985–2988 conservandistintasguías."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 70,
+      "observaciones": [
+        "ONU2990–3028; plaguicidas líquidos tóxicoscon/sininflamabilidad y sólidos no deben fusionarse. 3023verde; 3022P pero noverde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 71,
+      "observaciones": [
+        "ONU3048–3088; 3077ambiental171 no significa PTI. 3079Pverde, otrosisocianatosnoverde segúnfila. Orden numérico y nombresgenéricos."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 72,
+      "observaciones": [
+        "ONU3088–3121; baterías metal-litio3090/3091 guía138, diferentes de ion-litio. Peróxidosorgánicos tiposB–F y temperaturaregulada llevan145/146/148."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 73,
+      "observaciones": [
+        "ONU3122–3146; reactividadagua y toxicidad no implica resaltadogreen. Mezcla3138 conserva límites71.5/22.5/6%. Entradasgenéricasmultilínea."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 74,
+      "observaciones": [
+        "ONU3147–3162; gases licuados tóxicoszonasA–D verdes. 3162D continúa siguiente página. Polihalogenados ambientales noverde y171."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 75,
+      "observaciones": [
+        "3171 aparato/vehículo cambia guía154/147/138 según batería; no asignar respuesta única porONU. Toxinas3172 remiten152."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 76,
+      "observaciones": [
+        "ONU3178–3218; sólido calentamientoespontáneo con corrosión/toxicidad136 frente a135otros; códigos cercanosno equivalencia. Doscolumnas sinverde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 77,
+      "observaciones": [
+        "ONU3219–3254; reacciónespontánea149 vs temperaturaregulada150; organismosmodificados171 no infecciosoautomático. 3246verde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 78,
+      "observaciones": [
+        "ONU3255–3284; temperaturas y puntoinflamación de3256/3257/3258 conservan condiciones. Carbonilos3281verde frente a3282organometálico noverde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 79,
+      "observaciones": [
+        "ONU3284–3303; 3300mezcla>87% Pverde distinto1041/1952. 3294cianuro soluciónalcohólica máximo45%; 3303 iniciazonasA."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 80,
+      "observaciones": [
+        "Continúa3303B/C/D y oxidante;3304corrosivo,3305inflamablecorrosivo,3306comburentecorrosivo. Toda fila verde mantienezonapeligrocalificador, no semezcla variante."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 81,
+      "observaciones": [
+        "3306 continúa,3307/3308/3309/3310 gases licuados. Doscolumnas verdes con blancosentregrupos; no duplicarcalificadores niasignar blanco delgrupo siguiente."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 82,
+      "observaciones": [
+        "3310 continúa;3318soluciónamoniaco>50% verde, BAEfisionable3324/3325guía165 frente aBAEnofisionable162. TipoC3323guía163."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 83,
+      "observaciones": [
+        "ONU3326–3348; radioactivos fisionables165 yformaespecial164segúnentrada. TNT/nitroglicerinadesensibilizadoscon límitesquímicos, no reglasexplosivos división sincalificadores."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 84,
+      "observaciones": [
+        "ONU3349–3368; gasinsecticidatóxico3355zonasA–D verde vs3354inflamablesólo sinverde. Clorosilanos3361/3362guíasdistintas."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 85,
+      "observaciones": [
+        "ONU3369–3394; categoríasbiológicasB3373sinverde; líquidostóxicos3381–3390distintaszonas/peligros converde. Organometálicos3391–3394noverde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 86,
+      "observaciones": [
+        "ONU3395–3422; propiedadesorganometálicas cambian135/138; cianurossolución3413/3414noverde ydistintosdesólidos1680/1689.3422continúa."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 87,
+      "observaciones": [
+        "ONU3422–3468; toxinas3462sólidas152, carbonilossólidos3466noverde frentealíquidos3281.3456ácidonitrosilsulfúricosólidoverde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 88,
+      "observaciones": [
+        "ONU3468–3479; cartuchos depila combustible cambian guías128/138/153/115segúncontenido. Instalada/embalada no determina por sí sola guía."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 89,
+      "observaciones": [
+        "ONU3479–3497; bateríasionlitio3480/3481guía147, níquel-hidruro3496guía171; petróleo bruto tóxico3494verde difiere1267."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 90,
+      "observaciones": [
+        "ONU3498–3516; productosquímicospresión3500–3505variasguías; UF63507verdeconlímite0.1kg/bulto. Adsorbido3512peligrozonascontinúa."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 91,
+      "observaciones": [
+        "ONU3516–3530; gasesadsorbidos tóxicos173vsnontóxicos174. Cloro adsorbido3520 no mismoidentificador1017; 3530continúa."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 92,
+      "observaciones": [
+        "ONU3530–3559;3536guía147ionlitio/138metálico mismaONU, vehículos3556/3557/3558 distintos. SustanciaspolimerizantesP149/150; 3539gasestóxicosverde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 93,
+      "observaciones": [
+        "Fin índiceamarillo3560 yNA8000–9269. Sólo columnaizquierda con diezentradas; blanco derecha no falta deextracción. 9202criogénicoverde168."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 94,
+      "observaciones": [
+        "Instrucciones índice azul repiten bifurcación fuego, excepciónagua y explosivos por división112/114. Buscar nombreespecífico juntoaID, no primercoincidenteparcial."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "ÍNDICE DE NOMBRES DE MATERIALES"
+      ]
+    },
+    {
+      "paginaPdf": 95,
+      "observaciones": [
+        "Inicio azul Abono–Ácido; orden nombre/guía/ID inversodelamarillo. Abonosmismonombre dosONU2067/2071; acetatoisopropilo1200/2403 tiene P distinto; duplicados válidos."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 96,
+      "observaciones": [
+        "Índice azul de ácidos: ácido cianhídrico con un máximo del 20% aparece verde; la entrada con menos del 5% en la página anterior no. Ácido clorosulfónico 1754 conserva trióxido de azufre, también en Tabla 1. Ácido mixto tiene identificadores 1796/1826; el nombre aislado no permite seleccionar una identidad única."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 97,
+      "observaciones": [
+        "Ácidos nítrico fumante2032/nitrosilsulfúrico2308/3456/sulfúricofumante1831 verdes. Ácidopícrico mínimosagua10% y30% distintosONU, igual113."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 98,
+      "observaciones": [
+        "Ácidos–alcoholes: detonante112sinONU; acrilonitrilo/acroleínaPverdes. Prefijos numéricos enacetilos noordenancomoONU; condicionesconcentración conservadas."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 99,
+      "observaciones": [
+        "Alcoholes–aminas: aluminiofundido169 frente a polvo135/138/170; no respuesta familiarúnica. Alilamina y silano verde; filasalkyl/familia no borrar prefijos."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 100,
+      "observaciones": [
+        "Amoníacoanhidroverde125 vs soluciones154/125sinverde. Aparatoconbatería3171 presenta154/147/138. Arsenitosestadosyvalenciashierro diferenciados."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 101,
+      "observaciones": [
+        "Arsina2188vsadsorbida3522guías119/173ambosverdes. Bateríasionlitio/ionsodio147 vsmetallitio138 vsníquel-hidruro171; 3536dobleguía."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 102,
+      "observaciones": [
+        "Baterías–bromatos: sodio3292metálico138 distintoionsodio147. Bolsapoliéster sólido3527P vs líquido3269sinP; ambos128. Página sinverde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 103,
+      "observaciones": [
+        "Bromo–butilos: bromo solución1744zonasA/B; bromuroaluminioanhidroverde vs solución2580sinverde. Butano/Butileno aparecen condosONU; noresolverprimerafila."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 104,
+      "observaciones": [
+        "Butilos–cartuchos: carbonilosmetálicos líquidosverde frenteasólidosnoverde. Cartuchos porcontenido agua138/gas115/líquido128/corrosivo153; palabraequipo no fija guía."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 105,
+      "observaciones": [
+        "Cartuchos–ciclopentano: cuatroestados de cianurohidrógeno y guías154/131/117P/152verdes. Cianurosólicopotasioversolución y cálcicosdistintos; no inferirgasoriginal."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 106,
+      "observaciones": [
+        "Ciclo–clorhidratos: circonio húmedo170/seco135/formaalambre170; cinc tienealias zinc. Silanosverde, cloratosporestado ycontenciónsonfilasdistintas."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 107,
+      "observaciones": [
+        "Cloro–cloroformiatos: cloro1017guía124yadsorbido3520guía173. 2742tóxicocorrosivoinflamableverde vs3277tóxicocorrosivono verde; diferenciaciónexactanombre."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 108,
+      "observaciones": [
+        "Mezclas de cloropicrina remiten a guías 154/123/119 según composición y condición. Clorosilanos conservan identificadores 2985–2988/3361/3362 y sus peligros específicos. Cloruro de cloropivaloílo 9263 está verde. No eliminar prefijos ni agrupar por coincidencia parcial."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 109,
+      "observaciones": [
+        "Cloruros–combustibles: hidrógeno anhidro1050 ycriogénico2186ambos125verde. Colorantes tóxicos/corrosivosvariasguías; combustiblemotores gasolina1203/diesel1202no nombreúnico."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 110,
+      "observaciones": [
+        "Compuestos–desechos: organofosforadotóxicovsinflamable3278/3279verde151/131. Desechospescadoestabilizado171 vsnoestabilizado133; crotonaldehídoPverde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 111,
+      "observaciones": [
+        "Desechos–dicloro: desechomédico3291vs3549categoríaA. Diborano/mezclas1911verde y aliasesdiamida2004. Prefijosnumeralesdicloroformasdistintas."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 112,
+      "observaciones": [
+        "Dicloruros–dimetilos: NA9264/9206 verdes, no ONU universal. Dicloruro etilfosfónico2845 y etilfosfonotioico2927 tienen guías diferentes; conservar ortografía específica."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 113,
+      "observaciones": [
+        "Dimetilos–dispersión: hidrazina asimétrica1163 y simétrica2382, ambas verdes pero identidades distintas. CO2 estados comprimido/líquido/sólido no se confunden con dióxido nitrógeno verde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 114,
+      "observaciones": [
+        "Dispositivos–éteres: ditionitos calcio/cinc/zinc/sodio/potasio verdes, cinc guía171. Encendedores1057 cambia128/115según contenido; etanol/mezcla gasolina3475con>10%."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 115,
+      "observaciones": [
+        "Éteres–extractos: explosivos por división112/114 sin ONU, distintos de desensibilizados3379/3380guía113. EtileniminaPverde frente a etilenoPsinverde; etiltriclorosilano155."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 116,
+      "observaciones": [
+        "Extractos–formal: fenilmercaptano y fluoruro hidrógeno anhidro verdes; solucionesfluoruros no equivalente. Flúor comprimido1045 guía124 separado de fluoruro sulfurilo2191guía123."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 117,
+      "observaciones": [
+        "Formaldehído–galio: corrosivo2209 guía153 frente a inflamable1198 guía132. Fosfano adsorbido3525 guía173 vs gas2199 guía119. Fosfurocinc1714sinverde frente a otrosfosfurosverdes."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 118,
+      "observaciones": [
+        "Gases adsorbidos tóxicos: guías173 y zonas A–D; no tóxicos174 sinverde. Variantes comburente/corrosivo/inflamable mantienen nombres y códigos individuales."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 119,
+      "observaciones": [
+        "Gases adsorbidos3512 y comprimidos3303–3306; orden alfabético difiere de ordenONU. Verdes multilínea y guías distintas124/125/119 se mantienen dentro de su fila."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 120,
+      "observaciones": [
+        "Continúa gas comprimido1953 A–D; 1955 tóxico123 y3303 oxidante124, todosverdes. Gas insecticida3355 tóxicoinflamableverde vs3354inflamable noverde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 121,
+      "observaciones": [
+        "Gas licuado3307–3310 y3160/3162: guías124/125/119/123 según nombre yzona. Verde cubre nombre completo; 3162D continúa en122."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 122,
+      "observaciones": [
+        "Continúa3162D; refrigerantes R varios guías126/115/171, no homologación porprefijoR. LP/GNLestado y frío no equivalente; referenciasexactas."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 123,
+      "observaciones": [
+        "Gasrefrigerante R-1113Pverde, germano gas/adsorbido119/173. Hexafluoruros selenio/telurio/tungsteno125verde, azufre126noverde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 124,
+      "observaciones": [
+        "UF63507/2977/2978verde166 con condiciones nucleares; hidrazinas según concentración/inflamabilidad guías132/153. Hidrógeno criogénico ycomprimido115 distintos."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 125,
+      "observaciones": [
+        "Hidrosulfitos verdes vs hidrosulfuros2318/2949noverde y concentraciónagua diferente. Hidróxidos vs hidruros distinguibles; hierro pentacarbonilo1994verde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 126,
+      "observaciones": [
+        "Hipocloritosconcentración yagua están en nombre; isocianatos P sólo algunos: metilo2480P vs etilo2481sinP. Nombres próximos no habilitan heredarmarca."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 127,
+      "observaciones": [
+        "Isocianatosparticulares/genéricos y isotiocianatometilo2477 distinto de2480; líquidos elevados3256/3257 umbrales distintos. No simplificar nombres por encabezadofamilia."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 128,
+      "observaciones": [
+        "Líquidos por reacción espontánea y temperatura regulada remiten149/150. Genéricos PTI3387/3388/3492 verdes; no confundir toxicidad general con PTI."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 129,
+      "observaciones": [
+        "Líquidos PTI variantes zonasA/B y corrosivo/reactivo/inflamable; guías151/131/154/155/139 según calificador. Litio y maquinaria pasan a columna derecha sin verde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 130,
+      "observaciones": [
+        "Materiales radiactivos: BAE, tipos A/B/C, fisionable y formaespecial determinan guías161–165. Nombres completos sinverde; no eliminar condiciones nucleares."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 131,
+      "observaciones": [
+        "UF6 variantes2977/2978verdes dentrode radioactivos. Mercaptanos genéricos distintosONU1228/3071/3336; medicamentos estado y peligro cambian guía."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 132,
+      "observaciones": [
+        "Metales–metilos: metacrilonitriloPverde y metilclorosilano2534verde119 distinto1242metildiclorosilano139. Metilamina anhidra118verde frentea solución132."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 133,
+      "observaciones": [
+        "Mezclascloropicrina verdes y óxidoetileno/CO2>87%Pverde frentea9–87%sinverde. Concentración dirige identificación; no aceptar primera coincidencia nombre parcial."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 134,
+      "observaciones": [
+        "Mezcla óxidoetileno/CO2≤9%126; monóxidocarbonocomprimido1016guía119 vs líquidoNA9202guía168, ambosverdes. Motores3528/3529/3530segúncombustible."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 135,
+      "observaciones": [
+        "Muestras–nitratos: gases muestras no comprimidos tienen guías115/119/123 pero noverde. Nitratoamonio/gasóleodetonante112sinONU; níquelcarboniloverde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 136,
+      "observaciones": [
+        "Nitratos–nitros: urea húmeda10/20% distintasONU; nitrilos tóxicos líquidos3276 verde frente a sólidos3439sinverde. Nitrocelulosa mezcla/solución cambia113/133/127."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 137,
+      "observaciones": [
+        "Nitroglicerina alcohólica máximo1%1204 y1–5%3064 distintas; desensibilizadas distintasONU. Nitrurolitio verde139, clorosilanos verdes; orgánico genérico no identidad única."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 138,
+      "observaciones": [
+        "Óxidoetileno puro1040/CO2>87%3300 Pverdes vsmezclasmenorcontenido126/115. Óxidonítrico y mezclas verdes, óxidonitroso122noverde; ambosno se equiparan."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 139,
+      "observaciones": [
+        "Pentafluoruros: fósforo gas2198/adsorbido3524 guías125/173; pentasulfuro excluye blanco/amarillo. Percloratos porestado y oxidantes próximos guías140/141/143."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 140,
+      "observaciones": [
+        "Peróxidos de hidrógeno porconcentración cambian140/143; orgánicos tiposB–F y temperatura regulada145/146/148, no toda familia usa una sola guía. Sinverde."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 141,
+      "observaciones": [
+        "Petróleo bruto1267 noverde vsácidotóxico3494verde131. Picratos humedad/calificadores; plaguicidas bipiridilo múltiplesONU segúnestado yorden peligros."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 142,
+      "observaciones": [
+        "Plaguicidas porfamilia yestadogeneral tienen guías distintas; fosfuro aluminio3048verde157 vsfosfuroaluminio1397guía139. No resolución porpalabra fosfuro."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 143,
+      "observaciones": [
+        "Plaguicidas–productosquímicos: poliaminas estado/peligros cambian132/153/154; potasio yaleaciones138. Producto químico presión corrosivo3503 inicia secuencia."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 144,
+      "observaciones": [
+        "Productos químicos a presión conservan peligros y guías diferentes: 3505 → 118, 3501 → 115, 3504 → 119, 3500 → 126 y 3502 → 123. Propano aparece con identificadores 1075 y 1978. Propiltriclorosilano 1816 está resaltado en verde; propionaldehído 1275 lleva 129P. No resolver una identidad por la primera coincidencia de nombre."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 145,
+      "observaciones": [
+        "Seleniuro de hidrógeno adsorbido 3526 remite a 173; anhidro 2202 remite a 117, ambos verdes. Sodio 1428 remite a 138. Los sólidos corrosivos distinguen ácido, base, medio orgánico/inorgánico y peligros adicionales; no agrupar todos bajo una misma guía."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 146,
+      "observaciones": [
+        "Sólidos de reacción espontánea tipos B–F remiten a 149 o 150 según temperatura regulada. Sólidos que reaccionan con agua cambian entre 138 y 139 según peligro adicional. No trasladar el tratamiento de líquido o sólido por coincidencia parcial del nombre."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 147,
+      "observaciones": [
+        "Solución acuosa de amoniaco con más del 50% de amoniaco 3318 aparece verde, guía 125. Sustancias infecciosas distinguen humano, animales y categoría B, aunque comparten 158. Las sustancias organometálicas conservan estado físico e inflamabilidad/piroforicidad/hidrorreactividad; subproductos de fundición de aluminio 3170 figuran como alias."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 148,
+      "observaciones": [
+        "Sulfato de dimetilo 1595, sulfuro ácido de metilo 1064, sulfuro de carbonilo 2204 y sulfuro de hidrógeno 1053 aparecen verdes. Los sulfuros de sodio y potasio distinguen hidratación y porcentaje de agua de cristalización; no borrar estas condiciones al normalizar el nombre."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 149,
+      "observaciones": [
+        "Sustancias polimerizantes 3531–3534 llevan 149P o 150P según estado y temperatura. Tetracloruro de silicio 1818 y de titanio 1838 aparecen verdes con guías distintas. Tetrafluoruro de silicio adsorbido 3521 remite a 173; comprimido 1859 a 125."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 150,
+      "observaciones": [
+        "Tetranitrometano 1510, tetróxido de dinitrógeno 1067, tiofosgeno 2474, tribromuros de boro/fósforo y triclorosilano 1295 aparecen verdes. Titanio en polvo seco 2546 remite a 135; humedecido 1352 a 170. Las toxinas líquidas/sólidas 3172/3462 remiten a 152; no confundirlas con patógenos de guía 158."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 151,
+      "observaciones": [
+        "Trifluoroetileno estabilizado 1082 lleva 119P y resaltado verde. Trifluoruro de boro comprimido 1008 remite a 125; adsorbido 3519 a 173. Trimetoxisilano conserva identificador 9269. TNT, trinitrofenol y otros materiales distinguen humedad mínima; no eliminar porcentajes en una búsqueda normalizada."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 152,
+      "observaciones": [
+        "Vehículo accionado por batería 3171 se divide en acumulador húmedo → 154, ion litio → 147 y sodio → 138. Vehículos 3556 y 3558 remiten a 147; metal litio 3557 a 138. Viniltriclorosilano 1305 combina resaltado verde y 155P. Peligro de pila de combustible gaseosa/líquida 3166 distingue 115/128."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 153,
+      "observaciones": [
+        "Fin del índice azul: yoduro de metilo 2644 está verde y remite a 151. Zinc, cenizas/escoria/espuma/residuo 1435 y polvo 1436 remiten a 138. La segunda columna queda vacía; es cierre editorial, no pérdida de entradas."
+      ],
+      "limite": "Inspección visual de página, estructura y lectura de entradas relevantes; no cotejo semántico independiente de cada nombre ni ensayo de correspondencia del motor.",
+      "fragmentosFuente": [
+        "Nro."
+      ]
+    },
+    {
+      "paginaPdf": 154,
+      "observaciones": [
+        "Uso naranja impresa152: miniatura de guía117 con páginas168/169 es ejemplo y no tercera guía ni pie principal. Peligro primario primero, personal entrenado/equipado; título caracteriza grupo, no identidad única."
+      ],
+      "limite": "Condiciones documentales y contexto preservados; no criterio ejecutable de mando, equipo, ruta o intervención.",
+      "fragmentosFuente": [
+        "El peligro potencial primario se enumera primero"
+      ],
+      "paginaImpresaPrincipal": "152"
+    },
+    {
+      "paginaPdf": 155,
+      "observaciones": [
+        "Impresa153: aislamiento restringe ingreso público/respondedores sin preparación; evacuar busca salida segura y si es riesgosa permite considerar protecciónenlugar. Ropa depende de escenario, verde remiteTabla1, auxilios local+generales, ERAP soloCanadá."
+      ],
+      "limite": "Condiciones documentales y contexto preservados; no criterio ejecutable de mando, equipo, ruta o intervención.",
+      "fragmentosFuente": [
+        "Si la evacuación es demasiado arriesgada"
+      ]
+    },
+    {
+      "paginaPdf": 286,
+      "observaciones": [
+        "Orientación inicialPTI/agua; ajustes solo personal técnicamente calificado. Con incendio: distancia de incendio para aislamiento,Tabla1 para residual a favorviento; no elegir máximo global. Peorcaso instantáneo puedeaumentar distancias."
+      ],
+      "limite": "Interpretación documental contextual; no elección automática de protección, ajuste de distancias ni criterio toxicológico independiente.",
+      "fragmentosFuente": [
+        "solamente por personal técnicamente calificado"
+      ]
+    },
+    {
+      "paginaPdf": 287,
+      "observaciones": [
+        "Duplicación en ausencia de otra información conserva modalidadpuede. Varios recipientes,11.0+km,canalización/inversión/puestaSol/T>30°C requieren evaluación; agua/tierra desconocido oambos usa mayor protectora, noidentidadgasTabla2 sustituta."
+      ],
+      "limite": "Interpretación documental contextual; no elección automática de protección, ajuste de distancias ni criterio toxicológico independiente.",
+      "fragmentosFuente": [
+        "No está claro si el derrame es en agua o tierra"
+      ]
+    },
+    {
+      "paginaPdf": 288,
+      "observaciones": [
+        "MRAenrío puede desplazar fuente aguasabajo;Tabla3más208L,6grupos7ONU incluyendo2186 y variantes1040. Tipo/cantidad, día/noche y clasesviento son condiciones separadas."
+      ],
+      "limite": "Interpretación documental contextual; no elección automática de protección, ajuste de distancias ni criterio toxicológico independiente.",
+      "fragmentosFuente": [
+        "la fuente de gas tóxico puede desplazarse"
+      ]
+    },
+    {
+      "paginaPdf": 289,
+      "observaciones": [
+        "Aislamiento primero; evacuación requiere tiempo/ruta/destino seguro y comunicación; protecciónenlugar si salir mayor riesgo o inseguro. Distanciarecomendada noasegura proteccióncompleta ni permite acumulación personas en borde."
+      ],
+      "limite": "Interpretación documental contextual; no elección automática de protección, ajuste de distancias ni criterio toxicológico independiente.",
+      "fragmentosFuente": [
+        "puede que no estén completamente a salvo"
+      ]
+    },
+    {
+      "paginaPdf": 290,
+      "observaciones": [
+        "Continúa protecciónenlugar: comunicación/salida decidida por respondedores; prendas húmedas citadas no equivalen a equipo respiratorio certificado. Vehículos ofrecen protección inferior/temporal frenteedificios."
+      ],
+      "limite": "Interpretación documental contextual; no elección automática de protección, ajuste de distancias ni criterio toxicológico independiente.",
+      "fragmentosFuente": [
+        "Los vehículos no son tan efectivos"
+      ]
+    },
+    {
+      "paginaPdf": 291,
+      "observaciones": [
+        "Selección puede combinar evacuar/refugio; criterios material,población,clima,recursos/tiempo y nuevascondiciones. Autoridades instruyen; reevaluación hastaelimamenaza, sin algoritmo reservadoa software."
+      ],
+      "limite": "Interpretación documental contextual; no elección automática de protección, ajuste de distancias ni criterio toxicológico independiente.",
+      "fragmentosFuente": [
+        "Cada incidente con materiales peligrosos"
+      ]
+    },
+    {
+      "paginaPdf": 292,
+      "observaciones": [
+        "Tabla dos columnas de factores para CONSIDERAR evacuación/refugio; pares inflamable/tóxico, sellable, disipación, personasafuera/dentro, recursos y amenaza estable/cambiante. Noes verdadbooleana ni votación de criterios."
+      ],
+      "limite": "Interpretación documental contextual; no elección automática de protección, ajuste de distancias ni criterio toxicológico independiente.",
+      "fragmentosFuente": [
+        "Considere evacuación"
+      ]
+    },
+    {
+      "paginaPdf": 293,
+      "observaciones": [
+        "NOTAS vacía, impresa291; fuente conservada."
+      ],
+      "limite": "Interpretación documental contextual; no elección automática de protección, ajuste de distancias ni criterio toxicológico independiente.",
+      "fragmentosFuente": [
+        "NOTAS"
+      ]
+    },
+    {
+      "paginaPdf": 294,
+      "observaciones": [
+        "Metodologíaestadísticapercentil90 con clima/modelos/envases autorizados; no promete cobertura100% condiciones. Pequeño≤208L, grande>208L, liberado no contenido total. Datos/modelos históricos no meteorología actual."
+      ],
+      "limite": "Interpretación documental contextual; no elección automática de protección, ajuste de distancias ni criterio toxicológico independiente.",
+      "fragmentosFuente": [
+        "percentil 90"
+      ]
+    },
+    {
+      "paginaPdf": 295,
+      "observaciones": [
+        "Día entre salida/puestaSol, nocheentrepuesta/salida; prioriza AEGL-2 respectoERPG2 cuando disponible, otras estimaciones en suausencia. Noes umbral detector universal o cálculo de dosisclínica."
+      ],
+      "limite": "Interpretación documental contextual; no elección automática de protección, ajuste de distancias ni criterio toxicológico independiente.",
+      "fragmentosFuente": [
+        "siendo los valores de AEGL-2 la primera opción"
+      ]
+    },
+    {
+      "paginaPdf": 296,
+      "observaciones": [
+        "IdentidadONU+nombre, verde y viento precedenTabla1; noverde tabla noaplica. Nombreexacto primero y solo si ausente enTabla1multi-nombre usar mayor protectora. Radioaislamiento frente cuadrado protector km/millas, salirvientocruzado."
+      ],
+      "limite": "Interpretación documental contextual; no elección automática de protección, ajuste de distancias ni criterio toxicológico independiente.",
+      "fragmentosFuente": [
+        "Si no, la Tabla 1 no aplica"
+      ]
+    },
+    {
+      "paginaPdf": 298,
+      "observaciones": [
+        "Inicio de filas Tabla 1, ONU 1005–1064. Seis gases/variantes remiten a Tabla 3 sólo para grande; nombres alternativos comparten celdas, P permanece en guía. No convertir remisión en cero ni recalcular pares km/millas de la fuente."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Consulte la Tabla 3"
+      ]
+    },
+    {
+      "paginaPdf": 299,
+      "observaciones": [
+        "ONU 1067–1239; sinónimos con celdas compartidas y filas condicionadas al agua. Nota + significa que puede superarse distancia por atmósfera; P no es parte del número de guía."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Significa que la distancia puede ser mayor"
+      ]
+    },
+    {
+      "paginaPdf": 300,
+      "observaciones": [
+        "ONU 1242–1380; 1259 muestra 11.0+ km en día y noche grandes: no tope seguro. Filas silanos/fosfuros conservan condición agua; seis magnitudes y pares de unidades separados."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "11.0+ km"
+      ]
+    },
+    {
+      "paginaPdf": 301,
+      "observaciones": [
+        "ONU 1384–1581; tres sinónimos de 1384 y variantes 1560/1581 comparten distancias. Condición agua de 1541 no se transfiere a 1556 ni otras filas adyacentes."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Cianhidrina de la acetona"
+      ]
+    },
+    {
+      "paginaPdf": 302,
+      "observaciones": [
+        "ONU 1582–1647; concentración máxima 20% de 1613 y absorbido 1614 diferencian entradas. 1589 usa 11.0+ km grandes; filas y alias no se resuelven únicamente por prefijo del nombre."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "máximo del 20%"
+      ]
+    },
+    {
+      "paginaPdf": 305,
+      "observaciones": [
+        "ONU 1752–1765. Los identificadores 1752 y 1754 distinguen filas de derrame sobre tierra y en agua. Ácido clorosulfónico 1754 dice con o sin trióxido de azufre, como índices y Tabla 2. El 1758 presenta dos nombres dentro del mismo grupo; no copiar una distancia a todas las condiciones de un identificador."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "sobre la tierra"
+      ]
+    },
+    {
+      "paginaPdf": 306,
+      "observaciones": [
+        "ONU 1766–1800: nombres silanos y ácido fluorosulfónico condicionados al agua, grupos de seis celdas métricas más sus equivalentes. Una guía compartida no implica distancias compartidas."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Hexadeciltriclorosilano"
+      ]
+    },
+    {
+      "paginaPdf": 307,
+      "observaciones": [
+        "ONU 1801–1829. 1808/1809/1810/1828 tienen tierra/agua diferenciadas; 1828 cambia guía 157 tierra frente a 137 agua. No deducir guía sólo del ONU."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Cloruros de azufre"
+      ]
+    },
+    {
+      "paginaPdf": 308,
+      "observaciones": [
+        "ONU 1831–1898. 1834/1836/1838 tierra/agua; 1836 agua grande noche 11.0+, distinto de tierra. Sinónimos 1859 comparten filas; guía 137 no fija un radio universal."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Cloruro de tionilo"
+      ]
+    },
+    {
+      "paginaPdf": 309,
+      "observaciones": [
+        "ONU 1911–1953. Grupo 1953 comienza con Zona A/B y continúa en siguiente página; nombres zona toxicológica no son área geográfica ni nivel protector. 1931 incluye sales/alias condicionados al agua."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Zona A de Peligro para la Inhalación"
+      ]
+    },
+    {
+      "paginaPdf": 310,
+      "observaciones": [
+        "Continúa 1953 Zona C/D y 1955 Zona A/B/C, sin duplicar nombre genérico como una única distancia. Celdas conjuntas deben pertenecer a su grupo correcto y continuidad cruza página."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Zona D de Peligro para la Inhalación"
+      ]
+    },
+    {
+      "paginaPdf": 311,
+      "observaciones": [
+        "ONU 1967–2189. Variantes 1975 comparten distancias; 2004/2011/2012/2013 condicionan al agua. 2186 grande remite Tabla 3; 2188 arsina y 2189 diclorosilano conservan guías diferentes."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Cloruro de hidrógeno, líquido refrigerado"
+      ]
+    },
+    {
+      "paginaPdf": 312,
+      "observaciones": [
+        "ONU 2190–2285. 2195 muestra + ya en pequeño noche y grande; 2202 grande ambas columnas +. 2199 fosfina/fosfano/fosfamina son alias con una matriz, no tres incidentes."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Hexafluoruro de telurio"
+      ]
+    },
+    {
+      "paginaPdf": 313,
+      "observaciones": [
+        "ONU 2308–2477: varios materiales sólo cuando derramados en agua; 2420 hexafluoroacetona grande +. Marcas P no deben heredarse a compuestos próximos por familia de nombre."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Hexafluoroacetona"
+      ]
+    },
+    {
+      "paginaPdf": 314,
+      "observaciones": [
+        "ONU 2478–2560. Isocianatos 2480–2488 incluyen P y +; 2495 sólo agua con guía 144. 2506 termina abajo y continúa arriba de página siguiente."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Isocianato de metilo"
+      ]
+    },
+    {
+      "paginaPdf": 315,
+      "observaciones": [
+        "Continuación 2506 y ONU 2644–2927. 2692 tiene distancias separadas tierra/agua; grupos 2742 y 2927 tienen nombres alternativos. 2901 termina en 11.0+ grande noche."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Tribromuro de boro"
+      ]
+    },
+    {
+      "paginaPdf": 316,
+      "observaciones": [
+        "ONU 2965–2986, pocas filas largas: UF6 2977 fisionable vs 2978 no fisionable/fisionable exceptuado; ambos agua y guía 166. No confundir condición nuclear con zona PTI ni perder segundo alias."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Hexafluoruro de uranio"
+      ]
+    },
+    {
+      "paginaPdf": 317,
+      "observaciones": [
+        "ONU 2987–3160. Variantes clorosilano separadas, cloro trifluoruro y acrilonitrilo P. 3160 comienza matriz Zona A–D de gas licuado tóxico inflamable; dosis toxicológica no ubicación."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Gas licuado, tóxico, inflamable"
+      ]
+    },
+    {
+      "paginaPdf": 318,
+      "observaciones": [
+        "ONU 3162–3281. Grupo 3162 gas licuado tóxico y zonas A–D; guía 123 distinta de 3160. 3275/3276 tienen alias; 3281 carbonilos metálicos es fila final con signo +, sin continuación a 319."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Carbonilos metálicos, líquidos,"
+      ]
+    },
+    {
+      "paginaPdf": 319,
+      "observaciones": [
+        "ONU 3294–3303. 3300 distingue óxido de etileno/CO2 con límite 87%; 3303 comienza gas comprimido tóxico comburente/oxidante y zonas A/B con +. Continúa al 320."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "3303"
+      ]
+    },
+    {
+      "paginaPdf": 320,
+      "observaciones": [
+        "Continúa 3303 C/D; 3304 corrosivo guía 125 zonas A–D; 3305 inflamable corrosivo inicia Zona A guía 119 y continúa al 321. No agrupar matrices de distintas guías."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "3304"
+      ]
+    },
+    {
+      "paginaPdf": 321,
+      "observaciones": [
+        "3305 B/C/D y 3306 corrosivo comburente/oxidante A/B. Signo + sólo en columnas concretas de Zona A; mantener varias páginas del mismo ONU."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "3306"
+      ]
+    },
+    {
+      "paginaPdf": 322,
+      "observaciones": [
+        "3306 C/D y 3307 gas licuado tóxico comburente/oxidante A/B. Pares sinónimo/celda no son registros independientes con distancia vacía."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "3307"
+      ]
+    },
+    {
+      "paginaPdf": 323,
+      "observaciones": [
+        "3307 C/D, otra variante oxidante y 3308 gas licuado tóxico corrosivo A–C. Zonas y variantes se mantienen con su matriz específica."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "3308"
+      ]
+    },
+    {
+      "paginaPdf": 324,
+      "observaciones": [
+        "3308 D; 3309 gas licuado tóxico inflamable corrosivo A–D guía 119; 3310 comburente corrosivo A/B guía 124 comienza matriz y continúa."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "3309"
+      ]
+    },
+    {
+      "paginaPdf": 325,
+      "observaciones": [
+        "3310 C/D y variante oxidante; 3318 solución de amoníaco más de 50% no es amoníaco anhidro. 3355 gas insecticida inflamable comienza zonas A/B."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "3318"
+      ]
+    },
+    {
+      "paginaPdf": 326,
+      "observaciones": [
+        "3355 C/D y ONU 3361/3362 sólo agua; 3381–3384 líquidos tóxicos por inhalación separan zona A/B e inflamable. No intercambiar guía 151/131."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "3381"
+      ]
+    },
+    {
+      "paginaPdf": 327,
+      "observaciones": [
+        "ONU 3385–3489. Líquidos reactivos agua, oxidantes o corrosivos mantienen guías y zonas A/B. 3456 ácido nitrosilsulfúrico sólido tiene condición agua."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "3456"
+      ]
+    },
+    {
+      "paginaPdf": 328,
+      "observaciones": [
+        "ONU 3490–3507. 3490–3493 variantes inflamable/reactivo/corrosivo; 3494 petróleo bruto no sustituye ONU genérico de hidrocarburo. 3507 UF6 bultos exceptuados sólo agua guía 166."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "3507"
+      ]
+    },
+    {
+      "paginaPdf": 329,
+      "observaciones": [
+        "ONU 3512 y 3514 gas adsorbido tóxico, inflamable y zonas A–D. Matrices compartidas 30 m y 0.1 km son valores fuente, no permiso para colapsar variantes."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "3514"
+      ]
+    },
+    {
+      "paginaPdf": 330,
+      "observaciones": [
+        "ONU 3515 gas adsorbido tóxico oxidante y 3516 corrosivo zonas A–D. La repetición de distancias no demuestra equivalencia de otros peligros."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "3516"
+      ]
+    },
+    {
+      "paginaPdf": 331,
+      "observaciones": [
+        "ONU 3517 inflamable corrosivo y 3518 oxidante corrosivo zonas A–D. Conservan guía 173; Tabla 1 no contiene por sí sola toda la respuesta."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "3518"
+      ]
+    },
+    {
+      "paginaPdf": 332,
+      "observaciones": [
+        "ONU 3519–3539 y NA 9191/9202/9206: identificadores de jurisdicción no deben perder prefijo en correspondencia. 9191 hidrato/enfriado sólo agua; 9202 líquido criogénico y guía 168 difiere de gas comprimido."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "9191"
+      ]
+    },
+    {
+      "paginaPdf": 333,
+      "observaciones": [
+        "NA 9263/9264/9269 últimas tres filas de Tabla 1 y remisión explícita a Tabla 2 en página siguiente. Espacio vacío no es material desconocido ni fila sin datos."
+      ],
+      "limite": "Inspección visual de estructura, nombres, condiciones y continuidad de página; no cotejo semántico independiente de cada una de las celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "9269"
+      ]
+    },
+    {
+      "paginaPdf": 334,
+      "observaciones": [
+        "Instrucciones Tabla 2: gas generado informativo, distancias del material original. Sólo agua si única entrada; materiales 4.3 no siempre están en Tabla 2 porque no todos generan cantidades sustanciales de gas tóxico."
+      ],
+      "limite": "Inspección visual de página y lectura de condiciones; no cotejo semántico independiente de todos los gases/celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "no siempre será incluido en la Tabla 2"
+      ]
+    },
+    {
+      "paginaPdf": 335,
+      "observaciones": [
+        "Tabla 2 ONU 1162–1725: columna fórmula puede contener uno o dos gases, subíndices y leyenda. 1305 mantiene P; alias 1384 comparten H2S/SO2. No interpretar guiones nativos invisibles como gas extra."
+      ],
+      "limite": "Inspección visual de página y lectura de condiciones; no cotejo semántico independiente de todos los gases/celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Use esta lista solamente cuando el material sea derramado en agua."
+      ]
+    },
+    {
+      "paginaPdf": 336,
+      "observaciones": [
+        "Tabla 2, ONU 1726–1801: 1745/1746 generan HF y Br2; los silanos generan HCl y 1777 genera HF. Ácido clorosulfónico 1754 dice trióxido de azufre, también en Tabla 1. Esta tabla informa gases producidos; no sustituye la identidad consultada ni sus distancias."
+      ],
+      "limite": "Inspección visual de página y lectura de condiciones; no cotejo semántico independiente de todos los gases/celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "trióxido de azufre"
+      ]
+    },
+    {
+      "paginaPdf": 337,
+      "observaciones": [
+        "Tabla 2 ONU 1804–2011: 1828 muestra tres gases HCl/SO2/H2S; 1836 dos HCl/SO2. Múltiples alias 1923/1929/1931 y diamida/diamada 2004 conservan grupos, no suprimir segundo gas."
+      ],
+      "limite": "Inspección visual de página y lectura de condiciones; no cotejo semántico independiente de todos los gases/celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "HCl SO2 H2S"
+      ]
+    },
+    {
+      "paginaPdf": 338,
+      "observaciones": [
+        "Tabla 2 ONU 2012–2988; 2977/2978 UF6 son fuentes HF con variantes nucleares y nombres largos. No omitir gases por nombre partido en líneas ni usar radioactivo como reemplazo de peligro tóxico."
+      ],
+      "limite": "Inspección visual de página y lectura de condiciones; no cotejo semántico independiente de todos los gases/celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "Hexafluoruro de uranio"
+      ]
+    },
+    {
+      "paginaPdf": 339,
+      "observaciones": [
+        "Tabla 2 final ONU 3048/3361/3362/3456/3507 y NA9191. Sólo seis filas, gran zona vacía y leyenda repetida; no extraer leyenda como filas ni crear entrada por blanco."
+      ],
+      "limite": "Inspección visual de página y lectura de condiciones; no cotejo semántico independiente de todos los gases/celdas ni prueba del motor.",
+      "fragmentosFuente": [
+        "9191"
+      ]
+    },
+    {
+      "paginaPdf": 344,
+      "observaciones": [
+        "Alcance fase inicial despuésdelarribo; carretera/ferrocarril, limitado fijo/aéreo/marítimo. No sustituye capacitación/juicio ni todascircunstancias; explosivos agrupados. Identificación/protección/ayuda especializada son tareas distintas."
+      ],
+      "limite": "Lectura y contraste documental; sin capacitación/certificación del equipo, protocolo médico nuevo ni vigencia normativa actual verificada.",
+      "fragmentosFuente": [
+        "período que le sigue al arribo del respondedor"
+      ]
+    },
+    {
+      "paginaPdf": 345,
+      "observaciones": [
+        "P despuésguía polimerización bajo ciertas condiciones; amarilloONU y azulnombre con orden de columnas diferente.62guías agrupancaracterísticas, no sustancias únicas. Obligación capacitaciónOSHA/EPA en fuente correspondeEEUU, no regla institucional local nueva."
+      ],
+      "limite": "Lectura y contraste documental; sin capacitación/certificación del equipo, protocolo médico nuevo ni vigencia normativa actual verificada.",
+      "fragmentosFuente": [
+        "bajo ciertas condiciones"
+      ]
+    },
+    {
+      "paginaPdf": 346,
+      "observaciones": [
+        "Orden de peligro primario preservado y lectura peligros primero. Auxilios específicos además generales; precaucionesfuego/derrame separadas. Verde remiteTabla1,no cualquier nombrecontiene palabra tóxico."
+      ],
+      "limite": "Lectura y contraste documental; sin capacitación/certificación del equipo, protocolo médico nuevo ni vigencia normativa actual verificada.",
+      "fragmentosFuente": [
+        "además de la guía general"
+      ]
+    },
+    {
+      "paginaPdf": 347,
+      "observaciones": [
+        "Radioaislamiento vs distancia protectoraavientofavor;208L inclusive pequeño. Ejemplo1955radio150m/diámetro300m,día1km/noche3.9km no parámetros generales. Concentración/atmósfera distingue exposición de presenciasimple."
+      ],
+      "limite": "Lectura y contraste documental; sin capacitación/certificación del equipo, protocolo médico nuevo ni vigencia normativa actual verificada.",
+      "fragmentosFuente": [
+        "300 metros (1000 pies) de diámetro"
+      ]
+    },
+    {
+      "paginaPdf": 348,
+      "observaciones": [
+        "Doblefila agua/tierra vs soloagua; secoenonlyagua excluyeTabla1/2 yremiteguía. Gasproducido1689HCN informativo, usar filaoriginal no gascomoidentidad. Tabla3solo seisgrupos con2186varianteHCl."
+      ],
+      "limite": "Lectura y contraste documental; sin capacitación/certificación del equipo, protocolo médico nuevo ni vigencia normativa actual verificada.",
+      "fragmentosFuente": [
+        "las Tabla 1 y Tabla 2 no aplican"
+      ]
+    },
+    {
+      "paginaPdf": 349,
+      "observaciones": [
+        "Noverde→guía; remisiónTabla1 en guía solo recordatorioverde. Verde sinfuegoTabla1+guía, confuego evacuaciónIncendio+Tabla1residual. No mezclar finalidades ni elegir máximos todosescenarios."
+      ],
+      "limite": "Lectura y contraste documental; sin capacitación/certificación del equipo, protocolo médico nuevo ni vigencia normativa actual verificada.",
+      "fragmentosFuente": [
+        "material residual"
+      ]
+    },
+    {
+      "paginaPdf": 350,
+      "observaciones": [
+        "Calle/uniforme sin protección química; estructural limitada, forestalnoequivale. Entrada/salida rápidaconERA puede matar: decisión comandante solo beneficio mayor. Certificaciones/literales regulatorios fuente2024 no vigencia actual certificada."
+      ],
+      "limite": "Lectura y contraste documental; sin capacitación/certificación del equipo, protocolo médico nuevo ni vigencia normativa actual verificada.",
+      "fragmentosFuente": [
+        "El Comandante del Incidente"
+      ]
+    },
+    {
+      "paginaPdf": 351,
+      "observaciones": [
+        "Cartucho no sustituyeERA positiva;N95no gases/vapores yRSPA no oxígenofuenteseparada. Ropaquímica requierecompatibilidad/capacitación, noprotecciónuniversal/calor salvo certificación fabricante; remitenivelesglosario."
+      ],
+      "limite": "Lectura y contraste documental; sin capacitación/certificación del equipo, protocolo médico nuevo ni vigencia normativa actual verificada.",
+      "fragmentosFuente": [
+        "no proporcionan protección contra la exposición a gases y vapores"
+      ]
+    },
+    {
+      "paginaPdf": 352,
+      "observaciones": [
+        "Directa/cruzada y cuatrodecongruesa/técnica/masiva/emergencia; salidaZonaCaliente requieredecon. Neutralización química libera calor: prohibidasobrevíctima. Equiposcontaminados controlados ydescarte posible, sin fórmulas químicas automáticas."
+      ],
+      "limite": "Lectura y contraste documental; sin capacitación/certificación del equipo, protocolo médico nuevo ni vigencia normativa actual verificada.",
+      "fragmentosFuente": [
+        "NO REALIZARLA sobre una víctima"
+      ]
+    },
+    {
+      "paginaPdf": 353,
+      "observaciones": [
+        "Espuma compatible+mezcla+aplicación/mantenimiento; polar necesitaalcohol segúnfuente,secundariotóxico/corrosivopuedeeffective no garantía. Selecciónfinal agente dependeescenario/recursos/ambiente+asistencia técnica, no universalagua."
+      ],
+      "limite": "Lectura y contraste documental; sin capacitación/certificación del equipo, protocolo médico nuevo ni vigencia normativa actual verificada.",
+      "fragmentosFuente": [
+        "Un concentrado de espuma que sea químicamente compatible"
+      ]
+    },
+    {
+      "paginaPdf": 354,
+      "observaciones": [
+        "MRA agua requierefuenteautorizada; diferenciacontenedorrotocon agua,enfriamientovecinos e inundaciónsuficienteprolongada. Productos reacciónpuedenmásnocivos. Controlvaporrequierecapacitación/equipo/tácticasasesoradas; no predicadoagua=trueúnico."
+      ],
+      "limite": "Lectura y contraste documental; sin capacitación/certificación del equipo, protocolo médico nuevo ni vigencia normativa actual verificada.",
+      "fragmentosFuente": [
+        "basada en la información de una fuente autorizada"
+      ]
+    },
+    {
+      "paginaPdf": 355,
+      "observaciones": [
+        "Continúavapor:rociado no agitar/extenderderrames yasesoría materialexacto. Aserrínexcluidoinflamables/oxidantes yarenaarcillaexcluidaácidos porbicarbonato posible. Categoríasabsorbentesson literalGRE,no certificación química universal."
+      ],
+      "limite": "Lectura y contraste documental; sin capacitación/certificación del equipo, protocolo médico nuevo ni vigencia normativa actual verificada.",
+      "fragmentosFuente": [
+        "El aserrín no debe usarse"
+      ]
+    },
+    {
+      "paginaPdf": 356,
+      "observaciones": [
+        "Enfriamientoconaguano detienefugatérmica, otrosagentespuedenfalsabajatemperatura. OEMidentificaHV/MV yno cortarlos; corteemergenciabajovoltaje/desconexión12V solo segurosegúnfabricante. DDRmásriesgo que noDDR no implica noDDRsegura."
+      ],
+      "limite": "Lectura y contraste documental; sin capacitación/certificación del equipo, protocolo médico nuevo ni vigencia normativa actual verificada.",
+      "fragmentosFuente": [
+        "no detiene la reacción química"
+      ]
+    },
+    {
+      "paginaPdf": 360,
+      "observaciones": [
+        "Respuesta general QBRN: aviso local y recursos especializados; ingreso condicionado a entrenamiento/equipo y precaución frente a dispositivos secundarios. La fuente dice viento a favor para establecer el Sistema de Comando y contra el viento para evacuar. Son acciones diferentes: conservar los literales y precisar posición relativa a la fuente antes de codificar una ubicación. La diferencia de palabras no demuestra por sí sola una errata."
+      ],
+      "limite": "Inspección documental de la fuente 2024; no diagnóstico, instrucciones de manipulación de artefactos, validación de teléfonos actuales ni decisión institucional automatizada.",
+      "fragmentosFuente": [
+        "Establezca el Sistema de Comando en un área con viento a favor y elevada."
+      ]
+    },
+    {
+      "paginaPdf": 361,
+      "observaciones": [
+        "Distingue latencia química, biológica y radiológica; ausencia de olor/color/síntomas no descarta exposición. Indicadores observables orientan una sospecha, no identificación clínica confirmada."
+      ],
+      "limite": "Inspección documental de la fuente 2024; no diagnóstico, instrucciones de manipulación de artefactos, validación de teléfonos actuales ni decisión institucional automatizada.",
+      "fragmentosFuente": [
+        "Se requiere un equipo especializado"
+      ]
+    },
+    {
+      "paginaPdf": 362,
+      "observaciones": [
+        "Continúan indicadores químicos y comienzan biológicos en tablas de dos columnas. Evitar confundir sequía con daño por agente y no deducir identidad de síntomas o ausencia de olor."
+      ],
+      "limite": "Inspección documental de la fuente 2024; no diagnóstico, instrucciones de manipulación de artefactos, validación de teléfonos actuales ni decisión institucional automatizada.",
+      "fragmentosFuente": [
+        "No confundir con sequía"
+      ]
+    },
+    {
+      "paginaPdf": 363,
+      "observaciones": [
+        "Indicadores radiológicos y prioridad de seguridad del respondedor. La identificación puede no ser verificable; aplicación general debe evaluarse en cada caso."
+      ],
+      "limite": "Inspección documental de la fuente 2024; no diagnóstico, instrucciones de manipulación de artefactos, validación de teléfonos actuales ni decisión institucional automatizada.",
+      "fragmentosFuente": [
+        "su aplicación debe ser evaluada en cada caso"
+      ]
+    },
+    {
+      "paginaPdf": 364,
+      "observaciones": [
+        "Tiempo/distancia/cobertura y protección; olor menor no prueba menor concentración. Detección radiológica exige equipo y entrenamiento. Descontaminación externa no debe lesionar piel y la estabilización médica del lesionado tiene prioridad."
+      ],
+      "limite": "Inspección documental de la fuente 2024; no diagnóstico, instrucciones de manipulación de artefactos, validación de teléfonos actuales ni decisión institucional automatizada.",
+      "fragmentosFuente": [
+        "priorice la estabilización médica"
+      ]
+    },
+    {
+      "paginaPdf": 365,
+      "observaciones": [
+        "Agentes de guerra no reciben ONU comercial; patógenos remiten a 158 y toxinas a 152. Los límites de liberación de esta sección son hasta 2 kg y hasta 25 kg, distintos de los 208 litros de Tabla 1; no extrapolar por encima ni convertir automáticamente."
+      ],
+      "limite": "Inspección documental de la fuente 2024; no diagnóstico, instrucciones de manipulación de artefactos, validación de teléfonos actuales ni decisión institucional automatizada.",
+      "fragmentosFuente": [
+        "no tienen un número de identificación asignado"
+      ]
+    },
+    {
+      "paginaPdf": 366,
+      "observaciones": [
+        "Tabla descriptiva de cinco familias químicas, vías y síntomas; no constituye diagnóstico ni tratamiento. Nerviosos y vesicantes incluyen contacto dérmico, por lo que no reducir protección a inhalación."
+      ],
+      "limite": "Inspección documental de la fuente 2024; no diagnóstico, instrucciones de manipulación de artefactos, validación de teléfonos actuales ni decisión institucional automatizada.",
+      "fragmentosFuente": [
+        "por contacto de líquido o vapor"
+      ]
+    },
+    {
+      "paginaPdf": 367,
+      "observaciones": [
+        "Tabla específica QBRN: siete familias, guía, aislamiento en m/pies y protección en km/millas por liberación pequeña/grande; no tiene columnas día/noche. Biológicos remiten a sus guías. Comienza sección AEI separada de Tabla 1."
+      ],
+      "limite": "Inspección documental de la fuente 2024; no diagnóstico, instrucciones de manipulación de artefactos, validación de teléfonos actuales ni decisión institucional automatizada.",
+      "fragmentosFuente": [
+        "Para los agentes de guerra biológicos"
+      ]
+    },
+    {
+      "paginaPdf": 368,
+      "observaciones": [
+        "Tabla AEI girada 90 grados, ocho amenazas y tres zonas diferentes: evacuación obligatoria, protección en lugar y evacuación preferida. Preservar signo + y notas sobre edificio no reforzado, fragmentación y posibles variaciones; no usar capacidad estimada como cantidad real."
+      ],
+      "limite": "Inspección documental de la fuente 2024; no diagnóstico, instrucciones de manipulación de artefactos, validación de teléfonos actuales ni decisión institucional automatizada.",
+      "fragmentosFuente": [
+        "Posibles variaciones."
+      ]
+    },
+    {
+      "paginaPdf": 369,
+      "observaciones": [
+        "Tabla AEI/GLP girada: cinco categorías, masa/volumen, diámetro de bola de fuego y distancia de seguridad distintos. Las notas limitan el supuesto de mezcla y tanque GLP con explosivos exteriores; no equiparar con tanque lleno de explosivo potente ni importar como Tabla 3."
+      ],
+      "limite": "Inspección documental de la fuente 2024; no diagnóstico, instrucciones de manipulación de artefactos, validación de teléfonos actuales ni decisión institucional automatizada.",
+      "fragmentosFuente": [
+        "Esta tabla es para un tanque cargado con GLP"
+      ]
+    },
+    {
+      "paginaPdf": 370,
+      "observaciones": [
+        "AEGL tiene tres niveles y cinco duraciones, incluyendo población susceptible. Aislar excluye público y respondedores sin preparación/equipo; no es sinónimo de evacuar."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "10 minutos, 30 minutos, 1 hora, 4 horas"
+      ]
+    },
+    {
+      "paginaPdf": 371,
+      "observaciones": [
+        "Autoridad radiológica competente debe evaluar peligro; no asignarla automáticamente a SIGBO. Cantidades abundantes se define aquí como mínimo de 1900 L/min, no volumen total. Categorías infecciosas A/B no equivalen a zonas tóxicas A/B."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "Un mínimo de 1900 L/min"
+      ]
+    },
+    {
+      "paginaPdf": 372,
+      "observaciones": [
+        "Chorro directo/sólido puede dispersar producto si se usa mal; CL50 se refiere a población experimental, no predicción individual. Densidad de vapor compara con aire a iguales temperatura y presión, no concentración real ni ruta garantizada."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "a la misma temperatura y presión"
+      ]
+    },
+    {
+      "paginaPdf": 373,
+      "observaciones": [
+        "208 L exactos pertenecen a pequeño; varios envases pequeños pueden constituir grande y fuga pequeña de envase grande puede ser pequeña. Niveles protectores combinan ropa y respiración; no adjudicar nivel al traje solo."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "por separado"
+      ]
+    },
+    {
+      "paginaPdf": 374,
+      "observaciones": [
+        "ERPG define exposición de hasta una hora para casi todos, no inmunidad universal. Evacuación insegura permite considerar refugio; fuga térmica se puede propagar a otros materiales."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "Si la evacuación es demasiado arriesgada"
+      ]
+    },
+    {
+      "paginaPdf": 377,
+      "observaciones": [
+        "n.e.p. representa una denominación genérica regulada; no equivale a material desconocido sin peligro. Líquido inflamable se define por punto de inflamación menor a 60°C. Los códigos de identificación del riesgo de PDF21 emplean intervalos inclusivos en su propio contexto; no unificar estos límites como un único umbral."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "menor a 60°C"
+      ]
+    },
+    {
+      "paginaPdf": 378,
+      "observaciones": [
+        "P indica polimerización condicionada por calor/contaminación o inhibidor agotado; conservar marca sin convertirla en emergencia siempre activa. ppm=ml/m3 en texto no habilita conversión mg/m3 sin condiciones y sustancia."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "agotamiento de este inhibidor"
+      ]
+    },
+    {
+      "paginaPdf": 379,
+      "observaciones": [
+        "Refugio depende del riesgo de evacuar y cierre del edificio; inflamabilidad y dispersión prolongada pueden hacerlo inadecuado. Vehículos menos eficaces. PTMA es presión admisible normal, no presión medida actual."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "Los vehículos no son tan eficaces"
+      ]
+    },
+    {
+      "paginaPdf": 380,
+      "observaciones": [
+        "Rocío de agua depende de aplicación y compatibilidad; éxito descrito no invalida prohibiciones específicas de las guías. Sensible al agua incluye productos inflamables/tóxicos/corrosivos y no coincide automáticamente con Tabla 2."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "La efectividad depende particularmente del método de aplicación."
+      ]
+    },
+    {
+      "paginaPdf": 381,
+      "observaciones": [
+        "Temperatura de control y viscosidad son propiedades distintas. Zonas caliente/tibia/fría describen control del incidente; la zona fría aloja mando, sin radio universal predeterminado."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "En esta área se establece el puesto de mando"
+      ]
+    },
+    {
+      "paginaPdf": 382,
+      "observaciones": [
+        "Zonas toxicológicas A–D no son áreas ni distancias: umbrales CL50 y condiciones V para líquidos. Zona B excluye criterio A; conservar desigualdades exactas y no confundir con niveles EPP ni zonas de control."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "no representa un área o distancia"
+      ]
+    },
+    {
+      "paginaPdf": 383,
+      "observaciones": [
+        "Créditos y reglas de reproducción: copia fiel completa necesaria para nombres/escudos; la documentación derivada de SIGBO no debe presentarse como edición oficial modificada. Distribución/contactos son referencias de edición 2024."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "contenido completo (texto, formato y colorido)"
+      ]
+    },
+    {
+      "paginaPdf": 384,
+      "observaciones": [
+        "Canales de comentarios editoriales e información, diferentes de líneas de emergencia. No se enviaron mensajes ni se comprobó vigencia actual de esos contactos."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "Los comentarios deberán enviarse a:"
+      ]
+    },
+    {
+      "paginaPdf": 385,
+      "observaciones": [
+        "Revisión usual cuatrienal con instrucciones especiales por error/omisión; fuente pide comprobar cada seis meses. Campos de fecha están vacíos; no prueban ausencia de erratas ni versión vigente."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "cada 6 meses"
+      ]
+    },
+    {
+      "paginaPdf": 386,
+      "observaciones": [
+        "CANUTEC distingue emergencia de información; *666 sólo Canadá. Reportes y autoridades dependen de jurisdicción: no trasladar legislación canadiense a CBVC ni configurar obligación local automática."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "únicamente para Canadá"
+      ]
+    },
+    {
+      "paginaPdf": 390,
+      "observaciones": [
+        "Directorio con restricciones geográficas y líneas distintas para militar, intoxicación y apoyo radiológico. Registro documental 2024, no agenda local verificada ni llamadas efectuadas."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "únicamente dentro de Estados Unidos"
+      ]
+    },
+    {
+      "paginaPdf": 391,
+      "observaciones": [
+        "Directorio México/Argentina/Brasil/Colombia/Chile, nacional vs internacional y cobro revertido. Página sin folio numérico impreso; no inventar 389. No hay contacto paraguayo en esta página."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "NÚMEROS DE TELÉFONO DE RESPUESTA DE EMERGENCIA 24 HORAS"
+      ]
+    },
+    {
+      "paginaPdf": 392,
+      "observaciones": [
+        "Contraportada: no venta, QR institucionales y prohibición de usar GRE para determinar cumplimiento o crear documentos de seguridad químicos específicos. No se escanearon QR ni se validaron destinos actuales; sin folio impreso."
+      ],
+      "limite": "Lectura documental del original 2024; no revisión clínica, verificación de vigencia normativa/contactos, aprobación institucional ni prueba de motor.",
+      "fragmentosFuente": [
+        "PARA DETERMINAR EL CUMPLIMIENTO"
+      ]
+    }
+  ]
+}

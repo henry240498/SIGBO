@@ -2675,6 +2675,105 @@ export const PANTALLAS_WEB: PantallaCatalogo[] = [
     ]
   },
   {
+    "codigo": "0xB07C",
+    "ruta": "/dashboard/matpel",
+    "nombre": "Matpel",
+    "modulo": "matpel",
+    "prefijo": "matpel:",
+    "llamadas": [
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/matpel/versiones/*/archivo"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/matpel/versiones/*/paquete/archivo"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/matpel/estado"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/matpel/buscar"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/matpel/materiales/:entradaId"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/matpel/guias/:numero"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/matpel/fuentes/:referenciaId"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/matpel/versiones/:versionGreId/archivo"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/matpel/evaluaciones/consulta"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/matpel/secciones"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/matpel/secciones/:seccionId"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/matpel/versiones/:versionGreId/paquete/archivo"
+      },
+      {
+        "metodos": [
+          "POST"
+        ],
+        "patron": "/matpel/evaluaciones/consulta-v2"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/matpel/versiones/:versionGreId/paquete/manifest"
+      },
+      {
+        "metodos": [
+          "GET"
+        ],
+        "patron": "/matpel/versiones/:versionGreId/paquete/partes/:parte"
+      }
+    ]
+  },
+  {
     "codigo": "0xB046",
     "ruta": "/dashboard/organizacion",
     "nombre": "Resumen",
@@ -5267,6 +5366,16 @@ export const ACCIONES_FORZADAS: AccionForzada[] = [
     "metodo": "POST",
     "patron": "/configuracion/admin/borradores/:id/validar",
     "accion": "editar"
+  },
+  {
+    "metodo": "POST",
+    "patron": "/matpel/evaluaciones/consulta",
+    "accion": "ver"
+  },
+  {
+    "metodo": "POST",
+    "patron": "/matpel/evaluaciones/consulta-v2",
+    "accion": "ver"
   }
 ];
 

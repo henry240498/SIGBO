@@ -1,0 +1,38 @@
+{
+  "fechaUtc": "2026-10-09T23:38:12.506404+00:00",
+  "revisionGit": "a486055225929688a4046cfd39a0e4b90f736c9a",
+  "auditorSha256": "95294ed9fee0f423c39f730d456620c9480c69fe6a5429ff298ada61ed054c6d",
+  "tests": [
+    {
+      "comando": "cd scripts/matpel; python -m unittest test_auditar_conocimiento -v",
+      "aprobadas": 3,
+      "total": 3,
+      "duracionSegundos": 117.379,
+      "exitCode": 0
+    },
+    {
+      "comando": "python scripts/matpel/auditar_conocimiento.py",
+      "exitCode": 0,
+      "evidencia": "auditoria-documental.json"
+    },
+    {
+      "comando": "python scripts/matpel/validar_conocimiento.py",
+      "exitCode": 0,
+      "evidencia": "integridad-contexto.json"
+    },
+    {
+      "comando": "node .context/graph/build-graph.mjs; node .context/graph/validar.mjs",
+      "exitCode": 0,
+      "nodos": 1104,
+      "aristas": 3860,
+      "avisosPrevios": 8
+    },
+    {
+      "comando": "git -c core.safecrlf=false diff --check",
+      "exitCode": 0
+    }
+  ],
+  "cambiosSQL": false,
+  "commitsOPushPorAgente": false,
+  "dominioIntegralDemostrado": false
+}

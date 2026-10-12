@@ -1,0 +1,43 @@
+{
+  "fuenteSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+  "imagenes": [
+    {
+      "imagen": "pdf-303.png",
+      "sha256": "11184a2b75aafc6430332d6506942d11c7e7dac5cba2d7689ef7bccc2b3c3e1c",
+      "paginaPdf": 303,
+      "revisor": "/root/auditoria_independiente",
+      "metodo": "RENDER_PDF_INSPECCION_VISUAL_DIRECTA_REPORTADA_POR_REVISOR"
+    },
+    {
+      "imagen": "pdf-304.png",
+      "sha256": "fe250f7e2f356ca329442af642972ff28ad1df4afc3f1296e7b50a09d4fa195f",
+      "paginaPdf": 304,
+      "revisor": "/root/auditoria_independiente",
+      "metodo": "RENDER_PDF_INSPECCION_VISUAL_DIRECTA_REPORTADA_POR_REVISOR"
+    },
+    {
+      "imagen": "pdf-341.png",
+      "sha256": "fb86faaa55b299f54434bdbf9455f9270ef92370df858f1b7db3d34380d41fed",
+      "paginaPdf": 341,
+      "revisor": "/root/auditoria_independiente",
+      "metodo": "RENDER_PDF_INSPECCION_VISUAL_DIRECTA_REPORTADA_POR_REVISOR"
+    },
+    {
+      "imagen": "pdf-342.png",
+      "sha256": "dbb947c126e1677bfa816f58907fa2bd7393733d3c8fb2170c8de67ecca34bd7",
+      "paginaPdf": 342,
+      "revisor": "/root/auditoria_independiente",
+      "metodo": "RENDER_PDF_INSPECCION_VISUAL_DIRECTA_REPORTADA_POR_REVISOR"
+    },
+    {
+      "imagen": "pdf-343.png",
+      "sha256": "24ee3a67d2a3433fbf3edc1ca2293dee4693243cb3214d3d3d01df168860b3d3",
+      "paginaPdf": 343,
+      "revisor": "/root/auditoria_independiente",
+      "metodo": "RENDER_PDF_INSPECCION_VISUAL_DIRECTA_REPORTADA_POR_REVISOR"
+    }
+  ],
+  "limites": [
+    "Evidencia parcial; no cubre las392paginas."
+  ]
+}

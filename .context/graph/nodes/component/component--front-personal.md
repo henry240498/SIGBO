@@ -4,7 +4,7 @@ tipo: COMPONENT
 nombre: personal
 nivel: L2
 dominio: personal
-resumen: "Helper de frontend \"personal\" (13 exportaciones, consume 3 endpoint(s))."
+resumen: "Helper de frontend \"personal\" (14 exportaciones, consume 3 endpoint(s))."
 capa: frontend
 archivos:
   - frontend/src/lib/personal.ts
@@ -12,12 +12,12 @@ edges:
   - [calls, api--personal-tipos-bombero]
   - [calls, api--equipos-equipamiento-bombero]
   - [calls, api--equipos-equipamiento-bombero]
-terminos: [personal, tipo, bombero, resumen, estados, cargar, tipos, bomberos, construir, extraer, numero, codigo, comparar, institucional, catalogo, subir, firma, digital, eliminar, cambiar, autorizacion]
+terminos: [personal, tipo, bombero, resumen, estados, estilo, estado, cargar, tipos, bomberos, construir, extraer, numero, codigo, comparar, institucional, catalogo, subir, firma, digital, eliminar, cambiar, autorizacion]
 ---
 
 # personal
 
-Helper de frontend "personal" (13 exportaciones, consume 3 endpoint(s)).
+Helper de frontend "personal" (14 exportaciones, consume 3 endpoint(s)).
 
 
 ## Archivos
@@ -57,7 +57,9 @@ Helper de frontend "personal" (13 exportaciones, consume 3 endpoint(s)).
 - [[screen--dashboard-guardias-requisitos|/dashboard/guardias/requisitos]] `uses` →
 - [[screen--dashboard-guardias-id|/dashboard/guardias/[id]]] `uses` →
 - [[screen--dashboard-personal-control|/dashboard/personal/control]] `uses` →
+- [[screen--dashboard-personal-nuevo|/dashboard/personal/nuevo]] `uses` →
 - [[screen--dashboard-personal|/dashboard/personal]] `uses` →
+- [[screen--dashboard-personal-id|/dashboard/personal/[id]]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

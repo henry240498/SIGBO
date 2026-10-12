@@ -35,6 +35,7 @@ Avisos opcionales a un grupo o canal de Telegram (API de bots, abierta y gratuit
 ## Referenciado por
 
 - [[service--control-personal-avisos-vencimiento|AvisosVencimientoService]] `uses` →
+- [[service--sistema-sistema|SistemaService]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

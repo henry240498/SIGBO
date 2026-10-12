@@ -36,6 +36,7 @@ Logica de negocio de flota (modulo flota).
 
 ## Referenciado por
 
+- [[service--centro-mando-centro-mando|CentroMandoService]] `uses` →
 - [[api--flota-flota|FlotaController]] `exposes` →
 
 ---

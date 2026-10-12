@@ -1,18 +1,24 @@
 ---
 id: domain--matpel
 tipo: DOMAIN
-nombre: matpel
+nombre: MATPEL
 nivel: L0
 dominio: matpel
-estado: SOLO_BD
-resumen: Dominio presente en la base de datos y/o el backend pero no declarado en el menu del frontend.
+estado: ACTIVO
+resumen: "Modulo funcional \"MATPEL\". Habilitado en la navegacion."
+archivos:
+  - frontend/src/lib/modulos.ts
 terminos: [matpel]
 ---
 
-# matpel
+# MATPEL
 
-Dominio presente en la base de datos y/o el backend pero no declarado en el menu del frontend.
+Modulo funcional "MATPEL". Habilitado en la navegacion.
 
+
+## Archivos
+
+- `frontend/src/lib/modulos.ts`
 
 ## Referenciado por
 
@@ -61,7 +67,12 @@ Dominio presente en la base de datos y/o el backend pero no declarado en el menu
 - [[service--gre-gre-proceso|GreProcesoService]] `belongs_to` →
 - [[service--gre-gre-revision|GreRevisionService]] `belongs_to` →
 - [[service--gre-gre-trabajador|GreTrabajadorService]] `belongs_to` →
+- [[service--gre-matpel-consulta|MatpelConsultaService]] `belongs_to` →
+- [[service--gre-motor-matpel|MotorMatpelService]] `belongs_to` →
 - [[api--gre-gre-admin|GreAdminController]] `belongs_to` →
+- [[api--gre-matpel-consulta|MatpelConsultaController]] `belongs_to` →
+- [[screen--dashboard-matpel|/dashboard/matpel]] `belongs_to` →
+- [[workflow--consulta-gre-movil|Consulta GRE documental y guiada en Android]] `belongs_to` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

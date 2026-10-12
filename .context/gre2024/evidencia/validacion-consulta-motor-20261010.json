@@ -1,0 +1,298 @@
+{
+  "fechaUtc": "2026-10-11T00:29:14.897Z",
+  "estado": "CONSULTA_MOTOR_GEOMETRIA_Y_LECTURA_DOCUMENTAL_WEB_FLUTTER_PROBADOS_LOCALMENTE_SCI_Y_ACEPTACION_INSTITUCIONAL_PENDIENTES",
+  "alcance": "IMPLEMENTACION_Y_COTEJO_TECNICO_NO_VALIDACION_OPERATIVA_NO_ACTIVACION",
+  "revisionInicial": "b8c89a708eab18e5885f75309896d836d77a6274",
+  "revisionObservada": "3f123cdb73ed1b7df80f55f4ead41e570a0572e1",
+  "avanceConcurrenteConservado": true,
+  "respaldo": "C:/Users/jemc2/AppData/Local/Temp/sigbo-matpel-motor-v2y7_3du",
+  "fuente": {
+    "pdf": "docs/Manuales/GRE2024-Spa-Web-a.pdf",
+    "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+    "documentoBytes": 8182725,
+    "candidatoSha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543",
+    "archivosFuenteModificados": false,
+    "paginasVisualesRegistradas": 392,
+    "paginasPendientesInspeccion": 0,
+    "guiasConContenido": 62,
+    "clausulasDocumentadas": 2531,
+    "celdasTabla3CotejadasConCabeceras": 308,
+    "revisionIndependienteIntegralDemostrada": false
+  },
+  "implementacion": {
+    "consulta": "API autenticada y de solo lectura; edición registrada VALIDADA, jamás candidato automático",
+    "motor": "gre2024-matpel-1; selección condicionada Tablas1–3, sin autoridades, interpretación parcial de reglas",
+    "geometria": "sigbo-gre-figura-1; referencia PDF297 / impresa295, cálculo complementario SIGBO",
+    "web": "Operaciones/MATPEL; fuentes, guías completas,42 secciones y PDF",
+    "offline": "HTML documental autocontenido; lectura manual sin motor local; hashes de catálogo/PDF",
+    "flutter": "Lector documental en herramientas operativas; descarga JWT/refresh, hashes, biblioteca/recuperación, búsqueda, guías/secciones/tablas manuales, fuentes y exportación del PDF. Sin motor local/SCI."
+  },
+  "pruebas": [
+    {
+      "directorio": "backend",
+      "comando": "npm run build",
+      "exitCode": 0,
+      "resultado": "Compilación Nest aprobada"
+    },
+    {
+      "directorio": "backend",
+      "comando": "npm test -- --testPathPatterns=matpel-paquete",
+      "exitCode": 0,
+      "resultado": "Jest29 ejecutó TODA la suite: la opción plural no filtró",
+      "aprobadas": 658,
+      "omitidasSQL": 9,
+      "suitesAprobadas": 56,
+      "suitesOmitidas": 1,
+      "duracionSegundos": 145.014
+    },
+    {
+      "directorio": "backend",
+      "comando": "npm test -- --testPathPattern=matpel-paquete",
+      "exitCode": 0,
+      "resultado": "Repetición con filtro correcto y comparación eficiente de hash/bytes",
+      "aprobadas": 4,
+      "duracionSegundos": 26.132
+    },
+    {
+      "directorio": "frontend",
+      "comando": "npm run build",
+      "exitCode": 0,
+      "resultado": "Next16.3.4 y TypeScript;125 páginas generadas"
+    },
+    {
+      "directorio": "frontend",
+      "comando": "npm test",
+      "exitCode": 0,
+      "aprobadas": 66,
+      "fallidas": 0
+    },
+    {
+      "directorio": "frontend",
+      "comando": "npm run verificar:pantallas",
+      "exitCode": 0,
+      "pantallas": 135,
+      "enMatriz": 129
+    },
+    {
+      "directorio": "frontend",
+      "comando": "npm run audit:a11y; npm run audit:contraste",
+      "exitCode": 0,
+      "resultado": "Auditorías estáticas en línea base; no acreditan auditoría con lector de pantalla"
+    },
+    {
+      "directorio": "scripts/matpel",
+      "comando": "python -m unittest test_cotejo_motor test_validar_conocimiento -v",
+      "exitCode": 0,
+      "aprobadas": 23,
+      "duracionSegundos": 7.261
+    },
+    {
+      "directorio": "scripts/matpel",
+      "comando": "python -m unittest discover -p test_*.py -v",
+      "exitCode": 0,
+      "aprobadas": 88,
+      "duracionSegundos": 150.98,
+      "momento": "CORRIDA_PREVIA_A_AMPLIACION_PDF3_Y_CAMBIO_METADATA_AGUA; se repitieron23 casos afectados"
+    },
+    {
+      "herramienta": "Playwright",
+      "script": "scripts/matpel/recorrido_ui.cjs",
+      "aprobadas": 15,
+      "errores": 0,
+      "evidencia": ".context/gre2024/evidencia/recorrido-ui-matpel-20261010.json",
+      "alcance": "API interceptada, contexto aislado, fuente y motor reales; sin SQL institucional"
+    },
+    {
+      "herramienta": "Playwright",
+      "script": "scripts/matpel/recorrido_offline.cjs",
+      "aprobadas": 11,
+      "errores": 0,
+      "peticionesExternas": 0,
+      "evidencia": ".context/gre2024/evidencia/recorrido-offline-matpel-20261010.json",
+      "alcance": "Primera apertura de archivo desde disco con navegador desconectado desde el inicio; candidato real completo;390px emulados; no teléfono físico"
+    },
+    {
+      "comando": "node .context/graph/build-graph.mjs; node .context/graph/validar.mjs",
+      "exitCode": 0,
+      "nodos": 1135,
+      "aristas": 3984,
+      "avisosValidador": 10,
+      "advertenciasGenerador": 2,
+      "resultado": "Sin errores; el generador analiza SQL, no ejecuta migraciones"
+    },
+    {
+      "comando": "node scripts/verificar-endpoints.mjs",
+      "exitCode": 1,
+      "rutasBackend": 811,
+      "llamadasFrontend": 579,
+      "resueltas": 567,
+      "sinRuta": 12,
+      "resultado": "Las12 llamadas sin ruta son las mismas preexistentes registradas en LAST_VALIDATION. Ninguna es MATPEL.",
+      "pendienteAjenoConservado": true
+    },
+    {
+      "directorio": ".movile",
+      "comando": "flutter pub get --offline",
+      "exitCode": 0,
+      "resultado": "Regeneró package_config.json que tenía prefijo inválido; pubspec.yaml y lock no cambiaron",
+      "sha256Lock": "75800caefd7d8a9a39b0c2ba279eae89ca0d0dd23a1d0f3e7a565e5cbabbc151"
+    },
+    {
+      "directorio": ".movile",
+      "comando": "flutter analyze --no-pub",
+      "exitCode": 0,
+      "resultado": "Sin incidencias",
+      "duracionSegundos": 13.4
+    },
+    {
+      "directorio": ".movile",
+      "comando": "flutter test --no-pub --reporter expanded",
+      "exitCode": 0,
+      "aprobadas": 56,
+      "omitidas": 0,
+      "casosMatpel": 8,
+      "duracionAproximadaSegundos": 19,
+      "alcance": "Interoperabilidad exportador real con recorte y candidato completo; integridad/disco/recuperación y widgets Flutter; no teléfono físico"
+    },
+    {
+      "directorio": ".movile",
+      "comando": "flutter build apk --debug --no-pub",
+      "exitCode": 0,
+      "duracionGradleSegundos": 40.7,
+      "resultado": "APK de depuración final; no instalación/distribución. Avisos preexistentes de Gradle8.14,AGP8.11.1,Kotlin2.2.20 y SDKXML conservados"
+    }
+  ],
+  "paqueteCompletoDePrueba": {
+    "publicado": false,
+    "activado": false,
+    "archivoTemporal": "C:/Users/jemc2/AppData/Local/Temp/sigbo-matpel-motor-v2y7_3du/prueba-gre-completa.html",
+    "versionGreIdDePrueba": "00000000-0000-4000-8000-000000000001",
+    "htmlBytes": 39130727,
+    "htmlSha256": "fc49c5abe50d84071d092e0307be73f33eb9c11adaf560868f2be231dc4737f9",
+    "catalogoBytes": 25680578,
+    "catalogoSha256": "2328d2da2ffbacdf8606c168bfb4f4c89c5f0e90a42f9e4fee2a4bfe90f80039",
+    "entradasConciliadas": 2665,
+    "referencias": 38810,
+    "paginas": 392,
+    "secciones": 42,
+    "motorDisponibleOffline": false
+  },
+  "integridadContexto": {
+    "comando": "python scripts/matpel/validar_conocimiento.py",
+    "exitCode": 0,
+    "documentos": 27,
+    "reglasDocumentadas": 54,
+    "celdasTabla3CotejadasConCabeceras": 308,
+    "paginasVisualesRegistradas": 392,
+    "paginasPendientesInspeccion": 0,
+    "errores": [],
+    "evidencia": ".context/gre2024/evidencia/integridad-contexto.json"
+  },
+  "fuentesExternas": {
+    "evidencia": ".context/gre2024/evidencia/fuentes-externas-20261010.json",
+    "descargaWorkspaceHTTP": 403,
+    "hashRemotoCotejado": false,
+    "contactsActualesComprobados": false
+  },
+  "pendientes": [
+    {
+      "capacidad": "SCI: contexto, historial, autoridad y decisiones",
+      "bloqueo": "AGENTS exige Reglamento original y artículos aplicables antes de modificar flujos de Servicios/SCI. El usuario respondió que todavía no lo tiene consigo.",
+      "fuenteReglas": "AGENTS.md",
+      "fuenteNormativaDisponible": false
+    },
+    {
+      "capacidad": "Fotografía/OCR",
+      "bloqueo": "ContratoF requiere adjunto/evidencia del Servicio, permisoR y adjuntos:subir; depende de integración SCI. No se añadieron rutas de subida bajo permisoC.",
+      "validacionFotosRepresentativas": false
+    },
+    {
+      "capacidad": "Dispositivo físico/motor desconectado/sincronización",
+      "bloqueo": "Lector documental Flutter implementado, probado y compilado; faltan prueba Android/iOS físico, lector/selector PDF del teléfono, rendimiento de campo, motor local e integración/sincronización SCI"
+    },
+    {
+      "capacidad": "Aceptación del catálogo y pruebas operativas",
+      "bloqueo": "Cotejo independiente integral de entradas/celdas/reglas, responsables institucionales y entorno SQL aprobado pendientes"
+    },
+    {
+      "capacidad": "Meteorología y mapa del incidente",
+      "bloqueo": "Solo captura manual de datos declarados y geometría relativa de consulta; proveedor/incidente no integrados"
+    }
+  ],
+  "accionesNoRealizadas": [
+    "commits",
+    "pushes",
+    "migraciones SQL",
+    "importación institucional",
+    "activación de catálogo",
+    "cambios productivos",
+    "modificación de flujos SCI/Servicios",
+    "reinicio de backend institucional"
+  ],
+  "ajustePruebasPrevias": "Dos expectativas de Despacho ajustadas a registrar(input, manager?) y respaldadas; ninguna lógica de servicio modificada.",
+  "archivosSha256": {
+    "backend/src/modules/gre/matpel-consulta.controller.ts": "a104a682a54e6705399189b3a93ca34f4a366d3db7b91de211fd3d0a9decf127",
+    "backend/src/modules/gre/matpel-consulta.service.ts": "cb818371504acb31a9d2f5faffb7e2330c6931bae552ca3b0c136f7c6242d652",
+    "backend/src/modules/gre/matpel-consulta.spec.ts": "390d3826c953d446617799528262f430e19110fab2bbde5471a539e0a1ec7a8c",
+    "backend/src/modules/gre/dto/matpel-consulta.dto.ts": "826f45f4f0a25d3d71127cf010925da453e175fb70493afd16bb8f78739165b8",
+    "backend/src/modules/gre/matpel-modelo.ts": "d72a1dba8d0b0800d8f8f7da833dbd7ec7df75854b431ec18014d28a3520aeba",
+    "backend/src/modules/gre/motor-matpel.service.ts": "4f52b151af486c3232491d7d7ca99220acc6af75b9c8afc750ef43012ecf4428",
+    "backend/src/modules/gre/motor-matpel.spec.ts": "7dfdc9a8fc2c18ac3f42346b5b931474acf51a70176cbfae74b48079fb66efc1",
+    "backend/src/modules/gre/matpel-geometria.ts": "63e100e139c18fe296e74107ce4ccd9daa8af0bb2083a62fa1d510c8c9d908dd",
+    "backend/src/modules/gre/matpel-paquete.ts": "3e67d264fc33f1de3aaea75dec71fae89f6948e8800013ca26a7a7139a8cbc40",
+    "backend/src/modules/gre/matpel-paquete.spec.ts": "d0f3e4edd6ba2a05d94f2e86bab80fda4fd628fce7f9c295edaa334bc68c5ff3",
+    "backend/src/modules/gre/gre.module.ts": "3120e68980751047f56c83288a3eb3bc544c036cefb740f288d112ded36c8fc3",
+    "frontend/src/app/dashboard/matpel/page.tsx": "dd9d3040138365b5f691a91d7ed0e00c8cda355c3d2b1b5e3994658ec086fa2f",
+    "frontend/src/lib/matpel.ts": "43588303c449daad34c5c4f6de854c4e6dbc1fc5dfba52eecfadc1dfc7ba1c89",
+    "frontend/src/components/MapaMatpel.tsx": "b06da676716c60da0b75b0f0cbf6a8ae7af7561ff52cbc4747f3262d0a9dc5c0",
+    "frontend/scripts/pantallas-api-extra.json": "ffe328d15e3a519d128a5df41cd3c579fa2682c0287f4bb0ab325a5368977cb4",
+    "scripts/matpel/validar_conocimiento.py": "9c5c1ada3cc06ea2fa582cc1180a96df09d5546ce1e67749b860299e7c45a2d3",
+    "scripts/matpel/validar_cabeceras_tabla3.py": "b603e64ea67755e7fdbf2157c5342bcdcf918fbf1db65bd86663b4df95f79f2f",
+    "scripts/matpel/validar_recorte_motor.py": "5618d6c4ff5f557a2f1cf11e8f0278f4e72196412987016605e8cbffc47a41f4",
+    "scripts/matpel/test_cotejo_motor.py": "0a4fa44e438fb60dae41230266682cdd541e9666690e8132298cbdef93a5dafb",
+    "scripts/matpel/recorrido_ui.cjs": "4ad019573ab55884740a566a2fe9a319a2f4dfa59412fba25484105ae77b26a0",
+    "scripts/matpel/recorrido_offline.cjs": "4d81a04bf0475336b8de42a49ea1743d2df48577ab381e11d0e2afd4a07fc745",
+    "scripts/matpel/preparar_prueba_paquete.cjs": "87c3fe229efbe4a258cd2cf316cbb97226ca0dc3e1c007a59449e84a8a6c4c22",
+    "scripts/matpel/servidor_prueba_ui.cjs": "b63316243df165c8dd480a229ac78fdbe8001110db061454cec29787ea54e339",
+    ".context/gre2024/test-cases/motor-fuente.json": "1b4c96e79744ae461ba29fe96da376b00e8909ecba2b1729f08624e75444170c",
+    ".context/gre2024/evidencia/recorrido-ui-matpel-20261010.json": "111020255ae3c8506013f4970799a35af86e98b54ab67a31c53ced7b3650e4b4",
+    ".context/gre2024/evidencia/recorrido-offline-matpel-20261010.json": "ee1fd47a81b6c5687c1ba420126287ac6ff27f090c8c065533febbf65d2573f5",
+    "docs/matpel/FASE_4_5_CONSULTA_MOTOR.md": "f405583ba18e8a36da8168e8f43e816a655324cf605c4e92c79b3569ff5ce0b0",
+    "docs/matpel/PLAN_POR_FASES.md": "d83fd3675020855dde8d1a16a4ce9a025701627c1a6ce3628809d34ae1c014b6",
+    ".movile/lib/api.dart": "4c07b51165d6643a932eca93d5f0dee2947c457e15fb2768496043bd5d59e76f",
+    ".movile/lib/operacion.dart": "479f0095778fa2ae5725a48f11e9bcd4714da8a8d01dddaadd61c0e0b9b17423",
+    ".movile/lib/matpel.dart": "445622d0d26e3d98c45fd97bf86d6c3e6a5f8fb7e60dcb04e5e6ee2d0ed7ecc0",
+    ".movile/lib/matpel_documento.dart": "4e0297169f448969b9f175fbb784e5617822b8756dd6c82b51704b1b660771a1",
+    ".movile/test/matpel_test.dart": "b648a7326b9bf83b54de9d657e09a084a17d4bdf27ab73c97a7512a617d2ec53",
+    ".movile/docs/MATPEL.md": "f42cbb594c445ffefc13d0baae090350518e706562214f3e793de8f54277ad02",
+    ".movile/README.md": "32542a2d9d97394f0bbd80ac4d652e769d0c4a8964e0754e111db816d2922080",
+    "scripts/matpel/paquete_prueba_movil.cjs": "620d57924304ff1dc8cd8c318c57f3ce94fd0fb4cdbedffa59a996908b1b7f52",
+    ".context/gre2024/index.md": "494983a859411dfe3adca88085aaf87bccf8109e22c7dd920c5d251d496b705b",
+    ".context/gre2024/validation-report.md": "eb5f3480cccd05cfd647e71b072b6081101ba9abce3eeeb8eb3382ae4f0e0484",
+    ".context/gre2024/engine-implementation.md": "9d36b074617c152db5422a00510f63f09aafb97f18f87f3a9aed4b422fde6d48",
+    ".context/gre2024/open-issues.md": "cac496f6da59cb1cb1e09b17eac59c8e21b2174e0ceb3eaf543fcedbb523bcd5",
+    ".context/gre2024/test-cases.md": "1e568814a08068a3142945a6a15690cdb591d89e43f8ada093be281ebc4202e6",
+    ".context/gre2024/reglas-operativas.json": "65feaafe6e82b83a61be34dbf58d2d984cabefde0d183bdc64c7edf30ac0d9f4"
+  },
+  "dominioIntegralDemostrado": false,
+  "misionIntegralCompletada": false,
+  "apkDepuracion": {
+    "archivo": ".movile/build/app/outputs/flutter-apk/app-debug.apk",
+    "bytes": 191349529,
+    "sha256": "7921490588f7936f49ed8ef3a2dabf0561a26f38bf7a9e9320135fedb1d9b9d4",
+    "flutter": "3.47.3",
+    "dart": "3.13.3",
+    "instalado": false,
+    "publicado": false,
+    "telefonoFisicoProbado": false
+  },
+  "regresionEntornoMovil": {
+    "respaldoConfiguracion": "C:/Users/jemc2/AppData/Local/Temp/sigbo-matpel-motor-v2y7_3du/package-config-movil-previo.json",
+    "prefijoInvalidoDetectado": true,
+    "regeneradoDesdeCache": true,
+    "dependenciasModificadas": false,
+    "pruebasReparadas": "UTF-8 explícito para stdout Node en Windows, tipo Map del fixture de versión nueva y E/S de disco dentro de tester.runAsync; pruebas finales56/56",
+    "procesosTemporalesDeNavegadorCerrados": true,
+    "backendExistentePIDConservado": 37972
+  }
+}

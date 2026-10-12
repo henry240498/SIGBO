@@ -1,6 +1,6 @@
 # GRE / MATPEL / SCI — plan de implementación por fases
 
-Plan inicial: 2026-10-07. Actualización: 2026-10-09. Estado: **fases 1 y 2 concluidas; 3A–3C como fuente y extracción candidata; 3D backend de administración en validación; cotejo institucional pendiente**.
+Plan inicial: 2026-10-07. Actualización: 2026-10-10. Estado: **392 páginas inspeccionadas; consulta, motor, geometría y lectura documental sin conexión en web/Flutter implementados y probados localmente; integración SCI y aceptación institucional pendientes**.
 
 ## Objetivo y forma de avanzar
 
@@ -37,12 +37,12 @@ Fuentes de contexto leídas: `AGENTS.md`, `.context/contexto.md`, `.context/regl
 | 1 | Diagnóstico completo de SIGBO y GRE | Contexto del proyecto y fuente real | Concluida: diagnóstico, reglas y evidencia |
 | 2 | Arquitectura y experiencia de usuario | Fase 1 | Concluida: diseño, contratos, recorridos y matriz GRE |
 | 3 | Base GRE e importador reproducible | Fase 2 | En curso: 3A–3C candidatas; administración 3D en validación, cotejo institucional pendiente |
-| 4 | API de consulta y motor determinístico | Fase 3 validada | Pendiente |
-| 5 | Consulta MATPEL integrada y sencilla | Fases 2 y 4 | Pendiente |
-| 6 | Incidente MATPEL e integración SCI | Fase 5 y núcleo/contratos SCI comprobados | Pendiente |
-| 7 | Mapa operacional y condiciones | Fases 4 y 6 | Pendiente |
+| 4 | API de consulta y motor determinístico | Fase 3 validada | Implementación local y pruebas terminadas; cotejo institucional/SQL aprobado pendientes |
+| 5 | Consulta MATPEL integrada y sencilla | Fases 2 y 4 | Implementación local probada en escritorio/móvil aislados; habilitación institucional pendiente |
+| 6 | Incidente MATPEL e integración SCI | Fase 5 y núcleo/contratos SCI comprobados | Pendiente; usuario no dispone aún del Reglamento original requerido para modificar flujos |
+| 7 | Mapa operacional y condiciones | Fases 4 y 6 | Geometría de consulta relativa probada; integración con incidente y meteorología pendientes |
 | 8 | Lectura de ONU por fotografía | Fases 5 y 6 | Pendiente |
-| 9 | Consulta móvil, offline y degradación | Fase 5; integración de 6–8 según plataforma | Pendiente |
+| 9 | Consulta móvil, offline y degradación | Fase 5; integración de 6–8 según plataforma | Archivo web probado sin red; lector Flutter, cache/recuperación y APK de prueba comprobados. Teléfono físico, motor local y sincronización SCI pendientes |
 | 10 | Validación integral y entrega | Fases anteriores comprobadas | Pendiente |
 
 ### Fase 1 — comprender antes de implementar
@@ -124,6 +124,20 @@ Captura/carga → preprocesamiento local → OCR → candidatos válidos → con
 ### Fase 9 — móvil, offline y funcionamiento degradado
 
 Separar consulta local en servidor y consulta descargada en dispositivo. Reutilizar capacidades Flutter; determinar el alcance web después de analizar cache, tamaño y permisos. Paquetes locales de edición validada, integridad, fuente original, actualización y recuperación. Conservar edición histórica al sincronizar.
+
+Estado web2026-10-10: descarga manual HTML autocontenida con búsqueda, guía completa,
+tablas de lectura manual,42 secciones y PDF original. Los hashes se comprueban antes
+de habilitar la lectura. Apertura inicial desde disco con el navegador desconectado
+comprobada; catálogo y PDF alterados bloqueados. El candidato completo produce un
+archivo de39.130.727bytes. Este tamaño y la prueba móvil corresponden a escritorio
+emulado de390px, no a mediciones en teléfonos físicos. No ejecuta motor local ni
+sincroniza incidentes. Véase [entrega](FASE_4_5_CONSULTA_MOTOR.md#consulta-documental-sin-conexión).
+
+Estado Flutter: lector documental en las herramientas operativas, descarga JWT y
+misma autorización de consulta/matriz del servidor, biblioteca local verificada,
+búsqueda, fichas, guías/secciones, fuentes y exportación del PDF. Recuperación de
+copias anteriores sin alterar incidentes.56/56 pruebas, análisis limpio y APK de
+depuración compilado. No se instaló/publicó APK ni se comprobó un dispositivo físico.
 
 Decisiones/incidentes: aplicar cola y conflictos según contratos existentes, diferenciando guardado local, pendiente y confirmado en servidor. Consultar GRE no debe depender de meteorología ni de APIs de IA.
 

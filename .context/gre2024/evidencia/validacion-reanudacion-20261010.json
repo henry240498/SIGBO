@@ -1,0 +1,119 @@
+{
+  "fechaUtc": "2026-10-10T13:49:20.972122+00:00",
+  "fechaTrabajoLocal": "2026-10-10",
+  "revisionGit": "dda12531cbffbeaa977dff63d7595f1b58024b80",
+  "rama": "main",
+  "cambiosLocales": true,
+  "tipo": "REANUDACION_DOCUMENTAL_NO_VALIDACION_OPERATIVA",
+  "entorno": {
+    "python": "3.13.0",
+    "pymupdf": "1.28.2",
+    "node": "v24.19.0",
+    "sql": "NO_UTILIZADO"
+  },
+  "fuenteSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+  "artefactoSha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543",
+  "auditorSha256": "87a21ed092debfbc307bc5c289fe5510b74c30adf739f4a2e0029e37723a7b30",
+  "validadorSha256": "1a5b68f7bde2062e1bce0c7e100aefd606a43558354b669c1e819ecee21c9467",
+  "auditoriaDocumental": {
+    "evidencia": "auditoria-documental.json",
+    "exitCode": 0,
+    "referencias": 38810,
+    "discrepancias": 0
+  },
+  "verificaciones": [
+    {
+      "comando": "python -m unittest test_auditar_conocimiento test_validar_conocimiento -v",
+      "directorio": "scripts/matpel",
+      "aprobadas": 11,
+      "total": 11,
+      "duracionSegundos": 46.696,
+      "exitCode": 0,
+      "desglose": {
+        "auditor": 4,
+        "integridadYCantidades": 7
+      }
+    },
+    {
+      "comando": "python scripts/matpel/validar_conocimiento.py",
+      "exitCode": 0,
+      "evidencia": "integridad-contexto.json",
+      "resultado": {
+        "tipo": "INTEGRIDAD_CONTEXTO_NO_VALIDACION_OPERATIVA",
+        "documentos": 18,
+        "reglasDocumentadas": 3,
+        "imagenesRevisadas": 7,
+        "lotesGuias": 1,
+        "clausulasDocumentadas": 403,
+        "paginasRevisionIndependienteRegistradas": 5,
+        "paginasVisualesRegistradas": 28,
+        "errores": [],
+        "dominioIntegralDemostrado": false
+      }
+    },
+    {
+      "comando": "node .context/graph/build-graph.mjs",
+      "exitCode": 0,
+      "nodos": 1120,
+      "aristas": 3912,
+      "advertenciasGenerador": 2
+    },
+    {
+      "comando": "node .context/graph/validar.mjs",
+      "exitCode": 0,
+      "errores": 0,
+      "avisos": 12
+    },
+    {
+      "comando": "git -c core.safecrlf=false diff --check",
+      "exitCode": 0
+    }
+  ],
+  "enCurso": false,
+  "cambiosSQL": false,
+  "activacionCatalogo": false,
+  "cambiosCodigoAplicacion": false,
+  "commitsOPushPorAgente": false,
+  "dominioIntegralDemostrado": false,
+  "alcance": {
+    "guiasLecturaPrevia": 10,
+    "paginasLecturaPrevia": 20,
+    "clausulasDocumentadas": 403,
+    "casosPreviosSinResultadoIndependiente": 26,
+    "paginasVisualesNuevaSesion": [
+      340,
+      341,
+      342,
+      343
+    ],
+    "cantidadesConFuentePropia": 5,
+    "paginasVisualesDistintasRegistradas": 28,
+    "paginasRevisionIndependientePrevia": 5
+  },
+  "limites": [
+    "No demuestra dominio integral de 392 paginas.",
+    "No implementa ni valida motor, geometria, API o SCI.",
+    "No valida seleccion por cantidades ni capacidades diferentes.",
+    "No realiza segundo cotejo numerico exhaustivo de las 308 celdas de Tabla 3.",
+    "No repite build backend/regresion general: sin cambios de aplicacion.",
+    "No realiza revision independiente nueva ni aceptacion institucional."
+  ],
+  "fechaCierreValidacionUtc": "2026-10-10T13:52:03.478338+00:00",
+  "generadorGrafoSha256": "a2eaca55b5a6cfb67ac87789f25e712b9eb315e0c559a2c4ed16c9e1d1e3be6d",
+  "incidenciasResueltas": [
+    {
+      "tipo": "GRAFO_DOMINIOS_NO_DECLARADOS",
+      "erroresIniciales": 9,
+      "modulos": [
+        "centro-mando",
+        "sistema"
+      ],
+      "correccion": ".context/graph/build-graph.mjs: mapeo de inicio autenticado y administracion de plataforma a Seguridad",
+      "erroresFinales": 0
+    }
+  ],
+  "revisionGitAlPrepararVerificacion": "a3f9185769e10c757329c1106e4196dd5ceb4a1a",
+  "revisionGitAlInicio": "d4c32ccb31e642c096690876252bebb95bb31fef",
+  "avanceConcurrenteGitConservado": true,
+  "revisionAuditoriaDocumental": "d4c32ccb31e642c096690876252bebb95bb31fef"
+}

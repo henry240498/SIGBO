@@ -31,6 +31,7 @@ Helper de frontend "Aviso" (1 exportaciones).
 - [[screen--dashboard-asistencia-externos|/dashboard/asistencia/externos]] `uses` →
 - [[screen--dashboard-asistencia-registro|/dashboard/asistencia/registro]] `uses` →
 - [[screen--dashboard-asistencia-tolerancias|/dashboard/asistencia/tolerancias]] `uses` →
+- [[screen--dashboard-centro-mando|/dashboard/centro-mando]] `uses` →
 - [[screen--dashboard-deposito-articulos|/dashboard/deposito/articulos]] `uses` →
 - [[screen--dashboard-deposito-articulos-id|/dashboard/deposito/articulos/[id]]] `uses` →
 - [[screen--dashboard-deposito-bajas|/dashboard/deposito/bajas]] `uses` →
@@ -79,8 +80,7 @@ Helper de frontend "Aviso" (1 exportaciones).
 - [[screen--dashboard-guardias-sorteos|/dashboard/guardias/sorteos]] `uses` →
 - [[screen--dashboard-guardias-sorteos-id|/dashboard/guardias/sorteos/[id]]] `uses` →
 - [[screen--dashboard-guardias-id|/dashboard/guardias/[id]]] `uses` →
-- [[screen--dashboard-mi-perfil|/dashboard/mi-perfil]] `uses` →
-- [[screen--dashboard-organizacion-ascensos|/dashboard/organizacion/ascensos]] `uses` →
+- [[screen--dashboard-matpel|/dashboard/matpel]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

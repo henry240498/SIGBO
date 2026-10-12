@@ -1,0 +1,244 @@
+{
+  "id": "GRE24-CASOS-GUIAS-121-130",
+  "tipo": "COMPRENSION_DOCUMENTAL_PROPUESTA_NO_PRUEBA_OPERATIVA",
+  "fuenteSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+  "casos": [
+    {
+      "id": "GRE24-COMP-121-130-01",
+      "reglaId": "GRE24-G124-AGENTES-AGUA-CONDICIONES",
+      "entradasDocumentales": [
+        "Guía124 seleccionada con identificación respaldada.",
+        "Incendio pequeño confirmado; el responsable evalúa si debe combatirse."
+      ],
+      "esperadoDocumental": "Conservar juntos limitación de agentes y advertencia; no emitir selección automática mientras la interacción por material no esté resuelta.",
+      "fuentes": [
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 185,
+          "paginaImpresa": "183",
+          "extractoLiteral": "PRECAUCIÓN: Estos materiales no arden, pero mantienen la combustión. Algunos van a reaccionar \nviolentamente con el agua.",
+          "clausulaDocumental": "GRE24-G124-B08-C01",
+          "referenciasCatalogo": [
+            "ref-023962",
+            "ref-023963"
+          ],
+          "artefactoSha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543"
+        },
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 185,
+          "paginaImpresa": "183",
+          "extractoLiteral": "•\t Solamente agua, no use polvos químicos secos, CO2 o Halon®.",
+          "clausulaDocumental": "GRE24-G124-B08-C03",
+          "referenciasCatalogo": [
+            "ref-023966"
+          ],
+          "artefactoSha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543"
+        }
+      ],
+      "resultadoObtenidoIndependiente": null,
+      "revisionIndependiente": "PENDIENTE",
+      "pruebaMotor": "PENDIENTE"
+    },
+    {
+      "id": "GRE24-COMP-121-130-02",
+      "reglaId": "GRE24-G125-AMONIACO-CONFINADO",
+      "entradasDocumentales": [
+        "Guía125 y UN1005, amoniaco anhidro.",
+        "Alta concentración y espacio confinado.",
+        "Introducción de fuente de ignición."
+      ],
+      "esperadoDocumental": "Mostrar advertencia específica y condiciones; datos desconocidos no permiten negar riesgo.",
+      "fuentes": [
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 186,
+          "paginaImpresa": "184",
+          "extractoLiteral": "•\t Para UN1005: el amoniaco anhidro, en altas concentraciones en espacios confinados, presenta riesgo de \ninflamabilidad si una fuente de ignicion se introduce.",
+          "clausulaDocumental": "GRE24-G125-B03-C07",
+          "referenciasCatalogo": [
+            "ref-024015",
+            "ref-024016"
+          ],
+          "artefactoSha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543"
+        }
+      ],
+      "resultadoObtenidoIndependiente": null,
+      "revisionIndependiente": "PENDIENTE",
+      "pruebaMotor": "PENDIENTE"
+    },
+    {
+      "id": "GRE24-COMP-121-130-03",
+      "reglaId": "GRE24-G126-AEROSOL-PROPELENTE",
+      "entradasDocumentales": [
+        "Guía126 seleccionada.",
+        "Material identificado como aerosol UN1950."
+      ],
+      "esperadoDocumental": "Conservar posibilidad de propelente inflamable; no afirmar presencia medida ni ausencia por el título.",
+      "fuentes": [
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 188,
+          "paginaImpresa": "186",
+          "extractoLiteral": "PRECAUCIÓN: Los aerosoles (UN1950) pueden contener un propelente inflamable.",
+          "clausulaDocumental": "GRE24-G126-B02-C04",
+          "referenciasCatalogo": [
+            "ref-024087"
+          ],
+          "artefactoSha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543"
+        }
+      ],
+      "resultadoObtenidoIndependiente": null,
+      "revisionIndependiente": "PENDIENTE",
+      "pruebaMotor": "PENDIENTE"
+    },
+    {
+      "id": "GRE24-COMP-121-130-04",
+      "reglaId": "GRE24-G127-ESPUMA-ALCOHOL-IDENTIDADES",
+      "entradasDocumentales": [
+        "Guía127 seleccionada.",
+        "Incendio que involucra UN1170, UN1987 o UN3475."
+      ],
+      "esperadoDocumental": "Preservar exigencia específica y fuente junto a listas generales; el sistema no aplica agente ni dirige intervención.",
+      "fuentes": [
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 191,
+          "paginaImpresa": "189",
+          "extractoLiteral": "PRECAUCIÓN: Para incendios que involucren UN1170, UN1987 o UN3475, debe utilizarse espuma \nresistente al alcohol.",
+          "clausulaDocumental": "GRE24-G127-B08-C02",
+          "referenciasCatalogo": [
+            "ref-024204",
+            "ref-024205"
+          ],
+          "artefactoSha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543"
+        }
+      ],
+      "resultadoObtenidoIndependiente": null,
+      "revisionIndependiente": "PENDIENTE",
+      "pruebaMotor": "PENDIENTE"
+    },
+    {
+      "id": "GRE24-COMP-121-130-05",
+      "reglaId": "GRE24-G128-REMISION-HIBRIDOS",
+      "entradasDocumentales": [
+        "Guía128 seleccionada.",
+        "Vehículo híbrido involucrado."
+      ],
+      "esperadoDocumental": "Conservar remisión adicional; sin identidad de batería no seleccionar silenciosamente una de las dos guías.",
+      "fuentes": [
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 192,
+          "paginaImpresa": "190",
+          "extractoLiteral": "•\t Para vehículos híbridos, la GUÍA 147 (Baterías de ión litio o ión sodio) o la GUÍA 138 (Baterías de sodio) \ntambién deben ser consultadas.",
+          "clausulaDocumental": "GRE24-G128-B02-C11",
+          "referenciasCatalogo": [
+            "ref-024260",
+            "ref-024261"
+          ],
+          "artefactoSha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543"
+        }
+      ],
+      "resultadoObtenidoIndependiente": null,
+      "revisionIndependiente": "PENDIENTE",
+      "pruebaMotor": "PENDIENTE"
+    },
+    {
+      "id": "GRE24-COMP-121-130-06",
+      "reglaId": "GRE24-G128-AGUA-CRUDO-TANQUE-DANADO",
+      "entradasDocumentales": [
+        "Guía128 seleccionada y petróleo crudo identificado.",
+        "Carro tanque dañado.",
+        "Aplicación directa de agua al recipiente descrito."
+      ],
+      "esperadoDocumental": "Preservar prohibición específica por posible rebosamiento; no perderla detrás del enfriamiento general.",
+      "fuentes": [
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 193,
+          "paginaImpresa": "191",
+          "extractoLiteral": "•\t Para el petróleo crudo, no rocíe agua directamente en un carro tanque dañado. Esto puede conducir a \nuna peligrosa rebosamiento por ebullición.",
+          "clausulaDocumental": "GRE24-G128-B08-C09",
+          "referenciasCatalogo": [
+            "ref-024311",
+            "ref-024312"
+          ],
+          "artefactoSha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543"
+        }
+      ],
+      "resultadoObtenidoIndependiente": null,
+      "revisionIndependiente": "PENDIENTE",
+      "pruebaMotor": "PENDIENTE"
+    },
+    {
+      "id": "GRE24-COMP-121-130-07",
+      "reglaId": "GRE24-G129-POLVO-SECO-NITROS",
+      "entradasDocumentales": [
+        "Guía129 seleccionada.",
+        "Fuego involucrando UN1261 nitrometano o UN2842 nitroetano.",
+        "El texto está en el subapartado incendio pequeño; conservar esa ubicación."
+      ],
+      "esperadoDocumental": "Mostrar exclusión específica con fuente y contexto; no recomendar polvo seco por la viñeta genérica anterior.",
+      "fuentes": [
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 195,
+          "paginaImpresa": "193",
+          "extractoLiteral": "•\t No usar extintores de productos químicos secos, para controlar fuegos que involucren nitrometano \n(UN1261) o nitroetano (UN2842).",
+          "clausulaDocumental": "GRE24-G129-B08-C03",
+          "referenciasCatalogo": [
+            "ref-024387",
+            "ref-024388"
+          ],
+          "artefactoSha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543"
+        }
+      ],
+      "resultadoObtenidoIndependiente": null,
+      "revisionIndependiente": "PENDIENTE",
+      "pruebaMotor": "PENDIENTE"
+    },
+    {
+      "id": "GRE24-COMP-121-130-08",
+      "reglaId": "GRE24-G128-G130-ESPUMA-CONDICIONAL",
+      "entradasDocumentales": [
+        "Guía128 o130 seleccionada, en escenario de fuego del subapartado.",
+        "Espuma regular ineficaz O no disponible."
+      ],
+      "esperadoDocumental": "Conservar alternativa y disyunción; no presentar espuma regular como solución garantizada.",
+      "fuentes": [
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 193,
+          "paginaImpresa": "191",
+          "extractoLiteral": "•\t Polvos químicos secos, CO2, rocío de agua o espuma regular. Si la espuma regular no es efectiva, o no \nestá disponible, use espuma resistente al alcohol.",
+          "clausulaDocumental": "GRE24-G128-B08-C03",
+          "referenciasCatalogo": [
+            "ref-024299",
+            "ref-024300"
+          ],
+          "artefactoSha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543"
+        },
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 197,
+          "paginaImpresa": "195",
+          "extractoLiteral": "•\t Polvos químicos secos, CO2, rocío de agua o espuma regular. Si la espuma regular no es efectiva, o no \nestá disponible, use espuma resistente al alcohol.",
+          "clausulaDocumental": "GRE24-G130-B08-C02",
+          "referenciasCatalogo": [
+            "ref-024472",
+            "ref-024473"
+          ],
+          "artefactoSha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543"
+        }
+      ],
+      "resultadoObtenidoIndependiente": null,
+      "revisionIndependiente": "PENDIENTE",
+      "pruebaMotor": "PENDIENTE"
+    }
+  ],
+  "limites": [
+    "No se ejecutó un motor ni una revisión independiente.",
+    "Son casos documentales derivados de fuente; no datos operativos insertados en SIGBO."
+  ]
+}

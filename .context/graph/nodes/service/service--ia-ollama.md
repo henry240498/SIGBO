@@ -35,6 +35,7 @@ Cliente de Ollama LOCAL para Snoopy (Etapa 1 del pedido de integracion). Nunca t
 ## Referenciado por
 
 - [[service--ia-ia-motor|IaMotorService]] `uses` →
+- [[service--sistema-sistema|SistemaService]] `uses` →
 - [[api--ia-ia-configuracion|IaConfiguracionController]] `exposes` →
 
 ---

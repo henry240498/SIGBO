@@ -27,7 +27,7 @@ Cada llamada a una herramienta de la lista blanca (secciones 8/12/45 del pedido)
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/inteligencia`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`
+- **Pantallas:** `/dashboard/inteligencia`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`, `/dashboard/sistema`
 - **Endpoints:** IaAdminConversacionesController, IaChatController, IaConfiguracionController, IaDashboardController
 - **Servicios:** IaChatService, IaConfiguracionService, IaConversacionesService, IaDashboardService
 

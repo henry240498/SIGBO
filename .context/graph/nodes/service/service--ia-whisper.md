@@ -35,6 +35,7 @@ Cliente de whisper.cpp LOCAL para el "oido" de Snoopy (Etapa 2, seccion 3 del pe
 ## Referenciado por
 
 - [[service--ia-ia-voz|IaVozService]] `uses` →
+- [[service--sistema-sistema|SistemaService]] `uses` →
 - [[api--ia-ia-configuracion|IaConfiguracionController]] `exposes` →
 
 ---

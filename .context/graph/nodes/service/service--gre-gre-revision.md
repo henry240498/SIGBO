@@ -30,7 +30,7 @@ Revisión humana dato ↔ fuente y validación de una versión candidata. Valida
 
 ## Relaciones
 
-- `belongs_to` → [[domain--matpel|matpel]]
+- `belongs_to` → [[domain--matpel|MATPEL]]
 - `uses` → [[component--modulo-gre|gre (modulo NestJS)]]
 - `uses` → [[service--seguridad-auditoria|AuditoriaService]]
 

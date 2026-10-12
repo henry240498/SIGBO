@@ -23,7 +23,7 @@ Logica de negocio de servicio activo (modulo despacho).
 
 ## Metodos
 
-`activos()` · `detalle()` · `unirme()` · `cambiarEstadoParticipacion()` · `mensajes()` · `enviarMensaje()` · `formularios()` · `crearRespuesta()` · `modificarRespuesta()` · `anularRespuesta()` · `historialRespuesta()` · `guardarDefinicion()` · `mapa()`
+`activos()` · `activosParaCentroMando()` · `detalle()` · `unirme()` · `cambiarEstadoParticipacion()` · `mensajes()` · `enviarMensaje()` · `formularios()` · `crearRespuesta()` · `modificarRespuesta()` · `anularRespuesta()` · `historialRespuesta()` · `guardarDefinicion()` · `mapa()`
 
 ## Archivos
 
@@ -38,6 +38,7 @@ Logica de negocio de servicio activo (modulo despacho).
 
 ## Referenciado por
 
+- [[service--centro-mando-centro-mando|CentroMandoService]] `uses` →
 - [[api--despacho-servicio-activo|ServicioActivoController]] `exposes` →
 
 ---

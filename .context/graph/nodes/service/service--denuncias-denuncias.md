@@ -72,6 +72,7 @@ Logica de negocio de denuncias (modulo denuncias).
 
 ## Referenciado por
 
+- [[service--centro-mando-centro-mando|CentroMandoService]] `uses` →
 - [[api--denuncias-denuncias-publicas|DenunciasPublicasController]] `exposes` →
 - [[api--denuncias-denuncias|DenunciasController]] `exposes` →
 

@@ -36,6 +36,7 @@ Logica de negocio de vencimientos (modulo control-personal).
 
 ## Referenciado por
 
+- [[service--centro-mando-centro-mando|CentroMandoService]] `uses` →
 - [[service--control-personal-avisos-vencimiento|AvisosVencimientoService]] `uses` →
 - [[api--control-personal-control-personal|ControlPersonalController]] `exposes` →
 

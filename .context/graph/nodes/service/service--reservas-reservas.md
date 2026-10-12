@@ -36,6 +36,7 @@ Logica de negocio de reservas (modulo reservas).
 
 ## Referenciado por
 
+- [[service--centro-mando-centro-mando|CentroMandoService]] `uses` →
 - [[api--reservas-reservas|ReservasController]] `exposes` →
 
 ---

@@ -1,0 +1,17 @@
+{
+  "tipo": "INTEGRIDAD_CONTEXTO_NO_VALIDACION_OPERATIVA",
+  "documentos": 27,
+  "sha256RecorteMotor": "1b4c96e79744ae461ba29fe96da376b00e8909ecba2b1729f08624e75444170c",
+  "celdasTabla3CotejadasConCabeceras": 308,
+  "reglasDocumentadas": 54,
+  "imagenesRevisadas": 371,
+  "lotesGuias": 6,
+  "clausulasDocumentadas": 2531,
+  "paginasRevisionIndependienteRegistradas": 5,
+  "paginasVisualesRegistradas": 392,
+  "paginasInventariadas": 392,
+  "paginasConInspeccionNueva": 246,
+  "paginasPendientesInspeccion": 0,
+  "errores": [],
+  "dominioIntegralDemostrado": false
+}

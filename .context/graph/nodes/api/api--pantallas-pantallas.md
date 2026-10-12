@@ -13,6 +13,7 @@ archivos:
 edges:
   - [belongs_to, domain--seguridad]
   - [exposes, service--pantallas-pantallas]
+  - [exposes, service--pantallas-matriz-web]
   - [exposes, service--pantallas-navegacion]
 terminos: [pantallas, navegacion, registrar, seguridad, gestionar, ver]
 ---
@@ -28,6 +29,9 @@ Permisos por pantalla (rol, usuario, rango, cargo). Configurarlos requiere segur
 | Verbo | Ruta | Permiso exigido |
 |---|---|---|
 | GET | `/pantallas/mis-permisos` | `navegacion:registrar` |
+| GET | `/pantallas/mis-permisos-web` | — |
+| GET | `/pantallas/vista-previa` | `seguridad:gestionar_pantallas` |
+| GET | `/pantallas/catalogo-web` | `seguridad:gestionar_pantallas` |
 | GET | `/pantallas` | `seguridad:gestionar_pantallas` |
 | GET | `/pantallas/sujetos` | `seguridad:gestionar_pantallas` |
 | GET | `/pantallas/reglas` | `seguridad:gestionar_pantallas` |
@@ -44,6 +48,7 @@ Permisos por pantalla (rol, usuario, rango, cargo). Configurarlos requiere segur
 
 - `belongs_to` → [[domain--seguridad|Seguridad]]
 - `exposes` → [[service--pantallas-pantallas|PantallasService]]
+- `exposes` → [[service--pantallas-matriz-web|MatrizWebService]]
 - `exposes` → [[service--pantallas-navegacion|NavegacionService]]
 
 ## Referenciado por
@@ -53,6 +58,9 @@ Permisos por pantalla (rol, usuario, rango, cargo). Configurarlos requiere segur
 - [[screen--dashboard-seguridad-pantallas|/dashboard/seguridad/pantallas]] `calls` →
 - [[screen--dashboard-seguridad-pantallas|/dashboard/seguridad/pantallas]] `calls` →
 - [[screen--dashboard-seguridad-pantallas|/dashboard/seguridad/pantallas]] `calls` →
+- [[screen--dashboard-seguridad-pantallas|/dashboard/seguridad/pantallas]] `calls` →
+- [[screen--dashboard-seguridad-pantallas|/dashboard/seguridad/pantallas]] `calls` →
+- [[component--front-permisospantallaprovider|PermisosPantallaProvider]] `calls` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

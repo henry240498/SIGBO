@@ -33,6 +33,7 @@ Helper de frontend "api" (11 exportaciones).
 - [[screen--dashboard-asistencia-externos|/dashboard/asistencia/externos]] `uses` →
 - [[screen--dashboard-asistencia-registro|/dashboard/asistencia/registro]] `uses` →
 - [[screen--dashboard-asistencia-tolerancias|/dashboard/asistencia/tolerancias]] `uses` →
+- [[screen--dashboard-centro-mando|/dashboard/centro-mando]] `uses` →
 - [[screen--dashboard-denuncias|/dashboard/denuncias]] `uses` →
 - [[screen--dashboard-denuncias-id|/dashboard/denuncias/[id]]] `uses` →
 - [[screen--dashboard-deposito-articulos|/dashboard/deposito/articulos]] `uses` →
@@ -80,7 +81,6 @@ Helper de frontend "api" (11 exportaciones).
 - [[screen--dashboard-guardias-sorteos|/dashboard/guardias/sorteos]] `uses` →
 - [[screen--dashboard-guardias-sorteos-id|/dashboard/guardias/sorteos/[id]]] `uses` →
 - [[screen--dashboard-guardias-id|/dashboard/guardias/[id]]] `uses` →
-- [[screen--dashboard-inteligencia|/dashboard/inteligencia]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

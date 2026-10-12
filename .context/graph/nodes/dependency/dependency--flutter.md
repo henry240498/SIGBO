@@ -43,6 +43,7 @@ Fallas conocidas: [[error--smart-app-control-bloquea-flutter]]. Procedimiento:
 - [[error--instalacion-usb-xiaomi|Instalar el APK por USB en Xiaomi falla con INSTALL_FAILED_USER_RESTRICTED]] `originates_from` →
 - [[error--smart-app-control-bloquea-flutter|Smart App Control / Windows App Control bloquea ejecutables de Flutter]] `originates_from` →
 - [[workflow--apk-compilar-firmar-publicar|Compilar, firmar, publicar e instalar el APK de SIGBO]] `depends_on` →
+- [[workflow--consulta-gre-movil|Consulta GRE documental y guiada en Android]] `depends_on` →
 
 ---
 <sub>Nodo **curado** (editable a mano).</sub>

@@ -4,7 +4,7 @@ tipo: TABLE
 nombre: personal.bomberos
 nivel: L2
 dominio: personal
-resumen: Tabla personal.bomberos (71 columnas). Creada en 003_personal.sql, modificada por 009_foreign_keys.sql, 012_organizacion.sql, 016_personal_expansion.sql, 017_tipos_bombero.sql, 018_parametros_y_normalizacion_personal.sql, 026_guardias_planificacion.sql, 032_personal_autorizacion_firma.sql.
+resumen: Tabla personal.bomberos (71 columnas). Creada en 003_personal.sql, modificada por 009_foreign_keys.sql, 012_organizacion.sql, 016_personal_expansion.sql, 017_tipos_bombero.sql, 018_parametros_y_normalizacion_personal.sql, 026_guardias_planificacion.sql, 032_personal_autorizacion_firma.sql, 097_estados_bombero.sql.
 tabla: bomberos
 archivos:
   - database/migrations/003_personal.sql
@@ -15,6 +15,7 @@ archivos:
   - database/migrations/018_parametros_y_normalizacion_personal.sql
   - database/migrations/026_guardias_planificacion.sql
   - database/migrations/032_personal_autorizacion_firma.sql
+  - database/migrations/097_estados_bombero.sql
 edges:
   - [defined_in, file--003-personal]
   - [belongs_to, domain--personal]
@@ -23,7 +24,7 @@ terminos: [personal, bomberos, cedula, nombre, apellido, fecha, nacimiento, sexo
 
 # personal.bomberos
 
-Tabla personal.bomberos (71 columnas). Creada en 003_personal.sql, modificada por 009_foreign_keys.sql, 012_organizacion.sql, 016_personal_expansion.sql, 017_tipos_bombero.sql, 018_parametros_y_normalizacion_personal.sql, 026_guardias_planificacion.sql, 032_personal_autorizacion_firma.sql.
+Tabla personal.bomberos (71 columnas). Creada en 003_personal.sql, modificada por 009_foreign_keys.sql, 012_organizacion.sql, 016_personal_expansion.sql, 017_tipos_bombero.sql, 018_parametros_y_normalizacion_personal.sql, 026_guardias_planificacion.sql, 032_personal_autorizacion_firma.sql, 097_estados_bombero.sql.
 
 - **Esquema:** personal · **Columnas:** 71
 - **UNIQUE:** `cedula`, `numero_bombero`
@@ -33,6 +34,7 @@ Tabla personal.bomberos (71 columnas). Creada en 003_personal.sql, modificada po
 - `estado IN ('ASPIRANTE','ACTIVO','SUSPENDIDO','LICENCIA','RETIRADO','FALLECIDO','HONORARIO')`
 - `condicion_institucional IS NULL OR condicion_institucional IN ('INCORPORADO','COMBATIENTE','APOYO_ECONOMICO','HONORARIO')`
 - `dia_preferente_guardia IN ('NINGUNA','LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO')`
+- `estado IN (N'ACTIVO', N'SUSPENDIDO', N'LICENCIA', N'BAJA', N'FALLECIDO')`
 
 ## Columnas
 
@@ -129,6 +131,7 @@ Una llamada con la ruta armada en una variable no se detecta — ver rule--el-gr
 - `database/migrations/018_parametros_y_normalizacion_personal.sql`
 - `database/migrations/026_guardias_planificacion.sql`
 - `database/migrations/032_personal_autorizacion_firma.sql`
+- `database/migrations/097_estados_bombero.sql`
 
 ## Relaciones
 

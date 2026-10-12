@@ -1,2 +1,15 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# El manifiesto del motor GRE verifica bytes exactos de fuentes y artefactos.
+# Conservar sus finales de linea al publicar y clonar en Windows/Linux.
+backend/src/modules/gre/motor-matpel.service.ts -text whitespace=cr-at-eol
+backend/src/modules/gre/matpel-modelo.ts -text whitespace=cr-at-eol
+backend/src/modules/gre/matpel-perfil.ts -text whitespace=cr-at-eol
+backend/src/modules/gre/matpel-recorrido.ts -text whitespace=cr-at-eol
+backend/src/modules/gre/matpel-geometria.ts -text whitespace=cr-at-eol
+backend/src/modules/gre/dto/matpel-consulta.dto.ts -text whitespace=cr-at-eol
+backend/src/modules/gre/fuentes/gre2024-definiciones.json -text whitespace=cr-at-eol
+scripts/matpel/motor_local_runtime.js -text whitespace=cr-at-eol
+.movile/assets/gre/motor.js -text whitespace=cr-at-eol
+.movile/assets/gre/motor.json -text whitespace=cr-at-eol

@@ -57,6 +57,7 @@ Ver también [[rule--frontend-no-autoriza]].
 
 ## Referenciado por
 
+- [[decision--matriz-web-en-permissions-guard|La matriz por pantalla rige toda la web y se exige en PermissionsGuard]] `constrains` →
 - [[workflow--servicio-activo|Servicio activo: incorporarse, comunicarse y completar formularios]] `contains` →
 
 ---

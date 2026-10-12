@@ -1,0 +1,247 @@
+{
+  "id": "GRE24-HALLAZGOS-PAGINAS",
+  "fechaUtc": "2026-10-10T18:13:00.984101+00:00",
+  "fuenteSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+  "hallazgos": [
+    {
+      "id": "GRE24-PAG-VIENTO-POSICION",
+      "estado": "PENDIENTE_PRECISION_INTERPRETATIVA",
+      "descripcion": "Conservar acción y posición relativa a la fuente. Aproximación, establecimiento de comando y evacuación no son la misma operación; no declarar una errata solo por la diferencia de expresiones.",
+      "fuentes": [
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 6,
+          "paginasImpresas": [
+            "4"
+          ],
+          "literal": "APROXÍMESE AL INCIDENTE CON VIENTO A FAVOR, CUESTA ARRIBA Y/O RÍO ARRIBA:",
+          "imagen": ".context/gre2024/paginas/evidencia/pdf-006.png",
+          "imagenSha256": "d8db51e34b314a05187661ba64adb6bb9173e0d1c3450eb097e813b9a55629ff"
+        },
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 28,
+          "paginasImpresas": [
+            "26"
+          ],
+          "literal": "con el viento a su espalda, cuesta arriba, y aguas arriba",
+          "imagen": ".context/gre2024/paginas/evidencia/pdf-028.png",
+          "imagenSha256": "082c41ccfccfa987d59196aabfbe652cfa467e7c98fc3b251255cbb252eb13d0"
+        },
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 360,
+          "paginasImpresas": [
+            "358"
+          ],
+          "literal": "Establezca el Sistema de Comando en un área con viento a favor y elevada.",
+          "imagen": ".context/gre2024/paginas/evidencia/pdf-360.png",
+          "imagenSha256": "c3fb5e1de060a7c6db757c860e1c888b944ae64660653157611fa1e904cec1ce"
+        },
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 360,
+          "paginasImpresas": [
+            "358"
+          ],
+          "literal": "contra el viento y cuesta arriba",
+          "imagen": ".context/gre2024/paginas/evidencia/pdf-360.png",
+          "imagenSha256": "c3fb5e1de060a7c6db757c860e1c888b944ae64660653157611fa1e904cec1ce"
+        }
+      ],
+      "criterioDocumentalEsperado": "El software no deduce una ubicación del comando a partir de una expresión aislada; una futura regla exige dirección/posición respecto de la fuente y cotejo especializado.",
+      "resultadoIndependiente": null,
+      "pruebaMotor": "PENDIENTE",
+      "validacionInstitucional": "PENDIENTE"
+    },
+    {
+      "id": "GRE24-PAG-1754-CORRECCION-LECTURA",
+      "estado": "HIPOTESIS_DESCARTADA_POR_COTEJO",
+      "descripcion": "La anotación inicial confundió trióxido con dióxido en Tabla 1. Texto nativo y render orientado confirman trióxido. No existe la discrepancia química inicialmente sospechada.",
+      "fuentes": [
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 305,
+          "paginasImpresas": [
+            "303"
+          ],
+          "literal": "trióxido de azufre",
+          "imagen": ".context/gre2024/paginas/evidencia/pdf-305-rotado.png",
+          "imagenSha256": "6533bf2446234dbbca932d42c256424946bebffb68d1880bef9335da91e62ab5"
+        },
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 47,
+          "paginasImpresas": [
+            "45"
+          ],
+          "literal": "trióxido de azufre",
+          "imagen": ".context/gre2024/paginas/evidencia/pdf-047.png",
+          "imagenSha256": "0d62273c5ce05787551c380e1da90afb7caa23cb32223c2ca8761e6ba5308b65"
+        },
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 96,
+          "paginasImpresas": [
+            "94"
+          ],
+          "literal": "trióxido de azufre",
+          "imagen": ".context/gre2024/paginas/evidencia/pdf-096.png",
+          "imagenSha256": "0a64b17be5968907f293413c6c215c7cdf06f998b5247542901a7788be79aa64"
+        },
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 336,
+          "paginasImpresas": [
+            "334"
+          ],
+          "literal": "trióxido de azufre",
+          "imagen": ".context/gre2024/paginas/evidencia/pdf-336.png",
+          "imagenSha256": "40ca2c1068dd5d05892772a3d56a6e8d89a248f7ab9112f43d21b28eb82f1192"
+        }
+      ],
+      "criterioDocumentalEsperado": "Conservar trióxido y las filas tierra/agua; no inventar una errata de la fuente ni modificar el candidato.",
+      "resultadoIndependiente": null,
+      "pruebaMotor": "PENDIENTE",
+      "validacionInstitucional": "PENDIENTE"
+    },
+    {
+      "id": "GRE24-PAG-60C-CONTEXTO",
+      "estado": "DIFERENCIA_DE_CONTEXTO_NO_ERRATA_DEMOSTRADA",
+      "descripcion": "Códigos de riesgo y definición del glosario usan límites diferentes con finalidades diferentes.",
+      "fuentes": [
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 21,
+          "paginasImpresas": [
+            "19"
+          ],
+          "literal": "punto de inflamación de 23°C a 60°C, incluidos los valores límites",
+          "imagen": ".context/gre2024/paginas/evidencia/pdf-021.png",
+          "imagenSha256": "beb811862b107799b7834029be2be96d5c8b0971a235ae2c79e6e2b13a8fb495"
+        },
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 377,
+          "paginasImpresas": [
+            "375"
+          ],
+          "literal": "punto de inflamación menor a 60°C",
+          "imagen": ".context/gre2024/paginas/evidencia/pdf-377.png",
+          "imagenSha256": "f48ddbbe02c6d54524a1202ce45ff3f695ad1f3b93d027ba5abb36d04b893c1b"
+        }
+      ],
+      "criterioDocumentalEsperado": "Conservar definición, finalidad e inclusividad de cada sección; un umbral único no está justificado por esta lectura.",
+      "resultadoIndependiente": null,
+      "pruebaMotor": "PENDIENTE",
+      "validacionInstitucional": "PENDIENTE"
+    },
+    {
+      "id": "GRE24-PAG-VIGENCIA",
+      "estado": "VERIFICACION_EXTERNA_PENDIENTE",
+      "descripcion": "La fuente requiere comprobación periódica. Un espacio de anotaciones vacío no acredita vigencia ni ausencia de erratas; teléfonos y contactos no se verificaron.",
+      "fuentes": [
+        {
+          "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+          "paginaPdf": 385,
+          "paginasImpresas": [
+            "383"
+          ],
+          "literal": "cada 6 meses",
+          "imagen": ".context/gre2024/paginas/evidencia/pdf-385.png",
+          "imagenSha256": "a14d45e17b241dca37516d5d9043998cf65ad469bcf9fe48f59c20ec7f5595e0"
+        }
+      ],
+      "criterioDocumentalEsperado": "No atribuir verificación de vigencia o de contactos a la inspección documental del PDF local.",
+      "resultadoIndependiente": null,
+      "pruebaMotor": "PENDIENTE",
+      "validacionInstitucional": "PENDIENTE"
+    }
+  ],
+  "correccionesDeAnotaciones": [
+    {
+      "paginaPdf": 21,
+      "anotacionAnterior": [
+        "Lista20–368: fronteras23/60°C inclusivas para30 y36;33 inferior23.323 yX323 distinguen texto de reacción;333 pirofórico. Leer definiciones completas sin composición algorítmica por dígitos."
+      ],
+      "anotacionCorregida": [
+        "Códigos de identificación del riesgo: 30 y 36 incluyen los límites 23°C y 60°C; 33 usa punto de inflamación inferior a 23°C. Los códigos 323/X323 distinguen condiciones de reacción; 333 indica materia líquida pirofórica. Conservar definiciones completas y contexto, sin componer una decisión por dígitos."
+      ],
+      "motivo": "Cotejo final con texto nativo y evidencia visual; corrección de lectura o precisión del contexto."
+    },
+    {
+      "paginaPdf": 360,
+      "anotacionAnterior": [
+        "Respuesta QBRN general: aviso local y recursos especializados; no entrar sin entrenamiento/equipo, no tocar paquetes y considerar dispositivos secundarios. Discrepancia literal: el puesto de comando dice viento a favor, mientras la evacuación y otras páginas dicen contra el viento; requiere aclaración, no corrección silenciosa."
+      ],
+      "anotacionCorregida": [
+        "Respuesta general QBRN: aviso local y recursos especializados; ingreso condicionado a entrenamiento/equipo y precaución frente a dispositivos secundarios. La fuente dice viento a favor para establecer el Sistema de Comando y contra el viento para evacuar. Son acciones diferentes: conservar los literales y precisar posición relativa a la fuente antes de codificar una ubicación. La diferencia de palabras no demuestra por sí sola una errata."
+      ],
+      "motivo": "Cotejo final con texto nativo y evidencia visual; corrección de lectura o precisión del contexto."
+    },
+    {
+      "paginaPdf": 377,
+      "anotacionAnterior": [
+        "n.e.p. es nombre genérico regulado, no producto desconocido sin peligro. Definición de líquido inflamable usa menor de 60°C: difiere del intervalo inclusivo 23–60°C de algunos códigos de riesgo, por lo que no unificar límites fuera de contexto."
+      ],
+      "anotacionCorregida": [
+        "n.e.p. representa una denominación genérica regulada; no equivale a material desconocido sin peligro. Líquido inflamable se define por punto de inflamación menor a 60°C. Los códigos de identificación del riesgo de PDF21 emplean intervalos inclusivos en su propio contexto; no unificar estos límites como un único umbral."
+      ],
+      "motivo": "Cotejo final con texto nativo y evidencia visual; corrección de lectura o precisión del contexto."
+    },
+    {
+      "paginaPdf": 305,
+      "anotacionAnterior": [
+        "ONU 1752–1765. 1752 y 1754 tienen filas diferentes tierra/agua; 1754 agrega con o sin dióxido de azufre. 1758 tiene dos nombres en grupo; no copiar una sola distancia a todo ONU."
+      ],
+      "anotacionCorregida": [
+        "ONU 1752–1765. Los identificadores 1752 y 1754 distinguen filas de derrame sobre tierra y en agua. Ácido clorosulfónico 1754 dice con o sin trióxido de azufre, como índices y Tabla 2. El 1758 presenta dos nombres dentro del mismo grupo; no copiar una distancia a todas las condiciones de un identificador."
+      ],
+      "motivo": "Cotejo final con texto nativo y evidencia visual; corrección de lectura o precisión del contexto."
+    },
+    {
+      "paginaPdf": 336,
+      "anotacionAnterior": [
+        "Tabla 2 ONU 1726–1801: 1745/1746 generan HF y Br2, silanos HCl y 1777 HF. Nombre 1754 dice trióxido de azufre aquí, frente a dióxido en Tabla 1: discrepancia literal que requiere cotejo y no normalización silenciosa."
+      ],
+      "anotacionCorregida": [
+        "Tabla 2, ONU 1726–1801: 1745/1746 generan HF y Br2; los silanos generan HCl y 1777 genera HF. Ácido clorosulfónico 1754 dice trióxido de azufre, también en Tabla 1. Esta tabla informa gases producidos; no sustituye la identidad consultada ni sus distancias."
+      ],
+      "motivo": "Cotejo final con texto nativo y evidencia visual; corrección de lectura o precisión del contexto."
+    },
+    {
+      "paginaPdf": 47,
+      "anotacionAnterior": [
+        "ONU 1727–1762. 1744 bromo solución incluye zonas A/B verdes; 1754 literal trióxido de azufre en índice, diferente de Tabla1. Sinónimos pueden compartir guía y condición."
+      ],
+      "anotacionCorregida": [
+        "ONU 1727–1762. Bromo en solución 1744 incluye condiciones de zona de peligro A/B resaltadas en verde. Ácido clorosulfónico 1754 dice con o sin trióxido de azufre, consistente con Tabla 1 y Tabla 2. Los sinónimos pueden compartir guía y condición."
+      ],
+      "motivo": "Cotejo final con texto nativo y evidencia visual; corrección de lectura o precisión del contexto."
+    },
+    {
+      "paginaPdf": 96,
+      "anotacionAnterior": [
+        "Azul ácidos: cianhídrico máximo20% verde frente a<5% anterior sinverde. Clorosulfónico1754literaltrióxido confirma discrepanciaTabla1. Ácido mixto1796/1826no coincidencia única."
+      ],
+      "anotacionCorregida": [
+        "Índice azul de ácidos: ácido cianhídrico con un máximo del 20% aparece verde; la entrada con menos del 5% en la página anterior no. Ácido clorosulfónico 1754 conserva trióxido de azufre, también en Tabla 1. Ácido mixto tiene identificadores 1796/1826; el nombre aislado no permite seleccionar una identidad única."
+      ],
+      "motivo": "Cotejo final con texto nativo y evidencia visual; corrección de lectura o precisión del contexto."
+    },
+    {
+      "paginaPdf": 108,
+      "anotacionAnterior": [
+        "Cloropicrina mezclas cambian guía154/123/119. Clorosilanosfamilias294? se conservaONU2985–2988/3361/3362exacto; NA9263cloropivaloíloverde. No eliminar prefijos."
+      ],
+      "anotacionCorregida": [
+        "Mezclas de cloropicrina remiten a guías 154/123/119 según composición y condición. Clorosilanos conservan identificadores 2985–2988/3361/3362 y sus peligros específicos. Cloruro de cloropivaloílo 9263 está verde. No eliminar prefijos ni agrupar por coincidencia parcial."
+      ],
+      "motivo": "Cotejo final con texto nativo y evidencia visual; corrección de lectura o precisión del contexto."
+    }
+  ],
+  "limites": [
+    "Hallazgos documentales; no nuevos predicados operativos ejecutables.",
+    "Conservar versiones históricas e hipótesis descartadas sin presentarlas como discrepancias vigentes."
+  ]
+}

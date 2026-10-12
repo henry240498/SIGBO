@@ -1,0 +1,126 @@
+{
+  "id": "GRE24-CIERRE-LECTURA-GUIAS-20261010",
+  "fechaUtc": "2026-10-10T17:26:00.640377+00:00",
+  "estado": "LECTURA_DOCUMENTAL_GUIAS_COMPLETA_NO_VALIDACION_OPERATIVA",
+  "alcance": "Completar lectura documental de las43 guías restantes131–174, incluyendo167 vacía y dependencias; no ejecución de motor/SCI.",
+  "revisionGitInicial": "12534230794cb5c0d0b01b28791efd1c9fa9eb85",
+  "revisionGitAlRegistrar": "b8c89a708eab18e5885f75309896d836d77a6274",
+  "respaldo": "C:/Users/jemc2/AppData/Local/Temp/sigbo-gre-cierre-guias-40v0oerf",
+  "fuenteSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+  "artefactoSha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543",
+  "inventario": {
+    "numeros": 64,
+    "conContenido": 62,
+    "sinMateriales": 2,
+    "paginas": 128,
+    "clausulas": 2531
+  },
+  "lotes": 6,
+  "bloques": 620,
+  "nuevasGuiasConContenido": 43,
+  "nuevasPaginasGuiasVisualizadas": 88,
+  "nuevasPaginasDependenciasVisualizadas": 10,
+  "reglasDocumentadas": 54,
+  "casosNuevosPropuestosSinMotor": 87,
+  "remisionesLocalizadas": 154,
+  "auditorAnteriorNoRepetido": true,
+  "auditorResultadoAnterior": {
+    "aprobadas": 4,
+    "total": 4,
+    "archivo": "evidencia/validacion-reanudacion-20261010.json"
+  },
+  "discrepanciaCorregida": "evidencia/discrepancia-subapartados-guias.json",
+  "pruebasFinales": [
+    {
+      "comando": [
+        "-m",
+        "unittest",
+        "test_validar_conocimiento",
+        "test_documentar_guias",
+        "-v"
+      ],
+      "directorio": "C:\\Proyectos\\Personal\\SIGBO\\scripts\\matpel",
+      "exitCode": 0,
+      "duracionSegundos": 31.044,
+      "stdout": "",
+      "stderr": "test_anotacion_o_caso_omitidos_no_cierran_inventario (test_validar_conocimiento.LecturaConocimientoTests.test_anotacion_o_caso_omitidos_no_cierran_inventario) ... ok\ntest_cantidad_eliminada_o_duplicada_no_reduce_inventario_silenciosamente (test_validar_conocimiento.LecturaConocimientoTests.test_cantidad_eliminada_o_duplicada_no_reduce_inventario_silenciosamente) ... ok\ntest_cantidad_y_literal_alterados_juntos_no_superan_pdf (test_validar_conocimiento.LecturaConocimientoTests.test_cantidad_y_literal_alterados_juntos_no_superan_pdf) ... ok\ntest_cantidades_metricas_imperiales_y_rangos_contra_pdf (test_validar_conocimiento.LecturaConocimientoTests.test_cantidades_metricas_imperiales_y_rangos_contra_pdf) ... ok\ntest_clausula_eliminada_y_conteo_corregido_no_ocultan_perdida (test_validar_conocimiento.LecturaConocimientoTests.test_clausula_eliminada_y_conteo_corregido_no_ocultan_perdida) ... ok\ntest_cobertura_duplicada_y_huellas_falsas_se_detectan (test_validar_conocimiento.LecturaConocimientoTests.test_cobertura_duplicada_y_huellas_falsas_se_detectan) ... ok\ntest_condiciones_especificas_conservan_cobertura_fuente_y_casos_sin_motor (test_validar_conocimiento.LecturaConocimientoTests.test_condiciones_especificas_conservan_cobertura_fuente_y_casos_sin_motor) ... ok\ntest_evidencia_existente_coincide_con_pdf_catalogo_e_imagenes (test_validar_conocimiento.LecturaConocimientoTests.test_evidencia_existente_coincide_con_pdf_catalogo_e_imagenes) ... ok\ntest_fuente_de_condicion_cambiada_y_resultado_inventado_se_detectan (test_validar_conocimiento.LecturaConocimientoTests.test_fuente_de_condicion_cambiada_y_resultado_inventado_se_detectan) ... ok\ntest_fuente_inexistente_y_validacion_operativa_no_acreditada_se_detectan (test_validar_conocimiento.LecturaConocimientoTests.test_fuente_inexistente_y_validacion_operativa_no_acreditada_se_detectan) ... ok\ntest_literal_caja_y_bloque_alterados_se_detectan (test_validar_conocimiento.LecturaConocimientoTests.test_literal_caja_y_bloque_alterados_se_detectan) ... ok\ntest_lote_entero_omitido_y_manifest_reducido_no_ocultan_perdida (test_validar_conocimiento.LecturaConocimientoTests.test_lote_entero_omitido_y_manifest_reducido_no_ocultan_perdida) ... ok\ntest_lote_nuevo_con_lineas_completas_y_revisiones_registradas (test_validar_conocimiento.LecturaConocimientoTests.test_lote_nuevo_con_lineas_completas_y_revisiones_registradas) ... ok\ntest_lotes_duplicados_y_estado_vacio_falso_se_detectan (test_validar_conocimiento.LecturaConocimientoTests.test_lotes_duplicados_y_estado_vacio_falso_se_detectan) ... ok\ntest_revision_visual_inventada_y_pagina_impresa_falsa_se_detectan (test_validar_conocimiento.LecturaConocimientoTests.test_revision_visual_inventada_y_pagina_impresa_falsa_se_detectan) ... ok\ntest_subapartado_falso_con_literal_y_referencias_intactos_se_detecta (test_validar_conocimiento.LecturaConocimientoTests.test_subapartado_falso_con_literal_y_referencias_intactos_se_detecta) ... ok\ntest_todos_los_lotes_cubren_inventario_original_y_guias_vacias (test_validar_conocimiento.LecturaConocimientoTests.test_todos_los_lotes_cubren_inventario_original_y_guias_vacias) ... ok\ntest_erap_es_nota_jurisdiccional_sin_copiarlo_a_guias_que_no_lo_tienen (test_documentar_guias.DocumentarGuiasTests.test_erap_es_nota_jurisdiccional_sin_copiarlo_a_guias_que_no_lo_tienen) ... ok\ntest_guia_vacia_excepciones_y_remisiones_del_pdf_se_conservan (test_documentar_guias.DocumentarGuiasTests.test_guia_vacia_excepciones_y_remisiones_del_pdf_se_conservan) ... ok\ntest_registro_exige_misma_pagina_fuente_e_imagen (test_documentar_guias.DocumentarGuiasTests.test_registro_exige_misma_pagina_fuente_e_imagen) ... ok\ntest_render_y_texto_no_crean_revision_visual (test_documentar_guias.DocumentarGuiasTests.test_render_y_texto_no_crean_revision_visual) ... ok\ntest_titulo_partido_de_bateria_no_crea_indicacion_y_separa_tamanos (test_documentar_guias.DocumentarGuiasTests.test_titulo_partido_de_bateria_no_crea_indicacion_y_separa_tamanos) ... ok\ntest_titulos_plurales_de_metales_no_heredan_incendio_grande (test_documentar_guias.DocumentarGuiasTests.test_titulos_plurales_de_metales_no_heredan_incendio_grande) ... ok\n\n----------------------------------------------------------------------\nRan 23 tests in 28.863s\n\nOK\n"
+    },
+    {
+      "comando": [
+        "scripts/matpel/validar_conocimiento.py"
+      ],
+      "directorio": "C:\\Proyectos\\Personal\\SIGBO",
+      "exitCode": 0,
+      "duracionSegundos": 13.739,
+      "stdout": "{\"tipo\": \"INTEGRIDAD_CONTEXTO_NO_VALIDACION_OPERATIVA\", \"documentos\": 25, \"reglasDocumentadas\": 54, \"imagenesRevisadas\": 125, \"lotesGuias\": 6, \"clausulasDocumentadas\": 2531, \"paginasRevisionIndependienteRegistradas\": 5, \"paginasVisualesRegistradas\": 146, \"errores\": [], \"dominioIntegralDemostrado\": false}\n",
+      "stderr": ""
+    }
+  ],
+  "grafo": {
+    "generacion": {
+      "comando": "node .context/graph/build-graph.mjs",
+      "exitCode": 0,
+      "advertencias": 2
+    },
+    "validacion": {
+      "comando": "node .context/graph/validar.mjs",
+      "exitCode": 0,
+      "avisos": 10
+    },
+    "nodos": 1130,
+    "aristas": 3969
+  },
+  "dominioIntegralDemostrado": false,
+  "motorSciImplementado": false,
+  "catalogoActivado": false,
+  "limites": [
+    "Lectura documental principal terminada para guías, sin comprensión independiente completa.",
+    "Falta lectura integral del resto de392 páginas y cotejo semántico por celda de tablas.",
+    "Inventario exhaustivo de reglas, predicados, precedencia, motor/SCI y aceptación institucional pendientes.",
+    "Resultados históricos de backend, SQL, móvil y auditor no se atribuyen a esta revisión."
+  ],
+  "fechaCierreUtc": "2026-10-10T17:28:31.568302+00:00",
+  "revisionGitFinal": "b8c89a708eab18e5885f75309896d836d77a6274",
+  "integridad": {
+    "tipo": "INTEGRIDAD_CONTEXTO_NO_VALIDACION_OPERATIVA",
+    "documentos": 25,
+    "reglasDocumentadas": 54,
+    "imagenesRevisadas": 125,
+    "lotesGuias": 6,
+    "clausulasDocumentadas": 2531,
+    "paginasRevisionIndependienteRegistradas": 5,
+    "paginasVisualesRegistradas": 146,
+    "errores": [],
+    "dominioIntegralDemostrado": false
+  },
+  "pruebasDocumentales": {
+    "aprobadas": 23,
+    "total": 23,
+    "integridadCantidadesCondiciones": 17,
+    "preparacion": 6,
+    "duracionUnittestSegundos": 28.863
+  },
+  "diffCheck": {
+    "comando": "git diff --check",
+    "exitCode": 0
+  },
+  "archivosVerificadosSha256": {
+    "scripts/matpel/documentar_guias.py": "6288be636c4fedf09e62ae9192bd2625f2e4589d71b937344bdc6eff06197822",
+    "scripts/matpel/documentar_guias_v2.py": "5e440209261b19f86322c33d63f76d74c85e474e969677f786e25202543bdb1a",
+    "scripts/matpel/cerrar_estudio_guias.py": "d4d18223c2f665b105b2411800b48d6f600e9967f5c8aea914c3eb253be485e7",
+    "scripts/matpel/validar_conocimiento.py": "06e8dcb5eb8902ae719f5a7ef4a97697c134558cb5cefc6de23b39768169e8b9",
+    "scripts/matpel/test_documentar_guias.py": "2549e51d14e23e385d0d1fac05144943e58da43dbee199f2bd3dfe5612906ff0",
+    "scripts/matpel/test_validar_conocimiento.py": "3d93441dd93b28ffc6af82e8137d311c52ec2f2ca3b439dcd968ebf57bb2ac0c",
+    ".context/gre2024/response-guides/inventario-guias.json": "d079df39314fde24ebba435ee6db837586650dddecbf406b8bf59dbf21bf2430",
+    ".context/gre2024/response-guides/notas131-174.json": "ca83f2c0677ac7ae54f5e986c16db0185bae81e4eb1456a5f8f027a422b4f5fc",
+    ".context/gre2024/reglas-operativas.json": "00b6cb9704698d7050772d1f82e2d01194aa62d7d8aa49f57d2d559138344263",
+    ".context/gre2024/test-cases/casos-guias131-174.json": "e751a11e50f52325fa31ae818e5114d08eeb7b54ff924ce4ac182d4654ab17ba",
+    ".context/gre2024/evidencia/discrepancia-subapartados-guias.json": "47bfae5a977f17c249e91f10926e673ebcdc3a5652544a78e0f1d96e45652203",
+    ".context/gre2024/response-guides/lectura111-120.json": "9c5cd71eb1ecde068c137b4f33ad27c4409d98cea1579885ba5d141e476dcc42",
+    ".context/gre2024/response-guides/lectura121-130.json": "18a75c640b9f330a2f3ba7d8e302d976a0401dd1ab62a71556ad8edb955f021a",
+    ".context/gre2024/response-guides/lectura131-140.json": "1ff18f2740697acce222ee4dd926280c90da0c145e2b188f6c23ce4e324b93b4",
+    ".context/gre2024/response-guides/lectura141-150.json": "398a64d551321c67bfe110622bc7149cf527526e09254217a4df04b2da75a2fd",
+    ".context/gre2024/response-guides/lectura151-160.json": "4a8b1d38ed74a14c9912377f90177387161f2ed6fea8007ef7a14e75f64a803e",
+    ".context/gre2024/response-guides/lectura161-174.json": "1e0a534c6bad6eabb2992184faaa94f0e48f7cf7530ce84435cff1cb00eb9df7"
+  }
+}

@@ -24,7 +24,7 @@ Logica de negocio de alertas (modulo alertas).
 
 ## Metodos
 
-`if()` · `observarEventos()` · `crear()` · `listar()` · `obtener()` · `cambiarEstado()`
+`if()` · `observarEventos()` · `flujo()` · `suscriptoresActivos()` · `crear()` · `listar()` · `obtener()` · `cambiarEstado()`
 
 ## Archivos
 
@@ -40,6 +40,8 @@ Logica de negocio de alertas (modulo alertas).
 
 ## Referenciado por
 
+- [[service--centro-mando-centro-mando|CentroMandoService]] `uses` →
+- [[service--sistema-sistema|SistemaService]] `uses` →
 - [[api--alertas-alertas|AlertasController]] `exposes` →
 
 ---

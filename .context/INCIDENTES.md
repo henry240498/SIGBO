@@ -1,5 +1,8 @@
 # Centro de Operaciones e Incidentes
 
+> Análisis de 2026-10-11: el núcleo 093 sigue sin consumidores (tareas 3–7 del plan sin hacer) y
+> el SCI no existe. Estado real, defectos verificados y brechas P0–P3 en [SCI.md](SCI.md).
+
 ## 0. Decisiones del cuartel (tarea 0, 2026-10-07)
 
 Implementación autorizada del plan `docs/superpowers/plans/2026-10-07-centro-operaciones-incidentes.md`. Se aplican las recomendaciones previstas por el plan al no recibirse cambios en las respuestas; son configurables y no sustituyen decisiones reservadas a autoridades institucionales.

@@ -1,0 +1,33 @@
+{
+  "tipo": "MEDICION_LOCAL_FUENTE_REAL_NO_TELEFONO_NO_ACEPTACION",
+  "node": "v24.19.0",
+  "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+  "entradas": 2665,
+  "referencias": 38810,
+  "celdas": 5533,
+  "bytesV1": 39120544,
+  "bytesV2": 33981459,
+  "reduccionBytes": 5139085,
+  "reduccionPorcentaje": 13.136537671868776,
+  "primeraConsultaMs": 571.9011,
+  "promedio100ConsultasMs": 0.40418499999999996,
+  "motorOffline": false,
+  "manifest": {
+    "versionPaquete": 2,
+    "versionGreId": "00000000-0000-4000-8000-000000000001",
+    "edicion": "2024",
+    "idioma": "es",
+    "generadoEn": "2026-10-11T05:45:18.468Z",
+    "documentoSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+    "documentoBytes": 8182725,
+    "catalogoSha256": "2328d2da2ffbacdf8606c168bfb4f4c89c5f0e90a42f9e4fee2a4bfe90f80039",
+    "catalogoBytes": 25680578,
+    "interpretacionSha256": "9353daa9f5133a59ecbfeebcf679429aad6a853cf6b9950583bed0369ba11e7c",
+    "interpretacionBytes": 117467,
+    "versionInterpretacion": "gre2024-condiciones-2",
+    "finalidad": "CONSULTA_DOCUMENTAL_GRE_SIN_DATOS_DE_INCIDENTES",
+    "motorDisponibleOffline": false,
+    "formatoArchivo": "PARTES_DOCUMENTALES_VERIFICABLES"
+  },
+  "limites": "Comparación de serialización del mismo catálogo/PDF. No mide HTTP, memoria de Android ni rendimiento de campo."
+}

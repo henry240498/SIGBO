@@ -5,6 +5,11 @@ nivel: L0
 
 # .context — sistema nervioso del repositorio SIGBO
 
+Para GRE2024/MATPEL/SCI consultar también [gre2024/index.md](gre2024/index.md).
+Esa carpeta conserva conocimiento documental y evidencia bajo la autorización
+específica de esta misión; el PDF original define el contenido GRE. El grafo
+continúa siendo un índice de relaciones, y el código prueba qué implementa SIGBO.
+
 Este directorio es el **índice semántico** del proyecto: no contiene el conocimiento,
 contiene las **relaciones** que permiten encontrarlo. Existe para que un agente (o una
 persona nueva) pueda trabajar sobre un módulo cargando 1–4K tokens de contexto relevante

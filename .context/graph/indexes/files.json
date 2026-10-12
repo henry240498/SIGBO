@@ -1,5 +1,6 @@
 {
  "frontend/src/lib/modulos.ts": [
+  "domain--matpel",
   "domain--servicios",
   "domain--denuncias",
   "domain--guardias",
@@ -16,6 +17,7 @@
   "domain--publicaciones",
   "domain--seguridad",
   "domain--inteligencia",
+  "domain--sistema",
   "component--front-modulos",
   "rule--frontend-no-autoriza",
   "rule--modulo-visible-por-prefijo"
@@ -1192,6 +1194,13 @@
   "file--095-matpel-permisos",
   "decision--matpel-catalogo-contexto-versionados"
  ],
+ "database/migrations/096_sistema_permisos.sql": [
+  "file--096-sistema-permisos"
+ ],
+ "database/migrations/097_estados_bombero.sql": [
+  "file--097-estados-bombero",
+  "table--personal-bomberos"
+ ],
  "backend/src/modules/academia/academia.module.ts": [
   "component--modulo-academia"
  ],
@@ -1209,6 +1218,9 @@
  ],
  "backend/src/modules/cartografia/cartografia.module.ts": [
   "component--modulo-cartografia"
+ ],
+ "backend/src/modules/centro-mando/centro-mando.module.ts": [
+  "component--modulo-centro-mando"
  ],
  "backend/src/modules/configuracion/configuracion.module.ts": [
   "component--modulo-configuracion"
@@ -1265,7 +1277,7 @@
  "backend/src/modules/organizacion/organizacion.module.ts": [
   "component--modulo-organizacion"
  ],
- "backend/src/modules/pantallas/pantallas.module.ts": [
+ "backend/src/modules/pantallas/matriz-web.module.ts": [
   "component--modulo-pantallas"
  ],
  "backend/src/modules/personal/personal.module.ts": [
@@ -1291,6 +1303,9 @@
  ],
  "backend/src/modules/servicios/servicios.module.ts": [
   "component--modulo-servicios"
+ ],
+ "backend/src/modules/sistema/sistema.module.ts": [
+  "component--modulo-sistema"
  ],
  "backend/src/modules/vehiculos/vehiculos.module.ts": [
   "component--modulo-vehiculos"
@@ -1345,6 +1360,10 @@
  ],
  "backend/src/modules/cartografia/cartografia.service.ts": [
   "service--cartografia-cartografia"
+ ],
+ "backend/src/modules/centro-mando/centro-mando.service.ts": [
+  "service--centro-mando-centro-mando",
+  "rule--centro-de-mando-solo-personal-activo"
  ],
  "backend/src/modules/configuracion/configuracion.service.ts": [
   "service--configuracion-configuracion",
@@ -1428,6 +1447,7 @@
  "backend/src/modules/despacho/servicio-activo.service.ts": [
   "service--despacho-servicio-activo",
   "decision--matpel-catalogo-contexto-versionados",
+  "rule--centro-de-mando-solo-personal-activo",
   "rule--confidencial-lo-decide-la-matriz",
   "workflow--servicio-activo"
  ],
@@ -1532,7 +1552,8 @@
  ],
  "backend/src/modules/gre/gre-catalogo.service.ts": [
   "service--gre-gre-catalogo",
-  "decision--matpel-catalogo-contexto-versionados"
+  "decision--matpel-catalogo-contexto-versionados",
+  "rule--gre2024-fuente-conocimiento-operativo"
  ],
  "backend/src/modules/gre/gre-comparacion.service.ts": [
   "service--gre-gre-comparacion"
@@ -1542,7 +1563,8 @@
   "decision--matpel-catalogo-contexto-versionados"
  ],
  "backend/src/modules/gre/gre-importacion.service.ts": [
-  "service--gre-gre-importacion"
+  "service--gre-gre-importacion",
+  "rule--gre2024-fuente-conocimiento-operativo"
  ],
  "backend/src/modules/gre/gre-proceso.service.ts": [
   "service--gre-gre-proceso"
@@ -1552,6 +1574,14 @@
  ],
  "backend/src/modules/gre/gre-trabajador.service.ts": [
   "service--gre-gre-trabajador"
+ ],
+ "backend/src/modules/gre/matpel-consulta.service.ts": [
+  "service--gre-matpel-consulta",
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "backend/src/modules/gre/motor-matpel.service.ts": [
+  "service--gre-motor-matpel",
+  "rule--gre2024-fuente-conocimiento-operativo"
  ],
  "backend/src/modules/guardias/bitacora.service.ts": [
   "service--guardias-bitacora"
@@ -1717,6 +1747,10 @@
  "backend/src/modules/organizacion/unidades.service.ts": [
   "service--organizacion-unidades"
  ],
+ "backend/src/modules/pantallas/matriz-web.service.ts": [
+  "service--pantallas-matriz-web",
+  "decision--matriz-web-en-permissions-guard"
+ ],
  "backend/src/modules/pantallas/navegacion.service.ts": [
   "service--pantallas-navegacion"
  ],
@@ -1804,6 +1838,12 @@
   "service--servicios-servicios",
   "workflow--comunicacion-de-servicio"
  ],
+ "backend/src/modules/sistema/respaldos.service.ts": [
+  "service--sistema-respaldos"
+ ],
+ "backend/src/modules/sistema/sistema.service.ts": [
+  "service--sistema-sistema"
+ ],
  "backend/src/modules/vehiculos/checklist-items.service.ts": [
   "service--vehiculos-checklist-items"
  ],
@@ -1854,6 +1894,9 @@
  ],
  "backend/src/modules/cartografia/cartografia.controller.ts": [
   "api--cartografia-cartografia"
+ ],
+ "backend/src/modules/centro-mando/centro-mando.controller.ts": [
+  "api--centro-mando-centro-mando"
  ],
  "backend/src/modules/configuracion/configuracion.controller.ts": [
   "api--configuracion-configuracion"
@@ -2012,6 +2055,10 @@
  ],
  "backend/src/modules/gre/gre-admin.controller.ts": [
   "api--gre-gre-admin"
+ ],
+ "backend/src/modules/gre/matpel-consulta.controller.ts": [
+  "api--gre-matpel-consulta",
+  "rule--gre2024-fuente-conocimiento-operativo"
  ],
  "backend/src/modules/guardias/bitacora.controller.ts": [
   "api--guardias-bitacora"
@@ -2221,6 +2268,9 @@
   "api--servicios-servicios",
   "workflow--comunicacion-de-servicio"
  ],
+ "backend/src/modules/sistema/sistema.controller.ts": [
+  "api--sistema-sistema"
+ ],
  "backend/src/modules/vehiculos/checklist-items.controller.ts": [
   "api--vehiculos-checklist-items"
  ],
@@ -2265,6 +2315,9 @@
  ],
  "frontend/src/app/dashboard/asistencia/tolerancias/page.tsx": [
   "screen--dashboard-asistencia-tolerancias"
+ ],
+ "frontend/src/app/dashboard/centro-mando/page.tsx": [
+  "screen--dashboard-centro-mando"
  ],
  "frontend/src/app/dashboard/denuncias/page.tsx": [
   "screen--dashboard-denuncias"
@@ -2438,6 +2491,10 @@
  "frontend/src/app/dashboard/inteligencia/page.tsx": [
   "screen--dashboard-inteligencia"
  ],
+ "frontend/src/app/dashboard/matpel/page.tsx": [
+  "screen--dashboard-matpel",
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
  "frontend/src/app/dashboard/mi-perfil/page.tsx": [
   "screen--dashboard-mi-perfil"
  ],
@@ -2600,6 +2657,21 @@
  "frontend/src/app/dashboard/servicios/prevencion/page.tsx": [
   "screen--dashboard-servicios-prevencion"
  ],
+ "frontend/src/app/dashboard/sistema/app-movil/page.tsx": [
+  "screen--dashboard-sistema-app-movil"
+ ],
+ "frontend/src/app/dashboard/sistema/datos/page.tsx": [
+  "screen--dashboard-sistema-datos"
+ ],
+ "frontend/src/app/dashboard/sistema/page.tsx": [
+  "screen--dashboard-sistema"
+ ],
+ "frontend/src/app/dashboard/sistema/registros/page.tsx": [
+  "screen--dashboard-sistema-registros"
+ ],
+ "frontend/src/app/dashboard/sistema/tareas/page.tsx": [
+  "screen--dashboard-sistema-tareas"
+ ],
  "frontend/src/app/dashboard/vehiculos/checklist-items/page.tsx": [
   "screen--dashboard-vehiculos-checklist-items"
  ],
@@ -2636,6 +2708,9 @@
  ],
  "frontend/src/lib/academia.ts": [
   "component--front-academia"
+ ],
+ "frontend/src/lib/actualizacion.ts": [
+  "component--front-actualizacion"
  ],
  "frontend/src/lib/api.ts": [
   "component--front-api",
@@ -2697,6 +2772,9 @@
  "frontend/src/lib/llamados.ts": [
   "component--front-llamados"
  ],
+ "frontend/src/lib/matpel.ts": [
+  "component--front-matpel"
+ ],
  "frontend/src/lib/navegacion.ts": [
   "component--front-navegacion",
   "rule--registro-de-pantallas-generado"
@@ -2704,12 +2782,19 @@
  "frontend/src/lib/organizacion.ts": [
   "component--front-organizacion"
  ],
+ "frontend/src/lib/pantallas-admin.ts": [
+  "component--front-pantallas-admin"
+ ],
  "frontend/src/lib/pantallas.generado.ts": [
   "component--front-pantallas-generado",
   "rule--registro-de-pantallas-generado"
  ],
  "frontend/src/lib/parametros.ts": [
   "component--front-parametros"
+ ],
+ "frontend/src/lib/permisos-pantalla.ts": [
+  "component--front-permisos-pantalla",
+  "decision--matriz-web-en-permissions-guard"
  ],
  "frontend/src/lib/personal.ts": [
   "component--front-personal"
@@ -2761,8 +2846,17 @@
  "frontend/src/app/components/Paginador.tsx": [
   "component--front-paginador"
  ],
+ "frontend/src/app/components/PermisosPantallaProvider.tsx": [
+  "component--front-permisospantallaprovider"
+ ],
+ "frontend/src/app/components/SinAcceso.tsx": [
+  "component--front-sinacceso"
+ ],
  "frontend/src/app/components/SystemIcon.tsx": [
   "component--front-systemicon"
+ ],
+ "frontend/src/app/components/useActualizacionPeriodica.tsx": [
+  "component--front-useactualizacionperiodica"
  ],
  "backend/src/modules/configuracion/configuracion.registry.ts": [
   "configuration--apariencia",
@@ -2859,6 +2953,20 @@
  "scripts/matpel/extraer_gre.py": [
   "decision--matpel-catalogo-contexto-versionados"
  ],
+ "backend/src/modules/pantallas/matriz-web.logica.ts": [
+  "decision--matriz-web-en-permissions-guard"
+ ],
+ "backend/src/modules/seguridad/guards/permissions.guard.ts": [
+  "decision--matriz-web-en-permissions-guard",
+  "decision--permisos-dinamicos",
+  "rule--frontend-no-autoriza",
+  "rule--todo-endpoint-mutante-con-permiso"
+ ],
+ "frontend/scripts/generar-pantallas.mjs": [
+  "decision--matriz-web-en-permissions-guard",
+  "rule--pantalla-nueva-entra-a-la-matriz",
+  "rule--registro-de-pantallas-generado"
+ ],
  "database/run-migrations.ps1": [
   "decision--migraciones-a-mano",
   "dependency--nodejs",
@@ -2874,11 +2982,6 @@
  ],
  "frontend/next.config.js": [
   "decision--pantalla-vive-donde-su-permiso"
- ],
- "backend/src/modules/seguridad/guards/permissions.guard.ts": [
-  "decision--permisos-dinamicos",
-  "rule--frontend-no-autoriza",
-  "rule--todo-endpoint-mutante-con-permiso"
  ],
  "backend/src/modules/denuncias/guards/rate-limit.guard.ts": [
   "decision--rate-limit-propio"
@@ -2960,6 +3063,9 @@
   "error--instalacion-usb-xiaomi",
   "workflow--conectar-celular-al-servidor"
  ],
+ "backend/src/modules/centro-mando/centro-mando.logica.ts": [
+  "rule--centro-de-mando-solo-personal-activo"
+ ],
  "backend/src/modules/pantallas/pantallas.logica.ts": [
   "rule--confidencial-lo-decide-la-matriz"
  ],
@@ -2988,11 +3094,210 @@
   "rule--expediente-una-seccion-un-archivo",
   "rule--un-fallo-no-se-anuncia-como-vacio"
  ],
+ ".context/gre2024/index.md": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/agent-instructions.md": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/validation-report.md": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/open-issues.md": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/reglas-operativas.json": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "scripts/matpel/auditar_conocimiento.py": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "scripts/matpel/validar_conocimiento.py": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "scripts/matpel/documentar_paginas.py": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "scripts/matpel/registrar_paginas_leidas.py": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "scripts/matpel/validar_paginas.py": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "scripts/matpel/test_validar_paginas.py": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/paginas/README.md": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/paginas/cobertura.md": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/paginas/inventario.json": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/paginas/notas.json": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/paginas/hallazgos.json": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "scripts/matpel/test_validar_conocimiento.py": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/response-guides/lectura111-120.md": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/response-guides/lectura121-130.md": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/response-guides/lectura131-140.md": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/response-guides/lectura141-150.md": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/response-guides/lectura151-160.md": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/response-guides/lectura161-174.md": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/response-guides/inventario-guias.md": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/response-guides/inventario-guias.json": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/response-guides/notas131-174.json": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/response-guides/dependencias.md": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "scripts/matpel/documentar_guias.py": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "scripts/matpel/documentar_guias_v2.py": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "scripts/matpel/cerrar_estudio_guias.py": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "scripts/matpel/test_documentar_guias.py": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".context/gre2024/estudio-tabla3.md": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "docs/Manuales/GRE2024-Spa-Web-a.pdf": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "backend/src/modules/gre/motor-matpel.spec.ts": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "backend/src/modules/gre/matpel-geometria.ts": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "backend/src/modules/gre/matpel-paquete.ts": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "backend/src/modules/gre/matpel-paquete.spec.ts": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "frontend/src/components/MapaMatpel.tsx": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "scripts/matpel/validar_recorte_motor.py": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "scripts/matpel/validar_cabeceras_tabla3.py": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "scripts/matpel/recorrido_offline.cjs": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".movile/lib/matpel.dart": [
+  "rule--gre2024-fuente-conocimiento-operativo",
+  "workflow--consulta-gre-movil"
+ ],
+ ".movile/lib/matpel_documento.dart": [
+  "rule--gre2024-fuente-conocimiento-operativo",
+  "workflow--consulta-gre-movil"
+ ],
+ ".movile/lib/matpel_consulta.dart": [
+  "rule--gre2024-fuente-conocimiento-operativo",
+  "workflow--consulta-gre-movil"
+ ],
+ ".movile/lib/matpel_parametros.dart": [
+  "rule--gre2024-fuente-conocimiento-operativo",
+  "workflow--consulta-gre-movil"
+ ],
+ ".movile/lib/matpel_motor_local.dart": [
+  "rule--gre2024-fuente-conocimiento-operativo",
+  "workflow--consulta-gre-movil"
+ ],
+ ".movile/lib/matpel_foto.dart": [
+  "rule--gre2024-fuente-conocimiento-operativo",
+  "workflow--consulta-gre-movil"
+ ],
+ ".movile/test/matpel_motor_local_test.dart": [
+  "rule--gre2024-fuente-conocimiento-operativo",
+  "workflow--consulta-gre-movil"
+ ],
+ ".movile/test/matpel_foto_test.dart": [
+  "rule--gre2024-fuente-conocimiento-operativo",
+  "workflow--consulta-gre-movil"
+ ],
+ "backend/src/modules/gre/matpel-motor-local.spec.ts": [
+  "rule--gre2024-fuente-conocimiento-operativo",
+  "workflow--consulta-gre-movil"
+ ],
+ "backend/src/modules/gre/gre-importacion-estado.spec.ts": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ "scripts/matpel/compilar_motor_local.cjs": [
+  "rule--gre2024-fuente-conocimiento-operativo",
+  "workflow--consulta-gre-movil"
+ ],
+ "scripts/matpel/motor_local_runtime.js": [
+  "rule--gre2024-fuente-conocimiento-operativo",
+  "workflow--consulta-gre-movil"
+ ],
+ ".movile/docs/GRE_CIERRE_20261012.md": [
+  "rule--gre2024-fuente-conocimiento-operativo",
+  "workflow--consulta-gre-movil"
+ ],
+ ".movile/lib/mapa_matpel.dart": [
+  "rule--gre2024-fuente-conocimiento-operativo",
+  "workflow--consulta-gre-movil"
+ ],
+ ".movile/test/matpel_consulta_test.dart": [
+  "rule--gre2024-fuente-conocimiento-operativo",
+  "workflow--consulta-gre-movil"
+ ],
+ "scripts/matpel/evaluacion_prueba_movil.cjs": [
+  "rule--gre2024-fuente-conocimiento-operativo",
+  "workflow--consulta-gre-movil"
+ ],
+ ".movile/test/matpel_test.dart": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
+ ".movile/docs/MATPEL.md": [
+  "rule--gre2024-fuente-conocimiento-operativo",
+  "workflow--consulta-gre-movil"
+ ],
+ "docs/matpel/FASE_4_5_CONSULTA_MOTOR.md": [
+  "rule--gre2024-fuente-conocimiento-operativo"
+ ],
  "backend/src/modules/guardias": [
   "rule--guardias-vive-en-operaciones"
  ],
- "frontend/scripts/generar-pantallas.mjs": [
-  "rule--registro-de-pantallas-generado"
+ "frontend/scripts/pantallas-codigos.json": [
+  "rule--pantalla-nueva-entra-a-la-matriz"
+ ],
+ "frontend/scripts/pantallas-api-extra.json": [
+  "rule--pantalla-nueva-entra-a-la-matriz"
  ],
  "frontend/scripts/audit-contraste.mjs": [
   "rule--sin-clases-css-nuevas",
@@ -3015,6 +3320,12 @@
  ],
  "tunel-sigbo.bat": [
   "workflow--conectar-celular-al-servidor"
+ ],
+ ".movile/android/app/src/main/kotlin/org/cbvc/sigbo/MotorGreLocal.kt": [
+  "workflow--consulta-gre-movil"
+ ],
+ ".movile/android/app/src/main/kotlin/org/cbvc/sigbo/OcrGreLocal.kt": [
+  "workflow--consulta-gre-movil"
  ],
  "backend/src/modules/despacho/servicio-activo.logica.ts": [
   "workflow--servicio-activo"

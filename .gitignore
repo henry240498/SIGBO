@@ -43,3 +43,7 @@ respaldos/
 # Python
 __pycache__/
 *.pyc
+
+# Herramientas locales y cache de Android
+.playwright-mcp/
+**/.gradle/

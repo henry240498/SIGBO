@@ -68,6 +68,7 @@ Logica de negocio de perfil (modulo seguridad).
 
 ## Referenciado por
 
+- [[service--centro-mando-centro-mando|CentroMandoService]] `uses` →
 - [[api--seguridad-perfil|PerfilController]] `exposes` →
 
 ---

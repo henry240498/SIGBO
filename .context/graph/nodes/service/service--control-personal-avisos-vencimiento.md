@@ -23,7 +23,7 @@ Aviso por Telegram de lo que esta por vencer (opt-in: sin Telegram configurado n
 
 ## Metodos
 
-`if()` · `onModuleInit()` · `onModuleDestroy()` · `ejecutar()`
+`if()` · `onModuleInit()` · `onModuleDestroy()` · `estado()` · `ejecutarAhora()` · `ejecutar()`
 
 ## Archivos
 
@@ -35,6 +35,10 @@ Aviso por Telegram de lo que esta por vencer (opt-in: sin Telegram configurado n
 - `uses` → [[component--modulo-control-personal|control-personal (modulo NestJS)]]
 - `uses` → [[service--control-personal-vencimientos|VencimientosService]]
 - `uses` → [[service--notificaciones-telegram|TelegramService]]
+
+## Referenciado por
+
+- [[service--sistema-sistema|SistemaService]] `uses` →
 
 ---
 <sub>Nodo derivado — generado por `build-graph.mjs`, no editar a mano.</sub>

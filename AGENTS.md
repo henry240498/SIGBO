@@ -7,6 +7,18 @@ Las reglas locales existentes siguen aplicando. No realizar commits, pushes, mig
 
 # Instrucciones permanentes de SIGBO
 
+## Conocimiento GRE2024 / MATPEL / SCI
+
+Antes de interpretar o modificar GRE2024, MATPEL o su integración SCI, consultar
+[el índice GRE2024](.context/gre2024/index.md) y las
+[instrucciones de conocimiento para agentes](.context/gre2024/agent-instructions.md).
+Seguir cada regla y condición hasta el PDF original; citar páginas PDF e impresa
+por separado. Distinguir extracción, cotejo documental, interpretación y prueba
+operativa. No declarar dominio ni activar catálogo por pasar pruebas de importación.
+Actualizar conocimiento, evidencia y pruebas al descubrir discrepancias; conservar
+información válida y registrar límites. La fuente GRE prevalece para su contenido;
+el código demuestra el comportamiento actual, no qué debería decir la fuente.
+
 ## Fuente normativa institucional
 
 Antes de modificar flujos de Personal, Academia, Asistencia, Guardias, Servicios,

@@ -29,7 +29,7 @@ Proceso local de extracción (scripts/matpel). Argumentos fijos por el servidor:
 
 ## Relaciones
 
-- `belongs_to` → [[domain--matpel|matpel]]
+- `belongs_to` → [[domain--matpel|MATPEL]]
 - `uses` → [[component--modulo-gre|gre (modulo NestJS)]]
 
 ## Referenciado por

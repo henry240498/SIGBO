@@ -1,0 +1,3215 @@
+{
+  "id": "GRE24-INVENTARIO-GUIAS-COMPLETO",
+  "fuenteSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+  "artefactoSha256": "0a936d3c97fd95195fa24fa7b0f9538ef946e726adf6f8542b65b0a5da10b543",
+  "fechaUtc": "2026-10-10T17:20:56.384687+00:00",
+  "estado": "COBERTURA_DOCUMENTAL_GUIAS_COMPLETA_SIN_MOTOR",
+  "resumen": {
+    "numeros": 64,
+    "conContenido": 62,
+    "sinMateriales": 2,
+    "paginas": 128,
+    "clausulas": 2531
+  },
+  "guias": [
+    {
+      "numero": "111",
+      "tituloOriginal": "Carga Mixta / Carga Sin Identificar",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura111-120.json",
+      "estudio": "lectura111-120.md#guia-111",
+      "paginasPdf": [
+        158,
+        159
+      ],
+      "paginasImpresas": [
+        156,
+        157
+      ],
+      "clausulas": 35,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        null,
+        null
+      ]
+    },
+    {
+      "numero": "112",
+      "tituloOriginal": "Explosivos* - División 1.1, 1.2, 1.3 o 1.5",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura111-120.json",
+      "estudio": "lectura111-120.md#guia-112",
+      "paginasPdf": [
+        160,
+        161
+      ],
+      "paginasImpresas": [
+        158,
+        159
+      ],
+      "clausulas": 25,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        null,
+        null
+      ]
+    },
+    {
+      "numero": "113",
+      "tituloOriginal": "Materiales Inflamables \n\n(Explosivos húmedos / desensibilizados)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura111-120.json",
+      "estudio": "lectura111-120.md#guia-113",
+      "paginasPdf": [
+        162,
+        163
+      ],
+      "paginasImpresas": [
+        160,
+        161
+      ],
+      "clausulas": 32,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        null,
+        null
+      ]
+    },
+    {
+      "numero": "114",
+      "tituloOriginal": "Explosivos* - División 1.4 o 1.6",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura111-120.json",
+      "estudio": "lectura111-120.md#guia-114",
+      "paginasPdf": [
+        164,
+        165
+      ],
+      "paginasImpresas": [
+        162,
+        163
+      ],
+      "clausulas": 29,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        null,
+        null
+      ]
+    },
+    {
+      "numero": "115",
+      "tituloOriginal": "Gases - Inflamables\n\n(incluyendo líquidos refrigerados)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura111-120.json",
+      "estudio": "lectura111-120.md#guia-115",
+      "paginasPdf": [
+        166,
+        167
+      ],
+      "paginasImpresas": [
+        164,
+        165
+      ],
+      "clausulas": 50,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        null,
+        null
+      ]
+    },
+    {
+      "numero": "116",
+      "tituloOriginal": "Gases - Inflamables\n\n(inestables)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura111-120.json",
+      "estudio": "lectura111-120.md#guia-116",
+      "paginasPdf": [
+        168,
+        169
+      ],
+      "paginasImpresas": [
+        166,
+        167
+      ],
+      "clausulas": 46,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        null,
+        null
+      ]
+    },
+    {
+      "numero": "117",
+      "tituloOriginal": "Gases - Tóxicos - Inflamables\n\n(peligro extremo)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura111-120.json",
+      "estudio": "lectura111-120.md#guia-117",
+      "paginasPdf": [
+        170,
+        171
+      ],
+      "paginasImpresas": [
+        168,
+        169
+      ],
+      "clausulas": 51,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        null,
+        null
+      ]
+    },
+    {
+      "numero": "118",
+      "tituloOriginal": "Gases - Inflamables - Corrosivos",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura111-120.json",
+      "estudio": "lectura111-120.md#guia-118",
+      "paginasPdf": [
+        172,
+        173
+      ],
+      "paginasImpresas": [
+        170,
+        171
+      ],
+      "clausulas": 48,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        null,
+        null
+      ]
+    },
+    {
+      "numero": "119",
+      "tituloOriginal": "Gases - Tóxicos - Inflamables",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura111-120.json",
+      "estudio": "lectura111-120.md#guia-119",
+      "paginasPdf": [
+        174,
+        175
+      ],
+      "paginasImpresas": [
+        172,
+        173
+      ],
+      "clausulas": 50,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        null,
+        null
+      ]
+    },
+    {
+      "numero": "120",
+      "tituloOriginal": "Gases - Inertes\n\n(incluyendo líquidos refrigerados)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura111-120.json",
+      "estudio": "lectura111-120.md#guia-120",
+      "paginasPdf": [
+        176,
+        177
+      ],
+      "paginasImpresas": [
+        174,
+        175
+      ],
+      "clausulas": 37,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        null,
+        null
+      ]
+    },
+    {
+      "numero": "121",
+      "tituloOriginal": null,
+      "estadoContenido": "INTENCIONALMENTE_VACIA",
+      "lectura": "lectura121-130.json",
+      "estudio": "lectura121-130.md#guia-121",
+      "paginasPdf": [
+        178,
+        179
+      ],
+      "paginasImpresas": [
+        176,
+        177
+      ],
+      "clausulas": 0,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0178-GUIAS121-130",
+        "GRE24-VISUAL-0179-GUIAS121-130"
+      ]
+    },
+    {
+      "numero": "122",
+      "tituloOriginal": "Gases - Oxidantes\n\n(incluyendo líquidos refrigerados)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura121-130.json",
+      "estudio": "lectura121-130.md#guia-122",
+      "paginasPdf": [
+        180,
+        181
+      ],
+      "paginasImpresas": [
+        178,
+        179
+      ],
+      "clausulas": 47,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0180-GUIAS121-130",
+        "GRE24-VISUAL-0181-GUIAS121-130"
+      ]
+    },
+    {
+      "numero": "123",
+      "tituloOriginal": "Gases - Tóxicos",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura121-130.json",
+      "estudio": "lectura121-130.md#guia-123",
+      "paginasPdf": [
+        182,
+        183
+      ],
+      "paginasImpresas": [
+        180,
+        181
+      ],
+      "clausulas": 42,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0182-GUIAS121-130",
+        "GRE24-VISUAL-0183-GUIAS121-130"
+      ]
+    },
+    {
+      "numero": "124",
+      "tituloOriginal": "Gases - Tóxicos y/o Corrosivos - Oxidantes",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura121-130.json",
+      "estudio": "lectura121-130.md#guia-124",
+      "paginasPdf": [
+        184,
+        185
+      ],
+      "paginasImpresas": [
+        182,
+        183
+      ],
+      "clausulas": 46,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0184-GUIAS121-130",
+        "GRE24-VISUAL-0185-GUIAS121-130"
+      ]
+    },
+    {
+      "numero": "125",
+      "tituloOriginal": "Gases - Tóxicos y/o Corrosivos",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura121-130.json",
+      "estudio": "lectura121-130.md#guia-125",
+      "paginasPdf": [
+        186,
+        187
+      ],
+      "paginasImpresas": [
+        184,
+        185
+      ],
+      "clausulas": 45,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0186-GUIAS121-130",
+        "GRE24-VISUAL-0187-GUIAS121-130"
+      ]
+    },
+    {
+      "numero": "126",
+      "tituloOriginal": "Gases - Comprimidos o Licuados\n\n(incluyendo gases refrigerantes)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura121-130.json",
+      "estudio": "lectura121-130.md#guia-126",
+      "paginasPdf": [
+        188,
+        189
+      ],
+      "paginasImpresas": [
+        186,
+        187
+      ],
+      "clausulas": 40,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0188-GUIAS121-130",
+        "GRE24-VISUAL-0189-GUIAS121-130"
+      ]
+    },
+    {
+      "numero": "127",
+      "tituloOriginal": "Líquidos Inflamables\n\n(mezclable con agua)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura121-130.json",
+      "estudio": "lectura121-130.md#guia-127",
+      "paginasPdf": [
+        190,
+        191
+      ],
+      "paginasImpresas": [
+        188,
+        189
+      ],
+      "clausulas": 49,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0190-GUIAS121-130",
+        "GRE24-VISUAL-0191-GUIAS121-130"
+      ]
+    },
+    {
+      "numero": "128",
+      "tituloOriginal": "Líquidos Inflamables\n\n(no mezclables con agua)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura121-130.json",
+      "estudio": "lectura121-130.md#guia-128",
+      "paginasPdf": [
+        192,
+        193
+      ],
+      "paginasImpresas": [
+        190,
+        191
+      ],
+      "clausulas": 51,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0192-GUIAS121-130",
+        "GRE24-VISUAL-0193-GUIAS121-130"
+      ]
+    },
+    {
+      "numero": "129",
+      "tituloOriginal": "Líquidos Inflamables\n\n(mezclables con agua / nocivo)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura121-130.json",
+      "estudio": "lectura121-130.md#guia-129",
+      "paginasPdf": [
+        194,
+        195
+      ],
+      "paginasImpresas": [
+        192,
+        193
+      ],
+      "clausulas": 48,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0194-GUIAS121-130",
+        "GRE24-VISUAL-0195-GUIAS121-130"
+      ]
+    },
+    {
+      "numero": "130",
+      "tituloOriginal": "Líquidos Inflamables\n\n(no mezclables con agua / nocivo)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura121-130.json",
+      "estudio": "lectura121-130.md#guia-130",
+      "paginasPdf": [
+        196,
+        197
+      ],
+      "paginasImpresas": [
+        194,
+        195
+      ],
+      "clausulas": 46,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0196-GUIAS121-130",
+        "GRE24-VISUAL-0197-GUIAS121-130"
+      ]
+    },
+    {
+      "numero": "131",
+      "tituloOriginal": "Líquidos Inflamables - Tóxicos",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura131-140.json",
+      "estudio": "lectura131-140.md#guia-131",
+      "paginasPdf": [
+        198,
+        199
+      ],
+      "paginasImpresas": [
+        196,
+        197
+      ],
+      "clausulas": 53,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0198-GUIAS131-174",
+        "GRE24-VISUAL-0199-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "132",
+      "tituloOriginal": "Líquidos Inflamables - Corrosivos",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura131-140.json",
+      "estudio": "lectura131-140.md#guia-132",
+      "paginasPdf": [
+        200,
+        201
+      ],
+      "paginasImpresas": [
+        198,
+        199
+      ],
+      "clausulas": 52,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0200-GUIAS131-174",
+        "GRE24-VISUAL-0201-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "133",
+      "tituloOriginal": "Sólidos Inflamables",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura131-140.json",
+      "estudio": "lectura131-140.md#guia-133",
+      "paginasPdf": [
+        202,
+        203
+      ],
+      "paginasImpresas": [
+        200,
+        201
+      ],
+      "clausulas": 34,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0202-GUIAS131-174",
+        "GRE24-VISUAL-0203-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "134",
+      "tituloOriginal": "Sólidos Inflamables - Tóxicos y/o \nCorrosivos",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura131-140.json",
+      "estudio": "lectura131-140.md#guia-134",
+      "paginasPdf": [
+        204,
+        205
+      ],
+      "paginasImpresas": [
+        202,
+        203
+      ],
+      "clausulas": 36,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0204-GUIAS131-174",
+        "GRE24-VISUAL-0205-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "135",
+      "tituloOriginal": "Sustancias - Espontáneamente Combustibles",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura131-140.json",
+      "estudio": "lectura131-140.md#guia-135",
+      "paginasPdf": [
+        206,
+        207
+      ],
+      "paginasImpresas": [
+        204,
+        205
+      ],
+      "clausulas": 45,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0206-GUIAS131-174",
+        "GRE24-VISUAL-0207-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "136",
+      "tituloOriginal": "Sustancias - Espontáneamente Combustibles - \nTóxicas y/o Corrosivas (reactivas con el aire)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura131-140.json",
+      "estudio": "lectura131-140.md#guia-136",
+      "paginasPdf": [
+        208,
+        209
+      ],
+      "paginasImpresas": [
+        206,
+        207
+      ],
+      "clausulas": 42,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0208-GUIAS131-174",
+        "GRE24-VISUAL-0209-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "137",
+      "tituloOriginal": "Sustancias - Reactivas con el Agua - Corrosivas",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura131-140.json",
+      "estudio": "lectura131-140.md#guia-137",
+      "paginasPdf": [
+        210,
+        211
+      ],
+      "paginasImpresas": [
+        208,
+        209
+      ],
+      "clausulas": 42,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0210-GUIAS131-174",
+        "GRE24-VISUAL-0211-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "138",
+      "tituloOriginal": "Sustancias - Reactivas con el Agua\n\n(emiten gases inflamables)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura131-140.json",
+      "estudio": "lectura131-140.md#guia-138",
+      "paginasPdf": [
+        212,
+        213
+      ],
+      "paginasImpresas": [
+        210,
+        211
+      ],
+      "clausulas": 43,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0212-GUIAS131-174",
+        "GRE24-VISUAL-0213-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "139",
+      "tituloOriginal": "Sustancias - Reactivas con el Agua\n\n(emiten gases inflamables y tóxicos)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura131-140.json",
+      "estudio": "lectura131-140.md#guia-139",
+      "paginasPdf": [
+        214,
+        215
+      ],
+      "paginasImpresas": [
+        212,
+        213
+      ],
+      "clausulas": 47,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0214-GUIAS131-174",
+        "GRE24-VISUAL-0215-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "140",
+      "tituloOriginal": "Oxidantes",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura131-140.json",
+      "estudio": "lectura131-140.md#guia-140",
+      "paginasPdf": [
+        216,
+        217
+      ],
+      "paginasImpresas": [
+        214,
+        215
+      ],
+      "clausulas": 41,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0216-GUIAS131-174",
+        "GRE24-VISUAL-0217-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "141",
+      "tituloOriginal": "Oxidantes - Tóxicos",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura141-150.json",
+      "estudio": "lectura141-150.md#guia-141",
+      "paginasPdf": [
+        218,
+        219
+      ],
+      "paginasImpresas": [
+        216,
+        217
+      ],
+      "clausulas": 38,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0218-GUIAS131-174",
+        "GRE24-VISUAL-0219-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "142",
+      "tituloOriginal": "Oxidantes - Tóxicos (líquidos)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura141-150.json",
+      "estudio": "lectura141-150.md#guia-142",
+      "paginasPdf": [
+        220,
+        221
+      ],
+      "paginasImpresas": [
+        218,
+        219
+      ],
+      "clausulas": 39,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0220-GUIAS131-174",
+        "GRE24-VISUAL-0221-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "143",
+      "tituloOriginal": "Oxidantes (inestables)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura141-150.json",
+      "estudio": "lectura141-150.md#guia-143",
+      "paginasPdf": [
+        222,
+        223
+      ],
+      "paginasImpresas": [
+        220,
+        221
+      ],
+      "clausulas": 39,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0222-GUIAS131-174",
+        "GRE24-VISUAL-0223-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "144",
+      "tituloOriginal": "Oxidantes (reactivos con el agua)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura141-150.json",
+      "estudio": "lectura141-150.md#guia-144",
+      "paginasPdf": [
+        224,
+        225
+      ],
+      "paginasImpresas": [
+        222,
+        223
+      ],
+      "clausulas": 40,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0224-GUIAS131-174",
+        "GRE24-VISUAL-0225-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "145",
+      "tituloOriginal": "Peróxidos Orgánicos\n\n(susceptibles a la contaminación y al calor)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura141-150.json",
+      "estudio": "lectura141-150.md#guia-145",
+      "paginasPdf": [
+        226,
+        227
+      ],
+      "paginasImpresas": [
+        224,
+        225
+      ],
+      "clausulas": 38,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0226-GUIAS131-174",
+        "GRE24-VISUAL-0227-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "146",
+      "tituloOriginal": "Peróxidos Orgánicos\n\n(susceptibles a la contaminación, calor y fricción)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura141-150.json",
+      "estudio": "lectura141-150.md#guia-146",
+      "paginasPdf": [
+        228,
+        229
+      ],
+      "paginasImpresas": [
+        226,
+        227
+      ],
+      "clausulas": 39,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0228-GUIAS131-174",
+        "GRE24-VISUAL-0229-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "147",
+      "tituloOriginal": "Baterías de Ión Litio y Ión Sodio",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura141-150.json",
+      "estudio": "lectura141-150.md#guia-147",
+      "paginasPdf": [
+        230,
+        231
+      ],
+      "paginasImpresas": [
+        228,
+        229
+      ],
+      "clausulas": 37,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0230-GUIAS131-174",
+        "GRE24-VISUAL-0231-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "148",
+      "tituloOriginal": "Peróxidos Orgánicos\n\n(susceptibles a la calor y al contaminación /\n\ntemperatura controlada)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura141-150.json",
+      "estudio": "lectura141-150.md#guia-148",
+      "paginasPdf": [
+        232,
+        233
+      ],
+      "paginasImpresas": [
+        230,
+        231
+      ],
+      "clausulas": 43,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0232-GUIAS131-174",
+        "GRE24-VISUAL-0233-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "149",
+      "tituloOriginal": "Sustancias (auto reactivas)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura141-150.json",
+      "estudio": "lectura141-150.md#guia-149",
+      "paginasPdf": [
+        234,
+        235
+      ],
+      "paginasImpresas": [
+        232,
+        233
+      ],
+      "clausulas": 33,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0234-GUIAS131-174",
+        "GRE24-VISUAL-0235-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "150",
+      "tituloOriginal": "Sustancias\n\n(auto reactivas / temperatura controlada)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura141-150.json",
+      "estudio": "lectura141-150.md#guia-150",
+      "paginasPdf": [
+        236,
+        237
+      ],
+      "paginasImpresas": [
+        234,
+        235
+      ],
+      "clausulas": 38,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0236-GUIAS131-174",
+        "GRE24-VISUAL-0237-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "151",
+      "tituloOriginal": "Sustancias - Tóxicas (no combustibles)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura151-160.json",
+      "estudio": "lectura151-160.md#guia-151",
+      "paginasPdf": [
+        238,
+        239
+      ],
+      "paginasImpresas": [
+        236,
+        237
+      ],
+      "clausulas": 37,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0238-GUIAS131-174",
+        "GRE24-VISUAL-0239-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "152",
+      "tituloOriginal": "Sustancias - Tóxicas (combustibles)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura151-160.json",
+      "estudio": "lectura151-160.md#guia-152",
+      "paginasPdf": [
+        240,
+        241
+      ],
+      "paginasImpresas": [
+        238,
+        239
+      ],
+      "clausulas": 41,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0240-GUIAS131-174",
+        "GRE24-VISUAL-0241-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "153",
+      "tituloOriginal": "Sustancias - Tóxicas y/o Corrosivas\n\n(combustibles)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura151-160.json",
+      "estudio": "lectura151-160.md#guia-153",
+      "paginasPdf": [
+        242,
+        243
+      ],
+      "paginasImpresas": [
+        240,
+        241
+      ],
+      "clausulas": 43,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0242-GUIAS131-174",
+        "GRE24-VISUAL-0243-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "154",
+      "tituloOriginal": "Sustancias - Tóxicas y/o Corrosivas\n(no combustibles)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura151-160.json",
+      "estudio": "lectura151-160.md#guia-154",
+      "paginasPdf": [
+        244,
+        245
+      ],
+      "paginasImpresas": [
+        242,
+        243
+      ],
+      "clausulas": 39,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0244-GUIAS131-174",
+        "GRE24-VISUAL-0245-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "155",
+      "tituloOriginal": "Sustancias - Tóxicas y/o Corrosivas\n\n(inflamables / susceptibles al agua)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura151-160.json",
+      "estudio": "lectura151-160.md#guia-155",
+      "paginasPdf": [
+        246,
+        247
+      ],
+      "paginasImpresas": [
+        244,
+        245
+      ],
+      "clausulas": 51,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0246-GUIAS131-174",
+        "GRE24-VISUAL-0247-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "156",
+      "tituloOriginal": "Sustancias - Tóxicas y/o Corrosivas\n\n(combustibles / susceptibles al agua)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura151-160.json",
+      "estudio": "lectura151-160.md#guia-156",
+      "paginasPdf": [
+        248,
+        249
+      ],
+      "paginasImpresas": [
+        246,
+        247
+      ],
+      "clausulas": 51,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0248-GUIAS131-174",
+        "GRE24-VISUAL-0249-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "157",
+      "tituloOriginal": "Sustancias - Tóxicas y/o Corrosivas\n\n(no combustibles / susceptibles al agua)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura151-160.json",
+      "estudio": "lectura151-160.md#guia-157",
+      "paginasPdf": [
+        250,
+        251
+      ],
+      "paginasImpresas": [
+        248,
+        249
+      ],
+      "clausulas": 47,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0250-GUIAS131-174",
+        "GRE24-VISUAL-0251-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "158",
+      "tituloOriginal": "Sustancias Infecciosas",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura151-160.json",
+      "estudio": "lectura151-160.md#guia-158",
+      "paginasPdf": [
+        252,
+        253
+      ],
+      "paginasImpresas": [
+        250,
+        251
+      ],
+      "clausulas": 36,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0252-GUIAS131-174",
+        "GRE24-VISUAL-0253-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "159",
+      "tituloOriginal": "Sustancias (irritantes)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura151-160.json",
+      "estudio": "lectura151-160.md#guia-159",
+      "paginasPdf": [
+        254,
+        255
+      ],
+      "paginasImpresas": [
+        252,
+        253
+      ],
+      "clausulas": 36,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0254-GUIAS131-174",
+        "GRE24-VISUAL-0255-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "160",
+      "tituloOriginal": "Solventes Halogenados",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura151-160.json",
+      "estudio": "lectura151-160.md#guia-160",
+      "paginasPdf": [
+        256,
+        257
+      ],
+      "paginasImpresas": [
+        254,
+        255
+      ],
+      "clausulas": 36,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0256-GUIAS131-174",
+        "GRE24-VISUAL-0257-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "161",
+      "tituloOriginal": "Materiales Radiactivos\n\n(radiación de bajo nivel)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura161-174.json",
+      "estudio": "lectura161-174.md#guia-161",
+      "paginasPdf": [
+        258,
+        259
+      ],
+      "paginasImpresas": [
+        256,
+        257
+      ],
+      "clausulas": 30,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0258-GUIAS131-174",
+        "GRE24-VISUAL-0259-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "162",
+      "tituloOriginal": "Materiales Radiactivos\n\n(radiación de nivel bajo a moderado)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura161-174.json",
+      "estudio": "lectura161-174.md#guia-162",
+      "paginasPdf": [
+        260,
+        261
+      ],
+      "paginasImpresas": [
+        258,
+        259
+      ],
+      "clausulas": 39,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0260-GUIAS131-174",
+        "GRE24-VISUAL-0261-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "163",
+      "tituloOriginal": "Materiales Radiactivos\n\n(radiación de nivel bajo a alto)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura161-174.json",
+      "estudio": "lectura161-174.md#guia-163",
+      "paginasPdf": [
+        262,
+        263
+      ],
+      "paginasImpresas": [
+        260,
+        261
+      ],
+      "clausulas": 36,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0262-GUIAS131-174",
+        "GRE24-VISUAL-0263-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "164",
+      "tituloOriginal": "Materiales Radiactivos\n\n(forma especial / bajo a alto nivel de \nradiación externa)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura161-174.json",
+      "estudio": "lectura161-174.md#guia-164",
+      "paginasPdf": [
+        264,
+        265
+      ],
+      "paginasImpresas": [
+        262,
+        263
+      ],
+      "clausulas": 36,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0264-GUIAS131-174",
+        "GRE24-VISUAL-0265-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "165",
+      "tituloOriginal": "Materiales Radiactivos\n(fisionable / radiación de nivel bajo a alto)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura161-174.json",
+      "estudio": "lectura161-174.md#guia-165",
+      "paginasPdf": [
+        266,
+        267
+      ],
+      "paginasImpresas": [
+        264,
+        265
+      ],
+      "clausulas": 35,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0266-GUIAS131-174",
+        "GRE24-VISUAL-0267-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "166",
+      "tituloOriginal": "Materiales Radiactivos - Corrosivos\n(hexafluoruro de uranio / reactivos con el agua)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura161-174.json",
+      "estudio": "lectura161-174.md#guia-166",
+      "paginasPdf": [
+        268,
+        269
+      ],
+      "paginasImpresas": [
+        266,
+        267
+      ],
+      "clausulas": 44,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0268-GUIAS131-174",
+        "GRE24-VISUAL-0269-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "167",
+      "tituloOriginal": null,
+      "estadoContenido": "INTENCIONALMENTE_VACIA",
+      "lectura": "lectura161-174.json",
+      "estudio": "lectura161-174.md#guia-167",
+      "paginasPdf": [
+        270,
+        271
+      ],
+      "paginasImpresas": [
+        268,
+        269
+      ],
+      "clausulas": 0,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0270-GUIAS131-174",
+        "GRE24-VISUAL-0271-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "168",
+      "tituloOriginal": "Monoxido de Carbono (líquido refrigerado)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura161-174.json",
+      "estudio": "lectura161-174.md#guia-168",
+      "paginasPdf": [
+        272,
+        273
+      ],
+      "paginasImpresas": [
+        270,
+        271
+      ],
+      "clausulas": 45,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0272-GUIAS131-174",
+        "GRE24-VISUAL-0273-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "169",
+      "tituloOriginal": "Aluminio (fundido)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura161-174.json",
+      "estudio": "lectura161-174.md#guia-169",
+      "paginasPdf": [
+        274,
+        275
+      ],
+      "paginasImpresas": [
+        272,
+        273
+      ],
+      "clausulas": 29,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0274-GUIAS131-174",
+        "GRE24-VISUAL-0275-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "170",
+      "tituloOriginal": "Metales\n\n(polvos, cenizas, virutas, rebabas o recortes, etc.)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura161-174.json",
+      "estudio": "lectura161-174.md#guia-170",
+      "paginasPdf": [
+        276,
+        277
+      ],
+      "paginasImpresas": [
+        274,
+        275
+      ],
+      "clausulas": 31,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0276-GUIAS131-174",
+        "GRE24-VISUAL-0277-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "171",
+      "tituloOriginal": "Sustancias\n\n(peligro de bajo a moderado)",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura161-174.json",
+      "estudio": "lectura161-174.md#guia-171",
+      "paginasPdf": [
+        278,
+        279
+      ],
+      "paginasImpresas": [
+        276,
+        277
+      ],
+      "clausulas": 39,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0278-GUIAS131-174",
+        "GRE24-VISUAL-0279-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "172",
+      "tituloOriginal": "Galio y Mercurio",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura161-174.json",
+      "estudio": "lectura161-174.md#guia-172",
+      "paginasPdf": [
+        280,
+        281
+      ],
+      "paginasImpresas": [
+        278,
+        279
+      ],
+      "clausulas": 23,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0280-GUIAS131-174",
+        "GRE24-VISUAL-0281-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "173",
+      "tituloOriginal": "Gases Adsorbidos - Tóxico*",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura161-174.json",
+      "estudio": "lectura161-174.md#guia-173",
+      "paginasPdf": [
+        282,
+        283
+      ],
+      "paginasImpresas": [
+        280,
+        281
+      ],
+      "clausulas": 47,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0282-GUIAS131-174",
+        "GRE24-VISUAL-0283-GUIAS131-174"
+      ]
+    },
+    {
+      "numero": "174",
+      "tituloOriginal": "Gases Adsorbidos - Inflamables u Oxidantes",
+      "estadoContenido": "CON_CONTENIDO",
+      "lectura": "lectura161-174.json",
+      "estudio": "lectura161-174.md#guia-174",
+      "paginasPdf": [
+        284,
+        285
+      ],
+      "paginasImpresas": [
+        282,
+        283
+      ],
+      "clausulas": 44,
+      "estado": "LECTURA_DOCUMENTAL_SIN_MOTOR",
+      "revisionesVisuales": [
+        "GRE24-VISUAL-0284-GUIAS131-174",
+        "GRE24-VISUAL-0285-GUIAS131-174"
+      ]
+    }
+  ],
+  "remisiones": [
+    {
+      "guiaOrigen": "111",
+      "clausula": "GRE24-G111-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        159
+      ],
+      "paginasImpresas": [
+        157
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "112",
+      "clausula": "GRE24-G112-B06-C03",
+      "destino": "GRE24-SECCION-GLOSARIO",
+      "paginasPdf": [
+        160
+      ],
+      "paginasImpresas": [
+        158
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "112",
+      "clausula": "GRE24-G112-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        161
+      ],
+      "paginasImpresas": [
+        159
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "112",
+      "clausula": "GRE24-G112-B10-C02",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        161
+      ],
+      "paginasImpresas": [
+        159
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "113",
+      "clausula": "GRE24-G113-B02-C03",
+      "destino": "GRE24-GUIA-112",
+      "paginasPdf": [
+        162
+      ],
+      "paginasImpresas": [
+        160
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "113",
+      "clausula": "GRE24-G113-B02-C04",
+      "destino": "GRE24-GUIA-112",
+      "paginasPdf": [
+        162
+      ],
+      "paginasImpresas": [
+        160
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "113",
+      "clausula": "GRE24-G113-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        163
+      ],
+      "paginasImpresas": [
+        161
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "113",
+      "clausula": "GRE24-G113-B10-C02",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        163
+      ],
+      "paginasImpresas": [
+        161
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "114",
+      "clausula": "GRE24-G114-B06-C04",
+      "destino": "GRE24-SECCION-GLOSARIO",
+      "paginasPdf": [
+        164
+      ],
+      "paginasImpresas": [
+        162
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "114",
+      "clausula": "GRE24-G114-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        165
+      ],
+      "paginasImpresas": [
+        163
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "114",
+      "clausula": "GRE24-G114-B10-C02",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        165
+      ],
+      "paginasImpresas": [
+        163
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "115",
+      "clausula": "GRE24-G115-B06-C04",
+      "destino": "GRE24-SECCION-BLEVE",
+      "paginasPdf": [
+        166
+      ],
+      "paginasImpresas": [
+        164
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "115",
+      "clausula": "GRE24-G115-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        167
+      ],
+      "paginasImpresas": [
+        165
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "115",
+      "clausula": "GRE24-G115-B10-C05",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        167
+      ],
+      "paginasImpresas": [
+        165
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "116",
+      "clausula": "GRE24-G116-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        169
+      ],
+      "paginasImpresas": [
+        167
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "116",
+      "clausula": "GRE24-G116-B10-C04",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        169
+      ],
+      "paginasImpresas": [
+        167
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "117",
+      "clausula": "GRE24-G117-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        170
+      ],
+      "paginasImpresas": [
+        168
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "117",
+      "clausula": "GRE24-G117-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        171
+      ],
+      "paginasImpresas": [
+        169
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "117",
+      "clausula": "GRE24-G117-B10-C04",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        171
+      ],
+      "paginasImpresas": [
+        169
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "118",
+      "clausula": "GRE24-G118-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        172
+      ],
+      "paginasImpresas": [
+        170
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "118",
+      "clausula": "GRE24-G118-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        173
+      ],
+      "paginasImpresas": [
+        171
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "118",
+      "clausula": "GRE24-G118-B10-C04",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        173
+      ],
+      "paginasImpresas": [
+        171
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "119",
+      "clausula": "GRE24-G119-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        174
+      ],
+      "paginasImpresas": [
+        172
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "119",
+      "clausula": "GRE24-G119-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        175
+      ],
+      "paginasImpresas": [
+        173
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "119",
+      "clausula": "GRE24-G119-B10-C04",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        175
+      ],
+      "paginasImpresas": [
+        173
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "120",
+      "clausula": "GRE24-G120-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        177
+      ],
+      "paginasImpresas": [
+        175
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "122",
+      "clausula": "GRE24-G122-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        181
+      ],
+      "paginasImpresas": [
+        179
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "122",
+      "clausula": "GRE24-G122-B10-C04",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        181
+      ],
+      "paginasImpresas": [
+        179
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "123",
+      "clausula": "GRE24-G123-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        182
+      ],
+      "paginasImpresas": [
+        180
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "123",
+      "clausula": "GRE24-G123-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        183
+      ],
+      "paginasImpresas": [
+        181
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "123",
+      "clausula": "GRE24-G123-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        183
+      ],
+      "paginasImpresas": [
+        181
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "124",
+      "clausula": "GRE24-G124-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        184
+      ],
+      "paginasImpresas": [
+        182
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "124",
+      "clausula": "GRE24-G124-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        185
+      ],
+      "paginasImpresas": [
+        183
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "124",
+      "clausula": "GRE24-G124-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        185
+      ],
+      "paginasImpresas": [
+        183
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "125",
+      "clausula": "GRE24-G125-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        186
+      ],
+      "paginasImpresas": [
+        184
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "125",
+      "clausula": "GRE24-G125-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        187
+      ],
+      "paginasImpresas": [
+        185
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "125",
+      "clausula": "GRE24-G125-B10-C04",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        187
+      ],
+      "paginasImpresas": [
+        185
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "126",
+      "clausula": "GRE24-G126-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        189
+      ],
+      "paginasImpresas": [
+        187
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "127",
+      "clausula": "GRE24-G127-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        191
+      ],
+      "paginasImpresas": [
+        189
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "127",
+      "clausula": "GRE24-G127-B10-C04",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        191
+      ],
+      "paginasImpresas": [
+        189
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "128",
+      "clausula": "GRE24-G128-B02-C11",
+      "destino": "GRE24-GUIA-138",
+      "paginasPdf": [
+        192
+      ],
+      "paginasImpresas": [
+        190
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "128",
+      "clausula": "GRE24-G128-B02-C11",
+      "destino": "GRE24-GUIA-147",
+      "paginasPdf": [
+        192
+      ],
+      "paginasImpresas": [
+        190
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "128",
+      "clausula": "GRE24-G128-B02-C12",
+      "destino": "GRE24-GUIA-169",
+      "paginasPdf": [
+        192
+      ],
+      "paginasImpresas": [
+        190
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "128",
+      "clausula": "GRE24-G128-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        193
+      ],
+      "paginasImpresas": [
+        191
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "128",
+      "clausula": "GRE24-G128-B10-C04",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        193
+      ],
+      "paginasImpresas": [
+        191
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "129",
+      "clausula": "GRE24-G129-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        195
+      ],
+      "paginasImpresas": [
+        193
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "129",
+      "clausula": "GRE24-G129-B10-C04",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        195
+      ],
+      "paginasImpresas": [
+        193
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "130",
+      "clausula": "GRE24-G130-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        197
+      ],
+      "paginasImpresas": [
+        195
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "131",
+      "clausula": "GRE24-G131-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        198
+      ],
+      "paginasImpresas": [
+        196
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "131",
+      "clausula": "GRE24-G131-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        199
+      ],
+      "paginasImpresas": [
+        197
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "131",
+      "clausula": "GRE24-G131-B10-C04",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        199
+      ],
+      "paginasImpresas": [
+        197
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "132",
+      "clausula": "GRE24-G132-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        200
+      ],
+      "paginasImpresas": [
+        198
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "132",
+      "clausula": "GRE24-G132-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        201
+      ],
+      "paginasImpresas": [
+        199
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "132",
+      "clausula": "GRE24-G132-B10-C04",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        201
+      ],
+      "paginasImpresas": [
+        199
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "133",
+      "clausula": "GRE24-G133-B08-C04",
+      "destino": "GRE24-GUIA-170",
+      "paginasPdf": [
+        203
+      ],
+      "paginasImpresas": [
+        201
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "133",
+      "clausula": "GRE24-G133-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        203
+      ],
+      "paginasImpresas": [
+        201
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "133",
+      "clausula": "GRE24-G133-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        203
+      ],
+      "paginasImpresas": [
+        201
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "134",
+      "clausula": "GRE24-G134-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        205
+      ],
+      "paginasImpresas": [
+        203
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "134",
+      "clausula": "GRE24-G134-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        205
+      ],
+      "paginasImpresas": [
+        203
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "135",
+      "clausula": "GRE24-G135-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        206
+      ],
+      "paginasImpresas": [
+        204
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "135",
+      "clausula": "GRE24-G135-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        207
+      ],
+      "paginasImpresas": [
+        205
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "135",
+      "clausula": "GRE24-G135-B10-C02",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        207
+      ],
+      "paginasImpresas": [
+        205
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "136",
+      "clausula": "GRE24-G136-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        208
+      ],
+      "paginasImpresas": [
+        206
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "136",
+      "clausula": "GRE24-G136-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        209
+      ],
+      "paginasImpresas": [
+        207
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "136",
+      "clausula": "GRE24-G136-B10-C05",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        209
+      ],
+      "paginasImpresas": [
+        207
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "137",
+      "clausula": "GRE24-G137-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        210
+      ],
+      "paginasImpresas": [
+        208
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "137",
+      "clausula": "GRE24-G137-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        211
+      ],
+      "paginasImpresas": [
+        209
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "137",
+      "clausula": "GRE24-G137-B10-C04",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        211
+      ],
+      "paginasImpresas": [
+        209
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "138",
+      "clausula": "GRE24-G138-B08-C05",
+      "destino": "GRE24-GUIA-170",
+      "paginasPdf": [
+        213
+      ],
+      "paginasImpresas": [
+        211
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "138",
+      "clausula": "GRE24-G138-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        213
+      ],
+      "paginasImpresas": [
+        211
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "138",
+      "clausula": "GRE24-G138-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        213
+      ],
+      "paginasImpresas": [
+        211
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "139",
+      "clausula": "GRE24-G139-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        214
+      ],
+      "paginasImpresas": [
+        212
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "139",
+      "clausula": "GRE24-G139-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        215
+      ],
+      "paginasImpresas": [
+        213
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "139",
+      "clausula": "GRE24-G139-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        215
+      ],
+      "paginasImpresas": [
+        213
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "140",
+      "clausula": "GRE24-G140-B02-C01",
+      "destino": "GRE24-GUIA-112",
+      "paginasPdf": [
+        216
+      ],
+      "paginasImpresas": [
+        214
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "140",
+      "clausula": "GRE24-G140-B08-C05",
+      "destino": "GRE24-GUIA-112",
+      "paginasPdf": [
+        217
+      ],
+      "paginasImpresas": [
+        215
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "140",
+      "clausula": "GRE24-G140-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        217
+      ],
+      "paginasImpresas": [
+        215
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "140",
+      "clausula": "GRE24-G140-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        217
+      ],
+      "paginasImpresas": [
+        215
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "141",
+      "clausula": "GRE24-G141-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        219
+      ],
+      "paginasImpresas": [
+        217
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "141",
+      "clausula": "GRE24-G141-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        219
+      ],
+      "paginasImpresas": [
+        217
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "142",
+      "clausula": "GRE24-G142-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        220
+      ],
+      "paginasImpresas": [
+        218
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "142",
+      "clausula": "GRE24-G142-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        221
+      ],
+      "paginasImpresas": [
+        219
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "142",
+      "clausula": "GRE24-G142-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        221
+      ],
+      "paginasImpresas": [
+        219
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "143",
+      "clausula": "GRE24-G143-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        222
+      ],
+      "paginasImpresas": [
+        220
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "143",
+      "clausula": "GRE24-G143-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        223
+      ],
+      "paginasImpresas": [
+        221
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "143",
+      "clausula": "GRE24-G143-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        223
+      ],
+      "paginasImpresas": [
+        221
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "144",
+      "clausula": "GRE24-G144-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        224
+      ],
+      "paginasImpresas": [
+        222
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "144",
+      "clausula": "GRE24-G144-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        225
+      ],
+      "paginasImpresas": [
+        223
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "144",
+      "clausula": "GRE24-G144-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        225
+      ],
+      "paginasImpresas": [
+        223
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "145",
+      "clausula": "GRE24-G145-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        227
+      ],
+      "paginasImpresas": [
+        225
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "146",
+      "clausula": "GRE24-G146-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        229
+      ],
+      "paginasImpresas": [
+        227
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "146",
+      "clausula": "GRE24-G146-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        229
+      ],
+      "paginasImpresas": [
+        227
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "147",
+      "clausula": "GRE24-G147-B03-C03",
+      "destino": "GRE24-GUIA-125",
+      "paginasPdf": [
+        230
+      ],
+      "paginasImpresas": [
+        228
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "147",
+      "clausula": "GRE24-G147-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        231
+      ],
+      "paginasImpresas": [
+        229
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "148",
+      "clausula": "GRE24-G148-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        233
+      ],
+      "paginasImpresas": [
+        231
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "148",
+      "clausula": "GRE24-G148-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        233
+      ],
+      "paginasImpresas": [
+        231
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "149",
+      "clausula": "GRE24-G149-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        235
+      ],
+      "paginasImpresas": [
+        233
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "149",
+      "clausula": "GRE24-G149-B10-C02",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        235
+      ],
+      "paginasImpresas": [
+        233
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "150",
+      "clausula": "GRE24-G150-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        237
+      ],
+      "paginasImpresas": [
+        235
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "150",
+      "clausula": "GRE24-G150-B10-C02",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        237
+      ],
+      "paginasImpresas": [
+        235
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "151",
+      "clausula": "GRE24-G151-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        238
+      ],
+      "paginasImpresas": [
+        236
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "151",
+      "clausula": "GRE24-G151-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        239
+      ],
+      "paginasImpresas": [
+        237
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "151",
+      "clausula": "GRE24-G151-B10-C02",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        239
+      ],
+      "paginasImpresas": [
+        237
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "152",
+      "clausula": "GRE24-G152-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        240
+      ],
+      "paginasImpresas": [
+        238
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "152",
+      "clausula": "GRE24-G152-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        241
+      ],
+      "paginasImpresas": [
+        239
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "152",
+      "clausula": "GRE24-G152-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        241
+      ],
+      "paginasImpresas": [
+        239
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "153",
+      "clausula": "GRE24-G153-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        242
+      ],
+      "paginasImpresas": [
+        240
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "153",
+      "clausula": "GRE24-G153-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        243
+      ],
+      "paginasImpresas": [
+        241
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "153",
+      "clausula": "GRE24-G153-B10-C04",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        243
+      ],
+      "paginasImpresas": [
+        241
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "154",
+      "clausula": "GRE24-G154-B03-C05",
+      "destino": "GRE24-GUIA-138",
+      "paginasPdf": [
+        244
+      ],
+      "paginasImpresas": [
+        242
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "154",
+      "clausula": "GRE24-G154-B03-C05",
+      "destino": "GRE24-GUIA-147",
+      "paginasPdf": [
+        244
+      ],
+      "paginasImpresas": [
+        242
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "154",
+      "clausula": "GRE24-G154-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        244
+      ],
+      "paginasImpresas": [
+        242
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "154",
+      "clausula": "GRE24-G154-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        245
+      ],
+      "paginasImpresas": [
+        243
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "154",
+      "clausula": "GRE24-G154-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        245
+      ],
+      "paginasImpresas": [
+        243
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "155",
+      "clausula": "GRE24-G155-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        246
+      ],
+      "paginasImpresas": [
+        244
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "155",
+      "clausula": "GRE24-G155-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        247
+      ],
+      "paginasImpresas": [
+        245
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "155",
+      "clausula": "GRE24-G155-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        247
+      ],
+      "paginasImpresas": [
+        245
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "156",
+      "clausula": "GRE24-G156-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        248
+      ],
+      "paginasImpresas": [
+        246
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "156",
+      "clausula": "GRE24-G156-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        249
+      ],
+      "paginasImpresas": [
+        247
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "156",
+      "clausula": "GRE24-G156-B10-C04",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        249
+      ],
+      "paginasImpresas": [
+        247
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "157",
+      "clausula": "GRE24-G157-B03-C02",
+      "destino": "GRE24-GUIA-140",
+      "paginasPdf": [
+        250
+      ],
+      "paginasImpresas": [
+        248
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "157",
+      "clausula": "GRE24-G157-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        250
+      ],
+      "paginasImpresas": [
+        248
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "157",
+      "clausula": "GRE24-G157-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        251
+      ],
+      "paginasImpresas": [
+        249
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "157",
+      "clausula": "GRE24-G157-B10-C04",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        251
+      ],
+      "paginasImpresas": [
+        249
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "158",
+      "clausula": "GRE24-G158-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        253
+      ],
+      "paginasImpresas": [
+        251
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "158",
+      "clausula": "GRE24-G158-B10-C07",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        253
+      ],
+      "paginasImpresas": [
+        251
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "159",
+      "clausula": "GRE24-G159-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        255
+      ],
+      "paginasImpresas": [
+        253
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "159",
+      "clausula": "GRE24-G159-B10-C02",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        255
+      ],
+      "paginasImpresas": [
+        253
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "160",
+      "clausula": "GRE24-G160-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        257
+      ],
+      "paginasImpresas": [
+        255
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "161",
+      "clausula": "GRE24-G161-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        259
+      ],
+      "paginasImpresas": [
+        257
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "162",
+      "clausula": "GRE24-G162-B03-C02",
+      "destino": "GRE24-GUIA-136",
+      "paginasPdf": [
+        260
+      ],
+      "paginasImpresas": [
+        258
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "162",
+      "clausula": "GRE24-G162-B03-C03",
+      "destino": "GRE24-GUIA-141",
+      "paginasPdf": [
+        260
+      ],
+      "paginasImpresas": [
+        258
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "162",
+      "clausula": "GRE24-G162-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        261
+      ],
+      "paginasImpresas": [
+        259
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "162",
+      "clausula": "GRE24-G162-B10-C07",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        261
+      ],
+      "paginasImpresas": [
+        259
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "163",
+      "clausula": "GRE24-G163-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        263
+      ],
+      "paginasImpresas": [
+        261
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "164",
+      "clausula": "GRE24-G164-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        265
+      ],
+      "paginasImpresas": [
+        263
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "165",
+      "clausula": "GRE24-G165-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        267
+      ],
+      "paginasImpresas": [
+        265
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "165",
+      "clausula": "GRE24-G165-B10-C06",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        267
+      ],
+      "paginasImpresas": [
+        265
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "166",
+      "clausula": "GRE24-G166-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        268
+      ],
+      "paginasImpresas": [
+        266
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "166",
+      "clausula": "GRE24-G166-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        269
+      ],
+      "paginasImpresas": [
+        267
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "166",
+      "clausula": "GRE24-G166-B10-C06",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        269
+      ],
+      "paginasImpresas": [
+        267
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "168",
+      "clausula": "GRE24-G168-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        272
+      ],
+      "paginasImpresas": [
+        270
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "168",
+      "clausula": "GRE24-G168-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        273
+      ],
+      "paginasImpresas": [
+        271
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "169",
+      "clausula": "GRE24-G169-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        275
+      ],
+      "paginasImpresas": [
+        273
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "170",
+      "clausula": "GRE24-G170-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        277
+      ],
+      "paginasImpresas": [
+        275
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "170",
+      "clausula": "GRE24-G170-B10-C02",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        277
+      ],
+      "paginasImpresas": [
+        275
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "171",
+      "clausula": "GRE24-G171-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        278
+      ],
+      "paginasImpresas": [
+        276
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "171",
+      "clausula": "GRE24-G171-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        279
+      ],
+      "paginasImpresas": [
+        277
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "172",
+      "clausula": "GRE24-G172-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        281
+      ],
+      "paginasImpresas": [
+        279
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "173",
+      "clausula": "GRE24-G173-B06-C02",
+      "destino": "GRE24-TABLA-1",
+      "paginasPdf": [
+        282
+      ],
+      "paginasImpresas": [
+        280
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "173",
+      "clausula": "GRE24-G173-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        283
+      ],
+      "paginasImpresas": [
+        281
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "173",
+      "clausula": "GRE24-G173-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        283
+      ],
+      "paginasImpresas": [
+        281
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "174",
+      "clausula": "GRE24-G174-B10-C01",
+      "destino": "GRE24-SECCION-PRIMEROS-AUXILIOS-GENERALES-PDF156",
+      "paginasPdf": [
+        285
+      ],
+      "paginasImpresas": [
+        283
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    },
+    {
+      "guiaOrigen": "174",
+      "clausula": "GRE24-G174-B10-C03",
+      "destino": "GRE24-SECCION-ERAP-CANADA",
+      "paginasPdf": [
+        285
+      ],
+      "paginasImpresas": [
+        283
+      ],
+      "estado": "REFERENCIA_DOCUMENTAL_NO_EVALUACION_CONJUNTA"
+    }
+  ],
+  "limites": [
+    "Inventario de guías, no inventario exhaustivo de reglas GRE.",
+    "Condiciones expresadas documentalmente, sin predicados ejecutables.",
+    "Remisiones localizadas; interacción, precedencia y pruebas operativas pendientes."
+  ]
+}

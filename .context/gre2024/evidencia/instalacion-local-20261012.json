@@ -1,0 +1,30 @@
+{
+  "fecha": "2026-10-12",
+  "fechaUtc": "2026-10-12T12:09:04.665Z",
+  "entorno": "development",
+  "base": "sigbo_cbvc",
+  "autorizacion": "Pedido explícito del usuario: terminalo entonces, tras informar preparación del servidor pendiente. Instalación técnica local, no validación institucional.",
+  "respaldo": {
+    "archivo": "/var/opt/mssql/backup/sigbo_pre_gre_20261012_4e586d6436544304a3f58424c7e8742b.bak",
+    "copyOnly": true,
+    "checksum": true,
+    "verificacionRestore": true
+  },
+  "migracionesAplicadas": [
+    {
+      "nombre": "094_gre_base_documental.sql",
+      "sha256": "054c067c6a86858184c303f51bffb51df7fe6bc336a96a84ef25781961f3b8ab"
+    },
+    {
+      "nombre": "095_matpel_permisos.sql",
+      "sha256": "22484d0a436edcd582894ea54435ad32e0dd981c64fdb51eded6eb9e193699da"
+    }
+  ],
+  "permisosRegistrados": 4,
+  "versiones": 0,
+  "activaciones": 0,
+  "catalogoImportado": false,
+  "catalogoValidado": false,
+  "catalogoActivado": false,
+  "otrosScriptsEjecutados": false
+}

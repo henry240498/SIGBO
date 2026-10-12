@@ -32,7 +32,7 @@ preparada para una fase siguiente, o codigo muerto: verificar antes de asumir.
 
 ## Relaciones
 
-- `belongs_to` → [[domain--matpel|matpel]]
+- `belongs_to` → [[domain--matpel|MATPEL]]
 - `persisted_in` → [[table--matpel-gre-reglas|matpel.gre_reglas]]
 
 ---

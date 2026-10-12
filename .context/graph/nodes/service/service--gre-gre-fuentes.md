@@ -29,12 +29,13 @@ Fuente documental interna. El controlador consumidor debe autorizar antes de lee
 
 ## Relaciones
 
-- `belongs_to` → [[domain--matpel|matpel]]
+- `belongs_to` → [[domain--matpel|MATPEL]]
 - `uses` → [[component--modulo-gre|gre (modulo NestJS)]]
 
 ## Referenciado por
 
 - [[service--gre-gre-catalogo|GreCatalogoService]] `uses` →
+- [[service--gre-matpel-consulta|MatpelConsultaService]] `uses` →
 - [[api--gre-gre-admin|GreAdminController]] `exposes` →
 
 ---

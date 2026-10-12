@@ -28,7 +28,7 @@ GreDocumento, GreVersion, GrePagina, GreSeccion, GreReferencia, GreGuia, GreEntr
 
 ## Relaciones
 
-- `belongs_to` → [[domain--matpel|matpel]]
+- `belongs_to` → [[domain--matpel|MATPEL]]
 
 ## Referenciado por
 
@@ -40,6 +40,8 @@ GreDocumento, GreVersion, GrePagina, GreSeccion, GreReferencia, GreGuia, GreEntr
 - [[service--gre-gre-proceso|GreProcesoService]] `uses` →
 - [[service--gre-gre-revision|GreRevisionService]] `uses` →
 - [[service--gre-gre-trabajador|GreTrabajadorService]] `uses` →
+- [[service--gre-matpel-consulta|MatpelConsultaService]] `uses` →
+- [[service--gre-motor-matpel|MotorMatpelService]] `uses` →
 - [[decision--matpel-catalogo-contexto-versionados|GRE versionada y MATPEL sobre el mismo Servicio y cronología]] `constrains` →
 
 ---

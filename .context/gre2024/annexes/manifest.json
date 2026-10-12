@@ -1,0 +1,655 @@
+{
+  "fuente": "docs/Manuales/GRE2024-Spa-Web-a.pdf",
+  "fuenteSha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af",
+  "pymupdf": "1.28.2",
+  "renderEscala": 1.7,
+  "paginaDesde": 350,
+  "paginaHasta": 392,
+  "paginas": [
+    {
+      "paginaPdf": 350,
+      "paginaImpresa": "348",
+      "render": "renders/pdf-0350.png",
+      "renderSha256": "0c20ada08f173908361e8a9d3f168f64e9a0d644d9cc5940f5a79f774211a951",
+      "textoNativoSha256": "24118802f1c6e1e64586185926fb68f9ac217679ae49c52e64a93a976868b1d0",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 351,
+      "paginaImpresa": "349",
+      "render": "renders/pdf-0351.png",
+      "renderSha256": "c43d34e488769479057c0f5070045bb8d61a59571b891eec9066a4bab22750b0",
+      "textoNativoSha256": "0208e400712c3b0820bc263a37823837e19106f57e489d24c4dd4d4204a458fc",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 0
+    },
+    {
+      "paginaPdf": 352,
+      "paginaImpresa": "350",
+      "render": "renders/pdf-0352.png",
+      "renderSha256": "018c53e16b8890e00542a90e62fd121d5de6a741872e31c739f8b111adcadce8",
+      "textoNativoSha256": "c120c27762c9d54918b1aefb4229d9470acc61871937236f1465432d33f013ba",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 353,
+      "paginaImpresa": "351",
+      "render": "renders/pdf-0353.png",
+      "renderSha256": "6b1195218ffe19e543500cb1cb152404f3afa9c2729274f37ff22cb6214d5ee8",
+      "textoNativoSha256": "6df3da235d0198f122b77f006e28183d8a7437bf2b85b26866478a78f56548b2",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 4
+    },
+    {
+      "paginaPdf": 354,
+      "paginaImpresa": "352",
+      "render": "renders/pdf-0354.png",
+      "renderSha256": "9aa4ce39760a5964731cf558ae15f5b342f28bd6349f7882bfd17897fbc546ac",
+      "textoNativoSha256": "be1eb225a02e2f838456dd577db03db39544e5c9bd0d43a97a64096dd3caa369",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 0
+    },
+    {
+      "paginaPdf": 355,
+      "paginaImpresa": "353",
+      "render": "renders/pdf-0355.png",
+      "renderSha256": "26da91fc06f2b4925a004895b8f86d998032f360e193c04d8e7a0deded8733a0",
+      "textoNativoSha256": "904bb9bcc9c414115ac2d9f5a04128cf31a429207e6fbe008bde7dc5d6fbab71",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 0
+    },
+    {
+      "paginaPdf": 356,
+      "paginaImpresa": "354",
+      "render": "renders/pdf-0356.png",
+      "renderSha256": "3170541c23bf183d13d9773a27279310a93af0ee1c76317ac8de804ce03834b8",
+      "textoNativoSha256": "c6dfe4280a7608cdeb7a263b8445bee0d9417f84e787450a4da27e6ecf1a85d7",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 2
+    },
+    {
+      "paginaPdf": 357,
+      "paginaImpresa": "355",
+      "render": "renders/pdf-0357.png",
+      "renderSha256": "57198f562209a41ade24bef0ff15485b548a59ef3cdc5375c27837ed7f65ff93",
+      "textoNativoSha256": "0dae5cca44b6a30d1c8c301378242e9ab0820cb206f0b220ebce56a53b3aebe5",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 6
+    },
+    {
+      "paginaPdf": 358,
+      "paginaImpresa": "356",
+      "render": "renders/pdf-0358.png",
+      "renderSha256": "23b44aa203d274f8073f9b6d004a264be0267557c0a05c84eb77cf32bbc037c1",
+      "textoNativoSha256": "7005bf3059b305fb134f2a40193c2b8f47a5c43b45e4015d2929558c36b12988",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 2
+    },
+    {
+      "paginaPdf": 359,
+      "paginaImpresa": "357",
+      "render": "renders/pdf-0359.png",
+      "renderSha256": "3bee9433e141b2b0c0d425981ebf4ddb924566eda609125758a4b96388d1a511",
+      "textoNativoSha256": "972e829f70e7381236aec87523337c7453aa8a6368c9fa3502224ecb01c9f6dd",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 355
+    },
+    {
+      "paginaPdf": 360,
+      "paginaImpresa": "358",
+      "render": "renders/pdf-0360.png",
+      "renderSha256": "e1930e98dceedb710cb8ad417f68fbdb54ac16a160ffe68cd208cb673e62c458",
+      "textoNativoSha256": "41c00caa2dead255c47df3c2c0ac227c6fa38a178ea0df81af7fa36903aba254",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 2
+    },
+    {
+      "paginaPdf": 361,
+      "paginaImpresa": "359",
+      "render": "renders/pdf-0361.png",
+      "renderSha256": "44abf06421fbc4d2103f742c85b135a540a325043ffcfd9dc26cf6a54bbc0557",
+      "textoNativoSha256": "a84edd264ee90694b18a4185cb56d9467a1881de7cac6d397bac66d68e5cd6eb",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 0
+    },
+    {
+      "paginaPdf": 362,
+      "paginaImpresa": "360",
+      "render": "renders/pdf-0362.png",
+      "renderSha256": "f7e226a89cb76da144fbfc73dd5ceb82dc5bc75ddacc9c2339f400be647f5d52",
+      "textoNativoSha256": "bf77c02f78ffc7548ac7be1114d168af20220303bed7a971e06109fa037bf5e4",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 0
+    },
+    {
+      "paginaPdf": 363,
+      "paginaImpresa": "361",
+      "render": "renders/pdf-0363.png",
+      "renderSha256": "0cf9106058e697c1422827b07a6a7ed66b5a9a3d406c9d2ef5c5b812f336d94b",
+      "textoNativoSha256": "93eabda0a03024711b70ac50dd02cb73f0f5c32d433f8ad4f2676805eded7cfe",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 0
+    },
+    {
+      "paginaPdf": 364,
+      "paginaImpresa": "362",
+      "render": "renders/pdf-0364.png",
+      "renderSha256": "e429012107dd36a219033220888327e0f2d392ce8368574df01882407030917d",
+      "textoNativoSha256": "530cac18ed6140627040ebd8d912c9c6d850683727fde0f1e22881fb5eb1216e",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 0
+    },
+    {
+      "paginaPdf": 365,
+      "paginaImpresa": "363",
+      "render": "renders/pdf-0365.png",
+      "renderSha256": "57be3357d24563363cbfbd0ecc388d46d9afbb483f6db7fc9a81d6ca7eca30ba",
+      "textoNativoSha256": "17d939927a47d89e512e9afc2a0e53537d650014b8ae3da22aabf1addfa0b981",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 24
+    },
+    {
+      "paginaPdf": 366,
+      "paginaImpresa": "364",
+      "render": "renders/pdf-0366.png",
+      "renderSha256": "8c3b8b6b9c7243d95375c21d066d3fb1a6ca9d353ad65cb491dc3c3f01b83e36",
+      "textoNativoSha256": "84c0a7865f021514589e91e623e52c3ba97f6855bd3f8e9b53b41ad18b52ed56",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 27
+    },
+    {
+      "paginaPdf": 367,
+      "paginaImpresa": "365",
+      "render": "renders/pdf-0367.png",
+      "renderSha256": "1cb2d08f7c4258ffce9f215445915a6fea80451ce7afab2a04d1a574ec08663b",
+      "textoNativoSha256": "088a086c607b1d2e4a328c010926a535a6db4b2418721aeb9d357bf85a530edf",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 122
+    },
+    {
+      "paginaPdf": 368,
+      "paginaImpresa": "366",
+      "render": "renders/pdf-0368.png",
+      "renderSha256": "011cc3c378569b8546f62840d6e5cc4f3b43fde99f366ccb64cf341d72aee496",
+      "textoNativoSha256": "6df976b812bb8db10a92dd2014f524aea15dc612325801f2128dc4c25ab9aa5a",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 324
+    },
+    {
+      "paginaPdf": 369,
+      "paginaImpresa": "367",
+      "render": "renders/pdf-0369.png",
+      "renderSha256": "7c90ec2c56c99b6d5510323c5d2e7f7ed778208404f84e6877323e87a5a3591c",
+      "textoNativoSha256": "a2cb7460dbea60952f0d38c31684f5489b98517605773e4ce1c90a8deb59f9cf",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 93
+    },
+    {
+      "paginaPdf": 370,
+      "paginaImpresa": "368",
+      "render": "renders/pdf-0370.png",
+      "renderSha256": "0103a74ad57f778c9525e738d1848a14ce1c129a7b8706a06c6739663e457388",
+      "textoNativoSha256": "ebd1cbe292d81056e1eead9041a8082dbb0808f48dde100194bfaceeeb3591da",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 371,
+      "paginaImpresa": "369",
+      "render": "renders/pdf-0371.png",
+      "renderSha256": "12f568497f0c47fc9bc83b96dd55209e83656e29f26228d1985f8f1cacbe111a",
+      "textoNativoSha256": "26b64099d25a84f7e7a9318ea1939c41c260395414a35ccf9ef305ed910899f2",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 372,
+      "paginaImpresa": "370",
+      "render": "renders/pdf-0372.png",
+      "renderSha256": "065a90fa300fa47213bc0ff96af6088e0834a2e16d237a9070f26343a52f8a2c",
+      "textoNativoSha256": "4030bac216be858be595905bb2087e4d9e484b733691dd897534caca9d8634de",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 373,
+      "paginaImpresa": "371",
+      "render": "renders/pdf-0373.png",
+      "renderSha256": "7774ddc875d0d4d2fb705ef1c6b640ec34dd8b980208c2691db0d0088f2e8bab",
+      "textoNativoSha256": "e7ac57edb31067f1584769f7c5f8484dcf270a82cf405ea745ff9c7af978b883",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 374,
+      "paginaImpresa": "372",
+      "render": "renders/pdf-0374.png",
+      "renderSha256": "4f9f8e28990b923cb3b4e209ff7712644b31a12be611d00ff2968e5cff607598",
+      "textoNativoSha256": "1143189285486e910e8de443c1372501c085f36023f23ef84db9fca6cc207475",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 375,
+      "paginaImpresa": "373",
+      "render": "renders/pdf-0375.png",
+      "renderSha256": "2c066dad562e09a340732322a6858ca9531509f7777163c77ec751cbf7809542",
+      "textoNativoSha256": "ad93ca61a4c9695dbc2ce7ff5dd4a0e3f8cd51dd70161ba7249795a1c089f5fd",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 376,
+      "paginaImpresa": "374",
+      "render": "renders/pdf-0376.png",
+      "renderSha256": "aa869375e305f8f4609c484006339e5c0b8b93e7ea1bc897b0ba3fbfb336a7f4",
+      "textoNativoSha256": "d3fef0e99f4b92c028c5be0405b63a6bc3f852725311724ab38c6105ad950c97",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 377,
+      "paginaImpresa": "375",
+      "render": "renders/pdf-0377.png",
+      "renderSha256": "26ca0a3dba7eea367046dcfa6a857fb8fa24d160e8774b8dcac5aaf825b6b085",
+      "textoNativoSha256": "60f93569a58d064981c65e1a1daedc67fa85dbd5ba898f619117f4f301076d8c",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 378,
+      "paginaImpresa": "376",
+      "render": "renders/pdf-0378.png",
+      "renderSha256": "bcf35bfc86e95669b21702dce51c7adab94126ce8a8581e28103676e5d661481",
+      "textoNativoSha256": "ab607b42afe6e6735559e0d60ced850873093ce829bcf279a548be54104b3b1c",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 379,
+      "paginaImpresa": "377",
+      "render": "renders/pdf-0379.png",
+      "renderSha256": "117cf7eba48e4aa34fd7efabd6a4e52e46bc2897601570df8ccf267f7b66bbd0",
+      "textoNativoSha256": "ad296e392655fa5905826c79799d536c7c6e538c4de3633303606ae1856f2bc1",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 380,
+      "paginaImpresa": "378",
+      "render": "renders/pdf-0380.png",
+      "renderSha256": "df76d585d3029b66b365ec92c1d5145a318bd782414b2e3ffd2d90d5a53e4e1f",
+      "textoNativoSha256": "839d4c167bb04554b3e49a03e0581582c9f7b4c39bb25d250fd5372c0dc7040d",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 381,
+      "paginaImpresa": "379",
+      "render": "renders/pdf-0381.png",
+      "renderSha256": "74b5e25d1d1920d828f30dfaaffe8e781d1f2289fc70bfa29307b8a02aae9b69",
+      "textoNativoSha256": "19b288054650b3f6161784a3eebfc91945745674924377e124f6e2423dd55f63",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 382,
+      "paginaImpresa": "380",
+      "render": "renders/pdf-0382.png",
+      "renderSha256": "e7491f98f381c2bfb8804f270088425539687b19ec445bd5b197dac725c3af6f",
+      "textoNativoSha256": "a180a623ee3c753947f95cf47dcd865fb2362e1c15ee3a659d04f65ea8cc3bb4",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 383,
+      "paginaImpresa": "381",
+      "render": "renders/pdf-0383.png",
+      "renderSha256": "c2ee0f96245c88135ea1ec55251cacddb5fb03876dedb9315762ec67b05add92",
+      "textoNativoSha256": "c762993a7a99a592d26fb5de6eea0bdd5c9e9e362b71f7f68efd0b12b2e311a6",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 384,
+      "paginaImpresa": "382",
+      "render": "renders/pdf-0384.png",
+      "renderSha256": "a845602605f3c9a1b78451d2976f880bb82ff4a531b1af7dec3a4901472df428",
+      "textoNativoSha256": "7bdc770b4eb4276020b492c94906402e6fed34faa0810647e74b2a1787b24c55",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 0
+    },
+    {
+      "paginaPdf": 385,
+      "paginaImpresa": "383",
+      "render": "renders/pdf-0385.png",
+      "renderSha256": "f9a586be0ea04c8d82927126463f3f61c5b23596c4e92da56715abfc4400756b",
+      "textoNativoSha256": "fb9033469318fedac0e5780755f79d584dffd322a373deca6090459d2d707174",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 386,
+      "paginaImpresa": "384",
+      "render": "renders/pdf-0386.png",
+      "renderSha256": "6f890f6463592c7ff886c742d5e9496bd959d63ee3168fecc1696e1f176895df",
+      "textoNativoSha256": "273e544ce32027bc0fceabfd003b122bd28b371bedc7e8c953a4091ac7eca194",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 2
+    },
+    {
+      "paginaPdf": 387,
+      "paginaImpresa": "385",
+      "render": "renders/pdf-0387.png",
+      "renderSha256": "e65e05fb97745db3c9bbc8269b66500f63400226a41b64147be7db3084be62d7",
+      "textoNativoSha256": "c70d722be8a976b2e3008abb6fd0ac6d0d66bab02d8ac0dd5e91e86f01950b7a",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 7
+    },
+    {
+      "paginaPdf": 388,
+      "paginaImpresa": "386",
+      "render": "renders/pdf-0388.png",
+      "renderSha256": "7541d500e90c0ec5bc7f7ef14bf4443b1f68f66f741057bee737574e835221d2",
+      "textoNativoSha256": "3ab39f2c8328612c922237da189213613f690de27092cf1a074e6aba97bbdd73",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 485
+    },
+    {
+      "paginaPdf": 389,
+      "paginaImpresa": "387",
+      "render": "renders/pdf-0389.png",
+      "renderSha256": "3ef95abfe51b9037f785975d2c9ea4c21c51a9449b53eda08daf9d0431f8fd7b",
+      "textoNativoSha256": "233da15fb1ffd478658a4cbe46cb6dfb3d28992d2f71bbadf4282b61e7196839",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 1
+    },
+    {
+      "paginaPdf": 390,
+      "paginaImpresa": null,
+      "render": "renders/pdf-0390.png",
+      "renderSha256": "1a3c0c861e484830608d953ed0430ed0f3d66695a6f5cc82eba648a169deed7e",
+      "textoNativoSha256": "23ad20cabc10753eeee472264122e4aac59fbd85510cc78615860fbc934829df",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 3
+    },
+    {
+      "paginaPdf": 391,
+      "paginaImpresa": null,
+      "render": "renders/pdf-0391.png",
+      "renderSha256": "808a89da780d7b3f6df4ad6972e498c1e10bb21d252cab26097b46ea66f29812",
+      "textoNativoSha256": "7bf2539801783a2cb6e7e2bf93000d5a694d756219d9fa0810a4cb79d8bb4d87",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 6
+    },
+    {
+      "paginaPdf": 392,
+      "paginaImpresa": null,
+      "render": "renders/pdf-0392.png",
+      "renderSha256": "577a1d0bcd8a1c7469dc06c2e6d679c08383c0e6b2688bc3a904dbaf0da86bef",
+      "textoNativoSha256": "2871e9709a77439a066f7abdadc65d0eccf0cb0fba8cecbe32bb9ed8b270e94a",
+      "dimensiones": [
+        0.0,
+        0.0,
+        391.5,
+        549.0
+      ],
+      "imagenesRaster": 0,
+      "elementosVectoriales": 3074
+    }
+  ]
+}

@@ -1,42 +1,42 @@
 {
- "generado": "2026-10-09T19:10:15.386Z",
+ "generado": "2026-10-12T12:59:34.903Z",
  "repo": "SIGBO",
- "nodos": 1103,
- "aristas": 3859,
+ "nodos": 1136,
+ "aristas": 3988,
  "nodosPorTipo": {
-  "DOMAIN": 17,
+  "DOMAIN": 18,
   "ENTITY": 177,
-  "FILE": 102,
+  "FILE": 104,
   "TABLE": 213,
-  "COMPONENT": 76,
-  "SERVICE": 163,
-  "API": 137,
-  "SCREEN": 133,
+  "COMPONENT": 85,
+  "SERVICE": 169,
+  "API": 140,
+  "SCREEN": 140,
   "CONFIGURATION": 10,
-  "DECISION": 19,
+  "DECISION": 20,
   "DEPENDENCY": 5,
   "ERROR": 9,
-  "RULE": 31,
-  "WORKFLOW": 11
+  "RULE": 34,
+  "WORKFLOW": 12
  },
  "aristasPorTipo": {
-  "belongs_to": 907,
+  "belongs_to": 930,
   "defined_in": 213,
   "references": 354,
   "persisted_in": 177,
-  "uses": 1301,
+  "uses": 1381,
   "reads": 475,
-  "exposes": 161,
-  "calls": 138,
-  "depends_on": 6,
-  "constrains": 28,
+  "exposes": 169,
+  "calls": 153,
+  "depends_on": 7,
+  "constrains": 29,
   "configured_by": 3,
   "affects": 69,
   "originates_from": 10,
-  "contains": 17
+  "contains": 18
  },
- "permisos": 230,
- "terminosIndexados": 2219,
+ "permisos": 233,
+ "terminosIndexados": 2275,
  "huecos": {
   "tablasSinEntidad": [
    "seguridad.restricciones",
@@ -77,12 +77,13 @@
    "servicios.incidente_solicitudes"
   ],
   "entidadesSinTabla": [],
-  "dominiosSinPantalla": [
-   "matpel"
-  ],
-  "dominiosSinApi": []
+  "dominiosSinPantalla": [],
+  "dominiosSinApi": [
+   "Sistema"
+  ]
  },
  "advertencias": [
-  "tabla renombrada: seguridad.configuracion_apariencia -> seguridad.configuracion_sistema (014_configuracion_sistema.sql)"
+  "tabla renombrada: seguridad.configuracion_apariencia -> seguridad.configuracion_sistema (014_configuracion_sistema.sql)",
+  "nodo duplicado: component--modulo-pantallas"
  ]
 }

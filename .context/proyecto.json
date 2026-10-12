@@ -23,7 +23,7 @@
     "backend/package.json",
     "frontend/package.json"
   ],
-  "LAST_CONTEXT_UPDATE": "2026-10-09",
+  "LAST_CONTEXT_UPDATE": "2026-10-12",
   "LAST_VALIDATION": {
     "date": "2026-10-10",
     "revision": "c1fdd8b4b53a9fbcfaed14f1acea8336c29bb3f9 + cambios locales",
@@ -37,14 +37,396 @@
     ".github/workflows/sigbo-movil-apk.yml"
   ],
   "SOURCE_HASHES": {
-    ".movile/pubspec.yaml": "47b1880217a07352eb45fe3f9ab83c1199a90a754802ccb2336fc143af3a7435",
-    ".movile/android/build.gradle": "018d24d1d0854b1c51dec6f13894c481fc13f3cf7c28c6ca5a7e0b4830039920",
-    ".movile/android/app/build.gradle": "2787d45f3764d67ee873753ef69c61b2de4d6713055bc3279aa9e4a5e6ba901a",
-    ".movile/android_app_src/build.gradle": "2787d45f3764d67ee873753ef69c61b2de4d6713055bc3279aa9e4a5e6ba901a",
-    "backend/package.json": "21d7ea97c37b3503389eda1aec0de9ae8b2bdbe3d82745d67a38e1e4b6021ed0",
-    "frontend/package.json": "d8f321038811c433d1fb105d3c3f09b4777928172a9a69aaf4fcc8fd3db504cb",
-    ".github/workflows/build.yml": "bc260c29c25fe3fb3d9d72fce2f7115d2a74218f84f9790d77da2f7fcf305f79",
-    ".github/workflows/sigbo-movil-apk.yml": "73fb35d7adb622efc88e8e81978e2e0f5eec1fa6323c49c0fbd834c7427725d8"
+    ".movile/pubspec.yaml": "b711e3d236a557a387e606b712e27dab30778ce11f29785f53e6cdbd38d27557",
+    ".movile/android/build.gradle": "84f00f60037d2c84ee145e170e6884bf91f4a248b3d23f0ef20cf6e44f9a68d1",
+    ".movile/android/app/build.gradle": "38932292ea4033572be330e4d2a1053ba062b567e3e37b48ae9a5942f74b3ca1",
+    ".movile/android_app_src/build.gradle": "f0d9dedbaa4028452f8c9cb586d419b5a75b0e18564c1951ade53fd80da9786f",
+    "backend/package.json": "7d390b98cc850c30b7ae32c0556736ca75a618c25c37a3097e4ef26d522891cf",
+    "frontend/package.json": "b128ef7891451decc3a7b44edf20246dc98dac9c03303b6f099607ccb201ea86",
+    ".github/workflows/build.yml": "946938d1f8ae98015fe3a056e42d3c725ca29d061e8892376aa89905c404d615",
+    ".github/workflows/sigbo-movil-apk.yml": "f32a3184bf144a582fa12d447c9bfafc65c864af8b4fe1f19cf5185db44a9da3"
   },
-  "VAULTS_ROOT_RELATIVE": "../Vaults/jmartinez"
+  "VAULTS_ROOT_RELATIVE": "../Vaults/jmartinez",
+  "GRE2024_KNOWLEDGE_VALIDATION": {
+    "fechaUtc": "2026-10-11T05:48:49.961400+00:00",
+    "estado": "MEJORA_CONSULTA_GUIADA_INTERPRETACION_Y_BIBLIOTECA_MODULAR_PROBADAS_LOCALMENTE_NO_ACEPTACION_INSTITUCIONAL",
+    "indice": ".context/gre2024/index.md",
+    "evidencia": ".context/gre2024/evidencia/implementacion-mejora-20261011.json",
+    "pruebasBackend": {
+      "aprobadas": 664,
+      "omitidasSQL": 9,
+      "suitesMATPELPosteriores": 48
+    },
+    "pruebasFrontend": {
+      "aprobadas": 66
+    },
+    "pruebasDocumentalesRepetidas": {
+      "aprobadas": 88,
+      "total": 88
+    },
+    "pruebasNavegador": {
+      "consulta": 20,
+      "contextosAislados": true,
+      "sqlInstitucional": false,
+      "archivoSinConexionAnterior": 11
+    },
+    "integridadContexto": {
+      "errores": 0,
+      "celdasTabla3CotejadasConCabeceras": 308
+    },
+    "paginasVisualesDistintasRegistradas": 392,
+    "paginasAntecedentes": 146,
+    "paginasConInspeccionNueva": 246,
+    "paginasPendientesInspeccion": 0,
+    "guiasConContenidoDocumentadas": 62,
+    "numerosSinMateriales": [
+      "121",
+      "167"
+    ],
+    "paginasGuiasDocumentadas": 128,
+    "clausulasDocumentadas": 2531,
+    "reglasDocumentadas": 54,
+    "cotejoIndependienteDeTodasLasCeldas": false,
+    "dominioIntegralDemostrado": false,
+    "motorConsulta": "IMPLEMENTADO_PROBADO_LOCALMENTE_INTERPRETACION_PARCIAL",
+    "motorSCI": "PENDIENTE_REGLAMENTO_ORIGINAL_NO_DISPONIBLE",
+    "offlineWeb": "ARCHIVO_DOCUMENTAL_COMPLETO_PROBADO_SIN_RED_SIN_MOTOR_LOCAL",
+    "flutter": "LECTOR_MODULAR_PARTES_HASHES_ISOLATE_INDICES_HISTORIAL_PROBADO",
+    "pruebasFlutter": {
+      "aprobadas": 59,
+      "omitidas": 0,
+      "matpel": 11,
+      "analisisLimpio": true,
+      "apkDebugCompilado": true,
+      "telefonoFisicoProbado": false
+    },
+    "catalogoActivadoPorEstaTarea": false,
+    "fuenteOriginalModificada": false,
+    "validacionAnterior": {
+      "fechaUtc": "2026-10-11T00:08:19.656Z",
+      "estado": "CONSULTA_MOTOR_GEOMETRIA_OFFLINE_DOCUMENTAL_WEB_FLUTTER_PROBADOS_LOCALMENTE_NO_ACEPTACION_INSTITUCIONAL",
+      "indice": ".context/gre2024/index.md",
+      "evidencia": ".context/gre2024/evidencia/validacion-consulta-motor-20261010.json",
+      "pruebasBackend": {
+        "aprobadas": 658,
+        "omitidasSQL": 9
+      },
+      "pruebasFrontend": {
+        "aprobadas": 66
+      },
+      "pruebasDocumentalesRepetidas": {
+        "aprobadas": 23,
+        "total": 23
+      },
+      "pruebasNavegador": {
+        "consulta": 15,
+        "archivoSinConexion": 11,
+        "contextosAislados": true,
+        "sqlInstitucional": false
+      },
+      "integridadContexto": {
+        "errores": 0,
+        "celdasTabla3CotejadasConCabeceras": 308
+      },
+      "paginasVisualesDistintasRegistradas": 392,
+      "paginasAntecedentes": 146,
+      "paginasConInspeccionNueva": 246,
+      "paginasPendientesInspeccion": 0,
+      "guiasConContenidoDocumentadas": 62,
+      "numerosSinMateriales": [
+        "121",
+        "167"
+      ],
+      "paginasGuiasDocumentadas": 128,
+      "clausulasDocumentadas": 2531,
+      "reglasDocumentadas": 54,
+      "cotejoIndependienteDeTodasLasCeldas": false,
+      "dominioIntegralDemostrado": false,
+      "motorConsulta": "IMPLEMENTADO_PROBADO_LOCALMENTE_INTERPRETACION_PARCIAL",
+      "motorSCI": "PENDIENTE_REGLAMENTO_ORIGINAL_NO_DISPONIBLE",
+      "offlineWeb": "ARCHIVO_DOCUMENTAL_COMPLETO_PROBADO_SIN_RED_SIN_MOTOR_LOCAL",
+      "flutter": "LECTOR_DOCUMENTAL_Y_BIBLIOTECA_LOCAL_IMPLEMENTADOS_PROBADOS_Y_APK_DEBUG_COMPILADO",
+      "pruebasFlutter": {
+        "aprobadas": 56,
+        "omitidas": 0,
+        "matpel": 8,
+        "analisisLimpio": true,
+        "apkDebugCompilado": true,
+        "telefonoFisicoProbado": false
+      },
+      "catalogoActivadoPorEstaTarea": false,
+      "fuenteOriginalModificada": false,
+      "validacionAnterior": {
+        "fechaUtc": "2026-10-10T18:18:25.297832+00:00",
+        "estado": "INSPECCION_DOCUMENTAL_PAGINAS_392_COMPLETA_NO_VALIDACION_OPERATIVA",
+        "indice": ".context/gre2024/index.md",
+        "evidencia": ".context/gre2024/evidencia/validacion-paginas-restantes-20261010.json",
+        "pruebasDocumentales": {
+          "aprobadas": 32,
+          "total": 32,
+          "integridadCantidadesCondiciones": 17,
+          "preparacionGuias": 6,
+          "paginasHallazgos": 9,
+          "duracionUnittestSegundos": 19.362
+        },
+        "auditorAnteriorNoRepetido": true,
+        "paginasVisualesDistintasRegistradas": 392,
+        "paginasAntecedentes": 146,
+        "paginasConInspeccionNueva": 246,
+        "paginasPendientesInspeccion": 0,
+        "guiasConContenidoDocumentadas": 62,
+        "numerosSinMateriales": [
+          "121",
+          "167"
+        ],
+        "paginasGuiasDocumentadas": 128,
+        "clausulasDocumentadas": 2531,
+        "reglasDocumentadas": 54,
+        "cotejoIndependienteDeTodasLasCeldas": false,
+        "dominioIntegralDemostrado": false,
+        "motorSCI": "PENDIENTE",
+        "validacionAnterior": {
+          "fechaUtc": "2026-10-10T17:28:31.568302+00:00",
+          "estado": "LECTURA_DOCUMENTAL_GUIAS_COMPLETA_NO_VALIDACION_OPERATIVA",
+          "indice": ".context/gre2024/index.md",
+          "evidencia": ".context/gre2024/evidencia/validacion-guias-completas-20261010.json",
+          "pruebasDocumentales": {
+            "aprobadas": 23,
+            "total": 23,
+            "integridadCantidadesCondiciones": 17,
+            "preparacion": 6,
+            "duracionUnittestSegundos": 28.863
+          },
+          "auditorAnteriorNoRepetido": true,
+          "paginasVisualesDistintasRegistradas": 146,
+          "guiasConContenidoDocumentadas": 62,
+          "numerosSinMateriales": [
+            "121",
+            "167"
+          ],
+          "paginasGuiasDocumentadas": 128,
+          "clausulasDocumentadas": 2531,
+          "reglasDocumentadas": 54,
+          "dominioIntegralDemostrado": false,
+          "validacionAnterior": {
+            "fechaUtc": "2026-10-10T15:45:36.379675+00:00",
+            "estado": "CONTINUACION_GUIAS121_130_COTEJO_DOCUMENTAL_PARCIAL",
+            "indice": ".context/gre2024/index.md",
+            "evidencia": ".context/gre2024/evidencia/validacion-guias121-130-20261010.json",
+            "pruebasDocumentales": {
+              "aprobadas": 14,
+              "total": 14,
+              "integridadYCantidades": 10,
+              "preparacionDocumental": 4
+            },
+            "auditorAnteriorNoRepetido": true,
+            "paginasVisualesDistintasRegistradas": 48,
+            "guiasConContenidoDocumentadas": 19,
+            "reglasDocumentadas": 11,
+            "dominioIntegralDemostrado": false,
+            "validacionAnterior": {
+              "fechaUtc": "2026-10-10T13:52:03.478338+00:00",
+              "estado": "REANUDACION_COTEJO_TECNICO_ESTUDIO_DOCUMENTAL_PARCIAL",
+              "indice": ".context/gre2024/index.md",
+              "evidencia": ".context/gre2024/evidencia/validacion-reanudacion-20261010.json",
+              "pruebasAuditor": {
+                "aprobadas": 4,
+                "total": 4
+              },
+              "pruebasIntegridadYCantidades": {
+                "aprobadas": 7,
+                "total": 7
+              },
+              "paginasVisualesDistintasRegistradas": 28,
+              "dominioIntegralDemostrado": false,
+              "validacionAnterior": {
+                "fechaUtc": "2026-10-09T23:37:12.106726+00:00",
+                "estado": "AUDITORIA_INICIAL_COTEJO_TECNICO_ESTUDIO_OPERATIVO_PARCIAL",
+                "indice": ".context/gre2024/index.md",
+                "evidencia": ".context/gre2024/evidencia/auditoria-documental.json",
+                "pruebasAuditor": {
+                  "aprobadas": 3,
+                  "total": 3
+                },
+                "dominioIntegralDemostrado": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "versionMotor": "gre2024-matpel-2",
+    "versionInterpretacion": "gre2024-condiciones-2",
+    "grafo": {
+      "nodos": 1135,
+      "aristas": 3985,
+      "errores": 0,
+      "avisosOrfanos": 10,
+      "avisosGenerador": 2
+    }
+  },
+  "APK_GRE_VALIDATION": {
+    "fechaUtc": "2026-10-12T12:27:08.624Z",
+    "estado": "MOTOR_LOCAL_OCR_TRANSITORIO_Y_BACKEND_LOCAL_ENTREGADOS_NO_INTEGRACION_INSTITUCIONAL_COMPLETA",
+    "evidencia": ".context/gre2024/evidencia/integracion-tecnica-20261012.json",
+    "version": "1.7.0+14",
+    "archivo": ".movile/SIGBO.apk",
+    "sha256": "b666ddf2dddb42f23eed952d3efaeaf4c4a4a3d862fd52b501611555636d8467",
+    "pruebasAprobadas": 80,
+    "pruebasOmitidas": 0,
+    "analisisLimpio": true,
+    "compilacionAprobada": true,
+    "firmaVerificada": true,
+    "certificadoCoincideConVersionPublicada": true,
+    "telefonoFisicoProbado": false,
+    "publicadoAutomaticamente": false,
+    "motorCompartidoOffline": "IMPLEMENTADO_PROBADO_EN_ARNES_NO_ACEPTACION_OPERACIONAL",
+    "ocr": "LECTURA_LOCAL_TRANSITORIA_NO_RECONOCIMIENTO_OPERATIVO_VINCULADO",
+    "requierePreparacionServidor": false,
+    "requiereRevisionYActivacionInstitucional": true,
+    "servidorLocalObservado": {
+      "fechaUtc": "2026-10-12T12:27:02.159Z",
+      "entorno": "development",
+      "servidor": "127.0.0.1",
+      "puerto": 14330,
+      "base": "sigbo_cbvc",
+      "tablas": {
+        "versiones": true,
+        "activaciones": true
+      },
+      "historialMigracionesInstalado": true,
+      "permisosRegistrados": [
+        "matpel:activar_gre",
+        "matpel:administrar_gre",
+        "matpel:consultar",
+        "matpel:validar_gre"
+      ],
+      "migracionesRegistradas": [
+        {
+          "nombre": "094_gre_base_documental.sql",
+          "hash_sha256": "054c067c6a86858184c303f51bffb51df7fe6bc336a96a84ef25781961f3b8ab"
+        },
+        {
+          "nombre": "095_matpel_permisos.sql",
+          "hash_sha256": "22484d0a436edcd582894ea54435ad32e0dd981c64fdb51eded6eb9e193699da"
+        }
+      ],
+      "escriturasSQLDirectas": false,
+      "loginPuedeRegistrarSesionYAuditoria": true,
+      "loginHttp": 201,
+      "estadoGreAutenticadoHttp": 200,
+      "estadoGre": {
+        "versionContrato": 1,
+        "estado": "SIN_EDICION_ACTIVA",
+        "versionGreId": null
+      },
+      "rutaGreRegistrada": true,
+      "catalogoActivadoPorEstaTarea": false
+    },
+    "migracionesLocales": [
+      {
+        "nombre": "094_gre_base_documental.sql",
+        "sha256": "054c067c6a86858184c303f51bffb51df7fe6bc336a96a84ef25781961f3b8ab"
+      },
+      {
+        "nombre": "095_matpel_permisos.sql",
+        "sha256": "22484d0a436edcd582894ea54435ad32e0dd981c64fdb51eded6eb9e193699da"
+      }
+    ],
+    "importacionLocal": {
+      "estado": "COMPLETADA",
+      "version": "REQUIERE_REVISION"
+    },
+    "catalogoActivadoPorEstaTarea": false,
+    "aceptacionInstitucional": false,
+    "grafo": {
+      "nodos": 1136,
+      "aristas": 3988,
+      "errores": 0,
+      "avisosOrfanos": 10,
+      "avisosGenerador": 2
+    },
+    "validacionAnterior": {
+      "fechaUtc": "2026-10-11T18:16:19.622Z",
+      "estado": "APK_COMPILADO_FIRMADO_LOCALMENTE_NO_ACTIVACION_GRE_NI_ACEPTACION_INSTITUCIONAL",
+      "evidencia": ".context/gre2024/evidencia/apk-gre-20261011.json",
+      "version": "1.6.0+13",
+      "archivo": ".movile/SIGBO.apk",
+      "sha256": "ede2c7b62d108177ae3730a90b59ff3c7520c5305b7882323f83897468fc096f",
+      "pruebasAprobadas": 70,
+      "pruebasOmitidas": 0,
+      "analisisLimpio": true,
+      "compilacionAprobada": true,
+      "firmaVerificada": true,
+      "certificadoCoincideConVersionPublicada": true,
+      "telefonoFisicoProbado": false,
+      "publicadoAutomaticamente": false,
+      "servidorLocalObservado": {
+        "rutaEstadoGreHttp": 404,
+        "permisoMatpelUsuarioLocal": false,
+        "datosGREHabilitadosPorEstaTarea": false
+      },
+      "requierePreparacionServidor": true,
+      "catalogoActivadoPorEstaTarea": false,
+      "aceptacionInstitucional": false,
+      "grafo": {
+        "nodos": 1136,
+        "aristas": 3988,
+        "errores": 0,
+        "avisosOrfanos": 10,
+        "avisosGenerador": 2
+      }
+    }
+  },
+  "PUBLICATION_VALIDATION": {
+    "fecha": "2026-10-12",
+    "destino": "origin/main",
+    "autorizacion": "Pedido explicito: sube todo al main",
+    "evidencia": ".context/gre2024/evidencia/publicacion-main-20261012.md",
+    "backend": {
+      "compilado": true,
+      "suitesAprobadas": 58,
+      "pruebasAprobadas": 672,
+      "pruebasSQLomitidas": 9,
+      "dependenciasActualizadas": true
+    },
+    "frontend": {
+      "estado": "APROBADO",
+      "compilado": true,
+      "typescriptSinErrores": true,
+      "pruebasAprobadas": 66,
+      "dependenciasActualizadas": true,
+      "compilacionAisladaParaPreservarServidorLocal": true
+    },
+    "documentales": {
+      "aprobadas": 88,
+      "total": 88
+    },
+    "auditoriaProductiva": {
+      "umbral": "high",
+      "backend": {
+        "high": 0,
+        "critical": 0,
+        "moderate": 7
+      },
+      "frontend": {
+        "high": 0,
+        "critical": 0,
+        "moderate": 0
+      }
+    },
+    "grafo": {
+      "nodos": 1136,
+      "aristas": 3988,
+      "errores": 0,
+      "avisosOrfanos": 10,
+      "avisosGenerador": 2
+    },
+    "manifiestoMigraciones": "VALIDADO_SIN_APLICAR",
+    "secretosDetectados": 0,
+    "hashesMotorCoincidenConGit": true,
+    "integracionSCICompleta": false,
+    "catalogoActivado": false,
+    "pendienteHenry": ".context/PENDIENTES_PARA_HENRY.md"
+  }
 }

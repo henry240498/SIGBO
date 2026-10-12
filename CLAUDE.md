@@ -4,6 +4,11 @@ Leer @.context/contexto.md y @.context/reglas.md antes de cambios. Consultar Vau
 
 # SIGBO-CBVC
 
+Para GRE2024/MATPEL/SCI leer [el índice de conocimiento](.context/gre2024/index.md)
+y sus [instrucciones obligatorias](.context/gre2024/agent-instructions.md).
+La fuente original GRE define su contenido; el código demuestra la implementación
+actual. No deducir validación operativa de extracción/importación ni de resúmenes.
+
 Sistema de gestión para el Cuerpo de Bomberos Voluntarios. Monolito modular **NestJS 10**
 + **Next.js 14** (App Router) + **SQL Server 2019 Express**. Todo el código, la base de
 datos y la interfaz están en **español**.

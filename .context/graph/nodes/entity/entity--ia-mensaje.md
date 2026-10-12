@@ -28,7 +28,7 @@ Un turno dentro de una conversacion (seccion 7 del pedido). `duracionMs` y `fuen
 
 ## Donde se usa
 
-- **Pantallas:** `/dashboard/inteligencia`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`
+- **Pantallas:** `/dashboard/inteligencia`, `/dashboard/seguridad/inteligencia-artificial`, `/dashboard/seguridad/inteligencia-artificial/auditoria`, `/dashboard/seguridad/inteligencia-artificial/configuracion`, `/dashboard/seguridad/inteligencia-artificial/conversaciones`, `/dashboard/seguridad/inteligencia-artificial/propuestas`, `/dashboard/sistema`
 - **Endpoints:** IaAdminConversacionesController, IaChatController, IaConfiguracionController, IaDashboardController, IaVozController
 - **Servicios:** IaChatService, IaConfiguracionService, IaConversacionesService, IaDashboardService, IaVozService
 

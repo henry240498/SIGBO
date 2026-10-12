@@ -30,7 +30,7 @@ Puntero de edición activa por idioma. Activar o recuperar una versión anterior
 
 ## Relaciones
 
-- `belongs_to` → [[domain--matpel|matpel]]
+- `belongs_to` → [[domain--matpel|MATPEL]]
 - `uses` → [[component--modulo-gre|gre (modulo NestJS)]]
 - `uses` → [[service--seguridad-auditoria|AuditoriaService]]
 

@@ -17,6 +17,7 @@ edges:
   - [uses, component--front-cargando]
   - [uses, component--front-aviso]
   - [uses, component--front-seccion-url]
+  - [uses, component--front-personal]
   - [calls, api--equipos-equipamiento-bombero]
 terminos: [personal, editar, eliminar, fisico]
 ---
@@ -44,6 +45,7 @@ Pantalla /dashboard/personal/[id], consume 1 endpoint(s).
 - `uses` → [[component--front-cargando|Cargando]]
 - `uses` → [[component--front-aviso|Aviso]]
 - `uses` → [[component--front-seccion-url|seccion-url]]
+- `uses` → [[component--front-personal|personal]]
 - `calls` → [[api--equipos-equipamiento-bombero|EquipamientoBomberoController]]
 
 ---

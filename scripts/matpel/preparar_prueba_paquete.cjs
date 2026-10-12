@@ -1,0 +1,22 @@
+/** Prepara archivos de prueba temporales desde la fuente real. No publica/activa un catálogo. */
+const fs = require('node:fs');
+const path = require('node:path');
+const { createHash } = require('node:crypto');
+const root = path.resolve(__dirname, '../..');
+require(path.join(root, 'backend/node_modules/reflect-metadata'));
+const { planDeCarga } = require(path.join(root, 'backend/dist/modules/gre/gre-carga'));
+const { paqueteMatpel, archivoPaqueteMatpel } = require(path.join(root, 'backend/dist/modules/gre/matpel-paquete'));
+const destino = path.resolve(process.argv[2] || '');
+if (!process.argv[2] || !fs.statSync(destino).isDirectory()) throw new Error('Indicar un directorio temporal existente.');
+const fuente = path.join(root, 'backend/private_uploads/gre/bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af.catalogo-1-busqueda-1-pymupdf1.28.2.json');
+const a = JSON.parse(fs.readFileSync(fuente));
+const versionGreId = '00000000-0000-4000-8000-000000000001';
+let n = 1;
+const c = { ...planDeCarga(a, versionGreId, () => `00000000-0000-4000-8000-${String(++n).padStart(12, '0')}`), versionGreId, documento: a.documento };
+const p = paqueteMatpel(c, fs.readFileSync(path.join(root, 'docs/Manuales/GRE2024-Spa-Web-a.pdf')));
+const html = archivoPaqueteMatpel(p);
+fs.writeFileSync(path.join(destino, 'prueba-gre-completa.html'), html, 'utf8');
+fs.writeFileSync(path.join(destino, 'prueba-gre-catalogo-alterado.html'), archivoPaqueteMatpel({ ...p, catalogoJson: p.catalogoJson + ' ' }), 'utf8');
+const pdf = Buffer.from(p.pdfBase64, 'base64'); pdf[pdf.length - 10] ^= 1;
+fs.writeFileSync(path.join(destino, 'prueba-gre-pdf-alterado.html'), archivoPaqueteMatpel({ ...p, pdfBase64: pdf.toString('base64') }), 'utf8');
+console.log(JSON.stringify({ alcance: 'ARCHIVOS_TEMPORALES_DE_PRUEBA_NO_PUBLICACION_NO_ACTIVACION', destino, entradas: c.entradas.length, referencias: c.referencias.length, paginas: c.paginas.length, secciones: c.secciones.length, htmlBytes: Buffer.byteLength(html), htmlSha256: createHash('sha256').update(html).digest('hex'), manifest: p.manifest }));

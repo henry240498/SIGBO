@@ -1,0 +1,120 @@
+{
+  "tipo": "ANALISIS_ARQUITECTURA_PROPUESTA_NO_IMPLEMENTADA",
+  "fechaUtc": "2026-10-11T05:10:51.508435+00:00",
+  "informe": "docs/matpel/ANALISIS_MEJORA_ARQUITECTURA_20261011.md",
+  "respaldo": "C:/Users/jemc2/AppData/Local/Temp/sigbo-gre-analisis-20261011-6104yqnf",
+  "fuentes": [
+    {
+      "archivo": "docs/Manuales/GRE2024-Spa-Web-a.pdf",
+      "sha256": "bfc8b663259528dadd81a499afac2d5fd417467786ac616fb31625680f4ea4af"
+    },
+    {
+      "archivo": "backend/src/modules/gre/motor-matpel.service.ts",
+      "sha256": "4f52b151af486c3232491d7d7ca99220acc6af75b9c8afc750ef43012ecf4428"
+    },
+    {
+      "archivo": "backend/dist/modules/gre/motor-matpel.service.js",
+      "sha256": "20d646cc1e87cdcd8839bff8ebb753243c33da000eba9646a0880e566cd7e009"
+    },
+    {
+      "archivo": "backend/src/modules/gre/matpel-consulta.service.ts",
+      "sha256": "cb818371504acb31a9d2f5faffb7e2330c6931bae552ca3b0c136f7c6242d652"
+    },
+    {
+      "archivo": "backend/src/modules/gre/matpel-paquete.ts",
+      "sha256": "3e67d264fc33f1de3aaea75dec71fae89f6948e8800013ca26a7a7139a8cbc40"
+    },
+    {
+      "archivo": "frontend/src/app/dashboard/matpel/page.tsx",
+      "sha256": "dd9d3040138365b5f691a91d7ed0e00c8cda355c3d2b1b5e3994658ec086fa2f"
+    },
+    {
+      "archivo": ".movile/lib/matpel_documento.dart",
+      "sha256": "4e0297169f448969b9f175fbb784e5617822b8756dd6c82b51704b1b660771a1"
+    },
+    {
+      "archivo": ".context/gre2024/test-cases/motor-fuente.json",
+      "sha256": "1b4c96e79744ae461ba29fe96da376b00e8909ecba2b1729f08624e75444170c"
+    },
+    {
+      "archivo": "docs\\matpel\\ANALISIS_MEJORA_ARQUITECTURA_20261011.md",
+      "sha256": "41d002e0dd43dfd7b49ef4d0a75160c42c9822895530ced6dc47ba287d66daf6"
+    }
+  ],
+  "cotejoPdf": {
+    "paginasPdf": [
+      3,
+      286,
+      287,
+      294,
+      295,
+      296,
+      297,
+      340,
+      349
+    ],
+    "paginasImpresas": [
+      1,
+      284,
+      285,
+      292,
+      293,
+      294,
+      295,
+      338,
+      347
+    ],
+    "modalidad": "Lectura nativa focalizada; no revision independiente integral"
+  },
+  "reproduccion": {
+    "metodo": "Node aislado: MotorMatpelService compilado + artefactoRecortado real + planDeCarga como motor-matpel.spec.ts",
+    "primerIntento": "Fallido: contenedor del recorte tratado como catalogo; corregido usando artefactoRecortado/planDeCarga",
+    "segundoIntento": {
+      "exitCode": 0,
+      "identificador": "1613",
+      "resaltadoVerde": false,
+      "guia": [
+        "154"
+      ],
+      "tabla1": "NO_APLICABLE",
+      "aislamiento": "NO_APLICABLE",
+      "proteccion": "NO_APLICABLE"
+    },
+    "sql": false,
+    "activacion": false,
+    "validacionOperacional": false
+  },
+  "hallazgo": "GRE24-ISSUE-ORANGE-OUTPUT-SCOPE",
+  "fuentesExternas": [
+    {
+      "url": "https://www.phmsa.dot.gov/training/hazmat/erg/emergency-response-guidebook-erg",
+      "uso": "Finalidad de respuesta inicial en transporte"
+    },
+    {
+      "url": "https://tc.canada.ca/en/dangerous-goods/canutec/emergency-response-guidebook",
+      "uso": "Alcance y limites de utilidad"
+    },
+    {
+      "url": "https://tc.canada.ca/en/dangerous-goods/canutec/emergency-response-guidebook/corrections",
+      "uso": "No listaba correcciones2024 en la consulta; no ausencia universal de erratas"
+    }
+  ],
+  "suitesAnterioresRepetidas": false,
+  "codigoProductoModificado": false,
+  "migracionesEjecutadas": false,
+  "despliegue": false,
+  "catalogoActivado": false,
+  "dominioIntegralDemostrado": false,
+  "validacionDocumental": {
+    "enlacesLocalesFaltantes": 0,
+    "espaciosFinales": 0,
+    "integridadConocimiento": {
+      "comando": "python -X utf8 scripts/matpel/validar_conocimiento.py",
+      "exitCode": 0,
+      "errores": [],
+      "dominioIntegralDemostrado": false
+    },
+    "grafoRegenerado": false,
+    "motivoSinRegeneracion": "No se modificaron modulos, entidades, migraciones, API ni pantallas"
+  }
+}

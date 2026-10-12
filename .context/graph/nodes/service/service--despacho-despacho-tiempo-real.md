@@ -21,7 +21,7 @@ Bus de eventos en memoria + presencia. Igual que el de alertas: sirve con UNA in
 
 ## Metodos
 
-`emitir()` · `flujoPara()` · `conectar()` · `desconectar()` · `latido()` · `conexionesAbiertas()` · `ultimaActividad()`
+`emitir()` · `flujoPara()` · `conectar()` · `desconectar()` · `latido()` · `conexionesAbiertas()` · `ultimaActividad()` · `totalConexiones()` · `personasConectadas()`
 
 ## Archivos
 
