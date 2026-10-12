@@ -359,10 +359,11 @@ inundación) con muchos incidentes chicos. El criterio de activación lo fija la
      con `var(--…)`; etiquetas asociadas; `useActualizacionPeriodica` para datos en vivo (su
      `cargar` debe lanzar si falla).
    - Ninguna entidad usa relaciones TypeORM: joins explícitos.
-4. Verificación: `cd backend; npm test` (hoy 614 ok + **2 fallas previas** en `despacho.spec.ts`:
-   CREAR_SOLICITUD y CAMBIAR_DISPONIBILIDAD; ese archivo tiene cambios sin commit de otra sesión);
-   `cd frontend; npm test; npx tsc --noEmit; npm run audit:contraste; npm run audit:a11y;
-   npm run verificar:pantallas`; `node scripts/verificar-endpoints.mjs` (12 sin ruta, previas).
+4. Verificación: `cd backend; npm test` (al 2026-10-12 en `6c234b3`: 664 aprobadas, 9 omitidas,
+   0 fallas — las 2 históricas de `despacho.spec.ts` quedaron corregidas);
+   `cd frontend; npm test` (66/66); `npx tsc --noEmit; npm run audit:contraste; npm run audit:a11y;
+   npm run verificar:pantallas` (135 pantallas, 129 en la matriz); `node scripts/verificar-endpoints.mjs`
+   (12 sin ruta, previas).
 
 ---
 
